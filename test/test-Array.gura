@@ -1,4 +1,3 @@
-
 #!/usr/bin/env gurax
 import(util.tester) {*}
 

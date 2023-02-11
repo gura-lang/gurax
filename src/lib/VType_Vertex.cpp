@@ -211,6 +211,13 @@ Gurax_ImplementPropertySetter(Vertex, z)
 //------------------------------------------------------------------------------
 // Implementation of operator
 //------------------------------------------------------------------------------
+// +Vertex
+Gurax_ImplementOpUnary(Pos, Vertex)
+{
+	const Vertex& v = Value_Vertex::GetVertex(value);
+	return new Value_Vertex(v);
+}
+
 // -Vertex
 Gurax_ImplementOpUnary(Neg, Vertex)
 {
@@ -255,6 +262,10 @@ Gurax_ImplementOpBinary(Div, Vertex, Number)
 {
 	const Vertex& v = Value_Vertex::GetVertex(valueL);
 	Double num = Value_Number::GetNumber<Double>(valueR);
+	if (num == 0.) {
+		Error::Issue(ErrorType::DividedByZero, "divided by zero");
+		return Value::nil();
+	}
 	return new Value_Vertex(Vertex::Div(v, num));
 }
 
@@ -297,6 +308,7 @@ void VType_Vertex::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Vertex, y));
 	Assign(Gurax_CreateProperty(Vertex, z));
 	// Assignment of operator
+	Gurax_AssignOpUnary(Pos,	Vertex);
 	Gurax_AssignOpUnary(Neg,	Vertex);
 	Gurax_AssignOpBinary(Add,	Vertex, Vertex);
 	Gurax_AssignOpBinary(Sub,	Vertex, Vertex);

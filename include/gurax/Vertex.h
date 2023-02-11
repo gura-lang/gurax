@@ -4,6 +4,7 @@
 #ifndef GURAX_VERTEX_H
 #define GURAX_VERTEX_H
 #include "Referable.h"
+#include "Array.h"
 
 namespace Gurax {
 
@@ -45,6 +46,7 @@ public:
 	static Vertex Sub(const Vertex& v1, const Vertex& v2);
 	static Vertex Mul(const Vertex& v, Double num);
 	static Vertex Div(const Vertex& v, Double num);
+	//static Vertex Dot(const Array& array, const Vertex& v);
 	static Double Dot(const Vertex& v1, const Vertex& v2);
 	static Vertex Cross(const Vertex& v1, const Vertex& v2);
 	static Double Norm(const Vertex& v);

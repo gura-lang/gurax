@@ -18,16 +18,16 @@ public:
 	Gurax_MemoryPoolAllocator("model.stl.Face");
 public:
 	struct Packed {
-		enum { Size = sizeof(float) * 3 * 4 + sizeof(Uint16) };
 		float normal[3];
 		float vertex1[3];
 		float vertex2[3];
 		float vertex3[3];
 		UInt16 attr;
+		enum { Size = sizeof(float) * 3 * 4 + sizeof(UInt16) };
 	};
 private:
-	RefPtr<VertexRef> _pNormal;
-	VertexRef* _pVertexes[3];
+	Vertex _normal;
+	Vertex _vertexes[3];
 	UInt16 _attr;
 public:
 	// Constructor

@@ -1,0 +1,60 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+
+TestCase('Property') {
+	Vertex.PrintPropSlots()
+}
+
+TestCase('Constructor') {
+	Tester(`Vertex())
+	Tester(`Vertex(3))
+	Tester(`Vertex(3, 4))
+	Tester(`Vertex(3, 4, 5))
+}
+
+TestCase('Property Access') {
+	v = Vertex(3, 4, 5)
+	Tester(`v)
+	Tester(`v.x)
+	Tester(`v.y)
+	Tester(`v.z)
+	v.x = 6, v.y = 7, v.z = 8
+	Tester(`v)
+}
+
+TestCase('+Vertex') {
+	Tester(`(+Vertex(3, 4, 5)))
+}
+
+TestCase('-Vertex') {
+	Tester(`(-Vertex(3, 4, 5)))
+}
+
+TestCase('Vertex + Vertex') {
+	Tester(`(Vertex(3, 4, 5) + Vertex(2, 8, 1)))
+}
+
+TestCase('Vertex - Vertex') {
+	Tester(`(Vertex(3, 4, 5) - Vertex(2, 8, 1)))
+}
+
+TestCase('Vertex * Number') {
+	Tester(`(Vertex(3, 4, 5) * 3))
+}
+
+TestCase('Number * Vertex') {
+	Tester(`(3 * Vertex(3, 4, 5)))
+}
+
+TestCase('Vertex / Number') {
+	Tester(`(Vertex(3, 6, -9) / 3))
+	Tester(`(Vertex(3, 4, 5) / 0))
+}
+
+TestCase('Vertex |.| Vertex') {
+	Tester(`(Vertex(1, 2, 3) |.| Vertex(3, 4, 5)))
+}
+
+TestCase('Vertex |^| Vertex') {
+	Tester(`(Vertex(1, 2, 3) |^| Vertex(3, 4, 5)))
+}
