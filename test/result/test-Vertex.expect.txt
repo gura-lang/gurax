@@ -1,0 +1,40 @@
+======== Property ========
+Vertex
+  #x                Number       R/W
+  #y                Number       R/W
+  #z                Number       R/W
+======== Constructor ========
+Vertex() .. <Vertex:0,0,0>
+Vertex(3) .. <Vertex:3,0,0>
+Vertex(3, 4) .. <Vertex:3,4,0>
+Vertex(3, 4, 5) .. <Vertex:3,4,5>
+======== Property Access ========
+v .. <Vertex:3,4,5>
+v.x .. 3
+v.y .. 4
+v.z .. 5
+v .. <Vertex:6,7,8>
+======== +Vertex ========
++Vertex(3, 4, 5) .. <Vertex:3,4,5>
+======== -Vertex ========
+-Vertex(3, 4, 5) .. <Vertex:-3,-4,-5>
+======== Vertex + Vertex ========
+Vertex(3, 4, 5) + Vertex(2, 8, 1) .. <Vertex:5,12,6>
+======== Vertex - Vertex ========
+Vertex(3, 4, 5) - Vertex(2, 8, 1) .. <Vertex:1,-4,4>
+======== Vertex * Number ========
+Vertex(3, 4, 5) * 3 .. <Vertex:9,12,15>
+======== Number * Vertex ========
+3 * Vertex(3, 4, 5) .. <Vertex:9,12,15>
+======== Vertex / Number ========
+Vertex(3, 6, -9) / 3 .. <Vertex:1,2,-3>
+Vertex(3, 4, 5) / 0 .. divided by zero
+======== Vertex |.| Vertex ========
+Vertex(1, 0, 0) |.| Vertex(1, 0, 0) .. 1
+Vertex(0, 1, 0) |.| Vertex(1, 0, 0) .. 0
+Vertex(1, 2, 3) |.| Vertex(3, 4, 5) .. 26
+======== Vertex |^| Vertex ========
+Vertex(1, 0, 0) |^| Vertex(1, 0, 0) .. <Vertex:0,0,0>
+Vertex(0, 1, 0) |^| Vertex(1, 0, 0) .. <Vertex:0,0,-1>
+Vertex(1, 0, 0) |^| Vertex(0, 1, 0) .. <Vertex:0,0,1>
+Vertex(1, 2, 3) |^| Vertex(3, 4, 5) .. <Vertex:-2,4,-2>

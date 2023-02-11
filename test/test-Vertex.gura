@@ -52,9 +52,14 @@ TestCase('Vertex / Number') {
 }
 
 TestCase('Vertex |.| Vertex') {
+	Tester(`(Vertex(1, 0, 0) |.| Vertex(1, 0, 0)))
+	Tester(`(Vertex(0, 1, 0) |.| Vertex(1, 0, 0)))
 	Tester(`(Vertex(1, 2, 3) |.| Vertex(3, 4, 5)))
 }
 
 TestCase('Vertex |^| Vertex') {
+	Tester(`(Vertex(1, 0, 0) |^| Vertex(1, 0, 0)))
+	Tester(`(Vertex(0, 1, 0) |^| Vertex(1, 0, 0)))
+	Tester(`(Vertex(1, 0, 0) |^| Vertex(0, 1, 0)))
 	Tester(`(Vertex(1, 2, 3) |^| Vertex(3, 4, 5)))
 }
