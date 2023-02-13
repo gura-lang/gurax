@@ -27,7 +27,9 @@ public:
 	};
 private:
 	Vertex _normal;
-	Vertex _vertexes[3];
+	Vertex _vertex1;
+	Vertex _vertex2;
+	Vertex _vertex3;
 	UInt16 _attr;
 public:
 	// Constructor
@@ -42,10 +44,14 @@ protected:
 	~Face() = default;
 public:
 	void SetNormal(Vertex& normal) { _normal = normal; }
-	void SetVertex(size_t idx, const Vertex& vertex) { _vertexes[idx] = vertex; }
-	void SetAttr(UShort attr) { _attr = attr; }
-	const Vertex &GetNormal() const { return _normal; }
-	const Vertex &GetVertex(size_t idx) const { return _vertexes[idx]; }
+	void SetVertex1(const Vertex& vertex) { _vertex1 = vertex; }
+	void SetVertex2(const Vertex& vertex) { _vertex2 = vertex; }
+	void SetVertex3(const Vertex& vertex) { _vertex3 = vertex; }
+	void SetAttr(UInt16 attr) { _attr = attr; }
+	const Vertex& GetNormal() const { return _normal; }
+	const Vertex& GetVertex1() const { return _vertex1; }
+	const Vertex& GetVertex2() const { return _vertex2; }
+	const Vertex& GetVertex3() const { return _vertex3; }
 	UInt16 GetAttr() const { return _attr; }
 	void UpdateNormal();
 public:
