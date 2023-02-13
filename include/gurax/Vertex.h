@@ -60,6 +60,36 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
+//------------------------------------------------------------------------------
+// VertexRef
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE VertexRef : public Referable {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(VertexRef);
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("VertexRef");
+public:
+	Vertex v;
+public:
+	// Constructor
+	VertexRef(Vertex v_) : v(v_) {}
+	// Copy constructor/operator
+	VertexRef(const VertexRef& src) = delete;
+	VertexRef& operator=(const VertexRef& src) = delete;
+	// Move constructor/operator
+	VertexRef(VertexRef&& src) noexcept = delete;
+	VertexRef& operator=(VertexRef&& src) noexcept = delete;
+protected:
+	~VertexRef() = default;
+public:
+	size_t CalcHash() const { return v.CalcHash(); }
+	bool IsIdentical(const VertexRef& other) const { return v.IsIdentical(other.v); }
+	bool IsEqualTo(const VertexRef& other) const { return v.IsEqualTo(other.v); }
+	bool IsLessThan(const VertexRef& other) const { return v.IsLessThan(other.v); }
+	String ToString(const StringStyle& ss = StringStyle::Empty) const { return v.ToString(ss); }
+};
+
 }
 
 #endif
