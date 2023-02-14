@@ -8,9 +8,15 @@ Gurax_BeginModuleScope(model_stl)
 //------------------------------------------------------------------------------
 // Face
 //------------------------------------------------------------------------------
-Face::Face(const Face& src) : _normal(src._normal),
-	_vertex1(src._vertex1), _vertex2(src._vertex2), _vertex3(src._vertex3), _attr(src._attr)
+Face::Face(const Face& src) : _pNormal(src._pNormal.Reference()),
+	_pVertex1(src._pVertex1.Reference()), _pVertex2(src._pVertex2.Reference()), _pVertex3(src._pVertex3.Reference()),
+	_attr(src._attr)
 {
+}
+
+void Face::UpdateNormal()
+{
+	_pNormal.reset(new VertexRef(Vertex::Normal(GetVertex1(), GetVertex2(), GetVertex3(), true)));
 }
 
 String Face::ToString(const StringStyle& ss) const

@@ -26,10 +26,10 @@ public:
 		enum { Size = sizeof(float) * 3 * 4 + sizeof(UInt16) };
 	};
 private:
-	Vertex _normal;
-	Vertex _vertex1;
-	Vertex _vertex2;
-	Vertex _vertex3;
+	RefPtr<VertexRef> _pNormal;
+	RefPtr<VertexRef> _pVertex1;
+	RefPtr<VertexRef> _pVertex2;
+	RefPtr<VertexRef> _pVertex3;
 	UInt16 _attr;
 public:
 	// Constructor
@@ -43,15 +43,19 @@ public:
 protected:
 	~Face() = default;
 public:
-	void SetNormal(Vertex& normal) { _normal = normal; }
-	void SetVertex1(const Vertex& vertex) { _vertex1 = vertex; }
-	void SetVertex2(const Vertex& vertex) { _vertex2 = vertex; }
-	void SetVertex3(const Vertex& vertex) { _vertex3 = vertex; }
+	void SetNormal(VertexRef* pNormal) { _pNormal.reset(pNormal); }
+	void SetVertex1(VertexRef* pVertex) { _pVertex1.reset(pVertex); }
+	void SetVertex2(VertexRef* pVertex) { _pVertex2.reset(pVertex); }
+	void SetVertex3(VertexRef* pVertex) { _pVertex3.reset(pVertex); }
 	void SetAttr(UInt16 attr) { _attr = attr; }
-	const Vertex& GetNormal() const { return _normal; }
-	const Vertex& GetVertex1() const { return _vertex1; }
-	const Vertex& GetVertex2() const { return _vertex2; }
-	const Vertex& GetVertex3() const { return _vertex3; }
+	const Vertex& GetNormal() const { return _pNormal->v; }
+	const Vertex& GetVertex1() const { return _pVertex1->v; }
+	const Vertex& GetVertex2() const { return _pVertex2->v; }
+	const Vertex& GetVertex3() const { return _pVertex3->v; }
+	const VertexRef& GetNormalRef() const { return *_pNormal; }
+	const VertexRef& GetVertex1Ref() const { return *_pVertex1; }
+	const VertexRef& GetVertex2Ref() const { return *_pVertex2; }
+	const VertexRef& GetVertex3Ref() const { return *_pVertex3; }
 	UInt16 GetAttr() const { return _attr; }
 	void UpdateNormal();
 public:

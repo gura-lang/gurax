@@ -75,19 +75,64 @@ Gurax_ImplementMethod(Face, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// model.stl.Face#propSkeleton
-Gurax_DeclareProperty_R(Face, propSkeleton)
+// model.stl.Face#normal
+Gurax_DeclareProperty_R(Face, normal)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Vertex, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
 
-Gurax_ImplementPropertyGetter(Face, propSkeleton)
+Gurax_ImplementPropertyGetter(Face, normal)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Vertex(valueThis.GetFace().GetNormalRef().Reference());
+}
+
+// model.stl.Face#vertex1
+Gurax_DeclareProperty_R(Face, vertex1)
+{
+	Declare(VTYPE_Vertex, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"**(
+Skeleton.
+)**");
+}
+
+Gurax_ImplementPropertyGetter(Face, vertex1)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Vertex(valueThis.GetFace().GetNormalRef().Reference());
+}
+
+// model.stl.Face#vertex2
+Gurax_DeclareProperty_R(Face, vertex2)
+{
+	Declare(VTYPE_Vertex, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"**(
+Skeleton.
+)**");
+}
+
+Gurax_ImplementPropertyGetter(Face, vertex2)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Vertex(valueThis.GetFace().GetNormalRef().Reference());
+}
+
+// model.stl.Face#vertex3
+Gurax_DeclareProperty_R(Face, vertex3)
+{
+	Declare(VTYPE_Vertex, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"**(
+Skeleton.
+)**");
+}
+
+Gurax_ImplementPropertyGetter(Face, vertex3)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Vertex(valueThis.GetFace().GetNormalRef().Reference());
 }
 
 //------------------------------------------------------------------------------
@@ -104,7 +149,10 @@ void VType_Face::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Face, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Face, propSkeleton));
+	Assign(Gurax_CreateProperty(Face, normal));;
+	Assign(Gurax_CreateProperty(Face, vertex1));
+	Assign(Gurax_CreateProperty(Face, vertex2));
+	Assign(Gurax_CreateProperty(Face, vertex3));
 }
 
 //------------------------------------------------------------------------------
