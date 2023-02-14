@@ -14,9 +14,21 @@ Face::Face(const Face& src) : _pNormal(src._pNormal.Reference()),
 {
 }
 
-void Face::UpdateNormal()
+const Vertex& Face::GetNormal() const
 {
-	_pNormal.reset(new VertexRef(Vertex::Normal(GetVertex1(), GetVertex2(), GetVertex3(), true)));
+	if (!_pNormal) UpdateNormal();
+	return _pNormal->v;
+}
+
+const VertexRef& Face::GetNormalRef() const
+{
+	if (!_pNormal) UpdateNormal();
+	return *_pNormal;
+}
+
+void Face::UpdateNormal() const
+{
+	const_cast<Face*>(this)->_pNormal.reset(new VertexRef(Vertex::Normal(GetVertex1(), GetVertex2(), GetVertex3(), true)));
 }
 
 String Face::ToString(const StringStyle& ss) const

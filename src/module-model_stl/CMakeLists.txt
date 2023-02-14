@@ -39,7 +39,9 @@ target_sources(model_stl.gurd PRIVATE
 	Util.cpp
 	Tokenizer.cpp
 	Face.cpp
-	VType_Face.cpp)
+	Solid.cpp
+	VType_Face.cpp
+	VType_Solid.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------

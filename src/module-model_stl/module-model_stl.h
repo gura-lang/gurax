@@ -7,6 +7,7 @@
 #include "Util.h"
 #include "Tokenizer.h"
 #include "VType_Face.h"
+#include "VType_Solid.h"
 
 Gurax_BeginModuleHeader(model_stl)
 Gurax_EndModuleHeader(model_stl)

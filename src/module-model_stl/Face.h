@@ -26,10 +26,10 @@ public:
 		enum { Size = sizeof(float) * 3 * 4 + sizeof(UInt16) };
 	};
 private:
-	RefPtr<VertexRef> _pNormal;
 	RefPtr<VertexRef> _pVertex1;
 	RefPtr<VertexRef> _pVertex2;
 	RefPtr<VertexRef> _pVertex3;
+	RefPtr<VertexRef> _pNormal;
 	UInt16 _attr;
 public:
 	// Constructor
@@ -43,21 +43,21 @@ public:
 protected:
 	~Face() = default;
 public:
-	void SetNormal(VertexRef* pNormal) { _pNormal.reset(pNormal); }
 	void SetVertex1(VertexRef* pVertex) { _pVertex1.reset(pVertex); }
 	void SetVertex2(VertexRef* pVertex) { _pVertex2.reset(pVertex); }
 	void SetVertex3(VertexRef* pVertex) { _pVertex3.reset(pVertex); }
+	void SetNormal(VertexRef* pNormal) { _pNormal.reset(pNormal); }
 	void SetAttr(UInt16 attr) { _attr = attr; }
-	const Vertex& GetNormal() const { return _pNormal->v; }
 	const Vertex& GetVertex1() const { return _pVertex1->v; }
 	const Vertex& GetVertex2() const { return _pVertex2->v; }
 	const Vertex& GetVertex3() const { return _pVertex3->v; }
-	const VertexRef& GetNormalRef() const { return *_pNormal; }
+	const Vertex& GetNormal() const;
 	const VertexRef& GetVertex1Ref() const { return *_pVertex1; }
 	const VertexRef& GetVertex2Ref() const { return *_pVertex2; }
 	const VertexRef& GetVertex3Ref() const { return *_pVertex3; }
+	const VertexRef& GetNormalRef() const;
 	UInt16 GetAttr() const { return _attr; }
-	void UpdateNormal();
+	void UpdateNormal() const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Face& other) const { return this == &other; }

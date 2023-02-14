@@ -135,6 +135,21 @@ Gurax_ImplementPropertyGetter(Face, vertex3)
 	return new Value_Vertex(valueThis.GetFace().GetNormalRef().Reference());
 }
 
+// model.stl.Face#attr
+Gurax_DeclareProperty_R(Face, attr)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"**(
+Skeleton.
+)**");
+}
+
+Gurax_ImplementPropertyGetter(Face, attr)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetFace().GetAttr());
+}
+
 //------------------------------------------------------------------------------
 // VType_Face
 //------------------------------------------------------------------------------
@@ -149,10 +164,11 @@ void VType_Face::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Face, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Face, normal));;
+	Assign(Gurax_CreateProperty(Face, normal));
 	Assign(Gurax_CreateProperty(Face, vertex1));
 	Assign(Gurax_CreateProperty(Face, vertex2));
 	Assign(Gurax_CreateProperty(Face, vertex3));
+	Assign(Gurax_CreateProperty(Face, attr));
 }
 
 //------------------------------------------------------------------------------
