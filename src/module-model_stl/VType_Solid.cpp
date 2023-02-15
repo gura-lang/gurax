@@ -45,51 +45,47 @@ Gurax_ImplementConstructor(Solid)
 	Stream& stream = args.PickStream();
 	// Function body
 	RefPtr<Solid> pSolid(new Solid(stream.Reference()));
+	if (!pSolid->Prepare()) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Solid(pSolid.release()));
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// model.stl.Solid#MethodSkeleton(num1 as Number, num2 as Number)
-Gurax_DeclareMethod(Solid, MethodSkeleton)
+// model.stl.Solid#EachFace() {block?}
+Gurax_DeclareMethod(Solid, EachFace)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
 
-Gurax_ImplementMethod(Solid, MethodSkeleton)
+Gurax_ImplementMethod(Solid, EachFace)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	auto& valueThis = GetValueThis(argument);
 	// Function body
-	return new Value_Number(num1 + num2);
+	return argument.ReturnIterator(processor, valueThis.GetSolid().EachFace());
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// model.stl.Solid#propSkeleton
-Gurax_DeclareProperty_R(Solid, propSkeleton)
+// model.stl.Solid#name
+Gurax_DeclareProperty_R(Solid, name)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
 
-Gurax_ImplementPropertyGetter(Solid, propSkeleton)
+Gurax_ImplementPropertyGetter(Solid, name)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(valueThis.GetSolid().GetName());
 }
 
 //------------------------------------------------------------------------------
@@ -104,9 +100,9 @@ void VType_Solid::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Solid));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Solid, MethodSkeleton));
+	Assign(Gurax_CreateMethod(Solid, EachFace));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Solid, propSkeleton));
+	Assign(Gurax_CreateProperty(Solid, name));
 }
 
 //------------------------------------------------------------------------------
