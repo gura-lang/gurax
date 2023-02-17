@@ -95,7 +95,7 @@ private:
 	Stat _stat;
 	Tokenizer _tokenizer;
 public:
-	Iterator_EachFace_Text(Solid* pSolid) : _pSolid(pSolid) {}
+	Iterator_EachFace_Text(Solid* pSolid) : _pSolid(pSolid), _stat(Stat::facet) {}
 public:
 	Solid& GetSolid() { return *_pSolid; }
 	const Solid& GetSolid() const { return *_pSolid; }
