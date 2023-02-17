@@ -77,6 +77,7 @@ private:
 public:
 	Iterator_EachFace_Binary(Solid* pSolid) : _pSolid(pSolid) {}
 public:
+	Solid& GetSolid() { return *_pSolid; }
 	const Solid& GetSolid() const { return *_pSolid; }
 public:
 	// Virtual functions of Iterator
@@ -95,6 +96,7 @@ private:
 public:
 	Iterator_EachFace_Text(Solid* pSolid) : _pSolid(pSolid) {}
 public:
+	Solid& GetSolid() { return *_pSolid; }
 	const Solid& GetSolid() const { return *_pSolid; }
 public:
 	// Virtual functions of Iterator

@@ -146,6 +146,30 @@ Solid::TokenId Solid::Tokenizer::Tokenize(Stream& stream)
 //------------------------------------------------------------------------------
 Value* Iterator_EachFace_Binary::DoNextValue()
 {
+#if 0
+	if (_idxFace >= _nFace) return false;
+	Face::Packed facePacked;
+	size_t bytesRead = GetSolid().GetStream().Read(&facePacked, Face::Packed::Size);
+	if (bytesRead < Face::Packed::Size) {
+		SetError_FormatError();
+		return false;
+	}
+	AutoPtr<Object_face> pObjFace(new Object_face());
+	Face &face = pObjFace->GetFace();
+	face.SetVertex1(new VertexRef(facePacked.vertex1[0], facePacked.vertex1[1], facePacked.vertex1[2]));
+	face.SetVertex2(new VertexRef(facePacked.vertex2[0], facePacked.vertex2[1], facePacked.vertex2[2]));
+	face.SetVertex3(new VertexRef(facePacked.vertex3[0], facePacked.vertex3[1], facePacked.vertex3[2]));
+	face.SetAttr(facePacked.attr);
+	if (facePacked.normal[0] == 0. && facePacked.normal[1] == 0. && facePacked.normal[2] == 0.) {
+		face.UpdateNormal();
+	} else {
+		face.SetNormal(new VertexRef(facePacked.normal[0],
+									facePacked.normal[1], facePacked.normal[2]));
+	}
+	value = Value(pObjFace.release());
+	_idxFace++;
+	return true;
+#endif
 	return nullptr;
 }
 
