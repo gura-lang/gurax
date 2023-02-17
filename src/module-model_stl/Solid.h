@@ -56,6 +56,8 @@ protected:
 public:
 	bool Prepare();
 	Stream& GetStream() { return *_pStream; }
+	bool GetBinaryFlag() const { return _binaryFlag; }
+	size_t GetNFace() const { return _nFace; }
 	const char* GetName() const { return _text.c_str(); }
 	Iterator* EachFace();
 public:
@@ -67,19 +69,37 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Iterator_EachFace
+// Iterator_EachFace_Binary
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Iterator_EachFace : public Iterator {
+class GURAX_DLLDECLARE Iterator_EachFace_Binary : public Iterator {
 private:
 	RefPtr<Solid> _pSolid;
 public:
-	Iterator_EachFace(Solid* pSolid) : _pSolid(pSolid) {}
+	Iterator_EachFace_Binary(Solid* pSolid) : _pSolid(pSolid) {}
 public:
-	Solid& GetSolid() { return *_pSolid; }
+	const Solid& GetSolid() const { return *_pSolid; }
 public:
 	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override;
-	virtual size_t GetLength() const override;
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+	virtual size_t GetLength() const override { return GetSolid().GetNFace(); }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// Iterator_EachFace_Text
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_EachFace_Text : public Iterator {
+private:
+	RefPtr<Solid> _pSolid;
+public:
+	Iterator_EachFace_Text(Solid* pSolid) : _pSolid(pSolid) {}
+public:
+	const Solid& GetSolid() const { return *_pSolid; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenUndetermined; }
+	virtual size_t GetLength() const override { return static_cast<size_t>(-1); }
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 };

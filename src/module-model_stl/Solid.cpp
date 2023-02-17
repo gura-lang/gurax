@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(model_stl)
 //------------------------------------------------------------------------------
 // Solid
 //------------------------------------------------------------------------------
-Solid::Solid(Stream* pStream) : _pStream(pStream), _binaryFlag(false), _nFace(0)
+Solid::Solid(Stream* pStream) : _pStream(pStream), _nFace(0)
 {
 }
 
@@ -51,7 +51,11 @@ bool Solid::Prepare()
 
 Iterator* Solid::EachFace()
 {
-	return nullptr;
+	if (_binaryFlag) {
+		return new Iterator_EachFace_Binary(Reference());
+	} else {
+		return new Iterator_EachFace_Text(Reference());
+	}
 }
 
 String Solid::ToString(const StringStyle& ss) const
@@ -138,26 +142,29 @@ Solid::TokenId Solid::Tokenizer::Tokenize(Stream& stream)
 }
 
 //------------------------------------------------------------------------------
-// Iterator_EachFace
+// Iterator_EachFace_Binary
 //------------------------------------------------------------------------------
-Iterator::Flags Iterator_EachFace::GetFlags() const
-{
-	return Flag::Finite | Flag::LenDetermined;
-}
-
-size_t Iterator_EachFace::GetLength() const
-{
-	return 0;
-}
-
-Value* Iterator_EachFace::DoNextValue()
+Value* Iterator_EachFace_Binary::DoNextValue()
 {
 	return nullptr;
 }
 
-String Iterator_EachFace::ToString(const StringStyle& ss) const
+String Iterator_EachFace_Binary::ToString(const StringStyle& ss) const
 {
-	return "EachFace";
+	return "model.stl.EachFace_Binary";
+}
+
+//------------------------------------------------------------------------------
+// Iterator_EachFace_Text
+//------------------------------------------------------------------------------
+Value* Iterator_EachFace_Text::DoNextValue()
+{
+	return nullptr;
+}
+
+String Iterator_EachFace_Text::ToString(const StringStyle& ss) const
+{
+	return "model.stl.EachFace_Text";
 }
 
 Gurax_EndModuleScope(model_stl)
