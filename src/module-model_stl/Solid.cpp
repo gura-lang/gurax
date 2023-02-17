@@ -44,7 +44,7 @@ bool Solid::Prepare()
 			SetError_FormatError();
 			return false;
 		}
-		_nFace = *reinterpret_cast<UInt32*>(buff);
+		_nFace =* reinterpret_cast<UInt32*>(buff);
 	}
 	return true;
 }
@@ -64,9 +64,201 @@ String Solid::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// Solid::Tokenizer
+// Iterator_EachFace_Binary
 //------------------------------------------------------------------------------
-Solid::TokenId Solid::Tokenizer::Tokenize(Stream& stream)
+Value* Iterator_EachFace_Binary::DoNextValue()
+{
+	if (_idxFace >= GetSolid().GetNFace()) return false;
+	Face::Packed facePacked;
+	size_t bytesRead = GetSolid().GetStream().Read(&facePacked, Face::Packed::Size);
+	if (bytesRead < Face::Packed::Size) {
+		SetError_FormatError();
+		return false;
+	}
+	RefPtr<Face> pFace(new Face(
+		new VertexRef(Vertex(facePacked.vertex1[0], facePacked.vertex1[1], facePacked.vertex1[2])),
+		new VertexRef(Vertex(facePacked.vertex2[0], facePacked.vertex2[1], facePacked.vertex2[2])),
+		new VertexRef(Vertex(facePacked.vertex3[0], facePacked.vertex3[1], facePacked.vertex3[2]))));
+	pFace->SetAttr(facePacked.attr);
+	if (facePacked.normal[0] == 0. && facePacked.normal[1] == 0. && facePacked.normal[2] == 0.) {
+		pFace->UpdateNormal();
+	} else {
+		pFace->SetNormal(new VertexRef(Vertex(facePacked.normal[0], facePacked.normal[1], facePacked.normal[2])));
+	}
+	_idxFace++;
+	return new Value_Face(pFace.release());
+}
+
+String Iterator_EachFace_Binary::ToString(const StringStyle& ss) const
+{
+	return "model.stl.EachFace_Binary";
+}
+
+//------------------------------------------------------------------------------
+// Iterator_EachFace_Text
+//------------------------------------------------------------------------------
+Value* Iterator_EachFace_Text::DoNextValue()
+{
+	size_t nCoords = 0;
+	size_t nVertexes = 0;
+	Vertex vertex;
+	RefPtr<Face> pFace(new Face());
+	for (;;) {
+		TokenId tokenId = _tokenizer.Tokenize(GetSolid().GetStream());
+		if (Error::IsIssued()) return nullptr;
+		switch (_stat) {
+		case Stat::facet: {
+			if (tokenId == TokenId::Field) {
+				const char* field = _tokenizer.GetField();
+				if (::strcmp(field, "facet") == 0) {
+					//pObjFace.reset(new Object_face());
+					_stat = Stat::normal;
+				} else {
+					// error
+				}
+			}
+			break;
+		}
+		case Stat::normal: {
+			if (tokenId == TokenId::Field) {
+				const char* field = _tokenizer.GetField();
+				if (::strcmp(field, "normal") == 0) {
+					nCoords = 0;
+					_stat = Stat::normal_coords;
+				} else {
+					// error
+				}
+			}
+			break;
+		}
+		case Stat::normal_coords: {
+			if (tokenId == TokenId::Field) {
+				const char* field = _tokenizer.GetField();
+				double num = 0;
+				char* p = nullptr;
+				num = ::strtod(field, &p);
+				if (*p != '\0') {
+					// error
+				}
+				nCoords++;
+				if (nCoords == 1) {
+					vertex.x = num;
+				} else if (nCoords == 2) {
+					vertex.y = num;
+				} else if (nCoords == 3) {
+					vertex.z = num;
+					pFace->SetNormal(new VertexRef(vertex));
+					_stat = Stat::outer;
+				}
+			}
+			break;
+		}
+		case Stat::outer: {
+			if (tokenId == TokenId::Field) {
+				const char* field = _tokenizer.GetField();
+				if (::strcmp(field, "outer") == 0) {
+					_stat = Stat::loop;
+				} else {
+					// error
+				}
+			}
+			break;
+		}
+		case Stat::loop: {
+			if (tokenId == TokenId::Field) {
+				const char* field = _tokenizer.GetField();
+				if (::strcmp(field, "loop") == 0) {
+					nVertexes = 0;
+					_stat = Stat::vertex;
+				} else {
+					// error
+				}
+			}
+			break;
+		}
+		case Stat::vertex: {
+			if (tokenId == TokenId::Field) {
+				const char* field = _tokenizer.GetField();
+				if (::strcmp(field, "vertex") == 0) {
+					nCoords = 0;
+					_stat = Stat::vertex_coords;
+				} else {
+					// error
+				}
+			}
+			break;
+		}
+		case Stat::vertex_coords: {
+			if (tokenId == TokenId::Field) {
+				const char* field = _tokenizer.GetField();
+				double num = 0;
+				char* p = nullptr;
+				num = ::strtod(field, &p);
+				if (*p != '\0') {
+					// error
+				}
+				nCoords++;
+				if (nCoords == 1) {
+					vertex.x = num;
+				} else if (nCoords == 2) {
+					vertex.y = num;
+				} else if (nCoords == 3) {
+					vertex.z = num;
+					if (nVertexes == 0) {
+						pFace->SetVertex1(new VertexRef(vertex));
+					} else if (nVertexes == 1) {
+						pFace->SetVertex2(new VertexRef(vertex));
+					} else if (nVertexes == 2) {
+						pFace->SetVertex3(new VertexRef(vertex));
+					}
+					nVertexes++;
+					if (nVertexes == 3) {
+						if (pFace->GetNormal().IsZero()) {
+							pFace->UpdateNormal();
+						}
+						_stat = Stat::endloop;
+					} else {
+						_stat = Stat::vertex;
+					}
+				}
+			}
+			break;
+		}
+		case Stat::endloop: {
+			if (tokenId == TokenId::Field) {
+				const char* field = _tokenizer.GetField();
+				if (::strcmp(field, "endloop") == 0) {
+					_stat = Stat::endfacet;
+				} else {
+					// error
+				}
+			}
+			break;
+		}
+		case Stat::endfacet: {
+			if (tokenId == TokenId::Field) {
+				const char* field = _tokenizer.GetField();
+				if (::strcmp(field, "endfacet") == 0) {
+					_stat = Stat::facet;
+					return new Value_Face(pFace.release());
+				} else {
+					// error
+				}
+			}
+			break;
+		}
+		}
+		if (tokenId == TokenId::EndOfFile) break;
+	}
+	return nullptr;
+}
+
+String Iterator_EachFace_Text::ToString(const StringStyle& ss) const
+{
+	return "model.stl.EachFace_Text";
+}
+
+Iterator_EachFace_Text::TokenId Iterator_EachFace_Text::Tokenizer::Tokenize(Stream& stream)
 {
 	_iChar = 0;
 	if (_tokenIdPending != TokenId::None) {
@@ -139,56 +331,6 @@ Solid::TokenId Solid::Tokenizer::Tokenize(Stream& stream)
 		if (ch == '\0') break;
 	}
 	return TokenId::EndOfFile;
-}
-
-//------------------------------------------------------------------------------
-// Iterator_EachFace_Binary
-//------------------------------------------------------------------------------
-Value* Iterator_EachFace_Binary::DoNextValue()
-{
-#if 0
-	if (_idxFace >= _nFace) return false;
-	Face::Packed facePacked;
-	size_t bytesRead = GetSolid().GetStream().Read(&facePacked, Face::Packed::Size);
-	if (bytesRead < Face::Packed::Size) {
-		SetError_FormatError();
-		return false;
-	}
-	AutoPtr<Object_face> pObjFace(new Object_face());
-	Face &face = pObjFace->GetFace();
-	face.SetVertex1(new VertexRef(facePacked.vertex1[0], facePacked.vertex1[1], facePacked.vertex1[2]));
-	face.SetVertex2(new VertexRef(facePacked.vertex2[0], facePacked.vertex2[1], facePacked.vertex2[2]));
-	face.SetVertex3(new VertexRef(facePacked.vertex3[0], facePacked.vertex3[1], facePacked.vertex3[2]));
-	face.SetAttr(facePacked.attr);
-	if (facePacked.normal[0] == 0. && facePacked.normal[1] == 0. && facePacked.normal[2] == 0.) {
-		face.UpdateNormal();
-	} else {
-		face.SetNormal(new VertexRef(facePacked.normal[0],
-									facePacked.normal[1], facePacked.normal[2]));
-	}
-	value = Value(pObjFace.release());
-	_idxFace++;
-	return true;
-#endif
-	return nullptr;
-}
-
-String Iterator_EachFace_Binary::ToString(const StringStyle& ss) const
-{
-	return "model.stl.EachFace_Binary";
-}
-
-//------------------------------------------------------------------------------
-// Iterator_EachFace_Text
-//------------------------------------------------------------------------------
-Value* Iterator_EachFace_Text::DoNextValue()
-{
-	return nullptr;
-}
-
-String Iterator_EachFace_Text::ToString(const StringStyle& ss) const
-{
-	return "model.stl.EachFace_Text";
 }
 
 Gurax_EndModuleScope(model_stl)

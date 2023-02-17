@@ -34,6 +34,8 @@ private:
 public:
 	// Constructor
 	Face() {}
+	Face(VertexRef* pVertex1, VertexRef* pVertex2, VertexRef* pVertex3) :
+		_pVertex1(pVertex1), _pVertex2(pVertex2), _pVertex3(pVertex3) {}
 	// Copy constructor/operator
 	Face(const Face& src);
 	Face& operator=(const Face& src) = delete;

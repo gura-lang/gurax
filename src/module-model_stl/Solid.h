@@ -17,31 +17,11 @@ public:
 	Gurax_DeclareReferable(Solid);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("model.stl.Solid");
-public:
-	enum class Stat {
-		facet, normal, normal_coords, outer, loop, vertex, vertex_coords, endloop, endfacet,
-	};
-	enum TokenId { None, EOL, EndOfFile, Field, };
-	class Tokenizer {
-	public:
-		enum Stat { LineTop, Field, SkipWhite, FileEnd, };
-	private:
-		Stat _stat;
-		size_t _iChar;
-		char _field[128];
-		TokenId _tokenIdPending;
-	public:
-		Tokenizer() : _stat(Stat::LineTop), _iChar(0), _tokenIdPending(TokenId::None) {}
-		TokenId Tokenize(Stream& stream);
-		inline const char* GetField() const { return _field; }
-	};
 private:
 	RefPtr<Stream> _pStream;
 	bool _binaryFlag;
 	size_t _nFace;			// for binary
 	String _text;			// header for binary / solid name for text
-	Stat _stat;				// for text
-	Tokenizer _tokenizer;	// for text
 public:
 	// Constructor
 	Solid(Stream* pStream);
@@ -74,8 +54,9 @@ public:
 class GURAX_DLLDECLARE Iterator_EachFace_Binary : public Iterator {
 private:
 	RefPtr<Solid> _pSolid;
+	size_t _idxFace;
 public:
-	Iterator_EachFace_Binary(Solid* pSolid) : _pSolid(pSolid) {}
+	Iterator_EachFace_Binary(Solid* pSolid) : _pSolid(pSolid), _idxFace(0) {}
 public:
 	Solid& GetSolid() { return *_pSolid; }
 	const Solid& GetSolid() const { return *_pSolid; }
@@ -91,8 +72,28 @@ public:
 // Iterator_EachFace_Text
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Iterator_EachFace_Text : public Iterator {
+public:
+	enum class Stat {
+		facet, normal, normal_coords, outer, loop, vertex, vertex_coords, endloop, endfacet,
+	};
+	enum TokenId { None, EOL, EndOfFile, Field, };
+	class Tokenizer {
+	public:
+		enum Stat { LineTop, Field, SkipWhite, FileEnd, };
+	private:
+		Stat _stat;
+		size_t _iChar;
+		char _field[128];
+		TokenId _tokenIdPending;
+	public:
+		Tokenizer() : _stat(Stat::LineTop), _iChar(0), _tokenIdPending(TokenId::None) {}
+		TokenId Tokenize(Stream& stream);
+		inline const char* GetField() const { return _field; }
+	};
 private:
 	RefPtr<Solid> _pSolid;
+	Stat _stat;
+	Tokenizer _tokenizer;
 public:
 	Iterator_EachFace_Text(Solid* pSolid) : _pSolid(pSolid) {}
 public:
