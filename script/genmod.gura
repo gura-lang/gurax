@@ -235,7 +235,7 @@ main() = {
 		!fs.Exists(dirNameOut) && fs.CreateDir(dirNameOut)
 	}
 	fileName_CMakeLists = 'CMakeLists.txt'
-	fileName_gurd = ubarModuleName + '.gurd'
+	fileName_gurd = dotModuleName + '.gurd'
 	fileName_test = 'test-' + ubarModuleName + '.gura'
 	fileName_stdafx = 'stdafx.h'
 	fileName_mainHdr = 'module-' + ubarModuleName + '.h'
