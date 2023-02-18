@@ -52,3 +52,6 @@ target_link_libraries(opengl.gurd PRIVATE guraxcore
 # Install
 #-------------------------------------------------------------------------------
 install(TARGETS opengl.gurd RUNTIME DESTINATION module/site)
+install(PROGRAMS
+	script/opengl.teapot.gura
+	DESTINATION module/site)
