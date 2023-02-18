@@ -8,12 +8,12 @@ samples = []
 
 CreateList(pathName as String, regulateFlag as Bool = true) = {
 	list = glGenLists(1)
-	//faces = model.stl.Solid(pathName).EachFace():list
+	faces = model.stl.Solid(pathName).EachFace():list
+	scale = 1
 	if (regulateFlag) {
 		xMax = Max(faces:*vertex1:*x.Max(), faces:*vertex2:*x.Max(), faces:*vertex3:*x.Max())
 		yMax = Max(faces:*vertex1:*y.Max(), faces:*vertex2:*y.Max(), faces:*vertex3:*y.Max())
 		zMax = Max(faces:*vertex1:*z.Max(), faces:*vertex2:*z.Max(), faces:*vertex3:*z.Max())
-		Printf('%s\n', faces)
 		coordMax = Max(xMax, yMax, zMax)
 		if (coordMax != 0) {
 			scale = 1 / coordMax
@@ -21,10 +21,13 @@ CreateList(pathName as String, regulateFlag as Bool = true) = {
 	}
 	glNewList(list, GL_COMPILE)
 	faces.Each {|face|
-		glNormal3(face.normal)
-		glVertex3(face.vertex1 * scale)
-		glVertex3(face.vertex2 * scale)
-		glVertex3(face.vertex3 * scale)
+		glNormal3f(face.normal.x, face.normal.y, face.normal.z)
+		v = face.vertex1 * scale
+		glVertex3f(v.x, v.y, v.z)
+		v = face.vertex2 * scale
+		glVertex3f(v.x, v.y, v.z)
+		v = face.vertex3 * scale
+		glVertex3f(v.x, v.y, v.z)
 	}
 	glEndList()
 	list
@@ -64,8 +67,8 @@ Sample_teapot = class(SampleBase) {
 		glMaterialf(GL_FRONT, GL_SHININESS, 0.6 * 128.0)
 		glClearColor(0.5, 0.5, 0.5, 1.0)
 		glColor3f(1.0, 1.0, 1.0)
-		//this.list = opengl.teapot.CreateList(14)
-		this.list = CreateList('cube-ascii.stl')
+		this.list = opengl.teapot.CreateList(14)
+		//this.list = CreateList('cube-ascii.stl', false)
 	}
 	Reshape(w as Number, h as Number) = {
 		glViewport(0, 0, w, h)
