@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(model_stl)
 //------------------------------------------------------------------------------
 // Solid
 //------------------------------------------------------------------------------
-Solid::Solid(Stream* pStream) : _pStream(pStream), _nFace(0)
+Solid::Solid(Stream* pStream) : _pStream(pStream), _binaryFlag(false), _nFace(0)
 {
 }
 
@@ -22,6 +22,7 @@ bool Solid::ReadHeader()
 	}
 	if (::memcmp(buff, "solid ", 6) == 0) {
 		// "solid name"
+		_binaryFlag = false;
 		String field;
 		for (;;) {
 			int chRaw = _pStream->GetChar();

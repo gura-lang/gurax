@@ -6,18 +6,21 @@ import(opengl.teapot)
 
 samples = []
 
-/*
-ReadSTL() = {
+CreateList(pathName as String, regulateFlag as Bool = true) = {
 	list = glGenLists(1)
-	solid = 
-	faces = model.stl.Solid('cube-ascii.stl'):list
-	xMax = Max(faces:*vertex1:*x.Max(), faces:*vertex2:*x.Max(), faces:*vertex3:*x.Max())
-	yMax = Max(faces:*vertex1:*y.Max(), faces:*vertex2:*y.Max(), faces:*vertex3:*y.Max())
-	zMax = Max(faces:*vertex1:*z.Max(), faces:*vertex2:*z.Max(), faces:*vertex3:*z.Max())
-	coordMax = Max(xMax, yMax, zMax)
-	scale = 1 / coordMax
+	//faces = model.stl.Solid(pathName).EachFace():list
+	if (regulateFlag) {
+		xMax = Max(faces:*vertex1:*x.Max(), faces:*vertex2:*x.Max(), faces:*vertex3:*x.Max())
+		yMax = Max(faces:*vertex1:*y.Max(), faces:*vertex2:*y.Max(), faces:*vertex3:*y.Max())
+		zMax = Max(faces:*vertex1:*z.Max(), faces:*vertex2:*z.Max(), faces:*vertex3:*z.Max())
+		Printf('%s\n', faces)
+		coordMax = Max(xMax, yMax, zMax)
+		if (coordMax != 0) {
+			scale = 1 / coordMax
+		}
+	}
 	glNewList(list, GL_COMPILE)
-	faces.each {|face|
+	faces.Each {|face|
 		glNormal3(face.normal)
 		glVertex3(face.vertex1 * scale)
 		glVertex3(face.vertex2 * scale)
@@ -26,7 +29,6 @@ ReadSTL() = {
 	glEndList()
 	list
 }
-*/
 
 SampleBase = class {
 	Init() = nil
@@ -62,7 +64,8 @@ Sample_teapot = class(SampleBase) {
 		glMaterialf(GL_FRONT, GL_SHININESS, 0.6 * 128.0)
 		glClearColor(0.5, 0.5, 0.5, 1.0)
 		glColor3f(1.0, 1.0, 1.0)
-		this.list = opengl.teapot.CreateList(14)
+		//this.list = opengl.teapot.CreateList(14)
+		this.list = CreateList('cube-ascii.stl')
 	}
 	Reshape(w as Number, h as Number) = {
 		glViewport(0, 0, w, h)

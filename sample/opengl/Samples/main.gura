@@ -2,6 +2,11 @@
 import(wx)
 import(opengl) {*}
 import(Samples)
+import(model.stl)
+
+faces = model.stl.Solid('cube-ascii.stl').EachFace()
+Println(faces)
+sys.Exit()
 
 Pack = struct {
 	sample as Samples.SampleBase
