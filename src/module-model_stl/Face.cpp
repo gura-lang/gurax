@@ -14,12 +14,6 @@ Face::Face(const Face& src) : _pNormal(src._pNormal.Reference()),
 {
 }
 
-const Vertex& Face::GetNormal() const
-{
-	if (!_pNormal) UpdateNormal();
-	return _pNormal->v;
-}
-
 const VertexRef& Face::GetNormalRef() const
 {
 	if (!_pNormal) UpdateNormal();

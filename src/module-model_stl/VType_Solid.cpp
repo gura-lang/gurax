@@ -45,7 +45,7 @@ Gurax_ImplementConstructor(Solid)
 	Stream& stream = args.PickStream();
 	// Function body
 	RefPtr<Solid> pSolid(new Solid(stream.Reference()));
-	if (!pSolid->Prepare()) return Value::nil();
+	if (!pSolid->ReadHeader()) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Solid(pSolid.release()));
 }
 
@@ -58,7 +58,7 @@ Gurax_DeclareMethod(Solid, EachFace)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Skeleton.
+Creates an iterator that returns `Face` instances that provide coordinates of triangles.
 )**");
 }
 
@@ -76,7 +76,7 @@ Gurax_ImplementMethod(Solid, EachFace)
 // model.stl.Solid#name
 Gurax_DeclareProperty_R(Solid, name)
 {
-	Declare(VTYPE_String, Flag::None);
+	Declare(VTYPE_String, Flag::Nil);
 	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
@@ -84,8 +84,25 @@ Skeleton.
 
 Gurax_ImplementPropertyGetter(Solid, name)
 {
-	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_String(valueThis.GetSolid().GetName());
+	Solid& solid = GetValueThis(valueTarget).GetSolid();
+	if (solid.GetBinaryFlag()) return Value::nil();
+	return new Value_String(solid.GetName());
+}
+
+// model.stl.Solid#header
+Gurax_DeclareProperty_R(Solid, header)
+{
+	Declare(VTYPE_Binary, Flag::Nil);
+	AddHelp(Gurax_Symbol(en), u8R"**(
+Skeleton.
+)**");
+}
+
+Gurax_ImplementPropertyGetter(Solid, header)
+{
+	Solid& solid = GetValueThis(valueTarget).GetSolid();
+	if (!solid.GetBinaryFlag()) return Value::nil();
+	return new Value_Binary(solid.GetHeader());
 }
 
 //------------------------------------------------------------------------------
@@ -103,6 +120,7 @@ void VType_Solid::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Solid, EachFace));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Solid, name));
+	Assign(Gurax_CreateProperty(Solid, header));
 }
 
 //------------------------------------------------------------------------------

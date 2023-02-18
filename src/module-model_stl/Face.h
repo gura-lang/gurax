@@ -18,24 +18,24 @@ public:
 	Gurax_MemoryPoolAllocator("model.stl.Face");
 public:
 	struct Packed {
-		float normal[3];
-		float vertex1[3];
-		float vertex2[3];
-		float vertex3[3];
+		Float normal[3];
+		Float vertex1[3];
+		Float vertex2[3];
+		Float vertex3[3];
 		UInt16 attr;
-		enum { Size = sizeof(float) * 3 * 4 + sizeof(UInt16) };
+		enum { Size = sizeof(Float) * 3 * 4 + sizeof(UInt16) };
 	};
 private:
+	RefPtr<VertexRef> _pNormal;
 	RefPtr<VertexRef> _pVertex1;
 	RefPtr<VertexRef> _pVertex2;
 	RefPtr<VertexRef> _pVertex3;
-	RefPtr<VertexRef> _pNormal;
 	UInt16 _attr;
 public:
 	// Constructor
-	Face() {}
-	Face(VertexRef* pVertex1, VertexRef* pVertex2, VertexRef* pVertex3) :
-		_pVertex1(pVertex1), _pVertex2(pVertex2), _pVertex3(pVertex3) {}
+	Face() : _attr(0) {}
+	Face(VertexRef* pVertex1, VertexRef* pVertex2, VertexRef* pVertex3, UInt16 attr) :
+		_pVertex1(pVertex1), _pVertex2(pVertex2), _pVertex3(pVertex3), _attr(attr) {}
 	// Copy constructor/operator
 	Face(const Face& src);
 	Face& operator=(const Face& src) = delete;
@@ -45,19 +45,19 @@ public:
 protected:
 	~Face() = default;
 public:
+	void SetNormal(VertexRef* pNormal) { _pNormal.reset(pNormal); }
 	void SetVertex1(VertexRef* pVertex) { _pVertex1.reset(pVertex); }
 	void SetVertex2(VertexRef* pVertex) { _pVertex2.reset(pVertex); }
 	void SetVertex3(VertexRef* pVertex) { _pVertex3.reset(pVertex); }
-	void SetNormal(VertexRef* pNormal) { _pNormal.reset(pNormal); }
 	void SetAttr(UInt16 attr) { _attr = attr; }
-	const Vertex& GetVertex1() const { return _pVertex1->v; }
-	const Vertex& GetVertex2() const { return _pVertex2->v; }
-	const Vertex& GetVertex3() const { return _pVertex3->v; }
-	const Vertex& GetNormal() const;
+	const VertexRef& GetNormalRef() const;
 	const VertexRef& GetVertex1Ref() const { return *_pVertex1; }
 	const VertexRef& GetVertex2Ref() const { return *_pVertex2; }
 	const VertexRef& GetVertex3Ref() const { return *_pVertex3; }
-	const VertexRef& GetNormalRef() const;
+	const Vertex& GetNormal() const { return GetNormalRef().v; }
+	const Vertex& GetVertex1() const { return _pVertex1->v; }
+	const Vertex& GetVertex2() const { return _pVertex2->v; }
+	const Vertex& GetVertex3() const { return _pVertex3->v; }
 	UInt16 GetAttr() const { return _attr; }
 	void UpdateNormal() const;
 public:

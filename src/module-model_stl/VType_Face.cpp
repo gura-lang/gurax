@@ -49,6 +49,7 @@ Gurax_ImplementConstructor(Face)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+#if 0
 // model.stl.Face#MethodSkeleton(num1 as Number, num2 as Number)
 Gurax_DeclareMethod(Face, MethodSkeleton)
 {
@@ -71,6 +72,7 @@ Gurax_ImplementMethod(Face, MethodSkeleton)
 	// Function body
 	return new Value_Number(num1 + num2);
 }
+#endif
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -102,7 +104,7 @@ Skeleton.
 Gurax_ImplementPropertyGetter(Face, vertex1)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Vertex(valueThis.GetFace().GetNormalRef().Reference());
+	return new Value_Vertex(valueThis.GetFace().GetVertex1Ref().Reference());
 }
 
 // model.stl.Face#vertex2
@@ -117,7 +119,7 @@ Skeleton.
 Gurax_ImplementPropertyGetter(Face, vertex2)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Vertex(valueThis.GetFace().GetNormalRef().Reference());
+	return new Value_Vertex(valueThis.GetFace().GetVertex2Ref().Reference());
 }
 
 // model.stl.Face#vertex3
@@ -132,7 +134,7 @@ Skeleton.
 Gurax_ImplementPropertyGetter(Face, vertex3)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Vertex(valueThis.GetFace().GetNormalRef().Reference());
+	return new Value_Vertex(valueThis.GetFace().GetVertex3Ref().Reference());
 }
 
 // model.stl.Face#attr
@@ -162,7 +164,7 @@ void VType_Face::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Face));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Face, MethodSkeleton));
+	//Assign(Gurax_CreateMethod(Face, MethodSkeleton));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Face, normal));
 	Assign(Gurax_CreateProperty(Face, vertex1));

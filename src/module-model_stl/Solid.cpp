@@ -12,15 +12,16 @@ Solid::Solid(Stream* pStream) : _pStream(pStream), _nFace(0)
 {
 }
 
-bool Solid::Prepare()
+bool Solid::ReadHeader()
 {
-	char buff[81];
+	char buff[128];
 	size_t bytesRead = _pStream->Read(buff, 6);
 	if (bytesRead < 6) {
 		SetError_FormatError();
 		return false;
 	}
 	if (::memcmp(buff, "solid ", 6) == 0) {
+		// "solid name"
 		String field;
 		for (;;) {
 			int chRaw = _pStream->GetChar();
@@ -29,16 +30,17 @@ bool Solid::Prepare()
 			if (ch == '\0' || ch == '\n') break;
 			field += ch;
 		}
-		_text = field.Strip(true, true);
+		_name = field.Strip(true, true);
 	} else {
+		// UInt8[80] Header
+		// UInt32    Number of triangles
 		_binaryFlag = true;
 		size_t bytesRead = _pStream->Read(buff + 6, 80 - 6);
-		buff[80] = '\0';
 		if (bytesRead < 80 - 6) {
 			SetError_FormatError();
 			return false;
 		}
-		_text = buff;
+		_header = Binary(buff, 80);
 		bytesRead = _pStream->Read(buff, 4);
 		if (bytesRead < 4) {
 			SetError_FormatError();
@@ -78,11 +80,9 @@ Value* Iterator_EachFace_Binary::DoNextValue()
 	RefPtr<Face> pFace(new Face(
 		new VertexRef(Vertex(facePacked.vertex1[0], facePacked.vertex1[1], facePacked.vertex1[2])),
 		new VertexRef(Vertex(facePacked.vertex2[0], facePacked.vertex2[1], facePacked.vertex2[2])),
-		new VertexRef(Vertex(facePacked.vertex3[0], facePacked.vertex3[1], facePacked.vertex3[2]))));
-	pFace->SetAttr(facePacked.attr);
-	if (facePacked.normal[0] == 0. && facePacked.normal[1] == 0. && facePacked.normal[2] == 0.) {
-		pFace->UpdateNormal();
-	} else {
+		new VertexRef(Vertex(facePacked.vertex3[0], facePacked.vertex3[1], facePacked.vertex3[2])),
+		facePacked.attr));
+	if (facePacked.normal[0] != 0. || facePacked.normal[1] != 0. || facePacked.normal[2] != 0.) {
 		pFace->SetNormal(new VertexRef(Vertex(facePacked.normal[0], facePacked.normal[1], facePacked.normal[2])));
 	}
 	_idxFace++;
@@ -91,7 +91,7 @@ Value* Iterator_EachFace_Binary::DoNextValue()
 
 String Iterator_EachFace_Binary::ToString(const StringStyle& ss) const
 {
-	return "model.stl.EachFace_Binary";
+	return String().Format("model.stl.EachFace:Binary:%dtriangles", GetSolid().GetNFace());
 }
 
 //------------------------------------------------------------------------------
@@ -255,7 +255,7 @@ Value* Iterator_EachFace_Text::DoNextValue()
 
 String Iterator_EachFace_Text::ToString(const StringStyle& ss) const
 {
-	return "model.stl.EachFace_Text";
+	return String().Format("model.stl.EachFace:Text:'%s'", GetSolid().GetName());
 }
 
 Iterator_EachFace_Text::TokenId Iterator_EachFace_Text::Tokenizer::Tokenize(Stream& stream)

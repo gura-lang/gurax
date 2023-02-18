@@ -21,7 +21,8 @@ private:
 	RefPtr<Stream> _pStream;
 	bool _binaryFlag;
 	size_t _nFace;			// for binary
-	String _text;			// header for binary / solid name for text
+	Binary _header;			// for binary
+	String _name;			// for text
 public:
 	// Constructor
 	Solid(Stream* pStream);
@@ -34,11 +35,12 @@ public:
 protected:
 	~Solid() = default;
 public:
-	bool Prepare();
+	bool ReadHeader();
 	Stream& GetStream() { return *_pStream; }
 	bool GetBinaryFlag() const { return _binaryFlag; }
 	size_t GetNFace() const { return _nFace; }
-	const char* GetName() const { return _text.c_str(); }
+	const Binary& GetHeader() const { return _header; }
+	const char* GetName() const { return _name.c_str(); }
 	Iterator* EachFace();
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

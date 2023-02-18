@@ -1,5 +1,6 @@
 //==============================================================================
 // module-model_stl.cpp
+// Specification: https://en.wikipedia.org/wiki/STL_%28file_format%29
 //==============================================================================
 #include "stdafx.h"
 
@@ -8,26 +9,6 @@ Gurax_BeginModule(model_stl)
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
-// model.stl.Test()
-Gurax_DeclareFunction(Test)
-{
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Adds up the given two numbers and returns the result.
-)**");
-}
-
-Gurax_ImplementFunction(Test)
-{
-	// Arguments
-	ArgPicker args(argument);
-	const char* str = args.PickString();
-	Int num = args.PickNumber<Int>();
-	// Function body
-	return new Value_String(String::Repeat(str, num));
-}
 
 //------------------------------------------------------------------------------
 // Entries
@@ -43,7 +24,7 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_Face);
 	Assign(VTYPE_Solid);
 	// Assignment of function
-	Assign(Gurax_CreateFunction(Test));
+	//Assign(Gurax_CreateFunction(Test));
 	return true;
 }
 
