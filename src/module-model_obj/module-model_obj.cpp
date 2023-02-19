@@ -39,6 +39,10 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
+	// Assignment of VType
+	Assign(VTYPE_Content);
+	Assign(VTYPE_Face);
+	Assign(VTYPE_Vertex4);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));
 	return true;

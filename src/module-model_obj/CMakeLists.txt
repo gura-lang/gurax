@@ -36,7 +36,13 @@ target_compile_definitions(model.obj.gurd PRIVATE GURAX_MODULE_SEPARATED
 	$<$<PLATFORM_ID:Darwin>:>)
 target_sources(model.obj.gurd PRIVATE
 	module-model_obj.cpp
-	Util.cpp)
+	Util.cpp
+	Content.cpp
+	Face.cpp
+	Vertex4.cpp
+	VType_Content.cpp
+	VType_Face.cpp
+	VType_Vertex4.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
