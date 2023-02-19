@@ -100,7 +100,11 @@ public:
 protected:
 	~Content() = default;
 public:
-
+	const Vertex4* GetV(Index iV) const { return (0 < iV && iV < _vs.size() + 1)? _vs[iV - 1] : nullptr; }
+	const Vertex3* GetVp(Index iVp) const { return (0 < iVp && iVp < _vps.size() + 1)? _vps[iVp - 1] : nullptr; }
+	const Vertex3* GetVn(Index iVn) const { return (0 < iVn && iVn < _vns.size() + 1)? _vns[iVn - 1] : nullptr; }
+	const Vertex3* GetVt(Index iVt) const { return (0 < iVt && iVt < _vts.size() + 1)? _vts[iVt - 1] : nullptr; }
+	const Face* GetFace(Index iFace) const { return (iFace < _faces.size())? _faces[iFace] : nullptr; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Content& other) const { return this == &other; }

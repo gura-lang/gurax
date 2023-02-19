@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_FACE_H
 #define GURAX_MODULE_MODEL_OBJ_FACE_H
 #include <gurax.h>
+#include "Index.h"
 
 Gurax_BeginModuleScope(model_obj)
 

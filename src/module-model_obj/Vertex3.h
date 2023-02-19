@@ -16,9 +16,12 @@ public:
 	Gurax_DeclareReferable(Vertex3);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("model.obj.Vertex3");
+private:
+	Double _x, _y, _z;
 public:
 	// Constructor
-	Vertex3() {}
+	Vertex3() : _x(0), _y(0), _z(0) {}
+	Vertex3(Double x, Double y, Double z) : _x(x), _y(y), _z(z) {}
 	// Copy constructor/operator
 	Vertex3(const Vertex3& src) = delete;
 	Vertex3& operator=(const Vertex3& src) = delete;

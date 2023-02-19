@@ -4,8 +4,12 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_POINT_H
 #define GURAX_MODULE_MODEL_OBJ_POINT_H
 #include <gurax.h>
+#include "Index.h"
+#include "Vertex4.h"
 
 Gurax_BeginModuleScope(model_obj)
+
+class Content;
 
 //------------------------------------------------------------------------------
 // Point
@@ -16,9 +20,11 @@ public:
 	Gurax_DeclareReferable(Point);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("model.obj.Point");
+private:
+	IndexList _indexList;
 public:
 	// Constructor
-	Point() {}
+	Point() { _indexList.reserve(16); }
 	// Copy constructor/operator
 	Point(const Point& src) = delete;
 	Point& operator=(const Point& src) = delete;
@@ -27,6 +33,10 @@ public:
 	Point& operator=(Point&& src) noexcept = delete;
 protected:
 	~Point() = default;
+public:
+	void AddIndex(Index iV) { _indexList.push_back(iV); }
+	const IndexList& GetIndexList() const { return _indexList; }
+	const Vertex4* GetV(const Content& content, size_t iIndex) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Point& other) const { return this == &other; }
