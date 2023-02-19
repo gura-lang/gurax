@@ -35,6 +35,21 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
+//------------------------------------------------------------------------------
+// Vertex4List
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Vertex4List : public ListBase<Vertex4*> {
+};
+
+//------------------------------------------------------------------------------
+// Vertex4Owner
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Vertex4Owner : public Vertex4List {
+public:
+	~Vertex4Owner() { Clear(); }
+	void Clear();
+};
+
 Gurax_EndModuleScope(model_obj)
 
 #endif

@@ -1,28 +1,28 @@
 //==============================================================================
-// Face.cpp
+// Point.cpp
 //==============================================================================
 #include "stdafx.h"
 
 Gurax_BeginModuleScope(model_obj)
 
 //------------------------------------------------------------------------------
-// Face
+// Point
 //------------------------------------------------------------------------------
-String Face::ToString(const StringStyle& ss) const
+String Point::ToString(const StringStyle& ss) const
 {
-	return String().Format("model.obj.Face");
+	return String().Format("model.obj.Point");
 }
 
 //------------------------------------------------------------------------------
-// FaceList
+// PointList
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// FaceOwner
+// PointOwner
 //------------------------------------------------------------------------------
-void FaceOwner::Clear()
+void PointOwner::Clear()
 {
-	for (Face* pFace : *this) Face::Delete(pFace);
+	for (Point* pPoint : *this) Point::Delete(pPoint);
 	clear();
 }
 

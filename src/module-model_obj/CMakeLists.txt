@@ -39,9 +39,15 @@ target_sources(model.obj.gurd PRIVATE
 	Util.cpp
 	Content.cpp
 	Face.cpp
+	Line.cpp
+	Point.cpp
+	Vertex3.cpp
 	Vertex4.cpp
 	VType_Content.cpp
 	VType_Face.cpp
+	VType_Line.cpp
+	VType_Point.cpp
+	VType_Vertex3.cpp
 	VType_Vertex4.cpp)
 #-------------------------------------------------------------------------------
 # Link

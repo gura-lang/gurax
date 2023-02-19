@@ -1,28 +1,28 @@
 //==============================================================================
-// Face.cpp
+// Vertex3.cpp
 //==============================================================================
 #include "stdafx.h"
 
 Gurax_BeginModuleScope(model_obj)
 
 //------------------------------------------------------------------------------
-// Face
+// Vertex3
 //------------------------------------------------------------------------------
-String Face::ToString(const StringStyle& ss) const
+String Vertex3::ToString(const StringStyle& ss) const
 {
-	return String().Format("model.obj.Face");
+	return String().Format("model.obj.Vertex3");
 }
 
 //------------------------------------------------------------------------------
-// FaceList
+// Vertex3List
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// FaceOwner
+// Vertex3Owner
 //------------------------------------------------------------------------------
-void FaceOwner::Clear()
+void Vertex3Owner::Clear()
 {
-	for (Face* pFace : *this) Face::Delete(pFace);
+	for (Vertex3* pVertex3 : *this) Vertex3::Delete(pVertex3);
 	clear();
 }
 

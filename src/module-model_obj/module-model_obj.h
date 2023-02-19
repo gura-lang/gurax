@@ -7,6 +7,9 @@
 #include "Util.h"
 #include "VType_Content.h"
 #include "VType_Face.h"
+#include "VType_Line.h"
+#include "VType_Point.h"
+#include "VType_Vertex3.h"
 #include "VType_Vertex4.h"
 
 Gurax_BeginModuleHeader(model_obj)

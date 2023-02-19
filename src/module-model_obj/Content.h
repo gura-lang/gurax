@@ -33,6 +33,56 @@ public:
 		inline const char* GetField() const { return _field; }
 		inline size_t GetLineNo() const { return _iLine + 1; }
 	};
+	enum class Stat {
+		Keyword,
+		call,
+		csh,
+		v,
+		vt,
+		vn,
+		vp,
+		cstype,
+		deg,
+		bmat,
+		step,
+		p,
+		l,
+		f,
+		curv,
+		curv2,
+		surf,
+		parm,
+		trim,
+		hole,
+		scrv,
+		sp,
+		end,
+		con,
+		g,
+		s,
+		mg,
+		o,
+		beval,
+		c_interp,
+		d_interp,
+		lod,
+		usemap,
+		maplib,
+		usemtl,
+		mtllib,
+		shadow_obj,
+		trace_obj,
+		ctech,
+		stech,
+	};
+private:
+	//Vertex4Owner	_vs;
+	//Vertex3Owner	_vps;
+	//Vertex3Owner	_vns;
+	//Vertex3Owner	_vts;
+	//PointOwner		_points;
+	//LineOwner		_lines;
+	//FaceOwner		_faces;
 public:
 	// Constructor
 	Content() {}
@@ -44,6 +94,8 @@ public:
 	Content& operator=(Content&& src) noexcept = delete;
 protected:
 	~Content() = default;
+public:
+
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Content& other) const { return this == &other; }

@@ -1,52 +1,52 @@
 //==============================================================================
-// Face.h
+// Vertex3.h
 //==============================================================================
-#ifndef GURAX_MODULE_MODEL_OBJ_FACE_H
-#define GURAX_MODULE_MODEL_OBJ_FACE_H
+#ifndef GURAX_MODULE_MODEL_OBJ_VERTEX3_H
+#define GURAX_MODULE_MODEL_OBJ_VERTEX3_H
 #include <gurax.h>
 
 Gurax_BeginModuleScope(model_obj)
 
 //------------------------------------------------------------------------------
-// Face
+// Vertex3
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Face : public Referable {
+class GURAX_DLLDECLARE Vertex3 : public Referable {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Face);
+	Gurax_DeclareReferable(Vertex3);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("model.obj.Face");
+	Gurax_MemoryPoolAllocator("model.obj.Vertex3");
 public:
 	// Constructor
-	Face() {}
+	Vertex3() {}
 	// Copy constructor/operator
-	Face(const Face& src) = delete;
-	Face& operator=(const Face& src) = delete;
+	Vertex3(const Vertex3& src) = delete;
+	Vertex3& operator=(const Vertex3& src) = delete;
 	// Move constructor/operator
-	Face(Face&& src) noexcept = delete;
-	Face& operator=(Face&& src) noexcept = delete;
+	Vertex3(Vertex3&& src) noexcept = delete;
+	Vertex3& operator=(Vertex3&& src) noexcept = delete;
 protected:
-	~Face() = default;
+	~Vertex3() = default;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-	bool IsIdentical(const Face& other) const { return this == &other; }
-	bool IsEqualTo(const Face& other) const { return IsIdentical(other); }
-	bool IsLessThan(const Face& other) const { return this < &other; }
+	bool IsIdentical(const Vertex3& other) const { return this == &other; }
+	bool IsEqualTo(const Vertex3& other) const { return IsIdentical(other); }
+	bool IsLessThan(const Vertex3& other) const { return this < &other; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
 //------------------------------------------------------------------------------
-// FaceList
+// Vertex3List
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE FaceList : public ListBase<Face*> {
+class GURAX_DLLDECLARE Vertex3List : public ListBase<Vertex3*> {
 };
 
 //------------------------------------------------------------------------------
-// FaceOwner
+// Vertex3Owner
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE FaceOwner : public FaceList {
+class GURAX_DLLDECLARE Vertex3Owner : public Vertex3List {
 public:
-	~FaceOwner() { Clear(); }
+	~Vertex3Owner() { Clear(); }
 	void Clear();
 };
 

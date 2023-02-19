@@ -1,52 +1,52 @@
 //==============================================================================
-// Face.h
+// Point.h
 //==============================================================================
-#ifndef GURAX_MODULE_MODEL_OBJ_FACE_H
-#define GURAX_MODULE_MODEL_OBJ_FACE_H
+#ifndef GURAX_MODULE_MODEL_OBJ_POINT_H
+#define GURAX_MODULE_MODEL_OBJ_POINT_H
 #include <gurax.h>
 
 Gurax_BeginModuleScope(model_obj)
 
 //------------------------------------------------------------------------------
-// Face
+// Point
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Face : public Referable {
+class GURAX_DLLDECLARE Point : public Referable {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Face);
+	Gurax_DeclareReferable(Point);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("model.obj.Face");
+	Gurax_MemoryPoolAllocator("model.obj.Point");
 public:
 	// Constructor
-	Face() {}
+	Point() {}
 	// Copy constructor/operator
-	Face(const Face& src) = delete;
-	Face& operator=(const Face& src) = delete;
+	Point(const Point& src) = delete;
+	Point& operator=(const Point& src) = delete;
 	// Move constructor/operator
-	Face(Face&& src) noexcept = delete;
-	Face& operator=(Face&& src) noexcept = delete;
+	Point(Point&& src) noexcept = delete;
+	Point& operator=(Point&& src) noexcept = delete;
 protected:
-	~Face() = default;
+	~Point() = default;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-	bool IsIdentical(const Face& other) const { return this == &other; }
-	bool IsEqualTo(const Face& other) const { return IsIdentical(other); }
-	bool IsLessThan(const Face& other) const { return this < &other; }
+	bool IsIdentical(const Point& other) const { return this == &other; }
+	bool IsEqualTo(const Point& other) const { return IsIdentical(other); }
+	bool IsLessThan(const Point& other) const { return this < &other; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
 //------------------------------------------------------------------------------
-// FaceList
+// PointList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE FaceList : public ListBase<Face*> {
+class GURAX_DLLDECLARE PointList : public ListBase<Point*> {
 };
 
 //------------------------------------------------------------------------------
-// FaceOwner
+// PointOwner
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE FaceOwner : public FaceList {
+class GURAX_DLLDECLARE PointOwner : public PointList {
 public:
-	~FaceOwner() { Clear(); }
+	~PointOwner() { Clear(); }
 	void Clear();
 };
 
