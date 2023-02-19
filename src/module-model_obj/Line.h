@@ -25,7 +25,7 @@ private:
 	IndexPairList _indexPairList;
 public:
 	// Constructor
-	Line() {}
+	Line() { _indexPairList.reserve(16); }
 	// Copy constructor/operator
 	Line(const Line& src) = delete;
 	Line& operator=(const Line& src) = delete;

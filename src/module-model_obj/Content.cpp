@@ -8,6 +8,11 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Content
 //------------------------------------------------------------------------------
+bool Content::Read(Stream& stream)
+{
+	return false;
+}
+
 String Content::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Content");

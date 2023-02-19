@@ -8,6 +8,21 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Face
 //------------------------------------------------------------------------------
+const Vertex4* Face::GetV(const Content& content, size_t iIndexTriplet) const
+{
+	return (iIndexTriplet < _indexTripletList.size())? content.GetV(_indexTripletList[iIndexTriplet].iV) : nullptr;
+}
+
+const Vertex3* Face::GetVt(const Content& content, size_t iIndexTriplet) const
+{
+	return (iIndexTriplet < _indexTripletList.size())? content.GetVt(_indexTripletList[iIndexTriplet].iVt) : nullptr;
+}
+
+const Vertex3* Face::GetVn(const Content& content, size_t iIndexTriplet) const
+{
+	return (iIndexTriplet < _indexTripletList.size())? content.GetVn(_indexTripletList[iIndexTriplet].iVn) : nullptr;
+}
+
 String Face::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Face");

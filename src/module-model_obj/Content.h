@@ -100,6 +100,7 @@ public:
 protected:
 	~Content() = default;
 public:
+	bool Read(Stream& stream);
 	const Vertex4* GetV(Index iV) const { return (0 < iV && iV < _vs.size() + 1)? _vs[iV - 1] : nullptr; }
 	const Vertex3* GetVp(Index iVp) const { return (0 < iVp && iVp < _vps.size() + 1)? _vps[iVp - 1] : nullptr; }
 	const Vertex3* GetVn(Index iVn) const { return (0 < iVn && iVn < _vns.size() + 1)? _vns[iVn - 1] : nullptr; }
