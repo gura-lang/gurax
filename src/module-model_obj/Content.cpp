@@ -18,6 +18,7 @@ bool Content::Read(Stream& stream)
 	for (;;) {
 		TokenId tokenId = tokenizer.Tokenize(stream);
 		const char* field = tokenizer.GetField();
+		::printf("%s\n", field);
 		switch (stat) {
 		case Stat::Keyword: {
 			if (tokenId == TokenId::Field) {
@@ -806,6 +807,7 @@ Content::TokenId Content::Tokenizer::Tokenize(Stream& stream)
 		int chRaw = stream.GetChar();
 		if (Error::IsIssued()) break;
 		char ch = (chRaw < 0)? '\0' : static_cast<char>(static_cast<UChar>(chRaw));
+		::printf("%d %02x\n", _stat, ch);
 		if (ch == '\\' && !escapeFlag) {
 			escapeFlag = true;
 			continue;
@@ -853,7 +855,7 @@ Content::TokenId Content::Tokenizer::Tokenize(Stream& stream)
 				return TokenId::Field;
 			} else if (ch == '\0') {
 				_tokenIdPending = TokenId::EndOfFile;
-				_stat = Stat::FileEnd;
+				_stat = Stat::EndOfFile;
 				_field[_iChar] = '\0';
 				return TokenId::Field;
 			} else {
@@ -884,7 +886,7 @@ Content::TokenId Content::Tokenizer::Tokenize(Stream& stream)
 			}
 			break;
 		}
-		case Stat::FileEnd: {
+		case Stat::EndOfFile: {
 			// nothing to do
 			break;
 		}

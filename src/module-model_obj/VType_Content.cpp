@@ -27,10 +27,11 @@ ${help.ComposeMethodHelp(model.obj.Content, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// model.obj.Content() {block?}
+// model.obj.Content(stream as Stream) {block?}
 Gurax_DeclareConstructor(Content)
 {
 	Declare(VTYPE_Content, Flag::None);
+	DeclareArg("stream", VTYPE_Stream, DeclArg::Occur::Once, DeclArg::Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `model.obj.Content` instance.
@@ -40,9 +41,11 @@ Creates a `model.obj.Content` instance.
 Gurax_ImplementConstructor(Content)
 {
 	// Arguments
-	//ArgPicker args(argument);
+	ArgPicker args(argument);
+	Stream& stream = args.PickStream();
 	// Function body
 	RefPtr<Content> pContent(new Content());
+	if (!pContent->Read(stream)) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Content(pContent.release()));
 }
 

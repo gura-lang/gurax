@@ -25,7 +25,7 @@ public:
 	enum class TokenId { None, EndOfLine, EndOfFile, Field, };
 	class Tokenizer {
 	public:
-		enum class Stat { LineTop, SkipToNextLine, Field, SkipWhite, FileEnd, };
+		enum class Stat { LineTop, SkipToNextLine, Field, SkipWhite, EndOfFile, };
 	private:
 		Stat _stat;
 		size_t _iLine;
@@ -33,10 +33,12 @@ public:
 		char _field[128];
 		TokenId _tokenIdPending;
 	public:
-		Tokenizer() : _stat(Stat::LineTop), _iLine(0), _iChar(0), _tokenIdPending(TokenId::None) {}
+		Tokenizer() : _stat(Stat::LineTop), _iLine(0), _iChar(0), _tokenIdPending(TokenId::None) {
+			_field[0] = '\0';
+		}
 		TokenId Tokenize(Stream& stream);
-		inline const char* GetField() const { return _field; }
-		inline size_t GetLineNo() const { return _iLine + 1; }
+		const char* GetField() const { return _field; }
+		size_t GetLineNo() const { return _iLine + 1; }
 	};
 	enum class Stat {
 		Keyword,
