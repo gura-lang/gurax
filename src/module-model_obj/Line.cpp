@@ -13,4 +13,17 @@ String Line::ToString(const StringStyle& ss) const
 	return String().Format("model.obj.Line");
 }
 
+//------------------------------------------------------------------------------
+// LineList
+//------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+// LineOwner
+//------------------------------------------------------------------------------
+void LineOwner::Clear()
+{
+	for (Line* pLine : *this) Line::Delete(pLine);
+	clear();
+}
+
 Gurax_EndModuleScope(model_obj)

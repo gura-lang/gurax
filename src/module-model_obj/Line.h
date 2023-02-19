@@ -35,6 +35,21 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
+//------------------------------------------------------------------------------
+// LineList
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE LineList : public ListBase<Line*> {
+};
+
+//------------------------------------------------------------------------------
+// LineOwner
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE LineOwner : public LineList {
+public:
+	~LineOwner() { Clear(); }
+	void Clear();
+};
+
 Gurax_EndModuleScope(model_obj)
 
 #endif

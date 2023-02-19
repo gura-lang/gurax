@@ -4,6 +4,11 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_CONTENT_H
 #define GURAX_MODULE_MODEL_OBJ_CONTENT_H
 #include <gurax.h>
+#include "Face.h"
+#include "Line.h"
+#include "Point.h"
+#include "Vertex3.h"
+#include "Vertex4.h"
 
 Gurax_BeginModuleScope(model_obj)
 
@@ -76,13 +81,13 @@ public:
 		stech,
 	};
 private:
-	//Vertex4Owner	_vs;
-	//Vertex3Owner	_vps;
-	//Vertex3Owner	_vns;
-	//Vertex3Owner	_vts;
-	//PointOwner		_points;
-	//LineOwner		_lines;
-	//FaceOwner		_faces;
+	Vertex4Owner	_vs;
+	Vertex3Owner	_vps;
+	Vertex3Owner	_vns;
+	Vertex3Owner	_vts;
+	PointOwner		_points;
+	LineOwner		_lines;
+	FaceOwner		_faces;
 public:
 	// Constructor
 	Content() {}
