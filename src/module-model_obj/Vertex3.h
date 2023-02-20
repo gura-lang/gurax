@@ -31,6 +31,10 @@ public:
 protected:
 	~Vertex3() = default;
 public:
+	Double GetX() const { return _x; }
+	Double GetY() const { return _y; }
+	Double GetZ() const { return _z; }
+public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Vertex3& other) const { return this == &other; }
 	bool IsEqualTo(const Vertex3& other) const { return IsIdentical(other); }

@@ -24,52 +24,53 @@ ${help.ComposeConstructorHelp(model.obj.Line, `en)}
 ${help.ComposeMethodHelp(model.obj.Line, `en)}
 )**";
 
-//------------------------------------------------------------------------------
-// Implementation of constructor
-//------------------------------------------------------------------------------
-// model.obj.Line() {block?}
-Gurax_DeclareConstructor(Line)
-{
-	Declare(VTYPE_Line, Flag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates a `model.obj.Line` instance.
-)**");
-}
-
-Gurax_ImplementConstructor(Line)
-{
-	// Arguments
-	//ArgPicker args(argument);
-	// Function body
-	RefPtr<Line> pLine(new Line());
-	return argument.ReturnValue(processor, new Value_Line(pLine.release()));
-}
-
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// model.obj.Line#MethodSkeleton(num1 as Number, num2 as Number)
-Gurax_DeclareMethod(Line, MethodSkeleton)
+// model.obj.Line#GetV(idx as Number)
+Gurax_DeclareMethod(Line, GetV)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
 
-Gurax_ImplementMethod(Line, MethodSkeleton)
+Gurax_ImplementMethod(Line, GetV)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
+	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	int iIndex = args.PickNumber<int>();
 	// Function body
-	return new Value_Number(num1 + num2);
+	const Vertex4* pV = valueThis.GetLine().GetV(valueThis.GetContent(), iIndex);
+	if (pV) return new Value_Vertex4(pV->Reference());
+	return Value::nil();
+}
+
+// model.obj.Line#GetVt(idx as Number)
+Gurax_DeclareMethod(Line, GetVt)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(Gurax_Symbol(en), u8R"**(
+Skeleton.
+)**");
+}
+
+Gurax_ImplementMethod(Line, GetVt)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	int iIndex = args.PickNumber<int>();
+	// Function body
+	const Vertex3* pVt = valueThis.GetLine().GetVt(valueThis.GetContent(), iIndex);
+	if (pVt) return new Value_Vertex3(pVt->Reference());
+	return Value::nil();
 }
 
 //-----------------------------------------------------------------------------
@@ -100,9 +101,10 @@ void VType_Line::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Line));
+	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Line, MethodSkeleton));
+	Assign(Gurax_CreateMethod(Line, GetV));
+	Assign(Gurax_CreateMethod(Line, GetVt));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Line, propSkeleton));
 }

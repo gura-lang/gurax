@@ -24,52 +24,76 @@ ${help.ComposeConstructorHelp(model.obj.Face, `en)}
 ${help.ComposeMethodHelp(model.obj.Face, `en)}
 )**";
 
-//------------------------------------------------------------------------------
-// Implementation of constructor
-//------------------------------------------------------------------------------
-// model.obj.Face() {block?}
-Gurax_DeclareConstructor(Face)
-{
-	Declare(VTYPE_Face, Flag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates a `model.obj.Face` instance.
-)**");
-}
-
-Gurax_ImplementConstructor(Face)
-{
-	// Arguments
-	//ArgPicker args(argument);
-	// Function body
-	RefPtr<Face> pFace(new Face());
-	return argument.ReturnValue(processor, new Value_Face(pFace.release()));
-}
-
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// model.obj.Face#MethodSkeleton(num1 as Number, num2 as Number)
-Gurax_DeclareMethod(Face, MethodSkeleton)
+// model.obj.Face#GetV(idx as Number)
+Gurax_DeclareMethod(Face, GetV)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
 
-Gurax_ImplementMethod(Face, MethodSkeleton)
+Gurax_ImplementMethod(Face, GetV)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
+	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	int iIndex = args.PickNumber<int>();
 	// Function body
-	return new Value_Number(num1 + num2);
+	const Vertex4* pV = valueThis.GetFace().GetV(valueThis.GetContent(), iIndex);
+	if (pV) return new Value_Vertex4(pV->Reference());
+	return Value::nil();
+}
+
+// model.obj.Face#GetVt(idx as Number)
+Gurax_DeclareMethod(Face, GetVt)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(Gurax_Symbol(en), u8R"**(
+Skeleton.
+)**");
+}
+
+Gurax_ImplementMethod(Face, GetVt)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	int iIndex = args.PickNumber<int>();
+	// Function body
+	const Vertex3* pVt = valueThis.GetFace().GetVt(valueThis.GetContent(), iIndex);
+	if (pVt) return new Value_Vertex3(pVt->Reference());
+	return Value::nil();
+}
+
+// model.obj.Face#GetVn(idx as Number)
+Gurax_DeclareMethod(Face, GetVn)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(Gurax_Symbol(en), u8R"**(
+Skeleton.
+)**");
+}
+
+Gurax_ImplementMethod(Face, GetVn)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	int iIndex = args.PickNumber<int>();
+	// Function body
+	const Vertex3* pVn = valueThis.GetFace().GetVn(valueThis.GetContent(), iIndex);
+	if (pVn) return new Value_Vertex3(pVn->Reference());
+	return Value::nil();
 }
 
 //-----------------------------------------------------------------------------
@@ -100,9 +124,11 @@ void VType_Face::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Face));
+	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Face, MethodSkeleton));
+	Assign(Gurax_CreateMethod(Face, GetV));
+	Assign(Gurax_CreateMethod(Face, GetVt));
+	Assign(Gurax_CreateMethod(Face, GetVn));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Face, propSkeleton));
 }

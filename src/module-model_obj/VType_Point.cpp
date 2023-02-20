@@ -24,52 +24,30 @@ ${help.ComposeConstructorHelp(model.obj.Point, `en)}
 ${help.ComposeMethodHelp(model.obj.Point, `en)}
 )**";
 
-//------------------------------------------------------------------------------
-// Implementation of constructor
-//------------------------------------------------------------------------------
-// model.obj.Point() {block?}
-Gurax_DeclareConstructor(Point)
-{
-	Declare(VTYPE_Point, Flag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates a `model.obj.Point` instance.
-)**");
-}
-
-Gurax_ImplementConstructor(Point)
-{
-	// Arguments
-	//ArgPicker args(argument);
-	// Function body
-	RefPtr<Point> pPoint(new Point());
-	return argument.ReturnValue(processor, new Value_Point(pPoint.release()));
-}
-
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// model.obj.Point#MethodSkeleton(num1 as Number, num2 as Number)
-Gurax_DeclareMethod(Point, MethodSkeleton)
+// model.obj.Point#GetV(idx as Number)
+Gurax_DeclareMethod(Point, GetV)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
 
-Gurax_ImplementMethod(Point, MethodSkeleton)
+Gurax_ImplementMethod(Point, GetV)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
+	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	int iIndex = args.PickNumber<int>();
 	// Function body
-	return new Value_Number(num1 + num2);
+	const Vertex4* pV = valueThis.GetPoint().GetV(valueThis.GetContent(), iIndex);
+	if (pV) return new Value_Vertex4(pV->Reference());
+	return Value::nil();
 }
 
 //-----------------------------------------------------------------------------
@@ -100,9 +78,9 @@ void VType_Point::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Point));
+	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Point, MethodSkeleton));
+	Assign(Gurax_CreateMethod(Point, GetV));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Point, propSkeleton));
 }

@@ -75,8 +75,8 @@ Gurax_ImplementMethod(Vertex4, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// model.obj.Vertex4#propSkeleton
-Gurax_DeclareProperty_R(Vertex4, propSkeleton)
+// model.obj.Vertex4#x
+Gurax_DeclareProperty_R(Vertex4, x)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
@@ -84,10 +84,55 @@ Skeleton.
 )**");
 }
 
-Gurax_ImplementPropertyGetter(Vertex4, propSkeleton)
+Gurax_ImplementPropertyGetter(Vertex4, x)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetVertex4().GetX());
+}
+
+// model.obj.Vertex4#y
+Gurax_DeclareProperty_R(Vertex4, y)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"**(
+Skeleton.
+)**");
+}
+
+Gurax_ImplementPropertyGetter(Vertex4, y)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetVertex4().GetY());
+}
+
+// model.obj.Vertex4#z
+Gurax_DeclareProperty_R(Vertex4, z)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"**(
+Skeleton.
+)**");
+}
+
+Gurax_ImplementPropertyGetter(Vertex4, z)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetVertex4().GetZ());
+}
+
+// model.obj.Vertex4#w
+Gurax_DeclareProperty_R(Vertex4, w)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"**(
+Skeleton.
+)**");
+}
+
+Gurax_ImplementPropertyGetter(Vertex4, w)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetVertex4().GetW());
 }
 
 //------------------------------------------------------------------------------
@@ -104,7 +149,10 @@ void VType_Vertex4::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Vertex4, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Vertex4, propSkeleton));
+	Assign(Gurax_CreateProperty(Vertex4, x));
+	Assign(Gurax_CreateProperty(Vertex4, y));
+	Assign(Gurax_CreateProperty(Vertex4, z));
+	Assign(Gurax_CreateProperty(Vertex4, w));
 }
 
 //------------------------------------------------------------------------------

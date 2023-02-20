@@ -75,8 +75,8 @@ Gurax_ImplementMethod(Vertex3, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// model.obj.Vertex3#propSkeleton
-Gurax_DeclareProperty_R(Vertex3, propSkeleton)
+// model.obj.Vertex3#x
+Gurax_DeclareProperty_R(Vertex3, x)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
@@ -84,10 +84,40 @@ Skeleton.
 )**");
 }
 
-Gurax_ImplementPropertyGetter(Vertex3, propSkeleton)
+Gurax_ImplementPropertyGetter(Vertex3, x)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetVertex3().GetX());
+}
+
+// model.obj.Vertex3#y
+Gurax_DeclareProperty_R(Vertex3, y)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"**(
+Skeleton.
+)**");
+}
+
+Gurax_ImplementPropertyGetter(Vertex3, y)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetVertex3().GetY());
+}
+
+// model.obj.Vertex3#z
+Gurax_DeclareProperty_R(Vertex3, z)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"**(
+Skeleton.
+)**");
+}
+
+Gurax_ImplementPropertyGetter(Vertex3, z)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetVertex3().GetZ());
 }
 
 //------------------------------------------------------------------------------
@@ -104,7 +134,9 @@ void VType_Vertex3::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Vertex3, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Vertex3, propSkeleton));
+	Assign(Gurax_CreateProperty(Vertex3, x));
+	Assign(Gurax_CreateProperty(Vertex3, y));
+	Assign(Gurax_CreateProperty(Vertex3, z));
 }
 
 //------------------------------------------------------------------------------

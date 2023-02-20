@@ -5,6 +5,7 @@
 #define GURAX_MODULE_MODEL_OBJ_VTYPE_LINE_H
 #include <gurax.h>
 #include "Line.h"
+#include "Content.h"
 
 Gurax_BeginModuleScope(model_obj)
 
@@ -29,14 +30,15 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Line");
 protected:
+	RefPtr<Content> _pContent;
 	RefPtr<Line> _pLine;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_Line() = delete;
-	explicit Value_Line(Line* pLine, VType& vtype = VTYPE_Line) :
-		Value_Object(vtype), _pLine(pLine) {}
+	Value_Line(Content* pContent, Line* pLine, VType& vtype = VTYPE_Line) :
+		Value_Object(vtype), _pContent(pContent), _pLine(pLine) {}
 	// Copy constructor/operator
 	Value_Line(const Value_Line& src) :
 		Value_Object(src), _pLine(src._pLine->Reference()) {}
@@ -48,6 +50,7 @@ protected:
 	// Destructor
 	~Value_Line() = default;
 public:
+	const Content& GetContent() const { return *_pContent; }
 	Line& GetLine() { return *_pLine; }
 	const Line& GetLine() const { return *_pLine; }
 public:

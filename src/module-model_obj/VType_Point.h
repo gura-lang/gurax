@@ -5,6 +5,7 @@
 #define GURAX_MODULE_MODEL_OBJ_VTYPE_POINT_H
 #include <gurax.h>
 #include "Point.h"
+#include "Content.h"
 
 Gurax_BeginModuleScope(model_obj)
 
@@ -29,14 +30,15 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Point");
 protected:
+	RefPtr<Content> _pContent;
 	RefPtr<Point> _pPoint;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_Point() = delete;
-	explicit Value_Point(Point* pPoint, VType& vtype = VTYPE_Point) :
-		Value_Object(vtype), _pPoint(pPoint) {}
+	Value_Point(Content* pContent, Point* pPoint, VType& vtype = VTYPE_Point) :
+		Value_Object(vtype), _pContent(pContent), _pPoint(pPoint) {}
 	// Copy constructor/operator
 	Value_Point(const Value_Point& src) :
 		Value_Object(src), _pPoint(src._pPoint->Reference()) {}
@@ -48,6 +50,7 @@ protected:
 	// Destructor
 	~Value_Point() = default;
 public:
+	const Content& GetContent() const { return *_pContent; }
 	Point& GetPoint() { return *_pPoint; }
 	const Point& GetPoint() const { return *_pPoint; }
 public:

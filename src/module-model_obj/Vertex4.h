@@ -31,6 +31,11 @@ public:
 protected:
 	~Vertex4() = default;
 public:
+	Double GetX() const { return _x; }
+	Double GetY() const { return _y; }
+	Double GetZ() const { return _z; }
+	Double GetW() const { return _w; }
+public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Vertex4& other) const { return this == &other; }
 	bool IsEqualTo(const Vertex4& other) const { return IsIdentical(other); }

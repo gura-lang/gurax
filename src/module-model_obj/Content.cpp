@@ -902,7 +902,7 @@ Content::TokenId Content::Tokenizer::Tokenize(Stream& stream)
 Value* Iterator_EachPoint::DoNextValue()
 {
 	if (_idx >= GetPoints().size()) return nullptr;
-	return new Value_Point(_pContent->GetPoints()[_idx++]->Reference());
+	return new Value_Point(_pContent->Reference(), _pContent->GetPoints()[_idx++]->Reference());
 }
 
 String Iterator_EachPoint::ToString(const StringStyle& ss) const
@@ -916,7 +916,7 @@ String Iterator_EachPoint::ToString(const StringStyle& ss) const
 Value* Iterator_EachLine::DoNextValue()
 {
 	if (_idx >= GetLines().size()) return nullptr;
-	return new Value_Line(_pContent->GetLines()[_idx++]->Reference());
+	return new Value_Line(_pContent->Reference(), _pContent->GetLines()[_idx++]->Reference());
 }
 
 String Iterator_EachLine::ToString(const StringStyle& ss) const
@@ -930,7 +930,7 @@ String Iterator_EachLine::ToString(const StringStyle& ss) const
 Value* Iterator_EachFace::DoNextValue()
 {
 	if (_idx >= GetFaces().size()) return nullptr;
-	return new Value_Face(_pContent->GetFaces()[_idx++]->Reference());
+	return new Value_Face(_pContent->Reference(), _pContent->GetFaces()[_idx++]->Reference());
 }
 
 String Iterator_EachFace::ToString(const StringStyle& ss) const

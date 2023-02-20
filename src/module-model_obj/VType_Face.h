@@ -5,6 +5,7 @@
 #define GURAX_MODULE_MODEL_OBJ_VTYPE_FACE_H
 #include <gurax.h>
 #include "Face.h"
+#include "Content.h"
 
 Gurax_BeginModuleScope(model_obj)
 
@@ -29,14 +30,15 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Face");
 protected:
+	RefPtr<Content> _pContent;
 	RefPtr<Face> _pFace;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_Face() = delete;
-	explicit Value_Face(Face* pFace, VType& vtype = VTYPE_Face) :
-		Value_Object(vtype), _pFace(pFace) {}
+	Value_Face(Content* pContent, Face* pFace, VType& vtype = VTYPE_Face) :
+		Value_Object(vtype), _pContent(pContent), _pFace(pFace) {}
 	// Copy constructor/operator
 	Value_Face(const Value_Face& src) :
 		Value_Object(src), _pFace(src._pFace->Reference()) {}
@@ -48,6 +50,7 @@ protected:
 	// Destructor
 	~Value_Face() = default;
 public:
+	const Content& GetContent() const { return *_pContent; }
 	Face& GetFace() { return *_pFace; }
 	const Face& GetFace() const { return *_pFace; }
 public:
