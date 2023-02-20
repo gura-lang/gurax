@@ -111,13 +111,81 @@ public:
 	const Vertex3* GetVp(Index iVp) const { return (0 < iVp && iVp < _vps.size() + 1)? _vps[iVp - 1] : nullptr; }
 	const Vertex3* GetVn(Index iVn) const { return (0 < iVn && iVn < _vns.size() + 1)? _vns[iVn - 1] : nullptr; }
 	const Vertex3* GetVt(Index iVt) const { return (0 < iVt && iVt < _vts.size() + 1)? _vts[iVt - 1] : nullptr; }
-	const Face* GetFace(Index iFace) const { return (iFace < _faces.size())? _faces[iFace] : nullptr; }
+	const PointOwner& GetPoints() const { return _points; }
+	const LineOwner& GetLines() const { return _lines; }
+	const FaceOwner& GetFaces() const { return _faces; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Content& other) const { return this == &other; }
 	bool IsEqualTo(const Content& other) const { return IsIdentical(other); }
 	bool IsLessThan(const Content& other) const { return this < &other; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
+};
+
+//------------------------------------------------------------------------------
+// Iterator_EachPoint
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_EachPoint : public Iterator {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Iterator_EachPoint");
+private:
+	RefPtr<Content> _pContent;
+	size_t _idx;
+public:
+	Iterator_EachPoint(Content* pContent) : _pContent(pContent), _idx(0) {}
+public:
+	const PointOwner& GetPoints() const { return _pContent->GetPoints(); }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+	virtual size_t GetLength() const override { return GetPoints().size(); }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// Iterator_EachLine
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_EachLine : public Iterator {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Iterator_EachLine");
+private:
+	RefPtr<Content> _pContent;
+	size_t _idx;
+public:
+	Iterator_EachLine(Content* pContent) : _pContent(pContent), _idx(0) {}
+public:
+	const LineOwner& GetLines() const { return _pContent->GetLines(); }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+	virtual size_t GetLength() const override { return GetLines().size(); }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// Iterator_EachFace
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_EachFace : public Iterator {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Iterator_EachFace");
+private:
+	RefPtr<Content> _pContent;
+	size_t _idx;
+public:
+	Iterator_EachFace(Content* pContent) : _pContent(pContent), _idx(0) {}
+public:
+	const FaceOwner& GetFaces() const { return _pContent->GetFaces(); }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+	virtual size_t GetLength() const override { return GetFaces().size(); }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 Gurax_EndModuleScope(model_obj)

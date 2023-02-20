@@ -18,7 +18,6 @@ bool Content::Read(Stream& stream)
 	for (;;) {
 		TokenId tokenId = tokenizer.Tokenize(stream);
 		const char* field = tokenizer.GetField();
-		::printf("%s\n", field);
 		switch (stat) {
 		case Stat::Keyword: {
 			if (tokenId == TokenId::Field) {
@@ -788,7 +787,7 @@ bool Content::ExtractIndexTriplet(const Tokenizer& tokenizer, const char* field,
 
 String Content::ToString(const StringStyle& ss) const
 {
-	return String().Format("model.obj.Content");
+	return String().Format("model.obj.Content:%zupoints:%zulines:%zufaces", _points.size(), _lines.size(), _faces.size());
 }
 
 //------------------------------------------------------------------------------
@@ -804,10 +803,8 @@ Content::TokenId Content::Tokenizer::Tokenize(Stream& stream)
 	}
 	bool escapeFlag = false;
 	for (;;) {
-		int chRaw = stream.GetChar();
+		char ch = stream.GetChar();
 		if (Error::IsIssued()) break;
-		char ch = (chRaw < 0)? '\0' : static_cast<char>(static_cast<UChar>(chRaw));
-		::printf("%d %02x\n", _stat, ch);
 		if (ch == '\\' && !escapeFlag) {
 			escapeFlag = true;
 			continue;
@@ -897,6 +894,48 @@ Content::TokenId Content::Tokenizer::Tokenize(Stream& stream)
 		if (ch == '\n') _iLine++;
 	}
 	return TokenId::EndOfFile;
+}
+
+//------------------------------------------------------------------------------
+// Iterator_EachPoint
+//------------------------------------------------------------------------------
+Value* Iterator_EachPoint::DoNextValue()
+{
+	if (_idx >= GetPoints().size()) return nullptr;
+	return new Value_Point(_pContent->GetPoints()[_idx++]->Reference());
+}
+
+String Iterator_EachPoint::ToString(const StringStyle& ss) const
+{
+	return String().Format("model.obj.EachPoint");
+}
+
+//------------------------------------------------------------------------------
+// Iterator_EachLine
+//------------------------------------------------------------------------------
+Value* Iterator_EachLine::DoNextValue()
+{
+	if (_idx >= GetLines().size()) return nullptr;
+	return new Value_Line(_pContent->GetLines()[_idx++]->Reference());
+}
+
+String Iterator_EachLine::ToString(const StringStyle& ss) const
+{
+	return String().Format("model.obj.EachLine");
+}
+
+//------------------------------------------------------------------------------
+// Iterator_EachFace
+//------------------------------------------------------------------------------
+Value* Iterator_EachFace::DoNextValue()
+{
+	if (_idx >= GetFaces().size()) return nullptr;
+	return new Value_Face(_pContent->GetFaces()[_idx++]->Reference());
+}
+
+String Iterator_EachFace::ToString(const StringStyle& ss) const
+{
+	return String().Format("model.obj.EachFace");
 }
 
 Gurax_EndModuleScope(model_obj)

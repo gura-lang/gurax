@@ -52,27 +52,58 @@ Gurax_ImplementConstructor(Content)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// model.obj.Content#MethodSkeleton(num1 as Number, num2 as Number)
-Gurax_DeclareMethod(Content, MethodSkeleton)
+// model.obj.Content#EachPoint()
+Gurax_DeclareMethod(Content, EachPoint)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
 
-Gurax_ImplementMethod(Content, MethodSkeleton)
+Gurax_ImplementMethod(Content, EachPoint)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	auto& valueThis = GetValueThis(argument);
 	// Function body
-	return new Value_Number(num1 + num2);
+	RefPtr<Iterator> pIterator(new Iterator_EachPoint(valueThis.GetContent().Reference()));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
+// model.obj.Content#EachLine()
+Gurax_DeclareMethod(Content, EachLine)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"**(
+Skeleton.
+)**");
+}
+
+Gurax_ImplementMethod(Content, EachLine)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	RefPtr<Iterator> pIterator(new Iterator_EachLine(valueThis.GetContent().Reference()));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
+// model.obj.Content#EachFace()
+Gurax_DeclareMethod(Content, EachFace)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"**(
+Skeleton.
+)**");
+}
+
+Gurax_ImplementMethod(Content, EachFace)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	RefPtr<Iterator> pIterator(new Iterator_EachFace(valueThis.GetContent().Reference()));
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 //-----------------------------------------------------------------------------
@@ -105,7 +136,9 @@ void VType_Content::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Content));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Content, MethodSkeleton));
+	Assign(Gurax_CreateMethod(Content, EachPoint));
+	Assign(Gurax_CreateMethod(Content, EachLine));
+	Assign(Gurax_CreateMethod(Content, EachFace));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Content, propSkeleton));
 }
