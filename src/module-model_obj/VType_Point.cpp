@@ -53,8 +53,8 @@ Gurax_ImplementMethod(Point, GetV)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// model.obj.Point#propSkeleton
-Gurax_DeclareProperty_R(Point, propSkeleton)
+// model.obj.Point#nElements
+Gurax_DeclareProperty_R(Point, nElements)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
@@ -62,10 +62,10 @@ Skeleton.
 )**");
 }
 
-Gurax_ImplementPropertyGetter(Point, propSkeleton)
+Gurax_ImplementPropertyGetter(Point, nElements)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetPoint().GetIndexList().size());
 }
 
 //------------------------------------------------------------------------------
@@ -82,7 +82,7 @@ void VType_Point::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Point, GetV));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Point, propSkeleton));
+	Assign(Gurax_CreateProperty(Point, nElements));
 }
 
 //------------------------------------------------------------------------------

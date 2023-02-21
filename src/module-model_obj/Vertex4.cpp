@@ -10,7 +10,7 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 String Vertex4::ToString(const StringStyle& ss) const
 {
-	return String().Format("model.obj.Vertex4");
+	return String().Format("model.obj.Vertex4:%g,%g,%g,%g", _x, _y, _z, _w);
 }
 
 //------------------------------------------------------------------------------

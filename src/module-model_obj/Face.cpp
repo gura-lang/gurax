@@ -25,7 +25,7 @@ const Vertex3* Face::GetVn(const Content& content, size_t iIndexTriplet) const
 
 String Face::ToString(const StringStyle& ss) const
 {
-	return String().Format("model.obj.Face");
+	return String().Format("model.obj.Face:%zuelements", _indexTripletList.size());
 }
 
 //------------------------------------------------------------------------------

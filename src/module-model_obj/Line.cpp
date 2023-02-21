@@ -20,7 +20,7 @@ const Vertex3* Line::GetVt(const Content& content, size_t iIndexPair) const
 
 String Line::ToString(const StringStyle& ss) const
 {
-	return String().Format("model.obj.Line");
+	return String().Format("model.obj.Line:%zuelements", _indexPairList.size());
 }
 
 //------------------------------------------------------------------------------

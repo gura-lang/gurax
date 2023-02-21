@@ -52,10 +52,11 @@ Gurax_ImplementConstructor(Content)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// model.obj.Content#EachPoint()
+// model.obj.Content#EachPoint() {block?}
 Gurax_DeclareMethod(Content, EachPoint)
 {
 	Declare(VTYPE_Number, Flag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
@@ -70,10 +71,11 @@ Gurax_ImplementMethod(Content, EachPoint)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// model.obj.Content#EachLine()
+// model.obj.Content#EachLine() {block?}
 Gurax_DeclareMethod(Content, EachLine)
 {
 	Declare(VTYPE_Number, Flag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
@@ -88,10 +90,11 @@ Gurax_ImplementMethod(Content, EachLine)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// model.obj.Content#EachFace()
+// model.obj.Content#EachFace() {block?}
 Gurax_DeclareMethod(Content, EachFace)
 {
 	Declare(VTYPE_Number, Flag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");

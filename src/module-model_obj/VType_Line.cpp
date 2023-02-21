@@ -76,8 +76,8 @@ Gurax_ImplementMethod(Line, GetVt)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// model.obj.Line#propSkeleton
-Gurax_DeclareProperty_R(Line, propSkeleton)
+// model.obj.Line#nElements
+Gurax_DeclareProperty_R(Line, nElements)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
@@ -85,10 +85,10 @@ Skeleton.
 )**");
 }
 
-Gurax_ImplementPropertyGetter(Line, propSkeleton)
+Gurax_ImplementPropertyGetter(Line, nElements)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetLine().GetIndexPairList().size());
 }
 
 //------------------------------------------------------------------------------
@@ -106,7 +106,7 @@ void VType_Line::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Line, GetV));
 	Assign(Gurax_CreateMethod(Line, GetVt));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Line, propSkeleton));
+	Assign(Gurax_CreateProperty(Line, nElements));
 }
 
 //------------------------------------------------------------------------------

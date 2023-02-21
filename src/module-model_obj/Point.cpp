@@ -15,7 +15,7 @@ const Vertex4* Point::GetV(const Content& content, size_t iIndex) const
 
 String Point::ToString(const StringStyle& ss) const
 {
-	return String().Format("model.obj.Point");
+	return String().Format("model.obj.Point:%zuelements", _indexList.size());
 }
 
 //------------------------------------------------------------------------------

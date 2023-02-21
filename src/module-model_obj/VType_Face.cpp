@@ -99,8 +99,8 @@ Gurax_ImplementMethod(Face, GetVn)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// model.obj.Face#propSkeleton
-Gurax_DeclareProperty_R(Face, propSkeleton)
+// model.obj.Face#nElements
+Gurax_DeclareProperty_R(Face, nElements)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
@@ -108,10 +108,10 @@ Skeleton.
 )**");
 }
 
-Gurax_ImplementPropertyGetter(Face, propSkeleton)
+Gurax_ImplementPropertyGetter(Face, nElements)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetFace().GetIndexTripletList().size());
 }
 
 //------------------------------------------------------------------------------
@@ -130,7 +130,7 @@ void VType_Face::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Face, GetVt));
 	Assign(Gurax_CreateMethod(Face, GetVn));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Face, propSkeleton));
+	Assign(Gurax_CreateProperty(Face, nElements));
 }
 
 //------------------------------------------------------------------------------
