@@ -18,7 +18,6 @@ AppMain = class(wx.App) {
 }
 
 FrameMain = class(wx.Frame) {
-	canvas as Canvas
 	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
 		PanelTop(this)
 	}
@@ -107,7 +106,7 @@ Canvas = class(wx.GLCanvas) {
 	pack as Pack
 	posStart as wx.Point
 	posCur as wx.Point
-	__init__(parent as wx.Window) = {|parent, wx.ID_ANY, size = wx.Size(400, 300), style = wx.BORDER_SUNKEN|
+	__init__(parent as wx.Window) = {|parent, wx.ID_ANY, style = wx.BORDER_SUNKEN|
 		this.posCur = wx.Point(0, 0)
 		this.Bind(wx.EVT_SIZE, this.OnSize)
 		this.Bind(wx.EVT_PAINT, this.OnPaint)

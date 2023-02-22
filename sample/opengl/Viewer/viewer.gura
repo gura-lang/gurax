@@ -1,0 +1,115 @@
+#!/usr/bin/env gurax
+import(wx)
+import(opengl) {*}
+import(opengl.stl)
+
+AppMain = class(wx.App) {
+	OnInit() = {
+		FrameMain(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(900, 700)).Show()
+		true
+	}
+}
+
+FrameMain = class(wx.Frame) {
+	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
+		PanelTop(this)
+	}
+}
+
+PanelTop = class(wx.Panel) {
+	canvas as Canvas
+	__init__(parent as wx.Window) = {|parent|
+		vbox = wx.BoxSizer(wx.VERTICAL)
+		this.SetSizer(vbox)
+		Canvas(this) {|ctrl|
+			vbox.Add(ctrl, wx.SizerFlags(1).Expand())
+			this.canvas = ctrl
+		}
+		wx.Button(this, wx.ID_ANY, 'push') {|ctrl|
+			vbox.Add(ctrl, wx.SizerFlags().Expand())
+		}
+		wx.Button(this, wx.ID_ANY, 'push') {|ctrl|
+			vbox.Add(ctrl, wx.SizerFlags().Expand())
+		}
+	}
+}
+
+Canvas = class(wx.GLCanvas) {
+	posStart as wx.Point
+	posCur as wx.Point
+	list as Number
+	rotX = 0
+	rotY = 0
+	__init__(parent as wx.Window) = {|parent, wx.ID_ANY, style = wx.BORDER_SUNKEN|
+		this.SetCurrent(wx.GLContext(this))
+		this.posCur = wx.Point(0, 0)
+		position = @float([0.0, 3.0, 3.0, 0.0])
+		local_view = @float([0.0])
+		ambient = @float([0.1745, 0.01175, 0.01175, 0])
+		diffuse = @float([0.61424, 0.04136, 0.04136, 0])
+		specular = @float([0.727811, 0.626959, 0.626959, 0])
+		glEnable(GL_DEPTH_TEST)
+		glDepthFunc(GL_LESS)
+		glLightfv(GL_LIGHT0, GL_POSITION, position)
+		glLightModelfv(GL_LIGHT_MODEL_LOCAL_VIEWER, local_view)
+		glFrontFace(GL_CW)
+		glEnable(GL_LIGHTING)
+		glEnable(GL_LIGHT0)
+		glEnable(GL_AUTO_NORMAL)
+		glEnable(GL_NORMALIZE)
+		glMaterialfv(GL_FRONT, GL_AMBIENT, ambient)
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse)
+		glMaterialfv(GL_FRONT, GL_SPECULAR, specular)
+		glMaterialf(GL_FRONT, GL_SHININESS, 0.6 * 128.0)
+		glClearColor(0.5, 0.5, 0.5, 1.0)
+		glColor3f(1.0, 1.0, 1.0)
+		this.list = opengl.stl.CreateList('Voyager_17.stl', true, false)
+		this.Bind(wx.EVT_SIZE, this.OnSize)
+		this.Bind(wx.EVT_PAINT, this.OnPaint)
+		this.Bind(wx.EVT_LEFT_DOWN, this.OnLeftDown)
+		this.Bind(wx.EVT_LEFT_UP, this.OnLeftUp)
+		this.Bind(wx.EVT_MOTION, this.OnMotion)
+	}
+	OnSize(event as wx.SizeEvent) = {
+		size = event.GetSize()
+		glViewport(0, 0, size.GetWidth(), size.GetHeight())
+		glMatrixMode(GL_PROJECTION)
+		glLoadIdentity()
+		//glOrtho(-6.0, 6.0, -6.0, 6.0, -1.0, 10.0)
+		glOrtho(-2.0, 2.0, -2.0, 2.0, -1.0, 10.0)
+		glMatrixMode(GL_MODELVIEW)
+		glLoadIdentity()
+
+	}
+	OnPaint(event as wx.PaintEvent) = {
+		dc = wx.PaintDC(this)
+		glClearColor(1, 1, 1, 1)
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+		glPushMatrix()
+			glTranslatef(0.0, 0.0, -5.0)
+			glRotatef(this.rotX, 0.0, 1.0, 0.0)
+			glRotatef(this.rotY, 1.0, 0.0, 0.0)
+			glCallList(this.list)
+		glPopMatrix()
+		glFlush()
+		this.SwapBuffers()
+		dc = nil
+	}
+	OnLeftDown(event as wx.MouseEvent) = {
+		this.posStart = event.GetPosition()
+	}
+	OnLeftUp(event as wx.MouseEvent) = {
+		!this.posStart && return
+		this.posCur += event.GetPosition() - this.posStart
+		this.posStart = nil
+	}
+	OnMotion(event as wx.MouseEvent) = {
+		!this.posStart && return
+		pt = this.posCur + event.GetPosition() - this.posStart
+		this.rotX = pt.x
+		this.rotY = pt.y
+		this.Refresh()
+	}
+}
+
+wx.ImplementApp(AppMain())

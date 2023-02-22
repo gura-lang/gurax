@@ -42,11 +42,11 @@ Sample_teapot = class(SampleBase) {
 		glClearColor(0.5, 0.5, 0.5, 1.0)
 		glColor3f(1.0, 1.0, 1.0)
 		//this.list = opengl.teapot.CreateList(14)
-		this.list = opengl.stl.CreateList('cube-ascii.stl')
+		//this.list = opengl.stl.CreateList('cube-ascii.stl')
 		//this.list = opengl.stl.CreateList('cube-binary.stl')
 		//this.list = opengl.stl.CreateList('Voyager_17.stl', true, false)
 		//this.list = opengl.stl.CreateList('Utah_teapot_(solid).stl')
-		//this.list = opengl.stl.CreateList('Sphericon.stl')
+		this.list = opengl.stl.CreateList('Sphericon.stl')
 	}
 	Reshape(w as Number, h as Number) = {
 		glViewport(0, 0, w, h)
@@ -58,7 +58,7 @@ Sample_teapot = class(SampleBase) {
 		glLoadIdentity()
 	}
 	Display() = {
-		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 		glPushMatrix()
 			glTranslatef(0.0, 0.0, -5.0)
 			glRotatef(this.rotX, 0.0, 1.0, 0.0)
