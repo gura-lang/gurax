@@ -25,12 +25,6 @@ PanelTop = class(wx.Panel) {
 			vbox.Add(ctrl, wx.SizerFlags(1).Expand())
 			this.canvas = ctrl
 		}
-		wx.Button(this, wx.ID_ANY, 'push') {|ctrl|
-			vbox.Add(ctrl, wx.SizerFlags().Expand())
-		}
-		wx.Button(this, wx.ID_ANY, 'push') {|ctrl|
-			vbox.Add(ctrl, wx.SizerFlags().Expand())
-		}
 	}
 }
 
@@ -63,7 +57,7 @@ Canvas = class(wx.GLCanvas) {
 		glMaterialf(GL_FRONT, GL_SHININESS, 0.6 * 128.0)
 		glClearColor(0.5, 0.5, 0.5, 1.0)
 		glColor3f(1.0, 1.0, 1.0)
-		this.list = opengl.stl.CreateList('Voyager_17.stl', true, false)
+		this.list = opengl.stl.CreateList(pathNameSTL, true, false)
 		this.Bind(wx.EVT_SIZE, this.OnSize)
 		this.Bind(wx.EVT_PAINT, this.OnPaint)
 		this.Bind(wx.EVT_LEFT_DOWN, this.OnLeftDown)
@@ -111,5 +105,11 @@ Canvas = class(wx.GLCanvas) {
 		this.Refresh()
 	}
 }
+
+if (sys.argv.len < 2) {
+	sys.cerr.Println('usage: viewer STL')
+	sys.Exit(1)
+}
+pathNameSTL = sys.argv[1]
 
 wx.ImplementApp(AppMain())
