@@ -35,14 +35,15 @@ Canvas = class(wx.GLCanvas) {
 	list as Number
 	rotX = 0
 	rotY = 0
+	distance = 5
+	ambient = @float([0, 0, 0, 0])
+	diffuse = @float([1, 1, 1, 0])
+	specular = @float([1, 1, 1, 0])
 	__init__(parent as wx.Window) = {|parent, wx.ID_ANY, style = wx.BORDER_SUNKEN|
 		this.SetCurrent(wx.GLContext(this))
 		this.posCur = wx.Point(0, 0)
 		position = @float([0.0, 3.0, 3.0, 0.0])
 		local_view = @float([0.0])
-		ambient = @float([0.1745, 0.01175, 0.01175, 0])
-		diffuse = @float([0.61424, 0.04136, 0.04136, 0])
-		specular = @float([0.727811, 0.626959, 0.626959, 0])
 		glEnable(GL_DEPTH_TEST)
 		glDepthFunc(GL_LESS)
 		glLightfv(GL_LIGHT0, GL_POSITION, position)
@@ -52,18 +53,18 @@ Canvas = class(wx.GLCanvas) {
 		glEnable(GL_LIGHT0)
 		glEnable(GL_AUTO_NORMAL)
 		glEnable(GL_NORMALIZE)
-		glMaterialfv(GL_FRONT, GL_AMBIENT, ambient)
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse)
-		glMaterialfv(GL_FRONT, GL_SPECULAR, specular)
-		glMaterialf(GL_FRONT, GL_SHININESS, 0.6 * 128.0)
-		glClearColor(0.5, 0.5, 0.5, 1.0)
-		glColor3f(1.0, 1.0, 1.0)
+		glMaterialfv(GL_FRONT, GL_AMBIENT, this.ambient)
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, this.diffuse)
+		glMaterialfv(GL_FRONT, GL_SPECULAR, this.specular)
+		//glMaterialf(GL_FRONT, GL_SHININESS, 0.6 * 128.0)
+		glMaterialf(GL_FRONT, GL_SHININESS, 0.9 * 128.0)
 		this.list = opengl.stl.CreateList(pathNameSTL, true, false)
 		this.Bind(wx.EVT_SIZE, this.OnSize)
 		this.Bind(wx.EVT_PAINT, this.OnPaint)
 		this.Bind(wx.EVT_LEFT_DOWN, this.OnLeftDown)
 		this.Bind(wx.EVT_LEFT_UP, this.OnLeftUp)
 		this.Bind(wx.EVT_MOTION, this.OnMotion)
+		this.Bind(wx.EVT_MOUSEWHEEL, this.OnMouseWheel)
 	}
 	OnSize(event as wx.SizeEvent) = {
 		size = event.GetSize()
@@ -71,9 +72,7 @@ Canvas = class(wx.GLCanvas) {
 		glMatrixMode(GL_PROJECTION)
 		glLoadIdentity()
 		//glOrtho(-6.0, 6.0, -6.0, 6.0, -1.0, 10.0)
-		//glOrtho(-20.0, 20.0, -20.0, 20.0, -20.0, 20.0)
 		gluPerspective(30, size.GetWidth() / size.GetHeight(), 1, 100)
-
 	}
 	OnPaint(event as wx.PaintEvent) = {
 		dc = wx.PaintDC(this)
@@ -82,7 +81,7 @@ Canvas = class(wx.GLCanvas) {
 		glMatrixMode(GL_MODELVIEW)
 		glLoadIdentity()
 		glPushMatrix()
-			glTranslatef(0.0, 0.0, -3.0)
+			glTranslatef(0.0, 0.0, -this.distance)
 			glRotatef(this.rotX, 0.0, 1.0, 0.0)
 			glRotatef(this.rotY, 1.0, 0.0, 0.0)
 			glBegin(GL_TRIANGLES)
@@ -107,6 +106,12 @@ Canvas = class(wx.GLCanvas) {
 		pt = this.posCur + event.GetPosition() - this.posStart
 		this.rotX = pt.x
 		this.rotY = pt.y
+		this.Refresh()
+	}
+	OnMouseWheel(event as wx.MouseEvent) = {
+		this.distance -= event.GetWheelRotation() * .01
+		if (this.distance < 2) { this.distance = 2 }
+		if (this.distance > 20) { this.distance = 20 }
 		this.Refresh()
 	}
 }
