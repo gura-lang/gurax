@@ -2,6 +2,7 @@
 import(wx)
 import(opengl) {*}
 import(opengl.stl)
+import(glu) {*}
 
 AppMain = class(wx.App) {
 	OnInit() = {
@@ -70,21 +71,22 @@ Canvas = class(wx.GLCanvas) {
 		glMatrixMode(GL_PROJECTION)
 		glLoadIdentity()
 		//glOrtho(-6.0, 6.0, -6.0, 6.0, -1.0, 10.0)
-		glOrtho(-2.0, 2.0, -2.0, 2.0, -1.0, 10.0)
-		glMatrixMode(GL_MODELVIEW)
-		glLoadIdentity()
+		//glOrtho(-20.0, 20.0, -20.0, 20.0, -20.0, 20.0)
+		gluPerspective(30, size.GetWidth() / size.GetHeight(), 1, 100)
 
 	}
 	OnPaint(event as wx.PaintEvent) = {
 		dc = wx.PaintDC(this)
 		glClearColor(1, 1, 1, 1)
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+		glMatrixMode(GL_MODELVIEW)
+		glLoadIdentity()
 		glPushMatrix()
-			glTranslatef(0.0, 0.0, -10.0)
+			glTranslatef(0.0, 0.0, -3.0)
 			glRotatef(this.rotX, 0.0, 1.0, 0.0)
 			glRotatef(this.rotY, 1.0, 0.0, 0.0)
-			//glBegin(GL_TRIANGLES)
-			glBegin(GL_LINE_LOOP)
+			glBegin(GL_TRIANGLES)
+			//glBegin(GL_LINE_LOOP)
 			glCallList(this.list)
 			glEnd()
 		glPopMatrix()
