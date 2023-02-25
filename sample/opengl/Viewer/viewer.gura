@@ -12,8 +12,27 @@ AppMain = class(wx.App) {
 }
 
 FrameMain = class(wx.Frame) {
+	panelTop as PanelTop
 	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
-		PanelTop(this)
+		menuBar = wx.MenuBar()
+		this.SetMenuBar(menuBar)
+		wx.Menu {|menu|
+			menu.Append(wx.ID_OPEN, '&Open...\tCtrl-O', 'Open Model File')
+			menu.Append(wx.ID_EXIT)
+			menuBar.Append(menu, '&File')
+		}
+		this.panelTop = PanelTop(this)
+		this.Bind(wx.EVT_MENU, this.OnMenuOpen, id = wx.ID_OPEN)
+		this.Bind(wx.EVT_MENU, this.OnMenuExit, id = wx.ID_EXIT)
+	}
+	this.OnMenuOpen(event as wx.CommandEvent) = {
+		dlg = wx.FileDialog(this, 'Open Model File', wildcard = '*.stl', style = wx.FD_OPEN)
+		if (dlg.ShowModal() == wx.ID_OK) {
+			this.panelTop.canvas.OpenSTL(dlg.GetPath())
+		}
+	}
+	this.OnMenuExit(event as wx.CommandEvent) = {
+		this.Close(true)
 	}
 }
 
@@ -101,6 +120,10 @@ Canvas = class(wx.GLCanvas) {
 		this.Bind(wx.EVT_MOTION, this.OnMotion)
 		this.Bind(wx.EVT_MOUSEWHEEL, this.OnMouseWheel)
 	}
+	OpenSTL(stream as Stream) = {
+		this.list = opengl.stl.CreateList(stream, true, false)
+		this.Refresh()
+	}
 	OnSize(event as wx.SizeEvent) = {
 		size = event.GetSize()
 		glViewport(0, 0, size.GetWidth(), size.GetHeight())
@@ -113,20 +136,22 @@ Canvas = class(wx.GLCanvas) {
 		dc = wx.PaintDC(this)
 		glClearColor(1, 1, 1, 1)
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-		glMatrixMode(GL_MODELVIEW)
-		glLoadIdentity()
-		glMaterialfv(GL_FRONT, GL_AMBIENT, this.ambient)
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, this.diffuse)
-		glMaterialfv(GL_FRONT, GL_SPECULAR, this.specular)
-		glPushMatrix()
-			glTranslatef(0.0, 0.0, -this.distance)
-			glRotatef(this.rotX, 0.0, 1.0, 0.0)
-			glRotatef(this.rotY, 1.0, 0.0, 0.0)
-			glBegin(GL_TRIANGLES)
-			//glBegin(GL_LINE_LOOP)
-			glCallList(this.list)
-			glEnd()
-		glPopMatrix()
+		if (this.list) {
+			glMatrixMode(GL_MODELVIEW)
+			glLoadIdentity()
+			glMaterialfv(GL_FRONT, GL_AMBIENT, this.ambient)
+			glMaterialfv(GL_FRONT, GL_DIFFUSE, this.diffuse)
+			glMaterialfv(GL_FRONT, GL_SPECULAR, this.specular)
+			glPushMatrix()
+				glTranslatef(0.0, 0.0, -this.distance)
+				glRotatef(this.rotX, 0.0, 1.0, 0.0)
+				glRotatef(this.rotY, 1.0, 0.0, 0.0)
+				glBegin(GL_TRIANGLES)
+				//glBegin(GL_LINE_LOOP)
+				glCallList(this.list)
+				glEnd()
+			glPopMatrix()
+		}
 		glFlush()
 		this.SwapBuffers()
 		dc = nil
