@@ -3,7 +3,7 @@
 //==============================================================================
 TextEntryDialog = Class(Dialog) {
 	@include['wx/textdlg.h']
-	__init__(parent as Window_p, message as const_String_r, caption as const_String_r = wxGetTextFromUserPromptStr, value as const_String_r = wxEmptyString, style as long = wxTextEntryDialogStyle, pos as const_Point_r = wxDefaultPosition)
+	__init__(parent:nil as Window_p, message as const_String_r, caption as const_String_r = wxGetTextFromUserPromptStr, value as const_String_r = wxEmptyString, style as long = wxTextEntryDialogStyle, pos as const_Point_r = wxDefaultPosition)
 	Create(parent as Window_p, message as const_String_r, caption as const_String_r = wxGetTextFromUserPromptStr, value as const_String_r = wxEmptyString, style as long = wxTextEntryDialogStyle, pos as const_Point_r = wxDefaultPosition) as bool
 	GetValue() as String
 	SetMaxLength(len as unsigned_long) as void

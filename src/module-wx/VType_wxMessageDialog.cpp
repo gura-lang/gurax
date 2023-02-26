@@ -44,11 +44,11 @@ ${help.ComposeMethodHelp(wx.MessageDialog, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.MessageDialog(parent as wx.Window, message as String, caption? as String, style? as Number, pos? as wx.Point) {block?}
+// wx.MessageDialog(parent:nil as wx.Window, message as String, caption? as String, style? as Number, pos? as wx.Point) {block?}
 Gurax_DeclareConstructorAlias(MessageDialog_gurax, "MessageDialog")
 {
 	Declare(VTYPE_wxMessageDialog, Flag::None);
-	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("message", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("caption", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -60,8 +60,7 @@ Gurax_ImplementConstructorEx(MessageDialog_gurax, processor_gurax, argument_gura
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
-	wxWindow* parent = value_parent.GetEntityPtr();
+	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
 	const char* message = args_gurax.PickString();
 	const char* caption = args_gurax.IsValid()? args_gurax.PickString() : wxMessageBoxCaptionStr;
 	bool style_validFlag = args_gurax.IsValid();

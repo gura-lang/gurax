@@ -3,7 +3,7 @@
 //==============================================================================
 PGArrayEditorDialog = Class(Dialog) {
 	@include['wx/propgrid/props.h']
-	//__init__(parent as Window_p, message as const_String_r, caption as const_String_r, style as long = wxAEDIALOG_STYLE, pos as const_Point_r = wxDefaultPosition, sz as const_Size_r = wxDefaultSize)
+	//__init__(parent:nil as Window_p, message as const_String_r, caption as const_String_r, style as long = wxAEDIALOG_STYLE, pos as const_Point_r = wxDefaultPosition, sz as const_Size_r = wxDefaultSize)
 	Init() as void
 	Create(parent as Window_p, message as const_String_r, caption as const_String_r, style as long = wxAEDIALOG_STYLE, pos as const_Point_r = wxDefaultPosition, sz as const_Size_r = wxDefaultSize) as bool
 	EnableCustomNewAction() as void

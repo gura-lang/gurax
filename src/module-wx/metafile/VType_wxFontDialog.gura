@@ -3,7 +3,7 @@
 //==============================================================================
 FontDialog = Class(Dialog) {
 	@include['wx/fontdlg.h']
-	__init__(parent as Window_p, data? as FontData_p) = \
+	__init__(parent:nil as Window_p, data? as FontData_p) = \
 		R'''
 		if (data) {
 			return new Value_wxFontDialog(new wxFontDialog(parent, *data));

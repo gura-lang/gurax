@@ -3,7 +3,7 @@
 //==============================================================================
 FindReplaceDialog = Class(Dialog) {
 	@include['wx/fdrepdlg.h']
-	__init__(parent as Window_p, data as FindReplaceData_p, title as String, style as int = 0)
+	__init__(parent:nil as Window_p, data as FindReplaceData_p, title as String, style as int = 0)
 	Create(parent as Window_p, data as FindReplaceData_p, title as const_String_r, style as int = 0) as bool
 	GetData() as FindReplaceData_p
 } %% R'''

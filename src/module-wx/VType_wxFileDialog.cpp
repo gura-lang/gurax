@@ -44,11 +44,11 @@ ${help.ComposeMethodHelp(wx.FileDialog, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.FileDialog(parent as wx.Window, message? as String, defaultDir? as String, defaultFile? as String, wildcard? as String, style? as Number, pos? as wx.Point, size? as wx.Size, name? as String) {block?}
+// wx.FileDialog(parent:nil as wx.Window, message? as String, defaultDir? as String, defaultFile? as String, wildcard? as String, style? as Number, pos? as wx.Point, size? as wx.Size, name? as String) {block?}
 Gurax_DeclareConstructorAlias(FileDialog_gurax, "FileDialog")
 {
 	Declare(VTYPE_wxFileDialog, Flag::None);
-	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("message", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("defaultDir", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("defaultFile", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -64,8 +64,7 @@ Gurax_ImplementConstructorEx(FileDialog_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
-	wxWindow* parent = value_parent.GetEntityPtr();
+	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
 	const char* message = args_gurax.IsValid()? args_gurax.PickString() : wxFileSelectorPromptStr;
 	const char* defaultDir = args_gurax.IsValid()? args_gurax.PickString() : "";
 	const char* defaultFile = args_gurax.IsValid()? args_gurax.PickString() : "";

@@ -3,7 +3,7 @@
 //==============================================================================
 SingleChoiceDialog = Class(Dialog) {
 	@include['wx/choicdlg.h']
-	//__init__(parent as Window_p, message as const_String_r, caption as const_String_r, choices as const_ArrayString_r, clientData as void_p_p = NULL, style as long = wxCHOICEDLG_STYLE, pos as const_Point_r = wxDefaultPosition)
+	//__init__(parent:nil as Window_p, message as const_String_r, caption as const_String_r, choices as const_ArrayString_r, clientData as void_p_p = NULL, style as long = wxCHOICEDLG_STYLE, pos as const_Point_r = wxDefaultPosition)
 	GetSelection() as int
 	//GetSelectionData() as void_p
 	GetStringSelection() as String

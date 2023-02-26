@@ -3,7 +3,7 @@
 //==============================================================================
 MultiChoiceDialog = Class(Dialog) {
 	@include['wx/choicdlg.h']
-	__init__(parent as Window_p, message as const_String_r, caption as const_String_r, choices as const_ArrayString_r, style as long = wxCHOICEDLG_STYLE, pos as const_Point_r = wxDefaultPosition)
+	__init__(parent:nil as Window_p, message as const_String_r, caption as const_String_r, choices as const_ArrayString_r, style as long = wxCHOICEDLG_STYLE, pos as const_Point_r = wxDefaultPosition)
 	GetSelections() as ArrayInt
 	SetSelections(selections as const_ArrayInt_r) as void
 	ShowModal() as int

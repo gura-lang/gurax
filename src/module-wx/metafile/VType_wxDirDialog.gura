@@ -3,7 +3,7 @@
 //==============================================================================
 DirDialog = Class(Dialog) {
 	@include['wx/dirdlg.h']
-	__init__(parent as Window_p, message as String = wxDirSelectorPromptStr, defaultPath as String = '', style as long = wxDD_DEFAULT_STYLE,
+	__init__(parent:nil as Window_p, message as String = wxDirSelectorPromptStr, defaultPath as String = '', style as long = wxDD_DEFAULT_STYLE,
 		pos as Point = wxDefaultPosition, size as Size = wxDefaultSize, name as String = wxDirDialogNameStr)
 	GetMessage() as String
 	GetPath() as String

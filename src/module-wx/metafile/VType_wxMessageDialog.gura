@@ -3,7 +3,7 @@
 //==============================================================================
 MessageDialog = Class(Dialog) {
 	@include['wx/msgdlg.h']
-	__init__(parent as Window_p, message as String, caption as String = wxMessageBoxCaptionStr,
+	__init__(parent:nil as Window_p, message as String, caption as String = wxMessageBoxCaptionStr,
 		style as long = wxOK | wxCENTRE, pos as Point = wxDefaultPosition)
 	SetExtendedMessage(extendedMessage as const_String_r) as void
 	//SetHelpLabel(help as const_ButtonLabel_r) as bool

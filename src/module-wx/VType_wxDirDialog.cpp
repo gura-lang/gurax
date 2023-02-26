@@ -44,11 +44,11 @@ ${help.ComposeMethodHelp(wx.DirDialog, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.DirDialog(parent as wx.Window, message? as String, defaultPath? as String, style? as Number, pos? as wx.Point, size? as wx.Size, name? as String) {block?}
+// wx.DirDialog(parent:nil as wx.Window, message? as String, defaultPath? as String, style? as Number, pos? as wx.Point, size? as wx.Size, name? as String) {block?}
 Gurax_DeclareConstructorAlias(DirDialog_gurax, "DirDialog")
 {
 	Declare(VTYPE_wxDirDialog, Flag::None);
-	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("message", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("defaultPath", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -62,8 +62,7 @@ Gurax_ImplementConstructorEx(DirDialog_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
-	wxWindow* parent = value_parent.GetEntityPtr();
+	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
 	const char* message = args_gurax.IsValid()? args_gurax.PickString() : wxDirSelectorPromptStr;
 	const char* defaultPath = args_gurax.IsValid()? args_gurax.PickString() : "";
 	bool style_validFlag = args_gurax.IsValid();

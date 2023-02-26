@@ -48,6 +48,56 @@ ${help.ComposeMethodHelp(wx.Position, `ja)}
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.Position#GetCol()
+Gurax_DeclareMethodAlias(wxPosition, GetCol_gurax, "GetCol")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxPosition, GetCol_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetCol();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Position#GetColumn()
+Gurax_DeclareMethodAlias(wxPosition, GetColumn_gurax, "GetColumn")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxPosition, GetColumn_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetColumn();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Position#GetRow()
+Gurax_DeclareMethodAlias(wxPosition, GetRow_gurax, "GetRow")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxPosition, GetRow_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetRow();
+	return new Gurax::Value_Number(rtn);
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -66,6 +116,9 @@ void VType_wxPosition::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxPosition, GetCol_gurax));
+	Assign(Gurax_CreateMethod(wxPosition, GetColumn_gurax));
+	Assign(Gurax_CreateMethod(wxPosition, GetRow_gurax));
 }
 
 //------------------------------------------------------------------------------

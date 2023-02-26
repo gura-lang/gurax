@@ -3,7 +3,7 @@
 //==============================================================================
 ColourDialog = Class(Dialog) {
 	@include['wx/colordlg.h']
-	__init__(parent as Window_p, data? as ColourData_p)
+	__init__(parent:nil as Window_p, data? as ColourData_p)
 	Create(parent as Window_p, data? as ColourData_p) as bool
 	GetColourData() as ColourData
 	ShowModal() as int

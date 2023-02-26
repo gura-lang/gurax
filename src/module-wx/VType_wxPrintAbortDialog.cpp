@@ -44,11 +44,11 @@ ${help.ComposeMethodHelp(wx.PrintAbortDialog, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.PrintAbortDialog(parent as wx.Window, documentTitle as String, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
+// wx.PrintAbortDialog(parent:nil as wx.Window, documentTitle as String, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
 Gurax_DeclareConstructorAlias(PrintAbortDialog_gurax, "PrintAbortDialog")
 {
 	Declare(VTYPE_wxPrintAbortDialog, Flag::None);
-	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("documentTitle", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -61,8 +61,7 @@ Gurax_ImplementConstructorEx(PrintAbortDialog_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
-	wxWindow* parent = value_parent.GetEntityPtr();
+	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
 	const char* documentTitle = args_gurax.PickString();
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;

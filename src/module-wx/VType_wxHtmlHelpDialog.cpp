@@ -78,7 +78,7 @@ Gurax_ImplementConstructorEx(HtmlHelpDialog_gurax, processor_gurax, argument_gur
 		static DeclCallable* pDeclCallable = nullptr;
 		if (!pDeclCallable) {
 			pDeclCallable = new DeclCallable();
-			pDeclCallable->DeclareArg("parent", VTYPE_wxWindow);
+			pDeclCallable->DeclareArg("parent", VTYPE_wxWindow, DeclArg::Occur::Once, DeclArg::Flag::Nil);
 			pDeclCallable->DeclareArg("winid", VTYPE_Number);
 			pDeclCallable->DeclareArg("title", VTYPE_String, DeclArg::Occur::ZeroOrOnce);
 			pDeclCallable->DeclareArg("style", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
@@ -88,7 +88,7 @@ Gurax_ImplementConstructorEx(HtmlHelpDialog_gurax, processor_gurax, argument_gur
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
 		Error::Clear();
 		ArgPicker args(*pArgument);
-		wxWindow* parent = args.Pick<Value_wxWindow>().GetEntityPtr();
+		wxWindow* parent = args.IsValid()? args.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
 		wxWindowID winid = args.PickNumber<wxWindowID>();
 		const char* title = args.IsValid()? args.PickString() : "";
 		long style = args.IsValid()? args.PickNumber<long>() : wxHF_DEFAULT_STYLE;

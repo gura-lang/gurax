@@ -44,11 +44,11 @@ ${help.ComposeMethodHelp(wx.Dialog, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Dialog(parent as wx.Window, id as Number, title as String, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
+// wx.Dialog(parent:nil as wx.Window, id as Number, title as String, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
 Gurax_DeclareConstructorAlias(Dialog_gurax, "Dialog")
 {
 	Declare(VTYPE_wxDialog, Flag::None);
-	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("title", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -62,8 +62,7 @@ Gurax_ImplementConstructorEx(Dialog_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
-	wxWindow* parent = value_parent.GetEntityPtr();
+	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
 	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
 	const char* title = args_gurax.PickString();
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;

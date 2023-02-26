@@ -44,11 +44,11 @@ ${help.ComposeMethodHelp(wx.FindReplaceDialog, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.FindReplaceDialog(parent as wx.Window, data as wx.FindReplaceData, title as String, style? as Number) {block?}
+// wx.FindReplaceDialog(parent:nil as wx.Window, data as wx.FindReplaceData, title as String, style? as Number) {block?}
 Gurax_DeclareConstructorAlias(FindReplaceDialog_gurax, "FindReplaceDialog")
 {
 	Declare(VTYPE_wxFindReplaceDialog, Flag::None);
-	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("data", VTYPE_wxFindReplaceData, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("title", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -59,8 +59,7 @@ Gurax_ImplementConstructorEx(FindReplaceDialog_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
-	wxWindow* parent = value_parent.GetEntityPtr();
+	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
 	Value_wxFindReplaceData& value_data = args_gurax.Pick<Value_wxFindReplaceData>();
 	wxFindReplaceData* data = value_data.GetEntityPtr();
 	const char* title = args_gurax.PickString();

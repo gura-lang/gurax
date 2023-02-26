@@ -44,11 +44,11 @@ ${help.ComposeMethodHelp(wx.FontDialog, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.FontDialog(parent as wx.Window, data? as wx.FontData) {block?}
+// wx.FontDialog(parent:nil as wx.Window, data? as wx.FontData) {block?}
 Gurax_DeclareConstructorAlias(FontDialog_gurax, "FontDialog")
 {
 	Declare(VTYPE_wxFontDialog, Flag::None);
-	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("data", VTYPE_wxFontData, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 }
@@ -57,8 +57,7 @@ Gurax_ImplementConstructorEx(FontDialog_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
-	wxWindow* parent = value_parent.GetEntityPtr();
+	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
 	wxFontData* data = args_gurax.IsValid()? args_gurax.Pick<Value_wxFontData>().GetEntityPtr() : nullptr;
 	// Function body
 	if (data) {

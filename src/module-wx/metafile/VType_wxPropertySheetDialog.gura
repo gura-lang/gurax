@@ -3,7 +3,7 @@
 //==============================================================================
 PropertySheetDialog = Class(Dialog) {
 	@include['wx/propdlg.h']
-	__init__(parent as Window_p, id as WindowID, title as const_String_r, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxDEFAULT_DIALOG_STYLE, name as const_String_r = wxDialogNameStr)
+	__init__(parent:nil as Window_p, id as WindowID, title as const_String_r, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxDEFAULT_DIALOG_STYLE, name as const_String_r = wxDialogNameStr)
 	AddBookCtrl(sizer as Sizer_p) as void
 	Create(parent as Window_p, id as WindowID, title as const_String_r, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxDEFAULT_DIALOG_STYLE, name as const_String_r = wxDialogNameStr) as bool
 	CreateBookCtrl() as BookCtrlBase_p

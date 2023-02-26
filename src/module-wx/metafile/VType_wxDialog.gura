@@ -3,7 +3,7 @@
 //==============================================================================
 Dialog = Class(TopLevelWindow) {
 	@include['wx/dialog.h']
-	__init__(parent as Window_p, id as WindowID, title as String, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+	__init__(parent:nil as Window_p, id as WindowID, title as String, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = wxDEFAULT_DIALOG_STYLE, name as String = wxDialogNameStr)
 	AddMainButtonId(id as WindowID) as void
 	CanDoLayoutAdaptation() as bool

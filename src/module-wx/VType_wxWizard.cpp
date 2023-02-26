@@ -44,11 +44,11 @@ ${help.ComposeMethodHelp(wx.Wizard, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Wizard(parent as wx.Window, id? as Number, title? as String, bitmap? as wx.Bitmap, pos? as wx.Point, style? as Number) {block?}
+// wx.Wizard(parent:nil as wx.Window, id? as Number, title? as String, bitmap? as wx.Bitmap, pos? as wx.Point, style? as Number) {block?}
 Gurax_DeclareConstructorAlias(Wizard_gurax, "Wizard")
 {
 	Declare(VTYPE_wxWizard, Flag::None);
-	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("title", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -61,8 +61,7 @@ Gurax_ImplementConstructorEx(Wizard_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
-	wxWindow* parent = value_parent.GetEntityPtr();
+	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
 	bool id_validFlag = args_gurax.IsValid();
 	int id = id_validFlag? args_gurax.PickNumber<int>() : wxID_ANY;
 	const char* title = args_gurax.IsValid()? args_gurax.PickString() : "";

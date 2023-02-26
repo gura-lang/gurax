@@ -44,11 +44,11 @@ ${help.ComposeMethodHelp(wx.MultiChoiceDialog, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.MultiChoiceDialog(parent as wx.Window, message as String, caption as String, choices[] as String, style? as Number, pos? as wx.Point) {block?}
+// wx.MultiChoiceDialog(parent:nil as wx.Window, message as String, caption as String, choices[] as String, style? as Number, pos? as wx.Point) {block?}
 Gurax_DeclareConstructorAlias(MultiChoiceDialog_gurax, "MultiChoiceDialog")
 {
 	Declare(VTYPE_wxMultiChoiceDialog, Flag::None);
-	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("message", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("caption", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("choices", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
@@ -61,8 +61,7 @@ Gurax_ImplementConstructorEx(MultiChoiceDialog_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
-	wxWindow* parent = value_parent.GetEntityPtr();
+	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
 	const char* message = args_gurax.PickString();
 	const char* caption = args_gurax.PickString();
 	wxArrayString choices = Util::CreateArrayString(args_gurax.PickList());

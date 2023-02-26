@@ -3,7 +3,7 @@
 //==============================================================================
 Wizard = Class(Dialog) {
 	@include['wx/wizard.h']
-	__init__(parent as Window_p, id as int = wxID_ANY, title as const_String_r = wxEmptyString, bitmap as const_Bitmap_r = wxNullBitmap, pos as const_Point_r = wxDefaultPosition, style as long = wxDEFAULT_DIALOG_STYLE)
+	__init__(parent:nil as Window_p, id as int = wxID_ANY, title as const_String_r = wxEmptyString, bitmap as const_Bitmap_r = wxNullBitmap, pos as const_Point_r = wxDefaultPosition, style as long = wxDEFAULT_DIALOG_STYLE)
 	Create(parent as Window_p, id as int = wxID_ANY, title as const_String_r = wxEmptyString, bitmap as const_Bitmap_r = wxNullBitmap, pos as const_Point_r = wxDefaultPosition, style as long = wxDEFAULT_DIALOG_STYLE) as bool
 	FitToPage(firstPage as const_WizardPage_p) as void
 	GetBitmap() as Bitmap

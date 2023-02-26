@@ -44,11 +44,11 @@ ${help.ComposeMethodHelp(wx.NumberEntryDialog, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.NumberEntryDialog(parent as wx.Window, message as String, prompt as String, caption as String, value as Number, min as Number, max as Number, pos? as wx.Point) {block?}
+// wx.NumberEntryDialog(parent:nil as wx.Window, message as String, prompt as String, caption as String, value as Number, min as Number, max as Number, pos? as wx.Point) {block?}
 Gurax_DeclareConstructorAlias(NumberEntryDialog_gurax, "NumberEntryDialog")
 {
 	Declare(VTYPE_wxNumberEntryDialog, Flag::None);
-	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("message", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("prompt", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("caption", VTYPE_String, ArgOccur::Once, ArgFlag::None);
@@ -63,8 +63,7 @@ Gurax_ImplementConstructorEx(NumberEntryDialog_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
-	wxWindow* parent = value_parent.GetEntityPtr();
+	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
 	const char* message = args_gurax.PickString();
 	const char* prompt = args_gurax.PickString();
 	const char* caption = args_gurax.PickString();

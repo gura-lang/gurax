@@ -3,7 +3,7 @@
 //==============================================================================
 FileDialog = Class(Dialog) {
 	@include['wx/filedlg.h']
-	__init__(parent as Window_p, message as const_String_r = wxFileSelectorPromptStr, defaultDir as const_String_r = wxEmptyString, defaultFile as const_String_r = wxEmptyString, wildcard as const_String_r = wxFileSelectorDefaultWildcardStr, style as long = wxFD_DEFAULT_STYLE, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, name as const_String_r = wxFileDialogNameStr)
+	__init__(parent:nil as Window_p, message as const_String_r = wxFileSelectorPromptStr, defaultDir as const_String_r = wxEmptyString, defaultFile as const_String_r = wxEmptyString, wildcard as const_String_r = wxFileSelectorDefaultWildcardStr, style as long = wxFD_DEFAULT_STYLE, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, name as const_String_r = wxFileDialogNameStr)
 	GetCurrentlySelectedFilename() as String
 	GetDirectory() as String
 	GetExtraControl() as Window_p
