@@ -95,6 +95,10 @@ ${help.ComposeMethodHelp(wx.Dialog, `ja)}
 	}
 }
 
+@string {
+	DialogNameStr
+}
+
 @event {
 	//EVT_CLOSE		>> CloseEvent
 	EVT_INIT_DIALOG	>> InitDialogEvent

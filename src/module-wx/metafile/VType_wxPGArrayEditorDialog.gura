@@ -41,3 +41,7 @@ ${help.ComposeConstructorHelp(wx.PGArrayEditorDialog, `ja)}
 
 ${help.ComposeMethodHelp(wx.PGArrayEditorDialog, `ja)}
 '''ja
+
+@const {
+	AEDIALOG_STYLE
+}

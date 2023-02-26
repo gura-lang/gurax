@@ -71,4 +71,10 @@ ${help.ComposeMethodHelp(wx.FileDialog, `ja)}
 	FD_MULTIPLE
 	FD_CHANGE_DIR
 	FD_PREVIEW
-}	
+}
+
+@string {
+	FileDialogNameStr
+	FileSelectorPromptStr
+	FileSelectorDefaultWildcardStr
+}

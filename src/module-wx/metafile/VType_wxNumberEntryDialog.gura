@@ -34,3 +34,5 @@ ${help.ComposeConstructorHelp(wx.NumberEntryDialog, `ja)}
 
 ${help.ComposeMethodHelp(wx.NumberEntryDialog, `ja)}
 '''ja
+
+

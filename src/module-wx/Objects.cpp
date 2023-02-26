@@ -68,13 +68,6 @@ void AssignObjects(Frame& frame)
 	do { // Predefined Objects of wxSize
 		frame.Assign("DefaultSize", new Value_wxSize(wxDefaultSize));
 	} while (0);
-	do { // textdlg.h
-		frame.Assign("GetTextFromUserPromptStr", new Value_String(wxGetTextFromUserPromptStr));
-		frame.Assign("GetPasswordFromUserPromptStr", new Value_String(wxGetPasswordFromUserPromptStr));
-	} while (0);
-	do { // filedlg.h
-		frame.Assign("FileSelectorDefaultWildcardStr", new Value_String(wxFileSelectorDefaultWildcardStr));
-	} while (0);
 	do {
 		frame.Assign("EmptyString", new Value_String(""));
 	} while (0);

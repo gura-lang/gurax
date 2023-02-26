@@ -21,6 +21,7 @@ void AssignConsts(Frame& frame)
 	frame.Assign("ACC_SEL_TAKESELECTION", new Value_Number(wxACC_SEL_TAKESELECTION));
 	frame.Assign("AC_DEFAULT_STYLE", new Value_Number(wxAC_DEFAULT_STYLE));
 	frame.Assign("AC_NO_AUTORESIZE", new Value_Number(wxAC_NO_AUTORESIZE));
+	frame.Assign("AEDIALOG_STYLE", new Value_Number(wxAEDIALOG_STYLE));
 	frame.Assign("ALIGN_BOTTOM", new Value_Number(wxALIGN_BOTTOM));
 	frame.Assign("ALIGN_CENTER", new Value_Number(wxALIGN_CENTER));
 	frame.Assign("ALIGN_CENTER_HORIZONTAL", new Value_Number(wxALIGN_CENTER_HORIZONTAL));
@@ -191,6 +192,9 @@ void AssignConsts(Frame& frame)
 	frame.Assign("CHK_CHECKED", new Value_Number(wxCHK_CHECKED));
 	frame.Assign("CHK_UNCHECKED", new Value_Number(wxCHK_UNCHECKED));
 	frame.Assign("CHK_UNDETERMINED", new Value_Number(wxCHK_UNDETERMINED));
+	frame.Assign("CHOICEDLG_STYLE", new Value_Number(wxCHOICEDLG_STYLE));
+	frame.Assign("CHOICE_HEIGHT", new Value_Number(wxCHOICE_HEIGHT));
+	frame.Assign("CHOICE_WIDTH", new Value_Number(wxCHOICE_WIDTH));
 	frame.Assign("CLEAR", new Value_Number(wxCLEAR));
 	frame.Assign("CLIP_CHILDREN", new Value_Number(wxCLIP_CHILDREN));
 	frame.Assign("CLOSE_BOX", new Value_Number(wxCLOSE_BOX));
@@ -200,6 +204,9 @@ void AssignConsts(Frame& frame)
 	frame.Assign("COPY", new Value_Number(wxCOPY));
 	frame.Assign("CP_DEFAULT_STYLE", new Value_Number(wxCP_DEFAULT_STYLE));
 	frame.Assign("CP_NO_TLW_RESIZE", new Value_Number(wxCP_NO_TLW_RESIZE));
+	frame.Assign("DD_CHANGE_DIR", new Value_Number(wxDD_CHANGE_DIR));
+	frame.Assign("DD_DEFAULT_STYLE", new Value_Number(wxDD_DEFAULT_STYLE));
+	frame.Assign("DD_DIR_MUST_EXIST", new Value_Number(wxDD_DIR_MUST_EXIST));
 	frame.Assign("DEFAULT_DIALOG_STYLE", new Value_Number(wxDEFAULT_DIALOG_STYLE));
 	frame.Assign("DEFAULT_FRAME_STYLE", new Value_Number(wxDEFAULT_FRAME_STYLE));
 	frame.Assign("DF_BITMAP", new Value_Number(wxDF_BITMAP));
@@ -769,6 +776,7 @@ void AssignConsts(Frame& frame)
 	frame.Assign("NB_TOP", new Value_Number(wxNB_TOP));
 	frame.Assign("NOR", new Value_Number(wxNOR));
 	frame.Assign("NORTH", new Value_Number(wxNORTH));
+	frame.Assign("NOT_FOUND", new Value_Number(wxNOT_FOUND));
 	frame.Assign("NO_BORDER", new Value_Number(wxNO_BORDER));
 	frame.Assign("NO_DEFAULT", new Value_Number(wxNO_DEFAULT));
 	frame.Assign("NO_FULL_REPAINT_ON_RESIZE", new Value_Number(wxNO_FULL_REPAINT_ON_RESIZE));
@@ -1249,6 +1257,7 @@ void AssignConsts(Frame& frame)
 	frame.Assign("TR_ROW_LINES", new Value_Number(wxTR_ROW_LINES));
 	frame.Assign("TR_SINGLE", new Value_Number(wxTR_SINGLE));
 	frame.Assign("TR_TWIST_BUTTONS", new Value_Number(wxTR_TWIST_BUTTONS));
+	frame.Assign("TextEntryDialogStyle", new Value_Number(wxTextEntryDialogStyle));
 	frame.Assign("UP", new Value_Number(wxUP));
 	frame.Assign("UPDATE_UI_FROMIDLE", new Value_Number(wxUPDATE_UI_FROMIDLE));
 	frame.Assign("UPDATE_UI_NONE", new Value_Number(wxUPDATE_UI_NONE));
@@ -1438,6 +1447,16 @@ void AssignConsts(Frame& frame)
 	frame.Assign("XOR", new Value_Number(wxXOR));
 	frame.Assign("YES_DEFAULT", new Value_Number(wxYES_DEFAULT));
 	frame.Assign("YES_NO", new Value_Number(wxYES_NO));
+	frame.Assign("DialogNameStr", new Value_String(wxDialogNameStr));
+	frame.Assign("DirDialogNameStr", new Value_String(wxDirDialogNameStr));
+	frame.Assign("DirSelectorPromptStr", new Value_String(wxDirSelectorPromptStr));
+	frame.Assign("FileDialogNameStr", new Value_String(wxFileDialogNameStr));
+	frame.Assign("FileSelectorDefaultWildcardStr", new Value_String(wxFileSelectorDefaultWildcardStr));
+	frame.Assign("FileSelectorPromptStr", new Value_String(wxFileSelectorPromptStr));
+	frame.Assign("GetPasswordFromUserPromptStr", new Value_String(wxGetPasswordFromUserPromptStr));
+	frame.Assign("GetTextFromUserPromptStr", new Value_String(wxGetTextFromUserPromptStr));
+	frame.Assign("MessageBoxCaptionStr", new Value_String(wxMessageBoxCaptionStr));
+	frame.Assign("RearrangeDialogNameStr", new Value_String(wxRearrangeDialogNameStr));
 }
 
 Gurax_EndModuleScope(wx)

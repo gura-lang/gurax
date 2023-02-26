@@ -39,3 +39,14 @@ ${help.ComposeConstructorHelp(wx.DirDialog, `ja)}
 
 ${help.ComposeMethodHelp(wx.DirDialog, `ja)}
 '''ja
+
+@const {
+	DD_DEFAULT_STYLE
+	DD_DIR_MUST_EXIST
+	DD_CHANGE_DIR
+}
+
+@string {
+	DirSelectorPromptStr
+	DirDialogNameStr
+}

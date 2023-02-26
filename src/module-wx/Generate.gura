@@ -735,6 +735,9 @@ void AssignConsts(Frame& frame)
 	${constNameTbl.Each {|constName|}}
 	frame.Assign("${constName}", new Value_Number(${cond(constName.StartsWith('WXK_'), '', 'wx') + constName}));
 	${end}
+	${stringNameTbl.Each {|stringName|}}
+	frame.Assign("${stringName}", new Value_String(wx${stringName}));
+	${end}
 }
 
 Gurax_EndModuleScope(wx)
@@ -861,6 +864,7 @@ ClassInfo = class {
 	classNamesToMixin[] as String = []
 	enumNameTbl[] as String = []
 	constNameTbl[] as String = []
+	stringNameTbl[] as String = []
 	mixinDoneFlag as Bool = false
 	__init__(className as String, classNameParent:nil as String) = {
 		this.className = className
@@ -943,6 +947,7 @@ funcInfoOpTbl = []
 classInfoTbl = []
 classInfoToMixinTbl = []
 constNameTbl = []
+stringNameTbl = []
 enumNameTbl = []
 eventInfoTbl = []
 
@@ -1045,6 +1050,9 @@ path.Glob('metafile/*.gura').Each {|pathName|
 			if (expr.car.symbolName == '@const') {
 				params = expr.block.EachElem():list
 				constNameTbl.Append(params:*symbolName)
+			} elsif (expr.car.symbolName == '@string') {
+				params = expr.block.EachElem():list
+				stringNameTbl.Append(params:*symbolName)
 			} elsif (expr.car.symbolName == '@enum') {
 				params = expr.block.EachElem():list
 				params.Each {|param|
@@ -1414,7 +1422,7 @@ GenerateVType(classInfoTbl[] as ClassInfo) = {
 	tmplVTypesCMake.Render(Stream('VTypes.cmake', 'w').Write(Codec.bom@utf8))
 }
 
-GenerateConst(constNameTbl[] as String) = {
+GenerateConst(constNameTbl[] as String, stringNameTbl[] as String) = {
 	tmplConsts.Render(Stream('Consts.cpp', 'w').Write(Codec.bom@utf8))
 }
 
@@ -1431,7 +1439,7 @@ GenerateOperator(funcInfoTbl[] as cbridge.FuncInfo) = {
 }
 
 GenerateVType(classInfoTbl)
-GenerateConst(constNameTbl.Sort().Uniq():list)
+GenerateConst(constNameTbl.Sort().Uniq():list, stringNameTbl.Sort().Uniq():list)
 eventNames = eventInfoTbl::eventName
 GenerateEvent(eventInfoTbl.Sort(keys = eventNames), Int((('Gurax_AssignEvent' + ',').width + ((eventNames:*len).Max()) + 3) / 4 * 4 + 4))
 GenerateFunction(funcInfoTbl.Sort(keys = funcInfoTbl::name))

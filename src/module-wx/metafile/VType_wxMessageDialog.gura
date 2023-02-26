@@ -73,3 +73,7 @@ ${help.ComposeMethodHelp(wx.MessageDialog, `ja)}
 	STAY_ON_TOP
 	CENTRE
 }
+
+@string {
+	MessageBoxCaptionStr
+}

@@ -38,3 +38,12 @@ ${help.ComposeConstructorHelp(wx.SingleChoiceDialog, `ja)}
 
 ${help.ComposeMethodHelp(wx.SingleChoiceDialog, `ja)}
 '''ja
+
+@const {
+	CHOICE_HEIGHT
+	CHOICE_WIDTH
+}
+
+@const {
+	CHOICEDLG_STYLE
+}

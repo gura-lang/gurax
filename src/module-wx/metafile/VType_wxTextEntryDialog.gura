@@ -73,3 +73,12 @@ ${help.ComposeConstructorHelp(wx.TextEntryDialog, `ja)}
 
 ${help.ComposeMethodHelp(wx.TextEntryDialog, `ja)}
 '''ja
+
+@const {
+	TextEntryDialogStyle
+}
+
+@string {
+	GetTextFromUserPromptStr
+	GetPasswordFromUserPromptStr
+}

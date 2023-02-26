@@ -52,4 +52,5 @@ ${help.ComposeMethodHelp(wx.GenericProgressDialog, `ja)}
 	PD_ELAPSED_TIME
 	PD_ESTIMATED_TIME
 	PD_REMAINING_TIME
+	NOT_FOUND
 }

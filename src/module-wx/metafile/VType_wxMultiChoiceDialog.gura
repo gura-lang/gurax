@@ -36,3 +36,7 @@ ${help.ComposeConstructorHelp(wx.MultiChoiceDialog, `ja)}
 
 ${help.ComposeMethodHelp(wx.MultiChoiceDialog, `ja)}
 '''ja
+
+@const {
+	CHOICEDLG_STYLE
+}
