@@ -66,7 +66,7 @@ Gurax_ImplementMethod(Object, __clone__)
 	return Value::nil();
 }
 
-// Object#__instanceOf__(vtype:VType)
+// Object#__instanceOf__(vtype as VType)
 Gurax_DeclareMethod(Object, __instanceOf__)
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -87,7 +87,7 @@ Gurax_ImplementMethod(Object, __instanceOf__)
 	return new Value_Bool(valueThis.IsInstanceOf(vtype));
 }
 
-// Object##__prop__(symbol:Symbol):map {block?}
+// Object##__prop__(symbol as Symbol):map {block?}
 Gurax_DeclareHybridMethod(Object, __prop__)
 {
 	Declare(VTYPE_Bool, Flag::Map);

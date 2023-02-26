@@ -68,8 +68,8 @@ Value* Value_Module::DoGetProperty(const Symbol* pSymbol, const Attribute& attr,
 	if (pValue) return pValue.release();
 	if (notFoundErrorFlag) {
 		Error::Issue(ErrorType::PropertyError,
-					 "module '%s' doesn't have a property '%s'",
-					 GetModule().GetDottedSymbol().ToString().c_str(), pSymbol->GetName());
+					"module '%s' doesn't have a property '%s'",
+					GetModule().GetDottedSymbol().ToString().c_str(), pSymbol->GetName());
 	}
 	return nullptr;
 }

@@ -203,15 +203,15 @@ bool Module::AssignToFrame(Processor& processor, const SymbolList* pSymbolList, 
 		for (const Symbol* pSymbol : *pSymbolList) {
 			if (!overwriteFlag && frameCur.IsAssigned(pSymbol)) {
 				Error::Issue(ErrorType::ImportError,
-							 "the symbol '%s' is already assigned in the current frame",
-							 pSymbol->GetName());
+							"the symbol '%s' is already assigned in the current frame",
+							pSymbol->GetName());
 				return false;
 			}
 			RefPtr<Value> pValue(GetFrame().Retrieve(pSymbol));
 			if (!pValue) {
 				Error::Issue(ErrorType::ImportError,
-							 "module %s doesn't have a symbol named '%s'",
-							 GetDottedSymbol().ToString().c_str(), pSymbol->GetName());
+							"module %s doesn't have a symbol named '%s'",
+							GetDottedSymbol().ToString().c_str(), pSymbol->GetName());
 				return false;
 			}
 			frameCur.Assign(pSymbol, pValue->Reference());
@@ -226,13 +226,13 @@ bool Module::AssignToFrame(Processor& processor, const SymbolList* pSymbolList, 
 		if (!pModule) return false;
 		if (!frameCur.Assign(pModule.release())) {
 			Error::Issue(ErrorType::ImportError,
-						 "failed to assign module %s", pDottedSymbol->ToString().c_str());
+						"failed to assign module %s", pDottedSymbol->ToString().c_str());
 			return false;
 		}
 	}			
 	if (!frameCur.Assign(Reference())) {
 		Error::Issue(ErrorType::ImportError,
-					 "failed to assign module %s", GetDottedSymbol().ToString().c_str());
+					"failed to assign module %s", GetDottedSymbol().ToString().c_str());
 		return false;
 	}
 	return true;
