@@ -8,7 +8,12 @@ FileDialog = Class(Dialog) {
 	GetDirectory() as String
 	GetExtraControl() as Window_p
 	GetFilename() as String
-	//GetFilenames(filenames as ArrayString_r) as void
+	GetFilenames() = \
+		R'''
+		wxArrayString filenames;
+		pEntity_gurax->GetFilenames(filenames);
+		return Util::CreateList(filenames);
+		'''
 	GetFilterIndex() as int
 	GetMessage() as String
 	GetPath() as String

@@ -1,0 +1,68 @@
+#!/usr/bin/env gurax
+import(wx)
+
+AppMain = class(wx.App) {
+	OnInit() = {
+		FrameMain(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		true
+	}
+}
+
+FrameMain = class(wx.Frame) {
+	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
+		PanelTop(this)
+	}
+}
+
+PanelTop = class(wx.Panel) {
+	textCtrl as wx.TextCtrl
+	__init__(parent as wx.Window) = {|parent|
+		sizerTop = wx.BoxSizer(wx.VERTICAL)
+		this.SetSizer(sizerTop)
+		wx.BoxSizer(wx.HORIZONTAL) {|hbox|
+			sizerTop.Add(hbox, wx.SizerFlags().Expand())
+			wx.Button(this, wx.ID_ANY, 'Show Dialog') {|ctrl|
+				hbox.Add(ctrl, wx.SizerFlags().Expand())
+				ctrl.Bind(wx.EVT_BUTTON, this.OnButton)
+			}
+		}
+		wx.BoxSizer(wx.VERTICAL) {|vbox|
+			sizerTop.Add(vbox, wx.SizerFlags(1).Expand())
+			wx.TextCtrl(this, wx.ID_ANY, '', style = wx.TE_MULTILINE) {|ctrl|
+				ctrl.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE,  wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
+				this.textCtrl = ctrl
+				vbox.Add(ctrl, wx.SizerFlags(1).Expand())
+			}
+		}
+	}
+	OnButton(event as wx.CommandEvent) = {
+		//style = wx.FD_DEFAULT_STYLE
+		style = wx.FD_MULTIPLE
+		wx.FileDialog(this,
+				message = 'Test'
+				defaultDir = ''
+				defaultFile = ''
+				wildcard = wx.FileSelectorDefaultWildcardStr
+				style = style
+				pos = wx.Point(300, 50)
+				size = wx.DefaultSize) {|dlg|
+			rtn = dlg.ShowModal()
+			this.Printf('rtn = %d\n', rtn)
+			if (rtn == wx.ID_OK) {
+				this.Printf('GetCurrentlySelectedFilename: %s\n', dlg.GetCurrentlySelectedFilename())
+				this.Printf('GetDirectory   %s\n', dlg.GetDirectory())
+				!(style & wx.FD_MULTIPLE) && this.Printf('GetFilename    %s\n', dlg.GetFilename())
+				this.Printf('GetFilenames   %s\n', dlg.GetFilenames().Join('\n               '))
+				this.Printf('GetMessage     %s\n', dlg.GetMessage())
+				!(style & wx.FD_MULTIPLE) && this.Printf('GetPath        %s\n', dlg.GetPath())
+				this.Printf('GetPaths       %s\n', dlg.GetPaths().Join('\n               '))
+				this.Printf('GetWildcard    %s\n', dlg.GetWildcard())
+			}
+		}
+	}
+	Printf(format as String, args*) = {
+		this.textCtrl.AppendText(Format(format, args*))
+	}
+}
+
+wx.ImplementApp(AppMain())

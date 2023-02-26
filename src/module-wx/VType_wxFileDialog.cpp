@@ -153,6 +153,24 @@ Gurax_ImplementMethodEx(wxFileDialog, GetFilename_gurax, processor_gurax, argume
 	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
+// wx.FileDialog#GetFilenames()
+Gurax_DeclareMethodAlias(wxFileDialog, GetFilenames_gurax, "GetFilenames")
+{
+	Declare(VTYPE_Any, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxFileDialog, GetFilenames_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxArrayString filenames;
+	pEntity_gurax->GetFilenames(filenames);
+	return Util::CreateList(filenames);
+}
+
 // wx.FileDialog#GetFilterIndex()
 Gurax_DeclareMethodAlias(wxFileDialog, GetFilterIndex_gurax, "GetFilterIndex")
 {
@@ -403,6 +421,7 @@ void VType_wxFileDialog::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxFileDialog, GetDirectory_gurax));
 	Assign(Gurax_CreateMethod(wxFileDialog, GetExtraControl_gurax));
 	Assign(Gurax_CreateMethod(wxFileDialog, GetFilename_gurax));
+	Assign(Gurax_CreateMethod(wxFileDialog, GetFilenames_gurax));
 	Assign(Gurax_CreateMethod(wxFileDialog, GetFilterIndex_gurax));
 	Assign(Gurax_CreateMethod(wxFileDialog, GetMessage_gurax));
 	Assign(Gurax_CreateMethod(wxFileDialog, GetPath_gurax));
