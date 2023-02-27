@@ -26,6 +26,7 @@ PanelTop = class(wx.Panel) {
 				ctrl.Bind(wx.EVT_BUTTON, this.OnButton)
 			}
 		}
+		
 		wx.BoxSizer(wx.VERTICAL) {|vbox|
 			sizerTop.Add(vbox, wx.SizerFlags(1).Expand())
 			wx.TextCtrl(this, wx.ID_ANY, '', style = wx.TE_MULTILINE) {|ctrl|
