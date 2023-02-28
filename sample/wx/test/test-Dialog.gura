@@ -1,6 +1,12 @@
 #!/usr/bin/env gurax
 import(wx)
 
+textCtrl as wx.TextCtrl = nil
+
+LogPrintf(format as String, args*) = {
+	textCtrl.AppendText(Format(format, args*))
+}
+
 AppMain = class(wx.App) {
 	OnInit() = {
 		FrameMain(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
@@ -14,55 +20,73 @@ FrameMain = class(wx.Frame) {
 	}
 }
 
-PanelTop = class(wx.Panel) {
-	textCtrl as wx.TextCtrl
+panels = []
+
+Panel = class(wx.Panel) {
 	__init__(parent as wx.Window) = {|parent|
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
-		wx.BoxSizer(wx.HORIZONTAL) {|hbox|
-			sizerTop.Add(hbox, wx.SizerFlags().Expand())
-			wx.Button(this, wx.ID_ANY, 'Show Dialog') {|ctrl|
-				hbox.Add(ctrl, wx.SizerFlags().Expand())
-				ctrl.Bind(wx.EVT_BUTTON, this.OnButton)
-			}
-		}
-		
-		wx.BoxSizer(wx.VERTICAL) {|vbox|
-			sizerTop.Add(vbox, wx.SizerFlags(1).Expand())
-			wx.TextCtrl(this, wx.ID_ANY, '', style = wx.TE_MULTILINE) {|ctrl|
-				ctrl.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE,  wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
-				this.textCtrl = ctrl
-				vbox.Add(ctrl, wx.SizerFlags(1).Expand())
-			}
+		wx.Button(this, wx.ID_ANY, 'Show Dialog') {|ctrl|
+			sizerTop.Add(ctrl, wx.SizerFlags().Expand().Border(wx.ALL, 4))
+			ctrl.Bind(wx.EVT_BUTTON, this.OnButton)
 		}
 	}
-	OnButton(event as wx.CommandEvent) = {
+	OnButton(event as wx.CommandEvent) = this.ShowDialog()
+}
+
+Panel_FontDialog = class(Panel) {
+	name = 'FontDialog'
+	ShowDialog() = {
+		dlg = wx.FontDialog(this)
+		dlg.ShowModal()
+	}
+}
+panels.Add(Panel_FontDialog)
+
+Panel_FileDialog = class(Panel) {
+	name = 'FileDialog'
+	ShowDialog() = {
 		//style = wx.FD_DEFAULT_STYLE
 		style = wx.FD_MULTIPLE
-		wx.FileDialog(this,
-				message = 'Test'
-				defaultDir = ''
-				defaultFile = ''
-				wildcard = wx.FileSelectorDefaultWildcardStr
-				style = style
-				pos = wx.Point(300, 50)
-				size = wx.DefaultSize) {|dlg|
-			rtn = dlg.ShowModal()
-			this.Printf('rtn = %d\n', rtn)
-			if (rtn == wx.ID_OK) {
-				this.Printf('GetCurrentlySelectedFilename: %s\n', dlg.GetCurrentlySelectedFilename())
-				this.Printf('GetDirectory   %s\n', dlg.GetDirectory())
-				!(style & wx.FD_MULTIPLE) && this.Printf('GetFilename    %s\n', dlg.GetFilename())
-				this.Printf('GetFilenames   %s\n', dlg.GetFilenames().Join('\n               '))
-				this.Printf('GetMessage     %s\n', dlg.GetMessage())
-				!(style & wx.FD_MULTIPLE) && this.Printf('GetPath        %s\n', dlg.GetPath())
-				this.Printf('GetPaths       %s\n', dlg.GetPaths().Join('\n               '))
-				this.Printf('GetWildcard    %s\n', dlg.GetWildcard())
-			}
+		dlg = wx.FileDialog(this,
+			message = 'Test'
+			defaultDir = ''
+			defaultFile = ''
+			wildcard = wx.FileSelectorDefaultWildcardStr
+			style = style
+			pos = wx.Point(300, 50)
+			size = wx.DefaultSize)
+		rtn = dlg.ShowModal()
+		LogPrintf('rtn = %d\n', rtn)
+		if (rtn == wx.ID_OK) {
+			LogPrintf('GetCurrentlySelectedFilename: %s\n', dlg.GetCurrentlySelectedFilename())
+			LogPrintf('GetDirectory   %s\n', dlg.GetDirectory())
+			!(style & wx.FD_MULTIPLE) && LogPrintf('GetFilename    %s\n', dlg.GetFilename())
+			LogPrintf('GetFilenames   %s\n', dlg.GetFilenames().Join('\n               '))
+			LogPrintf('GetMessage     %s\n', dlg.GetMessage())
+			!(style & wx.FD_MULTIPLE) && LogPrintf('GetPath        %s\n', dlg.GetPath())
+			LogPrintf('GetPaths       %s\n', dlg.GetPaths().Join('\n               '))
+			LogPrintf('GetWildcard    %s\n', dlg.GetWildcard())
 		}
 	}
-	Printf(format as String, args*) = {
-		this.textCtrl.AppendText(Format(format, args*))
+}
+panels.Add(Panel_FileDialog)
+
+PanelTop = class(wx.Panel) {
+	__init__(parent as wx.Window) = {|parent|
+		sizerTop = wx.BoxSizer(wx.VERTICAL)
+		this.SetSizer(sizerTop)
+		wx.Notebook(this, wx.ID_ANY) {|notebook|
+			sizerTop.Add(notebook, wx.SizerFlags(1).Expand())
+			panels.Each {|Panel|
+				Panel(notebook) {|panel| notebook.AddPage(panel, panel.name)}
+			}
+		}
+		wx.TextCtrl(this, wx.ID_ANY, '', style = wx.TE_MULTILINE) {|ctrl|
+			ctrl.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE,  wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
+			textCtrl:extern = ctrl
+			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
+		}
 	}
 }
 
