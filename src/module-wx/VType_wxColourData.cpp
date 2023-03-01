@@ -199,7 +199,8 @@ Gurax_ImplementMethodEx(wxColourData, ToString_gurax, processor_gurax, argument_
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->ToString();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.ColourData#FromString(str as String)

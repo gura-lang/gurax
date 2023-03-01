@@ -104,7 +104,8 @@ Gurax_ImplementMethodEx(wxFileConfig, GetPath_gurax, processor_gurax, argument_g
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetPath();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.FileConfig#GetNumberOfEntries(bRecursive? as Bool)
@@ -370,7 +371,8 @@ Gurax_ImplementClassMethodEx(wxFileConfig, GetGlobalFileName_gurax, processor_gu
 	const char* szFile = args_gurax.PickString();
 	// Function body
 	wxString rtn = wxFileConfig::GetGlobalFileName(szFile);
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.FileConfig.GetLocalFileName(szFile as String, style? as Number)
@@ -390,7 +392,8 @@ Gurax_ImplementClassMethodEx(wxFileConfig, GetLocalFileName_gurax, processor_gur
 	int style = style_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body
 	wxString rtn = wxFileConfig::GetLocalFileName(szFile, style);
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 //-----------------------------------------------------------------------------

@@ -62,7 +62,8 @@ Gurax_ImplementMethodEx(wxFileCtrlEvent, GetDirectory_gurax, processor_gurax, ar
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetDirectory();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.FileCtrlEvent#GetFile()
@@ -79,7 +80,8 @@ Gurax_ImplementMethodEx(wxFileCtrlEvent, GetFile_gurax, processor_gurax, argumen
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetFile();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.FileCtrlEvent#GetFiles()

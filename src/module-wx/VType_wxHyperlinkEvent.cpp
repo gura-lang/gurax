@@ -62,7 +62,8 @@ Gurax_ImplementMethodEx(wxHyperlinkEvent, GetURL_gurax, processor_gurax, argumen
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetURL();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.HyperlinkEvent#SetURL(url as String)

@@ -156,7 +156,8 @@ Gurax_ImplementMethodEx(wxBookCtrlBase, GetPageText_gurax, processor_gurax, argu
 	size_t nPage = args_gurax.PickNumber<size_t>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetPageText(nPage);
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.BookCtrlBase#SetPageText(page as Number, text as String)

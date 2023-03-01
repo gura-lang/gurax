@@ -184,7 +184,8 @@ Gurax_ImplementMethodEx(wxPGProperty, ValueToString_gurax, processor_gurax, argu
 	int argFlags = argFlags_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body
 	wxString rtn = pEntity_gurax->ValueToString(value, argFlags);
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.PGProperty#SetValueFromString(text as String, flags? as Number)
@@ -730,7 +731,8 @@ Gurax_ImplementMethodEx(wxPGProperty, GenerateComposedValue_gurax, processor_gur
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GenerateComposedValue();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.PGProperty#GetAttribute(name as String) {block?}
@@ -851,7 +853,8 @@ Gurax_ImplementMethodEx(wxPGProperty, GetBaseName_gurax, processor_gurax, argume
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetBaseName();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.PGProperty#GetCell(column as Number) {block?}
@@ -989,7 +992,8 @@ Gurax_ImplementMethodEx(wxPGProperty, GetDisplayedString_gurax, processor_gurax,
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetDisplayedString();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.PGProperty#GetGrid() {block?}
@@ -1042,7 +1046,8 @@ Gurax_ImplementMethodEx(wxPGProperty, GetHelpString_gurax, processor_gurax, argu
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetHelpString();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.PGProperty#GetIndexInParent()
@@ -1076,7 +1081,8 @@ Gurax_ImplementMethodEx(wxPGProperty, GetLabel_gurax, processor_gurax, argument_
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetLabel();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.PGProperty#GetLastVisibleSubItem() {block?}
@@ -1146,7 +1152,8 @@ Gurax_ImplementMethodEx(wxPGProperty, GetName_gurax, processor_gurax, argument_g
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetName();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.PGProperty#GetParent() {block?}
@@ -1262,7 +1269,8 @@ Gurax_ImplementMethodEx(wxPGProperty, GetValueAsString_gurax, processor_gurax, a
 	int argFlags = argFlags_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body
 	wxString rtn = pEntity_gurax->GetValueAsString(argFlags);
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.PGProperty#GetValueType()
@@ -1279,7 +1287,8 @@ Gurax_ImplementMethodEx(wxPGProperty, GetValueType_gurax, processor_gurax, argum
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetValueType();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.PGProperty#GetY()

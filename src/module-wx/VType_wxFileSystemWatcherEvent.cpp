@@ -132,7 +132,8 @@ Gurax_ImplementMethodEx(wxFileSystemWatcherEvent, GetErrorDescription_gurax, pro
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetErrorDescription();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.FileSystemWatcherEvent#GetWarningType()
@@ -166,7 +167,8 @@ Gurax_ImplementMethodEx(wxFileSystemWatcherEvent, ToString_gurax, processor_gura
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->ToString();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 //-----------------------------------------------------------------------------

@@ -91,7 +91,8 @@ Gurax_ImplementMethodEx(wxColourProperty, ValueToString_gurax, processor_gurax, 
 	int argFlags = argFlags_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body
 	wxString rtn = pEntity_gurax->ValueToString(value, argFlags);
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.ColourProperty#GetColour(index as Number) {block?}

@@ -657,7 +657,8 @@ Gurax_ImplementMethodEx(wxGrid, GetColLabelValue_gurax, processor_gurax, argumen
 	int col = args_gurax.PickNumber<int>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetColLabelValue(col);
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.Grid#GetLabelBackgroundColour() {block?}
@@ -732,7 +733,8 @@ Gurax_ImplementMethodEx(wxGrid, GetRowLabelValue_gurax, processor_gurax, argumen
 	int row = args_gurax.PickNumber<int>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetRowLabelValue(row);
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.Grid#HideColLabels()
@@ -1454,7 +1456,8 @@ Gurax_ImplementMethodEx(wxGrid, GetCellValue_gurax, processor_gurax, argument_gu
 	int col = args_gurax.PickNumber<int>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetCellValue(row, col);
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.Grid#GetDefaultEditor() {block?}

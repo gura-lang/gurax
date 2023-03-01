@@ -140,7 +140,8 @@ Gurax_ImplementMethodEx(wxSymbolPickerDialog, GetFontName_gurax, processor_gurax
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetFontName();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.SymbolPickerDialog#GetFromUnicode()
@@ -174,7 +175,8 @@ Gurax_ImplementMethodEx(wxSymbolPickerDialog, GetNormalTextFontName_gurax, proce
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetNormalTextFontName();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.SymbolPickerDialog#GetSymbol()
@@ -191,7 +193,8 @@ Gurax_ImplementMethodEx(wxSymbolPickerDialog, GetSymbol_gurax, processor_gurax, 
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetSymbol();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.SymbolPickerDialog#GetSymbolChar()

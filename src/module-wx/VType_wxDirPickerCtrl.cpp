@@ -156,7 +156,8 @@ Gurax_ImplementMethodEx(wxDirPickerCtrl, GetPath_gurax, processor_gurax, argumen
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetPath();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.DirPickerCtrl#SetDirName(dirname as wx.FileName)

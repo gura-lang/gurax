@@ -1083,7 +1083,8 @@ Gurax_ImplementMethodEx(wxAuiToolBar, GetToolLabel_gurax, processor_gurax, argum
 	int tool_id = args_gurax.PickNumber<int>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetToolLabel(tool_id);
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.AuiToolBar#SetToolLabel(tool_id as Number, label as String)
@@ -1173,7 +1174,8 @@ Gurax_ImplementMethodEx(wxAuiToolBar, GetToolShortHelp_gurax, processor_gurax, a
 	int tool_id = args_gurax.PickNumber<int>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetToolShortHelp(tool_id);
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.AuiToolBar#SetToolShortHelp(tool_id as Number, help_string as String)
@@ -1217,7 +1219,8 @@ Gurax_ImplementMethodEx(wxAuiToolBar, GetToolLongHelp_gurax, processor_gurax, ar
 	int tool_id = args_gurax.PickNumber<int>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetToolLongHelp(tool_id);
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.AuiToolBar#SetToolLongHelp(tool_id as Number, help_string as String)

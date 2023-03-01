@@ -843,7 +843,8 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetItemText_gurax, processor_gurax, argument
 	const wxTreeItemId& item = value_item.GetEntity();
 	// Function body
 	wxString rtn = pEntity_gurax->GetItemText(item);
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.TreeCtrl#GetItemTextColour(item as wx.TreeItemId) {block?}

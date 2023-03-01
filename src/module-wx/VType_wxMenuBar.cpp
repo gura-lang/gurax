@@ -244,7 +244,8 @@ Gurax_ImplementMethodEx(wxMenuBar, GetHelpString_gurax, processor_gurax, argumen
 	int id = args_gurax.PickNumber<int>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetHelpString(id);
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.MenuBar#GetLabel(id as Number)
@@ -265,7 +266,8 @@ Gurax_ImplementMethodEx(wxMenuBar, GetLabel_gurax, processor_gurax, argument_gur
 	int id = args_gurax.PickNumber<int>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetLabel(id);
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.MenuBar#GetMenu(menuIndex as Number) {block?}
@@ -325,7 +327,8 @@ Gurax_ImplementMethodEx(wxMenuBar, GetMenuLabel_gurax, processor_gurax, argument
 	size_t pos = args_gurax.PickNumber<size_t>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetMenuLabel(pos);
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.MenuBar#GetMenuLabelText(pos as Number)
@@ -346,7 +349,8 @@ Gurax_ImplementMethodEx(wxMenuBar, GetMenuLabelText_gurax, processor_gurax, argu
 	size_t pos = args_gurax.PickNumber<size_t>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetMenuLabelText(pos);
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.MenuBar#Insert(pos as Number, menu as wx.Menu, title as String)

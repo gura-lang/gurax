@@ -374,7 +374,8 @@ Gurax_ImplementMethodEx(wxPropertyGridManager, GetPageName_gurax, processor_gura
 	int index = args_gurax.PickNumber<int>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetPageName(index);
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.PropertyGridManager#GetPageRoot(index as Number) {block?}

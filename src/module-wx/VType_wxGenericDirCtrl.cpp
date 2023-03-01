@@ -201,7 +201,8 @@ Gurax_ImplementMethodEx(wxGenericDirCtrl, GetDefaultPath_gurax, processor_gurax,
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetDefaultPath();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.GenericDirCtrl#GetFilePath()
@@ -218,7 +219,8 @@ Gurax_ImplementMethodEx(wxGenericDirCtrl, GetFilePath_gurax, processor_gurax, ar
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetFilePath();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.GenericDirCtrl#GetFilter()
@@ -235,7 +237,8 @@ Gurax_ImplementMethodEx(wxGenericDirCtrl, GetFilter_gurax, processor_gurax, argu
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetFilter();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.GenericDirCtrl#GetFilterIndex()
@@ -287,7 +290,8 @@ Gurax_ImplementMethodEx(wxGenericDirCtrl, GetPath_gurax, processor_gurax, argume
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetPath();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.GenericDirCtrl#GetRootId() {block?}

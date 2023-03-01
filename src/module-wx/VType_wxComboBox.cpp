@@ -303,7 +303,8 @@ Gurax_ImplementMethodEx(wxComboBox, GetString_gurax, processor_gurax, argument_g
 	unsigned int n = args_gurax.PickNumber<unsigned int>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetString(n);
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.ComboBox#GetStringSelection()
@@ -320,7 +321,8 @@ Gurax_ImplementMethodEx(wxComboBox, GetStringSelection_gurax, processor_gurax, a
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetStringSelection();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.ComboBox#SetString(n as Number, text as String)
@@ -936,7 +938,8 @@ Gurax_ImplementMethodEx(wxComboBox, GetRange_gurax, processor_gurax, argument_gu
 	long to = args_gurax.PickNumber<long>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetRange(from, to);
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.ComboBox#GetValue()
@@ -953,7 +956,8 @@ Gurax_ImplementMethodEx(wxComboBox, GetValue_gurax, processor_gurax, argument_gu
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetValue();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.ComboBox#IsEditable()
@@ -1204,7 +1208,8 @@ Gurax_ImplementMethodEx(wxComboBox, GetHint_gurax, processor_gurax, argument_gur
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetHint();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.ComboBox#GetMargins() {block?}

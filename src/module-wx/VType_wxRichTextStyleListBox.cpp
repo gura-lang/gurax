@@ -174,7 +174,8 @@ Gurax_ImplementMethodEx(wxRichTextStyleListBox, CreateHTML_gurax, processor_gura
 	wxRichTextStyleDefinition* def = value_def.GetEntityPtr();
 	// Function body
 	wxString rtn = pEntity_gurax->CreateHTML(def);
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.RichTextStyleListBox#GetApplyOnSelection()

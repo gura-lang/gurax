@@ -44,7 +44,7 @@ Colour = Class {
 		'''
 	Alpha() as unsigned_char
 	Blue() as unsigned_char
-	GetAsString(flags as long = wxC2S_NAME | wxC2S_CSS_SYNTAX) as String
+	GetAsString(flags as long = wxC2S_CSS_SYNTAX) as String
 	//GetPixel() as IntPtr
 	Green() as unsigned_char
 	IsOk() as bool
@@ -95,8 +95,8 @@ Colour = Class {
 		'''
 	__toString__() = \
 		R'''
-		const wxColour& c = GetEntity();
-		return ToStringGeneric(ss, String().Format("wx.Colour:#%02x%02x%02x", c.Red(), c.Green(), c.Blue()));
+		const wxColour& color = GetEntity();
+		return ToStringGeneric(ss, String().Format("wx.Colour:#%02X%02X%02X", color.Red(), color.Green(), color.Blue()));
 		'''
 } %% R'''
 # Overview

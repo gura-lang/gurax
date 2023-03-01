@@ -32,7 +32,8 @@ r.DeclareType('String', 'const char*', 'String',
 	'''
 	codeFunctionBody = R'''
 	wxString rtn = ${caller};
-	return new Gurax::Value_${this.vtype}(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_${this.vtype}(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_${this.vtype}(rtn.utf8_str().data());
 	''')
 
 r.DeclareType('wxString', 'wxString', 'String',
@@ -45,7 +46,8 @@ r.DeclareType('wxString', 'wxString', 'String',
 	codeConvToC = 'Value_String::GetString(${src})'
 	codeFunctionBody = R'''
 	wxString rtn = ${caller};
-	return new Gurax::Value_${this.vtype}(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_${this.vtype}(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_${this.vtype}(rtn.utf8_str().data());
 	''')
 
 r.DeclareType('const_String_r', 'const char*', 'String',

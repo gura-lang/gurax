@@ -179,7 +179,8 @@ Gurax_ImplementMethodEx(wxTextCtrl, GetLineText_gurax, processor_gurax, argument
 	long lineNo = args_gurax.PickNumber<long>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetLineText(lineNo);
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.TextCtrl#GetNumberOfLines()
@@ -851,7 +852,8 @@ Gurax_ImplementMethodEx(wxTextCtrl, GetRange_gurax, processor_gurax, argument_gu
 	long to = args_gurax.PickNumber<long>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetRange(from, to);
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.TextCtrl#GetSelection()
@@ -886,7 +888,8 @@ Gurax_ImplementMethodEx(wxTextCtrl, GetStringSelection_gurax, processor_gurax, a
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetStringSelection();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.TextCtrl#GetValue()
@@ -903,7 +906,8 @@ Gurax_ImplementMethodEx(wxTextCtrl, GetValue_gurax, processor_gurax, argument_gu
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetValue();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.TextCtrl#IsEditable()
@@ -1194,7 +1198,8 @@ Gurax_ImplementMethodEx(wxTextCtrl, GetHint_gurax, processor_gurax, argument_gur
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetHint();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.TextCtrl#GetMargins() {block?}

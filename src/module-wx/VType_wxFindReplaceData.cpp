@@ -80,7 +80,8 @@ Gurax_ImplementMethodEx(wxFindReplaceData, GetFindString_gurax, processor_gurax,
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetFindString();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.FindReplaceData#GetFlags()
@@ -114,7 +115,8 @@ Gurax_ImplementMethodEx(wxFindReplaceData, GetReplaceString_gurax, processor_gur
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetReplaceString();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.FindReplaceData#SetFindString(str as String)

@@ -168,7 +168,8 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, GetName_gurax, processor_gurax, argum
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetName();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.AboutDialogInfo#HasDescription()
@@ -202,7 +203,8 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, GetDescription_gurax, processor_gurax
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetDescription();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.AboutDialogInfo#HasCopyright()
@@ -236,7 +238,8 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, GetCopyright_gurax, processor_gurax, 
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetCopyright();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.AboutDialogInfo#SetArtists(artists[] as String)
@@ -432,7 +435,8 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, GetLicence_gurax, processor_gurax, ar
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetLicence();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.AboutDialogInfo#SetLicence(licence as String)
@@ -556,7 +560,8 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, GetVersion_gurax, processor_gurax, ar
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetVersion();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.AboutDialogInfo#GetLongVersion()
@@ -573,7 +578,8 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, GetLongVersion_gurax, processor_gurax
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetLongVersion();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.AboutDialogInfo#HasWebSite()
@@ -607,7 +613,8 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, GetWebSiteURL_gurax, processor_gurax,
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetWebSiteURL();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.AboutDialogInfo#GetWebSiteDescription()
@@ -624,7 +631,8 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, GetWebSiteDescription_gurax, processo
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetWebSiteDescription();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.AboutDialogInfo#SetWebSite(url as String, desc? as String)

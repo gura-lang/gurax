@@ -184,7 +184,8 @@ Gurax_ImplementMethodEx(wxFont, GetFaceName_gurax, processor_gurax, argument_gur
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetFaceName();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.Font#GetFamily()
@@ -218,7 +219,8 @@ Gurax_ImplementMethodEx(wxFont, GetNativeFontInfoDesc_gurax, processor_gurax, ar
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetNativeFontInfoDesc();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.Font#GetNativeFontInfoUserDesc()
@@ -235,7 +237,8 @@ Gurax_ImplementMethodEx(wxFont, GetNativeFontInfoUserDesc_gurax, processor_gurax
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetNativeFontInfoUserDesc();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.Font#GetPointSize()

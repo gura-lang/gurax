@@ -182,7 +182,8 @@ Gurax_ImplementMethodEx(wxListEvent, GetLabel_gurax, processor_gurax, argument_g
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetLabel();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.ListEvent#GetMask()
@@ -234,7 +235,8 @@ Gurax_ImplementMethodEx(wxListEvent, GetText_gurax, processor_gurax, argument_gu
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetText();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.ListEvent#IsEditCancelled()

@@ -149,10 +149,11 @@ Gurax_ImplementMethodEx(wxColour, GetAsString_gurax, processor_gurax, argument_g
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	bool flags_validFlag = args_gurax.IsValid();
-	long flags = flags_validFlag? args_gurax.PickNumber<long>() : (wxC2S_NAME | wxC2S_CSS_SYNTAX);
+	long flags = flags_validFlag? args_gurax.PickNumber<long>() : wxC2S_CSS_SYNTAX;
 	// Function body
 	wxString rtn = pEntity_gurax->GetAsString(flags);
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.Colour#Green()
@@ -528,8 +529,8 @@ VType& Value_wxColour::vtype = VTYPE_wxColour;
 
 String Value_wxColour::ToString(const StringStyle& ss) const
 {
-	const wxColour& c = GetEntity();
-	return ToStringGeneric(ss, String().Format("wx.Colour:#%02x%02x%02x", c.Red(), c.Green(), c.Blue()));
+	const wxColour& color = GetEntity();
+	return ToStringGeneric(ss, String().Format("wx.Colour:#%02X%02X%02X", color.Red(), color.Green(), color.Blue()));
 }
 
 Gurax_EndModuleScope(wx)

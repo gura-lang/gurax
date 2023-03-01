@@ -125,7 +125,8 @@ Gurax_ImplementMethodEx(wxTextEntryDialog, GetValue_gurax, processor_gurax, argu
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetValue();
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
 // wx.TextEntryDialog#SetMaxLength(len as Number)
