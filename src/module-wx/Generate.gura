@@ -526,7 +526,11 @@ ${end}
 
 String Value_wx${className}::ToString(const StringStyle& ss) const
 {
+${if (funcInfoToString)}
+	${funcInfoToString.tmplFunctionBody.Eval()}
+${else}
 	return ToStringGeneric(ss, "wx.${className}");
+${end}
 }
 ${if (evtHandlerOrDerivFlag)}
 
@@ -854,6 +858,7 @@ ClassInfo = class {
 	classInfoParent:nil as ClassInfo
 	funcInfoConstructor as cbridge.FuncInfo
 	funcInfoCast as cbridge.FuncInfo
+	funcInfoToString as cbridge.FuncInfo
 	tmplConstructorImplementation as Template
 	loosePointerFlag as Bool = false
 	holdEntityFlag as Bool = false
@@ -1020,6 +1025,8 @@ path.Glob('metafile/*.gura').Each {|pathName|
 							classInfo.funcInfoConstructor = funcInfo
 						} elsif (funcInfo.name == '__cast__') {
 							classInfo.funcInfoCast = funcInfo
+						} elsif (funcInfo.name == '__toString__') {
+							classInfo.funcInfoToString = funcInfo
 						} elsif (funcInfo.type == `function) {
 							classInfo.funcInfoTbl.Add(funcInfo)
 						} elsif (funcInfo.type == `propGetter || funcInfo.type == `propSetter) {
@@ -1401,6 +1408,7 @@ GenerateVType(classInfoTbl[] as ClassInfo) = {
 		classNameRoot = cond(classInfoRoot, classInfoRoot.className)
 		funcInfoConstructor = classInfo.funcInfoConstructor
 		funcInfoCast = classInfo.funcInfoCast
+		funcInfoToString = classInfo.funcInfoToString
 		funcInfoTbl = classInfo.funcInfoTbl
 		propInfoTbl = classInfo.propInfoTbl
 		funcInfoVirtualTbl = funcInfoTbl.Filter(funcInfoTbl:*virtualFlag):list

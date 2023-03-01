@@ -528,7 +528,8 @@ VType& Value_wxColour::vtype = VTYPE_wxColour;
 
 String Value_wxColour::ToString(const StringStyle& ss) const
 {
-	return ToStringGeneric(ss, "wx.Colour");
+	const wxColour& c = GetEntity();
+	return ToStringGeneric(ss, String().Format("wx.Colour:#%02x%02x%02x", c.Red(), c.Green(), c.Blue()));
 }
 
 Gurax_EndModuleScope(wx)

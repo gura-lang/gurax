@@ -93,6 +93,11 @@ Colour = Class {
 		}
 		return nullptr;
 		'''
+	__toString__() = \
+		R'''
+		const wxColour& c = GetEntity();
+		return ToStringGeneric(ss, String().Format("wx.Colour:#%02x%02x%02x", c.Red(), c.Green(), c.Blue()));
+		'''
 } %% R'''
 # Overview
 

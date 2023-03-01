@@ -34,11 +34,26 @@ Panel = class(wx.Panel) {
 	OnButton(event as wx.CommandEvent) = this.ShowDialog()
 }
 
+Panel_ColourDialog = class(Panel) {
+	name = 'ColourDialog'
+	ShowDialog() = {
+		dlg = wx.ColourDialog(this)
+		rtn = dlg.ShowModal()
+		LogPrintf('rtn = %d\n', rtn)
+		if (rtn == wx.ID_OK) {
+			colour = dlg.GetColourData()
+			LogPrintf('%s\n', colour.ToString())
+			LogPrintf('%s\n', colour.GetColour())
+		}
+	}
+}
+panels.Add(Panel_ColourDialog)
+
 Panel_FontDialog = class(Panel) {
 	name = 'FontDialog'
 	ShowDialog() = {
 		dlg = wx.FontDialog(this)
-		dlg.ShowModal()
+		rtn = dlg.ShowModal()
 	}
 }
 panels.Add(Panel_FontDialog)
