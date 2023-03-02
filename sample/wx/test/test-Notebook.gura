@@ -49,19 +49,23 @@ PanelTop = class(wx.Panel) {
 	}
 	SetupNotebook(notebook as wx.Notebook, name as String) = {
 		//notebook.SetPadding(wx.Size(4, 4))
-		['Page1', 'Page2', 'Page3', 'Page4'].Each {|label|
+		['Page1', 'Page2', 'Page3', 'Page4', 'Page5'].Each {|label|
 			wx.TextCtrl(notebook, wx.ID_ANY, Format('%s - %s', name, label)) {|ctrl|
 				notebook.AddPage(ctrl, label)
 			}
 		}
-		notebook.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGING, this.OnNotebookPageChanging, userData = name)
-		notebook.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, this.OnNotebookPageChanged, userData = name)
+		notebook.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGING, this.OnNotebookPageChanging, userData = (notebook, name))
+		notebook.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, this.OnNotebookPageChanged, userData = (notebook, name))
 	}
 	OnNotebookPageChanging(event as wx.BookCtrlEvent) = {
-		this.Printf('NotebookPageChanging(%s)\n', event.GetEventUserData())
+		[notebook, name] = event.GetEventUserData()
+		this.Printf('NotebookPageChanging(%s) OldSelection[%s]->Selection[%s]\n', name,
+			notebook.GetPageText(event.GetOldSelection()), notebook.GetPageText(event.GetSelection()))
 	}
 	OnNotebookPageChanged(event as wx.BookCtrlEvent) = {
-		this.Printf('NotebookPageChanged(%s)\n', event.GetEventUserData())
+		[notebook, name] = event.GetEventUserData()
+		this.Printf('NotebookPageChanged(%s)  OldSelection[%s]->Selection[%s]\n', name,
+			notebook.GetPageText(event.GetOldSelection()), notebook.GetPageText(event.GetSelection()))
 	}
 	Printf(format as String, args*) = {
 		this.textCtrl.AppendText(Format(format, args*))

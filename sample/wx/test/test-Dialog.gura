@@ -73,8 +73,8 @@ panels.Add(Panel_FontDialog)
 
 Panel_FileDialog = class(Panel) {
 	__init__(parent as wx.Window) = {|parent, 'FileDialog'|
-		wx.TextCtrl(this, wx.ID_ANY, '') {|ctrl|
-			this.vbox.Add(ctrl, wx.SizerFlags(1).Expand())
+		wx.CheckBox(this, wx.ID_ANY, 'hoge') {|ctrl|
+			this.vbox.Add(ctrl, wx.SizerFlags().Expand())
 		}
 	}
 	ShowDialog() = {
