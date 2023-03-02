@@ -30,9 +30,9 @@ Panel = class(wx.Panel) {
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
 		this.vbox = wx.BoxSizer(wx.VERTICAL)
-		sizerTop.Add(this.vbox, wx.SizerFlags(1).Expand())
+		sizerTop.Add(this.vbox, wx.SizerFlags(1).Expand().Border(wx.ALL, 8))
 		wx.Button(this, wx.ID_ANY, 'Show ' + this.name) {|ctrl|
-			sizerTop.Add(ctrl, wx.SizerFlags().Expand().Border(wx.ALL, 4))
+			sizerTop.Add(ctrl, wx.SizerFlags().Expand().Border(wx.ALL, 8))
 			ctrl.Bind(wx.EVT_BUTTON, this.OnButton)
 		}
 	}
@@ -72,14 +72,26 @@ Panel_FontDialog = class(Panel) {
 panels.Add(Panel_FontDialog)
 
 Panel_FileDialog = class(Panel) {
+	checkBoxTbl = []
+	styleTbl = []
 	__init__(parent as wx.Window) = {|parent, 'FileDialog'|
-		wx.CheckBox(this, wx.ID_ANY, 'hoge') {|ctrl|
+		[('FD_OPEN', wx.FD_OPEN), ('FD_SAVE', wx.FD_SAVE), ('FD_OVERWRITE_PROMPT', wx.FD_OVERWRITE_PROMPT),
+			('FD_FILE_MUST_EXIST', wx.FD_FILE_MUST_EXIST), ('FD_MULTIPLE', wx.FD_MULTIPLE),
+			('FD_CHANGE_DIR', wx.FD_CHANGE_DIR), ('FD_PREVIEW', wx.FD_PREVIEW)].Each {|tuple, i|
+			[label, style] = tuple
+			(i > 0) && this.vbox.AddSpacer(8)
+			ctrl = wx.CheckBox(this, wx.ID_ANY, label)
 			this.vbox.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBoxTbl.Add(ctrl)
+			this.styleTbl.Add(style)
 		}
 	}
 	ShowDialog() = {
 		//style = wx.FD_DEFAULT_STYLE
 		style = wx.FD_MULTIPLE
+		this.checkBoxTbl.Each {|checkBox, i|
+			if (checkBox.IsChecked()) { style |= this.styleTbl[i] }
+		}
 		dlg = wx.FileDialog(this,
 			message = 'Test'
 			defaultDir = ''
@@ -113,6 +125,7 @@ PanelTop = class(wx.Panel) {
 			panels.Each {|Panel|
 				Panel(notebook) {|panel| notebook.AddPage(panel, panel.name)}
 			}
+			notebook.SetSelection(2)
 		}
 		wx.TextCtrl(this, wx.ID_ANY, '', style = wx.TE_MULTILINE) {|ctrl|
 			ctrl.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE,  wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
