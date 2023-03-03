@@ -29,30 +29,37 @@ Panel = class(wx.Panel) {
 		this.name = name
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
-		this.vbox = wx.BoxSizer(wx.VERTICAL)
-		sizerTop.Add(this.vbox, wx.SizerFlags(1).Expand().Border(wx.ALL, 8))
 		wx.Button(this, wx.ID_ANY, 'Show ' + this.name) {|ctrl|
 			sizerTop.Add(ctrl, wx.SizerFlags().Expand().Border(wx.ALL, 8))
 			ctrl.Bind(wx.EVT_BUTTON, this.OnButton)
 		}
+		this.vbox = wx.BoxSizer(wx.VERTICAL)
+		sizerTop.Add(this.vbox, wx.SizerFlags(1).Expand().Border(wx.ALL, 8))
 	}
 	OnButton(event as wx.CommandEvent) = this.ShowDialog()
 }
 
 Panel_ColourDialog = class(Panel) {
-	__init__(parent as wx.Window) = {|parent, 'ColourDialog'|}
+	checkBox_ChooseFull
+	__init__(parent as wx.Window) = {|parent, 'ColourDialog'|
+		wx.CheckBox(this, wx.ID_ANY, 'ChooseFull') {|ctrl|
+			this.vbox.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_ChooseFull = ctrl
+		}
+	}
 	ShowDialog() = {
 		data = wx.ColourData()
 		repeat (16) {|i|
 			data.SetCustomColour(i, wx.Colour(i * 16, i * 16, i * 16))
 		}
+		data.SetChooseFull(this.checkBox_ChooseFull.IsChecked())
 		dlg = wx.ColourDialog(this, data)
 		rtn = dlg.ShowModal()
 		LogPrintf('rtn = %d\n', rtn)
 		if (rtn == wx.ID_OK) {
-			colour = dlg.GetColourData()
-			LogPrintf('%s\n', colour.ToString())
-			LogPrintf('%s\n', colour.GetColour())
+			colourData = dlg.GetColourData()
+			LogPrintf('ToString():  %s\n', colourData.ToString())
+			LogPrintf('GetColour(): %s\n', colourData.GetColour())
 		}
 	}
 }
@@ -80,15 +87,15 @@ Panel_FileDialog = class(Panel) {
 			('FD_CHANGE_DIR', wx.FD_CHANGE_DIR), ('FD_PREVIEW', wx.FD_PREVIEW)].Each {|tuple, i|
 			[label, style] = tuple
 			(i > 0) && this.vbox.AddSpacer(8)
-			ctrl = wx.CheckBox(this, wx.ID_ANY, label)
-			this.vbox.Add(ctrl, wx.SizerFlags().Expand())
-			this.checkBoxTbl.Add(ctrl)
+			wx.CheckBox(this, wx.ID_ANY, label) {|ctrl|
+				this.vbox.Add(ctrl, wx.SizerFlags().Expand())
+				this.checkBoxTbl.Add(ctrl)
+			}
 			this.styleTbl.Add(style)
 		}
 	}
 	ShowDialog() = {
-		//style = wx.FD_DEFAULT_STYLE
-		style = wx.FD_MULTIPLE
+		style = 0
 		this.checkBoxTbl.Each {|checkBox, i|
 			if (checkBox.IsChecked()) { style |= this.styleTbl[i] }
 		}
