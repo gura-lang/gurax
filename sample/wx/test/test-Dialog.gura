@@ -39,6 +39,21 @@ Panel = class(wx.Panel) {
 	OnButton(event as wx.CommandEvent) = this.ShowDialog()
 }
 
+Panel_MessageDialog = class(Panel) {
+	__init__(parent as wx.Window) = {|parent, 'MessageDialog'|}
+	ShowDialog() = {
+		//style = wx.OK | wx.CENTRE
+		style = wx.OK | wx.CENTRE
+		dlg = wx.MessageDialog(this,
+			message = 'Message'
+			caption = 'Caption'
+			style = style)
+		rtn = dlg.ShowModal()
+		LogPrintf('rtn = %d\n', rtn)
+	}
+}
+panels.Add(Panel_MessageDialog)
+
 Panel_ColourDialog = class(Panel) {
 	checkBox_ChooseFull
 	__init__(parent as wx.Window) = {|parent, 'ColourDialog'|
