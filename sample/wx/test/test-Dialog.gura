@@ -132,7 +132,7 @@ PanelTop = class(wx.Panel) {
 			panels.Each {|Panel|
 				Panel(notebook) {|panel| notebook.AddPage(panel, panel.name)}
 			}
-			notebook.SetSelection(2)
+			//notebook.SetSelection(2)
 		}
 		wx.TextCtrl(this, wx.ID_ANY, '', style = wx.TE_MULTILINE) {|ctrl|
 			ctrl.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE,  wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
