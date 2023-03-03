@@ -39,15 +39,56 @@ Panel = class(wx.Panel) {
 	OnButton(event as wx.CommandEvent) = this.ShowDialog()
 }
 
+Panel_DirDialog = class(Panel) {
+	checkBox_DIR_MUST_EXIST
+	checkBox_PREVIEW
+	styleTbl = []
+	__init__(parent as wx.Window) = {|parent, 'DirDialog'|
+		wx.CheckBox(this, wx.ID_ANY, 'DD_DIR_MUST_EXIST') {|ctrl|
+			this.vbox.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_DIR_MUST_EXIST = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'DD_CHANGE_DIR') {|ctrl|
+			this.vbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.TOP, 8))
+			this.checkBox_PREVIEW = ctrl
+		}
+	}
+	ShowDialog() = {
+		style = 0
+		if (this.checkBox_DIR_MUST_EXIST.IsChecked()) { style |= wx.DD_DIR_MUST_EXIST } 
+		if (this.checkBox_PREVIEW.IsChecked()) { style |= wx.DD_PREVIEW }
+		dlg = wx.DirDialog(
+				parent = this
+				message = wx.DirSelectorPromptStr
+				defaultPath = ''
+				style = style
+				pos = wx.Point(300, 50))
+		rtn = dlg.ShowModal()
+		LogPrintf('rtn = %d\n', rtn)
+		if (rtn == wx.ID_OK) {
+			LogPrintf('GetCurrentlySelectedFilename: %s\n', dlg.GetCurrentlySelectedFilename())
+			LogPrintf('GetDirectory   %s\n', dlg.GetDirectory())
+			!(style & wx.FD_MULTIPLE) && LogPrintf('GetFilename    %s\n', dlg.GetFilename())
+			LogPrintf('GetFilenames   %s\n', dlg.GetFilenames().Join('\n               '))
+			LogPrintf('GetMessage     %s\n', dlg.GetMessage())
+			!(style & wx.FD_MULTIPLE) && LogPrintf('GetPath        %s\n', dlg.GetPath())
+			LogPrintf('GetPaths       %s\n', dlg.GetPaths().Join('\n               '))
+			LogPrintf('GetWildcard    %s\n', dlg.GetWildcard())
+		}
+	}
+}
+panels.Add(Panel_DirDialog)
+
 Panel_MessageDialog = class(Panel) {
 	__init__(parent as wx.Window) = {|parent, 'MessageDialog'|}
 	ShowDialog() = {
 		//style = wx.OK | wx.CENTRE
 		style = wx.OK | wx.CENTRE
-		dlg = wx.MessageDialog(this,
-			message = 'Message'
-			caption = 'Caption'
-			style = style)
+		dlg = wx.MessageDialog(
+				parent = this
+				message = 'Message'
+				caption = 'Caption'
+				style = style)
 		rtn = dlg.ShowModal()
 		LogPrintf('rtn = %d\n', rtn)
 	}
@@ -68,7 +109,9 @@ Panel_ColourDialog = class(Panel) {
 			data.SetCustomColour(i, wx.Colour(i * 16, i * 16, i * 16))
 		}
 		data.SetChooseFull(this.checkBox_ChooseFull.IsChecked())
-		dlg = wx.ColourDialog(this, data)
+		dlg = wx.ColourDialog(
+				parent = this
+				data = data)
 		rtn = dlg.ShowModal()
 		LogPrintf('rtn = %d\n', rtn)
 		if (rtn == wx.ID_OK) {
@@ -94,34 +137,62 @@ Panel_FontDialog = class(Panel) {
 panels.Add(Panel_FontDialog)
 
 Panel_FileDialog = class(Panel) {
-	checkBoxTbl = []
+	checkBox_OPEN
+	checkBox_SAVE
+	checkBox_OVERWRITE_PROMPT
+	checkBox_FILE_MUST_EXIST
+	checkBox_MULTIPLE
+	checkBox_CHANGE_DIR
+	checkBox_PREVIEW
 	styleTbl = []
 	__init__(parent as wx.Window) = {|parent, 'FileDialog'|
-		[('FD_OPEN', wx.FD_OPEN), ('FD_SAVE', wx.FD_SAVE), ('FD_OVERWRITE_PROMPT', wx.FD_OVERWRITE_PROMPT),
-			('FD_FILE_MUST_EXIST', wx.FD_FILE_MUST_EXIST), ('FD_MULTIPLE', wx.FD_MULTIPLE),
-			('FD_CHANGE_DIR', wx.FD_CHANGE_DIR), ('FD_PREVIEW', wx.FD_PREVIEW)].Each {|tuple, i|
-			[label, style] = tuple
-			(i > 0) && this.vbox.AddSpacer(8)
-			wx.CheckBox(this, wx.ID_ANY, label) {|ctrl|
-				this.vbox.Add(ctrl, wx.SizerFlags().Expand())
-				this.checkBoxTbl.Add(ctrl)
-			}
-			this.styleTbl.Add(style)
+		wx.CheckBox(this, wx.ID_ANY, 'FD_OPEN') {|ctrl|
+			this.vbox.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_OPEN = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'FD_SAVE') {|ctrl|
+			this.vbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.TOP, 8))
+			this.checkBox_SAVE = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'FD_OVERWRITE_PROMPT') {|ctrl|
+			this.vbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.TOP, 8))
+			this.checkBox_OVERWRITE_PROMPT = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'FD_FILE_MUST_EXIST') {|ctrl|
+			this.vbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.TOP, 8))
+			this.checkBox_FILE_MUST_EXIST = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'FD_MULTIPLE') {|ctrl|
+			this.vbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.TOP, 8))
+			this.checkBox_MULTIPLE = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'FD_CHANGE_DIR') {|ctrl|
+			this.vbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.TOP, 8))
+			this.checkBox_CHANGE_DIR = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'FD_PREVIEW') {|ctrl|
+			this.vbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.TOP, 8))
+			this.checkBox_PREVIEW = ctrl
 		}
 	}
 	ShowDialog() = {
 		style = 0
-		this.checkBoxTbl.Each {|checkBox, i|
-			if (checkBox.IsChecked()) { style |= this.styleTbl[i] }
-		}
-		dlg = wx.FileDialog(this,
-			message = 'Test'
-			defaultDir = ''
-			defaultFile = ''
-			wildcard = wx.FileSelectorDefaultWildcardStr
-			style = style
-			pos = wx.Point(300, 50)
-			size = wx.DefaultSize)
+		if (this.checkBox_OPEN.IsChecked()) { style |= wx.FD_OPEN } 
+		if (this.checkBox_SAVE.IsChecked()) { style |= wx.FD_SAVE } 
+		if (this.checkBox_OVERWRITE_PROMPT.IsChecked()) { style |= wx.FD_OVERWRITE_PROMPT } 
+		if (this.checkBox_FILE_MUST_EXIST.IsChecked()) { style |= wx.FD_FILE_MUST_EXIST } 
+		if (this.checkBox_MULTIPLE.IsChecked()) { style |= wx.FD_MULTIPLE } 
+		if (this.checkBox_CHANGE_DIR.IsChecked()) { style |= wx.FD_CHANGE_DIR } 
+		if (this.checkBox_PREVIEW.IsChecked()) { style |= wx.FD_PREVIEW }
+		dlg = wx.FileDialog(
+				parent = this
+				message = 'Test'
+				defaultDir = ''
+				defaultFile = ''
+				wildcard = wx.FileSelectorDefaultWildcardStr
+				style = style
+				pos = wx.Point(300, 50)
+				size = wx.DefaultSize)
 		rtn = dlg.ShowModal()
 		LogPrintf('rtn = %d\n', rtn)
 		if (rtn == wx.ID_OK) {
