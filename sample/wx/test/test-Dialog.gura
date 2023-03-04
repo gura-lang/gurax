@@ -39,62 +39,28 @@ Panel = class(wx.Panel) {
 	OnButton(event as wx.CommandEvent) = this.ShowDialog()
 }
 
-Panel_DirDialog = class(Panel) {
-	checkBox_DIR_MUST_EXIST
-	checkBox_PREVIEW
-	styleTbl = []
-	__init__(parent as wx.Window) = {|parent, 'DirDialog'|
-		wx.CheckBox(this, wx.ID_ANY, 'DD_DIR_MUST_EXIST') {|ctrl|
-			this.vbox.Add(ctrl, wx.SizerFlags().Expand())
-			this.checkBox_DIR_MUST_EXIST = ctrl
+PanelTop = class(wx.Panel) {
+	__init__(parent as wx.Window) = {|parent|
+		sizerTop = wx.BoxSizer(wx.VERTICAL)
+		this.SetSizer(sizerTop)
+		wx.Notebook(this, wx.ID_ANY) {|notebook|
+			sizerTop.Add(notebook, wx.SizerFlags(1).Expand())
+			panels.Each {|Panel|
+				Panel(notebook) {|panel| notebook.AddPage(panel, panel.name)}
+			}
+			//notebook.SetSelection(2)
 		}
-		wx.CheckBox(this, wx.ID_ANY, 'DD_CHANGE_DIR') {|ctrl|
-			this.vbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.TOP, 8))
-			this.checkBox_PREVIEW = ctrl
-		}
-	}
-	ShowDialog() = {
-		style = 0
-		if (this.checkBox_DIR_MUST_EXIST.IsChecked()) { style |= wx.DD_DIR_MUST_EXIST } 
-		if (this.checkBox_PREVIEW.IsChecked()) { style |= wx.DD_PREVIEW }
-		dlg = wx.DirDialog(
-				parent = this
-				message = wx.DirSelectorPromptStr
-				defaultPath = ''
-				style = style
-				pos = wx.Point(300, 50))
-		rtn = dlg.ShowModal()
-		LogPrintf('rtn = %d\n', rtn)
-		if (rtn == wx.ID_OK) {
-			LogPrintf('GetCurrentlySelectedFilename: %s\n', dlg.GetCurrentlySelectedFilename())
-			LogPrintf('GetDirectory   %s\n', dlg.GetDirectory())
-			!(style & wx.FD_MULTIPLE) && LogPrintf('GetFilename    %s\n', dlg.GetFilename())
-			LogPrintf('GetFilenames   %s\n', dlg.GetFilenames().Join('\n               '))
-			LogPrintf('GetMessage     %s\n', dlg.GetMessage())
-			!(style & wx.FD_MULTIPLE) && LogPrintf('GetPath        %s\n', dlg.GetPath())
-			LogPrintf('GetPaths       %s\n', dlg.GetPaths().Join('\n               '))
-			LogPrintf('GetWildcard    %s\n', dlg.GetWildcard())
+		wx.TextCtrl(this, wx.ID_ANY, '', style = wx.TE_MULTILINE) {|ctrl|
+			ctrl.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE,  wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
+			textCtrl:extern = ctrl
+			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
 		}
 	}
 }
-panels.Add(Panel_DirDialog)
 
-Panel_MessageDialog = class(Panel) {
-	__init__(parent as wx.Window) = {|parent, 'MessageDialog'|}
-	ShowDialog() = {
-		//style = wx.OK | wx.CENTRE
-		style = wx.OK | wx.CENTRE
-		dlg = wx.MessageDialog(
-				parent = this
-				message = 'Message'
-				caption = 'Caption'
-				style = style)
-		rtn = dlg.ShowModal()
-		LogPrintf('rtn = %d\n', rtn)
-	}
-}
-panels.Add(Panel_MessageDialog)
-
+//------------------------------------------------------------------------------
+// Panel_ColourDialog
+//------------------------------------------------------------------------------
 Panel_ColourDialog = class(Panel) {
 	checkBox_ChooseFull
 	__init__(parent as wx.Window) = {|parent, 'ColourDialog'|
@@ -123,19 +89,46 @@ Panel_ColourDialog = class(Panel) {
 }
 panels.Add(Panel_ColourDialog)
 
-Panel_FontDialog = class(Panel) {
-	__init__(parent as wx.Window) = {|parent, 'FontDialog'|}
+//------------------------------------------------------------------------------
+// Panel_DirDialog
+//------------------------------------------------------------------------------
+Panel_DirDialog = class(Panel) {
+	checkBox_DIR_MUST_EXIST
+	checkBox_CHANGE_DIR
+	styleTbl = []
+	__init__(parent as wx.Window) = {|parent, 'DirDialog'|
+		wx.CheckBox(this, wx.ID_ANY, 'DD_DIR_MUST_EXIST') {|ctrl|
+			this.vbox.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_DIR_MUST_EXIST = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'DD_CHANGE_DIR') {|ctrl|
+			this.vbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.TOP, 8))
+			this.checkBox_CHANGE_DIR = ctrl
+		}
+	}
 	ShowDialog() = {
-		data = wx.FontData()
-		data.EnableEffects(false)
-		data.SetAllowSymbols(false)
-		data.SetInitialFont(textCtrl.GetFont())
-		dlg = wx.FontDialog(this, data)
+		style = 0
+		if (this.checkBox_DIR_MUST_EXIST.IsChecked()) { style |= wx.DD_DIR_MUST_EXIST } 
+		if (this.checkBox_CHANGE_DIR.IsChecked()) { style |= wx.DD_CHANGE_DIR }
+		dlg = wx.DirDialog(
+				parent = this
+				message = wx.DirSelectorPromptStr
+				defaultPath = ''
+				style = style
+				pos = wx.Point(300, 50))
 		rtn = dlg.ShowModal()
+		LogPrintf('rtn = %d\n', rtn)
+		if (rtn == wx.ID_OK) {
+			LogPrintf('GetMessage: %s\n', dlg.GetMessage())
+			LogPrintf('GetPath     %s\n', dlg.GetPath())
+		}
 	}
 }
-panels.Add(Panel_FontDialog)
+panels.Add(Panel_DirDialog)
 
+//------------------------------------------------------------------------------
+// Panel_FileDialog
+//------------------------------------------------------------------------------
 Panel_FileDialog = class(Panel) {
 	checkBox_OPEN
 	checkBox_SAVE
@@ -209,23 +202,81 @@ Panel_FileDialog = class(Panel) {
 }
 panels.Add(Panel_FileDialog)
 
-PanelTop = class(wx.Panel) {
-	__init__(parent as wx.Window) = {|parent|
-		sizerTop = wx.BoxSizer(wx.VERTICAL)
-		this.SetSizer(sizerTop)
-		wx.Notebook(this, wx.ID_ANY) {|notebook|
-			sizerTop.Add(notebook, wx.SizerFlags(1).Expand())
-			panels.Each {|Panel|
-				Panel(notebook) {|panel| notebook.AddPage(panel, panel.name)}
-			}
-			//notebook.SetSelection(2)
-		}
-		wx.TextCtrl(this, wx.ID_ANY, '', style = wx.TE_MULTILINE) {|ctrl|
-			ctrl.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE,  wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
-			textCtrl:extern = ctrl
-			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
-		}
+//------------------------------------------------------------------------------
+// Panel_FindReplaceDialog
+//------------------------------------------------------------------------------
+Panel_FindReplaceDialog = class(Panel) {
+	__init__(parent as wx.Window) = {|parent, 'FindReplaceDialog'|}
+	ShowDialog() = {
+		data = wx.FindReplaceData()
+		data.SetFindString('aaa')
+		data.SetFlags(0)
+		data.SetReplaceString('bbb')
+		style = 0
+		dlg = wx.FindReplaceDialog(
+				parent = this
+				data = data
+				title = 'FindReplace Test'
+				style = style)
+		rtn = dlg.ShowModal()
+		data = dlg.GetData()
 	}
 }
+panels.Add(Panel_FindReplaceDialog)
+
+//------------------------------------------------------------------------------
+// Panel_GenericProgressDialog
+//------------------------------------------------------------------------------
+Panel_GenericProgressDialog = class(Panel) {
+	__init__(parent as wx.Window) = {|parent, 'GenericProgressDialog'|}
+	ShowDialog() = {
+		style = wx.PD_AUTO_HIDE | wx.PD_APP_MODAL
+		style |= wx.PD_SMOOTH | wx.PD_CAN_ABORT | wx.PD_CAN_SKIP | wx.PD_ELAPSED_TIME | wx.PD_ESTIMATED_TIME | wx.PD_REMAINING_TIME
+		dlg = wx.GenericProgressDialog(
+				title = ''
+				message = 'message'
+				maximum = 100
+				parent = nil
+				style = style)
+		rtn = dlg.ShowModal()
+		data = dlg.GetData()
+	}
+}
+panels.Add(Panel_GenericProgressDialog)
+
+//------------------------------------------------------------------------------
+// Panel_FontDialog
+//------------------------------------------------------------------------------
+Panel_FontDialog = class(Panel) {
+	__init__(parent as wx.Window) = {|parent, 'FontDialog'|}
+	ShowDialog() = {
+		data = wx.FontData()
+		data.EnableEffects(false)
+		data.SetAllowSymbols(false)
+		data.SetInitialFont(textCtrl.GetFont())
+		dlg = wx.FontDialog(this, data)
+		rtn = dlg.ShowModal()
+	}
+}
+panels.Add(Panel_FontDialog)
+
+//------------------------------------------------------------------------------
+// Panel_MessageDialog
+//------------------------------------------------------------------------------
+Panel_MessageDialog = class(Panel) {
+	__init__(parent as wx.Window) = {|parent, 'MessageDialog'|}
+	ShowDialog() = {
+		//style = wx.OK | wx.CENTRE
+		style = wx.OK | wx.CENTRE
+		dlg = wx.MessageDialog(
+				parent = this
+				message = 'Message'
+				caption = 'Caption'
+				style = style)
+		rtn = dlg.ShowModal()
+		LogPrintf('rtn = %d\n', rtn)
+	}
+}
+panels.Add(Panel_MessageDialog)
 
 wx.ImplementApp(AppMain())
