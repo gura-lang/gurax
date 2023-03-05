@@ -24,8 +24,8 @@ panels = []
 
 Panel = class(wx.Panel) {
 	name as String
-	vbox as wx.BoxSizer
-	__init__(parent as wx.Window, name as String) = {|parent|
+	grid as wx.GridSizer
+	__init__(parent as wx.Window, name as String, rows as Number = 10, cols as Number = 2) = {|parent|
 		this.name = name
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
@@ -33,10 +33,14 @@ Panel = class(wx.Panel) {
 			sizerTop.Add(ctrl, wx.SizerFlags().Expand().Border(wx.ALL, 8))
 			ctrl.Bind(wx.EVT_BUTTON, this.OnButton)
 		}
-		this.vbox = wx.BoxSizer(wx.VERTICAL)
-		sizerTop.Add(this.vbox, wx.SizerFlags(1).Expand().Border(wx.ALL, 8))
+		this.grid = wx.GridSizer(rows, cols, 8, 16)
+		sizerTop.Add(this.grid, wx.SizerFlags().Expand().Border(wx.ALL, 8))
 	}
 	OnButton(event as wx.CommandEvent) = this.ShowDialog()
+	CodeToString(rtn as Number) = {
+		str = %{wx.ID_OK => 'OK', wx.ID_CANCEL => 'CANCEL', wx.ID_YES => 'YES', wx.ID_NO => 'NO'}.Get(rtn)
+		cond(str, Format('%s (0x%04x)', str, rtn), Format('0x%04x', rtn))
+	}
 }
 
 PanelTop = class(wx.Panel) {
@@ -65,7 +69,7 @@ Panel_ColourDialog = class(Panel) {
 	checkBox_ChooseFull
 	__init__(parent as wx.Window) = {|parent, 'ColourDialog'|
 		wx.CheckBox(this, wx.ID_ANY, 'ChooseFull') {|ctrl|
-			this.vbox.Add(ctrl, wx.SizerFlags().Expand())
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
 			this.checkBox_ChooseFull = ctrl
 		}
 	}
@@ -79,7 +83,7 @@ Panel_ColourDialog = class(Panel) {
 				parent = this
 				data = data)
 		rtn = dlg.ShowModal()
-		LogPrintf('rtn = %d\n', rtn)
+		LogPrintf('rtn = %s\n', this.CodeToString(rtn))
 		if (rtn == wx.ID_OK) {
 			colourData = dlg.GetColourData()
 			LogPrintf('ToString():  %s\n', colourData.ToString())
@@ -93,23 +97,23 @@ panels.Add(Panel_ColourDialog)
 // Panel_DirDialog
 //------------------------------------------------------------------------------
 Panel_DirDialog = class(Panel) {
-	checkBox_DIR_MUST_EXIST
-	checkBox_CHANGE_DIR
+	checkBox_DD_DIR_MUST_EXIST
+	checkBox_DD_CHANGE_DIR
 	styleTbl = []
 	__init__(parent as wx.Window) = {|parent, 'DirDialog'|
 		wx.CheckBox(this, wx.ID_ANY, 'DD_DIR_MUST_EXIST') {|ctrl|
-			this.vbox.Add(ctrl, wx.SizerFlags().Expand())
-			this.checkBox_DIR_MUST_EXIST = ctrl
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_DD_DIR_MUST_EXIST = ctrl
 		}
 		wx.CheckBox(this, wx.ID_ANY, 'DD_CHANGE_DIR') {|ctrl|
-			this.vbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.TOP, 8))
-			this.checkBox_CHANGE_DIR = ctrl
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_DD_CHANGE_DIR = ctrl
 		}
 	}
 	ShowDialog() = {
 		style = 0
-		if (this.checkBox_DIR_MUST_EXIST.IsChecked()) { style |= wx.DD_DIR_MUST_EXIST } 
-		if (this.checkBox_CHANGE_DIR.IsChecked()) { style |= wx.DD_CHANGE_DIR }
+		if (this.checkBox_DD_DIR_MUST_EXIST.IsChecked()) { style |= wx.DD_DIR_MUST_EXIST } 
+		if (this.checkBox_DD_CHANGE_DIR.IsChecked()) { style |= wx.DD_CHANGE_DIR }
 		dlg = wx.DirDialog(
 				parent = this
 				message = wx.DirSelectorPromptStr
@@ -117,7 +121,7 @@ Panel_DirDialog = class(Panel) {
 				style = style
 				pos = wx.Point(300, 50))
 		rtn = dlg.ShowModal()
-		LogPrintf('rtn = %d\n', rtn)
+		LogPrintf('rtn = %s\n', this.CodeToString(rtn))
 		if (rtn == wx.ID_OK) {
 			LogPrintf('GetMessage: %s\n', dlg.GetMessage())
 			LogPrintf('GetPath     %s\n', dlg.GetPath())
@@ -130,53 +134,54 @@ panels.Add(Panel_DirDialog)
 // Panel_FileDialog
 //------------------------------------------------------------------------------
 Panel_FileDialog = class(Panel) {
-	checkBox_OPEN
-	checkBox_SAVE
-	checkBox_OVERWRITE_PROMPT
-	checkBox_FILE_MUST_EXIST
-	checkBox_MULTIPLE
-	checkBox_CHANGE_DIR
-	checkBox_PREVIEW
+	checkBox_FD_OPEN
+	checkBox_FD_SAVE
+	checkBox_FD_OVERWRITE_PROMPT
+	checkBox_FD_FILE_MUST_EXIST
+	checkBox_FD_MULTIPLE
+	checkBox_FD_CHANGE_DIR
+	checkBox_FD_PREVIEW
 	styleTbl = []
 	__init__(parent as wx.Window) = {|parent, 'FileDialog'|
 		wx.CheckBox(this, wx.ID_ANY, 'FD_OPEN') {|ctrl|
-			this.vbox.Add(ctrl, wx.SizerFlags().Expand())
-			this.checkBox_OPEN = ctrl
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			ctrl.SetValue(true)
+			this.checkBox_FD_OPEN = ctrl
 		}
 		wx.CheckBox(this, wx.ID_ANY, 'FD_SAVE') {|ctrl|
-			this.vbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.TOP, 8))
-			this.checkBox_SAVE = ctrl
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_FD_SAVE = ctrl
 		}
 		wx.CheckBox(this, wx.ID_ANY, 'FD_OVERWRITE_PROMPT') {|ctrl|
-			this.vbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.TOP, 8))
-			this.checkBox_OVERWRITE_PROMPT = ctrl
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_FD_OVERWRITE_PROMPT = ctrl
 		}
 		wx.CheckBox(this, wx.ID_ANY, 'FD_FILE_MUST_EXIST') {|ctrl|
-			this.vbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.TOP, 8))
-			this.checkBox_FILE_MUST_EXIST = ctrl
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_FD_FILE_MUST_EXIST = ctrl
 		}
 		wx.CheckBox(this, wx.ID_ANY, 'FD_MULTIPLE') {|ctrl|
-			this.vbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.TOP, 8))
-			this.checkBox_MULTIPLE = ctrl
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_FD_MULTIPLE = ctrl
 		}
 		wx.CheckBox(this, wx.ID_ANY, 'FD_CHANGE_DIR') {|ctrl|
-			this.vbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.TOP, 8))
-			this.checkBox_CHANGE_DIR = ctrl
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_FD_CHANGE_DIR = ctrl
 		}
 		wx.CheckBox(this, wx.ID_ANY, 'FD_PREVIEW') {|ctrl|
-			this.vbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.TOP, 8))
-			this.checkBox_PREVIEW = ctrl
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_FD_PREVIEW = ctrl
 		}
 	}
 	ShowDialog() = {
 		style = 0
-		if (this.checkBox_OPEN.IsChecked()) { style |= wx.FD_OPEN } 
-		if (this.checkBox_SAVE.IsChecked()) { style |= wx.FD_SAVE } 
-		if (this.checkBox_OVERWRITE_PROMPT.IsChecked()) { style |= wx.FD_OVERWRITE_PROMPT } 
-		if (this.checkBox_FILE_MUST_EXIST.IsChecked()) { style |= wx.FD_FILE_MUST_EXIST } 
-		if (this.checkBox_MULTIPLE.IsChecked()) { style |= wx.FD_MULTIPLE } 
-		if (this.checkBox_CHANGE_DIR.IsChecked()) { style |= wx.FD_CHANGE_DIR } 
-		if (this.checkBox_PREVIEW.IsChecked()) { style |= wx.FD_PREVIEW }
+		if (this.checkBox_FD_OPEN.IsChecked()) { style |= wx.FD_OPEN } 
+		if (this.checkBox_FD_SAVE.IsChecked()) { style |= wx.FD_SAVE } 
+		if (this.checkBox_FD_OVERWRITE_PROMPT.IsChecked()) { style |= wx.FD_OVERWRITE_PROMPT } 
+		if (this.checkBox_FD_FILE_MUST_EXIST.IsChecked()) { style |= wx.FD_FILE_MUST_EXIST } 
+		if (this.checkBox_FD_MULTIPLE.IsChecked()) { style |= wx.FD_MULTIPLE } 
+		if (this.checkBox_FD_CHANGE_DIR.IsChecked()) { style |= wx.FD_CHANGE_DIR } 
+		if (this.checkBox_FD_PREVIEW.IsChecked()) { style |= wx.FD_PREVIEW }
 		dlg = wx.FileDialog(
 				parent = this
 				message = 'Test'
@@ -187,7 +192,7 @@ Panel_FileDialog = class(Panel) {
 				pos = wx.Point(300, 50)
 				size = wx.DefaultSize)
 		rtn = dlg.ShowModal()
-		LogPrintf('rtn = %d\n', rtn)
+		LogPrintf('rtn = %s\n', this.CodeToString(rtn))
 		if (rtn == wx.ID_OK) {
 			LogPrintf('GetCurrentlySelectedFilename: %s\n', dlg.GetCurrentlySelectedFilename())
 			LogPrintf('GetDirectory   %s\n', dlg.GetDirectory())
@@ -228,24 +233,73 @@ panels.Add(Panel_FindReplaceDialog)
 // Panel_GenericProgressDialog
 //------------------------------------------------------------------------------
 Panel_GenericProgressDialog = class(Panel) {
-	__init__(parent as wx.Window) = {|parent, 'GenericProgressDialog'|}
+	checkBox_PD_AUTO_HIDE
+	checkBox_PD_APP_MODAL
+	checkBox_PD_SMOOTH
+	checkBox_PD_CAN_ABORT
+	checkBox_PD_CAN_SKIP
+	checkBox_PD_ELAPSED_TIME
+	checkBox_PD_ESTIMATED_TIME
+	checkBox_PD_REMAINING_TIME
+	__init__(parent as wx.Window) = {|parent, 'GenericProgressDialog'|
+		wx.CheckBox(this, wx.ID_ANY, 'PD_AUTO_HIDE') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			ctrl.SetValue(true)
+			this.checkBox_PD_AUTO_HIDE = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'PD_APP_MODAL') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			ctrl.SetValue(true)
+			this.checkBox_PD_APP_MODAL = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'PD_SMOOTH') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_PD_SMOOTH = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'PD_CAN_ABORT') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_PD_CAN_ABORT = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'PD_CAN_SKIP') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_PD_CAN_SKIP = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'PD_ELAPSED_TIME') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_PD_ELAPSED_TIME = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'PD_ESTIMATED_TIME') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_PD_ESTIMATED_TIME = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'PD_REMAINING_TIME') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_PD_REMAINING_TIME = ctrl
+		}
+	}
 	ShowDialog() = {
-		style = wx.PD_AUTO_HIDE | wx.PD_APP_MODAL
-		style |= wx.PD_SMOOTH | wx.PD_CAN_ABORT | wx.PD_CAN_SKIP | wx.PD_ELAPSED_TIME | wx.PD_ESTIMATED_TIME | wx.PD_REMAINING_TIME
+		style = 0
+		if (this.checkBox_PD_AUTO_HIDE.IsChecked()) { style |= wx.PD_AUTO_HIDE }
+		if (this.checkBox_PD_APP_MODAL.IsChecked()) { style |= wx.PD_APP_MODAL }
+		if (this.checkBox_PD_SMOOTH.IsChecked()) { style |= wx.PD_SMOOTH }
+		if (this.checkBox_PD_CAN_ABORT.IsChecked()) { style |= wx.PD_CAN_ABORT }
+		if (this.checkBox_PD_CAN_SKIP.IsChecked()) { style |= wx.PD_CAN_SKIP }
+		if (this.checkBox_PD_ELAPSED_TIME.IsChecked()) { style |= wx.PD_ELAPSED_TIME }
+		if (this.checkBox_PD_ESTIMATED_TIME.IsChecked()) { style |= wx.PD_ESTIMATED_TIME }
+		if (this.checkBox_PD_REMAINING_TIME.IsChecked()) { style |= wx.PD_REMAINING_TIME }
 		dlg = wx.GenericProgressDialog(
 				title = 'title'
 				message = 'message'
-				maximum = 3
+				maximum = 100
 				parent = nil
 				style = style)
-		dlg.Pulse('One')
-		wx.MilliSleep(500)
-		dlg.Pulse('Two')
-		wx.MilliSleep(500)
-		dlg.Pulse('Three')
-		wx.MilliSleep(500)
-		//rtn = dlg.Show()
-		//data = dlg.GetData()
+		repeat(100) {|i|
+			dlg.WasCancelled() && break
+			dlg.WasSkipped() && break
+			wx.MilliSleep(20)
+			dlg.Pulse(Format('Count: %d', i))
+		}
+		dlg.Destroy()
 	}
 }
 panels.Add(Panel_GenericProgressDialog)
@@ -262,6 +316,7 @@ Panel_FontDialog = class(Panel) {
 		data.SetInitialFont(textCtrl.GetFont())
 		dlg = wx.FontDialog(this, data)
 		rtn = dlg.ShowModal()
+		LogPrintf('rtn = %s\n', this.CodeToString(rtn))
 	}
 }
 panels.Add(Panel_FontDialog)
@@ -270,17 +325,119 @@ panels.Add(Panel_FontDialog)
 // Panel_MessageDialog
 //------------------------------------------------------------------------------
 Panel_MessageDialog = class(Panel) {
-	__init__(parent as wx.Window) = {|parent, 'MessageDialog'|}
+	checkBox_OK
+	checkBox_CANCEL
+	checkBox_YES_NO
+	checkBox_HELP
+	checkBox_NO_DEFAULT
+	checkBox_CANCEL_DEFAULT
+	checkBox_YES_DEFAULT
+	checkBox_OK_DEFAULT
+	checkBox_ICON_NONE
+	checkBox_ICON_EXCLAMATION
+	checkBox_ICON_ERROR
+	checkBox_ICON_HAND
+	checkBox_ICON_QUESTION
+	checkBox_ICON_INFORMATION
+	checkBox_ICON_AUTH_NEEDED
+	checkBox_STAY_ON_TOP
+	checkBox_CENTRE
+	__init__(parent as wx.Window) = {|parent, 'MessageDialog'|
+		wx.CheckBox(this, wx.ID_ANY, 'OK') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_OK = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'CANCEL') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_CANCEL = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'YES_NO') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_YES_NO = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'HELP') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_HELP = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'NO_DEFAULT') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_NO_DEFAULT = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'CANCEL_DEFAULT') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_CANCEL_DEFAULT = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'YES_DEFAULT') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_YES_DEFAULT = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'OK_DEFAULT') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_OK_DEFAULT = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'ICON_NONE') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_ICON_NONE = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'ICON_EXCLAMATION') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_ICON_EXCLAMATION = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'ICON_ERROR') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_ICON_ERROR = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'ICON_HAND') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_ICON_HAND = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'ICON_QUESTION') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_ICON_QUESTION = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'ICON_INFORMATION') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_ICON_INFORMATION = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'ICON_AUTH_NEEDED') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_ICON_AUTH_NEEDED = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'STAY_ON_TOP') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_STAY_ON_TOP = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'CENTRE') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_CENTRE = ctrl
+		}
+	}
 	ShowDialog() = {
-		//style = wx.OK | wx.CENTRE
-		style = wx.OK | wx.CENTRE
+		style = 0
+		if (this.checkBox_OK.IsChecked()) { style |= wx.OK }
+		if (this.checkBox_CANCEL.IsChecked()) { style |= wx.CANCEL }
+		if (this.checkBox_YES_NO.IsChecked()) { style |= wx.YES_NO }
+		if (this.checkBox_HELP.IsChecked()) { style |= wx.HELP }
+		if (this.checkBox_NO_DEFAULT.IsChecked()) { style |= wx.NO_DEFAULT }
+		if (this.checkBox_CANCEL_DEFAULT.IsChecked()) { style |= wx.CANCEL_DEFAULT }
+		if (this.checkBox_YES_DEFAULT.IsChecked()) { style |= wx.YES_DEFAULT }
+		if (this.checkBox_OK_DEFAULT.IsChecked()) { style |= wx.OK_DEFAULT }
+		if (this.checkBox_ICON_NONE.IsChecked()) { style |= wx.ICON_NONE }
+		if (this.checkBox_ICON_EXCLAMATION.IsChecked()) { style |= wx.ICON_EXCLAMATION }
+		if (this.checkBox_ICON_ERROR.IsChecked()) { style |= wx.ICON_ERROR }
+		if (this.checkBox_ICON_HAND.IsChecked()) { style |= wx.ICON_HAND }
+		if (this.checkBox_ICON_QUESTION.IsChecked()) { style |= wx.ICON_QUESTION }
+		if (this.checkBox_ICON_INFORMATION.IsChecked()) { style |= wx.ICON_INFORMATION }
+		if (this.checkBox_ICON_AUTH_NEEDED.IsChecked()) { style |= wx.ICON_AUTH_NEEDED }
+		if (this.checkBox_STAY_ON_TOP.IsChecked()) { style |= wx.STAY_ON_TOP }
+		if (this.checkBox_CENTRE.IsChecked()) { style |= wx.CENTRE }
 		dlg = wx.MessageDialog(
 				parent = this
 				message = 'Message'
 				caption = 'Caption'
 				style = style)
 		rtn = dlg.ShowModal()
-		LogPrintf('rtn = %d\n', rtn)
+		LogPrintf('rtn = %s\n', this.CodeToString(rtn))
 	}
 }
 panels.Add(Panel_MessageDialog)

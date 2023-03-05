@@ -147,8 +147,8 @@ Gurax_ImplementMethodEx(wxGenericProgressDialog, Pulse_gurax, processor_gurax, a
 	const char* newmsg = args_gurax.IsValid()? args_gurax.PickString() : "";
 	// Function body
 	bool skip;
-	bool complete = pEntity_gurax->Pulse(newmsg, &skip);
-	return Value_Tuple::Create(new Value_Bool(complete), new Value_Bool(skip));
+	bool cont = pEntity_gurax->Pulse(newmsg, &skip);
+	return Value_Tuple::Create(new Value_Bool(cont), new Value_Bool(skip));
 }
 
 // wx.GenericProgressDialog#Resume()
@@ -243,8 +243,8 @@ Gurax_ImplementMethodEx(wxGenericProgressDialog, Update_gurax, processor_gurax, 
 	const char* newmsg = args_gurax.IsValid()? args_gurax.PickString() : "";
 	// Function body
 	bool skip;
-	bool complete = pEntity_gurax->Update(value, newmsg, &skip);
-	return Value_Tuple::Create(new Value_Bool(complete), new Value_Bool(skip));
+	bool cont = pEntity_gurax->Update(value, newmsg, &skip);
+	return Value_Tuple::Create(new Value_Bool(cont), new Value_Bool(skip));
 }
 
 //-----------------------------------------------------------------------------

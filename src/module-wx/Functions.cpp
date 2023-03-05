@@ -592,20 +592,20 @@ Gurax_ImplementFunctionEx(MicroSleep_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// wx.MilliSleep(microseconds as Number)
+// wx.MilliSleep(milliseconds as Number)
 Gurax_DeclareFunctionAlias(MilliSleep_gurax, "MilliSleep")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("microseconds", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("milliseconds", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 }
 
 Gurax_ImplementFunctionEx(MilliSleep_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	unsigned long microseconds = args_gurax.PickNumber<unsigned long>();
+	unsigned long milliseconds = args_gurax.PickNumber<unsigned long>();
 	// Function body
-	wxMilliSleep(microseconds);
+	wxMilliSleep(milliseconds);
 	return Gurax::Value::nil();
 }
 
