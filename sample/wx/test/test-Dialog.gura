@@ -23,6 +23,7 @@ FrameMain = class(wx.Frame) {
 panels = []
 
 Panel = class(wx.Panel) {
+	dict = %{wx.ID_OK => 'OK', wx.ID_CANCEL => 'CANCEL', wx.ID_YES => 'YES', wx.ID_NO => 'NO', wx.ID_HELP => 'HELP'}
 	name as String
 	grid as wx.GridSizer
 	__init__(parent as wx.Window, name as String, rows as Number = 10, cols as Number = 2) = {|parent|
@@ -38,7 +39,7 @@ Panel = class(wx.Panel) {
 	}
 	OnButton(event as wx.CommandEvent) = this.ShowDialog()
 	CodeToString(rtn as Number) = {
-		str = %{wx.ID_OK => 'OK', wx.ID_CANCEL => 'CANCEL', wx.ID_YES => 'YES', wx.ID_NO => 'NO'}.Get(rtn)
+		str = this.dict.Get(rtn)
 		cond(str, Format('%s (0x%04x)', str, rtn), Format('0x%04x', rtn))
 	}
 }
