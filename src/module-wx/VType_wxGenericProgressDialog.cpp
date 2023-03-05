@@ -129,6 +129,28 @@ Gurax_ImplementMethodEx(wxGenericProgressDialog, GetMessage_gurax, processor_gur
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
+// wx.GenericProgressDialog#Pulse(newmsg? as String)
+Gurax_DeclareMethodAlias(wxGenericProgressDialog, Pulse_gurax, "Pulse")
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	DeclareArg("newmsg", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxGenericProgressDialog, Pulse_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* newmsg = args_gurax.IsValid()? args_gurax.PickString() : "";
+	// Function body
+	bool skip;
+	bool complete = pEntity_gurax->Pulse(newmsg, &skip);
+	return Value_Tuple::Create(new Value_Bool(complete), new Value_Bool(skip));
+}
+
 // wx.GenericProgressDialog#Resume()
 Gurax_DeclareMethodAlias(wxGenericProgressDialog, Resume_gurax, "Resume")
 {
@@ -201,6 +223,30 @@ Gurax_ImplementMethodEx(wxGenericProgressDialog, WasSkipped_gurax, processor_gur
 	return new Gurax::Value_Bool(rtn);
 }
 
+// wx.GenericProgressDialog#Update(value as Number, newmsg? as String)
+Gurax_DeclareMethodAlias(wxGenericProgressDialog, Update_gurax, "Update")
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("newmsg", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxGenericProgressDialog, Update_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int value = args_gurax.PickNumber<int>();
+	const char* newmsg = args_gurax.IsValid()? args_gurax.PickString() : "";
+	// Function body
+	bool skip;
+	bool complete = pEntity_gurax->Update(value, newmsg, &skip);
+	return Value_Tuple::Create(new Value_Bool(complete), new Value_Bool(skip));
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -221,10 +267,12 @@ void VType_wxGenericProgressDialog::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxGenericProgressDialog, GetValue_gurax));
 	Assign(Gurax_CreateMethod(wxGenericProgressDialog, GetRange_gurax));
 	Assign(Gurax_CreateMethod(wxGenericProgressDialog, GetMessage_gurax));
+	Assign(Gurax_CreateMethod(wxGenericProgressDialog, Pulse_gurax));
 	Assign(Gurax_CreateMethod(wxGenericProgressDialog, Resume_gurax));
 	Assign(Gurax_CreateMethod(wxGenericProgressDialog, SetRange_gurax));
 	Assign(Gurax_CreateMethod(wxGenericProgressDialog, WasCancelled_gurax));
 	Assign(Gurax_CreateMethod(wxGenericProgressDialog, WasSkipped_gurax));
+	Assign(Gurax_CreateMethod(wxGenericProgressDialog, Update_gurax));
 }
 
 //------------------------------------------------------------------------------

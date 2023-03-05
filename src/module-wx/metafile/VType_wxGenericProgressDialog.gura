@@ -8,11 +8,23 @@ GenericProgressDialog = Class(Dialog) {
 	GetRange() as int
 	GetMessage() as String
 	//Pulse(newmsg as const_String_r = wxEmptyString, skip as bool_p = NULL) as bool
+	Pulse(newmsg as const_String_r = wxEmptyString) as Tuple@gurax = \
+		R'''
+		bool skip;
+		bool complete = pEntity_gurax->Pulse(newmsg, &skip);
+		return Value_Tuple::Create(new Value_Bool(complete), new Value_Bool(skip));
+		'''
 	Resume() as void
 	SetRange(maximum as int) as void
 	WasCancelled() as bool
 	WasSkipped() as bool
 	//Update(value as int, newmsg as const_String_r = wxEmptyString, skip as bool_p = NULL) as bool
+	Update(value as int, newmsg as const_String_r = wxEmptyString) as Tuple@gurax = \
+		R'''
+		bool skip;
+		bool complete = pEntity_gurax->Update(value, newmsg, &skip);
+		return Value_Tuple::Create(new Value_Bool(complete), new Value_Bool(skip));
+		'''
 } %% R'''
 # Overview
 

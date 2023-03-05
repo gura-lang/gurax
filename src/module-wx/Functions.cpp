@@ -200,6 +200,32 @@ Gurax_ImplementFunctionEx(GetKeyCodeName_gurax, processor_gurax, argument_gurax)
 	return new Value_String(Util::GetKeyCodeName(keyCode));
 }
 
+// wx.GetLocalTime()
+Gurax_DeclareFunctionAlias(GetLocalTime_gurax, "GetLocalTime")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementFunctionEx(GetLocalTime_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	long rtn = wxGetLocalTime();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.GetLocalTimeMillis()
+Gurax_DeclareFunctionAlias(GetLocalTimeMillis_gurax, "GetLocalTimeMillis")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementFunctionEx(GetLocalTimeMillis_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	wxLongLong rtn = wxGetLocalTimeMillis();
+	return new Gurax::Value_Number(rtn.GetValue());
+}
+
 // wx.GetNumberFromUser(message as String, prompt as String, caption as String, value as Number, min? as Number, max? as Number, parent? as wx.Window, pos? as wx.Point)
 Gurax_DeclareFunctionAlias(GetNumberFromUser_gurax, "GetNumberFromUser")
 {
@@ -378,6 +404,58 @@ Gurax_ImplementFunctionEx(GetTextFromUser_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
+// wx.GetTimeZone()
+Gurax_DeclareFunctionAlias(GetTimeZone_gurax, "GetTimeZone")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementFunctionEx(GetTimeZone_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	int rtn = wxGetTimeZone();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.GetUTCTime()
+Gurax_DeclareFunctionAlias(GetUTCTime_gurax, "GetUTCTime")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementFunctionEx(GetUTCTime_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	long rtn = wxGetUTCTime();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.GetUTCTimeMillis()
+Gurax_DeclareFunctionAlias(GetUTCTimeMillis_gurax, "GetUTCTimeMillis")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementFunctionEx(GetUTCTimeMillis_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	wxLongLong rtn = wxGetUTCTimeMillis();
+	return new Gurax::Value_Number(rtn.GetValue());
+}
+
+// wx.GetUTCTimeUSec()
+Gurax_DeclareFunctionAlias(GetUTCTimeUSec_gurax, "GetUTCTimeUSec")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementFunctionEx(GetUTCTimeUSec_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	wxLongLong rtn = wxGetUTCTimeUSec();
+	return new Gurax::Value_Number(rtn.GetValue());
+}
+
 // wx.ImplementApp(app as wx.App)
 Gurax_DeclareFunctionAlias(ImplementApp_gurax, "ImplementApp")
 {
@@ -497,6 +575,54 @@ Gurax_ImplementFunctionEx(MessageBox_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
+// wx.MicroSleep(microseconds as Number)
+Gurax_DeclareFunctionAlias(MicroSleep_gurax, "MicroSleep")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("microseconds", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementFunctionEx(MicroSleep_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned long microseconds = args_gurax.PickNumber<unsigned long>();
+	// Function body
+	wxMicroSleep(microseconds);
+	return Gurax::Value::nil();
+}
+
+// wx.MilliSleep(microseconds as Number)
+Gurax_DeclareFunctionAlias(MilliSleep_gurax, "MilliSleep")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("microseconds", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementFunctionEx(MilliSleep_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned long microseconds = args_gurax.PickNumber<unsigned long>();
+	// Function body
+	wxMilliSleep(microseconds);
+	return Gurax::Value::nil();
+}
+
+// wx.Now()
+Gurax_DeclareFunctionAlias(Now_gurax, "Now")
+{
+	Declare(VTYPE_String, Flag::None);
+}
+
+Gurax_ImplementFunctionEx(Now_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	wxString rtn = wxNow();
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
+}
+
 // wx.SaveFileSelector(what as String, extension as String, default_name? as String, parent? as wx.Window)
 Gurax_DeclareFunctionAlias(SaveFileSelector_gurax, "SaveFileSelector")
 {
@@ -519,6 +645,23 @@ Gurax_ImplementFunctionEx(SaveFileSelector_gurax, processor_gurax, argument_gura
 	wxString rtn = wxSaveFileSelector(what, extension, default_name, parent);
 	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
+}
+
+// wx.Sleep(secs as Number)
+Gurax_DeclareFunctionAlias(Sleep_gurax, "Sleep")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("secs", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementFunctionEx(Sleep_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int secs = args_gurax.PickNumber<int>();
+	// Function body
+	wxSleep(secs);
+	return Gurax::Value::nil();
 }
 
 // wx.T(str as String)
@@ -551,18 +694,28 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(GetColourFromUser_gurax));
 	frame.Assign(Gurax_CreateFunction(GetFontFromUser_gurax));
 	frame.Assign(Gurax_CreateFunction(GetKeyCodeName_gurax));
+	frame.Assign(Gurax_CreateFunction(GetLocalTime_gurax));
+	frame.Assign(Gurax_CreateFunction(GetLocalTimeMillis_gurax));
 	frame.Assign(Gurax_CreateFunction(GetNumberFromUser_gurax));
 	frame.Assign(Gurax_CreateFunction(GetPasswordFromUser_gurax));
 	frame.Assign(Gurax_CreateFunction(GetSingleChoice_gurax));
 	frame.Assign(Gurax_CreateFunction(GetSingleChoiceIndex_gurax));
 	frame.Assign(Gurax_CreateFunction(GetTextFromUser_gurax));
+	frame.Assign(Gurax_CreateFunction(GetTimeZone_gurax));
+	frame.Assign(Gurax_CreateFunction(GetUTCTime_gurax));
+	frame.Assign(Gurax_CreateFunction(GetUTCTimeMillis_gurax));
+	frame.Assign(Gurax_CreateFunction(GetUTCTimeUSec_gurax));
 	frame.Assign(Gurax_CreateFunction(ImplementApp_gurax));
 	frame.Assign(Gurax_CreateFunction(InfoMessageBox_gurax));
 	frame.Assign(Gurax_CreateFunction(InitAllImageHandlers_gurax));
 	frame.Assign(Gurax_CreateFunction(IsBusy_gurax));
 	frame.Assign(Gurax_CreateFunction(LoadFileSelector_gurax));
 	frame.Assign(Gurax_CreateFunction(MessageBox_gurax));
+	frame.Assign(Gurax_CreateFunction(MicroSleep_gurax));
+	frame.Assign(Gurax_CreateFunction(MilliSleep_gurax));
+	frame.Assign(Gurax_CreateFunction(Now_gurax));
 	frame.Assign(Gurax_CreateFunction(SaveFileSelector_gurax));
+	frame.Assign(Gurax_CreateFunction(Sleep_gurax));
 	frame.Assign(Gurax_CreateFunction(T_gurax));
 }
 

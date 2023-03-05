@@ -233,13 +233,17 @@ Panel_GenericProgressDialog = class(Panel) {
 		style = wx.PD_AUTO_HIDE | wx.PD_APP_MODAL
 		style |= wx.PD_SMOOTH | wx.PD_CAN_ABORT | wx.PD_CAN_SKIP | wx.PD_ELAPSED_TIME | wx.PD_ESTIMATED_TIME | wx.PD_REMAINING_TIME
 		dlg = wx.GenericProgressDialog(
-				title = ''
+				title = 'title'
 				message = 'message'
 				maximum = 100
 				parent = nil
 				style = style)
-		rtn = dlg.ShowModal()
-		data = dlg.GetData()
+		dlg.Pulse('One')
+		wx.Millisleep(500)
+		dlg.Pulse('Two')
+		wx.Millisleep(500)
+		//rtn = dlg.Show()
+		//data = dlg.GetData()
 	}
 }
 panels.Add(Panel_GenericProgressDialog)

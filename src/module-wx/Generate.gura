@@ -3,6 +3,15 @@ import(cbridge)
 
 r = cbridge.Renderer()
 
+r.DeclareType('LongLong', 'wxLongLong', 'Number',
+	codePicker = R'''
+	${this.cType} ${varName}(args_gurax.PickNumber<wxLongLong_t>());
+	'''
+	codeFunctionBody = R'''
+	${this.cType} rtn = ${caller};
+	return new Gurax::Value_${this.vtype}(rtn.GetValue());
+	''')
+
 r.DeclareType_Number('FileOffset', 'wxFileOffset')
 
 r.DeclareType('const_wxChar_p', 'const wxChar*', 'String',
