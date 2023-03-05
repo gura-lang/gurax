@@ -235,13 +235,15 @@ Panel_GenericProgressDialog = class(Panel) {
 		dlg = wx.GenericProgressDialog(
 				title = 'title'
 				message = 'message'
-				maximum = 100
+				maximum = 3
 				parent = nil
 				style = style)
 		dlg.Pulse('One')
-		wx.Millisleep(500)
+		wx.MilliSleep(500)
 		dlg.Pulse('Two')
-		wx.Millisleep(500)
+		wx.MilliSleep(500)
+		dlg.Pulse('Three')
+		wx.MilliSleep(500)
 		//rtn = dlg.Show()
 		//data = dlg.GetData()
 	}

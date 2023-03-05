@@ -8,7 +8,7 @@ GetUTCTime() as long
 GetUTCTimeMillis() as LongLong
 GetUTCTimeUSec() as LongLong
 MicroSleep(microseconds as unsigned_long) as void
-MilliSleep(microseconds as unsigned_long) as void
+MilliSleep(milliseconds as unsigned_long) as void
 Now() as String
 Sleep(secs as int) as void
 GetKeyCodeName(keyCode as int) = \
