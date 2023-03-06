@@ -23,7 +23,7 @@ FrameMain = class(wx.Frame) {
 panels = []
 
 Panel = class(wx.Panel) {
-	dict = %{wx.ID_OK => 'OK', wx.ID_CANCEL => 'CANCEL', wx.ID_YES => 'YES', wx.ID_NO => 'NO', wx.ID_HELP => 'HELP'}
+	dict:static = %{wx.ID_OK => 'OK', wx.ID_CANCEL => 'CANCEL', wx.ID_YES => 'YES', wx.ID_NO => 'NO', wx.ID_HELP => 'HELP'}
 	name as String
 	grid as wx.GridSizer
 	__init__(parent as wx.Window, name as String, rows as Number = 10, cols as Number = 2) = {|parent|
@@ -295,10 +295,12 @@ Panel_GenericProgressDialog = class(Panel) {
 				parent = nil
 				style = style)
 		repeat(100) {|i|
+			wx.MilliSleep(100)
+			[cont, skipped] = dlg.Pulse(Format('Count: %d', i))
+			LogPrintf('WasCancelled() = %s, WasSkipped() = %s, cont = %s, skip = %s\n',
+						dlg.WasCancelled(), dlg.WasSkipped(), cont, skipped)
 			dlg.WasCancelled() && break
-			dlg.WasSkipped() && break
-			wx.MilliSleep(20)
-			dlg.Pulse(Format('Count: %d', i))
+			//dlg.WasSkipped() && break
 		}
 		dlg.Destroy()
 	}
@@ -442,5 +444,214 @@ Panel_MessageDialog = class(Panel) {
 	}
 }
 panels.Add(Panel_MessageDialog)
+
+//------------------------------------------------------------------------------
+// Panel_HtmlHelpDialog
+//------------------------------------------------------------------------------
+Panel_HtmlHelpDialog = class(Panel) {
+	__init__(parent as wx.Window) = {|parent, 'HtmlHelpDialog'|}
+	ShowDialog() = {
+	}
+}
+panels.Add(Panel_HtmlHelpDialog)
+
+//------------------------------------------------------------------------------
+// Panel_MultiChoiceDialog
+//------------------------------------------------------------------------------
+Panel_MultiChoiceDialog = class(Panel) {
+	checkBox_OK
+	checkBox_CANCEL
+	checkBox_CENTRE
+	__init__(parent as wx.Window) = {|parent, 'MultiChoiceDialog'|
+		wx.CheckBox(this, wx.ID_ANY, 'OK') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			ctrl.SetValue(true)
+			this.checkBox_OK = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'CANCEL') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_CANCEL = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'CENTRE') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_CENTRE = ctrl
+		}
+	}
+	ShowDialog() = {
+		style = 0
+		if (this.checkBox_OK.IsChecked()) { style |= wx.OK }
+		if (this.checkBox_CANCEL.IsChecked()) { style |= wx.CANCEL }
+		if (this.checkBox_CENTRE.IsChecked()) { style |= wx.CENTRE }
+		dlg = wx.MultiChoiceDialog(
+				parent = nil
+				message = 'message'
+				caption = 'caption'
+				choices = ['item1', 'item2', 'item3', 'item4', 'item5']
+				style = style)
+		rtn = dlg.ShowModal()
+		LogPrintf('rtn = %s\n', this.CodeToString(rtn))
+		if (rtn == wx.ID_OK) {
+			LogPrintf('selections = %s\n', dlg.GetSelections().Join(', '))
+		}
+	}
+}
+panels.Add(Panel_MultiChoiceDialog)
+
+//------------------------------------------------------------------------------
+// Panel_NumberEntryDialog
+//------------------------------------------------------------------------------
+Panel_NumberEntryDialog = class(Panel) {
+	__init__(parent as wx.Window) = {|parent, 'NumberEntryDialog'|}
+	ShowDialog() = {
+		dlg = wx.NumberEntryDialog(
+				parent = nil
+				message = 'message'
+				prompt = 'prompt'
+				caption = 'caption'
+				value = 50
+				min = 0
+				max = 100)
+		rtn = dlg.ShowModal()
+		LogPrintf('rtn = %s\n', this.CodeToString(rtn))
+		if (rtn == wx.ID_OK) {
+			LogPrintf('value = %d\n', dlg.GetValue())
+		}
+	}
+}
+panels.Add(Panel_NumberEntryDialog)
+
+//------------------------------------------------------------------------------
+// Panel_PGArrayEditorDialog
+//------------------------------------------------------------------------------
+Panel_PGArrayEditorDialog = class(Panel) {
+	__init__(parent as wx.Window) = {|parent, 'PGArrayEditorDialog'|}
+	ShowDialog() = {
+	}
+}
+panels.Add(Panel_PGArrayEditorDialog)
+
+//------------------------------------------------------------------------------
+// Panel_PrintAbortDialog
+//------------------------------------------------------------------------------
+Panel_PrintAbortDialog = class(Panel) {
+	__init__(parent as wx.Window) = {|parent, 'PrintAbortDialog'|}
+	ShowDialog() = {
+	}
+}
+panels.Add(Panel_PrintAbortDialog)
+
+//------------------------------------------------------------------------------
+// Panel_PropertySheetDialog
+//------------------------------------------------------------------------------
+Panel_PropertySheetDialog = class(Panel) {
+	__init__(parent as wx.Window) = {|parent, 'PropertySheetDialog'|}
+	ShowDialog() = {
+	}
+}
+panels.Add(Panel_PropertySheetDialog)
+
+//------------------------------------------------------------------------------
+// Panel_RearrangeDialog
+//------------------------------------------------------------------------------
+Panel_RearrangeDialog = class(Panel) {
+	__init__(parent as wx.Window) = {|parent, 'RearrangeDialog'|}
+	ShowDialog() = {
+	}
+}
+panels.Add(Panel_RearrangeDialog)
+
+//------------------------------------------------------------------------------
+// Panel_RicTextStyleOrganiserDialog
+//------------------------------------------------------------------------------
+Panel_RicTextStyleOrganiserDialog = class(Panel) {
+	__init__(parent as wx.Window) = {|parent, 'RicTextStyleOrganiserDialog'|}
+	ShowDialog() = {
+	}
+}
+panels.Add(Panel_RicTextStyleOrganiserDialog)
+
+//------------------------------------------------------------------------------
+// Panel_SingleChoiceDialog
+//------------------------------------------------------------------------------
+Panel_SingleChoiceDialog = class(Panel) {
+	checkBox_OK
+	checkBox_CANCEL
+	checkBox_CENTRE
+	__init__(parent as wx.Window) = {|parent, 'SingleChoiceDialog'|
+		wx.CheckBox(this, wx.ID_ANY, 'OK') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			ctrl.SetValue(true)
+			this.checkBox_OK = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'CANCEL') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_CANCEL = ctrl
+		}
+		wx.CheckBox(this, wx.ID_ANY, 'CENTRE') {|ctrl|
+			this.grid.Add(ctrl, wx.SizerFlags().Expand())
+			this.checkBox_CENTRE = ctrl
+		}
+	}
+	ShowDialog() = {
+		style = 0
+		if (this.checkBox_OK.IsChecked()) { style |= wx.OK }
+		if (this.checkBox_CANCEL.IsChecked()) { style |= wx.CANCEL }
+		if (this.checkBox_CENTRE.IsChecked()) { style |= wx.CENTRE }
+		//dlg = wx.SingleChoiceDialog(
+		//		parent = nil
+		//		message = 'message'
+		//		caption = 'caption'
+		//		choices = ['item1', 'item2', 'item3', 'item4', 'item5']
+		//		clientData = []
+		//		style = style)
+		//rtn = dlg.ShowModal()
+		//LogPrintf('rtn = %s\n', this.CodeToString(rtn))
+		//if (rtn == wx.ID_OK) {
+		//	LogPrintf('selections = %s\n', dlg.GetSelections().Join(', '))
+		//}
+	}
+}
+panels.Add(Panel_SingleChoiceDialog)
+
+//------------------------------------------------------------------------------
+// Panel_SymbolPickerDialog
+//------------------------------------------------------------------------------
+Panel_SymbolPickerDialog = class(Panel) {
+	__init__(parent as wx.Window) = {|parent, 'SymbolPickerDialog'|}
+	ShowDialog() = {
+	}
+}
+panels.Add(Panel_SymbolPickerDialog)
+
+//------------------------------------------------------------------------------
+// Panel_TextEntryDialog
+//------------------------------------------------------------------------------
+Panel_TextEntryDialog = class(Panel) {
+	__init__(parent as wx.Window) = {|parent, 'TextEntryDialog'|}
+	ShowDialog() = {
+		dlg = wx.TextEntryDialog(
+				parent = nil
+				message = 'message'
+				caption = wx.GetTextFromUserPromptStr
+				value = 'value'
+				style = wx.TextEntryDialogStyle)
+		rtn = dlg.ShowModal()
+		LogPrintf('rtn = %s\n', this.CodeToString(rtn))
+		if (rtn == wx.ID_OK) {
+			LogPrintf('value = %s\n', dlg.GetValue())
+		}
+	}
+}
+panels.Add(Panel_TextEntryDialog)
+
+//------------------------------------------------------------------------------
+// Panel_Wizard
+//------------------------------------------------------------------------------
+Panel_Wizard = class(Panel) {
+	__init__(parent as wx.Window) = {|parent, 'Wizard'|}
+	ShowDialog() = {
+	}
+}
+panels.Add(Panel_Wizard)
 
 wx.ImplementApp(AppMain())
