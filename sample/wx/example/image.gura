@@ -5942,9 +5942,9 @@ SUVORK5CYII=
 
 InitImageList(images) = {
 	imageList = wx.ImageList(16, 16)
-	indices = %{}
-	images.EachKey {|key| indices[key] = imageList.Add(images[key])}
-	(imageList, indices)
+	imageIds = %{}
+	images.EachKey {|key| imageIds[key] = imageList.Add(images[key])}
+	(imageList, imageIds)
 }
 
 cat512 = Image(b'''

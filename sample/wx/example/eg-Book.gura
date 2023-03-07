@@ -15,13 +15,15 @@ MyFrame = class(wx.Frame) {
 	}
 }
 
+imageIds = nil
+
 PanelTop = class(wx.Panel) {
 	nPage as Number = 0
 	textCtrl as wx.TextCtrl
 	simplebook as wx.SimpleBook
 	__init__(parent as wx.Window) = {|parent|
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
-		[imageList, indices] = image.InitImageList(image.mini_icons)
+		[imageList, imageIds:extern] = image.InitImageList(image.mini_icons)
 		this.SetSizer(sizerTop)
 		wx.BoxSizer(wx.HORIZONTAL) {|hbox|
 			sizerTop.Add(hbox, wx.SizerFlags(4).Expand())
@@ -114,7 +116,7 @@ PanelTop = class(wx.Panel) {
 	SetupPages(book as wx.BookCtrlBase) = {
 		['Page1', 'Page2', 'Page3', 'Page4', 'Page5'].Each {|label|
 			wx.Panel(book) {|panel|
-				book.AddPage(panel, label, imageId = 0)
+				book.AddPage(panel, label, imageId = imageIds[`action_forward])
 				wx.BoxSizer(wx.VERTICAL) {|vbox|
 					panel.SetSizer(vbox)
 					vbox.Add(wx.Button(panel, wx.ID_ANY, 'Content of ' + label), wx.SizerFlags(1).Expand())

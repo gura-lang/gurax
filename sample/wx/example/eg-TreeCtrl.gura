@@ -20,7 +20,7 @@ PanelTop = class(wx.Panel) {
 	comboBox as wx.ComboBox
 	textCtrl as wx.TextCtrl
 	__init__(parent as wx.Window) = {|parent|
-		[imageList, indices] = image.InitImageList(image.mini_icons)
+		[imageList, imageIds] = image.InitImageList(image.mini_icons)
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
 		wx.BoxSizer(wx.HORIZONTAL) {|hbox|
@@ -28,23 +28,23 @@ PanelTop = class(wx.Panel) {
 			wx.TreeCtrl(this, style = wx.TR_DEFAULT_STYLE | wx.TR_EDIT_LABELS | wx.TR_ROW_LINES) {|ctrl|
 				hbox.Add(ctrl, wx.SizerFlags(1).Expand())
 				ctrl.SetImageList(imageList);
-				ctrl.AddRoot('root', image = indices[`folder]) {|itemId|
-					ctrl.AppendItem(itemId, 'child 1', image = indices[`page], data = 'hello 1')
-					ctrl.AppendItem(itemId, 'child 2', image = indices[`folder]) {|itemId|
-						ctrl.AppendItem(itemId, 'child 2-1', data = 'hello 2-1', image = indices[`page])
-						ctrl.AppendItem(itemId, 'child 2-2', data = 'hello 2-2', image = indices[`page])
-						ctrl.AppendItem(itemId, 'child 2-3', data = 'hello 2-3', image = indices[`page])
-						ctrl.AppendItem(itemId, 'child 2-4', data = 'hello 2-4', image = indices[`page])
+				ctrl.AddRoot('root', image = imageIds[`folder]) {|itemId|
+					ctrl.AppendItem(itemId, 'child 1', image = imageIds[`page], data = 'hello 1')
+					ctrl.AppendItem(itemId, 'child 2', image = imageIds[`folder]) {|itemId|
+						ctrl.AppendItem(itemId, 'child 2-1', data = 'hello 2-1', image = imageIds[`page])
+						ctrl.AppendItem(itemId, 'child 2-2', data = 'hello 2-2', image = imageIds[`page])
+						ctrl.AppendItem(itemId, 'child 2-3', data = 'hello 2-3', image = imageIds[`page])
+						ctrl.AppendItem(itemId, 'child 2-4', data = 'hello 2-4', image = imageIds[`page])
 					}
-					ctrl.AppendItem(itemId, 'child 3', image = indices[`page])
-					ctrl.AppendItem(itemId, 'child 4', image = indices[`page])
-					ctrl.AppendItem(itemId, 'child 5', image = indices[`folder]) {|itemId|
-						ctrl.AppendItem(itemId, 'child 5-1', image = indices[`page])
-						ctrl.AppendItem(itemId, 'child 5-2', image = indices[`page])
-						ctrl.AppendItem(itemId, 'child 5-3', image = indices[`page])
-						ctrl.AppendItem(itemId, 'child 5-4', image = indices[`page])
+					ctrl.AppendItem(itemId, 'child 3', image = imageIds[`page])
+					ctrl.AppendItem(itemId, 'child 4', image = imageIds[`page])
+					ctrl.AppendItem(itemId, 'child 5', image = imageIds[`folder]) {|itemId|
+						ctrl.AppendItem(itemId, 'child 5-1', image = imageIds[`page])
+						ctrl.AppendItem(itemId, 'child 5-2', image = imageIds[`page])
+						ctrl.AppendItem(itemId, 'child 5-3', image = imageIds[`page])
+						ctrl.AppendItem(itemId, 'child 5-4', image = imageIds[`page])
 					}
-					ctrl.AppendItem(itemId, 'child 6', image = indices[`page])
+					ctrl.AppendItem(itemId, 'child 6', image = imageIds[`page])
 				}
 				this.treeCtrl = ctrl
 				wx.EVT_TREE_BEGIN_DRAG(ctrl, this.OnTree)
@@ -73,12 +73,12 @@ PanelTop = class(wx.Panel) {
 				hbox.Add(ctrl, wx.SizerFlags(1).Expand())
 				ctrl.SetImageList(imageList);
 				ctrl.SetIndent(50)
-				ctrl.AddRoot('root', image = indices[`folder]) {|itemId|
-					ctrl.AppendItem(itemId, 'child 1', image = indices[`page], data = 'hello 1')
-					ctrl.AppendItem(itemId, 'child 2', image = indices[`folder]) {|itemId|
-						ctrl.AppendItem(itemId, 'child 2-1', data = 'hello 2-1', image = indices[`page])
-						ctrl.AppendItem(itemId, 'child 2-2', data = 'hello 2-2', image = indices[`page])
-						ctrl.AppendItem(itemId, 'child 2-3', data = 'hello 2-3', image = indices[`page])
+				ctrl.AddRoot('root', image = imageIds[`folder]) {|itemId|
+					ctrl.AppendItem(itemId, 'child 1', image = imageIds[`page], data = 'hello 1')
+					ctrl.AppendItem(itemId, 'child 2', image = imageIds[`folder]) {|itemId|
+						ctrl.AppendItem(itemId, 'child 2-1', data = 'hello 2-1', image = imageIds[`page])
+						ctrl.AppendItem(itemId, 'child 2-2', data = 'hello 2-2', image = imageIds[`page])
+						ctrl.AppendItem(itemId, 'child 2-3', data = 'hello 2-3', image = imageIds[`page])
 						ctrl.AppendItem(itemId, 'child 2-4', data = 'hello 2-4', image = indices[`page])
 					}
 					ctrl.AppendItem(itemId, 'child 3', image = indices[`page])

@@ -73,7 +73,7 @@ PanelTop = class(wx.Panel) {
 		this.ascentFlag = true
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
-		[imageList, indices] = image.InitImageList(image.silk_icons)
+		[imageList, imageIds] = image.InitImageList(image.silk_icons)
 		wx.Notebook(this, wx.ID_ANY) {|noteBook|
 			sizerTop.Add(noteBook, wx.SizerFlags(2).Expand())
 			wx.Panel(noteBook) {|panel|
