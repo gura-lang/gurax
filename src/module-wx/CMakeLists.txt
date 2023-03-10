@@ -13,7 +13,8 @@ add_library(wx.gurd SHARED)
 target_include_directories(wx.gurd PRIVATE
 	${PROJECT_SOURCE_DIR}/../../include
 	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/wxWidgets-3.1.5/include>
-	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/wxWidgets-3.1.5/lib/vc_x64_dll/mswud>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Release>>:${PROJECT_SOURCE_DIR}/../../guest/wxWidgets-3.1.5/lib/vc_x64_dll/mswu>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:${PROJECT_SOURCE_DIR}/../../guest/wxWidgets-3.1.5/lib/vc_x64_dll/mswud>
 	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/../../guest>
 	$<$<PLATFORM_ID:Darwin>:${PROJECT_SOURCE_DIR}/../../guest>)
 target_link_directories(wx.gurd PRIVATE

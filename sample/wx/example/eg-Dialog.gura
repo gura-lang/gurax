@@ -2,6 +2,7 @@
 import(wx)
 
 textCtrl as wx.TextCtrl = nil
+frame = nil
 
 LogPrintf(format as String, args*) = {
 	textCtrl.AppendText(Format(format, args*))
@@ -16,6 +17,7 @@ AppMain = class(wx.App) {
 
 FrameMain = class(wx.Frame) {
 	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
+		frame:extern = this
 		PanelTop(this)
 	}
 }
@@ -317,7 +319,8 @@ Panel_FontDialog = class(Panel) {
 		data.EnableEffects(false)
 		data.SetAllowSymbols(false)
 		data.SetInitialFont(textCtrl.GetFont())
-		dlg = wx.FontDialog(this, data)
+		//dlg = wx.FontDialog(this, data)
+		dlg = wx.FontDialog(frame)
 		rtn = dlg.ShowModal()
 		LogPrintf('rtn = %s\n', this.CodeToString(rtn))
 	}
