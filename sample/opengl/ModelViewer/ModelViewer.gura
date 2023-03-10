@@ -34,7 +34,7 @@ FrameMain = class(wx.Frame) {
 	this.OnMenuOpen(event as wx.CommandEvent) = {
 		dlg = wx.FileDialog(this, 'Open Model File', defaultDir = fs.GetCurDir(), wildcard = '*.stl', style = wx.FD_OPEN)
 		if (dlg.ShowModal() == wx.ID_OK) {
-			//this.panelTop.canvas.OpenSTL(dlg.GetPath())
+			this.panelTop.OpenSTL(dlg.GetPath())
 		}
 	}
 	this.OnMenuExit(event as wx.CommandEvent) = {
@@ -50,6 +50,7 @@ PanelTop = class(wx.Panel) {
 		vbox = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(vbox)
 		wx.Notebook(this, wx.ID_ANY) {|notebook|
+			notebook.SetPadding(wx.Size(16, 4))
 			vbox.Add(notebook, wx.SizerFlags(1).Expand())
 			sys.argv.Offset(1) {|pathNameSTL|
 				Canvas(notebook, pathNameSTL, this.property) {|ctrl|
@@ -95,6 +96,12 @@ PanelTop = class(wx.Panel) {
 		this.property.specular = this.ColourToArray(event.GetColour())
 		this.notebook.Refresh()
 	}
+	OpenSTL(pathNameSTL as String):map:void = {
+		Canvas(this.notebook, pathNameSTL, this.property) {|ctrl|
+			this.notebook.AddPage(ctrl, path.BaseName(path.FileName(pathNameSTL)))
+		}
+		this.notebook.SetSelection(this.notebook.GetPageCount() - 1)
+	}
 	ArrayToColour(array as Array):static = wx.Colour(array[0] * 255, array[1] * 255, array[2] * 255)
 	ColourToArray(colour as wx.Colour):static = @float([colour.Red() / 255, colour.Green() / 255, colour.Blue() / 255])
 }
@@ -121,11 +128,6 @@ Canvas = class(wx.GLCanvas) {
 		this.Bind(wx.EVT_LEFT_UP, this.OnLeftUp)
 		this.Bind(wx.EVT_MOTION, this.OnMotion)
 		this.Bind(wx.EVT_MOUSEWHEEL, this.OnMouseWheel)
-	}
-	OpenSTL(stream as Stream) = {
-		this.SetCurrent(this.context)
-		this.list = opengl.stl.CreateList(stream, true, false)
-		this.Refresh()
 	}
 	OnSize(event as wx.SizeEvent) = {
 		size = event.GetSize()
