@@ -4,6 +4,12 @@ import(opengl) {*}
 import(opengl.stl)
 import(glu) {*}
 
+Property = struct {
+	ambient = @float([1, 0, 0, 0])
+	diffuse = @float([1, 1, 1, 0])
+	specular = @float([1, 1, 1, 0])
+}
+
 AppMain = class(wx.App) {
 	OnInit() = {
 		FrameMain(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(900, 700)).Show()
@@ -26,9 +32,9 @@ FrameMain = class(wx.Frame) {
 		this.Bind(wx.EVT_MENU, this.OnMenuExit, id = wx.ID_EXIT)
 	}
 	this.OnMenuOpen(event as wx.CommandEvent) = {
-		dlg = wx.FileDialog(this, 'Open Model File', wildcard = '*.stl', style = wx.FD_OPEN)
+		dlg = wx.FileDialog(this, 'Open Model File', defaultDir = fs.GetCurDir(), wildcard = '*.stl', style = wx.FD_OPEN)
 		if (dlg.ShowModal() == wx.ID_OK) {
-			this.panelTop.canvas.OpenSTL(dlg.GetPath())
+			//this.panelTop.canvas.OpenSTL(dlg.GetPath())
 		}
 	}
 	this.OnMenuExit(event as wx.CommandEvent) = {
@@ -37,82 +43,78 @@ FrameMain = class(wx.Frame) {
 }
 
 PanelTop = class(wx.Panel) {
-	canvas as Canvas
+	notebook as wx.Notebook
+	property as Property
 	__init__(parent as wx.Window) = {|parent|
+		this.property = Property()
 		vbox = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(vbox)
-		Canvas(this) {|ctrl|
-			vbox.Add(ctrl, wx.SizerFlags(1).Expand())
-			this.canvas = ctrl
+		wx.Notebook(this, wx.ID_ANY) {|notebook|
+			vbox.Add(notebook, wx.SizerFlags(1).Expand())
+			sys.argv.Offset(1) {|pathNameSTL|
+				Canvas(notebook, pathNameSTL, this.property) {|ctrl|
+					notebook.AddPage(ctrl, path.BaseName(path.FileName(pathNameSTL)))
+				}
+			}
+			this.notebook = notebook
 		}
 		wx.BoxSizer(wx.HORIZONTAL) {|hbox|
 			vbox.Add(hbox, wx.SizerFlags().Expand().Border(wx.ALL, 4))
 			wx.StaticText(this, wx.ID_ANY, 'Ambient') {|ctrl|
 				hbox.Add(ctrl, wx.SizerFlags().Align(wx.CENTRE))
 			}
-			wx.ColourPickerCtrl(this, wx.ID_ANY, this.ArrayToColour(this.canvas.ambient)) {|ctrl|
+			wx.ColourPickerCtrl(this, wx.ID_ANY, this.ArrayToColour(this.property.ambient)) {|ctrl|
 				hbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.LEFT, 4))
 				wx.EVT_COLOURPICKER_CHANGED(ctrl, this.OnColourPickerChanged_Ambient)
 			}
 			wx.StaticText(this, wx.ID_ANY, 'Diffuse') {|ctrl|
 				hbox.Add(ctrl, wx.SizerFlags().Align(wx.CENTRE).Border(wx.LEFT, 12))
 			}
-			wx.ColourPickerCtrl(this, wx.ID_ANY, this.ArrayToColour(this.canvas.diffuse)) {|ctrl|
+			wx.ColourPickerCtrl(this, wx.ID_ANY, this.ArrayToColour(this.property.diffuse)) {|ctrl|
 				hbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.LEFT, 4))
 				wx.EVT_COLOURPICKER_CHANGED(ctrl, this.OnColourPickerChanged_Diffuse)
 			}
 			wx.StaticText(this, wx.ID_ANY, 'Specular') {|ctrl|
 				hbox.Add(ctrl, wx.SizerFlags().Align(wx.CENTRE).Border(wx.LEFT, 12))
 			}
-			wx.ColourPickerCtrl(this, wx.ID_ANY, this.ArrayToColour(this.canvas.specular)) {|ctrl|
+			wx.ColourPickerCtrl(this, wx.ID_ANY, this.ArrayToColour(this.property.specular)) {|ctrl|
 				hbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.LEFT, 4))
 				wx.EVT_COLOURPICKER_CHANGED(ctrl, this.OnColourPickerChanged_Specular)
 			}
 		}
 	}
 	OnColourPickerChanged_Ambient(event as wx.ColourPickerEvent) = {
-		this.canvas.ambient = this.ColourToArray(event.GetColour())
-		this.canvas.Refresh()
+		this.property.ambient = this.ColourToArray(event.GetColour())
+		this.notebook.Refresh()
 	}
 	OnColourPickerChanged_Diffuse(event as wx.ColourPickerEvent) = {
-		this.canvas.diffuse = this.ColourToArray(event.GetColour())
-		this.canvas.Refresh()
+		this.property.diffuse = this.ColourToArray(event.GetColour())
+		this.notebook.Refresh()
 	}
 	OnColourPickerChanged_Specular(event as wx.ColourPickerEvent) = {
-		this.canvas.specular = this.ColourToArray(event.GetColour())
-		this.canvas.Refresh()
+		this.property.specular = this.ColourToArray(event.GetColour())
+		this.notebook.Refresh()
 	}
 	ArrayToColour(array as Array):static = wx.Colour(array[0] * 255, array[1] * 255, array[2] * 255)
 	ColourToArray(colour as wx.Colour):static = @float([colour.Red() / 255, colour.Green() / 255, colour.Blue() / 255])
 }
 
 Canvas = class(wx.GLCanvas) {
+	context as wx.GLContext
+	property as Property
 	posStart as wx.Point
 	posCur as wx.Point
 	list as Number
 	rotX = 0
 	rotY = 0
 	distance = 5
-	ambient = @float([1, 0, 0, 0])
-	diffuse = @float([1, 1, 1, 0])
-	specular = @float([1, 1, 1, 0])
-	__init__(parent as wx.Window) = {|parent, wx.ID_ANY, style = wx.BORDER_SUNKEN|
-		this.SetCurrent(wx.GLContext(this))
+	initFlag = false
+	pathNameSTL as String
+	__init__(parent as wx.Window, pathNameSTL as String, property as Property) = {|parent, wx.ID_ANY, style = wx.BORDER_SUNKEN|
+		this.pathNameSTL = pathNameSTL
+		this.property = property
+		this.context = wx.GLContext(this)
 		this.posCur = wx.Point(0, 0)
-		position = @float([0.0, 3.0, 3.0, 0.0])
-		local_view = @float([0.0])
-		glEnable(GL_DEPTH_TEST)
-		glDepthFunc(GL_LESS)
-		glLightfv(GL_LIGHT0, GL_POSITION, position)
-		glLightModelfv(GL_LIGHT_MODEL_LOCAL_VIEWER, local_view)
-		glFrontFace(GL_CW)
-		glEnable(GL_LIGHTING)
-		glEnable(GL_LIGHT0)
-		glEnable(GL_AUTO_NORMAL)
-		glEnable(GL_NORMALIZE)
-		//glMaterialf(GL_FRONT, GL_SHININESS, 0.6 * 128.0)
-		glMaterialf(GL_FRONT, GL_SHININESS, 0.9 * 128.0)
-		this.list = opengl.stl.CreateList(pathNameSTL, true, false)
 		this.Bind(wx.EVT_SIZE, this.OnSize)
 		this.Bind(wx.EVT_PAINT, this.OnPaint)
 		this.Bind(wx.EVT_LEFT_DOWN, this.OnLeftDown)
@@ -121,27 +123,54 @@ Canvas = class(wx.GLCanvas) {
 		this.Bind(wx.EVT_MOUSEWHEEL, this.OnMouseWheel)
 	}
 	OpenSTL(stream as Stream) = {
+		this.SetCurrent(this.context)
 		this.list = opengl.stl.CreateList(stream, true, false)
 		this.Refresh()
 	}
 	OnSize(event as wx.SizeEvent) = {
 		size = event.GetSize()
+		//this.SetCurrent(this.context)
+		//glViewport(0, 0, size.GetWidth(), size.GetHeight())
+		//glMatrixMode(GL_PROJECTION)
+		//glLoadIdentity()
+		////glOrtho(-6.0, 6.0, -6.0, 6.0, -1.0, 10.0)
+		//gluPerspective(30, size.GetWidth() / size.GetHeight(), 1, 100)
+	}
+	OnPaint(event as wx.PaintEvent) = {
+		dc = wx.PaintDC(this)
+		this.SetCurrent(this.context)
+		if (!this.initFlag) {
+			this.initFlag = true
+			position = @float([0.0, 3.0, 3.0, 0.0])
+			local_view = @float([0.0])
+			this.list = opengl.stl.CreateList(this.pathNameSTL, true, false)
+			glEnable(GL_DEPTH_TEST)
+			glDepthFunc(GL_LESS)
+			glLightfv(GL_LIGHT0, GL_POSITION, position)
+			glLightModelfv(GL_LIGHT_MODEL_LOCAL_VIEWER, local_view)
+			glFrontFace(GL_CW)
+			glEnable(GL_LIGHTING)
+			glEnable(GL_LIGHT0)
+			glEnable(GL_AUTO_NORMAL)
+			glEnable(GL_NORMALIZE)
+			//glMaterialf(GL_FRONT, GL_SHININESS, 0.6 * 128.0)
+			glMaterialf(GL_FRONT, GL_SHININESS, 0.9 * 128.0)
+		}
+		size = this.GetClientSize()
 		glViewport(0, 0, size.GetWidth(), size.GetHeight())
 		glMatrixMode(GL_PROJECTION)
 		glLoadIdentity()
 		//glOrtho(-6.0, 6.0, -6.0, 6.0, -1.0, 10.0)
 		gluPerspective(30, size.GetWidth() / size.GetHeight(), 1, 100)
-	}
-	OnPaint(event as wx.PaintEvent) = {
-		dc = wx.PaintDC(this)
+
 		glClearColor(1, 1, 1, 1)
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 		if (this.list) {
 			glMatrixMode(GL_MODELVIEW)
 			glLoadIdentity()
-			glMaterialfv(GL_FRONT, GL_AMBIENT, this.ambient)
-			glMaterialfv(GL_FRONT, GL_DIFFUSE, this.diffuse)
-			glMaterialfv(GL_FRONT, GL_SPECULAR, this.specular)
+			glMaterialfv(GL_FRONT, GL_AMBIENT, this.property.ambient)
+			glMaterialfv(GL_FRONT, GL_DIFFUSE, this.property.diffuse)
+			glMaterialfv(GL_FRONT, GL_SPECULAR, this.property.specular)
 			glPushMatrix()
 				glTranslatef(0.0, 0.0, -this.distance)
 				glRotatef(this.rotX, 0.0, 1.0, 0.0)
@@ -183,6 +212,5 @@ if (sys.argv.len < 2) {
 	sys.cerr.Println('usage: viewer STL')
 	sys.Exit(1)
 }
-pathNameSTL = sys.argv[1]
 
 wx.ImplementApp(AppMain())
