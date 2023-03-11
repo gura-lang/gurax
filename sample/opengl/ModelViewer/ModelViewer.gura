@@ -216,7 +216,7 @@ Canvas = class(wx.GLCanvas) {
 	}
 	OnMouseWheel(event as wx.MouseEvent) = {
 		this.distance -= event.GetWheelRotation() * .01
-		if (this.distance < 2) { this.distance = 2 }
+		if (this.distance < 1) { this.distance = 1 }
 		if (this.distance > 20) { this.distance = 20 }
 		this.Refresh()
 	}

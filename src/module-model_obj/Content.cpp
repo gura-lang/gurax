@@ -433,7 +433,7 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::hole: {
-			// inner trimming loop: u0 u1 curv2d u0 u1 curv2d ...
+			// inner trimming loop: hole u0 u1 curv2d u0 u1 curv2d ...
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				SetError_NotImplementedKeyword("hole");
@@ -444,7 +444,7 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::scrv: {
-			// special curve: u0 u1 curv2d u0 u1 curv2d ...
+			// special curve: scrv u0 u1 curv2d u0 u1 curv2d ...
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				SetError_NotImplementedKeyword("scrv");
@@ -455,7 +455,7 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::sp: {
-			// special point: vp1 vp ...
+			// special point: sp vp1 vp ...
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				SetError_NotImplementedKeyword("sp");
