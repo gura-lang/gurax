@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(xml)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(xml.Node, `en)}
 ${help.ComposeConstructorHelp(xml.Node, `en)}
 
 ${help.ComposeMethodHelp(xml.Node, `en)}
-)**";
+)""";
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -32,9 +32,9 @@ Gurax_DeclareMethod(Node, Compose)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Node, Compose)
@@ -53,9 +53,9 @@ Gurax_ImplementMethod(Node, Compose)
 Gurax_DeclareMethod(Node, IsCData)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Node, IsCData)
@@ -70,9 +70,9 @@ Gurax_ImplementMethod(Node, IsCData)
 Gurax_DeclareMethod(Node, IsComment)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Node, IsComment)
@@ -87,9 +87,9 @@ Gurax_ImplementMethod(Node, IsComment)
 Gurax_DeclareMethod(Node, IsElement)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Node, IsElement)
@@ -104,9 +104,9 @@ Gurax_ImplementMethod(Node, IsElement)
 Gurax_DeclareMethod(Node, IsText)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Node, IsText)
@@ -124,9 +124,9 @@ Gurax_ImplementMethod(Node, IsText)
 Gurax_DeclareProperty_R(Node, depth)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Node, depth)
@@ -139,9 +139,9 @@ Gurax_ImplementPropertyGetter(Node, depth)
 Gurax_DeclareProperty_R(Node, parent)
 {
 	Declare(VTYPE_Node, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Node, parent)
@@ -155,9 +155,9 @@ Gurax_ImplementPropertyGetter(Node, parent)
 Gurax_DeclareProperty_R(Node, type)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Node, type)

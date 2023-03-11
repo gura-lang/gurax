@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 ${help.ComposePropertyHelp(Iterator, `en)}
@@ -29,7 +29,7 @@ The following cast operations are prepared:
 ${help.ComposeConstructorHelp(Iterator, `en)}
 
 ${help.ComposeMethodHelp(Iterator, `en)}
-)**";
+)""";
 
 //-----------------------------------------------------------------------------
 // Implementation of method specific to Iterator
@@ -38,12 +38,12 @@ ${help.ComposeMethodHelp(Iterator, `en)}
 Gurax_DeclareMethod(Iterator, IsFinite)
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns `true` if the iterator is finite.
-)**");
-	AddHelp(Gurax_Symbol(ja), u8R"**(
+)""");
+	AddHelp(Gurax_Symbol(ja), u8R"""(
 イテレータが有限のとき `true` を返します。
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, IsFinite)
@@ -59,12 +59,12 @@ Gurax_ImplementMethod(Iterator, IsFinite)
 Gurax_DeclareMethod(Iterator, IsInfinite)
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns `true` if the iterator is infinite.
-)**");
-	AddHelp(Gurax_Symbol(ja), u8R"**(
+)""");
+	AddHelp(Gurax_Symbol(ja), u8R"""(
 イテレータが無限のとき `true` を返します。
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, IsInfinite)
@@ -80,12 +80,12 @@ Gurax_ImplementMethod(Iterator, IsInfinite)
 Gurax_DeclareMethod(Iterator, NextValue)
 {
 	Declare(VTYPE_Iterator, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns the next element value of the iterator.
-)**");
-	AddHelp(Gurax_Symbol(ja), u8R"**(
+)""");
+	AddHelp(Gurax_Symbol(ja), u8R"""(
 イテレータの次の要素を返します。
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, NextValue)
@@ -103,9 +103,9 @@ Gurax_DeclareMethod(Iterator, Skip)
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Skip)
@@ -131,7 +131,7 @@ Gurax_DeclareMethod(Iterator, After)
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("criteria", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates an iterator that returns a sequence of elements from the target iterable after the condition specified by `criteria` is met.
 
 `criteria` is a `Function` or an iterable.
@@ -148,7 +148,7 @@ An iterable as the criteria is a sequence of `Bool` values that is scanned along
 ```
 [3, 1, 4, 1, 5, 9].After([false, false, true, false, false, false]):list // Returns [1, 5, 9]
 ```
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, After)
@@ -167,11 +167,11 @@ Gurax_DeclareMethod(Iterator, Align)
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("valueStuff", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates an iterator that returns `n` pieces of elements from the source iterable.
 If the source iterable has fewer elements, the rest will be filled with the value `valueStuff`
 or `nil` when the argument is omitted.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Align)
@@ -199,7 +199,7 @@ Value* VType_Iterator::Method_Align(Processor& processor, Argument& argument, It
 Gurax_DeclareMethod(Iterator, And)
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns the last value if all the values are determined as `true`, and returns `false` otherwise.
 
 ```
@@ -208,7 +208,7 @@ Returns the last value if all the values are determined as `true`, and returns `
 ['apple', 'grape', 'orange'].And() // Returns 'orange'
 ['apple', false, 'orange'].And()   // Returns false
 ```
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, And)
@@ -226,9 +226,9 @@ Gurax_DeclareMethod(Iterator, ArgMax)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(lastIndex));
 	DeclareAttrOpt(Gurax_Symbol(indices));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, ArgMax)
@@ -264,9 +264,9 @@ Gurax_DeclareMethod(Iterator, ArgMin)
 	Declare(VTYPE_Any, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(lastIndex));
 	DeclareAttrOpt(Gurax_Symbol(indices));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, ArgMin)
@@ -302,9 +302,9 @@ Gurax_DeclareMethod(Iterator, Before)
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("criteria", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Before)
@@ -322,10 +322,10 @@ Gurax_DeclareMethod(Iterator, Combination)
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates an iterator that generates lists that contain elements picked up
 from the original iterable in a combination rule.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Combination)
@@ -360,9 +360,9 @@ Gurax_DeclareMethod(Iterator, Contains)
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns `true` if the iterable contains an element that equals to the given argument `value`.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Contains)
@@ -383,9 +383,9 @@ Gurax_DeclareMethod(Iterator, Count)
 {
 	Declare(VTYPE_Number, Flag::Map);
 	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns the number of elements in the iterable that equals to the given argument `value`.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Count)
@@ -406,9 +406,9 @@ Gurax_ImplementMethod(Iterator, Count)
 Gurax_DeclareMethod(Iterator, CountFalse)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns the number of elements in the iterable that are recognized as `false`.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, CountFalse)
@@ -427,11 +427,11 @@ Gurax_DeclareMethod(Iterator, CountIf)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("criteria", VTYPE_Function, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns the number of elements in the iterable that passes the specified criteria function.
 The function `criteria` takes a single argument and returns a `Bool` value
 after determininig if the given value passes its criteria.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, CountIf)
@@ -452,9 +452,9 @@ Gurax_ImplementMethod(Iterator, CountIf)
 Gurax_DeclareMethod(Iterator, CountTrue)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns the number of elements in the iterable that are recognized as `true`.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, CountTrue)
@@ -474,9 +474,9 @@ Gurax_DeclareMethod(Iterator, Cycle)
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Cycle)
@@ -510,7 +510,7 @@ Gurax_DeclareMethod(Iterator, Each)
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce, DeclBlock::Flag::Quote);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Repeats the process in `block` for each element in the target iterable instance.
 The `block` takes block parameters in one of the following forms:
 
@@ -520,7 +520,7 @@ The `block` takes block parameters in one of the following forms:
 
 If `block` is not specified, it creates an iterator that iterates each item in the iterable.
 When the iterable is an iterator, its cloned value will be created.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Each)
@@ -539,9 +539,9 @@ Gurax_DeclareMethod(Iterator, Filter)
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("criteria", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Filter)
@@ -583,9 +583,9 @@ Gurax_DeclareMethod(Iterator, Find)
 	Declare(VTYPE_Any, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(index));
 	DeclareArg("criteria", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Find)
@@ -658,9 +658,9 @@ Gurax_DeclareMethod(Iterator, Flatten)
 	DeclareAttrOpt(Gurax_Symbol(dfs));
 	DeclareAttrOpt(Gurax_Symbol(bfs));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Flatten)
@@ -694,9 +694,9 @@ Gurax_DeclareMethod(Iterator, Fold)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	DeclareAttrOpt(Gurax_Symbol(iterItem));
 	DeclareAttrOpt(Gurax_Symbol(neat));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 
 }
 
@@ -730,9 +730,9 @@ Gurax_DeclareMethod(Iterator, Head)
 	Declare(VTYPE_Iterator, Flag::Map);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Head)
@@ -755,10 +755,10 @@ Gurax_DeclareMethod(Iterator, Join)
 	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("sep", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	StringStyle::DeclareAttrOpt(*this);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `String` that joins `String` elements from the iterable with a separator `sep`.
 Elements that are not `String` are converted to `String` before the jointing.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Join)
@@ -780,10 +780,10 @@ Gurax_ImplementMethod(Iterator, Join)
 Gurax_DeclareMethod(Iterator, Joinb)
 {
 	Declare(VTYPE_Binary, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `Binary` that joins `Binary` elements from the iterable.
 An error is issued if elements other than `Binary` are found.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Joinb)
@@ -805,9 +805,9 @@ Gurax_DeclareMethod(Iterator, Map)
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("func", VTYPE_Function, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Map)
@@ -827,9 +827,9 @@ Gurax_ImplementMethod(Iterator, Map)
 Gurax_DeclareMethod(Iterator, Max)
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Max)
@@ -846,9 +846,9 @@ Gurax_ImplementMethod(Iterator, Max)
 Gurax_DeclareMethod(Iterator, Mean)
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Mean)
@@ -864,9 +864,9 @@ Gurax_ImplementMethod(Iterator, Mean)
 Gurax_DeclareMethod(Iterator, Min)
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Min)
@@ -885,9 +885,9 @@ Gurax_DeclareMethod(Iterator, NilTo)
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("replace", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, NilTo)
@@ -911,9 +911,9 @@ Gurax_DeclareMethod(Iterator, Offset)
 	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(raise));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Offset)
@@ -935,9 +935,9 @@ Gurax_ImplementMethod(Iterator, Offset)
 Gurax_DeclareMethod(Iterator, Or)
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Or)
@@ -954,9 +954,9 @@ Gurax_DeclareMethod(Iterator, Pack)
 {
 	Declare(VTYPE_Binary, Flag::None);
 	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Pack)
@@ -978,10 +978,10 @@ Gurax_DeclareMethod(Iterator, Permutation)
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::ZeroOrOnce);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates an iterator that generates lists that contain elements picked up
 from the original iterable in a permutation rule.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Permutation)
@@ -1027,9 +1027,9 @@ Gurax_DeclareMethod(Iterator, PingPong)
 	DeclareAttrOpt(Gurax_Symbol(sticky));
 	DeclareAttrOpt(Gurax_Symbol(sticky_at_top));
 	DeclareAttrOpt(Gurax_Symbol(sticky_at_btm));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, PingPong)
@@ -1073,9 +1073,9 @@ Value* VType_Iterator::Method_PingPong(
 Gurax_DeclareMethod(Iterator, Prod)
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Prod)
@@ -1094,9 +1094,9 @@ Gurax_DeclareMethod(Iterator, Rank)
 	DeclareArg("directive", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	DeclareAttrOpt(Gurax_Symbol(stable));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Rank)
@@ -1118,9 +1118,9 @@ Gurax_DeclareMethod(Iterator, Reduce)
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("accum", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::Once);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Reduce)
@@ -1143,9 +1143,9 @@ Gurax_DeclareMethod(Iterator, Replace)
 	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("replace", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Replace)
@@ -1166,9 +1166,9 @@ Gurax_DeclareMethod(Iterator, Reverse)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Reverse)
@@ -1195,9 +1195,9 @@ Gurax_DeclareMethod(Iterator, RoundOff)
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("threshold", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, RoundOff)
@@ -1218,9 +1218,9 @@ Gurax_DeclareMethod(Iterator, RunLength)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, RunLength)
@@ -1239,9 +1239,9 @@ Gurax_DeclareMethod(Iterator, Since)
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("criteria", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Since)
@@ -1281,9 +1281,9 @@ Gurax_DeclareMethod(Iterator, SkipNil)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, SkipNil)
@@ -1304,9 +1304,9 @@ Gurax_DeclareMethod(Iterator, Sort)
 	DeclareArg("keys", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::ListVar);
 	DeclareAttrOpt(Gurax_Symbol(stable));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Sort)
@@ -1399,9 +1399,9 @@ Gurax_DeclareMethod(Iterator, Std)
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(p));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Std)
@@ -1417,9 +1417,9 @@ Gurax_ImplementMethod(Iterator, Std)
 Gurax_DeclareMethod(Iterator, Sum)
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Sum)
@@ -1437,9 +1437,9 @@ Gurax_DeclareMethod(Iterator, Tail)
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Tail)
@@ -1462,9 +1462,9 @@ Gurax_DeclareMethod(Iterator, Uniq)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Uniq)
@@ -1483,9 +1483,9 @@ Gurax_DeclareMethod(Iterator, Until)
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("criteria", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Until)
@@ -1525,9 +1525,9 @@ Gurax_DeclareMethod(Iterator, Var)
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(p));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, Var)
@@ -1545,9 +1545,9 @@ Gurax_DeclareMethod(Iterator, While)
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("criteria", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Iterator, While)
@@ -1588,9 +1588,9 @@ Value* VType_Iterator::Method_While(Processor& processor, Argument& argument, It
 Gurax_DeclareProperty_R(Iterator, tuple)
 {
 	Declare(VTYPE_Tuple, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `Tuple` from the `Iterator`.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Iterator, tuple)

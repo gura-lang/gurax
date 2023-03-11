@@ -9,7 +9,7 @@ Gurax_BeginModuleScope(wx)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -23,7 +23,7 @@ ${help.ComposePropertyHelp(wx.TeeeItemData, `en)}
 ${help.ComposeConstructorHelp(wx.TeeeItemData, `en)}
 
 ${help.ComposeMethodHelp(wx.TeeeItemData, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
@@ -33,9 +33,9 @@ Gurax_DeclareConstructorAlias(TeeeItemData_gurax, "TeeeItemData")
 {
 	Declare(VTYPE_wxTeeeItemData, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates an instance of wx.TeeeItemData.
-)**");
+)""");
 }
 
 Gurax_ImplementConstructorEx(TeeeItemData_gurax, processor_gurax, argument_gurax)

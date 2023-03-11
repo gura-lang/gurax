@@ -9,7 +9,7 @@ Gurax_BeginModuleScope(wx)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -23,9 +23,9 @@ ${help.ComposePropertyHelp(wx.VideoMode, `en)}
 ${help.ComposeConstructorHelp(wx.VideoMode, `en)}
 
 ${help.ComposeMethodHelp(wx.VideoMode, `en)}
-)**";
+)""";
 
-static const char* g_docHelp_ja = u8R"**(
+static const char* g_docHelp_ja = u8R"""(
 # 概要
 
 # 定数
@@ -39,7 +39,7 @@ ${help.ComposePropertyHelp(wx.VideoMode, `ja)}
 ${help.ComposeConstructorHelp(wx.VideoMode, `ja)}
 
 ${help.ComposeMethodHelp(wx.VideoMode, `ja)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
@@ -171,8 +171,8 @@ Gurax_ImplementMethodEx(wxVideoMode, IsOk_gurax, processor_gurax, argument_gurax
 Gurax_DeclareProperty_RW(wxVideoMode, w)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
 }
 
 Gurax_ImplementPropertyGetter(wxVideoMode, w)
@@ -192,8 +192,8 @@ Gurax_ImplementPropertySetter(wxVideoMode, w)
 Gurax_DeclareProperty_RW(wxVideoMode, h)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
 }
 
 Gurax_ImplementPropertyGetter(wxVideoMode, h)
@@ -213,8 +213,8 @@ Gurax_ImplementPropertySetter(wxVideoMode, h)
 Gurax_DeclareProperty_RW(wxVideoMode, bpp)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
 }
 
 Gurax_ImplementPropertyGetter(wxVideoMode, bpp)
@@ -234,8 +234,8 @@ Gurax_ImplementPropertySetter(wxVideoMode, bpp)
 Gurax_DeclareProperty_RW(wxVideoMode, refresh)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
 }
 
 Gurax_ImplementPropertyGetter(wxVideoMode, refresh)

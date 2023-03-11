@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(Dict, `en)}
 ${help.ComposeConstructorHelp(Dict, `en)}
 
 ${help.ComposeMethodHelp(Dict, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of statement
@@ -32,7 +32,7 @@ Gurax_DeclareStatementAlias(_create_dict_, "%")
 {
 	Declare(VTYPE_Dict, Flag::None);
 	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `Dict` instance from key-value pairs described in the `block`.
 There are several acceptable manners to describe key-value pairs.
 
@@ -52,7 +52,7 @@ d1 = %{ 3 => 100, 5 => 200, 9 => 80 }
 d2 = %{ 'apple' => 100, 'grape' => 200, 'banana' => 80 }
 d3 = %{ `apple => 100, `grape => 200, `banana => 80 }
 ```
-)**");
+)""");
 }
 
 Gurax_ImplementStatement(_create_dict_)
@@ -104,7 +104,7 @@ Gurax_DeclareMethod(Dict, Append)
 	DeclareAttrOpt(Gurax_Symbol(overwrite));
 	DeclareAttrOpt(Gurax_Symbol(strict));
 	DeclareAttrOpt(Gurax_Symbol(timid));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Appends items stored in another `Dict` instance to the target.
 
 If a key of the added item already exists in the target dictionary, it would be overwritten.
@@ -113,7 +113,7 @@ This behavior can be altered with the following attributes:
 - `:overwrite` .. overwrite the existing one (default)
 - `:strict` .. raises an error
 - `:timid` .. keeps the existing one
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Dict, Append)
@@ -136,9 +136,9 @@ Gurax_ImplementMethod(Dict, Append)
 Gurax_DeclareMethod(Dict, Clear)
 {
 	Declare(VTYPE_Dict, Flag::Reduce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Clears all the items in the target dictionary.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Dict, Clear)
@@ -155,9 +155,9 @@ Gurax_DeclareMethod(Dict, Each)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Dict, Each)
@@ -175,9 +175,9 @@ Gurax_DeclareMethod(Dict, EachKey)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Dict, EachKey)
@@ -195,9 +195,9 @@ Gurax_DeclareMethod(Dict, EachValue)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Dict, EachValue)
@@ -215,9 +215,9 @@ Gurax_DeclareMethod(Dict, Erase)
 {
 	Declare(VTYPE_Dict, Flag::Reduce);
 	DeclareArg("key", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Erases an item that has a key that matches with the specified one
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Dict, Erase)
@@ -239,7 +239,7 @@ Gurax_DeclareMethod(Dict, Get)
 	DeclareArg("key", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("default", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::NoMap);
 	DeclareAttrOpt(Gurax_Symbol(raise));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Seeks a value that is associated with the specified `key`.
 
 The method would return the value `default`
@@ -254,7 +254,7 @@ The following two codes have the same effect:
 
 - `v = d['foo']`
 - `v = d.Get('foo'):raise`
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Dict, Get)
@@ -282,9 +282,9 @@ Gurax_DeclareMethod(Dict, HasKey)
 {
 	Declare(VTYPE_Bool, Flag::Map);
 	DeclareArg("key", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns `true` if the specified `key` exists in the target dictionary.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Dict, HasKey)
@@ -303,9 +303,9 @@ Gurax_ImplementMethod(Dict, HasKey)
 Gurax_DeclareMethod(Dict, IsEmpty)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns `true` if the dictionary has no entries.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Dict, IsEmpty)
@@ -325,7 +325,7 @@ Gurax_DeclareMethod(Dict, Put)
 	DeclareAttrOpt(Gurax_Symbol(overwrite));
 	DeclareAttrOpt(Gurax_Symbol(strict));
 	DeclareAttrOpt(Gurax_Symbol(timid));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Appends items stored in another `Dict` instance to the target.
 
 If a key of the added item already exists in the target dictionary, it would be overwritten.
@@ -334,7 +334,7 @@ This behavior can be altered with the following attributes:
 - `:overwrite` .. overwrite the existing one (default)
 - `:strict` .. raises an error
 - `:timid` .. keeps the existing one
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Dict, Put)
@@ -361,9 +361,9 @@ Gurax_ImplementMethod(Dict, Put)
 Gurax_DeclareProperty_R(Dict, len)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 The number of items in the dictionary.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Dict, len)

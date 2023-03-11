@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(sdl)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(sdl.SDL_SysWMEvent, `en)}
 ${help.ComposeConstructorHelp(sdl.SDL_SysWMEvent, `en)}
 
 ${help.ComposeMethodHelp(sdl.SDL_SysWMEvent, `en)}
-)**";
+)""";
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(sdl.SDL_SysWMEvent, `en)}
 Gurax_DeclareProperty_R(SDL_SysWMEvent, type)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_SysWMEvent, type)
@@ -46,9 +46,9 @@ Gurax_ImplementPropertyGetter(SDL_SysWMEvent, type)
 Gurax_DeclareProperty_R(SDL_SysWMEvent, timestamp)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_SysWMEvent, timestamp)

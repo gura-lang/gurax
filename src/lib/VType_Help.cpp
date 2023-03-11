@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(Help, `en)}
 ${help.ComposeConstructorHelp(Help, `en)}
 
 ${help.ComposeMethodHelp(Help, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
@@ -36,9 +36,9 @@ Gurax_DeclareConstructor(Help)
 	DeclareAttrOpt(Gurax_Symbol(class_));
 	DeclareAttrOpt(Gurax_Symbol(raise));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `Help` instance.
-)**");
+)""");
 }
 
 Gurax_ImplementConstructor(Help)
@@ -71,9 +71,9 @@ Gurax_ImplementConstructor(Help)
 Gurax_DeclareProperty_R(Help, doc)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Document text of the help.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Help, doc)
@@ -86,9 +86,9 @@ Gurax_ImplementPropertyGetter(Help, doc)
 Gurax_DeclareProperty_R(Help, lang)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Language code of the help.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Help, lang)
@@ -101,9 +101,9 @@ Gurax_ImplementPropertyGetter(Help, lang)
 Gurax_DeclareProperty_R(Help, tmplDoc)
 {
 	Declare(VTYPE_Template, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Template object created from the help text.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Help, tmplDoc)

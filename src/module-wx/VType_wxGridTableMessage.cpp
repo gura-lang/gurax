@@ -9,7 +9,7 @@ Gurax_BeginModuleScope(wx)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -23,9 +23,9 @@ ${help.ComposePropertyHelp(wx.GridTableMessage, `en)}
 ${help.ComposeConstructorHelp(wx.GridTableMessage, `en)}
 
 ${help.ComposeMethodHelp(wx.GridTableMessage, `en)}
-)**";
+)""";
 
-static const char* g_docHelp_ja = u8R"**(
+static const char* g_docHelp_ja = u8R"""(
 # 概要
 
 # 定数
@@ -39,7 +39,7 @@ ${help.ComposePropertyHelp(wx.GridTableMessage, `ja)}
 ${help.ComposeConstructorHelp(wx.GridTableMessage, `ja)}
 
 ${help.ComposeMethodHelp(wx.GridTableMessage, `ja)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor

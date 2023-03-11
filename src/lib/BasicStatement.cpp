@@ -15,14 +15,14 @@ Gurax_DeclareStatement(cond)
 	DeclareArg("cond", VTYPE_Quote, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("exprTrue", VTYPE_Quote, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("exprFalse", VTYPE_Quote, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Evaluates `exprTrue` and returns its result if `cond` is determined as `true`, and does `exprFalse` otherwise.
 If `exprFalse` is omitted, it returns `nil` when `cond` turns out to be `false`.
 
 This statement has the same behavior as `if` being used like below:
 
     if (cond) {exprTrue} else {exprFalse}
-)**");
+)""");
 }
 
 Gurax_ImplementStatement(cond)
@@ -55,7 +55,7 @@ Gurax_DeclareStatementAlias(if_, "if")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("cond", VTYPE_Quote, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Specifies an \"if\" block within a sequence of `if-elsif-else`.
 
 If the result of `cond` is determined as `true`, the block would be executed,
@@ -63,7 +63,7 @@ and its evaluation result would become the returned value of the statement.
 
 Otherwise, if the statement is followed by a trailer such as `elsif` and `else`, that would be evaluated.
 If no trailer exists, the satement returns `nil` value.
-)**");
+)""");
 }
 
 Gurax_ImplementStatement(if_)
@@ -137,7 +137,7 @@ Gurax_DeclareStatementAlias(elsif, "elsif")
 	Declare(VTYPE_Any, Flag::Trailer);
 	DeclareArg("cond", VTYPE_Quote, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Specifies an \"elsif\" block within a sequence of `if-elsif-else`.
 
 If the result of `cond` is determined as `true`, the block would be executed,
@@ -145,7 +145,7 @@ and its evaluation result would become the returned value of the statement.
 
 Otherwise, if the statement is followed by a trailer such as `elsif` and `else`, that would be evaluated.
 If no trailer exists, the statement returns `nil` value.
-)**");
+)""");
 }
 
 Gurax_ImplementStatement(elsif)
@@ -157,9 +157,9 @@ Gurax_DeclareStatementAlias(else_, "else")
 {
 	Declare(VTYPE_Any, Flag::Trailer);
 	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Specifies an \"else\" block within a sequence of `if-elsif-else` or `try-catch-else-finally`.
-)**");
+)""");
 }
 
 Gurax_ImplementStatement(else_)
@@ -170,7 +170,7 @@ Gurax_ImplementStatement(else_)
 Gurax_DeclareStatement(end)
 {
 	Declare(VTYPE_Any, Flag::Trailer | Flag::EndMarker);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Specify an end of a block sequence like a closing brace bracket.
 
 This function is supposed to be used in a template
@@ -185,7 +185,7 @@ Example:
         ${i} is odd
       ${end}
     ${end}
-)**");
+)""");
 }
 
 Gurax_ImplementStatement(end)
@@ -197,10 +197,10 @@ Gurax_DeclareStatementAlias(try_, "try")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Specifies a range of code in which exceptions could be caught
 by following `catch` statement.
-)**");
+)""");
 }
 
 Gurax_ImplementStatement(try_)
@@ -353,12 +353,12 @@ Gurax_DeclareStatementAlias(catch_, "catch")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("errorType", VTYPE_ErrorType, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Executes the block when an exception that matches specified `errorType` occurs
 in the preceding `try` statement.
 If `errorType` is omitted, all exceptions that are not caught until here
 will be handled.
-)**");
+)""");
 }
 
 Gurax_ImplementStatement(catch_)
@@ -370,9 +370,9 @@ Gurax_DeclareStatement(finally)
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementStatement(finally)
@@ -385,7 +385,7 @@ Gurax_DeclareStatementAlias(for_, "for")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("cond", VTYPE_Quote, ArgOccur::OnceOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Repeats evaluating `block` while all of the specified `cond` provide items.
 The expression of `cond` is like `a in A` where `a` represents a variable name
 and A a list or an iterator that provides one value at each loop.
@@ -408,7 +408,7 @@ The following example evaluates the loop twice:
     for (fruit in ['apple', 'grape', 'banana'], person in ['Thomas', 'Jane']) {
         Println(fruit, ' for ', person)
     }
-)**");
+)""");
 }
 
 Gurax_ImplementStatement(for_)
@@ -542,7 +542,7 @@ Gurax_DeclareStatementAlias(while_, "while")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("cond", VTYPE_Quote, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Repeats evaluating `block` while the result of `cond` is judged as `true`.
 
 Example:
@@ -552,7 +552,7 @@ Example:
         Println(n)
         n += 1
     }
-)**");
+)""");
 }
 
 Gurax_ImplementStatement(while_)
@@ -672,9 +672,9 @@ Gurax_DeclareStatement(repeat)
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("cnt", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::Once, BlkFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Repeats evaluating `block` for `cnt` times.
-)**");
+)""");
 }
 
 Gurax_ImplementStatement(repeat)
@@ -806,9 +806,9 @@ Gurax_ImplementStatement(repeat)
 Gurax_DeclareStatementAlias(break_, "break")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Exits the most inside loop such as `for`, `while` and `repeat`.
-)**");
+)""");
 }
 
 Gurax_ImplementStatement(break_)
@@ -849,9 +849,9 @@ Gurax_DeclareStatementAlias(continue_, "continue")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("value", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementStatement(continue_)
@@ -885,9 +885,9 @@ Gurax_DeclareStatementAlias(return_, "return")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("value", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementStatement(return_)
@@ -928,9 +928,9 @@ Gurax_DeclareStatement(import)
 	DeclareAttrOpt(Gurax_Symbol(binary));
 	DeclareAttrOpt(Gurax_Symbol(overwrite));
 	DeclareBlock(BlkOccur::ZeroOrOnce, BlkFlag::Quote);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementStatement(import)
@@ -1007,9 +1007,9 @@ Gurax_DeclareStatementAlias(class_, "class")
 	Declare(VTYPE_VType, Flag::None);
 	DeclareArg("parent", VTYPE_VType, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementStatement(class_)
@@ -1031,9 +1031,9 @@ Gurax_DeclareStatementAlias(struct_, "struct")
 {
 	Declare(VTYPE_VType, Flag::None);
 	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementStatement(struct_)

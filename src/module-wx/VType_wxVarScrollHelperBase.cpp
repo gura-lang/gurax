@@ -9,7 +9,7 @@ Gurax_BeginModuleScope(wx)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -23,7 +23,7 @@ ${help.ComposePropertyHelp(wx.VarScrollHelperBase, `en)}
 ${help.ComposeConstructorHelp(wx.VarScrollHelperBase, `en)}
 
 ${help.ComposeMethodHelp(wx.VarScrollHelperBase, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor

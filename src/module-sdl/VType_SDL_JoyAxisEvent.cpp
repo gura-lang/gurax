@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(sdl)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(sdl.SDL_JoyAxisEvent, `en)}
 ${help.ComposeConstructorHelp(sdl.SDL_JoyAxisEvent, `en)}
 
 ${help.ComposeMethodHelp(sdl.SDL_JoyAxisEvent, `en)}
-)**";
+)""";
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(sdl.SDL_JoyAxisEvent, `en)}
 Gurax_DeclareProperty_R(SDL_JoyAxisEvent, type)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_JoyAxisEvent, type)
@@ -46,9 +46,9 @@ Gurax_ImplementPropertyGetter(SDL_JoyAxisEvent, type)
 Gurax_DeclareProperty_R(SDL_JoyAxisEvent, timestamp)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_JoyAxisEvent, timestamp)
@@ -61,9 +61,9 @@ Gurax_ImplementPropertyGetter(SDL_JoyAxisEvent, timestamp)
 Gurax_DeclareProperty_R(SDL_JoyAxisEvent, which)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_JoyAxisEvent, which)
@@ -76,9 +76,9 @@ Gurax_ImplementPropertyGetter(SDL_JoyAxisEvent, which)
 Gurax_DeclareProperty_R(SDL_JoyAxisEvent, axis)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_JoyAxisEvent, axis)
@@ -91,9 +91,9 @@ Gurax_ImplementPropertyGetter(SDL_JoyAxisEvent, axis)
 Gurax_DeclareProperty_R(SDL_JoyAxisEvent, value)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_JoyAxisEvent, value)

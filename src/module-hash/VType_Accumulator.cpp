@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(hash)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(hash.Accumulator, `en)}
 ${help.ComposeConstructorHelp(hash.Accumulator, `en)}
 
 ${help.ComposeMethodHelp(hash.Accumulator, `en)}
-)**";
+)""";
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(hash.Accumulator, `en)}
 Gurax_DeclareMethod(Accumulator, Initialize)
 {
 	Declare(VTYPE_Accumulator, Flag::Reduce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Initialize the state of the hash accumulator.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Accumulator, Initialize)
@@ -52,9 +52,9 @@ Gurax_ImplementMethod(Accumulator, Initialize)
 Gurax_DeclareProperty_R(Accumulator, digest)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Accumulator, digest)
@@ -68,9 +68,9 @@ Gurax_ImplementPropertyGetter(Accumulator, digest)
 Gurax_DeclareProperty_R(Accumulator, digestHex)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Accumulator, digestHex)
@@ -84,9 +84,9 @@ Gurax_ImplementPropertyGetter(Accumulator, digestHex)
 Gurax_DeclareProperty_R(Accumulator, number)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Accumulator, number)

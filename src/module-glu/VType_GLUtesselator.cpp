@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(glu)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(glu.GLUtesselator, `en)}
 ${help.ComposeConstructorHelp(glu.GLUtesselator, `en)}
 
 ${help.ComposeMethodHelp(glu.GLUtesselator, `en)}
-)**";
+)""";
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(glu.GLUtesselator, `en)}
 Gurax_DeclareProperty_R(GLUtesselator, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(GLUtesselator, propSkeleton)

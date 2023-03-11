@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(sdl)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(sdl.SDL_SysWMinfo, `en)}
 ${help.ComposeConstructorHelp(sdl.SDL_SysWMinfo, `en)}
 
 ${help.ComposeMethodHelp(sdl.SDL_SysWMinfo, `en)}
-)**";
+)""";
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(sdl.SDL_SysWMinfo, `en)}
 Gurax_DeclareProperty_R(SDL_SysWMinfo, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_SysWMinfo, propSkeleton)

@@ -9,7 +9,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 
@@ -42,7 +42,7 @@ The following cast operations are prepared:
 ${help.ComposeConstructorHelp(List, `en)}
 
 ${help.ComposeMethodHelp(List, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of statement
@@ -53,7 +53,7 @@ Gurax_DeclareStatementAlias(_at_, "@")
 	Declare(VTYPE_List, Flag::None);
 	DeclareArg("callable", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `List` instance after evaculating `block` as an element list.
 
 ```
@@ -103,7 +103,7 @@ Using the list creation with callable, this can be written as follows:
 ```
 @(Person) {('Taro', 23), ('Hanako', 22), ('Jiro', 25)}
 ```
-)**");
+)""");
 }
 
 Gurax_ImplementStatement(_at_)
@@ -144,10 +144,10 @@ Gurax_DeclareClassMethod(List, Zip)
 	Declare(VTYPE_List, Flag::None);
 	DeclareArg("values", VTYPE_Any, ArgOccur::OnceOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates an iterator generating lists that bind given argument values.
 When the value is a list or an iterator, each item in it would be zipped.
-)**");
+)""");
 }
 
 Gurax_ImplementClassMethod(List, Zip)
@@ -163,14 +163,14 @@ Gurax_DeclareMethod(List, Add)
 {
 	Declare(VTYPE_List, Flag::Reduce);
 	DeclareArg("value", VTYPE_Any, ArgOccur::OnceOrMore, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Adds values to `this` list.
 
 ```
 [1, 2, 3].Add(4, 5, 6)        // generates [1, 2, 3, 4, 5, 6]
 [1, 2, 3].Add([4, 5], [6, 7]) // generates [1, 2, 3, [4, 5], [6, 7]]
 ```
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(List, Add)
@@ -191,7 +191,7 @@ Gurax_DeclareMethod(List, Append)
 {
 	Declare(VTYPE_List, Flag::Reduce);
 	DeclareArg("value", VTYPE_Any, ArgOccur::OnceOrMore, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Adds values to `this` list.
 If the added value is a list or an iterator, elements in it are added to the list.
 
@@ -199,7 +199,7 @@ If the added value is a list or an iterator, elements in it are added to the lis
 [1, 2, 3].Append(4, 5, 6)        // generates [1, 2, 3, 4, 5, 6]
 [1, 2, 3].Append([4, 5], [6, 7]) // generates [1, 2, 3, 4, 5, 6, 7]
 ```
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(List, Append)
@@ -219,9 +219,9 @@ Gurax_ImplementMethod(List, Append)
 Gurax_DeclareMethod(List, Clear)
 {
 	Declare(VTYPE_List, Flag::Reduce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Clears all the elements of `this` list.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(List, Clear)
@@ -239,9 +239,9 @@ Gurax_DeclareMethod(List, Erase)
 {
 	Declare(VTYPE_List, Flag::Reduce);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Erases elements at the specified indices.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(List, Erase)
@@ -267,10 +267,10 @@ Gurax_DeclareMethod(List, Get)
 	Declare(VTYPE_Any, Flag::Map | Flag::Flat);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(raise));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns a value stored at the specified index in the list.
 An error occurs when the index is out of range.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(List, Get)
@@ -294,9 +294,9 @@ Gurax_DeclareMethod(List, Insert)
 	Declare(VTYPE_List, Flag::Reduce);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("elem", VTYPE_Any, ArgOccur::OnceOrMore, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Inserts items at the specified position in the list.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(List, Insert)
@@ -317,9 +317,9 @@ Gurax_ImplementMethod(List, Insert)
 Gurax_DeclareMethod(List, IsEmpty)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 A boolean value indicating whether the list is empty or not.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(List, IsEmpty)
@@ -336,10 +336,10 @@ Gurax_DeclareMethod(List, Put)
 	Declare(VTYPE_List, Flag::Reduce | Flag::Map);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::NoMap);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Stores a value at the specified index in the list.
 An error occurs when the index is out of range.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(List, Put)
@@ -362,9 +362,9 @@ Gurax_DeclareMethod(List, Shuffle)
 {
 	Declare(VTYPE_List, Flag::Reduce);
 	DeclareArg("random", VTYPE_Random, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Shuffle the order of the list content based on random numbers.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(List, Shuffle)
@@ -385,13 +385,13 @@ Gurax_DeclareMethod(List, Shift)
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(raise));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Shifts the elements of the list and returns the value of the shifted top element.
 If the content of the list is `[1, 2, 3, 4]`,
 it becomes `[2, 3, 4]` after calling this method. In default, no error occurs
 even when the list is empty. To raise an error for executing this method on
 an empty list, specify :raise attribute.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(List, Shift)
@@ -1350,9 +1350,9 @@ Gurax_ImplementMethod(List, While)
 Gurax_DeclareProperty_R(List, first)
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 The first element in the list, or `nil` if the list is empty.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(List, first)
@@ -1367,9 +1367,9 @@ Gurax_ImplementPropertyGetter(List, first)
 Gurax_DeclareProperty_R(List, last)
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 The last element in the list, or `nil` if the list is empty.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(List, last)
@@ -1384,12 +1384,12 @@ Gurax_ImplementPropertyGetter(List, last)
 Gurax_DeclareProperty_R(List, len)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 The number of elements in the list.
-)**");
-	AddHelp(Gurax_Symbol(ja), u8R"**(
+)""");
+	AddHelp(Gurax_Symbol(ja), u8R"""(
 リスト中の要素数。
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(List, len)
@@ -1402,12 +1402,12 @@ Gurax_ImplementPropertyGetter(List, len)
 Gurax_DeclareProperty_R(List, tuple)
 {
 	Declare(VTYPE_Tuple, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Converts into a `Tuple` instance.
-)**");
-	AddHelp(Gurax_Symbol(en), u8R"**(
+)""");
+	AddHelp(Gurax_Symbol(en), u8R"""(
 `Tuple` インスタンスに変換。
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(List, tuple)
@@ -1420,9 +1420,9 @@ Gurax_ImplementPropertyGetter(List, tuple)
 Gurax_DeclareProperty_R(List, vtypeOfElem)
 {
 	Declare(VTYPE_VType, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 The value type of elements in the list.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(List, vtypeOfElem)

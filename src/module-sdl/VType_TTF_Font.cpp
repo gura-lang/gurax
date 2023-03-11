@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(sdl)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(sdl.TTF_Font, `en)}
 ${help.ComposeConstructorHelp(sdl.TTF_Font, `en)}
 
 ${help.ComposeMethodHelp(sdl.TTF_Font, `en)}
-)**";
+)""";
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -33,9 +33,9 @@ Gurax_DeclareMethod(TTF_Font, MethodSkeleton)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(TTF_Font, MethodSkeleton)
@@ -57,9 +57,9 @@ Gurax_ImplementMethod(TTF_Font, MethodSkeleton)
 Gurax_DeclareProperty_R(TTF_Font, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(TTF_Font, propSkeleton)

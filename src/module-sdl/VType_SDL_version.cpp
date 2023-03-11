@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(sdl)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(sdl.SDL_version, `en)}
 ${help.ComposeConstructorHelp(sdl.SDL_version, `en)}
 
 ${help.ComposeMethodHelp(sdl.SDL_version, `en)}
-)**";
+)""";
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(sdl.SDL_version, `en)}
 Gurax_DeclareProperty_R(SDL_version, major)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_version, major)
@@ -46,9 +46,9 @@ Gurax_ImplementPropertyGetter(SDL_version, major)
 Gurax_DeclareProperty_R(SDL_version, minor)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_version, minor)
@@ -61,9 +61,9 @@ Gurax_ImplementPropertyGetter(SDL_version, minor)
 Gurax_DeclareProperty_R(SDL_version, patch)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_version, patch)

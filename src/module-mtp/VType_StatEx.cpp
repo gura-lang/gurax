@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(mtp)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(mtp.StatEx, `en)}
 ${help.ComposeConstructorHelp(mtp.StatEx, `en)}
 
 ${help.ComposeMethodHelp(mtp.StatEx, `en)}
-)**";
+)""";
 
 //-----------------------------------------------------------------------------
 // Implementation of method

@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(jpeg)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(jpeg.Segment, `en)}
 ${help.ComposeConstructorHelp(jpeg.Segment, `en)}
 
 ${help.ComposeMethodHelp(jpeg.Segment, `en)}
-)**";
+)""";
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(jpeg.Segment, `en)}
 Gurax_DeclareMethod(Segment, IsExif)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns `true` if the segment is an Exif.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Segment, IsExif)
@@ -48,9 +48,9 @@ Gurax_ImplementMethod(Segment, IsExif)
 Gurax_DeclareMethod(Segment, IsJFIF)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns `true` if the segment is an JFIF.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Segment, IsJFIF)
@@ -68,9 +68,9 @@ Gurax_ImplementMethod(Segment, IsJFIF)
 Gurax_DeclareProperty_R(Segment, marker)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Segment, marker)
@@ -83,9 +83,9 @@ Gurax_ImplementPropertyGetter(Segment, marker)
 Gurax_DeclareProperty_R(Segment, markerName)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Segment, markerName)
@@ -98,9 +98,9 @@ Gurax_ImplementPropertyGetter(Segment, markerName)
 Gurax_DeclareProperty_R(Segment, markerSymbol)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Segment, markerSymbol)
@@ -113,9 +113,9 @@ Gurax_ImplementPropertyGetter(Segment, markerSymbol)
 Gurax_DeclareProperty_R(Segment, parameter)
 {
 	Declare(VTYPE_Pointer, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Segment, parameter)

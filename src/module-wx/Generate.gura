@@ -452,9 +452,9 @@ Gurax_BeginModuleScope(wx)
 //------------------------------------------------------------------------------
 ${helpInfoTbl.Each {|helpInfo, idx|}}
 ${cond(idx > 0, "")}
-static const char* g_docHelp_${helpInfo.langCode} = u8R"**(
+static const char* g_docHelp_${helpInfo.langCode} = u8R"""(
 ${helpInfo.doc}
-)**";
+)""";
 ${end}
 
 //------------------------------------------------------------------------------
@@ -616,9 +616,9 @@ Gurax_DeclareMethodAlias(wx${className}, ${funcInfo.name}_gurax, "${funcInfo.nam
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	${end}
 	${funcInfo.helpInfoTbl.Each {|helpInfo|}}
-	AddHelp(Gurax_Symbol(${helpInfo.langCode}), u8R"**(
+	AddHelp(Gurax_Symbol(${helpInfo.langCode}), u8R"""(
 ${helpInfo.doc}
-)**");
+)""");
 	${end}
 }
 
@@ -658,9 +658,9 @@ Gurax_DeclareClassMethodAlias(wx${className}, ${funcInfo.name}_gurax, "${funcInf
 	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	${funcInfo.helpInfoTbl.Each {|helpInfo|}}
-	AddHelp(Gurax_Symbol(${helpInfo.langCode}), u8R"**(
+	AddHelp(Gurax_Symbol(${helpInfo.langCode}), u8R"""(
 ${helpInfo.doc}
-)**");
+)""");
 	${end}
 }
 
@@ -687,8 +687,8 @@ tmplPropertyImplementation_R = tR'''
 Gurax_DeclareProperty_R(wx${className}, ${propInfo.GetName()})
 {
 	Declare(VTYPE_${propInfo.GetTypeInfo().vtype}, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
 }
 
 Gurax_ImplementPropertyGetter(wx${className}, ${propInfo.GetName()})
@@ -702,8 +702,8 @@ tmplPropertyImplementation_W = tR'''
 Gurax_DeclareProperty_W(wx${className}, ${propInfo.GetName()})
 {
 	Declare(VTYPE_${propInfo.GetTypeInfo().vtype}, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
 }
 
 Gurax_ImplementPropertySetter(wx${className}, ${propInfo.GetName()})
@@ -718,8 +718,8 @@ tmplPropertyImplementation_RW = tR'''
 Gurax_DeclareProperty_RW(wx${className}, ${propInfo.GetName()})
 {
 	Declare(VTYPE_${propInfo.GetTypeInfo().vtype}, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
 }
 
 Gurax_ImplementPropertyGetter(wx${className}, ${propInfo.GetName()})
@@ -778,9 +778,9 @@ Gurax_DeclareFunctionAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	${end}
 	${funcInfo.helpInfoTbl.Each {|helpInfo|}}
-	AddHelp(Gurax_Symbol(${helpInfo.langCode}), u8R"**(
+	AddHelp(Gurax_Symbol(${helpInfo.langCode}), u8R"""(
 ${helpInfo.doc}
-)**");
+)""");
 	${end}
 }
 
@@ -1126,9 +1126,9 @@ Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	${funcInfo.helpInfoTbl.Each {|helpInfo|}}
-	AddHelp(Gurax_Symbol(${helpInfo.langCode}), u8R"**(
+	AddHelp(Gurax_Symbol(${helpInfo.langCode}), u8R"""(
 ${helpInfo.doc}
-)**");
+)""");
 	${end}
 }
 
@@ -1157,9 +1157,9 @@ Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	${funcInfo.helpInfoTbl.Each {|helpInfo|}}
-	AddHelp(Gurax_Symbol(${helpInfo.langCode}), u8R"**(
+	AddHelp(Gurax_Symbol(${helpInfo.langCode}), u8R"""(
 ${helpInfo.doc}
-)**");
+)""");
 	${end}
 }
 
@@ -1190,9 +1190,9 @@ Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	${funcInfo.helpInfoTbl.Each {|helpInfo|}}
-	AddHelp(Gurax_Symbol(${helpInfo.langCode}), u8R"**(
+	AddHelp(Gurax_Symbol(${helpInfo.langCode}), u8R"""(
 ${helpInfo.doc}
-)**");
+)""");
 	${end}
 }
 
@@ -1222,9 +1222,9 @@ Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	${funcInfo.helpInfoTbl.Each {|helpInfo|}}
-	AddHelp(Gurax_Symbol(${helpInfo.langCode}), u8R"**(
+	AddHelp(Gurax_Symbol(${helpInfo.langCode}), u8R"""(
 ${helpInfo.doc}
-)**");
+)""");
 	${end}
 }
 

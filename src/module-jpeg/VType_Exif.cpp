@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(jpeg)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 ${help.ComposePropertyHelp(jpeg.jpeg.Exif, `en)}
@@ -16,7 +16,7 @@ ${help.ComposePropertyHelp(jpeg.jpeg.Exif, `en)}
 ${help.ComposeConstructorHelp(jpeg.jpeg.Exif, `en)}
 
 ${help.ComposeMethodHelp(jpeg.jpeg.Exif, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
@@ -26,9 +26,9 @@ Gurax_DeclareConstructor(Exif)
 {
 	Declare(VTYPE_Content, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `jpeg.Exif` instance.
-)**");
+)""");
 }
 
 Gurax_ImplementConstructor(Exif)
@@ -47,9 +47,9 @@ Gurax_ImplementConstructor(Exif)
 Gurax_DeclareProperty_RW(Exif, ifd0)
 {
 	Declare(VTYPE_IFD, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 IFD0 field in the Exif. Returns `nil` if not exist.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Exif, ifd0)
@@ -70,9 +70,9 @@ Gurax_ImplementPropertySetter(Exif, ifd0)
 Gurax_DeclareProperty_RW(Exif, ifd1)
 {
 	Declare(VTYPE_IFD, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 IFD1 field in the Exif. Returns `nil` if not exist.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Exif, ifd1)

@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(PathMgr, `en)}
 ${help.ComposeConstructorHelp(PathMgr, `en)}
 
 ${help.ComposeMethodHelp(PathMgr, `en)}
-)**";
+)""";
 
 //-----------------------------------------------------------------------------
 // Implementation of class method
@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(PathMgr, `en)}
 Gurax_DeclareClassMethod(PathMgr, Dir)
 {
 	Declare(VTYPE_List, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns a list of `PathMgr` instances that represent registered path managers.
-)**");
+)""");
 }
 
 Gurax_ImplementClassMethod(PathMgr, Dir)

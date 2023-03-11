@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(zip)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(zip.gzip, `en)}
 ${help.ComposeConstructorHelp(zip.gzip, `en)}
 
 ${help.ComposeMethodHelp(zip.gzip, `en)}
-)**";
+)""";
 
 //-----------------------------------------------------------------------------
 // Implementation of class property
@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(zip.gzip, `en)}
 Gurax_DeclareClassProperty_RW(gzip, level)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementClassPropertyGetter(gzip, level)
@@ -50,9 +50,9 @@ Gurax_ImplementClassPropertySetter(gzip, level)
 Gurax_DeclareClassProperty_RW(gzip, windowBits)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementClassPropertyGetter(gzip, windowBits)
@@ -69,9 +69,9 @@ Gurax_ImplementClassPropertySetter(gzip, windowBits)
 Gurax_DeclareClassProperty_RW(gzip, memLevel)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementClassPropertyGetter(gzip, memLevel)
@@ -88,9 +88,9 @@ Gurax_ImplementClassPropertySetter(gzip, memLevel)
 Gurax_DeclareClassProperty_RW(gzip, strategy)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementClassPropertyGetter(gzip, strategy)

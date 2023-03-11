@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(model.obj.Point, `en)}
 ${help.ComposeConstructorHelp(model.obj.Point, `en)}
 
 ${help.ComposeMethodHelp(model.obj.Point, `en)}
-)**";
+)""";
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -32,9 +32,9 @@ Gurax_DeclareMethod(Point, GetV)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Point, GetV)
@@ -57,9 +57,9 @@ Gurax_ImplementMethod(Point, GetV)
 Gurax_DeclareProperty_R(Point, nElements)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Point, nElements)

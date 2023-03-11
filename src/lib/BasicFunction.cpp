@@ -13,12 +13,12 @@ Gurax_DeclareFunction(Chr)
 {
 	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("code", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Coverts a UTF-32 character code `code` into a string and returns it.
-)**");
-	AddHelp(Gurax_Symbol(ja), u8R"**(
+)""");
+	AddHelp(Gurax_Symbol(ja), u8R"""(
 UTF-32 キャラクタコード `code` を文字列に変換し、戻り値として返します。
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(Chr)
@@ -39,7 +39,7 @@ Gurax_DeclareFunction(Dim)
 	Declare(VTYPE_List, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::OnceOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns a list that contains `n` pieces of elements. The list is filled with `nil` values.
 Below is an example of creating a list with three elements:
 
@@ -61,7 +61,7 @@ Below is an example of creating a two-dimentional list containing strings.
 
     x = Dim(3, 2) {|i, j| Format('%d-%d', i, j)}
                         // x is [['0-0', '0-1'], ['1-0', '1-1'], ['2-0', '2-1']]
-)**");
+)""");
 }
 
 ValueTypedOwner* DimSub(Processor& processor, NumList<Int>& cntList, NumList<Int>::iterator pCnt,
@@ -120,9 +120,9 @@ Gurax_DeclareFunction(dir)
 {
 	Declare(VTYPE_List, Flag::None);
 	DeclareArg("value", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(dir)
@@ -149,7 +149,7 @@ Gurax_DeclareFunction(Format)
 	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("values", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Converts `values` into string depending on formatter specifications
 specified in `format` and returns the result in string.
 
@@ -209,7 +209,7 @@ Examples are shown below:
     Format('%.5f', 1 / 3) .. returns "0.33333"
 
 It has no effect with other specifiers.
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(Format)
@@ -230,14 +230,14 @@ Gurax_DeclareFunction(Int)
 {
 	Declare(VTYPE_Number, Flag::Map);
 	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Converts a value into an integer number like below:
 
 - With a number value, it would be converted into an integer number.
 - With a string value, it would be parsed as an integer number.
   An error occurs if it has an invalid format.
 - With a value of other types, an error occurs.
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(Int)
@@ -267,8 +267,8 @@ Gurax_DeclareFunction(Max)
 	Declare(VTYPE_Any, Flag::Map);
 	DeclareArg("values", VTYPE_Any, ArgOccur::OnceOrMore, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(index));
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
 }
 
 Gurax_ImplementFunction(Max)
@@ -291,8 +291,8 @@ Gurax_DeclareFunction(Min)
 	Declare(VTYPE_Any, Flag::Map);
 	DeclareArg("values", VTYPE_Any, ArgOccur::OnceOrMore, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(index));
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
 }
 
 Gurax_ImplementFunction(Min)
@@ -314,10 +314,10 @@ Gurax_DeclareFunction(Ord)
 {
 	Declare(VTYPE_Number, Flag::Map);
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Converts the first character of a string into a number of UTF-32 code.
 If the string contains more than one characters, it simply neglects trailing ones.
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(Ord)
@@ -335,9 +335,9 @@ Gurax_DeclareFunction(Print)
 {
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("values", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Prints out `values` to standard output.
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(Print)
@@ -357,12 +357,12 @@ Gurax_DeclareFunction(Printf)
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("values", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Prints out `values` to standard output according to formatter specifiers specified in `format`.
 
 For detail information about formatter specications,
 refer to the help or document of `Format()` function.
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(Printf)
@@ -382,9 +382,9 @@ Gurax_DeclareFunction(Println)
 {
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("values", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Prints out `values` and an end-of-line character to the standard output.
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(Println)
@@ -406,7 +406,7 @@ Gurax_DeclareFunction(Range)
 	DeclareArg("numEnd", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("step", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates an iterator that generates a sequence of number that increases or decreases by a specified step.
 
 - `Range(num as Number)` .. finite sequence of n where `0 <= n < num` or `num < n <= 0`
@@ -414,7 +414,7 @@ Creates an iterator that generates a sequence of number that increases or decrea
 - `Range(num as Number, numEnd as Number, step as Number)` .. finite sequence of n
    where `num <= n < numEnd` or `numEnd < n <= num` with an increment of `step`
 - `Range(num as Number, nil, step as Number)` .. infinite sequence that starts at `num` with an increment of `step`
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(Range)
@@ -457,13 +457,13 @@ Gurax_DeclareFunction(ReadLines)
 	DeclareArg("nLines", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(chop));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates an iterator that reads each line from the `Stream` and returns it as a `String` instance.
 
 The argument `nLines` limits the number of lines to be read. If omitted, all the lines are read.
 
 If the attribute `:chop` is specified, the end-of-line character of each line is eliminated.
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(ReadLines)
@@ -486,14 +486,14 @@ Gurax_DeclareFunction(hex)
 	DeclareArg(env, "num", VTYPE_number);
 	DeclareArg(env, "digits", VTYPE_number, OCCUR_ZeroOrOnce);
 	DeclareAttr(Gurax_Symbol(upper));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Converts a number into a hexadecimal string.
 Argument `digits` specifies a minimum columns of the converted result
 and fills `0` in the lacking space.
 
 In default, it uses lower-case characters in its conversion,
 while it uses upper-case ones when `:upper` attribute is specified.
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(hex)

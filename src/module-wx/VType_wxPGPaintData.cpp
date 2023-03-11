@@ -9,7 +9,7 @@ Gurax_BeginModuleScope(wx)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -23,9 +23,9 @@ ${help.ComposePropertyHelp(wx.PGPaintData, `en)}
 ${help.ComposeConstructorHelp(wx.PGPaintData, `en)}
 
 ${help.ComposeMethodHelp(wx.PGPaintData, `en)}
-)**";
+)""";
 
-static const char* g_docHelp_ja = u8R"**(
+static const char* g_docHelp_ja = u8R"""(
 # 概要
 
 # 定数
@@ -39,7 +39,7 @@ ${help.ComposePropertyHelp(wx.PGPaintData, `ja)}
 ${help.ComposeConstructorHelp(wx.PGPaintData, `ja)}
 
 ${help.ComposeMethodHelp(wx.PGPaintData, `ja)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
@@ -55,8 +55,8 @@ ${help.ComposeMethodHelp(wx.PGPaintData, `ja)}
 Gurax_DeclareProperty_R(wxPGPaintData, m_choiceItem)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
 }
 
 Gurax_ImplementPropertyGetter(wxPGPaintData, m_choiceItem)
@@ -68,8 +68,8 @@ Gurax_ImplementPropertyGetter(wxPGPaintData, m_choiceItem)
 Gurax_DeclareProperty_R(wxPGPaintData, m_drawnWidth)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
 }
 
 Gurax_ImplementPropertyGetter(wxPGPaintData, m_drawnWidth)
@@ -81,8 +81,8 @@ Gurax_ImplementPropertyGetter(wxPGPaintData, m_drawnWidth)
 Gurax_DeclareProperty_R(wxPGPaintData, m_drawnHeight)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
 }
 
 Gurax_ImplementPropertyGetter(wxPGPaintData, m_drawnHeight)

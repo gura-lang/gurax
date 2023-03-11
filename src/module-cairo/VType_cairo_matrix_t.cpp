@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(cairo)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(cairo.cairo_matrix_t, `en)}
 ${help.ComposeConstructorHelp(cairo.cairo_matrix_t, `en)}
 
 ${help.ComposeMethodHelp(cairo.cairo_matrix_t, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
@@ -38,9 +38,9 @@ Gurax_DeclareConstructor(cairo_matrix_t)
 	DeclareArg("x0", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("y0", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `cairo_matrix_t` instance.
-)**");
+)""");
 }
 
 Gurax_ImplementConstructor(cairo_matrix_t)
@@ -67,9 +67,9 @@ Gurax_DeclareMethod(cairo_matrix_t, MethodSkeleton)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(cairo_matrix_t, MethodSkeleton)
@@ -91,9 +91,9 @@ Gurax_ImplementMethod(cairo_matrix_t, MethodSkeleton)
 Gurax_DeclareProperty_RW(cairo_matrix_t, xx)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(cairo_matrix_t, xx)
@@ -112,9 +112,9 @@ Gurax_ImplementPropertySetter(cairo_matrix_t, xx)
 Gurax_DeclareProperty_RW(cairo_matrix_t, yx)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(cairo_matrix_t, yx)
@@ -133,9 +133,9 @@ Gurax_ImplementPropertySetter(cairo_matrix_t, yx)
 Gurax_DeclareProperty_RW(cairo_matrix_t, xy)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(cairo_matrix_t, xy)
@@ -154,9 +154,9 @@ Gurax_ImplementPropertySetter(cairo_matrix_t, xy)
 Gurax_DeclareProperty_RW(cairo_matrix_t, yy)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(cairo_matrix_t, yy)
@@ -175,9 +175,9 @@ Gurax_ImplementPropertySetter(cairo_matrix_t, yy)
 Gurax_DeclareProperty_RW(cairo_matrix_t, x0)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(cairo_matrix_t, x0)
@@ -196,9 +196,9 @@ Gurax_ImplementPropertySetter(cairo_matrix_t, x0)
 Gurax_DeclareProperty_RW(cairo_matrix_t, y0)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(cairo_matrix_t, y0)

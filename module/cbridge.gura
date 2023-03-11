@@ -371,9 +371,9 @@ Gurax_DeclareFunctionAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	${end}
 	${funcInfo.helpInfoTbl.Each {|helpInfo|}}
-	AddHelp(Gurax_Symbol(${helpInfo.langCode}), u8R"**(
+	AddHelp(Gurax_Symbol(${helpInfo.langCode}), u8R"""(
 ${helpInfo.doc}
-)**");
+)""");
 	${end}
 }
 

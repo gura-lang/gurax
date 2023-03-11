@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(sdl)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(sdl.SDL_TextInputEvent, `en)}
 ${help.ComposeConstructorHelp(sdl.SDL_TextInputEvent, `en)}
 
 ${help.ComposeMethodHelp(sdl.SDL_TextInputEvent, `en)}
-)**";
+)""";
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(sdl.SDL_TextInputEvent, `en)}
 Gurax_DeclareProperty_R(SDL_TextInputEvent, type)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_TextInputEvent, type)
@@ -46,9 +46,9 @@ Gurax_ImplementPropertyGetter(SDL_TextInputEvent, type)
 Gurax_DeclareProperty_R(SDL_TextInputEvent, timestamp)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_TextInputEvent, timestamp)
@@ -61,9 +61,9 @@ Gurax_ImplementPropertyGetter(SDL_TextInputEvent, timestamp)
 Gurax_DeclareProperty_R(SDL_TextInputEvent, windowID)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_TextInputEvent, windowID)
@@ -76,9 +76,9 @@ Gurax_ImplementPropertyGetter(SDL_TextInputEvent, windowID)
 Gurax_DeclareProperty_R(SDL_TextInputEvent, text)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_TextInputEvent, text)

@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(gif)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(gif.GraphicControlExtension, `en)}
 ${help.ComposeConstructorHelp(gif.GraphicControlExtension, `en)}
 
 ${help.ComposeMethodHelp(gif.GraphicControlExtension, `en)}
-)**";
+)""";
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -33,9 +33,9 @@ Gurax_DeclareMethod(GraphicControlExtension, MethodSkeleton)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(GraphicControlExtension, MethodSkeleton)
@@ -57,9 +57,9 @@ Gurax_ImplementMethod(GraphicControlExtension, MethodSkeleton)
 Gurax_DeclareProperty_R(GraphicControlExtension, BlockSize)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(GraphicControlExtension, BlockSize)
@@ -73,9 +73,9 @@ Gurax_ImplementPropertyGetter(GraphicControlExtension, BlockSize)
 Gurax_DeclareProperty_R(GraphicControlExtension, DelayTime)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(GraphicControlExtension, DelayTime)
@@ -89,9 +89,9 @@ Gurax_ImplementPropertyGetter(GraphicControlExtension, DelayTime)
 Gurax_DeclareProperty_R(GraphicControlExtension, TransparentColorIndex)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(GraphicControlExtension, TransparentColorIndex)
@@ -105,9 +105,9 @@ Gurax_ImplementPropertyGetter(GraphicControlExtension, TransparentColorIndex)
 Gurax_DeclareProperty_R(GraphicControlExtension, DisposalMethod)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(GraphicControlExtension, DisposalMethod)
@@ -121,9 +121,9 @@ Gurax_ImplementPropertyGetter(GraphicControlExtension, DisposalMethod)
 Gurax_DeclareProperty_R(GraphicControlExtension, UserInputFlag)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(GraphicControlExtension, UserInputFlag)
@@ -137,9 +137,9 @@ Gurax_ImplementPropertyGetter(GraphicControlExtension, UserInputFlag)
 Gurax_DeclareProperty_R(GraphicControlExtension, TransparentColorFlag)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(GraphicControlExtension, TransparentColorFlag)

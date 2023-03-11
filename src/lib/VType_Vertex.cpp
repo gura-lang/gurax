@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(Vertex, `en)}
 ${help.ComposeConstructorHelp(Vertex, `en)}
 
 ${help.ComposeMethodHelp(Vertex, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
@@ -35,9 +35,9 @@ Gurax_DeclareConstructor(Vertex)
 	DeclareArg("y", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `Vertex` instance.
-)**");
+)""");
 }
 
 Gurax_ImplementConstructor(Vertex)
@@ -63,8 +63,8 @@ Gurax_DeclareClassMethod(Vertex, Normal)
 	DeclareArg("v3", VTYPE_Vertex, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(unit));
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
 }
 
 Gurax_ImplementClassMethod(Vertex, Normal)
@@ -87,8 +87,8 @@ Gurax_DeclareMethod(Vertex, RotateX)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("angle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
 }
 
 Gurax_ImplementMethod(Vertex, RotateX)
@@ -107,8 +107,8 @@ Gurax_DeclareMethod(Vertex, RotateY)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("angle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
 }
 
 Gurax_ImplementMethod(Vertex, RotateY)
@@ -127,8 +127,8 @@ Gurax_DeclareMethod(Vertex, RotateZ)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("angle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
 }
 
 Gurax_ImplementMethod(Vertex, RotateZ)
@@ -149,9 +149,9 @@ Gurax_ImplementMethod(Vertex, RotateZ)
 Gurax_DeclareProperty_RW(Vertex, x)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Vertex, x)
@@ -170,9 +170,9 @@ Gurax_ImplementPropertySetter(Vertex, x)
 Gurax_DeclareProperty_RW(Vertex, y)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Vertex, y)
@@ -191,9 +191,9 @@ Gurax_ImplementPropertySetter(Vertex, y)
 Gurax_DeclareProperty_RW(Vertex, z)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Vertex, z)

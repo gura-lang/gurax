@@ -9,7 +9,7 @@ Gurax_BeginModuleScope(wx)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -23,9 +23,9 @@ ${help.ComposePropertyHelp(wx.OwnerDrawnComboBox, `en)}
 ${help.ComposeConstructorHelp(wx.OwnerDrawnComboBox, `en)}
 
 ${help.ComposeMethodHelp(wx.OwnerDrawnComboBox, `en)}
-)**";
+)""";
 
-static const char* g_docHelp_ja = u8R"**(
+static const char* g_docHelp_ja = u8R"""(
 # 概要
 
 # 定数
@@ -39,7 +39,7 @@ ${help.ComposePropertyHelp(wx.OwnerDrawnComboBox, `ja)}
 ${help.ComposeConstructorHelp(wx.OwnerDrawnComboBox, `ja)}
 
 ${help.ComposeMethodHelp(wx.OwnerDrawnComboBox, `ja)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor

@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(wx)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(wx.EventType, `en)}
 ${help.ComposeConstructorHelp(wx.EventType, `en)}
 
 ${help.ComposeMethodHelp(wx.EventType, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
@@ -39,9 +39,9 @@ ${help.ComposeMethodHelp(wx.EventType, `en)}
 Gurax_DeclareProperty_R(wxEventType, name)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(wxEventType, name)

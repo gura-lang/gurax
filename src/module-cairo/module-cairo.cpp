@@ -12,9 +12,9 @@ Gurax_BeginModule(cairo)
 Gurax_DeclareFunction(Test)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(Test)

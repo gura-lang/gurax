@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(Thread, `en)}
 ${help.ComposeConstructorHelp(Thread, `en)}
 
 ${help.ComposeMethodHelp(Thread, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
@@ -33,9 +33,9 @@ Gurax_DeclareConstructor(Thread)
 	Declare(VTYPE_Thread, Flag::None);
 	DeclareArg("func", VTYPE_Function, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `Thread` instance.
-)**");
+)""");
 }
 
 Gurax_ImplementConstructor(Thread)
@@ -56,9 +56,9 @@ Gurax_ImplementConstructor(Thread)
 Gurax_DeclareMethod(Thread, Start)
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Starts the thread.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Thread, Start)
@@ -74,9 +74,9 @@ Gurax_ImplementMethod(Thread, Start)
 Gurax_DeclareMethod(Thread, Wait)
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Waits for the thread to end.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Thread, Wait)
@@ -95,9 +95,9 @@ Gurax_ImplementMethod(Thread, Wait)
 Gurax_DeclareProperty_R(Thread, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Thread, propSkeleton)

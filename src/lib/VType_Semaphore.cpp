@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(Semaphore, `en)}
 ${help.ComposeConstructorHelp(Semaphore, `en)}
 
 ${help.ComposeMethodHelp(Semaphore, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
@@ -32,9 +32,9 @@ Gurax_DeclareConstructor(Semaphore)
 {
 	Declare(VTYPE_Semaphore, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `Semaphore` instance.
-)**");
+)""");
 }
 
 Gurax_ImplementConstructor(Semaphore)
@@ -51,9 +51,9 @@ Gurax_ImplementConstructor(Semaphore)
 Gurax_DeclareMethod(Semaphore, Release)
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Releases the semaphore.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Semaphore, Release)
@@ -69,9 +69,9 @@ Gurax_ImplementMethod(Semaphore, Release)
 Gurax_DeclareMethod(Semaphore, Wait)
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Waits for the semaphore to be released.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Semaphore, Wait)

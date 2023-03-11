@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(sdl)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(sdl.SDL_Event, `en)}
 ${help.ComposeConstructorHelp(sdl.SDL_Event, `en)}
 
 ${help.ComposeMethodHelp(sdl.SDL_Event, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
@@ -32,9 +32,9 @@ Gurax_DeclareConstructor(SDL_Event)
 {
 	Declare(VTYPE_SDL_Event, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `sdl.SDL_Event` instance.
-)**");
+)""");
 }
 
 Gurax_ImplementConstructor(SDL_Event)
@@ -50,9 +50,9 @@ Gurax_ImplementConstructor(SDL_Event)
 Gurax_DeclareProperty_R(SDL_Event, type)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Event, type)
@@ -65,9 +65,9 @@ Gurax_ImplementPropertyGetter(SDL_Event, type)
 Gurax_DeclareProperty_R(SDL_Event, common)
 {
 	Declare(VTYPE_SDL_CommonEvent, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Event, common)
@@ -80,9 +80,9 @@ Gurax_ImplementPropertyGetter(SDL_Event, common)
 Gurax_DeclareProperty_R(SDL_Event, window)
 {
 	Declare(VTYPE_SDL_WindowEvent, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Event, window)
@@ -95,9 +95,9 @@ Gurax_ImplementPropertyGetter(SDL_Event, window)
 Gurax_DeclareProperty_R(SDL_Event, key)
 {
 	Declare(VTYPE_SDL_KeyboardEvent, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Event, key)
@@ -110,9 +110,9 @@ Gurax_ImplementPropertyGetter(SDL_Event, key)
 Gurax_DeclareProperty_R(SDL_Event, edit)
 {
 	Declare(VTYPE_SDL_TextEditingEvent, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Event, edit)
@@ -125,9 +125,9 @@ Gurax_ImplementPropertyGetter(SDL_Event, edit)
 Gurax_DeclareProperty_R(SDL_Event, text)
 {
 	Declare(VTYPE_SDL_TextInputEvent, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Event, text)
@@ -140,9 +140,9 @@ Gurax_ImplementPropertyGetter(SDL_Event, text)
 Gurax_DeclareProperty_R(SDL_Event, motion)
 {
 	Declare(VTYPE_SDL_MouseMotionEvent, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Event, motion)
@@ -155,9 +155,9 @@ Gurax_ImplementPropertyGetter(SDL_Event, motion)
 Gurax_DeclareProperty_R(SDL_Event, button)
 {
 	Declare(VTYPE_SDL_MouseButtonEvent, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Event, button)
@@ -170,9 +170,9 @@ Gurax_ImplementPropertyGetter(SDL_Event, button)
 Gurax_DeclareProperty_R(SDL_Event, wheel)
 {
 	Declare(VTYPE_SDL_MouseWheelEvent, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Event, wheel)
@@ -185,9 +185,9 @@ Gurax_ImplementPropertyGetter(SDL_Event, wheel)
 Gurax_DeclareProperty_R(SDL_Event, jaxis)
 {
 	Declare(VTYPE_SDL_JoyAxisEvent, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Event, jaxis)
@@ -200,9 +200,9 @@ Gurax_ImplementPropertyGetter(SDL_Event, jaxis)
 Gurax_DeclareProperty_R(SDL_Event, jball)
 {
 	Declare(VTYPE_SDL_JoyBallEvent, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Event, jball)
@@ -215,9 +215,9 @@ Gurax_ImplementPropertyGetter(SDL_Event, jball)
 Gurax_DeclareProperty_R(SDL_Event, jhat)
 {
 	Declare(VTYPE_SDL_JoyHatEvent, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Event, jhat)
@@ -230,9 +230,9 @@ Gurax_ImplementPropertyGetter(SDL_Event, jhat)
 Gurax_DeclareProperty_R(SDL_Event, jbutton)
 {
 	Declare(VTYPE_SDL_JoyButtonEvent, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Event, jbutton)
@@ -245,9 +245,9 @@ Gurax_ImplementPropertyGetter(SDL_Event, jbutton)
 Gurax_DeclareProperty_R(SDL_Event, jdevice)
 {
 	Declare(VTYPE_SDL_JoyDeviceEvent, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Event, jdevice)
@@ -260,9 +260,9 @@ Gurax_ImplementPropertyGetter(SDL_Event, jdevice)
 Gurax_DeclareProperty_R(SDL_Event, caxis)
 {
 	Declare(VTYPE_SDL_ControllerAxisEvent, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Event, caxis)
@@ -275,9 +275,9 @@ Gurax_ImplementPropertyGetter(SDL_Event, caxis)
 Gurax_DeclareProperty_R(SDL_Event, cbutton)
 {
 	Declare(VTYPE_SDL_ControllerButtonEvent, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Event, cbutton)
@@ -290,9 +290,9 @@ Gurax_ImplementPropertyGetter(SDL_Event, cbutton)
 Gurax_DeclareProperty_R(SDL_Event, cdevice)
 {
 	Declare(VTYPE_SDL_ControllerDeviceEvent, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Event, cdevice)
@@ -305,9 +305,9 @@ Gurax_ImplementPropertyGetter(SDL_Event, cdevice)
 Gurax_DeclareProperty_R(SDL_Event, adevice)
 {
 	Declare(VTYPE_SDL_AudioDeviceEvent, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Event, adevice)
@@ -320,9 +320,9 @@ Gurax_ImplementPropertyGetter(SDL_Event, adevice)
 Gurax_DeclareProperty_R(SDL_Event, quit)
 {
 	Declare(VTYPE_SDL_QuitEvent, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Event, quit)
@@ -335,9 +335,9 @@ Gurax_ImplementPropertyGetter(SDL_Event, quit)
 Gurax_DeclareProperty_R(SDL_Event, user)
 {
 	Declare(VTYPE_SDL_UserEvent, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Event, user)
@@ -350,9 +350,9 @@ Gurax_ImplementPropertyGetter(SDL_Event, user)
 Gurax_DeclareProperty_R(SDL_Event, syswm)
 {
 	Declare(VTYPE_SDL_SysWMEvent, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Event, syswm)
@@ -365,9 +365,9 @@ Gurax_ImplementPropertyGetter(SDL_Event, syswm)
 Gurax_DeclareProperty_R(SDL_Event, tfinger)
 {
 	Declare(VTYPE_SDL_TouchFingerEvent, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Event, tfinger)
@@ -380,9 +380,9 @@ Gurax_ImplementPropertyGetter(SDL_Event, tfinger)
 Gurax_DeclareProperty_R(SDL_Event, mgesture)
 {
 	Declare(VTYPE_SDL_MultiGestureEvent, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Event, mgesture)
@@ -395,9 +395,9 @@ Gurax_ImplementPropertyGetter(SDL_Event, mgesture)
 Gurax_DeclareProperty_R(SDL_Event, dgesture)
 {
 	Declare(VTYPE_SDL_DollarGestureEvent, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Event, dgesture)
@@ -410,9 +410,9 @@ Gurax_ImplementPropertyGetter(SDL_Event, dgesture)
 Gurax_DeclareProperty_R(SDL_Event, drop)
 {
 	Declare(VTYPE_SDL_DropEvent, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Event, drop)

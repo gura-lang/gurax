@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(sdl)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(sdl.SDL_TextEditingEvent, `en)}
 ${help.ComposeConstructorHelp(sdl.SDL_TextEditingEvent, `en)}
 
 ${help.ComposeMethodHelp(sdl.SDL_TextEditingEvent, `en)}
-)**";
+)""";
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(sdl.SDL_TextEditingEvent, `en)}
 Gurax_DeclareProperty_R(SDL_TextEditingEvent, type)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_TextEditingEvent, type)
@@ -46,9 +46,9 @@ Gurax_ImplementPropertyGetter(SDL_TextEditingEvent, type)
 Gurax_DeclareProperty_R(SDL_TextEditingEvent, timestamp)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_TextEditingEvent, timestamp)
@@ -61,9 +61,9 @@ Gurax_ImplementPropertyGetter(SDL_TextEditingEvent, timestamp)
 Gurax_DeclareProperty_R(SDL_TextEditingEvent, windowID)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_TextEditingEvent, windowID)
@@ -76,9 +76,9 @@ Gurax_ImplementPropertyGetter(SDL_TextEditingEvent, windowID)
 Gurax_DeclareProperty_R(SDL_TextEditingEvent, text)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_TextEditingEvent, text)
@@ -91,9 +91,9 @@ Gurax_ImplementPropertyGetter(SDL_TextEditingEvent, text)
 Gurax_DeclareProperty_R(SDL_TextEditingEvent, start)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_TextEditingEvent, start)
@@ -106,9 +106,9 @@ Gurax_ImplementPropertyGetter(SDL_TextEditingEvent, start)
 Gurax_DeclareProperty_R(SDL_TextEditingEvent, length)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_TextEditingEvent, length)

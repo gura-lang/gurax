@@ -9,7 +9,7 @@ Gurax_BeginModuleScope(wx)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -23,9 +23,9 @@ ${help.ComposePropertyHelp(wx.Rect, `en)}
 ${help.ComposeConstructorHelp(wx.Rect, `en)}
 
 ${help.ComposeMethodHelp(wx.Rect, `en)}
-)**";
+)""";
 
-static const char* g_docHelp_ja = u8R"**(
+static const char* g_docHelp_ja = u8R"""(
 # 概要
 
 # 定数
@@ -39,7 +39,7 @@ ${help.ComposePropertyHelp(wx.Rect, `ja)}
 ${help.ComposeConstructorHelp(wx.Rect, `ja)}
 
 ${help.ComposeMethodHelp(wx.Rect, `ja)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
@@ -999,8 +999,8 @@ Gurax_ImplementMethodEx(wxRect, Union_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareProperty_RW(wxRect, width)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
 }
 
 Gurax_ImplementPropertyGetter(wxRect, width)
@@ -1020,8 +1020,8 @@ Gurax_ImplementPropertySetter(wxRect, width)
 Gurax_DeclareProperty_RW(wxRect, height)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
 }
 
 Gurax_ImplementPropertyGetter(wxRect, height)
@@ -1041,8 +1041,8 @@ Gurax_ImplementPropertySetter(wxRect, height)
 Gurax_DeclareProperty_RW(wxRect, x)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
 }
 
 Gurax_ImplementPropertyGetter(wxRect, x)
@@ -1062,8 +1062,8 @@ Gurax_ImplementPropertySetter(wxRect, x)
 Gurax_DeclareProperty_RW(wxRect, y)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
 }
 
 Gurax_ImplementPropertyGetter(wxRect, y)

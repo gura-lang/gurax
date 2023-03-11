@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(bmp)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(bmp.BitmapFileHeader, `en)}
 ${help.ComposeConstructorHelp(bmp.BitmapFileHeader, `en)}
 
 ${help.ComposeMethodHelp(bmp.BitmapFileHeader, `en)}
-)**";
+)""";
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(bmp.BitmapFileHeader, `en)}
 Gurax_DeclareProperty_R(BitmapFileHeader, bfType)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 The value of bfType.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(BitmapFileHeader, bfType)
@@ -47,9 +47,9 @@ Gurax_ImplementPropertyGetter(BitmapFileHeader, bfType)
 Gurax_DeclareProperty_R(BitmapFileHeader, bfSize)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 The value of bfSize.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(BitmapFileHeader, bfSize)
@@ -63,9 +63,9 @@ Gurax_ImplementPropertyGetter(BitmapFileHeader, bfSize)
 Gurax_DeclareProperty_R(BitmapFileHeader, bfOffBits)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 The value of bfOffBits.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(BitmapFileHeader, bfOffBits)

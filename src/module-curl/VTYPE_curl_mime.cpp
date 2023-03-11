@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(curl)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(curl.curl_mime, `en)}
 ${help.ComposeConstructorHelp(curl.curl_mime, `en)}
 
 ${help.ComposeMethodHelp(curl.curl_mime, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
@@ -32,9 +32,9 @@ Gurax_DeclareConstructor(curl_mime)
 {
 	Declare(VTYPE_curl_mime, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `curl.curl_mime` instance.
-)**");
+)""");
 }
 
 Gurax_ImplementConstructor(curl_mime)
@@ -56,9 +56,9 @@ Gurax_DeclareMethod(curl_mime, MethodSkeleton)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(curl_mime, MethodSkeleton)
@@ -80,9 +80,9 @@ Gurax_ImplementMethod(curl_mime, MethodSkeleton)
 Gurax_DeclareProperty_R(curl_mime, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(curl_mime, propSkeleton)

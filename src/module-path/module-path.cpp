@@ -14,9 +14,9 @@ Gurax_DeclareFunction(AbsName)
 	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(uri));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns an absolute path name of the given name.
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(AbsName)
@@ -34,7 +34,7 @@ Gurax_DeclareFunction(BaseName)
 {
 	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Removes a suffix part of a path name.
 This is complementary to `path.ExtName()`.
 
@@ -42,7 +42,7 @@ Example:
 ```
 path.BaseName('/foo/bar/file.txt')  # Returns '/foo/bar/file'
 ```
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(BaseName)
@@ -59,7 +59,7 @@ Gurax_DeclareFunction(BottomName)
 {
 	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns the last part of a path name (cf. `path.FileName()`).
 This is complementary to `path.HeadName()`.
 
@@ -68,7 +68,7 @@ Example:
 path.BottomName('/foo/bar/file.txt')  # Returns 'file.txt'
 path.BottomName('/foo/bar/dir/')      # Returns 'dir'
 ```
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(BottomName)
@@ -88,13 +88,13 @@ Gurax_DeclareFunction(Dir)
 	DeclareArg("pattern", VTYPE_String, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	Directory::WalkFlag::DeclareAttrOpt(*this);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates an iterator that lists item names in the specified directory.
 If pathname is omitted, the current directory shall be listed.
 
 Though the default sensitiveness of character cases during pattern matching depends on the target directory,
 it can be changed by attributes `:case` for case-sensitive and `:icase` for case-insensitive.
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(Dir)
@@ -118,7 +118,7 @@ Gurax_DeclareFunction(DirName)
 {
 	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Splits a pathname by a directory separator and returns a directory name part (cf. `path.HeadName()`).
 This is complementary to `path.FileName()`.
 
@@ -127,7 +127,7 @@ Example:
 path.DirName('/foo/bar/file.txt')  # Returns '/foo/bar/'
 path.DirName('/foo/bar/dir/')      # Returns '/foo/bar/dir/'
 ```
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(DirName)
@@ -144,9 +144,9 @@ Gurax_DeclareFunction(Exists)
 {
 	Declare(VTYPE_Bool, Flag::Map);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns true if the specified path exists.
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(Exists)
@@ -164,7 +164,7 @@ Gurax_DeclareFunction(ExtName)
 {
 	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Extracts a suffix part of a path name. It returns an empty string when the given pathname has no suffix.
 This is complementary to `path.BaseName()`.
 
@@ -173,7 +173,7 @@ Example:
 path.ExtName('/foo/bar/file.txt')  # Returns 'txt'
 path.ExtName('/foo/bar/file')      # Returns ''
 ```
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(ExtName)
@@ -190,7 +190,7 @@ Gurax_DeclareFunction(FileName)
 {
 	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Splits a pathname by a directory separator and returns a file name part (cf. `path.Bottom()`).
 This is complementary to `path.DirName()`.
 
@@ -199,7 +199,7 @@ Example:
 path.FileName('/foo/bar/file.txt')  # Returns 'file.txt'
 path.FileName('/foo/bar/dir/')      # Returns ''
 ```
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(FileName)
@@ -218,13 +218,13 @@ Gurax_DeclareFunction(Glob)
 	DeclareArg("pattern", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	Directory::WalkFlag::DeclareAttrOpt(*this);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates an iterator for item names that match with a pattern supporting
 UNIX shell-style wild cards. In default, case of characters is distinguished.
 
 Though the default sensitiveness of character cases during pattern matching depends on the current platform,
 it can be changed by attributes `:case` for case-sensitive and `:icase` for case-insensitive.
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(Glob)
@@ -245,7 +245,7 @@ Gurax_DeclareFunction(HeadName)
 {
 	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns a path name after eliminating its bottom part (cf. `path.DirName()`).
 This is complementary to `path.BottomName()`.
 
@@ -254,7 +254,7 @@ Example:
 path.HeadName('/foo/bar/file.txt')  # Returns '/foo/bar/'
 path.HeadName('/foo/bar/dir/')      # Returns '/foo/bar/'
 ```
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(HeadName)
@@ -272,9 +272,9 @@ Gurax_DeclareFunction(Join)
 	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("paths", VTYPE_String, ArgOccur::OnceOrMore, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(uri));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns a path name that joins given strings with directory separators.
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(Join)
@@ -299,12 +299,12 @@ Gurax_DeclareFunction(Match)
 	DeclareArg("pathName2", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(case_));
 	DeclareAttrOpt(Gurax_Symbol(icase));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns true if the both path names are determined as equal each other.
 
 Though the default sensitiveness of character cases depends on the current platform,
 it can be changed by attributes `:case` for case-sensitive and `:icase` for case-insensitive.
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(Match)
@@ -327,12 +327,12 @@ Gurax_DeclareFunction(MatchPattern)
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(case_));
 	DeclareAttrOpt(Gurax_Symbol(icase));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns true if a name matches with a pattern that supports UNIX shell-style wild cards.
 
 Though the default sensitiveness of character cases depends on the current platform,
 it can be changed by attributes `:case` for case-sensitive and `:icase` for case-insensitive.
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(MatchPattern)
@@ -353,9 +353,9 @@ Gurax_DeclareFunction(Regulate)
 	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(uri));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Removes redundant relative directories.
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(Regulate)
@@ -373,7 +373,7 @@ Gurax_DeclareFunction(Split)
 {
 	Declare(VTYPE_List, Flag::Map);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Splits a pathname by a directory separator and returns a tuple containing
 a directory name as the first element and a base name as the second one.
 
@@ -385,7 +385,7 @@ Example:
 path.Split('/foo/bar/file.txt')         # Returns ('/foo/bar/', 'file.txt')
 path.Split('/foo/bar/dir/')             # Returns ('/foo/bar/dir/', '')
 ```
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(Split)
@@ -404,7 +404,7 @@ Gurax_DeclareFunction(SplitBottom)
 {
 	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Splits a pathname by a directory separator and returns a tuple containing
 a directory name as the first element and a base name as the second one.
 
@@ -415,7 +415,7 @@ Example:
 path.SplitBottom('/foo/bar/file.txt'):bottom  # Returns ('/foo/bar/', 'file.txt')
 path.SplitBottom('/foo/bar/dir/'):bottom      # Returns ('/foo/bar/', 'dir')
 ```
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(SplitBottom)
@@ -434,7 +434,7 @@ Gurax_DeclareFunction(SplitExt)
 {
 	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Splits a pathname by a dot character indicating a beginning of an extension
 and returns a tuple containing a path name without an extention
 and an extention part.
@@ -446,7 +446,7 @@ Example:
 path.SplitExt('/foo/bar/file.txt'):bottom  # Returns ('/foo/bar/file', 'txt')
 path.SplitExt('/foo/bar/file'):bottom      # Returns ('/foo/bar/file', '')
 ```
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(SplitExt)
@@ -466,9 +466,9 @@ Gurax_DeclareFunction(Stat)
 	Declare(VTYPE_Any, Flag::Map);
 	DeclareArg("directory", VTYPE_Directory, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns a stat object associated with the specified item.
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(Stat)
@@ -491,13 +491,13 @@ Gurax_DeclareFunction(Walk)
 	DeclareArg("pattern", VTYPE_String, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	Directory::WalkFlag::DeclareAttrOpt(*this);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates an iterator that recursively lists item names under the specified directory.
 If `directory` is omitted, search starts at the current directory.
 
 Though the default sensitiveness of character cases during pattern matching depends on the target directory,
 it can be changed by attributes `:case` for case-sensitive and `:icase` for case-insensitive.
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(Walk)

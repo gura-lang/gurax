@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(re)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(re.Match, `en)}
 ${help.ComposeConstructorHelp(re.Match, `en)}
 
 ${help.ComposeMethodHelp(re.Match, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
@@ -34,9 +34,9 @@ Gurax_DeclareConstructor(Match)
 	DeclareArg("pattern", VTYPE_Pattern, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Executes a pattern matching and returns `re.Match` instance as its result.
-)**");
+)""");
 }
 
 Gurax_ImplementConstructor(Match)
@@ -60,9 +60,9 @@ Gurax_DeclareMethod(Match, Group)
 	Declare(VTYPE_Group, Flag::Map);
 	DeclareArg("index", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Match, Group)
@@ -81,9 +81,9 @@ Gurax_DeclareMethod(Match, Groups)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Match, Groups)
@@ -103,9 +103,9 @@ Gurax_ImplementMethod(Match, Groups)
 Gurax_DeclareProperty_R(Match, begin)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Match, begin)
@@ -119,9 +119,9 @@ Gurax_ImplementPropertyGetter(Match, begin)
 Gurax_DeclareProperty_R(Match, end)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Match, end)
@@ -135,9 +135,9 @@ Gurax_ImplementPropertyGetter(Match, end)
 Gurax_DeclareProperty_R(Match, source)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Match, source)
@@ -151,9 +151,9 @@ Gurax_ImplementPropertyGetter(Match, source)
 Gurax_DeclareProperty_R(Match, string)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Match, string)

@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -18,7 +18,7 @@ ${help.ComposePropertyHelp(NumberTrait, `en)}
 ${help.ComposeConstructorHelp(NumberTrait, `en)}
 
 ${help.ComposeMethodHelp(NumberTrait, `en)}
-)**";
+)""";
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -27,9 +27,9 @@ ${help.ComposeMethodHelp(NumberTrait, `en)}
 Gurax_DeclareProperty_R(NumberTrait, bytes)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(NumberTrait, bytes)

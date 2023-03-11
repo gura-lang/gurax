@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(model_stl)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(model.stl.Face, `en)}
 ${help.ComposeConstructorHelp(model.stl.Face, `en)}
 
 ${help.ComposeMethodHelp(model.stl.Face, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
@@ -32,9 +32,9 @@ Gurax_DeclareConstructor(Face)
 {
 	Declare(VTYPE_Face, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `model.stl.Face` instance.
-)**");
+)""");
 }
 
 Gurax_ImplementConstructor(Face)
@@ -56,9 +56,9 @@ Gurax_DeclareMethod(Face, MethodSkeleton)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Face, MethodSkeleton)
@@ -81,9 +81,9 @@ Gurax_ImplementMethod(Face, MethodSkeleton)
 Gurax_DeclareProperty_R(Face, normal)
 {
 	Declare(VTYPE_Vertex, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Face, normal)
@@ -96,9 +96,9 @@ Gurax_ImplementPropertyGetter(Face, normal)
 Gurax_DeclareProperty_R(Face, vertex1)
 {
 	Declare(VTYPE_Vertex, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Face, vertex1)
@@ -111,9 +111,9 @@ Gurax_ImplementPropertyGetter(Face, vertex1)
 Gurax_DeclareProperty_R(Face, vertex2)
 {
 	Declare(VTYPE_Vertex, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Face, vertex2)
@@ -126,9 +126,9 @@ Gurax_ImplementPropertyGetter(Face, vertex2)
 Gurax_DeclareProperty_R(Face, vertex3)
 {
 	Declare(VTYPE_Vertex, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Face, vertex3)
@@ -141,9 +141,9 @@ Gurax_ImplementPropertyGetter(Face, vertex3)
 Gurax_DeclareProperty_R(Face, attr)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Face, attr)

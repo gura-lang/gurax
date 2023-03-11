@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(model.obj.Line, `en)}
 ${help.ComposeConstructorHelp(model.obj.Line, `en)}
 
 ${help.ComposeMethodHelp(model.obj.Line, `en)}
-)**";
+)""";
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -32,9 +32,9 @@ Gurax_DeclareMethod(Line, GetV)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Line, GetV)
@@ -55,9 +55,9 @@ Gurax_DeclareMethod(Line, GetVt)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Line, GetVt)
@@ -80,9 +80,9 @@ Gurax_ImplementMethod(Line, GetVt)
 Gurax_DeclareProperty_R(Line, nElements)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Line, nElements)

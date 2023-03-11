@@ -15,7 +15,7 @@ Gurax_DeclareFunction(Clear)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("region", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Clears the screen.
 
 In default, it clears whole the screen.
@@ -27,7 +27,7 @@ would specify the region to be cleared.
 - `` `right`` .. clears characters on the right side of the cursor.
 - `` `top`` .. clears characters on the above side of the cursor.
 - `` `bottom`` .. clears characters on the below side of the cursor.
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(Clear)
@@ -44,9 +44,9 @@ Gurax_ImplementFunction(Clear)
 Gurax_DeclareFunction(Flush)
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Flushes the pending request of drawing.
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(Flush)
@@ -60,9 +60,9 @@ Gurax_ImplementFunction(Flush)
 Gurax_DeclareFunction(GetWinSize)
 {
 	Declare(VTYPE_List, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns the screen size as a tuple `(width, height)`.
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(GetWinSize)
@@ -80,13 +80,13 @@ Gurax_DeclareFunction(MoveTo)
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Moves cursor to the specified position.
 The most top-left position on the screen is represented as `0, 0`.
 
 If `block` is specified, the cursor is moved before evaluating the block,
 and then gets back to where it has been when done.
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(MoveTo)
@@ -106,7 +106,7 @@ Gurax_DeclareFunction(ReadKey)
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(raise));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Reads a keyboard input and returns a character code number associated with the key
 without blocking.
 
@@ -130,7 +130,7 @@ Character code numbers of some of the special keys are defined as below:
 - `conio.K_PAGEUP`
 - `conio.K_PAGEDOWN`
 - `conio.K_DELETE`
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(ReadKey)
@@ -149,7 +149,7 @@ Gurax_DeclareFunction(SetColor)
 	DeclareArg("fg", VTYPE_Symbol, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("bg", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Sets foreground and background color of text by specifying a color symbol.
 Available color symbols are listed below:
 
@@ -179,7 +179,7 @@ If `bg` is omitted or set to nil, the background color remains unchanged.
 
 If `block` is specified, the color is changed before evaluating the block,
 and then gets back to what has been set when done.
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(SetColor)
@@ -198,7 +198,7 @@ Gurax_DeclareFunction(WaitKey)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(raise));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Waits for a keyboard input and returns a character code number associated with the key.
 
 If `:raise` attribute is specified, hitting `Ctrl-C` issues a terminating signal
@@ -221,7 +221,7 @@ Character code numbers of some of the special keys are defined as below:
 - `conio.K_PAGEUP`
 - `conio.K_PAGEDOWN`
 - `conio.K_DELETE`
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(WaitKey)

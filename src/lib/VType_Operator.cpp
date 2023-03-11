@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 Instances of `Operator` class are associated with specified operators,
@@ -45,7 +45,7 @@ op_Sin(math.pi / 6) // calculates math.Sin(math.pi / 6)
 ${help.ComposeConstructorHelp(Operator, `en)}
 
 ${help.ComposeMethodHelp(Operator, `en)}
-)**";
+)""";
 
 //-----------------------------------------------------------------------------
 // Implementation of class method
@@ -55,7 +55,7 @@ Gurax_DeclareClassMethod(Operator, Binary)
 {
 	Declare(VTYPE_Operator, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates the `Operator` instance of a binary operator specified by `symbol`,
 which is a symbol of an operator preceded by a back quote.
 
@@ -63,7 +63,7 @@ which is a symbol of an operator preceded by a back quote.
 Operator.Binary(`+)    // Returns a binary Operator instance of addition.
 Operator.Binary(`*)    // Returns a binary Operator instance of multiplication.
 ```
-)**");
+)""");
 }
 
 Gurax_ImplementClassMethod(Operator, Binary)
@@ -85,7 +85,7 @@ Gurax_DeclareClassMethod(Operator, Math)
 {
 	Declare(VTYPE_Operator, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates the `Operator` instance of a binary operator specified by `symbol`,
 which is a name of a mathematical function preceded by a back quote.
 
@@ -93,7 +93,7 @@ which is a name of a mathematical function preceded by a back quote.
 Operator.Math(`Sin)    // Returns a math Operator instance of math.Sin().
 Operator.Math(`Atan2)  // Returns a math Operator instance of math.Atan2().
 ```
-)**");
+)""");
 }
 
 Gurax_ImplementClassMethod(Operator, Math)
@@ -115,7 +115,7 @@ Gurax_DeclareClassMethod(Operator, Unary)
 {
 	Declare(VTYPE_Operator, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates the `Operator` instance of a unary operator specified by `symbol`,
 which is a symbol of an operator preceded by a back quote.
 
@@ -123,7 +123,7 @@ which is a symbol of an operator preceded by a back quote.
 Operator.Unary(`!)    // Returns an Unary operator instance of negation.
 Operator.Unary(`-)    // Returns an Unary operator instance of negative.
 ```
-)**");
+)""");
 }
 
 Gurax_ImplementClassMethod(Operator, Unary)
@@ -145,10 +145,10 @@ Gurax_DeclareClassMethod(Operator, UnaryPost)
 {
 	Declare(VTYPE_Operator, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates the `Operator` instance of a unary operator specified by `symbol`,
 which is a symbol of an operator preceded by a back quote.
-)**");
+)""");
 }
 
 Gurax_ImplementClassMethod(Operator, UnaryPost)
@@ -173,9 +173,9 @@ Gurax_DeclareMethod(Operator, Assign)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::OnceOrMore, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Operator, Assign)
@@ -225,9 +225,9 @@ Gurax_ImplementMethod(Operator, Assign)
 Gurax_DeclareMethod(Operator, IsBinary)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns `true` if the target is a binary `Operator`.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Operator, IsBinary)
@@ -243,9 +243,9 @@ Gurax_ImplementMethod(Operator, IsBinary)
 Gurax_DeclareMethod(Operator, IsUnary)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns `true` if the target is a unary `Operator`.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Operator, IsUnary)
@@ -261,9 +261,9 @@ Gurax_ImplementMethod(Operator, IsUnary)
 Gurax_DeclareMethod(Operator, IsUnaryPost)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns `true` if the target is a unary-post `Operator`.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Operator, IsUnaryPost)
@@ -279,9 +279,9 @@ Gurax_ImplementMethod(Operator, IsUnaryPost)
 Gurax_DeclareMethod(Operator, IsMath)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns `true` if the target is a math `Operator`.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Operator, IsMath)
@@ -300,9 +300,9 @@ Gurax_ImplementMethod(Operator, IsMath)
 Gurax_DeclareProperty_R(Operator, name)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 The name of the operator.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Operator, name)
@@ -315,7 +315,7 @@ Gurax_ImplementPropertyGetter(Operator, name)
 Gurax_DeclareProperty_R(Operator, style)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns one of the following symbols that represents the operator's style:
 
 - `` `Unary`` .. Unary prefixed operator.
@@ -323,7 +323,7 @@ Returns one of the following symbols that represents the operator's style:
 - `` `Binary`` .. Binary operator.
 - `` `MathUnary`` .. Mathematical function that takes a single argument.
 - `` `MathBinary`` ..  Mathematical function that takes two arguments.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Operator, style)
@@ -336,9 +336,9 @@ Gurax_ImplementPropertyGetter(Operator, style)
 Gurax_DeclareProperty_R(Operator, symbol)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 The symbol of the operator.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Operator, symbol)
@@ -351,9 +351,9 @@ Gurax_ImplementPropertyGetter(Operator, symbol)
 Gurax_DeclareProperty_R(Operator, typeId)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 The number that represents the operator's type identifier.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Operator, typeId)

@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(xml)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(xml.Nodes, `en)}
 ${help.ComposeConstructorHelp(xml.Nodes, `en)}
 
 ${help.ComposeMethodHelp(xml.Nodes, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
@@ -32,9 +32,9 @@ Gurax_DeclareConstructor(Nodes)
 {
 	Declare(VTYPE_Nodes, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `xml.Nodes` instance.
-)**");
+)""");
 }
 
 Gurax_ImplementConstructor(Nodes)
@@ -59,9 +59,9 @@ Gurax_DeclareMethod(Nodes, Each)
 	DeclareAttrOpt(Gurax_Symbol(element));
 	DeclareAttrOpt(Gurax_Symbol(text));
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Nodes, Each)
@@ -84,9 +84,9 @@ Gurax_ImplementMethod(Nodes, Each)
 Gurax_DeclareProperty_R(Nodes, len)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Nodes, len)

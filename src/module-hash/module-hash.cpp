@@ -14,9 +14,9 @@ Gurax_DeclareFunction(CRC32)
 	Declare(VTYPE_Accumulator, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamR);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `Accumulator` instance.
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(CRC32)
@@ -36,9 +36,9 @@ Gurax_DeclareFunction(MD5)
 	Declare(VTYPE_Accumulator, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamR);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `Accumulator` instance.
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(MD5)
@@ -58,9 +58,9 @@ Gurax_DeclareFunction(SHA1)
 	Declare(VTYPE_Accumulator, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamR);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `Accumulator` instance.
-)**");
+)""");
 }
 
 Gurax_ImplementFunction(SHA1)

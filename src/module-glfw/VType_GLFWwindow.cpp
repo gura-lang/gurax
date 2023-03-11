@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(glfw)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(glfw.GLFWwindow, `en)}
 ${help.ComposeConstructorHelp(glfw.GLFWwindow, `en)}
 
 ${help.ComposeMethodHelp(glfw.GLFWwindow, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // VType_GLFWwindow

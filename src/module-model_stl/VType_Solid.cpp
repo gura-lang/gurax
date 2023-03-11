@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(model_stl)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(model.stl.Solid, `en)}
 ${help.ComposeConstructorHelp(model.stl.Solid, `en)}
 
 ${help.ComposeMethodHelp(model.stl.Solid, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
@@ -33,9 +33,9 @@ Gurax_DeclareConstructor(Solid)
 	Declare(VTYPE_Solid, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, DeclArg::Occur::Once, DeclArg::Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `model.stl.Solid` instance.
-)**");
+)""");
 }
 
 Gurax_ImplementConstructor(Solid)
@@ -57,9 +57,9 @@ Gurax_DeclareMethod(Solid, EachFace)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates an iterator that returns `Face` instances that provide coordinates of triangles.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Solid, EachFace)
@@ -77,9 +77,9 @@ Gurax_ImplementMethod(Solid, EachFace)
 Gurax_DeclareProperty_R(Solid, name)
 {
 	Declare(VTYPE_String, Flag::Nil);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Solid, name)
@@ -93,9 +93,9 @@ Gurax_ImplementPropertyGetter(Solid, name)
 Gurax_DeclareProperty_R(Solid, header)
 {
 	Declare(VTYPE_Binary, Flag::Nil);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Solid, header)

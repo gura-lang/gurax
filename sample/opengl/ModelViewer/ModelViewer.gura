@@ -8,6 +8,7 @@ Property = struct {
 	ambient = @float([1, 0, 0, 0])
 	diffuse = @float([1, 1, 1, 0])
 	specular = @float([1, 1, 1, 0])
+	background = [1, 1, 1, 1]
 }
 
 AppMain = class(wx.App) {
@@ -82,6 +83,13 @@ PanelTop = class(wx.Panel) {
 				hbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.LEFT, 4))
 				wx.EVT_COLOURPICKER_CHANGED(ctrl, this.OnColourPickerChanged_Specular)
 			}
+			wx.StaticText(this, wx.ID_ANY, 'Background') {|ctrl|
+				hbox.Add(ctrl, wx.SizerFlags().Align(wx.CENTRE).Border(wx.LEFT, 12))
+			}
+			wx.ColourPickerCtrl(this, wx.ID_ANY, wx.Colour((this.property.background * 255)*)) {|ctrl|
+				hbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.LEFT, 4))
+				wx.EVT_COLOURPICKER_CHANGED(ctrl, this.OnColourPickerChanged_Background)
+			}
 		}
 	}
 	OnColourPickerChanged_Ambient(event as wx.ColourPickerEvent) = {
@@ -94,6 +102,11 @@ PanelTop = class(wx.Panel) {
 	}
 	OnColourPickerChanged_Specular(event as wx.ColourPickerEvent) = {
 		this.property.specular = this.ColourToArray(event.GetColour())
+		this.notebook.Refresh()
+	}
+	OnColourPickerChanged_Background(event as wx.ColourPickerEvent) = {
+		c = event.GetColour()
+		this.property.background = [c.Red() / 255, c.Green() / 255, c.Blue() / 255, 1]
 		this.notebook.Refresh()
 	}
 	OpenSTL(pathNameSTL as String):map:void = {
@@ -164,8 +177,7 @@ Canvas = class(wx.GLCanvas) {
 		glLoadIdentity()
 		//glOrtho(-6.0, 6.0, -6.0, 6.0, -1.0, 10.0)
 		gluPerspective(30, size.GetWidth() / size.GetHeight(), 1, 100)
-
-		glClearColor(1, 1, 1, 1)
+		glClearColor(this.property.background*)
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 		if (this.list) {
 			glMatrixMode(GL_MODELVIEW)
@@ -208,11 +220,6 @@ Canvas = class(wx.GLCanvas) {
 		if (this.distance > 20) { this.distance = 20 }
 		this.Refresh()
 	}
-}
-
-if (sys.argv.len < 2) {
-	sys.cerr.Println('usage: viewer STL')
-	sys.Exit(1)
 }
 
 wx.ImplementApp(AppMain())

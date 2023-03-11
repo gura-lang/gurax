@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(xml)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(xml.Document, `en)}
 ${help.ComposeConstructorHelp(xml.Document, `en)}
 
 ${help.ComposeMethodHelp(xml.Document, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
@@ -32,9 +32,9 @@ Gurax_DeclareConstructor(Document)
 {
 	Declare(VTYPE_Document, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `xml.Document` instance.
-)**");
+)""");
 }
 
 Gurax_ImplementConstructor(Document)
@@ -54,9 +54,9 @@ Gurax_DeclareMethod(Document, Compose)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Document, Compose)
@@ -76,9 +76,9 @@ Gurax_DeclareMethod(Document, Path)
 {
 	Declare(VTYPE_Element, Flag::None);
 	DeclareArg("path", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Document, Path)
@@ -104,9 +104,9 @@ Gurax_DeclareMethod(Document, Walk)
 	DeclareAttrOpt(Gurax_Symbol(element));
 	DeclareAttrOpt(Gurax_Symbol(text));
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Document, Walk)
@@ -130,9 +130,9 @@ Gurax_ImplementMethod(Document, Walk)
 Gurax_DeclareProperty_R(Document, root)
 {
 	Declare(VTYPE_Element, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Document, root)
@@ -146,9 +146,9 @@ Gurax_ImplementPropertyGetter(Document, root)
 Gurax_DeclareProperty_R(Document, xmlDecl)
 {
 	Declare(VTYPE_Element, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Document, xmlDecl)

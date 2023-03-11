@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(glu)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(glu.GLUquadric, `en)}
 ${help.ComposeConstructorHelp(glu.GLUquadric, `en)}
 
 ${help.ComposeMethodHelp(glu.GLUquadric, `en)}
-)**";
+)""";
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(glu.GLUquadric, `en)}
 Gurax_DeclareProperty_R(GLUquadric, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(GLUquadric, propSkeleton)

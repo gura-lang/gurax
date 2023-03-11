@@ -9,7 +9,7 @@ Gurax_BeginModuleScope(wx)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -23,9 +23,9 @@ ${help.ComposePropertyHelp(wx.AboutDialogInfo, `en)}
 ${help.ComposeConstructorHelp(wx.AboutDialogInfo, `en)}
 
 ${help.ComposeMethodHelp(wx.AboutDialogInfo, `en)}
-)**";
+)""";
 
-static const char* g_docHelp_ja = u8R"**(
+static const char* g_docHelp_ja = u8R"""(
 # 概要
 
 # 定数
@@ -39,7 +39,7 @@ ${help.ComposePropertyHelp(wx.AboutDialogInfo, `ja)}
 ${help.ComposeConstructorHelp(wx.AboutDialogInfo, `ja)}
 
 ${help.ComposeMethodHelp(wx.AboutDialogInfo, `ja)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
@@ -66,9 +66,9 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, AddArtist_gurax, "AddArtist")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("artist", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Adds an artist name to be shown in the program credits.
-)**");
+)""");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, AddArtist_gurax, processor_gurax, argument_gurax)
@@ -90,9 +90,9 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, AddDeveloper_gurax, "AddDeveloper")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("developer", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Adds a developer name to be shown in the program credits.
-)**");
+)""");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, AddDeveloper_gurax, processor_gurax, argument_gurax)
@@ -114,9 +114,9 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, AddDocWriter_gurax, "AddDocWriter")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("docwriter", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Adds a documentation writer name to be shown in the program credits.
-)**");
+)""");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, AddDocWriter_gurax, processor_gurax, argument_gurax)

@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(sdl)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(sdl.SDL_Rect, `en)}
 ${help.ComposeConstructorHelp(sdl.SDL_Rect, `en)}
 
 ${help.ComposeMethodHelp(sdl.SDL_Rect, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
@@ -36,9 +36,9 @@ Gurax_DeclareConstructor(SDL_Rect)
 	DeclareArg("w", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("h", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `SDL_Rect` instance.
-)**");
+)""");
 }
 
 Gurax_ImplementConstructor(SDL_Rect)
@@ -61,9 +61,9 @@ Gurax_ImplementConstructor(SDL_Rect)
 Gurax_DeclareProperty_RW(SDL_Rect, x)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Rect, x)
@@ -82,9 +82,9 @@ Gurax_ImplementPropertySetter(SDL_Rect, x)
 Gurax_DeclareProperty_RW(SDL_Rect, y)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Rect, y)
@@ -103,9 +103,9 @@ Gurax_ImplementPropertySetter(SDL_Rect, y)
 Gurax_DeclareProperty_RW(SDL_Rect, w)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Rect, w)
@@ -124,9 +124,9 @@ Gurax_ImplementPropertySetter(SDL_Rect, w)
 Gurax_DeclareProperty_RW(SDL_Rect, h)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Rect, h)

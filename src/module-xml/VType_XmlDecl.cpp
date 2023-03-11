@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(xml)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(xml.XmlDecl, `en)}
 ${help.ComposeConstructorHelp(xml.XmlDecl, `en)}
 
 ${help.ComposeMethodHelp(xml.XmlDecl, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
@@ -35,9 +35,9 @@ Gurax_DeclareConstructor(XmlDecl)
 	DeclareArg("encoding", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None);
 	DeclareArg("standalone", VTYPE_Bool, DeclArg::Occur::Once, DeclArg::Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `xml.XmlDecl` instance.
-)**");
+)""");
 }
 
 Gurax_ImplementConstructor(XmlDecl)
@@ -61,9 +61,9 @@ Gurax_DeclareMethod(XmlDecl, MethodSkeleton)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(XmlDecl, MethodSkeleton)
@@ -85,9 +85,9 @@ Gurax_ImplementMethod(XmlDecl, MethodSkeleton)
 Gurax_DeclareProperty_R(XmlDecl, version)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(XmlDecl, version)
@@ -102,9 +102,9 @@ Gurax_ImplementPropertyGetter(XmlDecl, version)
 Gurax_DeclareProperty_R(XmlDecl, encoding)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(XmlDecl, encoding)
@@ -119,9 +119,9 @@ Gurax_ImplementPropertyGetter(XmlDecl, encoding)
 Gurax_DeclareProperty_R(XmlDecl, standalone)
 {
 	Declare(VTYPE_Bool, Flag::Nil);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(XmlDecl, standalone)

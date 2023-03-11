@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(diff)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(diff.Edit, `en)}
 ${help.ComposeConstructorHelp(diff.Edit, `en)}
 
 ${help.ComposeMethodHelp(diff.Edit, `en)}
-)**";
+)""";
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(diff.Edit, `en)}
 Gurax_DeclareProperty_R(Edit, lineNoOrg)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Edit, lineNoOrg)
@@ -47,9 +47,9 @@ Gurax_ImplementPropertyGetter(Edit, lineNoOrg)
 Gurax_DeclareProperty_R(Edit, lineNoNew)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Edit, lineNoNew)
@@ -63,9 +63,9 @@ Gurax_ImplementPropertyGetter(Edit, lineNoNew)
 Gurax_DeclareProperty_R(Edit, source)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Edit, source)
@@ -79,9 +79,9 @@ Gurax_ImplementPropertyGetter(Edit, source)
 Gurax_DeclareProperty_R(Edit, type)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Edit, type)
@@ -99,9 +99,9 @@ Gurax_ImplementPropertyGetter(Edit, type)
 Gurax_DeclareProperty_R(Edit, mark)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Edit, mark)

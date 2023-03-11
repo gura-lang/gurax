@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(Argument, `en)}
 ${help.ComposeConstructorHelp(Argument, `en)}
 
 ${help.ComposeMethodHelp(Argument, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of method
@@ -32,9 +32,9 @@ Gurax_DeclareMethod(Argument, IsSet)
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns `true` if the argument has te specified symbol in its attribute list.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Argument, IsSet)

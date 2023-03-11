@@ -9,7 +9,7 @@ Gurax_BeginModuleScope(wx)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -23,9 +23,9 @@ ${help.ComposePropertyHelp(wx.FilePickerCtrl, `en)}
 ${help.ComposeConstructorHelp(wx.FilePickerCtrl, `en)}
 
 ${help.ComposeMethodHelp(wx.FilePickerCtrl, `en)}
-)**";
+)""";
 
-static const char* g_docHelp_ja = u8R"**(
+static const char* g_docHelp_ja = u8R"""(
 # 概要
 
 # 定数
@@ -39,7 +39,7 @@ ${help.ComposePropertyHelp(wx.FilePickerCtrl, `ja)}
 ${help.ComposeConstructorHelp(wx.FilePickerCtrl, `ja)}
 
 ${help.ComposeMethodHelp(wx.FilePickerCtrl, `ja)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor

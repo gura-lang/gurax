@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(sdl)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(sdl.SDL_Window, `en)}
 ${help.ComposeConstructorHelp(sdl.SDL_Window, `en)}
 
 ${help.ComposeMethodHelp(sdl.SDL_Window, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // VType_SDL_Window

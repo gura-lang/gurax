@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(sdl)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(sdl.SDL_RendererInfo, `en)}
 ${help.ComposeConstructorHelp(sdl.SDL_RendererInfo, `en)}
 
 ${help.ComposeMethodHelp(sdl.SDL_RendererInfo, `en)}
-)**";
+)""";
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(sdl.SDL_RendererInfo, `en)}
 Gurax_DeclareProperty_R(SDL_RendererInfo, name)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_RendererInfo, name)
@@ -46,9 +46,9 @@ Gurax_ImplementPropertyGetter(SDL_RendererInfo, name)
 Gurax_DeclareProperty_R(SDL_RendererInfo, flags)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_RendererInfo, flags)
@@ -61,9 +61,9 @@ Gurax_ImplementPropertyGetter(SDL_RendererInfo, flags)
 Gurax_DeclareProperty_R(SDL_RendererInfo, num_texture_formats)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_RendererInfo, num_texture_formats)
@@ -76,9 +76,9 @@ Gurax_ImplementPropertyGetter(SDL_RendererInfo, num_texture_formats)
 Gurax_DeclareProperty_R(SDL_RendererInfo, texture_formats)
 {
 	Declare(VTYPE_List, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_RendererInfo, texture_formats)
@@ -92,9 +92,9 @@ Gurax_ImplementPropertyGetter(SDL_RendererInfo, texture_formats)
 Gurax_DeclareProperty_R(SDL_RendererInfo, max_texture_width)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_RendererInfo, max_texture_width)
@@ -107,9 +107,9 @@ Gurax_ImplementPropertyGetter(SDL_RendererInfo, max_texture_width)
 Gurax_DeclareProperty_R(SDL_RendererInfo, max_texture_height)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_RendererInfo, max_texture_height)

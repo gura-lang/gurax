@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 - `p.int8 = 10` .. Writes data into the pointed memory and increments the address by 1 byte.
@@ -43,7 +43,7 @@ ${help.ComposePropertyHelp(Pointer, `en)}
 ${help.ComposeConstructorHelp(Pointer, `en)}
 
 ${help.ComposeMethodHelp(Pointer, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Template function
@@ -84,9 +84,9 @@ Gurax_DeclareConstructor(Pointer)
 {
 	Declare(VTYPE_Pointer, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `Pointer` instance.
-)**");
+)""");
 }
 
 Gurax_ImplementConstructor(Pointer)
@@ -108,10 +108,10 @@ Gurax_DeclareClassMethod(Pointer, HasSame)
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("p1", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("p2", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Compares contents pointed by the specified by the two given pointers and returns
 `true` if they are identical and `false` otherwise.
-)**");
+)""");
 }
 
 Gurax_ImplementClassMethod(Pointer, HasSame)
@@ -136,9 +136,9 @@ Gurax_DeclareMethod(Pointer, Append)
 	DeclareArg("pointer", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bytes", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(stay));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Pointer, Append)
@@ -170,9 +170,9 @@ Gurax_DeclareMethod(Pointer, Decode)
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("codec", VTYPE_Codec, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Decodes the data pointed by the pointer with the given `codec` and return the result as a `String`.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Pointer, Decode)
@@ -196,7 +196,7 @@ Gurax_DeclareMethod(Pointer, Dump)
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
 	DeclareArg("addrOffset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DumpStyle::DeclareAttrOpt(*this);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Prints a hexadecimal dump of the `Pointer` to the standard output.
 If the argument `stream` is specified, the result would be output to the stream.
 
@@ -210,7 +210,7 @@ Example:
     41 20 71 75 69 63 6B 20 62 72 6F 77 6E 20 66 6F  A quick brown fo
     78 20 6A 75 6D 70 73 20 6F 76 65 72 20 74 68 65  x jumps over the
     20 6C 61 7A 79 20 64 6F 67 2E                     lazy dog.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Pointer, Dump)
@@ -236,7 +236,7 @@ Gurax_DeclareMethod(Pointer, Pack)
 	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(stay));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Packs values in the argument list according to specifiers in the `format`
 into a binary and adds it to where the pointer points.
 The pointer offset is automatically incremented by the added length
@@ -300,7 +300,7 @@ that picks that number from the argument list.
 You can specify encoding name embraced with \"`{`\" and \"`}`\" in the format
 to change coding character set from UTF-8
 while packing a string with format character \"`s`\".
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Pointer, Pack)
@@ -328,9 +328,9 @@ Gurax_DeclareMethod(Pointer, Put)
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(stay));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Pointer, Put)
@@ -363,7 +363,7 @@ Gurax_DeclareMethod(Pointer, Unpack)
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(raise));
 	DeclareAttrOpt(Gurax_Symbol(stay));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Extracts values from data sequence pointed by the `pointer` instance according to specifiers in the `format`
 and returns a list containing the values.
 
@@ -423,7 +423,7 @@ while extracting a string with format character \"`s`\".
 
 An error occurs if the binary size is smaller than the format reqeusts.
 If the attribute `:nil` is specified, `nil` value would be returned for such a case.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Pointer, Unpack)
@@ -451,9 +451,9 @@ Gurax_ImplementMethod(Pointer, Unpack)
 Gurax_DeclareProperty_R(Pointer, bytesAvail)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 the data size available from the current pointer position.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Pointer, bytesAvail)
@@ -466,9 +466,9 @@ Gurax_ImplementPropertyGetter(Pointer, bytesAvail)
 Gurax_DeclareProperty_R(Pointer, bytesEntire)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 the entire size of the memory that the pointer covers.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Pointer, bytesEntire)
@@ -481,9 +481,9 @@ Gurax_ImplementPropertyGetter(Pointer, bytesEntire)
 Gurax_DeclareProperty_RW(Pointer, offset)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 the offset of the pointer.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Pointer, offset)
@@ -506,9 +506,9 @@ Gurax_DeclareProperty_RW(Pointer, int8)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(stay));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 read or write a number stored in a format of signed 8-bit integer.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Pointer, int8)
@@ -527,9 +527,9 @@ Gurax_DeclareProperty_RW(Pointer, int16)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(stay));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 read or write a number stored in a format of signed 16-bit integer.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Pointer, int16)
@@ -548,9 +548,9 @@ Gurax_DeclareProperty_RW(Pointer, int32)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(stay));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 read or write a number stored in a format of signed 32-bit integer.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Pointer, int32)
@@ -569,9 +569,9 @@ Gurax_DeclareProperty_RW(Pointer, int64)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(stay));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 read or write a number stored in a format of signed 64-bit integer.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Pointer, int64)
@@ -590,9 +590,9 @@ Gurax_DeclareProperty_RW(Pointer, uint8)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(stay));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 read or write a number stored in a format of unsigned 8-bit integer.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Pointer, uint8)
@@ -611,9 +611,9 @@ Gurax_DeclareProperty_RW(Pointer, uint16)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(stay));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 read or write a number stored in a format of unsigned 16-bit integer.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Pointer, uint16)
@@ -632,9 +632,9 @@ Gurax_DeclareProperty_RW(Pointer, uint32)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(stay));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 read or write a number stored in a format of unsigned 32-bit integer.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Pointer, uint32)
@@ -653,9 +653,9 @@ Gurax_DeclareProperty_RW(Pointer, uint64)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(stay));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 read or write a number stored in a format of unsigned 64-bit integer.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Pointer, uint64)
@@ -674,9 +674,9 @@ Gurax_DeclarePropertyAlias_RW(Pointer, float_, "float")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(stay));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 read or write a number stored in a format of unsigned 64-bit integer.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Pointer, float_)
@@ -695,9 +695,9 @@ Gurax_DeclarePropertyAlias_RW(Pointer, double_, "double")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(stay));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 read or write a number stored in a format of unsigned 64-bit integer.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Pointer, double_)

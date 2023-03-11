@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(tar)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(tar.StatEx, `en)}
 ${help.ComposeConstructorHelp(tar.StatEx, `en)}
 
 ${help.ComposeMethodHelp(tar.StatEx, `en)}
-)**";
+)""";
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -35,9 +35,9 @@ ${help.ComposeMethodHelp(tar.StatEx, `en)}
 Gurax_DeclareProperty_R(StatEx, chksum)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(StatEx, chksum)
@@ -50,9 +50,9 @@ Gurax_ImplementPropertyGetter(StatEx, chksum)
 Gurax_DeclareProperty_R(StatEx, devmajor)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(StatEx, devmajor)
@@ -65,9 +65,9 @@ Gurax_ImplementPropertyGetter(StatEx, devmajor)
 Gurax_DeclareProperty_R(StatEx, devminor)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(StatEx, devminor)
@@ -80,9 +80,9 @@ Gurax_ImplementPropertyGetter(StatEx, devminor)
 Gurax_DeclareProperty_R(StatEx, mode)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(StatEx, mode)
@@ -95,9 +95,9 @@ Gurax_ImplementPropertyGetter(StatEx, mode)
 Gurax_DeclareProperty_R(StatEx, gname)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(StatEx, gname)
@@ -110,9 +110,9 @@ Gurax_ImplementPropertyGetter(StatEx, gname)
 Gurax_DeclareProperty_R(StatEx, uname)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(StatEx, uname)
@@ -125,9 +125,9 @@ Gurax_ImplementPropertyGetter(StatEx, uname)
 Gurax_DeclareProperty_R(StatEx, linkName)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(StatEx, linkName)
@@ -140,9 +140,9 @@ Gurax_ImplementPropertyGetter(StatEx, linkName)
 Gurax_DeclarePropertyAlias_R(StatEx, name_at_tar, "name@tar")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(StatEx, name_at_tar)

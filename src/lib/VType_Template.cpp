@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(Template, `en)}
 ${help.ComposeConstructorHelp(Template, `en)}
 
 ${help.ComposeMethodHelp(Template, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
@@ -33,7 +33,7 @@ Gurax_DeclareConstructor(Template)
 	Declare(VTYPE_Template, Flag::Map);
 	DeclareArg("src", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamR);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `template` instance.
 
 If the stream `src` is specified, the instance would be initialized
@@ -43,7 +43,7 @@ Following attributes would customize the parser's behavior:
 
 - `:lastEol`
 - `:noIndent`
-)**");
+)""");
 }
 
 Gurax_ImplementConstructor(Template)
@@ -68,9 +68,9 @@ Gurax_ImplementConstructor(Template)
 Gurax_DeclareMethod(Template, Eval)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Evaluates the template and returns the rendered string.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Template, Eval)
@@ -91,14 +91,14 @@ Gurax_DeclareMethod(Template, Parse)
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(noIndent));
 	DeclareAttrOpt(Gurax_Symbol(lastEol));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `template` instance by parsing a script-embedded text in a string.
 
 Following attributes would customize the parser's behavior:
 
 - `:lastEol`
 - `:noIndent`
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Template, Parse)
@@ -124,14 +124,14 @@ Gurax_DeclareMethod(Template, Read)
 	DeclareArg("src", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	DeclareAttrOpt(Gurax_Symbol(noIndent));
 	DeclareAttrOpt(Gurax_Symbol(lastEol));
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `template` instance by parsing a script-embedded text from a stream.
 
 Following attributes would customize the parser's behavior:
 
 - `:lastEol`
 - `:noIndent`
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Template, Read)
@@ -155,11 +155,11 @@ Gurax_DeclareMethod(Template, Render)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("dst", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Renders stored content to the specified stream.
 
 If the argument is omitted, it would be rendered to the standard output.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Template, Render)
@@ -187,7 +187,7 @@ Gurax_DeclareMethod(Template, block)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a template block which content is supposed to be replaced by a derived template.
 
 This method is called by template directive `${=block()}`
@@ -231,7 +231,7 @@ This template renders the following result:
     Block begins here.
     Content of derived.
     Block ends here.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Template, block)
@@ -258,7 +258,7 @@ Gurax_DeclareMethod(Template, call)
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Calls a template macro that has been created by directive `${=define}`.
 
 This method is called by template directive `${=call()}`
@@ -270,7 +270,7 @@ Below is an exemple to call a template macro:
 
 This method would return `nil` if a line-break character is rendered at last
 and would return a null string otherwise.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Template, call)
@@ -302,7 +302,7 @@ Gurax_DeclareMethod(Template, define)
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("args", VTYPE_Quote, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a template macro from the specified block,
 which is supposed to be called by `${=call}` directive,
 and associates it with the specified symbol.
@@ -315,7 +315,7 @@ Below is an example to create a template macro:
     ${=define(`show_person, name:string, age:number)}
     ${name} is ${age} years old.
     ${end}
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Template, define)
@@ -329,7 +329,7 @@ Gurax_DeclareMethod(Template, embed)
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("template", VTYPE_Template, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Renders the specified template at the current position.
 
 This method is called by template directive `${=embed()}`
@@ -345,7 +345,7 @@ are not reflected to the current context.
 
 This method would return `nil` if a line-break character is rendered at last
 and would return a null string otherwise.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Template, embed)
@@ -367,7 +367,7 @@ Gurax_DeclareMethod(Template, extends)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("template", VTYPE_Template, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Declares the current template as a derived one from the specified template.
 
 This method is called by template directive `${=extends()}`
@@ -379,7 +379,7 @@ An error occurs if the current template has already derived from another templat
 Below is an example to declare the current template as one derived from `base.tmpl`.
 
     ${=extends('base.tmpl')}
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Template, extends)
@@ -393,7 +393,7 @@ Gurax_DeclareMethod(Template, super)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Evaluates a template block registered with the specified symbol in a template
 from which the current template has derived.
 
@@ -437,7 +437,7 @@ This template renders the following result:
     Content of base.
     Content of derived.
     Block ends here.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Template, super)
@@ -582,9 +582,9 @@ Gurax_ImplementMethod(Template, init_super)
 Gurax_DeclareProperty_R(Template, expr)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 An `Expr` instance that represents parsed expressions of the template body.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Template, expr)
@@ -597,9 +597,9 @@ Gurax_ImplementPropertyGetter(Template, expr)
 Gurax_DeclareProperty_R(Template, exprForInit)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 An `Expr` instance that represents parsed expressions of the template's initialization part.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Template, exprForInit)

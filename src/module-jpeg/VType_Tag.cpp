@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(jpeg)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(jpeg.Tag, `en)}
 ${help.ComposeConstructorHelp(jpeg.Tag, `en)}
 
 ${help.ComposeMethodHelp(jpeg.Tag, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
@@ -35,9 +35,9 @@ Gurax_DeclareConstructor(Tag)
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `jpeg.Tag` instance.
-)**");
+)""");
 }
 
 Gurax_ImplementConstructor(Tag)
@@ -63,9 +63,9 @@ Gurax_DeclareMethod(Tag, MethodSkeleton)
 	Declare(VTYPE_List, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Tag, MethodSkeleton)
@@ -87,9 +87,9 @@ Gurax_ImplementMethod(Tag, MethodSkeleton)
 Gurax_DeclareProperty_R(Tag, name)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Tag, name)
@@ -102,9 +102,9 @@ Gurax_ImplementPropertyGetter(Tag, name)
 Gurax_DeclareProperty_R(Tag, orderHint)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Tag, orderHint)
@@ -117,9 +117,9 @@ Gurax_ImplementPropertyGetter(Tag, orderHint)
 Gurax_DeclareProperty_R(Tag, symbol)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Tag, symbol)
@@ -132,9 +132,9 @@ Gurax_ImplementPropertyGetter(Tag, symbol)
 Gurax_DeclareProperty_R(Tag, tagId)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Tag, tagId)
@@ -147,9 +147,9 @@ Gurax_ImplementPropertyGetter(Tag, tagId)
 Gurax_DeclareProperty_R(Tag, type)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Tag, type)
@@ -162,9 +162,9 @@ Gurax_ImplementPropertyGetter(Tag, type)
 Gurax_DeclareProperty_R(Tag, typeId)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Tag, typeId)
@@ -177,9 +177,9 @@ Gurax_ImplementPropertyGetter(Tag, typeId)
 Gurax_DeclareProperty_RW(Tag, value)
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Tag, value)
@@ -198,9 +198,9 @@ Gurax_ImplementPropertySetter(Tag, value)
 Gurax_DeclareProperty_R(Tag, vtypeAcceptable)
 {
 	Declare(VTYPE_VType, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Tag, vtypeAcceptable)

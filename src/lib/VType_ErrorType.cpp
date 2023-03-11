@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 ${help.ComposePropertyHelp(ErrorType, `en)}
@@ -16,7 +16,7 @@ ${help.ComposePropertyHelp(ErrorType, `en)}
 ${help.ComposeConstructorHelp(ErrorType, `en)}
 
 ${help.ComposeMethodHelp(ErrorType, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of property
@@ -25,9 +25,9 @@ ${help.ComposeMethodHelp(ErrorType, `en)}
 Gurax_DeclareProperty_R(ErrorType, name)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(ErrorType, name)

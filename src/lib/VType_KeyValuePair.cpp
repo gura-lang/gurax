@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 ${help.ComposePropertyHelp(KeyValuePair, `en)}
@@ -16,7 +16,7 @@ ${help.ComposePropertyHelp(KeyValuePair, `en)}
 ${help.ComposeConstructorHelp(KeyValuePair, `en)}
 
 ${help.ComposeMethodHelp(KeyValuePair, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // VType_KeyValuePair

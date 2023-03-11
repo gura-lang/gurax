@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(Undefined, `en)}
 ${help.ComposeConstructorHelp(Undefined, `en)}
 
 ${help.ComposeMethodHelp(Undefined, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of method
@@ -32,9 +32,9 @@ Gurax_DeclareClassMethod(Undefined, __str__)
 {
 	Declare(VTYPE_String, Flag::None);
 	StringStyle::DeclareAttrOpt(*this);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Converts the object to a string.
-)**");
+)""");
 }
 
 Gurax_ImplementClassMethod(Undefined, __str__)

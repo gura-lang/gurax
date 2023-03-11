@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(PUnit, `en)}
 ${help.ComposeConstructorHelp(PUnit, `en)}
 
 ${help.ComposeMethodHelp(PUnit, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of method

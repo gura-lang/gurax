@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(ArgMapper_Multiple, `en)}
 ${help.ComposeConstructorHelp(ArgMapper_Multiple, `en)}
 
 ${help.ComposeMethodHelp(ArgMapper_Multiple, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // VType_ArgMapper_Multiple

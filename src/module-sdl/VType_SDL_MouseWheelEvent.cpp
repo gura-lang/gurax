@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(sdl)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(sdl.SDL_MouseWheelEvent, `en)}
 ${help.ComposeConstructorHelp(sdl.SDL_MouseWheelEvent, `en)}
 
 ${help.ComposeMethodHelp(sdl.SDL_MouseWheelEvent, `en)}
-)**";
+)""";
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(sdl.SDL_MouseWheelEvent, `en)}
 Gurax_DeclareProperty_R(SDL_MouseWheelEvent, type)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_MouseWheelEvent, type)
@@ -46,9 +46,9 @@ Gurax_ImplementPropertyGetter(SDL_MouseWheelEvent, type)
 Gurax_DeclareProperty_R(SDL_MouseWheelEvent, timestamp)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_MouseWheelEvent, timestamp)
@@ -61,9 +61,9 @@ Gurax_ImplementPropertyGetter(SDL_MouseWheelEvent, timestamp)
 Gurax_DeclareProperty_R(SDL_MouseWheelEvent, windowID)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_MouseWheelEvent, windowID)
@@ -76,9 +76,9 @@ Gurax_ImplementPropertyGetter(SDL_MouseWheelEvent, windowID)
 Gurax_DeclareProperty_R(SDL_MouseWheelEvent, which)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_MouseWheelEvent, which)
@@ -91,9 +91,9 @@ Gurax_ImplementPropertyGetter(SDL_MouseWheelEvent, which)
 Gurax_DeclareProperty_R(SDL_MouseWheelEvent, x)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_MouseWheelEvent, x)
@@ -106,9 +106,9 @@ Gurax_ImplementPropertyGetter(SDL_MouseWheelEvent, x)
 Gurax_DeclareProperty_R(SDL_MouseWheelEvent, y)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_MouseWheelEvent, y)
@@ -121,9 +121,9 @@ Gurax_ImplementPropertyGetter(SDL_MouseWheelEvent, y)
 Gurax_DeclareProperty_R(SDL_MouseWheelEvent, direction)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(SDL_MouseWheelEvent, direction)

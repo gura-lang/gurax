@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(curl)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(curl.curl_slist, `en)}
 ${help.ComposeConstructorHelp(curl.curl_slist, `en)}
 
 ${help.ComposeMethodHelp(curl.curl_slist, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
@@ -33,9 +33,9 @@ Gurax_DeclareConstructor(curl_slist)
 	Declare(VTYPE_curl_slist, Flag::None);
 	DeclareArg("src", VTYPE_Iterator, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `curl.curl_slist` instance.
-)**");
+)""");
 }
 
 Gurax_ImplementConstructor(curl_slist)
@@ -67,9 +67,9 @@ Gurax_DeclareMethod(curl_slist, MethodSkeleton)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(curl_slist, MethodSkeleton)
@@ -91,9 +91,9 @@ Gurax_ImplementMethod(curl_slist, MethodSkeleton)
 Gurax_DeclareProperty_R(curl_slist, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(curl_slist, propSkeleton)

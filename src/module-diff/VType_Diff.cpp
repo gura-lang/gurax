@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(diff)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(diff.Diff, `en)}
 ${help.ComposeConstructorHelp(diff.Diff, `en)}
 
 ${help.ComposeMethodHelp(diff.Diff, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
@@ -35,7 +35,7 @@ Gurax_DeclareConstructor(Diff)
 	DeclareArg("src2", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(icase));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `diff.Diff` instance that includes difference information
 between two sources `src1` and `src2`. The source is one of the followings:
 
@@ -46,7 +46,7 @@ between two sources `src1` and `src2`. The source is one of the followings:
 - `List` that contains `String` of each line of a text.
 
 Specifying `:icase` indicates the comparator to ignore character case.
-)**");
+)""");
 }
 
 Gurax_ImplementConstructor(Diff)
@@ -70,9 +70,9 @@ Gurax_DeclareMethod(Diff, EachEdit)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates an iterator that returns stored edit information.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Diff, EachEdit)
@@ -91,9 +91,9 @@ Gurax_DeclareMethod(Diff, EachHunk)
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("nLinesCommon", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates an iterator that returns stored hunk information.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Diff, EachHunk)
@@ -115,9 +115,9 @@ Gurax_ImplementMethod(Diff, EachHunk)
 Gurax_DeclareProperty_R(Diff, distance)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Difference distance.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Diff, distance)

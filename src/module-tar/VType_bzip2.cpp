@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(tar)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(tar.bzip2, `en)}
 ${help.ComposeConstructorHelp(tar.bzip2, `en)}
 
 ${help.ComposeMethodHelp(tar.bzip2, `en)}
-)**";
+)""";
 
 //-----------------------------------------------------------------------------
 // Implementation of class property
@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(tar.bzip2, `en)}
 Gurax_DeclareClassProperty_RW(bzip2, blockSize100k)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementClassPropertyGetter(bzip2, blockSize100k)
@@ -50,9 +50,9 @@ Gurax_ImplementClassPropertySetter(bzip2, blockSize100k)
 Gurax_DeclareClassProperty_RW(bzip2, verbosity)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementClassPropertyGetter(bzip2, verbosity)
@@ -69,9 +69,9 @@ Gurax_ImplementClassPropertySetter(bzip2, verbosity)
 Gurax_DeclareClassProperty_RW(bzip2, workFactor)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementClassPropertyGetter(bzip2, workFactor)

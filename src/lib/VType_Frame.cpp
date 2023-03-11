@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 ${help.ComposePropertyHelp(Frame, `en)}
@@ -18,7 +18,7 @@ ${help.ComposePropertyHelp(Frame, `en)}
 ${help.ComposeConstructorHelp(Frame, `en)}
 
 ${help.ComposeMethodHelp(Frame, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
@@ -28,9 +28,9 @@ Gurax_DeclareConstructor(Frame)
 {
 	Declare(VTYPE_Frame, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `Frame` instance of the current scope.
-)**");
+)""");
 }
 
 Gurax_ImplementConstructor(Frame)
@@ -50,9 +50,9 @@ Gurax_DeclareHybridMethod(Frame, __functions__)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementHybridMethod(Frame, __functions__)
@@ -78,9 +78,9 @@ Gurax_DeclareHybridMethod(Frame, __statements__)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementHybridMethod(Frame, __statements__)
@@ -106,9 +106,9 @@ Gurax_DeclareHybridMethod(Frame, __vtypes__)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementHybridMethod(Frame, __vtypes__)
@@ -133,9 +133,9 @@ Gurax_ImplementHybridMethod(Frame, __vtypes__)
 Gurax_DeclareClassMethod(Frame, GetCurrent)
 {
 	Declare(VTYPE_Frame, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementClassMethod(Frame, GetCurrent)
@@ -147,9 +147,9 @@ Gurax_ImplementClassMethod(Frame, GetCurrent)
 Gurax_DeclareClassMethod(Frame, PrintStack)
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementClassMethod(Frame, PrintStack)
@@ -165,10 +165,10 @@ Gurax_DeclareClassMethod(Frame, Where)
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(raise));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Searches a value in the current environment and returns a `Frame` instance where it's found.
 If the symbol is not found, it returns `nil`.
-)**");
+)""");
 }
 
 Gurax_ImplementClassMethod(Frame, Where)
@@ -199,9 +199,9 @@ Gurax_DeclareMethod(Frame, Assign)
 	Declare(VTYPE_Image, Flag::Reduce);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Frame, Assign)
@@ -222,9 +222,9 @@ Gurax_ImplementMethod(Frame, Assign)
 Gurax_DeclareMethod(Frame, PrintTree)
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Prints the frame's information.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Frame, PrintTree)
@@ -243,9 +243,9 @@ Gurax_ImplementMethod(Frame, PrintTree)
 Gurax_DeclareProperty_R(Frame, id)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Frame, id)
@@ -258,9 +258,9 @@ Gurax_ImplementPropertyGetter(Frame, id)
 Gurax_DeclareProperty_R(Frame, local)
 {
 	Declare(VTYPE_Frame, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Frame, local)
@@ -275,9 +275,9 @@ Gurax_ImplementPropertyGetter(Frame, local)
 Gurax_DeclareProperty_R(Frame, outer)
 {
 	Declare(VTYPE_Frame, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Frame, outer)
@@ -292,9 +292,9 @@ Gurax_ImplementPropertyGetter(Frame, outer)
 Gurax_DeclareProperty_R(Frame, symbols)
 {
 	Declare(VTYPE_List, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Frame, symbols)
@@ -315,9 +315,9 @@ Gurax_ImplementPropertyGetter(Frame, symbols)
 Gurax_DeclareProperty_R(Frame, typeName)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Frame, typeName)

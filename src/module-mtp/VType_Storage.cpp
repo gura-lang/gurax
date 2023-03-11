@@ -10,7 +10,7 @@ Gurax_BeginModuleScope(mtp)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -24,7 +24,7 @@ ${help.ComposePropertyHelp(mtp.Storage, `en)}
 ${help.ComposeConstructorHelp(mtp.Storage, `en)}
 
 ${help.ComposeMethodHelp(mtp.Storage, `en)}
-)**";
+)""";
 
 // mtp.Storage(iDevice? as Number, iStorage? as Number) {block?}
 Gurax_DeclareConstructor(Storage)
@@ -33,9 +33,9 @@ Gurax_DeclareConstructor(Storage)
 	DeclareArg("iDevice", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None);
 	DeclareArg("iStorage", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Create an `mtp.Storage` instance.
-)**");
+)""");
 }
 
 Gurax_ImplementConstructor(Storage)
@@ -60,9 +60,9 @@ Gurax_DeclareMethod(Storage, OpenDirectory)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Storage, OpenDirectory)
@@ -88,9 +88,9 @@ Gurax_DeclareMethod(Storage, RecvFile)
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Storage, RecvFile)
@@ -112,9 +112,9 @@ Gurax_DeclareMethodAlias(Storage, DeleteFile_, "DeleteFile")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Storage, DeleteFile_)
@@ -136,9 +136,9 @@ Gurax_DeclareMethod(Storage, SendFile)
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Storage, SendFile)
@@ -162,7 +162,7 @@ Gurax_ImplementMethod(Storage, SendFile)
 Gurax_DeclareProperty_R(Storage, storageType)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Indicates the type of the storage by following symbols:
 
 - `` `Undefined`` .. Undefined type.
@@ -170,7 +170,7 @@ Indicates the type of the storage by following symbols:
 - `` `RemovableROM`` .. Removable and read-only.
 - `` `FixedRAM`` .. Non-removable and read/write capable.
 - `` `RemovableRAM`` .. Removable and read/write capable.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Storage, storageType)
@@ -183,14 +183,14 @@ Gurax_ImplementPropertyGetter(Storage, storageType)
 Gurax_DeclareProperty_R(Storage, filesystemType)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Indicates the type of the file system by following symbols:
 
 - `` `Undefined`` .. 
 - `` `GenericFlat`` .. 
 - `` `GenericHierarchical`` .. 
 - `` `DCF`` .. 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Storage, filesystemType)
@@ -203,13 +203,13 @@ Gurax_ImplementPropertyGetter(Storage, filesystemType)
 Gurax_DeclareProperty_R(Storage, accessCapability)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Indicates what access is permitted to the storage by following symbols:
 
 - `` `ReadWrite`` .. Read/write capable.
 - `` `ReadOnly`` .. Read-only.
 - `` `ReadOnlyWithObjectDeletion`` .. Read-only but deleting operation is permitted.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Storage, accessCapability)
@@ -222,9 +222,9 @@ Gurax_ImplementPropertyGetter(Storage, accessCapability)
 Gurax_DeclareProperty_R(Storage, maxCapacity)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns the maximum capacity of the storage in bytes.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Storage, maxCapacity)
@@ -237,9 +237,9 @@ Gurax_ImplementPropertyGetter(Storage, maxCapacity)
 Gurax_DeclareProperty_R(Storage, freeSpaceInBytes)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns the free space in the storage in bytes.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Storage, freeSpaceInBytes)
@@ -252,9 +252,9 @@ Gurax_ImplementPropertyGetter(Storage, freeSpaceInBytes)
 Gurax_DeclareProperty_R(Storage, freeSpaceInObjects)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns the free space in the storage in number of objects.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Storage, freeSpaceInObjects)
@@ -267,9 +267,9 @@ Gurax_ImplementPropertyGetter(Storage, freeSpaceInObjects)
 Gurax_DeclareProperty_R(Storage, storageDescription)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns the storage description.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Storage, storageDescription)
@@ -282,9 +282,9 @@ Gurax_ImplementPropertyGetter(Storage, storageDescription)
 Gurax_DeclareProperty_R(Storage, volumeIdentifier)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Returns the volume identifier.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Storage, volumeIdentifier)

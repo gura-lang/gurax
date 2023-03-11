@@ -9,7 +9,7 @@ Gurax_BeginModuleScope(wx)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -23,9 +23,9 @@ ${help.ComposePropertyHelp(wx.Point, `en)}
 ${help.ComposeConstructorHelp(wx.Point, `en)}
 
 ${help.ComposeMethodHelp(wx.Point, `en)}
-)**";
+)""";
 
-static const char* g_docHelp_ja = u8R"**(
+static const char* g_docHelp_ja = u8R"""(
 # 概要
 
 # 定数
@@ -39,7 +39,7 @@ ${help.ComposePropertyHelp(wx.Point, `ja)}
 ${help.ComposeConstructorHelp(wx.Point, `ja)}
 
 ${help.ComposeMethodHelp(wx.Point, `ja)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
@@ -76,8 +76,8 @@ Gurax_ImplementConstructorEx(Point_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareProperty_RW(wxPoint, x)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
 }
 
 Gurax_ImplementPropertyGetter(wxPoint, x)
@@ -97,8 +97,8 @@ Gurax_ImplementPropertySetter(wxPoint, x)
 Gurax_DeclareProperty_RW(wxPoint, y)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
 }
 
 Gurax_ImplementPropertyGetter(wxPoint, y)

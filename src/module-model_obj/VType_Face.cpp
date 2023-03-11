@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(model.obj.Face, `en)}
 ${help.ComposeConstructorHelp(model.obj.Face, `en)}
 
 ${help.ComposeMethodHelp(model.obj.Face, `en)}
-)**";
+)""";
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -32,9 +32,9 @@ Gurax_DeclareMethod(Face, GetV)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Face, GetV)
@@ -55,9 +55,9 @@ Gurax_DeclareMethod(Face, GetVt)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Face, GetVt)
@@ -78,9 +78,9 @@ Gurax_DeclareMethod(Face, GetVn)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(Face, GetVn)
@@ -103,9 +103,9 @@ Gurax_ImplementMethod(Face, GetVn)
 Gurax_DeclareProperty_R(Face, nElements)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(Face, nElements)

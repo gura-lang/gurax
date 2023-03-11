@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(fs)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(fs.StatEx, `en)}
 ${help.ComposeConstructorHelp(fs.StatEx, `en)}
 
 ${help.ComposeMethodHelp(fs.StatEx, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
@@ -33,9 +33,9 @@ Gurax_DeclareConstructor(Stat)
 	Declare(VTYPE_StatEx, Flag::Map);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `fs.Stat` instance from the specified path name.
-)**");
+)""");
 }
 
 Gurax_ImplementConstructor(Stat)

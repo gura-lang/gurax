@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(Scope, `en)}
 ${help.ComposeConstructorHelp(Scope, `en)}
 
 ${help.ComposeMethodHelp(Scope, `en)}
-)**";
+)""";
 
 //------------------------------------------------------------------------------
 // VType_Scope

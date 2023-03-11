@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(mswin)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
+static const char* g_docHelp_en = u8R"""(
 # Overview
 
 # Predefined Variable
@@ -22,7 +22,7 @@ ${help.ComposePropertyHelp(mswin.RegKey, `en)}
 ${help.ComposeConstructorHelp(mswin.RegKey, `en)}
 
 ${help.ComposeMethodHelp(mswin.RegKey, `en)}
-)**";
+)""";
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -34,9 +34,9 @@ Gurax_DeclareMethod(RegKey, CreateKey)
 	DeclareArg("subKey", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("options", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("samDesired", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(RegKey, CreateKey)
@@ -67,9 +67,9 @@ Gurax_DeclareMethod(RegKey, OpenKey)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("subKey", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("samDesired", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(RegKey, OpenKey)
@@ -96,9 +96,9 @@ Gurax_DeclareMethod(RegKey, DeleteKey)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("subKey", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(RegKey, DeleteKey)
@@ -124,9 +124,9 @@ Gurax_DeclareMethod(RegKey, EnumKey)
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("samDesired", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(RegKey, EnumKey)
@@ -148,9 +148,9 @@ Gurax_DeclareMethod(RegKey, SetKeyValue)
 	DeclareArg("subKey", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("valueName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Any, ArgOccur::Once, ArgFlag::NoMap);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(RegKey, SetKeyValue)
@@ -181,9 +181,9 @@ Gurax_DeclareMethod(RegKey, SetValue)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("valueName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Any, ArgOccur::Once, ArgFlag::NoMap);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(RegKey, SetValue)
@@ -212,9 +212,9 @@ Gurax_DeclareMethod(RegKey, DeleteValue)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("subKey", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(RegKey, DeleteValue)
@@ -236,9 +236,9 @@ Gurax_DeclareMethod(RegKey, QueryValue)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("valueName", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(RegKey, QueryValue)
@@ -278,9 +278,9 @@ Gurax_DeclareMethod(RegKey, EnumValue)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
-)**");
+)""");
 }
 
 Gurax_ImplementMethod(RegKey, EnumValue)
@@ -299,9 +299,9 @@ Gurax_ImplementMethod(RegKey, EnumValue)
 Gurax_DeclareProperty_R(RegKey, name)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"""(
 
-)**");
+)""");
 }
 
 Gurax_ImplementPropertyGetter(RegKey, name)
