@@ -4,9 +4,41 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_CONTENT_H
 #define GURAX_MODULE_MODEL_OBJ_CONTENT_H
 #include <gurax.h>
+#include "Beval.h"
+#include "Bmat.h"
+#include "CallObj.h"
+#include "Connect.h"
+#include "Content.h"
+#include "Csh.h"
+#include "Cstype.h"
+#include "Ctech.h"
+#include "Curv.h"
+#include "Curv2.h"
+#include "C_interp.h"
+#include "Deg.h"
+#include "D_interp.h"
 #include "Face.h"
+#include "GroupName.h"
+#include "Hole.h"
 #include "Line.h"
+#include "Lod.h"
+#include "Maplib.h"
+#include "MergingGroup.h"
+#include "Mtllib.h"
+#include "ObjectName.h"
+#include "Parm.h"
 #include "Point.h"
+#include "Scrv.h"
+#include "Shadow_obj.h"
+#include "SmoothingGroup.h"
+#include "Spoint.h"
+#include "Stech.h"
+#include "Step.h"
+#include "Surf.h"
+#include "Trace_obj.h"
+#include "Trim.h"
+#include "Usemap.h"
+#include "Usemtl.h"
 #include "Vertex3.h"
 #include "Vertex4.h"
 
@@ -83,10 +115,16 @@ public:
 		stech,
 	};
 private:
+	CallObjOwner	_callObjs;
+	CshOwner		_cshs;
 	Vertex4Owner	_vs;
-	Vertex3Owner	_vps;
-	Vertex3Owner	_vns;
 	Vertex3Owner	_vts;
+	Vertex3Owner	_vns;
+	Vertex3Owner	_vps;
+	CstypeOwner		_cstypes;
+	DegOwner		_degs;
+	BmatOwner		_bmats;
+	
 	PointOwner		_points;
 	LineOwner		_lines;
 	FaceOwner		_faces;
