@@ -8,6 +8,11 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Trim
 //------------------------------------------------------------------------------
+bool Trim::FeedField(const char* field, size_t iParam)
+{
+	return true;
+}
+
 String Trim::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Trim");

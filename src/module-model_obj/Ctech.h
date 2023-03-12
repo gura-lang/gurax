@@ -4,13 +4,14 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_CTECH_H
 #define GURAX_MODULE_MODEL_OBJ_CTECH_H
 #include <gurax.h>
+#include "Data.h"
 
 Gurax_BeginModuleScope(model_obj)
 
 //------------------------------------------------------------------------------
 // Ctech
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Ctech : public Referable {
+class GURAX_DLLDECLARE Ctech : public Referable, public Data {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Ctech);
@@ -27,6 +28,8 @@ public:
 	Ctech& operator=(Ctech&& src) noexcept = delete;
 protected:
 	~Ctech() = default;
+public:
+	virtual bool FeedField(const char* field, size_t iParam) override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Ctech& other) const { return this == &other; }

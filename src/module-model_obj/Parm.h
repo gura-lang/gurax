@@ -4,13 +4,14 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_PARM_H
 #define GURAX_MODULE_MODEL_OBJ_PARM_H
 #include <gurax.h>
+#include "Data.h"
 
 Gurax_BeginModuleScope(model_obj)
 
 //------------------------------------------------------------------------------
 // Parm
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Parm : public Referable {
+class GURAX_DLLDECLARE Parm : public Referable, public Data {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Parm);
@@ -27,6 +28,8 @@ public:
 	Parm& operator=(Parm&& src) noexcept = delete;
 protected:
 	~Parm() = default;
+public:
+	virtual bool FeedField(const char* field, size_t iParam) override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Parm& other) const { return this == &other; }

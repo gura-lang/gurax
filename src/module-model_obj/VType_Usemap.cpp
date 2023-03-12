@@ -112,6 +112,7 @@ void VType_Usemap::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Usemap::vtype = VTYPE_Usemap;
 
+
 String Value_Usemap::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetUsemap().ToString(ss));

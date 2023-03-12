@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_VTYPE_HOLE_H
 #define GURAX_MODULE_MODEL_OBJ_VTYPE_HOLE_H
 #include <gurax.h>
+#include "Data.h"
 #include "Hole.h"
 
 Gurax_BeginModuleScope(model_obj)

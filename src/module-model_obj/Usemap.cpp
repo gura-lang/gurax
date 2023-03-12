@@ -8,6 +8,11 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Usemap
 //------------------------------------------------------------------------------
+bool Usemap::FeedField(const char* field, size_t iParam)
+{
+	return true;
+}
+
 String Usemap::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Usemap");

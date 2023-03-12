@@ -4,13 +4,14 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_BMAT_H
 #define GURAX_MODULE_MODEL_OBJ_BMAT_H
 #include <gurax.h>
+#include "Data.h"
 
 Gurax_BeginModuleScope(model_obj)
 
 //------------------------------------------------------------------------------
 // Bmat
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Bmat : public Referable {
+class GURAX_DLLDECLARE Bmat : public Referable, public Data {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Bmat);
@@ -27,6 +28,8 @@ public:
 	Bmat& operator=(Bmat&& src) noexcept = delete;
 protected:
 	~Bmat() = default;
+public:
+	virtual bool FeedField(const char* field, size_t iParam) override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Bmat& other) const { return this == &other; }

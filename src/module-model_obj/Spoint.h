@@ -4,13 +4,14 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_SPOINT_H
 #define GURAX_MODULE_MODEL_OBJ_SPOINT_H
 #include <gurax.h>
+#include "Data.h"
 
 Gurax_BeginModuleScope(model_obj)
 
 //------------------------------------------------------------------------------
 // Spoint
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Spoint : public Referable {
+class GURAX_DLLDECLARE Spoint : public Referable, public Data {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Spoint);
@@ -27,6 +28,8 @@ public:
 	Spoint& operator=(Spoint&& src) noexcept = delete;
 protected:
 	~Spoint() = default;
+public:
+	virtual bool FeedField(const char* field, size_t iParam) override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Spoint& other) const { return this == &other; }

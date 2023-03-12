@@ -8,6 +8,11 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // C_interp
 //------------------------------------------------------------------------------
+bool C_interp::FeedField(const char* field, size_t iParam)
+{
+	return true;
+}
+
 String C_interp::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.C_interp");

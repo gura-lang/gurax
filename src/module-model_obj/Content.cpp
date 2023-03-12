@@ -22,10 +22,12 @@ bool Content::Read(Stream& stream)
 		case Stat::Keyword: {
 			if (tokenId == TokenId::Field) {
 				iParam = 0;
+				// General statement
 				if (::strcmp(field, "call") == 0) {
 					stat = Stat::call;
 				} else if (::strcmp(field, "csh") == 0) {
 					stat = Stat::csh;
+				// Vertex data
 				} else if (::strcmp(field, "v") == 0) {
 					stat = Stat::v;
 				} else if (::strcmp(field, "vt") == 0) {
@@ -42,6 +44,7 @@ bool Content::Read(Stream& stream)
 					stat = Stat::bmat;
 				} else if (::strcmp(field, "step") == 0) {
 					stat = Stat::step;
+				// Elements
 				} else if (::strcmp(field, "p") == 0) {
 					_points.push_back(new Point());
 					stat = Stat::p;
@@ -57,6 +60,7 @@ bool Content::Read(Stream& stream)
 					stat = Stat::curv2;
 				} else if (::strcmp(field, "surf") == 0) {
 					stat = Stat::surf;
+				// Free-form curve/surface body statements
 				} else if (::strcmp(field, "parm") == 0) {
 					stat = Stat::parm;
 				} else if (::strcmp(field, "trim") == 0) {
@@ -69,8 +73,10 @@ bool Content::Read(Stream& stream)
 					stat = Stat::sp;
 				} else if (::strcmp(field, "end") == 0) {
 					stat = Stat::end;
+				// Connectivity between free-form surfaces
 				} else if (::strcmp(field, "con") == 0) {
 					stat = Stat::con;
+				// Grouping
 				} else if (::strcmp(field, "g") == 0) {
 					stat = Stat::g;
 				} else if (::strcmp(field, "s") == 0) {
@@ -79,6 +85,7 @@ bool Content::Read(Stream& stream)
 					stat = Stat::mg;
 				} else if (::strcmp(field, "o") == 0) {
 					stat = Stat::o;
+				// Display/render attributes
 				} else if (::strcmp(field, "bevel") == 0) {
 					stat = Stat::beval;
 				} else if (::strcmp(field, "c_interp") == 0) {
@@ -617,8 +624,9 @@ bool Content::Read(Stream& stream)
 		case Stat::mtllib: {
 			// material library: mtllib filename1 filename2 ...
 			if (tokenId == TokenId::EndOfLine) {
+				
+				
 				stat = Stat::Keyword;
-				SetError_NotImplementedKeyword("mtllib");
 				return false;
 			} else if (tokenId == TokenId::Field) {
 				iParam++;

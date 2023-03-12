@@ -8,6 +8,11 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Scrv
 //------------------------------------------------------------------------------
+bool Scrv::FeedField(const char* field, size_t iParam)
+{
+	return true;
+}
+
 String Scrv::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Scrv");

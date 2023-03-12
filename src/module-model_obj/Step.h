@@ -4,13 +4,14 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_STEP_H
 #define GURAX_MODULE_MODEL_OBJ_STEP_H
 #include <gurax.h>
+#include "Data.h"
 
 Gurax_BeginModuleScope(model_obj)
 
 //------------------------------------------------------------------------------
 // Step
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Step : public Referable {
+class GURAX_DLLDECLARE Step : public Referable, public Data {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Step);
@@ -27,6 +28,8 @@ public:
 	Step& operator=(Step&& src) noexcept = delete;
 protected:
 	~Step() = default;
+public:
+	virtual bool FeedField(const char* field, size_t iParam) override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Step& other) const { return this == &other; }

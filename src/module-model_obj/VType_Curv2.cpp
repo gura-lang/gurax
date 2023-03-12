@@ -112,6 +112,7 @@ void VType_Curv2::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Curv2::vtype = VTYPE_Curv2;
 
+
 String Value_Curv2::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetCurv2().ToString(ss));

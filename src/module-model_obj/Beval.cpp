@@ -8,6 +8,11 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Beval
 //------------------------------------------------------------------------------
+bool Beval::FeedField(const char* field, size_t iParam)
+{
+	return true;
+}
+
 String Beval::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Beval");

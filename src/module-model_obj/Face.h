@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_FACE_H
 #define GURAX_MODULE_MODEL_OBJ_FACE_H
 #include <gurax.h>
+#include "Data.h"
 #include "Index.h"
 #include "Vertex3.h"
 #include "Vertex4.h"
@@ -15,7 +16,7 @@ class Content;
 //------------------------------------------------------------------------------
 // Face
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Face : public Referable {
+class GURAX_DLLDECLARE Face : public Referable, public Data {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Face);
@@ -34,6 +35,8 @@ public:
 	Face& operator=(Face&& src) noexcept = delete;
 protected:
 	~Face() = default;
+public:
+	virtual bool FeedField(const char* field, size_t iParam) override;
 public:
 	void AddIndexTriplet(int iV, int iVt, int iVn) { _indexTripletList.push_back(IndexTriplet(iV, iVt, iVn)); }
 	const IndexTripletList& GetIndexTripletList() const { return _indexTripletList; }

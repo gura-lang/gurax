@@ -4,13 +4,14 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_TRIM_H
 #define GURAX_MODULE_MODEL_OBJ_TRIM_H
 #include <gurax.h>
+#include "Data.h"
 
 Gurax_BeginModuleScope(model_obj)
 
 //------------------------------------------------------------------------------
 // Trim
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Trim : public Referable {
+class GURAX_DLLDECLARE Trim : public Referable, public Data {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Trim);
@@ -27,6 +28,8 @@ public:
 	Trim& operator=(Trim&& src) noexcept = delete;
 protected:
 	~Trim() = default;
+public:
+	virtual bool FeedField(const char* field, size_t iParam) override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Trim& other) const { return this == &other; }

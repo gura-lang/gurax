@@ -138,6 +138,7 @@ void VType_Face::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Face::vtype = VTYPE_Face;
 
+
 String Value_Face::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetFace().ToString(ss));

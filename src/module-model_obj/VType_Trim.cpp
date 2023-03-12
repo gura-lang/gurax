@@ -112,6 +112,7 @@ void VType_Trim::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Trim::vtype = VTYPE_Trim;
 
+
 String Value_Trim::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetTrim().ToString(ss));

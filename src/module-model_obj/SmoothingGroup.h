@@ -4,13 +4,14 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_SMOOTHINGGROUP_H
 #define GURAX_MODULE_MODEL_OBJ_SMOOTHINGGROUP_H
 #include <gurax.h>
+#include "Data.h"
 
 Gurax_BeginModuleScope(model_obj)
 
 //------------------------------------------------------------------------------
 // SmoothingGroup
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE SmoothingGroup : public Referable {
+class GURAX_DLLDECLARE SmoothingGroup : public Referable, public Data {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(SmoothingGroup);
@@ -27,6 +28,8 @@ public:
 	SmoothingGroup& operator=(SmoothingGroup&& src) noexcept = delete;
 protected:
 	~SmoothingGroup() = default;
+public:
+	virtual bool FeedField(const char* field, size_t iParam) override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const SmoothingGroup& other) const { return this == &other; }

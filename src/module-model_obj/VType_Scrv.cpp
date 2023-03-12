@@ -112,6 +112,7 @@ void VType_Scrv::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Scrv::vtype = VTYPE_Scrv;
 
+
 String Value_Scrv::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetScrv().ToString(ss));

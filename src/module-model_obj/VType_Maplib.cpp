@@ -112,6 +112,7 @@ void VType_Maplib::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Maplib::vtype = VTYPE_Maplib;
 
+
 String Value_Maplib::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetMaplib().ToString(ss));

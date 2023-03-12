@@ -90,6 +90,7 @@ void VType_Point::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Point::vtype = VTYPE_Point;
 
+
 String Value_Point::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetPoint().ToString(ss));

@@ -4,13 +4,14 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_VERTEX3_H
 #define GURAX_MODULE_MODEL_OBJ_VERTEX3_H
 #include <gurax.h>
+#include "Data.h"
 
 Gurax_BeginModuleScope(model_obj)
 
 //------------------------------------------------------------------------------
 // Vertex3
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Vertex3 : public Referable {
+class GURAX_DLLDECLARE Vertex3 : public Referable, public Data {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Vertex3);
@@ -30,6 +31,8 @@ public:
 	Vertex3& operator=(Vertex3&& src) noexcept = delete;
 protected:
 	~Vertex3() = default;
+public:
+	virtual bool FeedField(const char* field, size_t iParam) override;
 public:
 	Double GetX() const { return _x; }
 	Double GetY() const { return _y; }

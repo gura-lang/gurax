@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_VTYPE_FACE_H
 #define GURAX_MODULE_MODEL_OBJ_VTYPE_FACE_H
 #include <gurax.h>
+#include "Data.h"
 #include "Face.h"
 #include "Content.h"
 

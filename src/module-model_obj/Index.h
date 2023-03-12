@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_INDEX_H
 #define GURAX_MODULE_MODEL_OBJ_INDEX_H
 #include <gurax.h>
+#include "Data.h"
 
 Gurax_BeginModuleScope(model_obj)
 

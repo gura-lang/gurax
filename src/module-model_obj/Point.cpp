@@ -13,6 +13,11 @@ const Vertex4* Point::GetV(const Content& content, size_t iIndex) const
 	return (iIndex < _indexList.size())? content.GetV(_indexList[iIndex]) : nullptr;
 }
 
+bool Point::FeedField(const char* field, size_t iParam)
+{
+	return true;
+}
+
 String Point::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Point:%zuelements", _indexList.size());

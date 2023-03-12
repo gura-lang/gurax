@@ -112,6 +112,7 @@ void VType_ObjectName::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_ObjectName::vtype = VTYPE_ObjectName;
 
+
 String Value_ObjectName::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetObjectName().ToString(ss));

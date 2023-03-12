@@ -112,6 +112,7 @@ void VType_Beval::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Beval::vtype = VTYPE_Beval;
 
+
 String Value_Beval::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetBeval().ToString(ss));

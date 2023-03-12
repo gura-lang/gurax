@@ -4,13 +4,14 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_DEG_H
 #define GURAX_MODULE_MODEL_OBJ_DEG_H
 #include <gurax.h>
+#include "Data.h"
 
 Gurax_BeginModuleScope(model_obj)
 
 //------------------------------------------------------------------------------
 // Deg
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Deg : public Referable {
+class GURAX_DLLDECLARE Deg : public Referable, public Data {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Deg);
@@ -27,6 +28,8 @@ public:
 	Deg& operator=(Deg&& src) noexcept = delete;
 protected:
 	~Deg() = default;
+public:
+	virtual bool FeedField(const char* field, size_t iParam) override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Deg& other) const { return this == &other; }

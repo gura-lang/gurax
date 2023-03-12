@@ -4,13 +4,14 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_BEVAL_H
 #define GURAX_MODULE_MODEL_OBJ_BEVAL_H
 #include <gurax.h>
+#include "Data.h"
 
 Gurax_BeginModuleScope(model_obj)
 
 //------------------------------------------------------------------------------
 // Beval
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Beval : public Referable {
+class GURAX_DLLDECLARE Beval : public Referable, public Data {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Beval);
@@ -27,6 +28,8 @@ public:
 	Beval& operator=(Beval&& src) noexcept = delete;
 protected:
 	~Beval() = default;
+public:
+	virtual bool FeedField(const char* field, size_t iParam) override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Beval& other) const { return this == &other; }

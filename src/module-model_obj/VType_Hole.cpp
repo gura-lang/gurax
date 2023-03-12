@@ -112,6 +112,7 @@ void VType_Hole::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Hole::vtype = VTYPE_Hole;
 
+
 String Value_Hole::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetHole().ToString(ss));

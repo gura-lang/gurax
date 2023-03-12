@@ -112,6 +112,7 @@ void VType_Connect::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Connect::vtype = VTYPE_Connect;
 
+
 String Value_Connect::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetConnect().ToString(ss));

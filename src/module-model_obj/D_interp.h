@@ -4,13 +4,14 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_D_INTERP_H
 #define GURAX_MODULE_MODEL_OBJ_D_INTERP_H
 #include <gurax.h>
+#include "Data.h"
 
 Gurax_BeginModuleScope(model_obj)
 
 //------------------------------------------------------------------------------
 // D_interp
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE D_interp : public Referable {
+class GURAX_DLLDECLARE D_interp : public Referable, public Data {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(D_interp);
@@ -27,6 +28,8 @@ public:
 	D_interp& operator=(D_interp&& src) noexcept = delete;
 protected:
 	~D_interp() = default;
+public:
+	virtual bool FeedField(const char* field, size_t iParam) override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const D_interp& other) const { return this == &other; }

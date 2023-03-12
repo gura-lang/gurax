@@ -4,13 +4,14 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_SURF_H
 #define GURAX_MODULE_MODEL_OBJ_SURF_H
 #include <gurax.h>
+#include "Data.h"
 
 Gurax_BeginModuleScope(model_obj)
 
 //------------------------------------------------------------------------------
 // Surf
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Surf : public Referable {
+class GURAX_DLLDECLARE Surf : public Referable, public Data {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Surf);
@@ -27,6 +28,8 @@ public:
 	Surf& operator=(Surf&& src) noexcept = delete;
 protected:
 	~Surf() = default;
+public:
+	virtual bool FeedField(const char* field, size_t iParam) override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Surf& other) const { return this == &other; }

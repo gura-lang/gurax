@@ -8,6 +8,11 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Ctech
 //------------------------------------------------------------------------------
+bool Ctech::FeedField(const char* field, size_t iParam)
+{
+	return true;
+}
+
 String Ctech::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Ctech");

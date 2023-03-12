@@ -8,6 +8,11 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Deg
 //------------------------------------------------------------------------------
+bool Deg::FeedField(const char* field, size_t iParam)
+{
+	return true;
+}
+
 String Deg::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Deg");

@@ -112,6 +112,7 @@ void VType_Deg::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Deg::vtype = VTYPE_Deg;
 
+
 String Value_Deg::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetDeg().ToString(ss));

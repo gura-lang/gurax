@@ -112,6 +112,7 @@ void VType_Surf::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Surf::vtype = VTYPE_Surf;
 
+
 String Value_Surf::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetSurf().ToString(ss));

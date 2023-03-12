@@ -8,6 +8,11 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Step
 //------------------------------------------------------------------------------
+bool Step::FeedField(const char* field, size_t iParam)
+{
+	return true;
+}
+
 String Step::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Step");

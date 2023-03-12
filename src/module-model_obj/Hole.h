@@ -4,13 +4,14 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_HOLE_H
 #define GURAX_MODULE_MODEL_OBJ_HOLE_H
 #include <gurax.h>
+#include "Data.h"
 
 Gurax_BeginModuleScope(model_obj)
 
 //------------------------------------------------------------------------------
 // Hole
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Hole : public Referable {
+class GURAX_DLLDECLARE Hole : public Referable, public Data {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Hole);
@@ -27,6 +28,8 @@ public:
 	Hole& operator=(Hole&& src) noexcept = delete;
 protected:
 	~Hole() = default;
+public:
+	virtual bool FeedField(const char* field, size_t iParam) override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Hole& other) const { return this == &other; }

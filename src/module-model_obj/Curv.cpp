@@ -8,6 +8,11 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Curv
 //------------------------------------------------------------------------------
+bool Curv::FeedField(const char* field, size_t iParam)
+{
+	return true;
+}
+
 String Curv::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Curv");

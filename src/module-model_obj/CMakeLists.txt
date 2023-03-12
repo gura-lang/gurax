@@ -39,10 +39,8 @@ target_sources(model.obj.gurd PRIVATE
 	Util.cpp
 	Beval.cpp
 	Bmat.cpp
-	CallObj.cpp
 	Connect.cpp
 	Content.cpp
-	Csh.cpp
 	Cstype.cpp
 	Ctech.cpp
 	Curv.cpp
@@ -77,10 +75,8 @@ target_sources(model.obj.gurd PRIVATE
 	Vertex4.cpp
 	VType_Beval.cpp
 	VType_Bmat.cpp
-	VType_CallObj.cpp
 	VType_Connect.cpp
 	VType_Content.cpp
-	VType_Csh.cpp
 	VType_Cstype.cpp
 	VType_Ctech.cpp
 	VType_Curv.cpp

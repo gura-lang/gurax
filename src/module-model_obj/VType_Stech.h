@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_VTYPE_STECH_H
 #define GURAX_MODULE_MODEL_OBJ_VTYPE_STECH_H
 #include <gurax.h>
+#include "Data.h"
 #include "Stech.h"
 
 Gurax_BeginModuleScope(model_obj)

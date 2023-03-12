@@ -114,6 +114,7 @@ void VType_Line::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Line::vtype = VTYPE_Line;
 
+
 String Value_Line::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetLine().ToString(ss));

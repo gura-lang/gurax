@@ -4,13 +4,14 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_LOD_H
 #define GURAX_MODULE_MODEL_OBJ_LOD_H
 #include <gurax.h>
+#include "Data.h"
 
 Gurax_BeginModuleScope(model_obj)
 
 //------------------------------------------------------------------------------
 // Lod
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Lod : public Referable {
+class GURAX_DLLDECLARE Lod : public Referable, public Data {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Lod);
@@ -27,6 +28,8 @@ public:
 	Lod& operator=(Lod&& src) noexcept = delete;
 protected:
 	~Lod() = default;
+public:
+	virtual bool FeedField(const char* field, size_t iParam) override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Lod& other) const { return this == &other; }

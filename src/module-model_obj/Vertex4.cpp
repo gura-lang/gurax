@@ -8,6 +8,11 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Vertex4
 //------------------------------------------------------------------------------
+bool Vertex4::FeedField(const char* field, size_t iParam)
+{
+	return true;
+}
+
 String Vertex4::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Vertex4:%g,%g,%g,%g", _x, _y, _z, _w);

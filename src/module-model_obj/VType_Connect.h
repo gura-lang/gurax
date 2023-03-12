@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_VTYPE_CONNECT_H
 #define GURAX_MODULE_MODEL_OBJ_VTYPE_CONNECT_H
 #include <gurax.h>
+#include "Data.h"
 #include "Connect.h"
 
 Gurax_BeginModuleScope(model_obj)

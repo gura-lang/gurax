@@ -1,16 +1,16 @@
 //==============================================================================
 // module-model_obj.h
+// Specification: http://www.martinreddy.net/gfx/3d/OBJ.spec
 //==============================================================================
 #ifndef GURAX_MODULE_MODEL_OBJ_H
 #define GURAX_MODULE_MODEL_OBJ_H
 #include <gurax.h>
 #include "Util.h"
+#include "Data.h"
 #include "VType_Beval.h"
 #include "VType_Bmat.h"
-#include "VType_CallObj.h"
 #include "VType_Connect.h"
 #include "VType_Content.h"
-#include "VType_Csh.h"
 #include "VType_Cstype.h"
 #include "VType_Ctech.h"
 #include "VType_Curv.h"

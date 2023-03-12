@@ -8,6 +8,11 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Connect
 //------------------------------------------------------------------------------
+bool Connect::FeedField(const char* field, size_t iParam)
+{
+	return true;
+}
+
 String Connect::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Connect");

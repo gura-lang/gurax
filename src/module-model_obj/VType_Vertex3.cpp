@@ -144,6 +144,7 @@ void VType_Vertex3::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Vertex3::vtype = VTYPE_Vertex3;
 
+
 String Value_Vertex3::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetVertex3().ToString(ss));

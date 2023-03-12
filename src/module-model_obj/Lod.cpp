@@ -8,6 +8,11 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Lod
 //------------------------------------------------------------------------------
+bool Lod::FeedField(const char* field, size_t iParam)
+{
+	return true;
+}
+
 String Lod::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Lod");

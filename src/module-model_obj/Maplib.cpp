@@ -8,6 +8,11 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Maplib
 //------------------------------------------------------------------------------
+bool Maplib::FeedField(const char* field, size_t iParam)
+{
+	return true;
+}
+
 String Maplib::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Maplib");

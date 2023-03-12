@@ -4,13 +4,14 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_TRACE_OBJ_H
 #define GURAX_MODULE_MODEL_OBJ_TRACE_OBJ_H
 #include <gurax.h>
+#include "Data.h"
 
 Gurax_BeginModuleScope(model_obj)
 
 //------------------------------------------------------------------------------
 // Trace_obj
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Trace_obj : public Referable {
+class GURAX_DLLDECLARE Trace_obj : public Referable, public Data {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Trace_obj);
@@ -27,6 +28,8 @@ public:
 	Trace_obj& operator=(Trace_obj&& src) noexcept = delete;
 protected:
 	~Trace_obj() = default;
+public:
+	virtual bool FeedField(const char* field, size_t iParam) override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Trace_obj& other) const { return this == &other; }

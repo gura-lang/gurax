@@ -112,6 +112,7 @@ void VType_Step::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Step::vtype = VTYPE_Step;
 
+
 String Value_Step::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetStep().ToString(ss));

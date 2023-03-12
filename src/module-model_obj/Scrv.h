@@ -4,13 +4,14 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_SCRV_H
 #define GURAX_MODULE_MODEL_OBJ_SCRV_H
 #include <gurax.h>
+#include "Data.h"
 
 Gurax_BeginModuleScope(model_obj)
 
 //------------------------------------------------------------------------------
 // Scrv
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Scrv : public Referable {
+class GURAX_DLLDECLARE Scrv : public Referable, public Data {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Scrv);
@@ -27,6 +28,8 @@ public:
 	Scrv& operator=(Scrv&& src) noexcept = delete;
 protected:
 	~Scrv() = default;
+public:
+	virtual bool FeedField(const char* field, size_t iParam) override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Scrv& other) const { return this == &other; }

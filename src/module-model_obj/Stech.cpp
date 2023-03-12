@@ -8,6 +8,11 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Stech
 //------------------------------------------------------------------------------
+bool Stech::FeedField(const char* field, size_t iParam)
+{
+	return true;
+}
+
 String Stech::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Stech");

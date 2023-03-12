@@ -4,13 +4,14 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_GROUPNAME_H
 #define GURAX_MODULE_MODEL_OBJ_GROUPNAME_H
 #include <gurax.h>
+#include "Data.h"
 
 Gurax_BeginModuleScope(model_obj)
 
 //------------------------------------------------------------------------------
 // GroupName
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE GroupName : public Referable {
+class GURAX_DLLDECLARE GroupName : public Referable, public Data {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(GroupName);
@@ -27,6 +28,8 @@ public:
 	GroupName& operator=(GroupName&& src) noexcept = delete;
 protected:
 	~GroupName() = default;
+public:
+	virtual bool FeedField(const char* field, size_t iParam) override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const GroupName& other) const { return this == &other; }

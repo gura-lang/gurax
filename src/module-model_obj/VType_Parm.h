@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_VTYPE_PARM_H
 #define GURAX_MODULE_MODEL_OBJ_VTYPE_PARM_H
 #include <gurax.h>
+#include "Data.h"
 #include "Parm.h"
 
 Gurax_BeginModuleScope(model_obj)

@@ -112,6 +112,7 @@ void VType_D_interp::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_D_interp::vtype = VTYPE_D_interp;
 
+
 String Value_D_interp::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetD_interp().ToString(ss));

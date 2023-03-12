@@ -8,6 +8,11 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Bmat
 //------------------------------------------------------------------------------
+bool Bmat::FeedField(const char* field, size_t iParam)
+{
+	return true;
+}
+
 String Bmat::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Bmat");

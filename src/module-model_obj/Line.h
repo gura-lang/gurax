@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_LINE_H
 #define GURAX_MODULE_MODEL_OBJ_LINE_H
 #include <gurax.h>
+#include "Data.h"
 #include "Index.h"
 #include "Vertex3.h"
 #include "Vertex4.h"
@@ -15,7 +16,7 @@ class Content;
 //------------------------------------------------------------------------------
 // Line
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Line : public Referable {
+class GURAX_DLLDECLARE Line : public Referable, public Data {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Line);
@@ -34,6 +35,8 @@ public:
 	Line& operator=(Line&& src) noexcept = delete;
 protected:
 	~Line() = default;
+public:
+	virtual bool FeedField(const char* field, size_t iParam) override;
 public:
 	void AddIndexPair(int iV, int iVt) { _indexPairList.push_back(IndexPair(iV, iVt)); }
 	const IndexPairList& GetIndexPairList() const { return _indexPairList; }

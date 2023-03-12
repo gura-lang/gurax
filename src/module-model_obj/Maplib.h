@@ -4,13 +4,14 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_MAPLIB_H
 #define GURAX_MODULE_MODEL_OBJ_MAPLIB_H
 #include <gurax.h>
+#include "Data.h"
 
 Gurax_BeginModuleScope(model_obj)
 
 //------------------------------------------------------------------------------
 // Maplib
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Maplib : public Referable {
+class GURAX_DLLDECLARE Maplib : public Referable, public Data {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Maplib);
@@ -27,6 +28,8 @@ public:
 	Maplib& operator=(Maplib&& src) noexcept = delete;
 protected:
 	~Maplib() = default;
+public:
+	virtual bool FeedField(const char* field, size_t iParam) override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Maplib& other) const { return this == &other; }

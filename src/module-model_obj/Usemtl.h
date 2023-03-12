@@ -4,13 +4,14 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_USEMTL_H
 #define GURAX_MODULE_MODEL_OBJ_USEMTL_H
 #include <gurax.h>
+#include "Data.h"
 
 Gurax_BeginModuleScope(model_obj)
 
 //------------------------------------------------------------------------------
 // Usemtl
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Usemtl : public Referable {
+class GURAX_DLLDECLARE Usemtl : public Referable, public Data {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Usemtl);
@@ -27,6 +28,8 @@ public:
 	Usemtl& operator=(Usemtl&& src) noexcept = delete;
 protected:
 	~Usemtl() = default;
+public:
+	virtual bool FeedField(const char* field, size_t iParam) override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Usemtl& other) const { return this == &other; }

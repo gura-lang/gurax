@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_VTYPE_BMAT_H
 #define GURAX_MODULE_MODEL_OBJ_VTYPE_BMAT_H
 #include <gurax.h>
+#include "Data.h"
 #include "Bmat.h"
 
 Gurax_BeginModuleScope(model_obj)

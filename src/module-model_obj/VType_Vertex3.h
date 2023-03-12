@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_VTYPE_VERTEX3_H
 #define GURAX_MODULE_MODEL_OBJ_VTYPE_VERTEX3_H
 #include <gurax.h>
+#include "Data.h"
 #include "Vertex3.h"
 
 Gurax_BeginModuleScope(model_obj)

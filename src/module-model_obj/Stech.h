@@ -4,13 +4,14 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_STECH_H
 #define GURAX_MODULE_MODEL_OBJ_STECH_H
 #include <gurax.h>
+#include "Data.h"
 
 Gurax_BeginModuleScope(model_obj)
 
 //------------------------------------------------------------------------------
 // Stech
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Stech : public Referable {
+class GURAX_DLLDECLARE Stech : public Referable, public Data {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Stech);
@@ -27,6 +28,8 @@ public:
 	Stech& operator=(Stech&& src) noexcept = delete;
 protected:
 	~Stech() = default;
+public:
+	virtual bool FeedField(const char* field, size_t iParam) override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Stech& other) const { return this == &other; }

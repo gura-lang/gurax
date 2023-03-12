@@ -112,6 +112,7 @@ void VType_GroupName::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_GroupName::vtype = VTYPE_GroupName;
 
+
 String Value_GroupName::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetGroupName().ToString(ss));

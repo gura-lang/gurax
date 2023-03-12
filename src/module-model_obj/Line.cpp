@@ -18,6 +18,11 @@ const Vertex3* Line::GetVt(const Content& content, size_t iIndexPair) const
 	return (iIndexPair < _indexPairList.size())? content.GetVt(_indexPairList[iIndexPair].iVt) : nullptr;
 }
 
+bool Line::FeedField(const char* field, size_t iParam)
+{
+	return true;
+}
+
 String Line::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Line:%zuelements", _indexPairList.size());

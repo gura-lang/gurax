@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_VTYPE_TRACE_OBJ_H
 #define GURAX_MODULE_MODEL_OBJ_VTYPE_TRACE_OBJ_H
 #include <gurax.h>
+#include "Data.h"
 #include "Trace_obj.h"
 
 Gurax_BeginModuleScope(model_obj)

@@ -112,6 +112,7 @@ void VType_SmoothingGroup::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_SmoothingGroup::vtype = VTYPE_SmoothingGroup;
 
+
 String Value_SmoothingGroup::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetSmoothingGroup().ToString(ss));

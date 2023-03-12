@@ -4,13 +4,14 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_CURV_H
 #define GURAX_MODULE_MODEL_OBJ_CURV_H
 #include <gurax.h>
+#include "Data.h"
 
 Gurax_BeginModuleScope(model_obj)
 
 //------------------------------------------------------------------------------
 // Curv
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Curv : public Referable {
+class GURAX_DLLDECLARE Curv : public Referable, public Data {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Curv);
@@ -27,6 +28,8 @@ public:
 	Curv& operator=(Curv&& src) noexcept = delete;
 protected:
 	~Curv() = default;
+public:
+	virtual bool FeedField(const char* field, size_t iParam) override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Curv& other) const { return this == &other; }

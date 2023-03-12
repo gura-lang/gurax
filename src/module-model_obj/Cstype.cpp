@@ -8,6 +8,11 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Cstype
 //------------------------------------------------------------------------------
+bool Cstype::FeedField(const char* field, size_t iParam)
+{
+	return true;
+}
+
 String Cstype::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Cstype");

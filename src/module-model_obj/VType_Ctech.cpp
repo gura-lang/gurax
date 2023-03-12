@@ -112,6 +112,7 @@ void VType_Ctech::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Ctech::vtype = VTYPE_Ctech;
 
+
 String Value_Ctech::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetCtech().ToString(ss));

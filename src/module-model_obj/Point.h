@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_POINT_H
 #define GURAX_MODULE_MODEL_OBJ_POINT_H
 #include <gurax.h>
+#include "Data.h"
 #include "Index.h"
 #include "Vertex4.h"
 
@@ -14,7 +15,7 @@ class Content;
 //------------------------------------------------------------------------------
 // Point
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Point : public Referable {
+class GURAX_DLLDECLARE Point : public Referable, public Data {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Point);
@@ -33,6 +34,8 @@ public:
 	Point& operator=(Point&& src) noexcept = delete;
 protected:
 	~Point() = default;
+public:
+	virtual bool FeedField(const char* field, size_t iParam) override;
 public:
 	void AddIndex(Index iV) { _indexList.push_back(iV); }
 	const IndexList& GetIndexList() const { return _indexList; }

@@ -8,6 +8,11 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Shadow_obj
 //------------------------------------------------------------------------------
+bool Shadow_obj::FeedField(const char* field, size_t iParam)
+{
+	return true;
+}
+
 String Shadow_obj::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Shadow_obj");

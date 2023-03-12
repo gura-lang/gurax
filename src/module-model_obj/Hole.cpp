@@ -8,6 +8,11 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Hole
 //------------------------------------------------------------------------------
+bool Hole::FeedField(const char* field, size_t iParam)
+{
+	return true;
+}
+
 String Hole::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Hole");

@@ -8,6 +8,11 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Spoint
 //------------------------------------------------------------------------------
+bool Spoint::FeedField(const char* field, size_t iParam)
+{
+	return true;
+}
+
 String Spoint::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Spoint");

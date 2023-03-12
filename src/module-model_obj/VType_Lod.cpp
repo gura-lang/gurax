@@ -112,6 +112,7 @@ void VType_Lod::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Lod::vtype = VTYPE_Lod;
 
+
 String Value_Lod::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetLod().ToString(ss));

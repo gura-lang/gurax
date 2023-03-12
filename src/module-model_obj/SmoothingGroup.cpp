@@ -8,6 +8,11 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // SmoothingGroup
 //------------------------------------------------------------------------------
+bool SmoothingGroup::FeedField(const char* field, size_t iParam)
+{
+	return true;
+}
+
 String SmoothingGroup::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.SmoothingGroup");

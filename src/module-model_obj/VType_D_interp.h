@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_VTYPE_D_INTERP_H
 #define GURAX_MODULE_MODEL_OBJ_VTYPE_D_INTERP_H
 #include <gurax.h>
+#include "Data.h"
 #include "D_interp.h"
 
 Gurax_BeginModuleScope(model_obj)

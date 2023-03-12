@@ -4,13 +4,14 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_CSTYPE_H
 #define GURAX_MODULE_MODEL_OBJ_CSTYPE_H
 #include <gurax.h>
+#include "Data.h"
 
 Gurax_BeginModuleScope(model_obj)
 
 //------------------------------------------------------------------------------
 // Cstype
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Cstype : public Referable {
+class GURAX_DLLDECLARE Cstype : public Referable, public Data {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Cstype);
@@ -27,6 +28,8 @@ public:
 	Cstype& operator=(Cstype&& src) noexcept = delete;
 protected:
 	~Cstype() = default;
+public:
+	virtual bool FeedField(const char* field, size_t iParam) override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Cstype& other) const { return this == &other; }

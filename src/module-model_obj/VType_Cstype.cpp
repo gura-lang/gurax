@@ -112,6 +112,7 @@ void VType_Cstype::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Cstype::vtype = VTYPE_Cstype;
 
+
 String Value_Cstype::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetCstype().ToString(ss));

@@ -8,6 +8,11 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Trace_obj
 //------------------------------------------------------------------------------
+bool Trace_obj::FeedField(const char* field, size_t iParam)
+{
+	return true;
+}
+
 String Trace_obj::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Trace_obj");

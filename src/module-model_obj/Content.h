@@ -9,7 +9,6 @@
 #include "CallObj.h"
 #include "Connect.h"
 #include "Content.h"
-#include "Csh.h"
 #include "Cstype.h"
 #include "Ctech.h"
 #include "Curv.h"
@@ -115,8 +114,6 @@ public:
 		stech,
 	};
 private:
-	CallObjOwner	_callObjs;
-	CshOwner		_cshs;
 	Vertex4Owner	_vs;
 	Vertex3Owner	_vts;
 	Vertex3Owner	_vns;
