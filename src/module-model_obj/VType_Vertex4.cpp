@@ -160,7 +160,6 @@ void VType_Vertex4::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Vertex4::vtype = VTYPE_Vertex4;
 
-
 String Value_Vertex4::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetVertex4().ToString(ss));

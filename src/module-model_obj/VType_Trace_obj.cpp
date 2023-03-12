@@ -112,7 +112,6 @@ void VType_Trace_obj::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Trace_obj::vtype = VTYPE_Trace_obj;
 
-
 String Value_Trace_obj::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetTrace_obj().ToString(ss));

@@ -112,7 +112,6 @@ void VType_Parm::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Parm::vtype = VTYPE_Parm;
 
-
 String Value_Parm::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetParm().ToString(ss));

@@ -112,7 +112,6 @@ void VType_MergingGroup::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_MergingGroup::vtype = VTYPE_MergingGroup;
 
-
 String Value_MergingGroup::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetMergingGroup().ToString(ss));

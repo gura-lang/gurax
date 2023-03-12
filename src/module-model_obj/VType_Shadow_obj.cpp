@@ -112,7 +112,6 @@ void VType_Shadow_obj::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Shadow_obj::vtype = VTYPE_Shadow_obj;
 
-
 String Value_Shadow_obj::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetShadow_obj().ToString(ss));

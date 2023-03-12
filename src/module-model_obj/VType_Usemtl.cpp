@@ -112,7 +112,6 @@ void VType_Usemtl::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Usemtl::vtype = VTYPE_Usemtl;
 
-
 String Value_Usemtl::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetUsemtl().ToString(ss));

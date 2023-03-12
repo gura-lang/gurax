@@ -151,7 +151,6 @@ void VType_Content::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Content::vtype = VTYPE_Content;
 
-
 String Value_Content::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetContent().ToString(ss));

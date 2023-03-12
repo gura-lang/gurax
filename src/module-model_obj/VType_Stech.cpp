@@ -112,7 +112,6 @@ void VType_Stech::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Stech::vtype = VTYPE_Stech;
 
-
 String Value_Stech::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetStech().ToString(ss));

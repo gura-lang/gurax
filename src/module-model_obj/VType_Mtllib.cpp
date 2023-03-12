@@ -112,7 +112,6 @@ void VType_Mtllib::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Mtllib::vtype = VTYPE_Mtllib;
 
-
 String Value_Mtllib::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetMtllib().ToString(ss));

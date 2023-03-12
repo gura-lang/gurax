@@ -112,7 +112,6 @@ void VType_Spoint::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Spoint::vtype = VTYPE_Spoint;
 
-
 String Value_Spoint::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetSpoint().ToString(ss));

@@ -112,7 +112,6 @@ void VType_Curv::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Curv::vtype = VTYPE_Curv;
 
-
 String Value_Curv::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetCurv().ToString(ss));

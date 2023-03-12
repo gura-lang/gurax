@@ -112,7 +112,6 @@ void VType_Bmat::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Bmat::vtype = VTYPE_Bmat;
 
-
 String Value_Bmat::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetBmat().ToString(ss));
