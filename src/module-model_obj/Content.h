@@ -124,10 +124,35 @@ private:
 	CstypeOwner		_cstypes;
 	DegOwner		_degs;
 	BmatOwner		_bmats;
-	
+	StepOwner		_steps;
 	PointOwner		_points;
 	LineOwner		_lines;
 	FaceOwner		_faces;
+	CurvOwner		_curvs;
+	Curv2Owner		_curv2s;
+	SurfOwner		_surfs;
+	ParmOwner		_parms;
+	TrimOwner		_trims;
+	HoleOwner		_holes;
+	ScrvOwner		_scrvs;
+	SpointOwner		_spoints;
+	ConnectOwner	_connects;
+	GroupNameOwner	_groupNames;
+	SmoothingGroupOwner	_smoothingGroups;
+	MergingGroupOwner	_mergingGroups;
+	ObjectNameOwner	_objectNames;
+	BevalOwner		_bevals;
+	C_interpOwner	_c_interps;
+	D_interpOwner	_d_interps;
+	LodOwner		_lods;
+	UsemapOwner		_usemaps;
+	MaplibOwner		_maplibs;
+	UsemtlOwner		_usemtls;
+	MtllibOwner		_mtllibs;
+	Shadow_objOwner	_shadow_objs;
+	Trace_objOwner	_trace_objs;
+	CtechOwner		_ctechs;
+	StechOwner		_stechs;
 public:
 	// Constructor
 	Content() {}
