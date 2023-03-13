@@ -8,12 +8,12 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Ctech
 //------------------------------------------------------------------------------
-bool Ctech::FeedField(const char* field, size_t iParam)
+bool Ctech::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
 	return true;
 }
 
-bool Ctech::FinishField(size_t nParams)
+bool Ctech::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
 	return true;
 }

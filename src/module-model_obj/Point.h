@@ -35,8 +35,8 @@ public:
 protected:
 	~Point() = default;
 public:
-	virtual bool FeedField(const char* field, size_t iParam) override;
-	virtual bool FinishField(size_t nParams) override;
+	virtual bool FeedField(const Tokenizer& tokenizer, size_t iParam) override;
+	virtual bool FinishField(const Tokenizer& tokenizer, size_t nParams) override;
 public:
 	void AddIndex(Index iV) { _indexList.push_back(iV); }
 	const IndexList& GetIndexList() const { return _indexList; }

@@ -8,12 +8,12 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // C_interp
 //------------------------------------------------------------------------------
-bool C_interp::FeedField(const char* field, size_t iParam)
+bool C_interp::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
 	return true;
 }
 
-bool C_interp::FinishField(size_t nParams)
+bool C_interp::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
 	return true;
 }

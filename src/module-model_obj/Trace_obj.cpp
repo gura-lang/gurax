@@ -8,12 +8,12 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Trace_obj
 //------------------------------------------------------------------------------
-bool Trace_obj::FeedField(const char* field, size_t iParam)
+bool Trace_obj::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
 	return true;
 }
 
-bool Trace_obj::FinishField(size_t nParams)
+bool Trace_obj::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
 	return true;
 }

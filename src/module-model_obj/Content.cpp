@@ -147,11 +147,11 @@ bool Content::Read(Stream& stream)
 		// Data
 		case Stat::Data: {
 			if (tokenId == TokenId::Field) {
-				if (!pData->FeedField(field, iParam)) return false;
+				if (!pData->FeedField(tokenizer, iParam)) return false;
 				iParam++;
 			} else if (tokenId == TokenId::EndOfLine) {
 				// complete
-				if (!pData->FinishField(iParam)) return false;
+				if (!pData->FinishField(tokenizer, iParam)) return false;
 				stat = Stat::Keyword;
 			}
 			break;
@@ -810,112 +810,6 @@ bool Content::ExtractIndexTriplet(const Tokenizer& tokenizer, const char* field,
 String Content::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Content:%zupoints:%zulines:%zufaces", _points.size(), _lines.size(), _faces.size());
-}
-
-//------------------------------------------------------------------------------
-// Content::Tokenizer
-//------------------------------------------------------------------------------
-Content::TokenId Content::Tokenizer::Tokenize(Stream& stream)
-{
-	_iChar = 0;
-	if (_tokenIdPending != TokenId::None) {
-		TokenId tokenId = _tokenIdPending;
-		_tokenIdPending = TokenId::None;
-		return tokenId;
-	}
-	bool escapeFlag = false;
-	for (;;) {
-		char ch = stream.GetChar();
-		if (Error::IsIssued()) break;
-		if (ch == '\\' && !escapeFlag) {
-			escapeFlag = true;
-			continue;
-		}
-		Gurax_BeginPushbackRegion();
-		switch (_stat) {
-		case Stat::LineTop: {
-			if (ch == ' ' || ch == '\t') {
-				// nothing to do
-			} else if (ch == '\n' || ch == '\0') {
-				// nothing to do
-			} else if (ch == '#') {
-				_stat = Stat::SkipToNextLine;
-			} else {
-				Gurax_Pushback();
-				_stat = Stat::Field;
-			}
-			break;
-		}
-		case Stat::SkipToNextLine: {
-			if (ch == '\n') {
-				if (escapeFlag) {
-					// nothing to do
-				} else {
-					_stat = Stat::LineTop;
-				}
-			} else {
-				// nothing to do
-			}
-			break;
-		}
-		case Stat::Field: {
-			if (ch == ' ' || ch == '\t') {
-				_stat = Stat::SkipWhite;
-				_field[_iChar] = '\0';
-				return TokenId::Field;
-			} else if (ch == '\n') {
-				if (escapeFlag) {
-					_stat = Stat::SkipWhite;
-				} else {
-					_tokenIdPending = TokenId::EndOfLine;
-					_stat = Stat::LineTop;
-				}
-				_field[_iChar] = '\0';
-				return TokenId::Field;
-			} else if (ch == '\0') {
-				_tokenIdPending = TokenId::EndOfFile;
-				_stat = Stat::EndOfFile;
-				_field[_iChar] = '\0';
-				return TokenId::Field;
-			} else {
-				_field[_iChar++] = ch;
-				if (_iChar >= Gurax_ArraySizeOf(_field)) {
-					SetError_FormatError();
-					return TokenId::EndOfFile;
-				}
-			}
-			break;
-		}
-		case Stat::SkipWhite: {
-			if (ch == ' ' || ch == '\t') {
-				// nothing to do
-			} else if (ch == '\n') {
-				if (escapeFlag) {
-					// nothing to do
-				} else {
-					_stat = Stat::LineTop;
-					return TokenId::EndOfLine;
-				}
-			} else if (ch == '\0') {
-				_stat = Stat::LineTop;
-				return TokenId::EndOfFile;
-			} else {
-				Gurax_Pushback();
-				_stat = Stat::Field;
-			}
-			break;
-		}
-		case Stat::EndOfFile: {
-			// nothing to do
-			break;
-		}
-		}
-		Gurax_EndPushbackRegion();
-		escapeFlag = false;
-		if (ch == '\0') break;
-		if (ch == '\n') _iLine++;
-	}
-	return TokenId::EndOfFile;
 }
 
 //------------------------------------------------------------------------------

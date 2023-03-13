@@ -8,12 +8,12 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Parm
 //------------------------------------------------------------------------------
-bool Parm::FeedField(const char* field, size_t iParam)
+bool Parm::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
 	return true;
 }
 
-bool Parm::FinishField(size_t nParams)
+bool Parm::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
 	return true;
 }

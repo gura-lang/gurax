@@ -13,12 +13,12 @@ const Vertex4* Point::GetV(const Content& content, size_t iIndex) const
 	return (iIndex < _indexList.size())? content.GetV(_indexList[iIndex]) : nullptr;
 }
 
-bool Point::FeedField(const char* field, size_t iParam)
+bool Point::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
 	return true;
 }
 
-bool Point::FinishField(size_t nParams)
+bool Point::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
 	return true;
 }

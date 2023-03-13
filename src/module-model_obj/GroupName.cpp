@@ -8,12 +8,12 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // GroupName
 //------------------------------------------------------------------------------
-bool GroupName::FeedField(const char* field, size_t iParam)
+bool GroupName::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
 	return true;
 }
 
-bool GroupName::FinishField(size_t nParams)
+bool GroupName::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
 	return true;
 }

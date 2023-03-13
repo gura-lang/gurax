@@ -8,12 +8,12 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Usemap
 //------------------------------------------------------------------------------
-bool Usemap::FeedField(const char* field, size_t iParam)
+bool Usemap::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
 	return true;
 }
 
-bool Usemap::FinishField(size_t nParams)
+bool Usemap::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
 	return true;
 }

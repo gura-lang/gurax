@@ -36,8 +36,8 @@ public:
 protected:
 	~Line() = default;
 public:
-	virtual bool FeedField(const char* field, size_t iParam) override;
-	virtual bool FinishField(size_t nParams) override;
+	virtual bool FeedField(const Tokenizer& tokenizer, size_t iParam) override;
+	virtual bool FinishField(const Tokenizer& tokenizer, size_t nParams) override;
 public:
 	void AddIndexPair(int iV, int iVt) { _indexPairList.push_back(IndexPair(iV, iVt)); }
 	const IndexPairList& GetIndexPairList() const { return _indexPairList; }

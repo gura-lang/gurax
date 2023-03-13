@@ -8,12 +8,12 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Hole
 //------------------------------------------------------------------------------
-bool Hole::FeedField(const char* field, size_t iParam)
+bool Hole::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
 	return true;
 }
 
-bool Hole::FinishField(size_t nParams)
+bool Hole::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
 	return true;
 }

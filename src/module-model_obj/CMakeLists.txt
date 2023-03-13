@@ -37,6 +37,7 @@ target_compile_definitions(model.obj.gurd PRIVATE GURAX_MODULE_SEPARATED
 target_sources(model.obj.gurd PRIVATE
 	module-model_obj.cpp
 	Util.cpp
+	Tokenizer.cpp
 	Beval.cpp
 	Bmat.cpp
 	Connect.cpp

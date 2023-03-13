@@ -8,12 +8,21 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Vertex4
 //------------------------------------------------------------------------------
-bool Vertex4::FeedField(const char* field, size_t iParam)
+bool Vertex4::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
+	if (iParam >= 4) {
+		Error::Issue(ErrorType::FormatError, "%d: too many elements for item v", tokenizer.GetLineNo());
+		return false;
+	}
+	double num;
+	if (!Content::ExtractFloat(tokenizer.GetField(), &num)) {
+		SetError_FormatError();
+		return false;
+	}
 	return true;
 }
 
-bool Vertex4::FinishField(size_t nParams)
+bool Vertex4::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
 	return true;
 }

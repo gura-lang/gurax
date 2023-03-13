@@ -29,8 +29,8 @@ public:
 protected:
 	~Parm() = default;
 public:
-	virtual bool FeedField(const char* field, size_t iParam) override;
-	virtual bool FinishField(size_t nParams) override;
+	virtual bool FeedField(const Tokenizer& tokenizer, size_t iParam) override;
+	virtual bool FinishField(const Tokenizer& tokenizer, size_t nParams) override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Parm& other) const { return this == &other; }

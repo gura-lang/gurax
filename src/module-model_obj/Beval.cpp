@@ -8,12 +8,12 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Beval
 //------------------------------------------------------------------------------
-bool Beval::FeedField(const char* field, size_t iParam)
+bool Beval::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
 	return true;
 }
 
-bool Beval::FinishField(size_t nParams)
+bool Beval::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
 	return true;
 }

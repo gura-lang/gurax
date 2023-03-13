@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_MODEL_OBJ_CONTENT_H
 #define GURAX_MODULE_MODEL_OBJ_CONTENT_H
 #include <gurax.h>
+#include "Tokenizer.h"
 #include "Beval.h"
 #include "Bmat.h"
 #include "CallObj.h"
@@ -53,24 +54,6 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("model.obj.Content");
 public:
-	enum class TokenId { None, EndOfLine, EndOfFile, Field, };
-	class Tokenizer {
-	public:
-		enum class Stat { LineTop, SkipToNextLine, Field, SkipWhite, EndOfFile, };
-	private:
-		Stat _stat;
-		size_t _iLine;
-		size_t _iChar;
-		char _field[128];
-		TokenId _tokenIdPending;
-	public:
-		Tokenizer() : _stat(Stat::LineTop), _iLine(0), _iChar(0), _tokenIdPending(TokenId::None) {
-			_field[0] = '\0';
-		}
-		TokenId Tokenize(Stream& stream);
-		const char* GetField() const { return _field; }
-		size_t GetLineNo() const { return _iLine + 1; }
-	};
 	enum class Stat {
 		Keyword,
 		call,

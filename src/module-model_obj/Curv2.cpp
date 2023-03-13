@@ -8,12 +8,12 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Curv2
 //------------------------------------------------------------------------------
-bool Curv2::FeedField(const char* field, size_t iParam)
+bool Curv2::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
 	return true;
 }
 
-bool Curv2::FinishField(size_t nParams)
+bool Curv2::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
 	return true;
 }

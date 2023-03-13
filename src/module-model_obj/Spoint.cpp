@@ -8,12 +8,12 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Spoint
 //------------------------------------------------------------------------------
-bool Spoint::FeedField(const char* field, size_t iParam)
+bool Spoint::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
 	return true;
 }
 
-bool Spoint::FinishField(size_t nParams)
+bool Spoint::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
 	return true;
 }

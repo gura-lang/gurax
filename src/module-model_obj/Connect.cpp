@@ -8,12 +8,12 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Connect
 //------------------------------------------------------------------------------
-bool Connect::FeedField(const char* field, size_t iParam)
+bool Connect::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
 	return true;
 }
 
-bool Connect::FinishField(size_t nParams)
+bool Connect::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
 	return true;
 }

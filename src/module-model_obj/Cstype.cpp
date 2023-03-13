@@ -8,12 +8,12 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Cstype
 //------------------------------------------------------------------------------
-bool Cstype::FeedField(const char* field, size_t iParam)
+bool Cstype::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
 	return true;
 }
 
-bool Cstype::FinishField(size_t nParams)
+bool Cstype::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
 	return true;
 }

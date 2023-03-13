@@ -8,12 +8,12 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Shadow_obj
 //------------------------------------------------------------------------------
-bool Shadow_obj::FeedField(const char* field, size_t iParam)
+bool Shadow_obj::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
 	return true;
 }
 
-bool Shadow_obj::FinishField(size_t nParams)
+bool Shadow_obj::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
 	return true;
 }

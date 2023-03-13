@@ -8,12 +8,12 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // MergingGroup
 //------------------------------------------------------------------------------
-bool MergingGroup::FeedField(const char* field, size_t iParam)
+bool MergingGroup::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
 	return true;
 }
 
-bool MergingGroup::FinishField(size_t nParams)
+bool MergingGroup::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
 	return true;
 }

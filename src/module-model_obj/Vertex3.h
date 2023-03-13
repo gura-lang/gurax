@@ -32,8 +32,8 @@ public:
 protected:
 	~Vertex3() = default;
 public:
-	virtual bool FeedField(const char* field, size_t iParam) override;
-	virtual bool FinishField(size_t nParams) override;
+	virtual bool FeedField(const Tokenizer& tokenizer, size_t iParam) override;
+	virtual bool FinishField(const Tokenizer& tokenizer, size_t nParams) override;
 public:
 	Double GetX() const { return _x; }
 	Double GetY() const { return _y; }

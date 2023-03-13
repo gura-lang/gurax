@@ -8,12 +8,12 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Bmat
 //------------------------------------------------------------------------------
-bool Bmat::FeedField(const char* field, size_t iParam)
+bool Bmat::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
 	return true;
 }
 
-bool Bmat::FinishField(size_t nParams)
+bool Bmat::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
 	return true;
 }

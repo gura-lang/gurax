@@ -36,8 +36,8 @@ public:
 protected:
 	~Face() = default;
 public:
-	virtual bool FeedField(const char* field, size_t iParam) override;
-	virtual bool FinishField(size_t nParams) override;
+	virtual bool FeedField(const Tokenizer& tokenizer, size_t iParam) override;
+	virtual bool FinishField(const Tokenizer& tokenizer, size_t nParams) override;
 public:
 	void AddIndexTriplet(int iV, int iVt, int iVn) { _indexTripletList.push_back(IndexTriplet(iV, iVt, iVn)); }
 	const IndexTripletList& GetIndexTripletList() const { return _indexTripletList; }

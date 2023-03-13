@@ -8,12 +8,12 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Stech
 //------------------------------------------------------------------------------
-bool Stech::FeedField(const char* field, size_t iParam)
+bool Stech::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
 	return true;
 }
 
-bool Stech::FinishField(size_t nParams)
+bool Stech::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
 	return true;
 }

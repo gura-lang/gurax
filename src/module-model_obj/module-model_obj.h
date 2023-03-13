@@ -6,6 +6,7 @@
 #define GURAX_MODULE_MODEL_OBJ_H
 #include <gurax.h>
 #include "Util.h"
+#include "Tokenizer.h"
 #include "Data.h"
 #include "VType_Beval.h"
 #include "VType_Bmat.h"

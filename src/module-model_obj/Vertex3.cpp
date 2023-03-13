@@ -8,12 +8,12 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Vertex3
 //------------------------------------------------------------------------------
-bool Vertex3::FeedField(const char* field, size_t iParam)
+bool Vertex3::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
 	return true;
 }
 
-bool Vertex3::FinishField(size_t nParams)
+bool Vertex3::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
 	return true;
 }

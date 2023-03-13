@@ -18,12 +18,12 @@ const Vertex3* Line::GetVt(const Content& content, size_t iIndexPair) const
 	return (iIndexPair < _indexPairList.size())? content.GetVt(_indexPairList[iIndexPair].iVt) : nullptr;
 }
 
-bool Line::FeedField(const char* field, size_t iParam)
+bool Line::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
 	return true;
 }
 
-bool Line::FinishField(size_t nParams)
+bool Line::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
 	return true;
 }

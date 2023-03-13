@@ -8,12 +8,12 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Step
 //------------------------------------------------------------------------------
-bool Step::FeedField(const char* field, size_t iParam)
+bool Step::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
 	return true;
 }
 
-bool Step::FinishField(size_t nParams)
+bool Step::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
 	return true;
 }

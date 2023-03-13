@@ -8,12 +8,12 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Maplib
 //------------------------------------------------------------------------------
-bool Maplib::FeedField(const char* field, size_t iParam)
+bool Maplib::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
 	return true;
 }
 
-bool Maplib::FinishField(size_t nParams)
+bool Maplib::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
 	return true;
 }

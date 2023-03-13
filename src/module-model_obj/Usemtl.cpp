@@ -8,12 +8,12 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 // Usemtl
 //------------------------------------------------------------------------------
-bool Usemtl::FeedField(const char* field, size_t iParam)
+bool Usemtl::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
 	return true;
 }
 
-bool Usemtl::FinishField(size_t nParams)
+bool Usemtl::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
 	return true;
 }
