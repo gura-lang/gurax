@@ -30,86 +30,123 @@ bool Content::Read(Stream& stream)
 					stat = Stat::csh;
 				// Vertex data
 				} else if (::strcmp(field, "v") == 0) {
+					// geometric vertices: v x y z [w]
 					stat = Stat::v;
 				} else if (::strcmp(field, "vt") == 0) {
-					stat = Stat::vt;
+					// texture vertices: vt u [v] [w]
+					_vs.push_back(new Vertex4(0, 0, 0, 1));
+					stat = Stat::Param;
 				} else if (::strcmp(field, "vn") == 0) {
+					// vertex normals: vn i j k
 					stat = Stat::vn;
 				} else if (::strcmp(field, "vp") == 0) {
+					// parameter space vertices: vp u v [w]
 					stat = Stat::vp;
 				} else if (::strcmp(field, "cstype") == 0) {
 					stat = Stat::cstype;
 				} else if (::strcmp(field, "deg") == 0) {
+					// degree: deg degu [degv]
 					stat = Stat::deg;
 				} else if (::strcmp(field, "bmat") == 0) {
+					// basic matrix: bmat u|v matrix
 					stat = Stat::bmat;
 				} else if (::strcmp(field, "step") == 0) {
+					// step size: step stepu [stepv]
 					stat = Stat::step;
 				// Elements
 				} else if (::strcmp(field, "p") == 0) {
+					// point: p v1 v2 v3 ...
 					_points.push_back(new Point());
 					stat = Stat::p;
 				} else if (::strcmp(field, "l") == 0) {
+					// line: l v1/vt1 v2/vt2 v3/vt3 ...
 					_lines.push_back(new Line());
 					stat = Stat::l;
 				} else if (::strcmp(field, "f") == 0) {
+					// face: f v1/vt1/vn1 v2/vt2/vn2 v3/vt3/vn3 ...
 					_faces.push_back(new Face());
 					stat = Stat::f;
 				} else if (::strcmp(field, "curv") == 0) {
+					// curve: curv u0 u1 v1 v2 ...
 					stat = Stat::curv;
 				} else if (::strcmp(field, "curv2") == 0) {
+					// 2D curve: curv2 vp1 vp2 vp3 ...
 					stat = Stat::curv2;
 				} else if (::strcmp(field, "surf") == 0) {
+					// surface: surf s0 s1 t0 t1 v1/vt1/vn1 v2/vt2/vn2 ...
 					stat = Stat::surf;
 				// Free-form curve/surface body statements
 				} else if (::strcmp(field, "parm") == 0) {
+					// parameter values: parm u|v p1 p2 p3 ...
 					stat = Stat::parm;
 				} else if (::strcmp(field, "trim") == 0) {
+					// outer trimming loop: trim u0 u1 curv2d u0 u1 curv2d ...
 					stat = Stat::trim;
 				} else if (::strcmp(field, "hole") == 0) {
+					// inner trimming loop: hole u0 u1 curv2d u0 u1 curv2d ...
 					stat = Stat::hole;
 				} else if (::strcmp(field, "scrv") == 0) {
+					// special curve: scrv u0 u1 curv2d u0 u1 curv2d ...
 					stat = Stat::scrv;
 				} else if (::strcmp(field, "sp") == 0) {
+					// special point: sp vp1 vp ...
 					stat = Stat::sp;
 				} else if (::strcmp(field, "end") == 0) {
+					// end statement: end
 					stat = Stat::end;
 				// Connectivity between free-form surfaces
 				} else if (::strcmp(field, "con") == 0) {
+					// connect: con surf_1 q0_1 q1_1 curv2d_1 surf_2 q0_2 q1_2 curv2d_2
 					stat = Stat::con;
 				// Grouping
 				} else if (::strcmp(field, "g") == 0) {
+					// group name: g group_name1 group_name2 ...
 					stat = Stat::g;
 				} else if (::strcmp(field, "s") == 0) {
+					// smoothing group: s group_number
 					stat = Stat::s;
 				} else if (::strcmp(field, "mg") == 0) {
+					// merging group: mg group_number res
 					stat = Stat::mg;
 				} else if (::strcmp(field, "o") == 0) {
+					// object name: o object_name
 					stat = Stat::o;
 				// Display/render attributes
 				} else if (::strcmp(field, "bevel") == 0) {
+					// bevel interpolation: bevel on|off
 					stat = Stat::beval;
 				} else if (::strcmp(field, "c_interp") == 0) {
+					// color interpolation: c_interp on|off
 					stat = Stat::c_interp;
 				} else if (::strcmp(field, "d_interp") == 0) {
+					// dissolve interpolation: d_interp on|off
 					stat = Stat::d_interp;
 				} else if (::strcmp(field, "lod") == 0) {
+					// level of detail: lod level
 					stat = Stat::lod;
 				} else if (::strcmp(field, "usemap") == 0) {
+					// map name: usemap map_name|off
 					stat = Stat::usemap;
 				} else if (::strcmp(field, "maplib") == 0) {
+					// map library: maplib filename1 filename2 ...
 					stat = Stat::maplib;
 				} else if (::strcmp(field, "usemtl") == 0) {
+					// material name: usemtl material_name
 					stat = Stat::usemtl;
 				} else if (::strcmp(field, "mtllib") == 0) {
+					// material library: mtllib filename1 filename2 ...
 					stat = Stat::mtllib;
 				} else if (::strcmp(field, "shadow_obj") == 0) {
+					// shadow casting: shadow_obj filename
 					stat = Stat::shadow_obj;
 				} else if (::strcmp(field, "trace_obj") == 0) {
+					// ray tracing: trace_obj filename
 					stat = Stat::trace_obj;
 				} else if (::strcmp(field, "ctech") == 0) {
+					// curve approximation technique: ctech technique resolution
 					stat = Stat::ctech;
 				} else if (::strcmp(field, "stech") == 0) {
+					// surface approximation technique: stech technique resolution
 					stat = Stat::stech;
 				} else {
 					Error::Issue(ErrorType::FormatError, "%d: unknown keyword '%s'", tokenizer.GetLineNo(), field);
@@ -144,8 +181,8 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		//----------------------------------------------------------------------
-		// Data
-		case Stat::Data: {
+		// Param
+		case Stat::Param: {
 			if (tokenId == TokenId::Field) {
 				if (!pData->FeedField(tokenizer, iParam)) return false;
 				iParam++;
@@ -159,7 +196,6 @@ bool Content::Read(Stream& stream)
 		//----------------------------------------------------------------------
 		// Vertex data
 		case Stat::v: {
-			// geometric vertices: v x y z [w]
 			if (tokenId == TokenId::EndOfLine) {
 				// complete
 				if (iParam < 3) {
@@ -184,7 +220,6 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::vt: {
-			// texture vertices: vt u [v] [w]
 			if (tokenId == TokenId::EndOfLine) {
 				// complete
 				if (iParam < 1) {
@@ -208,7 +243,6 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::vn: {
-			// vertex normals: vn i j k
 			if (tokenId == TokenId::EndOfLine) {
 				// complete
 				if (iParam < 3) {
@@ -232,7 +266,6 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::vp: {
-			// parameter space vertices: vp u v [w]
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 			} else if (tokenId == TokenId::Field) {
@@ -264,7 +297,6 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::deg: {
-			// degree: deg degu [degv]
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				SetError_NotImplementedKeyword("deg");
@@ -284,7 +316,6 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::bmat: {
-			// basic matrix: bmat u|v matrix
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				SetError_NotImplementedKeyword("bmat");
@@ -305,7 +336,6 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::step: {
-			// step size: step stepu [stepv]
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				SetError_NotImplementedKeyword("step");
@@ -327,7 +357,6 @@ bool Content::Read(Stream& stream)
 		//----------------------------------------------------------------------
 		// Elements
 		case Stat::p: {
-			// point: p v1 v2 v3 ...
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 			} else if (tokenId == TokenId::Field) {
@@ -351,7 +380,6 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::l: {
-			// line: l v1/vt1 v2/vt2 v3/vt3 ...
 			if (tokenId == TokenId::EndOfLine) {
 				// complete
 				if (iParam < 2) {
@@ -374,7 +402,6 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::f: {
-			// face: f v1/vt1/vn1 v2/vt2/vn2 v3/vt3/vn3 ...
 			if (tokenId == TokenId::EndOfLine) {
 				// complete
 				if (iParam < 3) {
@@ -397,7 +424,6 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::curv: {
-			// curve: curv u0 u1 v1 v2 ...
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				SetError_NotImplementedKeyword("curv");
@@ -408,7 +434,6 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::curv2: {
-			// 2D curve: curv2 vp1 vp2 vp3 ...
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				SetError_NotImplementedKeyword("curv2");
@@ -419,7 +444,6 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::surf: {
-			// surface: surf s0 s1 t0 t1 v1/vt1/vn1 v2/vt2/vn2 ...
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				SetError_NotImplementedKeyword("surf");
@@ -432,7 +456,6 @@ bool Content::Read(Stream& stream)
 		//----------------------------------------------------------------------
 		// Parameter values and knot vectors
 		case Stat::parm: {
-			// parameter values: parm u|v p1 p2 p3 ...
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				SetError_NotImplementedKeyword("parm");
@@ -443,7 +466,6 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::trim: {
-			// outer trimming loop: trim u0 u1 curv2d u0 u1 curv2d ...
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				SetError_NotImplementedKeyword("trim");
@@ -454,7 +476,6 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::hole: {
-			// inner trimming loop: hole u0 u1 curv2d u0 u1 curv2d ...
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				SetError_NotImplementedKeyword("hole");
@@ -465,7 +486,6 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::scrv: {
-			// special curve: scrv u0 u1 curv2d u0 u1 curv2d ...
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				SetError_NotImplementedKeyword("scrv");
@@ -476,7 +496,6 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::sp: {
-			// special point: sp vp1 vp ...
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				SetError_NotImplementedKeyword("sp");
@@ -487,7 +506,6 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::end: {
-			// end statement: end
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				SetError_NotImplementedKeyword("end");
@@ -500,7 +518,6 @@ bool Content::Read(Stream& stream)
 		//----------------------------------------------------------------------
 		// Connectivity between free-form surfaces
 		case Stat::con: {
-			// connect: con surf_1 q0_1 q1_1 curv2d_1 surf_2 q0_2 q1_2 curv2d_2
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				SetError_NotImplementedKeyword("con");
@@ -513,7 +530,6 @@ bool Content::Read(Stream& stream)
 		//----------------------------------------------------------------------
 		// Grouping
 		case Stat::g: {
-			// group name: g group_name1 group_name2 ...
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				//SetError_NotImplementedKeyword("g");
@@ -524,7 +540,6 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::s: {
-			// smoothing group: s group_number
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				SetError_NotImplementedKeyword("s");
@@ -535,7 +550,6 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::mg: {
-			// merging group: mg group_number res
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				SetError_NotImplementedKeyword("mg");
@@ -546,7 +560,6 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::o: {
-			// object name: o object_name
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				SetError_NotImplementedKeyword("o");
@@ -559,7 +572,6 @@ bool Content::Read(Stream& stream)
 		//----------------------------------------------------------------------
 		// Display/render attributes
 		case Stat::beval: {
-			// bevel interpolation: bevel on|off
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				SetError_NotImplementedKeyword("beval");
@@ -570,7 +582,6 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::c_interp: {
-			// color interpolation: c_interp on|off
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				SetError_NotImplementedKeyword("c_interp");
@@ -581,7 +592,6 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::d_interp: {
-			// dissolve interpolation: d_interp on|off
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				SetError_NotImplementedKeyword("d_interp");
@@ -592,7 +602,6 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::lod: {
-			// level of detail: lod level
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				SetError_NotImplementedKeyword("lod");
@@ -603,7 +612,6 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::usemap: {
-			// map name: usemap map_name|off
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				SetError_NotImplementedKeyword("usemap");
@@ -614,7 +622,6 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::maplib: {
-			// map library: maplib filename1 filename2 ...
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				SetError_NotImplementedKeyword("maplib");
@@ -625,7 +632,6 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::usemtl: {
-			// material name: usemtl material_name
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				SetError_NotImplementedKeyword("usemtl");
@@ -636,7 +642,6 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::mtllib: {
-			// material library: mtllib filename1 filename2 ...
 			if (tokenId == TokenId::EndOfLine) {
 				
 				
@@ -648,7 +653,6 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::shadow_obj: {
-			// shadow casting: shadow_obj filename
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				SetError_NotImplementedKeyword("shadow_obj");
@@ -659,7 +663,6 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::trace_obj: {
-			// ray tracing: trace_obj filename
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				SetError_NotImplementedKeyword("trace_obj");
@@ -670,7 +673,6 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::ctech: {
-			// curve approximation technique: ctech technique resolution
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				SetError_NotImplementedKeyword("ctech");
@@ -681,7 +683,6 @@ bool Content::Read(Stream& stream)
 			break;
 		}
 		case Stat::stech: {
-			// surface approximation technique: stech technique resolution
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
 				SetError_NotImplementedKeyword("stech");

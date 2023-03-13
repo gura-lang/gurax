@@ -58,7 +58,7 @@ public:
 		Keyword,
 		call,
 		csh,
-		Data,
+		Param,
 		v,
 		vt,
 		vn,

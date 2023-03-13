@@ -10,20 +10,50 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 bool Vertex4::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
-	if (iParam >= 4) {
-		Error::Issue(ErrorType::FormatError, "%d: too many elements for item v", tokenizer.GetLineNo());
+	switch (iParam) {
+	case 0: {
+		if (!Content::ExtractFloat(tokenizer.GetField(), &_x)) {
+			SetError_FormatError();
+			return false;
+		}
+		break;
+	}
+	case 1: {
+		if (!Content::ExtractFloat(tokenizer.GetField(), &_y)) {
+			SetError_FormatError();
+			return false;
+		}
+		break;
+	}
+	case 2: {
+		if (!Content::ExtractFloat(tokenizer.GetField(), &_z)) {
+			SetError_FormatError();
+			return false;
+		}
+		break;
+	}
+	case 3: {
+		if (!Content::ExtractFloat(tokenizer.GetField(), &_w)) {
+			SetError_FormatError();
+			return false;
+		}
+		break;
+	}
+	case 4: {
+		Error::Issue(ErrorType::FormatError, "%d: too many elements", tokenizer.GetLineNo());
 		return false;
 	}
-	double num;
-	if (!Content::ExtractFloat(tokenizer.GetField(), &num)) {
-		SetError_FormatError();
-		return false;
 	}
 	return true;
 }
 
 bool Vertex4::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
+	if (nParams < 3) {
+		Error::Issue(ErrorType::FormatError,
+			"%d: item v should have three elements at least", tokenizer.GetLineNo());
+		return false;
+	}
 	return true;
 }
 
