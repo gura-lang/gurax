@@ -13,6 +13,11 @@ bool MergingGroup::FeedField(const char* field, size_t iParam)
 	return true;
 }
 
+bool MergingGroup::FinishField(size_t nParams)
+{
+	return true;
+}
+
 String MergingGroup::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.MergingGroup");

@@ -13,6 +13,11 @@ bool Deg::FeedField(const char* field, size_t iParam)
 	return true;
 }
 
+bool Deg::FinishField(size_t nParams)
+{
+	return true;
+}
+
 String Deg::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Deg");

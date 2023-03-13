@@ -23,6 +23,11 @@ bool Line::FeedField(const char* field, size_t iParam)
 	return true;
 }
 
+bool Line::FinishField(size_t nParams)
+{
+	return true;
+}
+
 String Line::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Line:%zuelements", _indexPairList.size());

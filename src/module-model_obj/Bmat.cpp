@@ -13,6 +13,11 @@ bool Bmat::FeedField(const char* field, size_t iParam)
 	return true;
 }
 
+bool Bmat::FinishField(size_t nParams)
+{
+	return true;
+}
+
 String Bmat::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Bmat");

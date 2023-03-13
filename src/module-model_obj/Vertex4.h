@@ -33,6 +33,7 @@ protected:
 	~Vertex4() = default;
 public:
 	virtual bool FeedField(const char* field, size_t iParam) override;
+	virtual bool FinishField(size_t nParams) override;
 public:
 	Double GetX() const { return _x; }
 	Double GetY() const { return _y; }

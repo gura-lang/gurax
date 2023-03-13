@@ -18,6 +18,11 @@ bool Point::FeedField(const char* field, size_t iParam)
 	return true;
 }
 
+bool Point::FinishField(size_t nParams)
+{
+	return true;
+}
+
 String Point::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Point:%zuelements", _indexList.size());

@@ -13,6 +13,11 @@ bool C_interp::FeedField(const char* field, size_t iParam)
 	return true;
 }
 
+bool C_interp::FinishField(size_t nParams)
+{
+	return true;
+}
+
 String C_interp::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.C_interp");

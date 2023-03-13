@@ -13,6 +13,11 @@ bool GroupName::FeedField(const char* field, size_t iParam)
 	return true;
 }
 
+bool GroupName::FinishField(size_t nParams)
+{
+	return true;
+}
+
 String GroupName::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.GroupName");

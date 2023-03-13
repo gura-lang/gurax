@@ -13,6 +13,11 @@ bool Mtllib::FeedField(const char* field, size_t iParam)
 	return true;
 }
 
+bool Mtllib::FinishField(size_t nParams)
+{
+	return true;
+}
+
 String Mtllib::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Mtllib");

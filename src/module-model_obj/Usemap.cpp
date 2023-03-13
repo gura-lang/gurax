@@ -13,6 +13,11 @@ bool Usemap::FeedField(const char* field, size_t iParam)
 	return true;
 }
 
+bool Usemap::FinishField(size_t nParams)
+{
+	return true;
+}
+
 String Usemap::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Usemap");

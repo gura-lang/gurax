@@ -13,6 +13,11 @@ bool Trim::FeedField(const char* field, size_t iParam)
 	return true;
 }
 
+bool Trim::FinishField(size_t nParams)
+{
+	return true;
+}
+
 String Trim::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Trim");

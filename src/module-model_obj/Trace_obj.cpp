@@ -13,6 +13,11 @@ bool Trace_obj::FeedField(const char* field, size_t iParam)
 	return true;
 }
 
+bool Trace_obj::FinishField(size_t nParams)
+{
+	return true;
+}
+
 String Trace_obj::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Trace_obj");

@@ -13,6 +13,11 @@ bool Step::FeedField(const char* field, size_t iParam)
 	return true;
 }
 
+bool Step::FinishField(size_t nParams)
+{
+	return true;
+}
+
 String Step::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Step");

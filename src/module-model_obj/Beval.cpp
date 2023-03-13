@@ -13,6 +13,11 @@ bool Beval::FeedField(const char* field, size_t iParam)
 	return true;
 }
 
+bool Beval::FinishField(size_t nParams)
+{
+	return true;
+}
+
 String Beval::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Beval");

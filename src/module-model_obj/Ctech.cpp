@@ -13,6 +13,11 @@ bool Ctech::FeedField(const char* field, size_t iParam)
 	return true;
 }
 
+bool Ctech::FinishField(size_t nParams)
+{
+	return true;
+}
+
 String Ctech::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Ctech");

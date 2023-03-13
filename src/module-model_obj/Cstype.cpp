@@ -13,6 +13,11 @@ bool Cstype::FeedField(const char* field, size_t iParam)
 	return true;
 }
 
+bool Cstype::FinishField(size_t nParams)
+{
+	return true;
+}
+
 String Cstype::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Cstype");

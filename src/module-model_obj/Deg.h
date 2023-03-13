@@ -30,6 +30,7 @@ protected:
 	~Deg() = default;
 public:
 	virtual bool FeedField(const char* field, size_t iParam) override;
+	virtual bool FinishField(size_t nParams) override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Deg& other) const { return this == &other; }

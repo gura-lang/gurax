@@ -13,6 +13,11 @@ bool Maplib::FeedField(const char* field, size_t iParam)
 	return true;
 }
 
+bool Maplib::FinishField(size_t nParams)
+{
+	return true;
+}
+
 String Maplib::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Maplib");

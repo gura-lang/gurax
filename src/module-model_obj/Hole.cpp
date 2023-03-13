@@ -13,6 +13,11 @@ bool Hole::FeedField(const char* field, size_t iParam)
 	return true;
 }
 
+bool Hole::FinishField(size_t nParams)
+{
+	return true;
+}
+
 String Hole::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Hole");

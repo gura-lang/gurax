@@ -75,6 +75,7 @@ public:
 		Keyword,
 		call,
 		csh,
+		Data,
 		v,
 		vt,
 		vn,

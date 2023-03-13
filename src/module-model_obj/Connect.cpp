@@ -13,6 +13,11 @@ bool Connect::FeedField(const char* field, size_t iParam)
 	return true;
 }
 
+bool Connect::FinishField(size_t nParams)
+{
+	return true;
+}
+
 String Connect::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Connect");

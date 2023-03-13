@@ -13,6 +13,11 @@ bool Stech::FeedField(const char* field, size_t iParam)
 	return true;
 }
 
+bool Stech::FinishField(size_t nParams)
+{
+	return true;
+}
+
 String Stech::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Stech");

@@ -13,6 +13,11 @@ bool Vertex3::FeedField(const char* field, size_t iParam)
 	return true;
 }
 
+bool Vertex3::FinishField(size_t nParams)
+{
+	return true;
+}
+
 String Vertex3::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Vertex3:%g,%g,%g", _x, _y, _z);

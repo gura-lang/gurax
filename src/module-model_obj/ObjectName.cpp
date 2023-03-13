@@ -13,6 +13,11 @@ bool ObjectName::FeedField(const char* field, size_t iParam)
 	return true;
 }
 
+bool ObjectName::FinishField(size_t nParams)
+{
+	return true;
+}
+
 String ObjectName::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.ObjectName");

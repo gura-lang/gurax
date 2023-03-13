@@ -28,6 +28,11 @@ bool Face::FeedField(const char* field, size_t iParam)
 	return true;
 }
 
+bool Face::FinishField(size_t nParams)
+{
+	return true;
+}
+
 String Face::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Face:%zuelements", _indexTripletList.size());

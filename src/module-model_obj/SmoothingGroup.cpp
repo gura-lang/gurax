@@ -13,6 +13,11 @@ bool SmoothingGroup::FeedField(const char* field, size_t iParam)
 	return true;
 }
 
+bool SmoothingGroup::FinishField(size_t nParams)
+{
+	return true;
+}
+
 String SmoothingGroup::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.SmoothingGroup");

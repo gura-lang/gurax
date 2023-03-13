@@ -13,6 +13,11 @@ bool Curv2::FeedField(const char* field, size_t iParam)
 	return true;
 }
 
+bool Curv2::FinishField(size_t nParams)
+{
+	return true;
+}
+
 String Curv2::ToString(const StringStyle& ss) const
 {
 	return String().Format("model.obj.Curv2");

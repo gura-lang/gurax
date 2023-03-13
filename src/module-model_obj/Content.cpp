@@ -15,6 +15,7 @@ bool Content::Read(Stream& stream)
 	Tokenizer tokenizer;
 	double numTbl[32];
 	StringList strList;
+	Data* pData = nullptr;
 	for (;;) {
 		TokenId tokenId = tokenizer.Tokenize(stream);
 		const char* field = tokenizer.GetField();
@@ -139,6 +140,19 @@ bool Content::Read(Stream& stream)
 				return false;
 			} else if (tokenId == TokenId::Field) {
 				iParam++;
+			}
+			break;
+		}
+		//----------------------------------------------------------------------
+		// Data
+		case Stat::Data: {
+			if (tokenId == TokenId::Field) {
+				if (!pData->FeedField(field, iParam)) return false;
+				iParam++;
+			} else if (tokenId == TokenId::EndOfLine) {
+				// complete
+				if (!pData->FinishField(iParam)) return false;
+				stat = Stat::Keyword;
 			}
 			break;
 		}
