@@ -31,10 +31,13 @@ bool Content::Read(Stream& stream)
 				// Vertex data
 				} else if (::strcmp(field, "v") == 0) {
 					// geometric vertices: v x y z [w]
-					stat = Stat::v;
+					_vs.push_back(new Vertex4(0, 0, 0, 1));
+					pData = _vs.back();
+					stat = Stat::Param;
 				} else if (::strcmp(field, "vt") == 0) {
 					// texture vertices: vt u [v] [w]
-					_vs.push_back(new Vertex4(0, 0, 0, 1));
+					_vts.push_back(new Vertex3(0, 0, 0));
+					pData = _vts.back();
 					stat = Stat::Param;
 				} else if (::strcmp(field, "vn") == 0) {
 					// vertex normals: vn i j k
@@ -195,6 +198,7 @@ bool Content::Read(Stream& stream)
 		}
 		//----------------------------------------------------------------------
 		// Vertex data
+#if 0
 		case Stat::v: {
 			if (tokenId == TokenId::EndOfLine) {
 				// complete
@@ -219,6 +223,7 @@ bool Content::Read(Stream& stream)
 			}
 			break;
 		}
+#endif
 		case Stat::vt: {
 			if (tokenId == TokenId::EndOfLine) {
 				// complete

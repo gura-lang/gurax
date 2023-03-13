@@ -10,11 +10,43 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 bool Vertex3::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
+	switch (iParam) {
+	case 0: {
+		if (!Content::ExtractFloat(tokenizer.GetField(), &_x)) {
+			SetError_FormatError();
+			return false;
+		}
+		break;
+	}
+	case 1: {
+		if (!Content::ExtractFloat(tokenizer.GetField(), &_y)) {
+			SetError_FormatError();
+			return false;
+		}
+		break;
+	}
+	case 2: {
+		if (!Content::ExtractFloat(tokenizer.GetField(), &_z)) {
+			SetError_FormatError();
+			return false;
+		}
+		break;
+	}
+	case 3: {
+		Error::Issue(ErrorType::FormatError, "%d: too many elements", tokenizer.GetLineNo());
+		return false;
+	}
+	}
 	return true;
 }
 
 bool Vertex3::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
+	if (nParams < 2) {
+		Error::Issue(ErrorType::FormatError,
+			"%d: there should be three elements at least", tokenizer.GetLineNo());
+		return false;
+	}
 	return true;
 }
 
