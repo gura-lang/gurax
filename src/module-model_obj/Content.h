@@ -59,7 +59,6 @@ public:
 		call,
 		csh,
 		Param,
-		p,
 	};
 private:
 	Vertex4Owner	_vs;

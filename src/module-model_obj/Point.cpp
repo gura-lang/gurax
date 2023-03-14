@@ -15,6 +15,13 @@ const Vertex4* Point::GetV(const Content& content, size_t iIndex) const
 
 bool Point::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
+	int iV;
+	if (!tokenizer.ExtractIndex(&iV)) return false;
+	if (iV <= 0) {
+		Error::Issue(ErrorType::FormatError, "invalid index for vertex");
+		return false;
+	}
+	AddIndex(iV);
 	return true;
 }
 

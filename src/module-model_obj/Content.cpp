@@ -67,11 +67,12 @@ bool Content::Read(Stream& stream)
 				} else if (::strcmp(field, "p") == 0) {
 					// point: p v1 v2 v3 ...
 					_points.push_back(new Point());
-					stat = Stat::p;
+					pData = _points.back();
+					stat = Stat::Param;
 				} else if (::strcmp(field, "l") == 0) {
 					// line: l v1/vt1 v2/vt2 v3/vt3 ...
 					_lines.push_back(new Line());
-					pData = _vns.back();
+					pData = _lines.back();
 					stat = Stat::Param;
 				} else if (::strcmp(field, "f") == 0) {
 					// face: f v1/vt1/vn1 v2/vt2/vn2 v3/vt3/vn3 ...
@@ -228,33 +229,6 @@ bool Content::Read(Stream& stream)
 				// complete
 				if (!pData->FinishField(tokenizer, iParam)) return false;
 				stat = Stat::Keyword;
-			}
-			break;
-		}
-		//----------------------------------------------------------------------
-		// Vertex data
-		//----------------------------------------------------------------------
-		// Elements
-		case Stat::p: {
-			if (tokenId == TokenId::EndOfLine) {
-				stat = Stat::Keyword;
-			} else if (tokenId == TokenId::Field) {
-				int iV;
-				if (!tokenizer.ExtractIndex(&iV)) {
-					return false;
-				} else if (iV <= 0) {
-					Error::Issue(ErrorType::FormatError, "invalid index for vertex");
-					return false;
-				}
-				Point* pPoint = _points.back();
-				if (!tokenizer.ExtractIndex(&iV)) {
-					return false;
-				} else if (iV <= 0) {
-					Error::Issue(ErrorType::FormatError, "invalid index for vertex");
-					return false;
-				}
-				pPoint->AddIndex(iV);
-				iParam++;
 			}
 			break;
 		}
