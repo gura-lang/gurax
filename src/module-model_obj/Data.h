@@ -17,6 +17,15 @@ public:
 	virtual bool FinishField(const Tokenizer& tokenizer, size_t nParams) = 0;
 };
 
+//------------------------------------------------------------------------------
+// DataDummy
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE DataDummy : public Data {
+public:
+	virtual bool FeedField(const Tokenizer& tokenizer, size_t iParam) { return true; }
+	virtual bool FinishField(const Tokenizer& tokenizer, size_t nParams) { return true; }
+};
+
 Gurax_EndModuleScope(model_obj)
 
 #endif

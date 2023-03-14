@@ -13,9 +13,9 @@ bool Content::Read(Stream& stream)
 	Stat stat = Stat::Keyword;
 	size_t iParam = 0;
 	Tokenizer tokenizer;
-	double numTbl[32];
 	StringList strList;
 	Data* pData = nullptr;
+	DataDummy dataDummy;
 	for (;;) {
 		TokenId tokenId = tokenizer.Tokenize(stream);
 		const char* field = tokenizer.GetField();
@@ -41,21 +41,28 @@ bool Content::Read(Stream& stream)
 					stat = Stat::Param;
 				} else if (::strcmp(field, "vn") == 0) {
 					// vertex normals: vn i j k
-					stat = Stat::vn;
+					_vns.push_back(new Vertex3(0, 0, 0));
+					pData = _vns.back();
+					stat = Stat::Param;
 				} else if (::strcmp(field, "vp") == 0) {
 					// parameter space vertices: vp u v [w]
-					stat = Stat::vp;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				} else if (::strcmp(field, "cstype") == 0) {
-					stat = Stat::cstype;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				} else if (::strcmp(field, "deg") == 0) {
 					// degree: deg degu [degv]
-					stat = Stat::deg;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				} else if (::strcmp(field, "bmat") == 0) {
 					// basic matrix: bmat u|v matrix
-					stat = Stat::bmat;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				} else if (::strcmp(field, "step") == 0) {
 					// step size: step stepu [stepv]
-					stat = Stat::step;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				// Elements
 				} else if (::strcmp(field, "p") == 0) {
 					// point: p v1 v2 v3 ...
@@ -71,86 +78,112 @@ bool Content::Read(Stream& stream)
 					stat = Stat::f;
 				} else if (::strcmp(field, "curv") == 0) {
 					// curve: curv u0 u1 v1 v2 ...
-					stat = Stat::curv;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				} else if (::strcmp(field, "curv2") == 0) {
 					// 2D curve: curv2 vp1 vp2 vp3 ...
-					stat = Stat::curv2;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				} else if (::strcmp(field, "surf") == 0) {
 					// surface: surf s0 s1 t0 t1 v1/vt1/vn1 v2/vt2/vn2 ...
-					stat = Stat::surf;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				// Free-form curve/surface body statements
 				} else if (::strcmp(field, "parm") == 0) {
 					// parameter values: parm u|v p1 p2 p3 ...
-					stat = Stat::parm;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				} else if (::strcmp(field, "trim") == 0) {
 					// outer trimming loop: trim u0 u1 curv2d u0 u1 curv2d ...
-					stat = Stat::trim;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				} else if (::strcmp(field, "hole") == 0) {
 					// inner trimming loop: hole u0 u1 curv2d u0 u1 curv2d ...
-					stat = Stat::hole;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				} else if (::strcmp(field, "scrv") == 0) {
 					// special curve: scrv u0 u1 curv2d u0 u1 curv2d ...
-					stat = Stat::scrv;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				} else if (::strcmp(field, "sp") == 0) {
 					// special point: sp vp1 vp ...
-					stat = Stat::sp;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				} else if (::strcmp(field, "end") == 0) {
 					// end statement: end
-					stat = Stat::end;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				// Connectivity between free-form surfaces
 				} else if (::strcmp(field, "con") == 0) {
 					// connect: con surf_1 q0_1 q1_1 curv2d_1 surf_2 q0_2 q1_2 curv2d_2
-					stat = Stat::con;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				// Grouping
 				} else if (::strcmp(field, "g") == 0) {
 					// group name: g group_name1 group_name2 ...
-					stat = Stat::g;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				} else if (::strcmp(field, "s") == 0) {
 					// smoothing group: s group_number
-					stat = Stat::s;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				} else if (::strcmp(field, "mg") == 0) {
 					// merging group: mg group_number res
-					stat = Stat::mg;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				} else if (::strcmp(field, "o") == 0) {
 					// object name: o object_name
-					stat = Stat::o;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				// Display/render attributes
 				} else if (::strcmp(field, "bevel") == 0) {
 					// bevel interpolation: bevel on|off
-					stat = Stat::beval;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				} else if (::strcmp(field, "c_interp") == 0) {
 					// color interpolation: c_interp on|off
-					stat = Stat::c_interp;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				} else if (::strcmp(field, "d_interp") == 0) {
 					// dissolve interpolation: d_interp on|off
-					stat = Stat::d_interp;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				} else if (::strcmp(field, "lod") == 0) {
 					// level of detail: lod level
-					stat = Stat::lod;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				} else if (::strcmp(field, "usemap") == 0) {
 					// map name: usemap map_name|off
-					stat = Stat::usemap;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				} else if (::strcmp(field, "maplib") == 0) {
 					// map library: maplib filename1 filename2 ...
-					stat = Stat::maplib;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				} else if (::strcmp(field, "usemtl") == 0) {
 					// material name: usemtl material_name
-					stat = Stat::usemtl;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				} else if (::strcmp(field, "mtllib") == 0) {
 					// material library: mtllib filename1 filename2 ...
-					stat = Stat::mtllib;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				} else if (::strcmp(field, "shadow_obj") == 0) {
 					// shadow casting: shadow_obj filename
-					stat = Stat::shadow_obj;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				} else if (::strcmp(field, "trace_obj") == 0) {
 					// ray tracing: trace_obj filename
-					stat = Stat::trace_obj;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				} else if (::strcmp(field, "ctech") == 0) {
 					// curve approximation technique: ctech technique resolution
-					stat = Stat::ctech;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				} else if (::strcmp(field, "stech") == 0) {
 					// surface approximation technique: stech technique resolution
-					stat = Stat::stech;
+					pData = &dataDummy;
+					stat = Stat::Param;
 				} else {
 					Error::Issue(ErrorType::FormatError, "%d: unknown keyword '%s'", tokenizer.GetLineNo(), field);
 					return false;
@@ -223,7 +256,6 @@ bool Content::Read(Stream& stream)
 			}
 			break;
 		}
-#endif
 		case Stat::vt: {
 			if (tokenId == TokenId::EndOfLine) {
 				// complete
@@ -359,6 +391,7 @@ bool Content::Read(Stream& stream)
 			}
 			break;
 		}
+#endif
 		//----------------------------------------------------------------------
 		// Elements
 		case Stat::p: {
@@ -428,6 +461,7 @@ bool Content::Read(Stream& stream)
 			}
 			break;
 		}
+#if 0
 		case Stat::curv: {
 			if (tokenId == TokenId::EndOfLine) {
 				stat = Stat::Keyword;
@@ -697,6 +731,7 @@ bool Content::Read(Stream& stream)
 			}
 			break;
 		}
+#endif
 		}
 		if (tokenId == TokenId::EndOfFile) break;
 	}
