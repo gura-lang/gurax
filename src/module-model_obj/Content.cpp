@@ -24,6 +24,7 @@ bool Content::Read(Stream& stream)
 			if (tokenId == TokenId::Field) {
 				iParam = 0;
 				// General statement
+				//::printf("%s\n", field);
 				if (::strcmp(field, "call") == 0) {
 					stat = Stat::call;
 				} else if (::strcmp(field, "csh") == 0) {
@@ -124,11 +125,13 @@ bool Content::Read(Stream& stream)
 				// Grouping
 				} else if (::strcmp(field, "g") == 0) {
 					// group name: g group_name1 group_name2 ...
-					pData = &dataDummy;
+					_groupNames.push_back(new GroupName());
+					pData = _groupNames.back();
 					stat = Stat::Param;
 				} else if (::strcmp(field, "s") == 0) {
 					// smoothing group: s group_number
-					pData = &dataDummy;
+					_smoothingGroups.push_back(new SmoothingGroup());
+					pData = _smoothingGroups.back();
 					stat = Stat::Param;
 				} else if (::strcmp(field, "mg") == 0) {
 					// merging group: mg group_number res
@@ -165,11 +168,13 @@ bool Content::Read(Stream& stream)
 					stat = Stat::Param;
 				} else if (::strcmp(field, "usemtl") == 0) {
 					// material name: usemtl material_name
-					pData = &dataDummy;
+					_usemtls.push_back(new Usemtl());
+					pData = _usemtls.back();
 					stat = Stat::Param;
 				} else if (::strcmp(field, "mtllib") == 0) {
 					// material library: mtllib filename1 filename2 ...
-					pData = &dataDummy;
+					_mtllibs.push_back(new Mtllib());
+					pData = _mtllibs.back();
 					stat = Stat::Param;
 				} else if (::strcmp(field, "shadow_obj") == 0) {
 					// shadow casting: shadow_obj filename

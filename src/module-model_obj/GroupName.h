@@ -17,6 +17,8 @@ public:
 	Gurax_DeclareReferable(GroupName);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("model.obj.GroupName");
+private:
+	StringList _groupNames;
 public:
 	// Constructor
 	GroupName() {}

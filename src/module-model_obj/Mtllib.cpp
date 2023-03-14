@@ -10,6 +10,7 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 bool Mtllib::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
+	_filenames.push_back(tokenizer.GetField());
 	return true;
 }
 

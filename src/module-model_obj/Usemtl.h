@@ -17,6 +17,8 @@ public:
 	Gurax_DeclareReferable(Usemtl);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("model.obj.Usemtl");
+private:
+	String _materialName;
 public:
 	// Constructor
 	Usemtl() {}

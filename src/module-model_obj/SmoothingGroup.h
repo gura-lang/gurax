@@ -17,9 +17,11 @@ public:
 	Gurax_DeclareReferable(SmoothingGroup);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("model.obj.SmoothingGroup");
+private:
+	int _groupNumber;
 public:
 	// Constructor
-	SmoothingGroup() {}
+	SmoothingGroup() : _groupNumber(0) {}
 	// Copy constructor/operator
 	SmoothingGroup(const SmoothingGroup& src) = delete;
 	SmoothingGroup& operator=(const SmoothingGroup& src) = delete;

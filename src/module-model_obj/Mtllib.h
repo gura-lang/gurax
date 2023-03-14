@@ -17,6 +17,8 @@ public:
 	Gurax_DeclareReferable(Mtllib);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("model.obj.Mtllib");
+private:
+	StringList _filenames;
 public:
 	// Constructor
 	Mtllib() {}

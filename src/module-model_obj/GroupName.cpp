@@ -10,6 +10,7 @@ Gurax_BeginModuleScope(model_obj)
 //------------------------------------------------------------------------------
 bool GroupName::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
+	_groupNames.push_back(tokenizer.GetField());
 	return true;
 }
 

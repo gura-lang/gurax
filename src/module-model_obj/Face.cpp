@@ -25,6 +25,7 @@ const Vertex3* Face::GetVn(const Content& content, size_t iIndexTriplet) const
 
 bool Face::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
+	
 	int iV, iVt, iVn;
 	if (!tokenizer.ExtractIndexTriplet(&iV, &iVt, &iVn)) return false;
 	if (iV <= 0) {
