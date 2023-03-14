@@ -20,11 +20,23 @@ const Vertex3* Line::GetVt(const Content& content, size_t iIndexPair) const
 
 bool Line::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
+	int iV, iVt;
+	if (!tokenizer.ExtractIndexPair(&iV, &iVt)) {
+		return false;
+	} else if (iV <= 0) {
+		Error::Issue(ErrorType::FormatError, "invalid index for vertex");
+		return false;
+	}
+	AddIndexPair(iV, iVt);
 	return true;
 }
 
 bool Line::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
+	if (nParams < 2) {
+		Error::Issue(ErrorType::FormatError, "at least two index-pairs must exist");
+		return false;
+	}
 	return true;
 }
 

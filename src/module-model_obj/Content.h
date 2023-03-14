@@ -60,8 +60,6 @@ public:
 		csh,
 		Param,
 		p,
-		l,
-		f,
 	};
 private:
 	Vertex4Owner	_vs;
@@ -113,10 +111,6 @@ protected:
 	~Content() = default;
 public:
 	bool Read(Stream& stream);
-	static bool ExtractFloat(const char* field, double* pNum);
-	static bool ExtractIndex(const char* field, int* piV);
-	static bool ExtractIndexPair(const char* field, int* piV, int* piVt);
-	static bool ExtractIndexTriplet(const Tokenizer& tokenizer, const char* field, int* piV, int* piVt, int* piVn);
 	const Vertex4* GetV(Index iV) const { return (0 < iV && iV < _vs.size() + 1)? _vs[iV - 1] : nullptr; }
 	const Vertex3* GetVp(Index iVp) const { return (0 < iVp && iVp < _vps.size() + 1)? _vps[iVp - 1] : nullptr; }
 	const Vertex3* GetVn(Index iVn) const { return (0 < iVn && iVn < _vns.size() + 1)? _vns[iVn - 1] : nullptr; }

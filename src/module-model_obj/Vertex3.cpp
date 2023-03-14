@@ -12,24 +12,15 @@ bool Vertex3::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
 	switch (iParam) {
 	case 0: {
-		if (!Content::ExtractFloat(tokenizer.GetField(), &_x)) {
-			SetError_FormatError();
-			return false;
-		}
+		if (!tokenizer.ExtractFloat(&_x)) return false;
 		break;
 	}
 	case 1: {
-		if (!Content::ExtractFloat(tokenizer.GetField(), &_y)) {
-			SetError_FormatError();
-			return false;
-		}
+		if (!tokenizer.ExtractFloat(&_y)) return false;
 		break;
 	}
 	case 2: {
-		if (!Content::ExtractFloat(tokenizer.GetField(), &_z)) {
-			SetError_FormatError();
-			return false;
-		}
+		if (!tokenizer.ExtractFloat(&_z)) return false;
 		break;
 	}
 	case 3: {

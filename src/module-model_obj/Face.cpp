@@ -25,11 +25,23 @@ const Vertex3* Face::GetVn(const Content& content, size_t iIndexTriplet) const
 
 bool Face::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
+	int iV, iVt, iVn;
+	if (!tokenizer.ExtractIndexTriplet(&iV, &iVt, &iVn)) {
+		return false;
+	} else if (iV <= 0) {
+		Error::Issue(ErrorType::FormatError, "invalid index for vertex");
+		return false;
+	}
+	AddIndexTriplet(iV, iVt, iVn);
 	return true;
 }
 
 bool Face::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
+	if (nParams < 3) {
+		Error::Issue(ErrorType::FormatError, "at least three index-triplets must exist");
+		return false;
+	}
 	return true;
 }
 

@@ -111,4 +111,114 @@ TokenId Tokenizer::Tokenize(Stream& stream)
 	return TokenId::EndOfFile;
 }
 
+bool Tokenizer::ExtractFloat(double* pNum) const
+{
+	char* p = nullptr;
+	*pNum = ::strtod(GetField(), &p);
+	if (*p == '\0') return true;
+	Error::Issue(ErrorType::FormatError, "invalid format of float number");
+	return false;
+}
+
+bool Tokenizer::ExtractIndex(int* piV) const
+{
+	const char* errMsg = "invalid format of vertex index";
+	char* p = nullptr;
+	*piV = static_cast<int>(::strtol(GetField(), &p, 10));
+	while (*p == ' ' || *p == '\t') p++;
+	if (*p != '\0') {
+		Error::Issue(ErrorType::FormatError, errMsg);
+		return false;
+	}
+	if (*piV < 0) {
+		Error::Issue(ErrorType::FormatError, errMsg);
+		return false;
+	}
+	return true;
+}
+
+bool Tokenizer::ExtractIndexPair(int* piV, int* piVt) const
+{
+	const char* errMsg = "invalid format of vertex index pair";
+	*piV = *piVt = 0;
+	char* p = const_cast<char*>(GetField());
+	if (*p == '/') {
+		*piV = 0;
+		p++;
+	} else if (String::IsDigit(*p)) {
+		*piV = static_cast<int>(::strtol(p, &p, 10));
+		if (*p == '/') p++;
+	} else {
+		Error::Issue(ErrorType::FormatError, errMsg);
+		return false;
+	}
+	while (*p == ' ' || *p == '\t') p++;
+	if (*p == '\0') {
+		return true;
+	} else if (*p == '/') {
+		p++;
+	} else if (String::IsDigit(*p)) {
+		*piVt = static_cast<int>(::strtol(p, &p, 10));
+	} else {
+		Error::Issue(ErrorType::FormatError, errMsg);
+		return false;
+	}
+	while (*p == ' ' || *p == '\t') p++;
+	if (*p != '\0') {
+		Error::Issue(ErrorType::FormatError, errMsg);
+		return false;
+	}
+	if (*piV < 0 || *piVt < 0) {
+		Error::Issue(ErrorType::FormatError, errMsg);
+		return false;
+	}
+	return true;
+}
+
+bool Tokenizer::ExtractIndexTriplet(int* piV, int* piVt, int* piVn) const
+{
+	const char* errMsg = "%d: invalid format of vertex index triplet";
+	*piV = *piVt = *piVn = 0;
+	char* p = const_cast<char*>(GetField());
+	if (*p == '/') {
+		*piV = 0;
+		p++;
+	} else if (String::IsDigit(*p)) {
+		*piV = static_cast<int>(::strtol(p, &p, 10));
+		if (*p == '/') p++;
+	} else {
+		Error::Issue(ErrorType::FormatError, errMsg, GetLineNo());
+		return false;
+	}
+	if (*p == '\0') {
+		return true;
+	} else if (*p == '/') {
+		p++;
+	} else if (String::IsDigit(*p)) {
+		*piVt = static_cast<int>(::strtol(p, &p, 10));
+		if (*p == '/') p++;
+	} else {
+		Error::Issue(ErrorType::FormatError, errMsg, GetLineNo());
+		return false;
+	}
+	if (*p == '\0') {
+		return true;
+	} else if (*p == '/') {
+		p++;
+	} else if (String::IsDigit(*p)) {
+		*piVn = static_cast<int>(::strtol(p, &p, 10));
+	} else {
+		Error::Issue(ErrorType::FormatError, errMsg, GetLineNo());
+		return false;
+	}
+	if (*p != '\0') {
+		Error::Issue(ErrorType::FormatError, errMsg, GetLineNo());
+		return false;
+	}
+	if (*piV < 0 || *piVt < 0 || *piVn < 0) {
+		Error::Issue(ErrorType::FormatError, errMsg, GetLineNo());
+	}
+	return true;
+}
+
 Gurax_EndModuleScope(model_obj)

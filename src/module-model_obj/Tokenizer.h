@@ -27,6 +27,10 @@ public:
 	TokenId Tokenize(Stream& stream);
 	const char* GetField() const { return _field; }
 	size_t GetLineNo() const { return _iLine + 1; }
+	bool ExtractFloat(double* pNum) const;
+	bool ExtractIndex(int* piV) const;
+	bool ExtractIndexPair(int* piV, int* piVt) const;
+	bool ExtractIndexTriplet(int* piV, int* piVt, int* piVn) const;
 };
 
 Gurax_EndModuleScope(model_obj)
