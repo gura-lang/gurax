@@ -48,21 +48,26 @@ bool Content::Read(Stream& stream)
 				} else if (::strcmp(field, "vp") == 0) {
 					// parameter space vertices: vp u v [w]
 					pData = &dataDummy;
+					dataDummy.SetName(field);
 					stat = Stat::Param;
 				} else if (::strcmp(field, "cstype") == 0) {
 					pData = &dataDummy;
+					dataDummy.SetName(field);
 					stat = Stat::Param;
 				} else if (::strcmp(field, "deg") == 0) {
 					// degree: deg degu [degv]
 					pData = &dataDummy;
+					dataDummy.SetName(field);
 					stat = Stat::Param;
 				} else if (::strcmp(field, "bmat") == 0) {
 					// basic matrix: bmat u|v matrix
 					pData = &dataDummy;
+					dataDummy.SetName(field);
 					stat = Stat::Param;
 				} else if (::strcmp(field, "step") == 0) {
 					// step size: step stepu [stepv]
 					pData = &dataDummy;
+					dataDummy.SetName(field);
 					stat = Stat::Param;
 				// Elements
 				} else if (::strcmp(field, "p") == 0) {
@@ -83,44 +88,54 @@ bool Content::Read(Stream& stream)
 				} else if (::strcmp(field, "curv") == 0) {
 					// curve: curv u0 u1 v1 v2 ...
 					pData = &dataDummy;
+					dataDummy.SetName(field);
 					stat = Stat::Param;
 				} else if (::strcmp(field, "curv2") == 0) {
 					// 2D curve: curv2 vp1 vp2 vp3 ...
 					pData = &dataDummy;
+					dataDummy.SetName(field);
 					stat = Stat::Param;
 				} else if (::strcmp(field, "surf") == 0) {
 					// surface: surf s0 s1 t0 t1 v1/vt1/vn1 v2/vt2/vn2 ...
 					pData = &dataDummy;
+					dataDummy.SetName(field);
 					stat = Stat::Param;
 				// Free-form curve/surface body statements
 				} else if (::strcmp(field, "parm") == 0) {
 					// parameter values: parm u|v p1 p2 p3 ...
 					pData = &dataDummy;
+					dataDummy.SetName(field);
 					stat = Stat::Param;
 				} else if (::strcmp(field, "trim") == 0) {
 					// outer trimming loop: trim u0 u1 curv2d u0 u1 curv2d ...
 					pData = &dataDummy;
+					dataDummy.SetName(field);
 					stat = Stat::Param;
 				} else if (::strcmp(field, "hole") == 0) {
 					// inner trimming loop: hole u0 u1 curv2d u0 u1 curv2d ...
 					pData = &dataDummy;
+					dataDummy.SetName(field);
 					stat = Stat::Param;
 				} else if (::strcmp(field, "scrv") == 0) {
 					// special curve: scrv u0 u1 curv2d u0 u1 curv2d ...
 					pData = &dataDummy;
+					dataDummy.SetName(field);
 					stat = Stat::Param;
 				} else if (::strcmp(field, "sp") == 0) {
 					// special point: sp vp1 vp ...
 					pData = &dataDummy;
+					dataDummy.SetName(field);
 					stat = Stat::Param;
 				} else if (::strcmp(field, "end") == 0) {
 					// end statement: end
 					pData = &dataDummy;
+					dataDummy.SetName(field);
 					stat = Stat::Param;
 				// Connectivity between free-form surfaces
 				} else if (::strcmp(field, "con") == 0) {
 					// connect: con surf_1 q0_1 q1_1 curv2d_1 surf_2 q0_2 q1_2 curv2d_2
 					pData = &dataDummy;
+					dataDummy.SetName(field);
 					stat = Stat::Param;
 				// Grouping
 				} else if (::strcmp(field, "g") == 0) {
@@ -136,35 +151,43 @@ bool Content::Read(Stream& stream)
 				} else if (::strcmp(field, "mg") == 0) {
 					// merging group: mg group_number res
 					pData = &dataDummy;
+					dataDummy.SetName(field);
 					stat = Stat::Param;
 				} else if (::strcmp(field, "o") == 0) {
 					// object name: o object_name
 					pData = &dataDummy;
+					dataDummy.SetName(field);
 					stat = Stat::Param;
 				// Display/render attributes
 				} else if (::strcmp(field, "bevel") == 0) {
 					// bevel interpolation: bevel on|off
 					pData = &dataDummy;
+					dataDummy.SetName(field);
 					stat = Stat::Param;
 				} else if (::strcmp(field, "c_interp") == 0) {
 					// color interpolation: c_interp on|off
 					pData = &dataDummy;
+					dataDummy.SetName(field);
 					stat = Stat::Param;
 				} else if (::strcmp(field, "d_interp") == 0) {
 					// dissolve interpolation: d_interp on|off
 					pData = &dataDummy;
+					dataDummy.SetName(field);
 					stat = Stat::Param;
 				} else if (::strcmp(field, "lod") == 0) {
 					// level of detail: lod level
 					pData = &dataDummy;
+					dataDummy.SetName(field);
 					stat = Stat::Param;
 				} else if (::strcmp(field, "usemap") == 0) {
 					// map name: usemap map_name|off
 					pData = &dataDummy;
+					dataDummy.SetName(field);
 					stat = Stat::Param;
 				} else if (::strcmp(field, "maplib") == 0) {
 					// map library: maplib filename1 filename2 ...
 					pData = &dataDummy;
+					dataDummy.SetName(field);
 					stat = Stat::Param;
 				} else if (::strcmp(field, "usemtl") == 0) {
 					// material name: usemtl material_name
@@ -179,18 +202,22 @@ bool Content::Read(Stream& stream)
 				} else if (::strcmp(field, "shadow_obj") == 0) {
 					// shadow casting: shadow_obj filename
 					pData = &dataDummy;
+					dataDummy.SetName(field);
 					stat = Stat::Param;
 				} else if (::strcmp(field, "trace_obj") == 0) {
 					// ray tracing: trace_obj filename
 					pData = &dataDummy;
+					dataDummy.SetName(field);
 					stat = Stat::Param;
 				} else if (::strcmp(field, "ctech") == 0) {
 					// curve approximation technique: ctech technique resolution
 					pData = &dataDummy;
+					dataDummy.SetName(field);
 					stat = Stat::Param;
 				} else if (::strcmp(field, "stech") == 0) {
 					// surface approximation technique: stech technique resolution
 					pData = &dataDummy;
+					dataDummy.SetName(field);
 					stat = Stat::Param;
 				} else {
 					Error::Issue(ErrorType::FormatError, "%d: unknown keyword '%s'", tokenizer.GetLineNo(), field);

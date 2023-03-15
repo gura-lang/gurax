@@ -32,6 +32,7 @@ public:
 protected:
 	~Vertex4() = default;
 public:
+	virtual const char* GetName() const override { return "Vertex4"; }
 	virtual bool FeedField(const Tokenizer& tokenizer, size_t iParam) override;
 	virtual bool FinishField(const Tokenizer& tokenizer, size_t nParams) override;
 public:

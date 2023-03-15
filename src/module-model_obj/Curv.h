@@ -29,6 +29,7 @@ public:
 protected:
 	~Curv() = default;
 public:
+	virtual const char* GetName() const override { return "Curv"; }
 	virtual bool FeedField(const Tokenizer& tokenizer, size_t iParam) override;
 	virtual bool FinishField(const Tokenizer& tokenizer, size_t nParams) override;
 public:
