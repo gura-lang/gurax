@@ -17,11 +17,12 @@ public:
 private:
 	Stat _stat;
 	size_t _iLine;
+	size_t _iLineInc;
 	size_t _iChar;
 	char _field[128];
 	TokenId _tokenIdPending;
 public:
-	Tokenizer() : _stat(Stat::LineTop), _iLine(0), _iChar(0), _tokenIdPending(TokenId::None) {
+	Tokenizer() : _stat(Stat::LineTop), _iLine(0), _iLineInc(0), _iChar(0), _tokenIdPending(TokenId::None) {
 		_field[0] = '\0';
 	}
 	TokenId Tokenize(Stream& stream);

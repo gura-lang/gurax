@@ -24,7 +24,7 @@ bool Content::Read(Stream& stream)
 			if (tokenId == TokenId::Field) {
 				iParam = 0;
 				// General statement
-				//::printf("%s\n", field);
+				//::printf("%zu: %s\n", tokenizer.GetLineNo(), field);
 				if (::strcmp(field, "call") == 0) {
 					stat = Stat::call;
 				} else if (::strcmp(field, "csh") == 0) {

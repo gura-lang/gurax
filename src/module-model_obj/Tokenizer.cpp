@@ -11,6 +11,8 @@ Gurax_BeginModuleScope(model_obj)
 TokenId Tokenizer::Tokenize(Stream& stream)
 {
 	_iChar = 0;
+	_iLine += _iLineInc;
+	_iLineInc = 0;
 	if (_tokenIdPending != TokenId::None) {
 		TokenId tokenId = _tokenIdPending;
 		_tokenIdPending = TokenId::None;
@@ -29,7 +31,9 @@ TokenId Tokenizer::Tokenize(Stream& stream)
 		case Stat::LineTop: {
 			if (ch == ' ' || ch == '\t') {
 				// nothing to do
-			} else if (ch == '\n' || ch == '\0') {
+			} else if (ch == '\n') {
+				_iLine++;
+			} else if (ch == '\0') {
 				// nothing to do
 			} else if (ch == '#') {
 				_stat = Stat::SkipToNextLine;
@@ -41,6 +45,7 @@ TokenId Tokenizer::Tokenize(Stream& stream)
 		}
 		case Stat::SkipToNextLine: {
 			if (ch == '\n') {
+				_iLine++;
 				if (escapeFlag) {
 					// nothing to do
 				} else {
@@ -57,6 +62,7 @@ TokenId Tokenizer::Tokenize(Stream& stream)
 				_field[_iChar] = '\0';
 				return TokenId::Field;
 			} else if (ch == '\n') {
+				_iLineInc = 1;
 				if (escapeFlag) {
 					_stat = Stat::SkipWhite;
 				} else {
@@ -84,8 +90,9 @@ TokenId Tokenizer::Tokenize(Stream& stream)
 				// nothing to do
 			} else if (ch == '\n') {
 				if (escapeFlag) {
-					// nothing to do
+					_iLine++;
 				} else {
+					_iLineInc = 1;
 					_stat = Stat::LineTop;
 					return TokenId::EndOfLine;
 				}
@@ -106,7 +113,6 @@ TokenId Tokenizer::Tokenize(Stream& stream)
 		Gurax_EndPushbackRegion();
 		escapeFlag = false;
 		if (ch == '\0') break;
-		if (ch == '\n') _iLine++;
 	}
 	return TokenId::EndOfFile;
 }
