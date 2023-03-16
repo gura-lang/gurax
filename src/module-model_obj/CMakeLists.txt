@@ -38,7 +38,7 @@ target_sources(model.obj.gurd PRIVATE
 	module-model_obj.cpp
 	Util.cpp
 	Tokenizer.cpp
-	Beval.cpp
+	Bevel.cpp
 	Bmat.cpp
 	Connect.cpp
 	Content.cpp
@@ -74,7 +74,7 @@ target_sources(model.obj.gurd PRIVATE
 	Usemtl.cpp
 	Vertex3.cpp
 	Vertex4.cpp
-	VType_Beval.cpp
+	VType_Bevel.cpp
 	VType_Bmat.cpp
 	VType_Connect.cpp
 	VType_Content.cpp

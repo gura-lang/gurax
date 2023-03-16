@@ -5,7 +5,7 @@
 #define GURAX_MODULE_MODEL_OBJ_CONTENT_H
 #include <gurax.h>
 #include "Tokenizer.h"
-#include "Beval.h"
+#include "Bevel.h"
 #include "Bmat.h"
 #include "CallObj.h"
 #include "Connect.h"
@@ -85,7 +85,7 @@ private:
 	SmoothingGroupOwner	_smoothingGroups;
 	MergingGroupOwner	_mergingGroups;
 	ObjectNameOwner	_objectNames;
-	BevalOwner		_bevals;
+	BevelOwner		_bevels;
 	C_interpOwner	_c_interps;
 	D_interpOwner	_d_interps;
 	LodOwner		_lods;

@@ -1,57 +1,57 @@
 //==============================================================================
-// Beval.h
+// Bevel.h
 //==============================================================================
-#ifndef GURAX_MODULE_MODEL_OBJ_BEVAL_H
-#define GURAX_MODULE_MODEL_OBJ_BEVAL_H
+#ifndef GURAX_MODULE_MODEL_OBJ_BEVEL_H
+#define GURAX_MODULE_MODEL_OBJ_BEVEL_H
 #include <gurax.h>
 #include "Data.h"
 
 Gurax_BeginModuleScope(model_obj)
 
 //------------------------------------------------------------------------------
-// Beval
+// Bevel
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Beval : public Referable, public Data {
+class GURAX_DLLDECLARE Bevel : public Referable, public Data {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Beval);
+	Gurax_DeclareReferable(Bevel);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("model.obj.Beval");
+	Gurax_MemoryPoolAllocator("model.obj.Bevel");
 public:
 	// Constructor
-	Beval() {}
+	Bevel() {}
 	// Copy constructor/operator
-	Beval(const Beval& src) = delete;
-	Beval& operator=(const Beval& src) = delete;
+	Bevel(const Bevel& src) = delete;
+	Bevel& operator=(const Bevel& src) = delete;
 	// Move constructor/operator
-	Beval(Beval&& src) noexcept = delete;
-	Beval& operator=(Beval&& src) noexcept = delete;
+	Bevel(Bevel&& src) noexcept = delete;
+	Bevel& operator=(Bevel&& src) noexcept = delete;
 protected:
-	~Beval() = default;
+	~Bevel() = default;
 public:
-	virtual const char* GetName() const override { return "Beval"; }
+	virtual const char* GetName() const override { return "Bevel"; }
 	virtual bool FeedField(const Tokenizer& tokenizer, size_t iParam) override;
 	virtual bool FinishField(const Tokenizer& tokenizer, size_t nParams) override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-	bool IsIdentical(const Beval& other) const { return this == &other; }
-	bool IsEqualTo(const Beval& other) const { return IsIdentical(other); }
-	bool IsLessThan(const Beval& other) const { return this < &other; }
+	bool IsIdentical(const Bevel& other) const { return this == &other; }
+	bool IsEqualTo(const Bevel& other) const { return IsIdentical(other); }
+	bool IsLessThan(const Bevel& other) const { return this < &other; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
 //------------------------------------------------------------------------------
-// BevalList
+// BevelList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE BevalList : public ListBase<Beval*> {
+class GURAX_DLLDECLARE BevelList : public ListBase<Bevel*> {
 };
 
 //------------------------------------------------------------------------------
-// BevalOwner
+// BevelOwner
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE BevalOwner : public BevalList {
+class GURAX_DLLDECLARE BevelOwner : public BevelList {
 public:
-	~BevalOwner() { Clear(); }
+	~BevelOwner() { Clear(); }
 	void Clear();
 };
 

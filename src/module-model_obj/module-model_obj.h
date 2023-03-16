@@ -8,7 +8,7 @@
 #include "Util.h"
 #include "Tokenizer.h"
 #include "Data.h"
-#include "VType_Beval.h"
+#include "VType_Bevel.h"
 #include "VType_Bmat.h"
 #include "VType_Connect.h"
 #include "VType_Content.h"

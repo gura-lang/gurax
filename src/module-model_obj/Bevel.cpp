@@ -1,38 +1,38 @@
 //==============================================================================
-// Beval.cpp
+// Bevel.cpp
 //==============================================================================
 #include "stdafx.h"
 
 Gurax_BeginModuleScope(model_obj)
 
 //------------------------------------------------------------------------------
-// Beval
+// Bevel
 //------------------------------------------------------------------------------
-bool Beval::FeedField(const Tokenizer& tokenizer, size_t iParam)
+bool Bevel::FeedField(const Tokenizer& tokenizer, size_t iParam)
 {
 	return true;
 }
 
-bool Beval::FinishField(const Tokenizer& tokenizer, size_t nParams)
+bool Bevel::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
 	return true;
 }
 
-String Beval::ToString(const StringStyle& ss) const
+String Bevel::ToString(const StringStyle& ss) const
 {
-	return String().Format("model.obj.Beval");
+	return String().Format("model.obj.Bevel");
 }
 
 //------------------------------------------------------------------------------
-// BevalList
+// BevelList
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// BevalOwner
+// BevelOwner
 //------------------------------------------------------------------------------
-void BevalOwner::Clear()
+void BevelOwner::Clear()
 {
-	for (Beval* pBeval : *this) Beval::Delete(pBeval);
+	for (Bevel* pBevel : *this) Bevel::Delete(pBevel);
 	clear();
 }
 

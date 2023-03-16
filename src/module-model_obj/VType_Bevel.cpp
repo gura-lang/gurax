@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_Beval.cpp
+// VType_Bevel.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -13,44 +13,44 @@ static const char* g_docHelp_en = u8R"""(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(model.obj.Beval, `en)}
+${help.ComposePropertyHelp(model.obj.Bevel, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(model.obj.Beval, `en)}
+${help.ComposeConstructorHelp(model.obj.Bevel, `en)}
 
-${help.ComposeMethodHelp(model.obj.Beval, `en)}
+${help.ComposeMethodHelp(model.obj.Bevel, `en)}
 )""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// model.obj.Beval() {block?}
-Gurax_DeclareConstructor(Beval)
+// model.obj.Bevel() {block?}
+Gurax_DeclareConstructor(Bevel)
 {
-	Declare(VTYPE_Beval, Flag::None);
+	Declare(VTYPE_Bevel, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
-Creates a `model.obj.Beval` instance.
+Creates a `model.obj.Bevel` instance.
 )""");
 }
 
-Gurax_ImplementConstructor(Beval)
+Gurax_ImplementConstructor(Bevel)
 {
 	// Arguments
 	//ArgPicker args(argument);
 	// Function body
-	RefPtr<Beval> pBeval(new Beval());
-	return argument.ReturnValue(processor, new Value_Beval(pBeval.release()));
+	RefPtr<Bevel> pBevel(new Bevel());
+	return argument.ReturnValue(processor, new Value_Bevel(pBevel.release()));
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// model.obj.Beval#MethodSkeleton(num1 as Number, num2 as Number)
-Gurax_DeclareMethod(Beval, MethodSkeleton)
+// model.obj.Bevel#MethodSkeleton(num1 as Number, num2 as Number)
+Gurax_DeclareMethod(Bevel, MethodSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -60,7 +60,7 @@ Skeleton.
 )""");
 }
 
-Gurax_ImplementMethod(Beval, MethodSkeleton)
+Gurax_ImplementMethod(Bevel, MethodSkeleton)
 {
 	// Target
 	//auto& valueThis = GetValueThis(argument);
@@ -75,8 +75,8 @@ Gurax_ImplementMethod(Beval, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// model.obj.Beval#propSkeleton
-Gurax_DeclareProperty_R(Beval, propSkeleton)
+// model.obj.Bevel#propSkeleton
+Gurax_DeclareProperty_R(Bevel, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -84,37 +84,37 @@ Skeleton.
 )""");
 }
 
-Gurax_ImplementPropertyGetter(Beval, propSkeleton)
+Gurax_ImplementPropertyGetter(Bevel, propSkeleton)
 {
 	//auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Number(3);
 }
 
 //------------------------------------------------------------------------------
-// VType_Beval
+// VType_Bevel
 //------------------------------------------------------------------------------
-VType_Beval VTYPE_Beval("Beval");
+VType_Bevel VTYPE_Bevel("Bevel");
 
-void VType_Beval::DoPrepare(Frame& frameOuter)
+void VType_Bevel::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Beval));
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Bevel));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Beval, MethodSkeleton));
+	Assign(Gurax_CreateMethod(Bevel, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Beval, propSkeleton));
+	Assign(Gurax_CreateProperty(Bevel, propSkeleton));
 }
 
 //------------------------------------------------------------------------------
-// Value_Beval
+// Value_Bevel
 //------------------------------------------------------------------------------
-VType& Value_Beval::vtype = VTYPE_Beval;
+VType& Value_Bevel::vtype = VTYPE_Bevel;
 
-String Value_Beval::ToString(const StringStyle& ss) const
+String Value_Bevel::ToString(const StringStyle& ss) const
 {
-	return ToStringGeneric(ss, GetBeval().ToString(ss));
+	return ToStringGeneric(ss, GetBevel().ToString(ss));
 }
 
 Gurax_EndModuleScope(model_obj)
