@@ -146,6 +146,7 @@
 #include "gurax/VType_Template.h"
 #include "gurax/VType_Thread.h"
 #include "gurax/VType_TimeDelta.h"
+#include "gurax/VType_Trainer.h"
 #include "gurax/VType_Tuple.h"
 #include "gurax/VType_Undefined.h"
 #include "gurax/VType_Vertex.h"

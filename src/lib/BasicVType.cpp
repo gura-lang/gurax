@@ -65,6 +65,7 @@ void BasicVType::Prepare(Frame& frame)
 	frame.Assign(VTYPE_Template);
 	frame.Assign(VTYPE_Thread);
 	frame.Assign(VTYPE_TimeDelta);
+	frame.Assign(VTYPE_Trainer);
 	frame.Assign(VTYPE_Tuple);
 	frame.Assign(VTYPE_Undefined);
 	frame.Assign(VTYPE_Vertex);
