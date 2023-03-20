@@ -15,7 +15,6 @@ bool Content::Read(Stream& stream)
 	Tokenizer tokenizer;
 	StringList strList;
 	Data* pData = nullptr;
-	DataDummy dataDummy;
 	for (;;) {
 		TokenId tokenId = tokenizer.Tokenize(stream);
 		const char* field = tokenizer.GetField();

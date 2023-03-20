@@ -15,7 +15,8 @@ bool Trace_obj::FeedField(const Tokenizer& tokenizer, size_t iParam)
 
 bool Trace_obj::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
-	return true;
+	Error::Issue(ErrorType::UnimplementedError, "%d: %s is not implemented", tokenizer.GetLineNo(), GetName());
+	return false;
 }
 
 String Trace_obj::ToString(const StringStyle& ss) const

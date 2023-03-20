@@ -1,0 +1,14 @@
+import(model.obj)
+
+c = model.obj.Content('sample/cube.obj')
+//c = model.obj.Content('11091_FemaleHead_v4.obj')
+c.EachFace {|face|
+	//Printf('%d\n', face.nElements)
+	//repeat(face.nElements) {|i|
+	//	Printf('%s, %s, %s\n', face.GetV(i), face.GetVt(i), face.GetVn(i))
+	//}
+	repeat(face.nElements) {|i|
+		Printf('%s ', face.GetV(i))
+	}
+	Println()
+}

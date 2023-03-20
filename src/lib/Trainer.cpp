@@ -1,40 +1,29 @@
 //==============================================================================
-// D_interp.cpp
+// Trainer.cpp
 //==============================================================================
 #include "stdafx.h"
 
-Gurax_BeginModuleScope(model_obj)
+namespace Gurax {
 
 //------------------------------------------------------------------------------
-// D_interp
+// Trainer
 //------------------------------------------------------------------------------
-bool D_interp::FeedField(const Tokenizer& tokenizer, size_t iParam)
+String Trainer::ToString(const StringStyle& ss) const
 {
-	return true;
-}
-
-bool D_interp::FinishField(const Tokenizer& tokenizer, size_t nParams)
-{
-	Error::Issue(ErrorType::UnimplementedError, "%d: %s is not implemented", tokenizer.GetLineNo(), GetName());
-	return false;
-}
-
-String D_interp::ToString(const StringStyle& ss) const
-{
-	return String().Format("model.obj.D_interp");
+	return String().Format("Trainer");
 }
 
 //------------------------------------------------------------------------------
-// D_interpList
+// TrainerList
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// D_interpOwner
+// TrainerOwner
 //------------------------------------------------------------------------------
-void D_interpOwner::Clear()
+void TrainerOwner::Clear()
 {
-	for (D_interp* pD_interp : *this) D_interp::Delete(pD_interp);
+	for (Trainer* pTrainer : *this) Trainer::Delete(pTrainer);
 	clear();
 }
 
-Gurax_EndModuleScope(model_obj)
+}

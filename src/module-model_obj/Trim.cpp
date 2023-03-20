@@ -15,7 +15,8 @@ bool Trim::FeedField(const Tokenizer& tokenizer, size_t iParam)
 
 bool Trim::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
-	return true;
+	Error::Issue(ErrorType::UnimplementedError, "%d: %s is not implemented", tokenizer.GetLineNo(), GetName());
+	return false;
 }
 
 String Trim::ToString(const StringStyle& ss) const

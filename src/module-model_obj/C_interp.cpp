@@ -15,7 +15,8 @@ bool C_interp::FeedField(const Tokenizer& tokenizer, size_t iParam)
 
 bool C_interp::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
-	return true;
+	Error::Issue(ErrorType::UnimplementedError, "%d: %s is not implemented", tokenizer.GetLineNo(), GetName());
+	return false;
 }
 
 String C_interp::ToString(const StringStyle& ss) const

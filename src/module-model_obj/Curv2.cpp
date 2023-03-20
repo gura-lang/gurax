@@ -15,7 +15,8 @@ bool Curv2::FeedField(const Tokenizer& tokenizer, size_t iParam)
 
 bool Curv2::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
-	return true;
+	Error::Issue(ErrorType::UnimplementedError, "%d: %s is not implemented", tokenizer.GetLineNo(), GetName());
+	return false;
 }
 
 String Curv2::ToString(const StringStyle& ss) const

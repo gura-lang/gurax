@@ -142,7 +142,7 @@ const OpEntry* Operator::FindMatchedEntry(const VType& vtype) const
 	if ((pOpEntry = LookupEntry(VTYPE_Any))) return pOpEntry;
 	if (vtype.IsIdentical(VTYPE_Undefined)) return &OpEntry::Empty;
 	Error::Issue(ErrorType::TypeError, "unsupported %s operation: %s",
-		 IsMathUnary()? "math" : "unary", ToString(StringStyle::Empty, vtype).c_str());
+		IsMathUnary()? "math" : "unary", ToString(StringStyle::Empty, vtype).c_str());
 	return nullptr;
 }
 
@@ -155,7 +155,7 @@ const OpEntry* Operator::FindMatchedEntry(const VType& vtypeL, const VType& vtyp
 	if ((pOpEntry = LookupEntry(VTYPE_Any, VTYPE_Any))) return pOpEntry;
 	if (vtypeL.IsIdentical(VTYPE_Undefined) || vtypeR.IsIdentical(VTYPE_Undefined)) return &OpEntry::Empty;
 	Error::Issue(ErrorType::TypeError, "unsuppported %s operation: %s",
-		 IsMathBinary()? "math" : "binary", ToString(StringStyle::Empty, vtypeL, vtypeR).c_str());
+		IsMathBinary()? "math" : "binary", ToString(StringStyle::Empty, vtypeL, vtypeR).c_str());
 	return nullptr;
 }
 

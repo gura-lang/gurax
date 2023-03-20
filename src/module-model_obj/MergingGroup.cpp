@@ -15,7 +15,8 @@ bool MergingGroup::FeedField(const Tokenizer& tokenizer, size_t iParam)
 
 bool MergingGroup::FinishField(const Tokenizer& tokenizer, size_t nParams)
 {
-	return true;
+	Error::Issue(ErrorType::UnimplementedError, "%d: %s is not implemented", tokenizer.GetLineNo(), GetName());
+	return false;
 }
 
 String MergingGroup::ToString(const StringStyle& ss) const

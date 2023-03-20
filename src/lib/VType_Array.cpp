@@ -157,7 +157,7 @@ Gurax_ImplementFunction(ConstructArray)
 //-----------------------------------------------------------------------------
 // Implementation of class method
 //-----------------------------------------------------------------------------
-// Array.Identity(elemType:Symbol, n:Number)
+// Array.Identity(elemType as Symbol, n as Number)
 Gurax_DeclareClassMethod(Array, Identity)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -187,7 +187,7 @@ Gurax_ImplementClassMethod(Array, Identity)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// Array#Cast(elemType:Symbol) {block?}
+// Array#Cast(elemType as Symbol) {block?}
 Gurax_DeclareMethod(Array, Cast)
 {
 	Declare(VTYPE_List, Flag::None);
@@ -233,7 +233,7 @@ Gurax_ImplementMethod(Array, Each)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// Array#Inject(values:Iterator, offset?:Number):reduce
+// Array#Inject(values as Iterator, offset? as Number):reduce
 Gurax_DeclareMethod(Array, Inject)
 {
 	Declare(VTYPE_Iterator, Flag::Reduce);
@@ -322,7 +322,7 @@ Gurax_ImplementMethod(Array, Transpose)
 	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
 }
 
-// Array#VerifyShape(dim+:Number)
+// Array#VerifyShape(dim+ as Number)
 Gurax_DeclareMethod(Array, VerifyShape)
 {
 	Declare(VTYPE_Bool, Flag::Reduce);
