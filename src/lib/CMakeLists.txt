@@ -102,6 +102,7 @@ target_sources(guraxcore PRIVATE
 	Token.cpp
 	Tokenizer.cpp
 	Trainer.cpp
+	TrainNode.cpp
 	Value.cpp
 	ValueDeque.cpp
 	ValueDict.cpp
@@ -169,6 +170,7 @@ target_sources(guraxcore PRIVATE
 	VType_Thread.cpp
 	VType_TimeDelta.cpp
 	VType_Trainer.cpp
+	VType_TrainNode.cpp
 	VType_Tuple.cpp
 	VType_Undefined.cpp
 	VType_Vertex.cpp
