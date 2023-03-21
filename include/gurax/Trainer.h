@@ -3,7 +3,8 @@
 //==============================================================================
 #ifndef GURAX_TRAINER_H
 #define GURAX_TRAINER_H
-#include "Referable.h"
+#include "TrainNode.h"
+#include "TrainOptimizer.h"
 
 namespace Gurax {
 
@@ -16,6 +17,13 @@ public:
 	Gurax_DeclareReferable(Trainer);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Trainer");
+public:
+	RefPtr<TrainOptimizer> _pTrainOptimizer;
+	//RefPtr<TrainNodeBottom> _pNodeBottom;
+	TrainNodeOwner _nodeOwner;
+	//TrainNodeMap _nodeMap;
+	RefPtr<Expr> _pExprModel;
+	//static NodeGearCreatorMap _nodeGearCreatorMap;
 public:
 	// Constructor
 	Trainer() {}

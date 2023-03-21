@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_TRAINNODE_H
 #define GURAX_TRAINNODE_H
-#include "Referable.h"
+#include "Array.h"
 
 namespace Gurax {
 
@@ -16,6 +16,31 @@ public:
 	Gurax_DeclareReferable(TrainNode);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("TrainNode");
+public:
+	class Connector {
+	private:
+		TrainNode* _pNodeSrc;
+		TrainNode* _pNodeDst;
+		RefPtr<Array> _pArrayGrad;
+	public:
+		Connector(TrainNode* pNodeDst) : _pNodeSrc(nullptr), _pNodeDst(pNodeDst) {}
+		TrainNode* GetNodeSrc() { return _pNodeSrc; }
+		TrainNode* GetNodeDst() { return _pNodeDst; }
+		const TrainNode* GetNodeSrc() const { return _pNodeSrc; }
+		const TrainNode* GetNodeDst() const { return _pNodeDst; }
+		void SetNodeSrc(TrainNode* pNodeSrc) { _pNodeSrc = pNodeSrc; }
+		void SetArrayGrad(Array* pArrayGrad) { _pArrayGrad.reset(pArrayGrad); }
+		//Array* GetArrayFwd() { return _pNodeSrc->GetArrayFwd(); }
+		Array* GetArrayGrad() { return _pArrayGrad.get(); }
+		const Array* GetArrayGrad() const { return _pArrayGrad.get(); }
+		//AutoPtr<Array> &GetArrayGradAutoPtr() { return _pArrayGrad; }
+		//const Array* GetArrayFwd() const { return _pNodeSrc->GetArrayFwd(); }
+	};
+	class ConnectorList : public ListBase<Connector*> {
+	public:
+		ConnectorList() {}
+	};
+
 public:
 	// Constructor
 	TrainNode() {}
