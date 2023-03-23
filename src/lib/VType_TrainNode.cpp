@@ -24,28 +24,6 @@ ${help.ComposeConstructorHelp(TrainNode, `en)}
 ${help.ComposeMethodHelp(TrainNode, `en)}
 )""";
 
-//------------------------------------------------------------------------------
-// Implementation of constructor
-//------------------------------------------------------------------------------
-// TrainNode() {block?}
-Gurax_DeclareConstructor(TrainNode)
-{
-	Declare(VTYPE_TrainNode, Flag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"""(
-Creates a `TrainNode` instance.
-)""");
-}
-
-Gurax_ImplementConstructor(TrainNode)
-{
-	// Arguments
-	//ArgPicker args(argument);
-	// Function body
-	RefPtr<TrainNode> pTrainNode(new TrainNode());
-	return argument.ReturnValue(processor, new Value_TrainNode(pTrainNode.release()));
-}
-
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
@@ -100,7 +78,7 @@ void VType_TrainNode::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(TrainNode));
+	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(TrainNode, MethodSkeleton));
 	// Assignment of property
