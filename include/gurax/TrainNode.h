@@ -139,7 +139,7 @@ public:
 	virtual bool IsVulnerable() const;
 	virtual bool EvalForward(Processor& processor);
 	virtual bool EvalBackward(Processor& processor);
-	bool EvalBackwardTop(const Array* pArrayCorrect);
+	bool EvalBackwardTop(const Array& arrayCorrect);
 	virtual bool GatherMemberSymbol(SymbolList& symbols);
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr);
 	virtual String ToString() const;
@@ -157,8 +157,8 @@ protected:
 public:
 	TrainNode_Unary(const char* nodeTypeName, const Array::UnaryFuncPack &unaryFuncPack, Connector* pConnectorDst) :
 		TrainNode(nodeTypeName, pConnectorDst), _unaryFuncPack(unaryFuncPack), _connectorSrc(this) {}
-	Connector* GetConnectorSrc() { return &_connectorSrc; }
-	const Connector* GetConnectorSrc() const { return &_connectorSrc; }
+	Connector& GetConnectorSrc() { return _connectorSrc; }
+	const Connector& GetConnectorSrc() const { return _connectorSrc; }
 	virtual bool IsUnary();
 	virtual bool IsVulnerable() const;
 	virtual bool EvalForward(Processor& processor);
@@ -167,7 +167,9 @@ public:
 	virtual String ToString() const;
 	virtual void Print(int indentLevel) const;
 };
+#endif
 
+#if 0
 //------------------------------------------------------------------------------
 // TrainNode_Pos
 //------------------------------------------------------------------------------

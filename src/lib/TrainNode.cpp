@@ -150,11 +150,11 @@ bool TrainNode_Bottom::EvalBackward(Processor& processor)
 	return true;
 }
 
-bool TrainNode_Bottom::EvalBackwardTop(const Array *pArrayCorrect)
+bool TrainNode_Bottom::EvalBackwardTop(const Array& arrayCorrect)
 {
-	_pArrayCorrect.reset(pArrayCorrect->Reference());
+	_pArrayCorrect.reset(arrayCorrect.Reference());
 	if (_connectorSrc.GetNodeSrc().IsVulnerable()) {
-		RefPtr<Array> pArrayGrad(Array::Sub(_connectorSrc.GetArrayFwd(), *pArrayCorrect));
+		RefPtr<Array> pArrayGrad(Array::Sub(_connectorSrc.GetArrayFwd(), arrayCorrect));
 		if (!pArrayGrad) return false;
 		_connectorSrc.SetArrayGrad(pArrayGrad.release());
 	}
@@ -163,20 +163,18 @@ bool TrainNode_Bottom::EvalBackwardTop(const Array *pArrayCorrect)
 
 bool TrainNode_Bottom::GatherMemberSymbol(SymbolList& symbols)
 {
-	//symbols.insert(Gura_Symbol(input));
-	//symbols.insert(Gura_Symbol(inputgrad));
+	symbols.push_back(Gurax_Symbol(input));
+	symbols.push_back(Gurax_Symbol(inputgrad));
 	return TrainNode::GatherMemberSymbol(symbols);
 }
 
 Value* TrainNode_Bottom::DoGetProperty(const Symbol* pSymbol, const Attribute& attr)
 {
-	//if (pSymbol->IsIdentical(Gura_Symbol(input))) {
-	//	evaluatedFlag = true;
-	//	return Array::ToValue(env, Array::Reference(_connectorSrc.GetArrayFwd()));
-	//} else if (pSymbol->IsIdentical(Gura_Symbol(inputgrad))) {
-	//	evaluatedFlag = true;
-	//	return Array::ToValue(env, Array::Reference(_connectorSrc.GetArrayGrad()));
-	//}
+	if (pSymbol->IsIdentical(Gurax_Symbol(input))) {
+		return new Value_Array(_connectorSrc.GetArrayFwd().Reference());
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(inputgrad))) {
+		return new Value_Array(_connectorSrc.GetArrayGrad().Reference());
+	}
 	return TrainNode::DoGetProperty(pSymbol, attr);
 }
 
@@ -216,17 +214,17 @@ bool TrainNode_Unary::EvalForward(Processor& processor)
 
 bool TrainNode_Unary::GatherMemberSymbol(SymbolList& symbols)
 {
-	symbols.insert(Gura_Symbol(input));
-	symbols.insert(Gura_Symbol(inputgrad));
+	symbols.push_back(Gurax_Symbol(input));
+	symbols.push_back(Gurax_Symbol(inputgrad));
 	return TrainNode::GatherMemberSymbol(symbols);
 }
 
 Value* TrainNode_Unary::DoGetProperty(const Symbol* pSymbol, const Attribute& attr)
 {
-	if (pSymbol->IsIdentical(Gura_Symbol(input))) {
+	if (pSymbol->IsIdentical(Gurax_Symbol(input))) {
 		evaluatedFlag = true;
 		return Array::ToValue(env, Array::Reference(_connectorSrc.GetArrayFwd()));
-	} else if (pSymbol->IsIdentical(Gura_Symbol(inputgrad))) {
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(inputgrad))) {
 		evaluatedFlag = true;
 		return Array::ToValue(env, Array::Reference(_connectorSrc.GetArrayGrad()));
 	}
@@ -300,25 +298,25 @@ bool TrainNode_Binary::EvalForward(Processor& processor)
 
 bool TrainNode_Binary::GatherMemberSymbol(SymbolList& symbols)
 {
-	symbols.insert(Gura_Symbol(input_at_left));
-	symbols.insert(Gura_Symbol(input_at_right));
-	symbols.insert(Gura_Symbol(inputgrad_at_left));
-	symbols.insert(Gura_Symbol(inputgrad_at_right));
+	symbols.push_back(Gurax_Symbol(input_at_left));
+	symbols.push_back(Gurax_Symbol(input_at_right));
+	symbols.push_back(Gurax_Symbol(inputgrad_at_left));
+	symbols.push_back(Gurax_Symbol(inputgrad_at_right));
 	return TrainNode::GatherMemberSymbol(symbols);
 }
 
 Value* TrainNode_Binary::DoGetProperty(const Symbol* pSymbol, const Attribute& attr)
 {
-	if (pSymbol->IsIdentical(Gura_Symbol(input_at_left))) {
+	if (pSymbol->IsIdentical(Gurax_Symbol(input_at_left))) {
 		evaluatedFlag = true;
 		return Array::ToValue(env, Array::Reference(_connectorSrcLeft.GetArrayFwd()));
-	} else if (pSymbol->IsIdentical(Gura_Symbol(input_at_right))) {
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(input_at_right))) {
 		evaluatedFlag = true;
 		return Array::ToValue(env, Array::Reference(_connectorSrcRight.GetArrayFwd()));
-	} else if (pSymbol->IsIdentical(Gura_Symbol(inputgrad_at_left))) {
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(inputgrad_at_left))) {
 		evaluatedFlag = true;
 		return Array::ToValue(env, Array::Reference(_connectorSrcLeft.GetArrayGrad()));
-	} else if (pSymbol->IsIdentical(Gura_Symbol(inputgrad_at_right))) {
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(inputgrad_at_right))) {
 		evaluatedFlag = true;
 		return Array::ToValue(env, Array::Reference(_connectorSrcRight.GetArrayGrad()));
 	}
@@ -481,22 +479,22 @@ bool TrainNode_Gear::IsGear() { return true; }
 
 bool TrainNode_Gear::GatherMemberSymbol(SymbolList& symbols)
 {
-	symbols.insert(Gura_Symbol(gear));
-	symbols.insert(Gura_Symbol(input));
-	symbols.insert(Gura_Symbol(inputgrad));
+	symbols.push_back(Gurax_Symbol(gear));
+	symbols.push_back(Gurax_Symbol(input));
+	symbols.push_back(Gurax_Symbol(inputgrad));
 	return TrainNode::GatherMemberSymbol(symbols);
 }
 
 Value* TrainNode_Gear::DoGetProp(const Symbol *pSymbol,
 								   const SymbolSet &attrs, bool &evaluatedFlag)
 {
-	if (pSymbol->IsIdentical(Gura_Symbol(gear))) {
+	if (pSymbol->IsIdentical(Gurax_Symbol(gear))) {
 		evaluatedFlag = true;
 		return Value(_pGear->ToObject());
-	} else if (pSymbol->IsIdentical(Gura_Symbol(input))) {
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(input))) {
 		evaluatedFlag = true;
 		return Array::ToValue(env, Array::Reference(_connectorSrc.GetArrayFwd()));
-	} else if (pSymbol->IsIdentical(Gura_Symbol(inputgrad))) {
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(inputgrad))) {
 		evaluatedFlag = true;
 		return Array::ToValue(env, Array::Reference(_connectorSrc.GetArrayGrad()));
 	}
