@@ -397,6 +397,20 @@ Array* Array::Create(ElemTypeT& elemType, DimSizes dimSizes)
 	return new Array(elemType, pMemory.release(), std::move(dimSizes));
 }
 
+Array* Array::CreateScalar(ElemTypeT& elemType, Double num)
+{
+	RefPtr<Array> pArray(Create(elemType, DimSizes()));
+	*pArray->GetPointerC<Double>() = num;
+	return pArray.release();
+}
+
+Array* Array::CreateScalar(ElemTypeT& elemType, const Complex& num)
+{
+	RefPtr<Array> pArray(Create(elemType, DimSizes()));
+	*pArray->GetPointerC<Complex>() = num;
+	return pArray.release();
+}
+
 Array* Array::CreateIdentity(ElemTypeT& elemType, size_t n, Double mag)
 {
 	RefPtr<Array> pArray(Create2d(elemType, n, n));
@@ -2002,6 +2016,7 @@ bool DimSizes::Verify(const ValueList& values) const
 
 String DimSizes::ToString(const StringStyle& ss) const
 {
+	if (empty()) return "scalar";
 	String str;
 	for (size_t dimSize : *this) {
 		if (!str.empty()) str += 'x';

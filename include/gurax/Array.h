@@ -173,15 +173,11 @@ public:
 public:
 	Array* Clone() const { return new Array(*this); }
 	static Array* Create(ElemTypeT& elemType, DimSizes dimSizes);
-	static Array* Create1d(ElemTypeT& elemType, size_t n) {
-		return Create(elemType, DimSizes(n));
-	}
-	static Array* Create2d(ElemTypeT& elemType, size_t m, size_t n) {
-		return Create(elemType, DimSizes(m, n));
-	}
-	static Array* Create3d(ElemTypeT& elemType, size_t l, size_t m, size_t n) {
-		return Create(elemType, DimSizes(l, m, n));
-	}
+	static Array* CreateScalar(ElemTypeT& elemType, Double num);
+	static Array* CreateScalar(ElemTypeT& elemType, const Complex& num);
+	static Array* Create1d(ElemTypeT& elemType, size_t n) { return Create(elemType, DimSizes(n)); }
+	static Array* Create2d(ElemTypeT& elemType, size_t m, size_t n) { return Create(elemType, DimSizes(m, n)); }
+	static Array* Create3d(ElemTypeT& elemType, size_t l, size_t m, size_t n) { return Create(elemType, DimSizes(l, m, n)); }
 	static Array* CreateIdentity(ElemTypeT& elemType, size_t n, Double mag);
 	ElemTypeT& GetElemType() const { return _elemType; }
 	Memory& GetMemory() { return *_pMemory; }

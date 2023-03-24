@@ -91,6 +91,7 @@ public:
 	T* release() { T* p = _p; _p = nullptr; return p; }
 	T* Reference() const { return _p? _p->Reference() : nullptr; }
 	T* Reference(size_t nRefs) const { return _p? _p->Reference(nRefs) : nullptr; }
+	bool IsNull() const { return _p == nullptr; }
 	explicit operator bool() const { return static_cast<bool>(_p); }
 };
 
