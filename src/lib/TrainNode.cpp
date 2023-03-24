@@ -26,7 +26,7 @@ bool TrainNode::GatherMemberSymbol(SymbolList& symbols)
 Value* TrainNode::DoGetProperty(const Symbol* pSymbol, const Attribute& attr)
 {
 	if (pSymbol->IsIdentical(Gurax_Symbol(output))) {
-		return new Value_Array(GetArrayFwd()->Reference());
+		return new Value_Array(GetArrayFwd().Reference());
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(type))) {
 		return new Value_Symbol(Symbol::Add(GetNodeTypeName()));
 	}
@@ -68,7 +68,7 @@ bool TrainNode_Head::IsVulnerable() const
 
 void TrainNode_Head::Reset()
 {
-	//_pTrainOptimizer->Reset();
+	_pTrainOptimizer->Reset();
 }
 
 bool TrainNode_Head::EvalForward(Processor& processor)
@@ -98,7 +98,7 @@ bool TrainNode_Head::EvalBackward(Processor& processor)
 	ConnectorList::iterator ppConnectorDst = _connectorsDst.begin();
 	if (ppConnectorDst == _connectorsDst.end()) return true;
 	if (_pTrainOptimizer.get() != nullptr) {
-		//if (!_pTrainOptimizer->Update(processor, _pArrayFwd, (*ppConnectorDst)->GetArrayGrad())) return false;
+		if (!_pTrainOptimizer->Update(processor, _pArrayFwd, (*ppConnectorDst)->GetArrayGrad())) return false;
 	}
 	return true;
 }
@@ -127,7 +127,6 @@ void TrainNode_Head::Print(int indentLevel) const
 	Print(indentLevel);
 }
 
-#if 0
 //-----------------------------------------------------------------------------
 // TrainNode_Bottom
 //-----------------------------------------------------------------------------
@@ -135,13 +134,13 @@ bool TrainNode_Bottom::IsBottom() { return true; }
 
 bool TrainNode_Bottom::IsVulnerable() const
 {
-	return _connectorSrc.GetNodeSrc()->IsVulnerable();
+	return _connectorSrc.GetNodeSrc().IsVulnerable();
 }
 
 bool TrainNode_Bottom::EvalForward(Processor& processor)
 {
 	//::printf("NodeBottom::EvalForward(Processor& processor)\n");
-	_pArrayFwd.reset(_connectorSrc.GetArrayFwd()->Reference());
+	_pArrayFwd.reset(_connectorSrc.GetArrayFwd().Reference());
 	return true;
 }
 
@@ -154,29 +153,30 @@ bool TrainNode_Bottom::EvalBackward(Processor& processor)
 bool TrainNode_Bottom::EvalBackwardTop(const Array *pArrayCorrect)
 {
 	_pArrayCorrect.reset(pArrayCorrect->Reference());
-	if (_connectorSrc.GetNodeSrc()->IsVulnerable()) {
-		if (!Array::Sub(env, _connectorSrc.GetArrayGradAutoPtr(),
-						_connectorSrc.GetArrayFwd(), pArrayCorrect)) return false;
+	if (_connectorSrc.GetNodeSrc().IsVulnerable()) {
+		RefPtr<Array> pArrayGrad(Array::Sub(_connectorSrc.GetArrayFwd(), *pArrayCorrect));
+		if (!pArrayGrad) return false;
+		_connectorSrc.SetArrayGrad(pArrayGrad.release());
 	}
 	return true;
 }
 
 bool TrainNode_Bottom::GatherMemberSymbol(SymbolList& symbols)
 {
-	symbols.insert(Gura_Symbol(input));
-	symbols.insert(Gura_Symbol(inputgrad));
+	//symbols.insert(Gura_Symbol(input));
+	//symbols.insert(Gura_Symbol(inputgrad));
 	return TrainNode::GatherMemberSymbol(symbols);
 }
 
 Value* TrainNode_Bottom::DoGetProperty(const Symbol* pSymbol, const Attribute& attr)
 {
-	if (pSymbol->IsIdentical(Gura_Symbol(input))) {
-		evaluatedFlag = true;
-		return Array::ToValue(env, Array::Reference(_connectorSrc.GetArrayFwd()));
-	} else if (pSymbol->IsIdentical(Gura_Symbol(inputgrad))) {
-		evaluatedFlag = true;
-		return Array::ToValue(env, Array::Reference(_connectorSrc.GetArrayGrad()));
-	}
+	//if (pSymbol->IsIdentical(Gura_Symbol(input))) {
+	//	evaluatedFlag = true;
+	//	return Array::ToValue(env, Array::Reference(_connectorSrc.GetArrayFwd()));
+	//} else if (pSymbol->IsIdentical(Gura_Symbol(inputgrad))) {
+	//	evaluatedFlag = true;
+	//	return Array::ToValue(env, Array::Reference(_connectorSrc.GetArrayGrad()));
+	//}
 	return TrainNode::DoGetProperty(pSymbol, attr);
 }
 
@@ -185,7 +185,7 @@ String TrainNode_Bottom::ToString() const
 	String str;
 	char buff[128];
 	str += GetNodeTypeName();
-	::sprintf(buff, " [fwd:%p,grad:%p]", _connectorSrc.GetArrayFwd(), _connectorSrc.GetArrayGrad());
+	::sprintf(buff, " [fwd:%p,grad:%p]", &_connectorSrc.GetArrayFwd(), &_connectorSrc.GetArrayGrad());
 	str += buff;
 	return str;
 }
@@ -193,9 +193,10 @@ String TrainNode_Bottom::ToString() const
 void TrainNode_Bottom::Print(int indentLevel) const
 {
 	Print(indentLevel);
-	_connectorSrc.GetNodeSrc()->Print(indentLevel + 1);
+	_connectorSrc.GetNodeSrc().Print(indentLevel + 1);
 }
 
+#if 0
 //-----------------------------------------------------------------------------
 // TrainNode_Unary
 //-----------------------------------------------------------------------------

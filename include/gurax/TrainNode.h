@@ -26,17 +26,16 @@ public:
 		RefPtr<Array> _pArrayGrad;
 	public:
 		Connector(TrainNode* pNodeDst) : _pNodeSrc(nullptr), _pNodeDst(pNodeDst) {}
-		TrainNode* GetNodeSrc() { return _pNodeSrc; }
-		TrainNode* GetNodeDst() { return _pNodeDst; }
-		const TrainNode* GetNodeSrc() const { return _pNodeSrc; }
-		const TrainNode* GetNodeDst() const { return _pNodeDst; }
+		TrainNode& GetNodeSrc() { return *_pNodeSrc; }
+		TrainNode& GetNodeDst() { return *_pNodeDst; }
+		const TrainNode& GetNodeSrc() const { return *_pNodeSrc; }
+		const TrainNode& GetNodeDst() const { return *_pNodeDst; }
 		void SetNodeSrc(TrainNode* pNodeSrc) { _pNodeSrc = pNodeSrc; }
 		void SetArrayGrad(Array* pArrayGrad) { _pArrayGrad.reset(pArrayGrad); }
-		//Array* GetArrayFwd() { return _pNodeSrc->GetArrayFwd(); }
-		Array* GetArrayGrad() { return _pArrayGrad.get(); }
-		const Array* GetArrayGrad() const { return _pArrayGrad.get(); }
-		RefPtr<Array>& GetArrayGradRef() { return _pArrayGrad; }
-		//const Array* GetArrayFwd() const { return _pNodeSrc->GetArrayFwd(); }
+		Array& GetArrayFwd() { return _pNodeSrc->GetArrayFwd(); }
+		Array& GetArrayGrad() { return *_pArrayGrad; }
+		const Array& GetArrayFwd() const { return _pNodeSrc->GetArrayFwd(); }
+		const Array& GetArrayGrad() const { return *_pArrayGrad; }
 	};
 	class ConnectorList : public ListBase<Connector*> {
 	public:
@@ -61,7 +60,8 @@ protected:
 public:
 	const char* GetNodeTypeName() const { return _nodeTypeName; }
 	void AddConnectorDst(Connector* pConnectorDst) { _connectorsDst.push_back(pConnectorDst); }
-	Array* GetArrayFwd() { return _pArrayFwd.get(); }
+	Array& GetArrayFwd() { return *_pArrayFwd; }
+	const Array& GetArrayFwd() const { return *_pArrayFwd; }
 	virtual bool IsHead() { return false; }
 	virtual bool IsBottom() { return false; }
 	virtual bool IsUnary() { return false; }
@@ -124,7 +124,6 @@ public:
 	virtual void Print(int indentLevel) const;
 };
 
-#if 0
 //------------------------------------------------------------------------------
 // TrainNode_Bottom
 //------------------------------------------------------------------------------
@@ -134,8 +133,8 @@ private:
 	RefPtr<Array> _pArrayCorrect;
 public:
 	TrainNode_Bottom() : TrainNode("bottom"), _connectorSrc(this) {}
-	Connector* GetConnectorSrc() { return &_connectorSrc; }
-	const Connector* GetConnectorSrc() const { return &_connectorSrc; }
+	Connector& GetConnectorSrc() { return _connectorSrc; }
+	const Connector& GetConnectorSrc() const { return _connectorSrc; }
 	virtual bool IsBottom();
 	virtual bool IsVulnerable() const;
 	virtual bool EvalForward(Processor& processor);
@@ -147,6 +146,7 @@ public:
 	virtual void Print(int indentLevel) const;
 };
 
+#if 0
 //------------------------------------------------------------------------------
 // TrainNode_Unary
 //------------------------------------------------------------------------------

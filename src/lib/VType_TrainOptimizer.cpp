@@ -24,28 +24,6 @@ ${help.ComposeConstructorHelp(TrainOptimizer, `en)}
 ${help.ComposeMethodHelp(TrainOptimizer, `en)}
 )""";
 
-//------------------------------------------------------------------------------
-// Implementation of constructor
-//------------------------------------------------------------------------------
-// TrainOptimizer() {block?}
-Gurax_DeclareConstructor(TrainOptimizer)
-{
-	Declare(VTYPE_TrainOptimizer, Flag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"""(
-Creates a `TrainOptimizer` instance.
-)""");
-}
-
-Gurax_ImplementConstructor(TrainOptimizer)
-{
-	// Arguments
-	//ArgPicker args(argument);
-	// Function body
-	RefPtr<TrainOptimizer> pTrainOptimizer(new TrainOptimizer());
-	return argument.ReturnValue(processor, new Value_TrainOptimizer(pTrainOptimizer.release()));
-}
-
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
@@ -100,7 +78,7 @@ void VType_TrainOptimizer::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(TrainOptimizer));
+	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(TrainOptimizer, MethodSkeleton));
 	// Assignment of property

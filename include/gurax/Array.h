@@ -184,23 +184,17 @@ public:
 	const Memory& GetMemory() const { return *_pMemory; }
 	const DimSizes& GetDimSizes() const { return _dimSizes; }
 	bool IsMultidemensional() const { return _dimSizes.size() > 1; }
+	bool IsScalar() const { return _dimSizes.empty(); }
 	template<typename T> T* GetPointerC() { return _pMemory->GetPointerC<T>(); }
 	template<typename T> T* GetPointerC(size_t offset) { return _pMemory->GetPointerC<T>(offset); }
 	template<typename T> const T* GetPointerC() const { return _pMemory->GetPointerC<T>(); }
 	template<typename T> const T* GetPointerC(size_t offset) const { return _pMemory->GetPointerC<T>(offset); }
 public:
-	bool IndexSetValue(size_t idx, const Value& value) {
-		return _elemType.IndexSetValue(GetPointerC<void>(), idx, value);
-	}
-	bool IndexSetDouble(size_t idx, Double num) {
-		return _elemType.IndexSetDouble(GetPointerC<void>(), idx, num);
-	}
-	Value* IndexGetValue(size_t idx) const {
-		return _elemType.IndexGetValue(GetPointerC<void>(), idx);
-	}
-	Double IndexGetDouble(size_t idx) const {
-		return _elemType.IndexGetDouble(GetPointerC<void>(), idx);
-	}
+	bool IndexSetValue(size_t idx, const Value& value) { return _elemType.IndexSetValue(GetPointerC<void>(), idx, value); }
+	bool IndexSetDouble(size_t idx, Double num) { return _elemType.IndexSetDouble(GetPointerC<void>(), idx, num); }
+	Value* IndexGetValue(size_t idx) const { return _elemType.IndexGetValue(GetPointerC<void>(), idx); }
+	Double IndexGetDouble(size_t idx) const { return _elemType.IndexGetDouble(GetPointerC<void>(), idx); }
+	
 	void InjectElems(ValueList& values, size_t offset, size_t len);
 	void InjectElems(ValueList& values, size_t offset = 0);
 	bool InjectElems(Iterator& iterator, size_t offset, size_t len);
