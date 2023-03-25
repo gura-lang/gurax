@@ -456,9 +456,8 @@ Gurax_ImplementPropertyGetter(Array, shape)
 Gurax_ImplementOpUnary(Neg, Array)
 {
 	const Array& array = Value_Array::GetArray(value);
-	RefPtr<Array> pArrayRtn(Array::Neg(array));
-	if (!pArrayRtn) return Value::nil();
-	return new Value_Array(pArrayRtn.release());
+	RefPtr<Array> pArrayRtn;
+	return Array::Neg(pArrayRtn, array)? new Value_Array(pArrayRtn.release()) : Value::nil();
 }
 
 // Array + Array

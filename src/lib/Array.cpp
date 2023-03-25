@@ -1520,15 +1520,18 @@ Array* Array::Transpose() const
 	return pArrayRtn.release();
 }
 
-Array* Array::GenericUnaryOp(const Array& array,
+bool Array::GenericUnaryOp(RefPtr<Array>& pArrayRtn, const Array& array,
 	const std::function<void (void* pvRtn, const void* pv, size_t len)>& func)
 {
-	RefPtr<Array> pArrayRtn(Create(array.GetElemType(), array.GetDimSizes()));
+	//RefPtr<Array> pArrayRtn(Create(array.GetElemType(), array.GetDimSizes()));
+	if (!pArrayRtn) pArrayRtn.reset(Create(array.GetElemType(), array.GetDimSizes()));
+	if (!pArrayRtn) return false;
 	void* pvRtn = pArrayRtn->GetPointerC<void>();
 	const void* pv = array.GetPointerC<void>();
 	size_t len = array.GetDimSizes().CalcLength();
 	func(pvRtn, pv, len);
-	return pArrayRtn.release();
+	//return pArrayRtn.release();
+	return true;
 }
 
 Array* Array::GenericBinaryOp(ElemTypeT& elemTypeRtn, const Array& arrayL, const Array& arrayR,
@@ -1619,9 +1622,9 @@ Array* Array::GenericBinaryOp(ElemTypeT& elemTypeRtn, const Complex& numL, const
 	return pArrayRtn.release();
 }
 
-Array* Array::Neg(const Array& array)
+bool Array::Neg(RefPtr<Array>& pArrayRtn, const Array& array)
 {
-	return GenericUnaryOp(array, array.GetElemType().Neg_Array);
+	return GenericUnaryOp(pArrayRtn, array, array.GetElemType().Neg_Array);
 }
 
 Array* Array::Add(const Array& arrayL, const Array& arrayR)

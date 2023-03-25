@@ -206,7 +206,7 @@ public:
 public:
 	Array* Transpose() const;
 public:
-	static Array* GenericUnaryOp(const Array& array,
+	static bool GenericUnaryOp(RefPtr<Array>& pArrayRtn, const Array& array,
 		const std::function<void (void* pvRtn, const void* pv, size_t len)>& func);
 	static Array* GenericBinaryOp(ElemTypeT& elemTypeRtn, const Array& arrayL, const Array& arrayR,
 		const std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>& func);
@@ -222,7 +222,7 @@ public:
 		const std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>& func);
 	static Array* GenericBinaryOp(ElemTypeT& elemTypeRtn, const Complex& numL, const Array& arrayR,
 		const std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>& func);
-	static Array* Neg(const Array& array);
+	static bool Neg(RefPtr<Array>& pArrayRtn, const Array& array);
 	static Array* Add(const Array& arrayL, const Array& arrayR);
 	static Array* Add(const Array& arrayL, Double numR);
 	static Array* Add(const Array& arrayL, const Complex& numR);
