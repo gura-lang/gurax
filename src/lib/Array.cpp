@@ -1534,7 +1534,7 @@ bool Array::GenericUnaryOp(RefPtr<Array>& pArrayRtn, const Array& array,
 	return true;
 }
 
-Array* Array::GenericBinaryOp(ElemTypeT& elemTypeRtn, const Array& arrayL, const Array& arrayR,
+bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, const Array& arrayL, const Array& arrayR,
 	const std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>& func)
 {
 	size_t nUnits = 1;
@@ -1543,7 +1543,8 @@ Array* Array::GenericBinaryOp(ElemTypeT& elemTypeRtn, const Array& arrayL, const
 	const DimSizes* pDimSizesRtn = DimSizes::DetermineResult(arrayL.GetDimSizes(), arrayR.GetDimSizes(), &nUnits, &lenUnit, &lenFwdL, &lenFwdR);
 	if (!pDimSizesRtn) return nullptr;
 	//RefPtr<Array> pArrayRtn(Create(GetElemTypeRtn(arrayL, arrayR), *pDimSizesRtn));
-	RefPtr<Array> pArrayRtn(Create(elemTypeRtn, *pDimSizesRtn));
+	if (!pArrayRtn) pArrayRtn.reset(Create(elemTypeRtn, *pDimSizesRtn));
+	if (!pArrayRtn) return false;
 	void* pvRtn = pArrayRtn->GetPointerC<void>();
 	const void* pvL = arrayL.GetPointerC<void>();
 	const void* pvR = arrayR.GetPointerC<void>();
@@ -1553,73 +1554,86 @@ Array* Array::GenericBinaryOp(ElemTypeT& elemTypeRtn, const Array& arrayL, const
 		pvL = arrayL.FwdPointer(pvL, lenFwdL);
 		pvR = arrayR.FwdPointer(pvR, lenFwdR);
 	}
-	return pArrayRtn.release();
+	//return pArrayRtn.release();
+	return true;
 }
 
-Array* Array::GenericBinaryOp(ElemTypeT& elemTypeRtn, const Array& arrayL, Double numR,
+bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, const Array& arrayL, Double numR,
 	const std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>& func)
 {
-	RefPtr<Array> pArrayRtn(Create(elemTypeRtn, arrayL.GetDimSizes()));
+	if (!pArrayRtn) pArrayRtn.reset(Create(elemTypeRtn, arrayL.GetDimSizes()));
+	if (!pArrayRtn) return false;
 	void* pvRtn = pArrayRtn->GetPointerC<void>();
 	const void* pvL = arrayL.GetPointerC<void>();
 	size_t len = arrayL.GetDimSizes().CalcLength();
 	func(pvRtn, pvL, numR, len);
-	return pArrayRtn.release();
+	//return pArrayRtn.release();
+	return true;
 }
 
-Array* Array::GenericBinaryOp(ElemTypeT& elemTypeRtn, Double numL, const Array& arrayR,
+bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, Double numL, const Array& arrayR,
 	const std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>& func)
 {
-	RefPtr<Array> pArrayRtn(Create(elemTypeRtn, arrayR.GetDimSizes()));
+	if (!pArrayRtn) pArrayRtn.reset(Create(elemTypeRtn, arrayR.GetDimSizes()));
+	if (!pArrayRtn) return false;
 	void* pvRtn = pArrayRtn->GetPointerC<void>();
 	const void* pvR = arrayR.GetPointerC<void>();
 	size_t len = arrayR.GetDimSizes().CalcLength();
 	func(pvRtn, numL, pvR, len);
-	return pArrayRtn.release();
+	//return pArrayRtn.release();
+	return true;
 }
 
-Array* Array::GenericBinaryOp(ElemTypeT& elemTypeRtn, const Array& arrayL, UInt64 numR,
+bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, const Array& arrayL, UInt64 numR,
 	const std::function<void (void* pvRtn, const void* pvL, UInt64 numR, size_t len)>& func)
 {
-	RefPtr<Array> pArrayRtn(Create(elemTypeRtn, arrayL.GetDimSizes()));
+	if (!pArrayRtn) pArrayRtn.reset(Create(elemTypeRtn, arrayL.GetDimSizes()));
+	if (!pArrayRtn) return false;
 	void* pvRtn = pArrayRtn->GetPointerC<void>();
 	const void* pvL = arrayL.GetPointerC<void>();
 	size_t len = arrayL.GetDimSizes().CalcLength();
 	func(pvRtn, pvL, numR, len);
-	return pArrayRtn.release();
+	//return pArrayRtn.release();
+	return true;
 }
 
-Array* Array::GenericBinaryOp(ElemTypeT& elemTypeRtn, UInt64 numL, const Array& arrayR,
+bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, UInt64 numL, const Array& arrayR,
 	const std::function<void (void* pvRtn, UInt64 numL, const void* pvR, size_t len)>& func)
 {
-	RefPtr<Array> pArrayRtn(Create(elemTypeRtn, arrayR.GetDimSizes()));
+	if (!pArrayRtn) pArrayRtn.reset(Create(elemTypeRtn, arrayR.GetDimSizes()));
+	if (!pArrayRtn) return false;
 	void* pvRtn = pArrayRtn->GetPointerC<void>();
 	const void* pvR = arrayR.GetPointerC<void>();
 	size_t len = arrayR.GetDimSizes().CalcLength();
 	func(pvRtn, numL, pvR, len);
-	return pArrayRtn.release();
+	//return pArrayRtn.release();
+	return true;
 }
 
-Array* Array::GenericBinaryOp(ElemTypeT& elemTypeRtn, const Array& arrayL, const Complex& numR,
+bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, const Array& arrayL, const Complex& numR,
 	const std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>& func)
 {
-	RefPtr<Array> pArrayRtn(Create(elemTypeRtn, arrayL.GetDimSizes()));
+	if (!pArrayRtn) pArrayRtn.reset(Create(elemTypeRtn, arrayL.GetDimSizes()));
+	if (!pArrayRtn) return false;
 	void* pvRtn = pArrayRtn->GetPointerC<void>();
 	const void* pvL = arrayL.GetPointerC<void>();
 	size_t len = arrayL.GetDimSizes().CalcLength();
 	func(pvRtn, pvL, numR, len);
-	return pArrayRtn.release();
+	//return pArrayRtn.release();
+	return true;
 }
 
-Array* Array::GenericBinaryOp(ElemTypeT& elemTypeRtn, const Complex& numL, const Array& arrayR,
+bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, const Complex& numL, const Array& arrayR,
 	const std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>& func)
 {
-	RefPtr<Array> pArrayRtn(Create(elemTypeRtn, arrayR.GetDimSizes()));
+	if (!pArrayRtn) pArrayRtn.reset(Create(elemTypeRtn, arrayR.GetDimSizes()));
+	if (!pArrayRtn) return false;
 	void* pvRtn = pArrayRtn->GetPointerC<void>();
 	const void* pvR = arrayR.GetPointerC<void>();
 	size_t len = arrayR.GetDimSizes().CalcLength();
 	func(pvRtn, numL, pvR, len);
-	return pArrayRtn.release();
+	//return pArrayRtn.release();
+	return true;
 }
 
 bool Array::Neg(RefPtr<Array>& pArrayRtn, const Array& array)
@@ -1627,192 +1641,192 @@ bool Array::Neg(RefPtr<Array>& pArrayRtn, const Array& array)
 	return GenericUnaryOp(pArrayRtn, array, array.GetElemType().Neg_Array);
 }
 
-Array* Array::Add(const Array& arrayL, const Array& arrayR)
+bool Array::Add(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(GetElemTypeRtn(arrayL, arrayR), arrayL, arrayR, arrayL.GetElemType().Add_ArrayArray[arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, GetElemTypeRtn(arrayL, arrayR), arrayL, arrayR, arrayL.GetElemType().Add_ArrayArray[arrayR.GetElemType().id]);
 }
 
-Array* Array::Add(const Array& arrayL, Double numR)
+bool Array::Add(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
 {
-	return GenericBinaryOp(arrayL.GetElemType(), arrayL, numR, arrayL.GetElemType().Add_ArrayNumber);
+	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, arrayL.GetElemType().Add_ArrayNumber);
 }
 
-Array* Array::Add(const Array& arrayL, const Complex& numR)
+bool Array::Add(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR)
 {
-	return GenericBinaryOp(arrayL.GetElemType(), arrayL, numR, arrayL.GetElemType().Add_ArrayComplex);
+	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, arrayL.GetElemType().Add_ArrayComplex);
 }
 
-Array* Array::And(const Array& arrayL, const Array& arrayR)
+bool Array::And(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(GetElemTypeRtn(arrayL, arrayR), arrayL, arrayR, arrayL.GetElemType().And_ArrayArray[arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, GetElemTypeRtn(arrayL, arrayR), arrayL, arrayR, arrayL.GetElemType().And_ArrayArray[arrayR.GetElemType().id]);
 }
 
-Array* Array::And(const Array& arrayL, UInt64 numR)
+bool Array::And(RefPtr<Array>& pArrayRtn, const Array& arrayL, UInt64 numR)
 {
-	return GenericBinaryOp(arrayL.GetElemType(), arrayL, numR, arrayL.GetElemType().And_ArrayNumber);
+	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, arrayL.GetElemType().And_ArrayNumber);
 }
 
-Array* Array::Sub(const Array& arrayL, const Array& arrayR)
+bool Array::Sub(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(GetElemTypeRtn(arrayL, arrayR), arrayL, arrayR, arrayL.GetElemType().Sub_ArrayArray[arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, GetElemTypeRtn(arrayL, arrayR), arrayL, arrayR, arrayL.GetElemType().Sub_ArrayArray[arrayR.GetElemType().id]);
 }
 
-Array* Array::Sub(const Array& arrayL, Double numR)
+bool Array::Sub(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
 {
-	return GenericBinaryOp(arrayL.GetElemType(), arrayL, numR, arrayL.GetElemType().Sub_ArrayNumber);
+	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, arrayL.GetElemType().Sub_ArrayNumber);
 }
 
-Array* Array::Sub(Double numL, const Array& arrayR)
+bool Array::Sub(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR)
 {
-	return GenericBinaryOp(arrayR.GetElemType(), numL, arrayR, arrayR.GetElemType().Sub_NumberArray);
+	return GenericBinaryOp(pArrayRtn, arrayR.GetElemType(), numL, arrayR, arrayR.GetElemType().Sub_NumberArray);
 }
 
-Array* Array::Sub(const Array& arrayL, const Complex& numR)
+bool Array::Sub(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR)
 {
-	return GenericBinaryOp(arrayL.GetElemType(), arrayL, numR, arrayL.GetElemType().Sub_ArrayComplex);
+	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, arrayL.GetElemType().Sub_ArrayComplex);
 }
 
-Array* Array::Sub(const Complex& numL, const Array& arrayR)
+bool Array::Sub(RefPtr<Array>& pArrayRtn, const Complex& numL, const Array& arrayR)
 {
-	return GenericBinaryOp(arrayR.GetElemType(), numL, arrayR, arrayR.GetElemType().Sub_ComplexArray);
+	return GenericBinaryOp(pArrayRtn, arrayR.GetElemType(), numL, arrayR, arrayR.GetElemType().Sub_ComplexArray);
 }
 
-Array* Array::Mul(const Array& arrayL, const Array& arrayR)
+bool Array::Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(GetElemTypeRtn(arrayL, arrayR), arrayL, arrayR, arrayL.GetElemType().Mul_ArrayArray[arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, GetElemTypeRtn(arrayL, arrayR), arrayL, arrayR, arrayL.GetElemType().Mul_ArrayArray[arrayR.GetElemType().id]);
 }
 
-Array* Array::Mul(const Array& arrayL, Double numR)
+bool Array::Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
 {
-	return GenericBinaryOp(arrayL.GetElemType(), arrayL, numR, arrayL.GetElemType().Mul_ArrayNumber);
+	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, arrayL.GetElemType().Mul_ArrayNumber);
 }
 
-Array* Array::Mul(const Array& arrayL, const Complex& numR)
+bool Array::Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR)
 {
-	return GenericBinaryOp(arrayL.GetElemType(), arrayL, numR, arrayL.GetElemType().Mul_ArrayComplex);
+	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, arrayL.GetElemType().Mul_ArrayComplex);
 }
 
-Array* Array::Div(const Array& arrayL, const Array& arrayR)
+bool Array::Div(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(GetElemTypeRtn(arrayL, arrayR), arrayL, arrayR, arrayL.GetElemType().Div_ArrayArray[arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, GetElemTypeRtn(arrayL, arrayR), arrayL, arrayR, arrayL.GetElemType().Div_ArrayArray[arrayR.GetElemType().id]);
 }
 
-Array* Array::Div(const Array& arrayL, Double numR)
+bool Array::Div(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
 {
-	return GenericBinaryOp(arrayL.GetElemType(), arrayL, numR, arrayL.GetElemType().Div_ArrayNumber);
+	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, arrayL.GetElemType().Div_ArrayNumber);
 }
 
-Array* Array::Div(Double numL, const Array& arrayR)
+bool Array::Div(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR)
 {
-	return GenericBinaryOp(arrayR.GetElemType(), numL, arrayR, arrayR.GetElemType().Div_NumberArray);
+	return GenericBinaryOp(pArrayRtn, arrayR.GetElemType(), numL, arrayR, arrayR.GetElemType().Div_NumberArray);
 }
 
-Array* Array::Div(const Array& arrayL, const Complex& numR)
+bool Array::Div(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR)
 {
-	return GenericBinaryOp(arrayL.GetElemType(), arrayL, numR, arrayL.GetElemType().Div_ArrayComplex);
+	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, arrayL.GetElemType().Div_ArrayComplex);
 }
 
-Array* Array::Div(const Complex& numL, const Array& arrayR)
+bool Array::Div(RefPtr<Array>& pArrayRtn, const Complex& numL, const Array& arrayR)
 {
-	return GenericBinaryOp(arrayR.GetElemType(), numL, arrayR, arrayR.GetElemType().Div_ComplexArray);
+	return GenericBinaryOp(pArrayRtn, arrayR.GetElemType(), numL, arrayR, arrayR.GetElemType().Div_ComplexArray);
 }
 
-Array* Array::Or(const Array& arrayL, const Array& arrayR)
+bool Array::Or(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(GetElemTypeRtn(arrayL, arrayR), arrayL, arrayR, arrayL.GetElemType().Or_ArrayArray[arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, GetElemTypeRtn(arrayL, arrayR), arrayL, arrayR, arrayL.GetElemType().Or_ArrayArray[arrayR.GetElemType().id]);
 }
 
-Array* Array::Or(const Array& arrayL, UInt64 numR)
+bool Array::Or(RefPtr<Array>& pArrayRtn, const Array& arrayL, UInt64 numR)
 {
-	return GenericBinaryOp(arrayL.GetElemType(), arrayL, numR, arrayL.GetElemType().Or_ArrayNumber);
+	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, arrayL.GetElemType().Or_ArrayNumber);
 }
 
-Array* Array::Xor(const Array& arrayL, const Array& arrayR)
+bool Array::Xor(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(GetElemTypeRtn(arrayL, arrayR), arrayL, arrayR, arrayL.GetElemType().Xor_ArrayArray[arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, GetElemTypeRtn(arrayL, arrayR), arrayL, arrayR, arrayL.GetElemType().Xor_ArrayArray[arrayR.GetElemType().id]);
 }
 
-Array* Array::Xor(const Array& arrayL, UInt64 numR)
+bool Array::Xor(RefPtr<Array>& pArrayRtn, const Array& arrayL, UInt64 numR)
 {
-	return GenericBinaryOp(arrayL.GetElemType(), arrayL, numR, arrayL.GetElemType().Xor_ArrayNumber);
+	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, arrayL.GetElemType().Xor_ArrayNumber);
 }
 
-Array* Array::Eq(const Array& arrayL, const Array& arrayR)
+bool Array::Eq(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(ElemType::Bool, arrayL, arrayR, arrayL.GetElemType().Eq_ArrayArray[arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, arrayR, arrayL.GetElemType().Eq_ArrayArray[arrayR.GetElemType().id]);
 }
 
-Array* Array::Eq(const Array& arrayL, Double numR)
+bool Array::Eq(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
 {
-	return GenericBinaryOp(ElemType::Bool, arrayL, numR, arrayL.GetElemType().Eq_ArrayNumber);
+	return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, numR, arrayL.GetElemType().Eq_ArrayNumber);
 }
 
-Array* Array::Eq(const Array& arrayL, const Complex& numR)
+bool Array::Eq(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR)
 {
-	return GenericBinaryOp(ElemType::Bool, arrayL, numR, arrayL.GetElemType().Eq_ArrayComplex);
+	return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, numR, arrayL.GetElemType().Eq_ArrayComplex);
 }
 
-Array* Array::Ne(const Array& arrayL, const Array& arrayR)
+bool Array::Ne(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(ElemType::Bool, arrayL, arrayR, arrayL.GetElemType().Ne_ArrayArray[arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, arrayR, arrayL.GetElemType().Ne_ArrayArray[arrayR.GetElemType().id]);
 }
 
-Array* Array::Ne(const Array& arrayL, Double numR)
+bool Array::Ne(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
 {
-	return GenericBinaryOp(ElemType::Bool, arrayL, numR, arrayL.GetElemType().Ne_ArrayNumber);
+	return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, numR, arrayL.GetElemType().Ne_ArrayNumber);
 }
 
-Array* Array::Ne(const Array& arrayL, const Complex& numR)
+bool Array::Ne(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR)
 {
-	return GenericBinaryOp(ElemType::Bool, arrayL, numR, arrayL.GetElemType().Ne_ArrayComplex);
+	return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, numR, arrayL.GetElemType().Ne_ArrayComplex);
 }
 
-Array* Array::Lt(const Array& arrayL, const Array& arrayR)
+bool Array::Lt(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(ElemType::Bool, arrayL, arrayR, arrayL.GetElemType().Lt_ArrayArray[arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, arrayR, arrayL.GetElemType().Lt_ArrayArray[arrayR.GetElemType().id]);
 }
 
-Array* Array::Lt(const Array& arrayL, Double numR)
+bool Array::Lt(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
 {
-	return GenericBinaryOp(ElemType::Bool, arrayL, numR, arrayL.GetElemType().Lt_ArrayNumber);
+	return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, numR, arrayL.GetElemType().Lt_ArrayNumber);
 }
 
-Array* Array::Lt(Double numL, const Array& arrayR)
+bool Array::Lt(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR)
 {
-	return GenericBinaryOp(ElemType::Bool, numL, arrayR, arrayR.GetElemType().Lt_NumberArray);
+	return GenericBinaryOp(pArrayRtn, ElemType::Bool, numL, arrayR, arrayR.GetElemType().Lt_NumberArray);
 }
 
-Array* Array::Le(const Array& arrayL, const Array& arrayR)
+bool Array::Le(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(ElemType::Bool, arrayL, arrayR, arrayL.GetElemType().Le_ArrayArray[arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, arrayR, arrayL.GetElemType().Le_ArrayArray[arrayR.GetElemType().id]);
 }
 
-Array* Array::Le(const Array& arrayL, Double numR)
+bool Array::Le(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
 {
-	return GenericBinaryOp(ElemType::Bool, arrayL, numR, arrayL.GetElemType().Le_ArrayNumber);
+	return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, numR, arrayL.GetElemType().Le_ArrayNumber);
 }
 
-Array* Array::Le(Double numL, const Array& arrayR)
+bool Array::Le(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR)
 {
-	return GenericBinaryOp(ElemType::Bool, numL, arrayR, arrayR.GetElemType().Le_NumberArray);
+	return GenericBinaryOp(pArrayRtn, ElemType::Bool, numL, arrayR, arrayR.GetElemType().Le_NumberArray);
 }
 
-Array* Array::Cmp(const Array& arrayL, const Array& arrayR)
+bool Array::Cmp(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(ElemType::Int8, arrayL, arrayR, arrayL.GetElemType().Cmp_ArrayArray[arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Int8, arrayL, arrayR, arrayL.GetElemType().Cmp_ArrayArray[arrayR.GetElemType().id]);
 }
 
-Array* Array::Cmp(const Array& arrayL, Double numR)
+bool Array::Cmp(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
 {
-	return GenericBinaryOp(ElemType::Int8, arrayL, numR, arrayL.GetElemType().Cmp_ArrayNumber);
+	return GenericBinaryOp(pArrayRtn, ElemType::Int8, arrayL, numR, arrayL.GetElemType().Cmp_ArrayNumber);
 }
 
-Array* Array::Cmp(Double numL, const Array& arrayR)
+bool Array::Cmp(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR)
 {
-	return GenericBinaryOp(ElemType::Int8, numL, arrayR, arrayR.GetElemType().Cmp_NumberArray);
+	return GenericBinaryOp(pArrayRtn, ElemType::Int8, numL, arrayR, arrayR.GetElemType().Cmp_NumberArray);
 }
 
-Array* Array::Dot(const Array& arrayL, const Array& arrayR)
+bool Array::Dot(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
 #if 1
 	const DimSizes& dimSizesL = arrayL.GetDimSizes();
@@ -1824,12 +1838,13 @@ Array* Array::Dot(const Array& arrayL, const Array& arrayR)
 	}
 	DimSizes dimSizesRtn(dimSizesL.GetRowSize(), dimSizesR.GetColSize());
 	auto func = arrayL.GetElemType().Dot_ArrayArray[arrayR.GetElemType().id];
-	RefPtr<Array> pArrayRtn(Create(GetElemTypeRtn(arrayL, arrayR), dimSizesRtn));
+	if (!pArrayRtn) pArrayRtn.reset(Create(GetElemTypeRtn(arrayL, arrayR), dimSizesRtn));
+	if (!pArrayRtn) return false;
 	void* pvRtn = pArrayRtn->GetPointerC<void>();
 	const void* pvL = arrayL.GetPointerC<void>();
 	const void* pvR = arrayR.GetPointerC<void>();
 	func(pvRtn, dimSizesRtn.GetRowSize(), dimSizesRtn.GetColSize(), pvL, pvR, dimSizesL.GetColSize());
-	return pArrayRtn.release();
+	return true;
 #else
 	size_t nUnits = 1;
 	size_t lenUnit = 0;;
@@ -1875,23 +1890,23 @@ Array* Array::Dot(const Array& arrayL, const Array& arrayR)
 #endif
 }
 
-Array* Array::Cross(const Array& arrayL, const Array& arrayR)
+bool Array::Cross(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
 	const DimSizes& dimSizesL = arrayL.GetDimSizes();
 	const DimSizes& dimSizesR = arrayR.GetDimSizes();
-	if (dimSizesL.size() != 1 || dimSizesR.size() != 1 ||
-								dimSizesL[0] != 3 || dimSizesR[0] != 3) {
+	if (dimSizesL.size() != 1 || dimSizesR.size() != 1 || dimSizesL[0] != 3 || dimSizesR[0] != 3) {
 		Error::Issue(ErrorType::RangeError, "unmatched array size");
 		return nullptr;
 	}
 	size_t n = 3;
-	RefPtr<Array> pArrayRtn(Create(GetElemTypeRtn(arrayL, arrayR), DimSizes(n)));
+	if (!pArrayRtn) pArrayRtn.reset(Create(GetElemTypeRtn(arrayL, arrayR), DimSizes(n)));
+	if (!pArrayRtn) return false;
 	void* pvRtn = pArrayRtn->GetPointerC<void>();
 	const void* pvL = arrayL.GetPointerC<void>();
 	const void* pvR = arrayR.GetPointerC<void>();
 	auto func = arrayL.GetElemType().Cross_ArrayArray[arrayR.GetElemType().id];
 	func(pvRtn, pvL, pvR, n);
-	return pArrayRtn.release();
+	return true;
 }
 
 Value_List* Array::ToList() const

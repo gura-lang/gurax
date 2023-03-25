@@ -154,9 +154,9 @@ bool TrainNode_Bottom::EvalBackwardTop(const Array& arrayCorrect)
 {
 	_pArrayCorrect.reset(arrayCorrect.Reference());
 	if (_connectorSrc.GetNodeSrc().IsVulnerable()) {
-		RefPtr<Array> pArrayGrad(Array::Sub(_connectorSrc.GetArrayFwd(), arrayCorrect));
-		if (!pArrayGrad) return false;
-		_connectorSrc.SetArrayGrad(pArrayGrad.release());
+		//RefPtr<Array> pArrayGrad(Array::Sub(_connectorSrc.GetArrayFwd(), arrayCorrect));
+		//if (!pArrayGrad) return false;
+		//_connectorSrc.SetArrayGrad(pArrayGrad.release());
 	}
 	return true;
 }

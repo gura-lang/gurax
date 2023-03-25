@@ -208,60 +208,60 @@ public:
 public:
 	static bool GenericUnaryOp(RefPtr<Array>& pArrayRtn, const Array& array,
 		const std::function<void (void* pvRtn, const void* pv, size_t len)>& func);
-	static Array* GenericBinaryOp(ElemTypeT& elemTypeRtn, const Array& arrayL, const Array& arrayR,
+	static bool GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, const Array& arrayL, const Array& arrayR,
 		const std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>& func);
-	static Array* GenericBinaryOp(ElemTypeT& elemTypeRtn, const Array& arrayL, UInt64 numR,
+	static bool GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, const Array& arrayL, UInt64 numR,
 		const std::function<void (void* pvRtn, const void* pvL, UInt64 numR, size_t len)>& func);
-	static Array* GenericBinaryOp(ElemTypeT& elemTypeRtn, UInt64 numL, const Array& arrayR,
+	static bool GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, UInt64 numL, const Array& arrayR,
 		const std::function<void (void* pvRtn, UInt64 numL, const void* pvR, size_t len)>& func);
-	static Array* GenericBinaryOp(ElemTypeT& elemTypeRtn, const Array& arrayL, Double numR,
+	static bool GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, const Array& arrayL, Double numR,
 		const std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>& func);
-	static Array* GenericBinaryOp(ElemTypeT& elemTypeRtn, Double numL, const Array& arrayR,
+	static bool GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, Double numL, const Array& arrayR,
 		const std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>& func);
-	static Array* GenericBinaryOp(ElemTypeT& elemTypeRtn, const Array& arrayL, const Complex& numR,
+	static bool GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, const Array& arrayL, const Complex& numR,
 		const std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>& func);
-	static Array* GenericBinaryOp(ElemTypeT& elemTypeRtn, const Complex& numL, const Array& arrayR,
+	static bool GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, const Complex& numL, const Array& arrayR,
 		const std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>& func);
 	static bool Neg(RefPtr<Array>& pArrayRtn, const Array& array);
-	static Array* Add(const Array& arrayL, const Array& arrayR);
-	static Array* Add(const Array& arrayL, Double numR);
-	static Array* Add(const Array& arrayL, const Complex& numR);
-	static Array* And(const Array& arrayL, const Array& arrayR);
-	static Array* And(const Array& arrayL, UInt64 numR);
-	static Array* Sub(const Array& arrayL, const Array& arrayR);
-	static Array* Sub(const Array& arrayL, Double numR);
-	static Array* Sub(Double numL, const Array& arrayR);
-	static Array* Sub(const Array& arrayL, const Complex& numR);
-	static Array* Sub(const Complex& numL, const Array& arrayR);
-	static Array* Mul(const Array& arrayL, const Array& arrayR);
-	static Array* Mul(const Array& arrayL, Double numR);
-	static Array* Mul(const Array& arrayL, const Complex& numR);
-	static Array* Div(const Array& arrayL, const Array& arrayR);
-	static Array* Div(const Array& arrayL, Double numR);
-	static Array* Div(Double numL, const Array& arrayR);
-	static Array* Div(const Array& arrayL, const Complex& numR);
-	static Array* Div(const Complex& numL, const Array& arrayR);
-	static Array* Or(const Array& arrayL, const Array& arrayR);
-	static Array* Or(const Array& arrayL, UInt64 numR);
-	static Array* Xor(const Array& arrayL, const Array& arrayR);
-	static Array* Xor(const Array& arrayL, UInt64 numR);
-	static Array* Eq(const Array& arrayL, const Array& arrayR);
-	static Array* Eq(const Array& arrayL, Double numR);
-	static Array* Eq(const Array& arrayL, const Complex& numR);
-	static Array* Ne(const Array& arrayL, const Array& arrayR);
-	static Array* Ne(const Array& arrayL, Double numR);
-	static Array* Ne(const Array& arrayL, const Complex& numR);
-	static Array* Lt(const Array& arrayL, const Array& arrayR);
-	static Array* Lt(const Array& arrayL, Double numR);
-	static Array* Lt(Double numL, const Array& arrayR);
-	static Array* Le(const Array& arrayL, const Array& arrayR);
-	static Array* Le(const Array& arrayL, Double numR);
-	static Array* Le(Double numL, const Array& arrayR);
-	static Array* Cmp(const Array& arrayL, const Array& arrayR);
-	static Array* Cmp(const Array& arrayL, Double numR);
-	static Array* Cmp(Double numL, const Array& arrayR);
-	static Array* Dot(const Array& arrayL, const Array& arrayR);
-	static Array* Cross(const Array& arrayL, const Array& arrayR);
+	static bool Add(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
+	static bool Add(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR);
+	static bool Add(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR);
+	static bool And(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
+	static bool And(RefPtr<Array>& pArrayRtn, const Array& arrayL, UInt64 numR);
+	static bool Sub(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
+	static bool Sub(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR);
+	static bool Sub(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR);
+	static bool Sub(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR);
+	static bool Sub(RefPtr<Array>& pArrayRtn, const Complex& numL, const Array& arrayR);
+	static bool Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
+	static bool Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR);
+	static bool Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR);
+	static bool Div(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
+	static bool Div(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR);
+	static bool Div(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR);
+	static bool Div(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR);
+	static bool Div(RefPtr<Array>& pArrayRtn, const Complex& numL, const Array& arrayR);
+	static bool Or(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
+	static bool Or(RefPtr<Array>& pArrayRtn, const Array& arrayL, UInt64 numR);
+	static bool Xor(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
+	static bool Xor(RefPtr<Array>& pArrayRtn, const Array& arrayL, UInt64 numR);
+	static bool Eq(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
+	static bool Eq(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR);
+	static bool Eq(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR);
+	static bool Ne(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
+	static bool Ne(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR);
+	static bool Ne(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR);
+	static bool Lt(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
+	static bool Lt(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR);
+	static bool Lt(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR);
+	static bool Le(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
+	static bool Le(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR);
+	static bool Le(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR);
+	static bool Cmp(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
+	static bool Cmp(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR);
+	static bool Cmp(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR);
+	static bool Dot(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
+	static bool Cross(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
 public:
 	Value_List* ToList() const;
 	Array* CreateCasted(ElemTypeT& elemType) const;
