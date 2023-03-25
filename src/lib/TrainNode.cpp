@@ -194,7 +194,6 @@ void TrainNode_Bottom::Print(int indentLevel) const
 	_connectorSrc.GetNodeSrc().Print(indentLevel + 1);
 }
 
-#if 0
 //-----------------------------------------------------------------------------
 // TrainNode_Unary
 //-----------------------------------------------------------------------------
@@ -202,14 +201,7 @@ bool TrainNode_Unary::IsUnary() { return true; }
 
 bool TrainNode_Unary::IsVulnerable() const
 {
-	return _connectorSrc.GetNodeSrc()->IsVulnerable();
-}
-
-bool TrainNode_Unary::EvalForward(Processor& processor)
-{
-	//::printf("NodeUnary::EvalForward(Processor& processor)\n");
-	return Array::ApplyUnaryFunc(
-		env, _unaryFuncPack, _pArrayFwd, GetConnectorSrc()->GetArrayFwd());
+	return _connectorSrc.GetNodeSrc().IsVulnerable();
 }
 
 bool TrainNode_Unary::GatherMemberSymbol(SymbolList& symbols)
@@ -222,11 +214,9 @@ bool TrainNode_Unary::GatherMemberSymbol(SymbolList& symbols)
 Value* TrainNode_Unary::DoGetProperty(const Symbol* pSymbol, const Attribute& attr)
 {
 	if (pSymbol->IsIdentical(Gurax_Symbol(input))) {
-		evaluatedFlag = true;
-		return Array::ToValue(env, Array::Reference(_connectorSrc.GetArrayFwd()));
+		return new Value_Array(_connectorSrc.GetArrayFwd().Reference());
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(inputgrad))) {
-		evaluatedFlag = true;
-		return Array::ToValue(env, Array::Reference(_connectorSrc.GetArrayGrad()));
+		return new Value_Array(_connectorSrc.GetArrayGrad().Reference());
 	}
 	return TrainNode::DoGetProperty(pSymbol, attr);
 }
@@ -236,7 +226,7 @@ String TrainNode_Unary::ToString() const
 	String str;
 	char buff[128];
 	str += GetNodeTypeName();
-	::sprintf(buff, " [fwd:%p,grad:%p]", _connectorSrc.GetArrayFwd(), _connectorSrc.GetArrayGrad());
+	::sprintf(buff, " [fwd:%p,grad:%p]", &_connectorSrc.GetArrayFwd(), &_connectorSrc.GetArrayGrad());
 	str += buff;
 	return str;
 }
@@ -244,37 +234,36 @@ String TrainNode_Unary::ToString() const
 void TrainNode_Unary::Print(int indentLevel) const
 {
 	Print(indentLevel);
-	_connectorSrc.GetNodeSrc()->Print(indentLevel + 1);
-}
-
-//-----------------------------------------------------------------------------
-// TrainNode_Pos
-//-----------------------------------------------------------------------------
-bool TrainNode_Pos::EvalBackward(Processor& processor)
-{
-	if (_connectorSrc.GetNodeSrc()->IsVulnerable()) {
-		ConnectorList::iterator ppConnectorDst = _connectorsDst.begin();
-		if (ppConnectorDst == _connectorsDst.end()) return true;
-		// grad_src = grad_out
-		_connectorSrc.SetArrayGrad((*ppConnectorDst)->GetArrayGrad()->Reference());
-	}
-	return true;
+	_connectorSrc.GetNodeSrc().Print(indentLevel + 1);
 }
 
 //-----------------------------------------------------------------------------
 // TrainNode_Neg
 //-----------------------------------------------------------------------------
+bool TrainNode_Neg::EvalForward(Processor& processor)
+{
+	//::printf("NodeUnary::EvalForward(Processor& processor)\n");
+	void* pvRtn = GetArrayFwd().GetPointerC<void>();
+	const Array& array = GetConnectorSrc().GetArrayFwd();
+	const void* pv = array.GetPointerC<void>();
+	size_t len = array.GetDimSizes().CalcLength();
+	auto& func = array.GetElemType().Neg_Array;
+	func(pvRtn, pv, len);
+	return true;
+}
+
 bool TrainNode_Neg::EvalBackward(Processor& processor)
 {
 	ConnectorList::iterator ppConnectorDst = _connectorsDst.begin();
 	if (ppConnectorDst == _connectorsDst.end()) return true;
-	if (_connectorSrc.GetNodeSrc()->IsVulnerable()) {
+	if (_connectorSrc.GetNodeSrc().IsVulnerable()) {
 		// grad_src = -grad_out
-		if (!Array::Neg(env, _connectorSrc.GetArrayGradAutoPtr(), (*ppConnectorDst)->GetArrayGrad())) return false;
+		//if (!Array::Neg(env, _connectorSrc.GetArrayGradAutoPtr(), (*ppConnectorDst)->GetArrayGrad())) return false;
 	}
 	return true;
 }
 
+#if 0
 //-----------------------------------------------------------------------------
 // TrainNode_Binary
 //-----------------------------------------------------------------------------

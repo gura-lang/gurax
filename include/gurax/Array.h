@@ -59,12 +59,12 @@ public:
 		size_t bytes;
 		const Symbol* pSymbol;
 	public:
-		std::function<bool (void* pv, size_t idx, const Value& value)> IndexSetValue;
-		std::function<bool (void* pv, size_t idx, Double num)> IndexSetDouble;
-		std::function<Value* (const void* pv, size_t idx)> IndexGetValue;
-		std::function<Double (const void* pv, size_t idx)> IndexGetDouble;
-		std::function<void (const ValueList& values, void* pv, size_t offset, size_t len)> InjectFromValueList;
-		std::function<bool (Iterator& iterator, void* pv, size_t offset, size_t len)> InjectFromIterator;
+		std::function<bool (void* pv, size_t idx, const Value& value)>						IndexSetValue;
+		std::function<bool (void* pv, size_t idx, Double num)>								IndexSetDouble;
+		std::function<Value* (const void* pv, size_t idx)>									IndexGetValue;
+		std::function<Double (const void* pv, size_t idx)>									IndexGetDouble;
+		std::function<void (const ValueList& values, void* pv, size_t offset, size_t len)>	InjectFromValueList;
+		std::function<bool (Iterator& iterator, void* pv, size_t offset, size_t len)>		InjectFromIterator;
 		std::function<void (ValueOwner& values, const void* pv, size_t offset, size_t len)> ExtractToValueOwner;
 		std::function<void (void* pvDst, const void* pvSrc, size_t offset, size_t len)> 	CopyElems[ElemTypeIdMax];
 		std::function<void (void* pvDst, size_t nRows, size_t nCols, const void* pvSrc)>	Transpose[ElemTypeIdMax];

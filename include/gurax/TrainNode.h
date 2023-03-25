@@ -146,38 +146,22 @@ public:
 	virtual void Print(int indentLevel) const;
 };
 
-#if 0
 //------------------------------------------------------------------------------
 // TrainNode_Unary
 //------------------------------------------------------------------------------
 class TrainNode_Unary : public TrainNode {
 protected:
-	const Array::UnaryFuncPack &_unaryFuncPack;
 	Connector _connectorSrc;
 public:
-	TrainNode_Unary(const char* nodeTypeName, const Array::UnaryFuncPack &unaryFuncPack, Connector* pConnectorDst) :
-		TrainNode(nodeTypeName, pConnectorDst), _unaryFuncPack(unaryFuncPack), _connectorSrc(this) {}
+	TrainNode_Unary(const char* nodeTypeName, Connector* pConnectorDst) : TrainNode(nodeTypeName, pConnectorDst), _connectorSrc(this) {}
 	Connector& GetConnectorSrc() { return _connectorSrc; }
 	const Connector& GetConnectorSrc() const { return _connectorSrc; }
 	virtual bool IsUnary();
 	virtual bool IsVulnerable() const;
-	virtual bool EvalForward(Processor& processor);
 	virtual bool GatherMemberSymbol(SymbolList& symbols);
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr);
 	virtual String ToString() const;
 	virtual void Print(int indentLevel) const;
-};
-#endif
-
-#if 0
-//------------------------------------------------------------------------------
-// TrainNode_Pos
-//------------------------------------------------------------------------------
-class TrainNode_Pos : public TrainNode_Unary {
-public:
-	TrainNode_Pos(Connector* pConnectorDst) :
-			TrainNode_Unary("unary@pos", Array::unaryFuncPack_Pos, pConnectorDst) {}
-	virtual bool EvalBackward(Processor& processor);
 };
 
 //------------------------------------------------------------------------------
@@ -185,11 +169,12 @@ public:
 //------------------------------------------------------------------------------
 class TrainNode_Neg : public TrainNode_Unary {
 public:
-	TrainNode_Neg(Connector* pConnectorDst) :
-			TrainNode_Unary("unary@neg", Array::unaryFuncPack_Neg, pConnectorDst) {}
+	TrainNode_Neg(Connector* pConnectorDst) : TrainNode_Unary("unary@neg", pConnectorDst) {}
+	virtual bool EvalForward(Processor& processor);
 	virtual bool EvalBackward(Processor& processor);
 };
 
+#if 0
 //------------------------------------------------------------------------------
 // TrainNode_Binary
 //------------------------------------------------------------------------------
