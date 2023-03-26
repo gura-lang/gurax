@@ -34,6 +34,7 @@ public:
 		void SetArrayGrad(Array* pArrayGrad) { _pArrayGrad.reset(pArrayGrad); }
 		Array& GetArrayFwd() { return _pNodeSrc->GetArrayFwd(); }
 		Array& GetArrayGrad() { return *_pArrayGrad; }
+		RefPtr<Array>& GetArrayGradRefPtr() { return _pArrayGrad; }
 		const Array& GetArrayFwd() const { return _pNodeSrc->GetArrayFwd(); }
 		const Array& GetArrayGrad() const { return *_pArrayGrad; }
 	};
@@ -61,12 +62,13 @@ public:
 	const char* GetNodeTypeName() const { return _nodeTypeName; }
 	void AddConnectorDst(Connector* pConnectorDst) { _connectorsDst.push_back(pConnectorDst); }
 	Array& GetArrayFwd() { return *_pArrayFwd; }
+	RefPtr<Array>& GetArrayFwdRefPtr() { return _pArrayFwd; }
 	const Array& GetArrayFwd() const { return *_pArrayFwd; }
-	virtual bool IsHead() { return false; }
-	virtual bool IsBottom() { return false; }
-	virtual bool IsUnary() { return false; }
-	virtual bool IsBinary() { return false; }
-	virtual bool IsGear() { return false; }
+	virtual bool IsHead() const { return false; }
+	virtual bool IsBottom() const { return false; }
+	virtual bool IsUnary() const { return false; }
+	virtual bool IsBinary() const { return false; }
+	virtual bool IsGear() const { return false; }
 	virtual bool IsVulnerable() const = 0;
 	virtual void Reset() {}
 	virtual bool EvalForward(Processor& processor) = 0;
@@ -109,11 +111,11 @@ protected:
 	RefPtr<TrainOptimizer> _pTrainOptimizer;
 public:
 	TrainNode_Head(Connector* pConnectorDst, Expr* pExpr, Trait trait, TrainOptimizer* pTrainOptimizer) :
-		TrainNode("head", pConnectorDst), _pExpr(pExpr), _trait(trait), _pTrainOptimizer(pTrainOptimizer) {}
+		TrainNode("Head", pConnectorDst), _pExpr(pExpr), _trait(trait), _pTrainOptimizer(pTrainOptimizer) {}
 	bool IsVariable() const { return _trait == Trait::Variable; }
 	bool IsConstant() const { return _trait == Trait::Constant; }
 	bool IsInput() const { return _trait == Trait::Input; }
-	virtual bool IsHead();
+	virtual bool IsHead() const { return true; }
 	virtual void Reset();
 	virtual bool IsVulnerable() const;
 	virtual bool EvalForward(Processor& processor);
@@ -132,10 +134,10 @@ private:
 	Connector _connectorSrc;
 	RefPtr<Array> _pArrayCorrect;
 public:
-	TrainNode_Bottom() : TrainNode("bottom"), _connectorSrc(this) {}
+	TrainNode_Bottom() : TrainNode("Bottom"), _connectorSrc(this) {}
 	Connector& GetConnectorSrc() { return _connectorSrc; }
 	const Connector& GetConnectorSrc() const { return _connectorSrc; }
-	virtual bool IsBottom();
+	virtual bool IsBottom() const { return true; }
 	virtual bool IsVulnerable() const;
 	virtual bool EvalForward(Processor& processor);
 	virtual bool EvalBackward(Processor& processor);
@@ -156,7 +158,7 @@ public:
 	TrainNode_Unary(const char* nodeTypeName, Connector* pConnectorDst) : TrainNode(nodeTypeName, pConnectorDst), _connectorSrc(this) {}
 	Connector& GetConnectorSrc() { return _connectorSrc; }
 	const Connector& GetConnectorSrc() const { return _connectorSrc; }
-	virtual bool IsUnary();
+	virtual bool IsUnary() const { return true; }
 	virtual bool IsVulnerable() const;
 	virtual bool GatherMemberSymbol(SymbolList& symbols);
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr);
@@ -169,44 +171,41 @@ public:
 //------------------------------------------------------------------------------
 class TrainNode_Neg : public TrainNode_Unary {
 public:
-	TrainNode_Neg(Connector* pConnectorDst) : TrainNode_Unary("unary@neg", pConnectorDst) {}
+	TrainNode_Neg(Connector* pConnectorDst) : TrainNode_Unary("Neg", pConnectorDst) {}
 	virtual bool EvalForward(Processor& processor);
 	virtual bool EvalBackward(Processor& processor);
 };
 
-#if 0
 //------------------------------------------------------------------------------
 // TrainNode_Binary
 //------------------------------------------------------------------------------
 class TrainNode_Binary : public TrainNode {
 protected:
-	const Array::BinaryFuncPack &_binaryFuncPack;
 	Connector _connectorSrcLeft;
 	Connector _connectorSrcRight;
 public:
-	TrainNode_Binary(const char* nodeTypeName, const Array::BinaryFuncPack &binaryFuncPack, Connector* pConnectorDst) :
-			TrainNode(nodeTypeName, pConnectorDst), _binaryFuncPack(binaryFuncPack),
-			_connectorSrcLeft(this), _connectorSrcRight(this) {}
+	TrainNode_Binary(const char* nodeTypeName, Connector* pConnectorDst) :
+			TrainNode(nodeTypeName, pConnectorDst), _connectorSrcLeft(this), _connectorSrcRight(this) {}
 	Connector* GetConnectorSrcLeft() { return &_connectorSrcLeft; }
 	Connector* GetConnectorSrcRight() { return &_connectorSrcRight; }
 	const Connector* GetConnectorSrcLeft() const { return &_connectorSrcLeft; }
 	const Connector* GetConnectorSrcRight() const { return &_connectorSrcRight; }
-	virtual bool IsBinary();
+	virtual bool IsBinary() const { return true; }
 	virtual bool IsVulnerable() const;
-	virtual bool EvalForward(Processor& processor);
 	virtual bool GatherMemberSymbol(SymbolList& symbols);
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr);
 	virtual String ToString() const;
 	virtual void Print(int indentLevel) const;
 };
 
+#if 0
 //------------------------------------------------------------------------------
 // TrainNode_Add
 //------------------------------------------------------------------------------
 class TrainNode_Add : public TrainNode_Binary {
 public:
-	TrainNode_Add(Connector* pConnectorDst) :
-			TrainNode_Binary("binary@add", Array::binaryFuncPack_Add, pConnectorDst) {}
+	TrainNode_Add(Connector* pConnectorDst) : TrainNode_Binary("Add", pConnectorDst) {}
+	virtual bool EvalForward(Processor& processor);
 	virtual bool EvalBackward(Processor& processor);
 };
 
@@ -215,8 +214,8 @@ public:
 //------------------------------------------------------------------------------
 class TrainNode_Sub : public TrainNode_Binary {
 public:
-	TrainNode_Sub(Connector* pConnectorDst) :
-			TrainNode_Binary("binary@sub", Array::binaryFuncPack_Sub, pConnectorDst) {}
+	TrainNode_Sub(Connector* pConnectorDst) : TrainNode_Binary("Sub", pConnectorDst) {}
+	virtual bool EvalForward(Processor& processor);
 	virtual bool EvalBackward(Processor& processor);
 };
 
@@ -225,8 +224,8 @@ public:
 //------------------------------------------------------------------------------
 class TrainNode_Mul : public TrainNode_Binary {
 public:
-	TrainNode_Mul(Connector* pConnectorDst) :
-			TrainNode_Binary("binary@mul", Array::binaryFuncPack_Mul, pConnectorDst) {}
+	TrainNode_Mul(Connector* pConnectorDst) : TrainNode_Binary("Mul", pConnectorDst) {}
+	virtual bool EvalForward(Processor& processor);
 	virtual bool EvalBackward(Processor& processor);
 };
 
@@ -235,8 +234,8 @@ public:
 //------------------------------------------------------------------------------
 class TrainNode_Div : public TrainNode_Binary {
 public:
-	TrainNode_Div(Connector* pConnectorDst) :
-			TrainNode_Binary("binary@div", Array::binaryFuncPack_Div, pConnectorDst) {}
+	TrainNode_Div(Connector* pConnectorDst) : TrainNode_Binary("Div", pConnectorDst) {}
+	virtual bool EvalForward(Processor& processor);
 	virtual bool EvalBackward(Processor& processor);
 };
 
@@ -247,8 +246,8 @@ class TrainNode_Pow : public TrainNode_Binary {
 private:
 	RefPtr<Array> _pArrayWork;
 public:
-	TrainNode_Pow(Connector* pConnectorDst) :
-			TrainNode_Binary("binary@pow", Array::binaryFuncPack_Pow, pConnectorDst) {}
+	TrainNode_Pow(Connector* pConnectorDst) : TrainNode_Binary("Pow", pConnectorDst) {}
+	virtual bool EvalForward(Processor& processor);
 	virtual bool EvalBackward(Processor& processor);
 };
 
@@ -260,29 +259,29 @@ private:
 	RefPtr<Array> _pArrayFwdLeftTrans;
 	RefPtr<Array> _pArrayFwdRightTrans;
 public:
-	TrainNode_Dot(Connector* pConnectorDst) :
-			TrainNode_Binary("binary@dot", Array::binaryFuncPack_Dot, pConnectorDst) {}
+	TrainNode_Dot(Connector* pConnectorDst) : TrainNode_Binary("Dot", pConnectorDst) {}
+	virtual bool EvalForward(Processor& processor);
 	virtual bool EvalBackward(Processor& processor);
 };
 
 //------------------------------------------------------------------------------
-// NodeGear
+// TrainNode_Gear
 //------------------------------------------------------------------------------
-class NodeGear : public TrainNode {
+class TrainNode_Gear : public TrainNode {
 public:
 	class Creator {
 	public:
-		virtual NodeGear* Create(const Value &value, Connector* pConnectorDst, const Trainer* pTrainer) const = 0;
+		virtual TrainNode_Gear* Create(const Value &value, Connector* pConnectorDst, const Trainer* pTrainer) const = 0;
 	};
 protected:
 	RefPtr<Gear> _pGear;
 	Connector _connectorSrc;
 public:
-	NodeGear(Gear* pGear, Connector* pConnectorDst) :
+	TrainNode_Gear(Gear* pGear, Connector* pConnectorDst) :
 			TrainNode(pGear->GetName(), pConnectorDst), _pGear(pGear), _connectorSrc(this) {}
 	Connector* GetConnectorSrc() { return &_connectorSrc; }
 	const Connector* GetConnectorSrc() const { return &_connectorSrc; }
-	virtual bool IsGear();
+	virtual bool IsGear() const { return true; }
 	virtual bool GatherMemberSymbol(SymbolList& symbols);
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr);
 	virtual String ToString() const;

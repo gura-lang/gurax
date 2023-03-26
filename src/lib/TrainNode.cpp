@@ -59,8 +59,6 @@ void TrainNodeOwner::Clear()
 //-----------------------------------------------------------------------------
 // TrainNode_Head
 //-----------------------------------------------------------------------------
-bool TrainNode_Head::IsHead() { return true; }
-
 bool TrainNode_Head::IsVulnerable() const
 {
 	return IsVariable();
@@ -130,8 +128,6 @@ void TrainNode_Head::Print(int indentLevel) const
 //-----------------------------------------------------------------------------
 // TrainNode_Bottom
 //-----------------------------------------------------------------------------
-bool TrainNode_Bottom::IsBottom() { return true; }
-
 bool TrainNode_Bottom::IsVulnerable() const
 {
 	return _connectorSrc.GetNodeSrc().IsVulnerable();
@@ -197,8 +193,6 @@ void TrainNode_Bottom::Print(int indentLevel) const
 //-----------------------------------------------------------------------------
 // TrainNode_Unary
 //-----------------------------------------------------------------------------
-bool TrainNode_Unary::IsUnary() { return true; }
-
 bool TrainNode_Unary::IsVulnerable() const
 {
 	return _connectorSrc.GetNodeSrc().IsVulnerable();
@@ -242,14 +236,7 @@ void TrainNode_Unary::Print(int indentLevel) const
 //-----------------------------------------------------------------------------
 bool TrainNode_Neg::EvalForward(Processor& processor)
 {
-	//::printf("NodeUnary::EvalForward(Processor& processor)\n");
-	void* pvRtn = GetArrayFwd().GetPointerC<void>();
-	const Array& array = GetConnectorSrc().GetArrayFwd();
-	const void* pv = array.GetPointerC<void>();
-	size_t len = array.GetDimSizes().CalcLength();
-	auto& func = array.GetElemType().Neg_Array;
-	func(pvRtn, pv, len);
-	return true;
+	return Array::Neg(_pArrayFwd, GetConnectorSrc().GetArrayFwd());
 }
 
 bool TrainNode_Neg::EvalBackward(Processor& processor)
@@ -258,31 +245,19 @@ bool TrainNode_Neg::EvalBackward(Processor& processor)
 	if (ppConnectorDst == _connectorsDst.end()) return true;
 	if (_connectorSrc.GetNodeSrc().IsVulnerable()) {
 		// grad_src = -grad_out
-		//if (!Array::Neg(env, _connectorSrc.GetArrayGradAutoPtr(), (*ppConnectorDst)->GetArrayGrad())) return false;
+		if (!Array::Neg(_connectorSrc.GetArrayGradRefPtr(), (*ppConnectorDst)->GetArrayGrad())) return false;
 	}
 	return true;
 }
 
-#if 0
 //-----------------------------------------------------------------------------
 // TrainNode_Binary
 //-----------------------------------------------------------------------------
-bool TrainNode_Binary::IsBinary() { return true; }
-
 bool TrainNode_Binary::IsVulnerable() const
 {
 	return
-		_connectorSrcLeft.GetNodeSrc()->IsVulnerable() ||
-		_connectorSrcRight.GetNodeSrc()->IsVulnerable();
-}
-
-bool TrainNode_Binary::EvalForward(Processor& processor)
-{
-	//::printf("NodeBinary::EvalForward(Processor& processor)\n");
-	return Array::ApplyBinaryFunc(
-			env, _binaryFuncPack, _pArrayFwd,
-			GetConnectorSrcLeft()->GetArrayFwd(),
-			GetConnectorSrcRight()->GetArrayFwd());
+		_connectorSrcLeft.GetNodeSrc().IsVulnerable() ||
+		_connectorSrcRight.GetNodeSrc().IsVulnerable();
 }
 
 bool TrainNode_Binary::GatherMemberSymbol(SymbolList& symbols)
@@ -297,17 +272,13 @@ bool TrainNode_Binary::GatherMemberSymbol(SymbolList& symbols)
 Value* TrainNode_Binary::DoGetProperty(const Symbol* pSymbol, const Attribute& attr)
 {
 	if (pSymbol->IsIdentical(Gurax_Symbol(input_at_left))) {
-		evaluatedFlag = true;
-		return Array::ToValue(env, Array::Reference(_connectorSrcLeft.GetArrayFwd()));
+		return new Value_Array(_connectorSrcLeft.GetArrayFwd().Reference());
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(input_at_right))) {
-		evaluatedFlag = true;
-		return Array::ToValue(env, Array::Reference(_connectorSrcRight.GetArrayFwd()));
+		return new Value_Array(_connectorSrcRight.GetArrayFwd().Reference());
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(inputgrad_at_left))) {
-		evaluatedFlag = true;
-		return Array::ToValue(env, Array::Reference(_connectorSrcLeft.GetArrayGrad()));
+		return new Value_Array(_connectorSrcLeft.GetArrayGrad().Reference());
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(inputgrad_at_right))) {
-		evaluatedFlag = true;
-		return Array::ToValue(env, Array::Reference(_connectorSrcRight.GetArrayGrad()));
+		return new Value_Array(_connectorSrcRight.GetArrayGrad().Reference());
 	}
 	return TrainNode::DoGetProperty(pSymbol, attr);
 }
@@ -318,8 +289,8 @@ String TrainNode_Binary::ToString() const
 	char buff[128];
 	str += GetNodeTypeName();
 	::sprintf(buff, " [fwd:%p,grad:%p][fwd:%p,grad:%p]",
-			_connectorSrcLeft.GetArrayFwd(), _connectorSrcLeft.GetArrayGrad(),
-			_connectorSrcRight.GetArrayFwd(), _connectorSrcRight.GetArrayGrad());
+			&_connectorSrcLeft.GetArrayFwd(), &_connectorSrcLeft.GetArrayGrad(),
+			&_connectorSrcRight.GetArrayFwd(), &_connectorSrcRight.GetArrayGrad());
 	str += buff;
 	return str;
 }
@@ -327,13 +298,23 @@ String TrainNode_Binary::ToString() const
 void TrainNode_Binary::Print(int indentLevel) const
 {
 	Print(indentLevel);
-	_connectorSrcLeft.GetNodeSrc()->Print(indentLevel + 1);
-	_connectorSrcRight.GetNodeSrc()->Print(indentLevel + 1);
+	_connectorSrcLeft.GetNodeSrc().Print(indentLevel + 1);
+	_connectorSrcRight.GetNodeSrc().Print(indentLevel + 1);
 }
 
+#if 0
 //-----------------------------------------------------------------------------
 // TrainNode_Add
 //-----------------------------------------------------------------------------
+bool TrainNode_Binary::EvalForward(Processor& processor)
+{
+	//::printf("NodeBinary::EvalForward(Processor& processor)\n");
+	return Array::ApplyBinaryFunc(
+			env, _binaryFuncPack, _pArrayFwd,
+			GetConnectorSrcLeft()->GetArrayFwd(),
+			GetConnectorSrcRight()->GetArrayFwd());
+}
+
 bool TrainNode_Add::EvalBackward(Processor& processor)
 {
 	ConnectorList::iterator ppConnectorDst = _connectorsDst.begin();
@@ -464,8 +445,6 @@ bool TrainNode_Dot::EvalBackward(Processor& processor)
 //-----------------------------------------------------------------------------
 // TrainNode_Gear
 //-----------------------------------------------------------------------------
-bool TrainNode_Gear::IsGear() { return true; }
-
 bool TrainNode_Gear::GatherMemberSymbol(SymbolList& symbols)
 {
 	symbols.push_back(Gurax_Symbol(gear));
@@ -474,8 +453,7 @@ bool TrainNode_Gear::GatherMemberSymbol(SymbolList& symbols)
 	return TrainNode::GatherMemberSymbol(symbols);
 }
 
-Value* TrainNode_Gear::DoGetProp(const Symbol *pSymbol,
-								   const SymbolSet &attrs, bool &evaluatedFlag)
+Value* TrainNode_Gear::DoGetProp(const Symbol *pSymbol, const SymbolSet &attrs, bool &evaluatedFlag)
 {
 	if (pSymbol->IsIdentical(Gurax_Symbol(gear))) {
 		evaluatedFlag = true;
