@@ -250,6 +250,7 @@ Gurax_RealizeSymbol(gzip);
 Gurax_RealizeSymbol(h);
 Gurax_RealizeSymbol(H);
 Gurax_RealizeSymbol(half);
+Gurax_RealizeSymbol(head);
 Gurax_RealizeSymbol(height);
 Gurax_RealizeSymbol(help);
 Gurax_RealizeSymbol(horz);

@@ -2026,9 +2026,14 @@ Value_List* Array::ToList() const
 	return new Value_List(vtypeOfElems, pValues.release());
 }
 
+Array* Array::CreateLike() const
+{
+	return Create(GetElemType(), GetDimSizes());
+}
+
 Array* Array::CreateCasted(ElemTypeT& elemType) const
 {
-	RefPtr<Array> pArray(Array::Create(elemType, _dimSizes));
+	RefPtr<Array> pArray(Create(elemType, _dimSizes));
 	pArray->InjectElems(GetPointerC<void>(), GetElemType(), 0, _dimSizes.CalcLength());
 	return pArray.release();
 }

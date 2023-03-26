@@ -242,7 +242,7 @@ bool TrainNode_Neg::EvalBackward(Processor& processor)
 	ConnectorList::iterator ppConnectorDst = _connectorsDst.begin();
 	if (ppConnectorDst == _connectorsDst.end()) return true;
 	if (GetConnectorSrc().GetNodeSrc().IsVulnerable()) {
-		// grad_src = -grad_out
+		// inputGrad = -outputGrad
 		if (!Array::Neg(GetConnectorSrc().GetArrayGradRefPtr(), (*ppConnectorDst)->GetArrayGrad())) return false;
 	}
 	return true;
@@ -314,11 +314,11 @@ bool TrainNode_Add::EvalBackward(Processor& processor)
 	if (ppConnectorDst == _connectorsDst.end()) return true;
 	const Array& arrayGrad = (*ppConnectorDst)->GetArrayGrad();
 	if (GetConnectorSrcLeft().GetNodeSrc().IsVulnerable()) {
-		// grad_left = grad_out
+		// inputGradLeft = outputGrad
 		GetConnectorSrcLeft().SetArrayGrad(arrayGrad.Reference());
 	}
 	if (GetConnectorSrcRight().GetNodeSrc().IsVulnerable()) {
-		// grad_right = grad_out
+		// inputGradRight = outputGrad
 		GetConnectorSrcRight().SetArrayGrad(arrayGrad.Reference());
 	}
 	return true;
@@ -337,11 +337,11 @@ bool TrainNode_Sub::EvalBackward(Processor& processor)
 	ConnectorList::iterator ppConnectorDst = _connectorsDst.begin();
 	if (ppConnectorDst == _connectorsDst.end()) return true;
 	if (GetConnectorSrcLeft().GetNodeSrc().IsVulnerable()) {
-		// grad_left = grad_out
+		// inputGradLeft = outputGrad
 		GetConnectorSrcLeft().SetArrayGrad((*ppConnectorDst)->GetArrayGrad().Reference());
 	}
 	if (GetConnectorSrcRight().GetNodeSrc().IsVulnerable()) {
-		// grad_right = -grad_out
+		// inputGradRight = -outputGrad
 		if (!Array::Neg(GetConnectorSrcRight().GetArrayGradRefPtr(), (*ppConnectorDst)->GetArrayGrad())) return false;
 	}
 	return true;
@@ -360,12 +360,12 @@ bool TrainNode_Mul::EvalBackward(Processor& processor)
 	ConnectorList::iterator ppConnectorDst = _connectorsDst.begin();
 	if (ppConnectorDst == _connectorsDst.end()) return true;
 	if (GetConnectorSrcLeft().GetNodeSrc().IsVulnerable()) {
-		// grad_left = grad_out * right
+		// inputGradLeft = outputGrad * inputRight
 		if (!Array::Mul(GetConnectorSrcLeft().GetArrayGradRefPtr(),
 						(*ppConnectorDst)->GetArrayGrad(), GetConnectorSrcRight().GetArrayFwd())) return false;
 	}
 	if (GetConnectorSrcRight().GetNodeSrc().IsVulnerable()) {
-		// grad_right = grad_out * left
+		// inputGradRight = outputGrad * inputLeft
 		if (!Array::Mul(GetConnectorSrcRight().GetArrayGradRefPtr(),
 						(*ppConnectorDst)->GetArrayGrad(), GetConnectorSrcLeft().GetArrayFwd())) return false;
 	}
@@ -385,12 +385,12 @@ bool TrainNode_Div::EvalBackward(Processor& processor)
 	ConnectorList::iterator ppConnectorDst = _connectorsDst.begin();
 	if (ppConnectorDst == _connectorsDst.end()) return true;
 	if (GetConnectorSrcLeft().GetNodeSrc().IsVulnerable()) {
-		// grad_left = grad_out / right
+		// inputGradLeft = outputGrad / inputRight
 		if (!Array::Div(GetConnectorSrcLeft().GetArrayGradRefPtr(),
 						(*ppConnectorDst)->GetArrayGrad(), GetConnectorSrcRight().GetArrayFwd())) return false;
 	}
 	if (GetConnectorSrcRight().GetNodeSrc().IsVulnerable()) {
-		// grad_right = -grad_out * left / (right * right) = -grad_out * out / right
+		// inputGradRight = -outputGrad * inputLeft / (inputRight * inputRight) = -outputGrad * output / inputRight
 		if (!Array::Mul(GetConnectorSrcRight().GetArrayGradRefPtr(),
 						(*ppConnectorDst)->GetArrayGrad(), GetArrayFwd())) return false;
 		if (!Array::Div(GetConnectorSrcRight().GetArrayGradRefPtr(),
@@ -414,7 +414,7 @@ bool TrainNode_Pow::EvalBackward(Processor& processor)
 	ConnectorList::iterator ppConnectorDst = _connectorsDst.begin();
 	if (ppConnectorDst == _connectorsDst.end()) return true;
 	if (GetConnectorSrcLeft().GetNodeSrc().IsVulnerable()) {
-		// grad_left = grad_out * right * left ** (right - 1) = grad_out * out * right / left
+		// inputGradLeft = outputGrad * inputRight * inputLeft ** (inputRight - 1) = outputGrad * output * inputRight / inputLeft
 		if (!Array::Mul(GetConnectorSrcLeft().GetArrayGradRefPtr(),
 						(*ppConnectorDst)->GetArrayGrad(), GetArrayFwd())) return false;
 		if (!Array::Mul(GetConnectorSrcLeft().GetArrayGradRefPtr(),
@@ -423,7 +423,7 @@ bool TrainNode_Pow::EvalBackward(Processor& processor)
 						GetConnectorSrcLeft().GetArrayGrad(), GetConnectorSrcLeft().GetArrayFwd())) return false;
 	}
 	if (GetConnectorSrcRight().GetNodeSrc().IsVulnerable()) {
-		// grad_right = grad_out * log(left) * left ** right = grad_out * out * log(left)
+		// inputGradRight = outputGrad * log(inputLeft) * inputLeft ** inputRight = outputGrad * output * log(inputLeft)
 		//if (!Array::Math_log(_pArrayWork, GetConnectorSrcLeft().GetArrayFwd())) return false;
 		if (!Array::Mul(GetConnectorSrcRight().GetArrayGradRefPtr(),
 						(*ppConnectorDst)->GetArrayGrad(), GetArrayFwd())) return false;
@@ -446,13 +446,13 @@ bool TrainNode_Dot::EvalBackward(Processor& processor)
 	ConnectorList::iterator ppConnectorDst = _connectorsDst.begin();
 	if (ppConnectorDst == _connectorsDst.end()) return true;
 	if (GetConnectorSrcLeft().GetNodeSrc().IsVulnerable()) {
-		// grad_left = grad_out |.| trans(right)
+		// inputGradLeft = outputGrad |.| transpose(inputRight)
 		GetConnectorSrcRight().GetArrayFwd().Transpose(_pArrayFwdRightTrans);
 		if (!Array::Dot(GetConnectorSrcLeft().GetArrayGradRefPtr(),
 						(*ppConnectorDst)->GetArrayGrad(), *_pArrayFwdRightTrans)) return false;
 	}
 	if (GetConnectorSrcRight().GetNodeSrc().IsVulnerable()) {
-		// grad_right = trans(left) |.| grad_out
+		// inputGradRight = transpose(inputLeft) |.| outputGrad
 		GetConnectorSrcLeft().GetArrayFwd().Transpose(_pArrayFwdLeftTrans);
 		if (!Array::Dot(GetConnectorSrcRight().GetArrayGradRefPtr(),
 						*_pArrayFwdLeftTrans, (*ppConnectorDst)->GetArrayGrad())) return false;

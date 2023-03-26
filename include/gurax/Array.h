@@ -274,6 +274,7 @@ public:
 	static bool Cross(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
 public:
 	Value_List* ToList() const;
+	Array* CreateLike() const;
 	Array* CreateCasted(ElemTypeT& elemType) const;
 	void* FwdPointer(void* pv, int n) const { return GetElemType().FwdPointer(pv, n); }
 	const void* FwdPointer(const void* pv, int n) const { return GetElemType().FwdPointer(pv, n); }

@@ -253,6 +253,7 @@ Gurax_DeclareSymbol(gzip);
 Gurax_DeclareSymbol(h);
 Gurax_DeclareSymbol(H);
 Gurax_DeclareSymbol(half);
+Gurax_DeclareSymbol(head);
 Gurax_DeclareSymbol(height);
 Gurax_DeclareSymbol(help);
 Gurax_DeclareSymbol(horz);

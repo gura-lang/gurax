@@ -51,7 +51,7 @@ protected:
 public:
 	// Constructor
 	explicit TrainNode(const char* nodeTypeName) : _nodeTypeName(nodeTypeName) {}
-	explicit TrainNode(const char* nodeTypeName, Connector* pConnectorDst);
+	TrainNode(const char* nodeTypeName, Connector* pConnectorDst);
 	// Copy constructor/operator
 	TrainNode(const TrainNode& src) = delete;
 	TrainNode& operator=(const TrainNode& src) = delete;
