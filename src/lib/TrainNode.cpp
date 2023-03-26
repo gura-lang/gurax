@@ -130,13 +130,13 @@ void TrainNode_Head::Print(int indentLevel) const
 //-----------------------------------------------------------------------------
 bool TrainNode_Bottom::IsVulnerable() const
 {
-	return _connectorSrc.GetNodeSrc().IsVulnerable();
+	return GetConnectorSrc().GetNodeSrc().IsVulnerable();
 }
 
 bool TrainNode_Bottom::EvalForward(Processor& processor)
 {
 	//::printf("NodeBottom::EvalForward(Processor& processor)\n");
-	_pArrayFwd.reset(_connectorSrc.GetArrayFwd().Reference());
+	_pArrayFwd.reset(GetConnectorSrc().GetArrayFwd().Reference());
 	return true;
 }
 
@@ -149,10 +149,8 @@ bool TrainNode_Bottom::EvalBackward(Processor& processor)
 bool TrainNode_Bottom::EvalBackwardTop(const Array& arrayCorrect)
 {
 	_pArrayCorrect.reset(arrayCorrect.Reference());
-	if (_connectorSrc.GetNodeSrc().IsVulnerable()) {
-		//RefPtr<Array> pArrayGrad(Array::Sub(_connectorSrc.GetArrayFwd(), arrayCorrect));
-		//if (!pArrayGrad) return false;
-		//_connectorSrc.SetArrayGrad(pArrayGrad.release());
+	if (GetConnectorSrc().GetNodeSrc().IsVulnerable()) {
+		if (!Array::Sub(GetConnectorSrc().GetArrayGradRefPtr(), GetConnectorSrc().GetArrayFwd(), arrayCorrect)) return false;
 	}
 	return true;
 }
@@ -160,16 +158,16 @@ bool TrainNode_Bottom::EvalBackwardTop(const Array& arrayCorrect)
 bool TrainNode_Bottom::GatherMemberSymbol(SymbolList& symbols)
 {
 	symbols.push_back(Gurax_Symbol(input));
-	symbols.push_back(Gurax_Symbol(inputgrad));
+	symbols.push_back(Gurax_Symbol(inputGrad));
 	return TrainNode::GatherMemberSymbol(symbols);
 }
 
 Value* TrainNode_Bottom::DoGetProperty(const Symbol* pSymbol, const Attribute& attr)
 {
 	if (pSymbol->IsIdentical(Gurax_Symbol(input))) {
-		return new Value_Array(_connectorSrc.GetArrayFwd().Reference());
-	} else if (pSymbol->IsIdentical(Gurax_Symbol(inputgrad))) {
-		return new Value_Array(_connectorSrc.GetArrayGrad().Reference());
+		return new Value_Array(GetConnectorSrc().GetArrayFwd().Reference());
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(inputGrad))) {
+		return new Value_Array(GetConnectorSrc().GetArrayGrad().Reference());
 	}
 	return TrainNode::DoGetProperty(pSymbol, attr);
 }
@@ -179,7 +177,7 @@ String TrainNode_Bottom::ToString() const
 	String str;
 	char buff[128];
 	str += GetNodeTypeName();
-	::sprintf(buff, " [fwd:%p,grad:%p]", &_connectorSrc.GetArrayFwd(), &_connectorSrc.GetArrayGrad());
+	::sprintf(buff, " [fwd:%p,grad:%p]", &GetConnectorSrc().GetArrayFwd(), &GetConnectorSrc().GetArrayGrad());
 	str += buff;
 	return str;
 }
@@ -187,7 +185,7 @@ String TrainNode_Bottom::ToString() const
 void TrainNode_Bottom::Print(int indentLevel) const
 {
 	Print(indentLevel);
-	_connectorSrc.GetNodeSrc().Print(indentLevel + 1);
+	GetConnectorSrc().GetNodeSrc().Print(indentLevel + 1);
 }
 
 //-----------------------------------------------------------------------------
@@ -195,22 +193,22 @@ void TrainNode_Bottom::Print(int indentLevel) const
 //-----------------------------------------------------------------------------
 bool TrainNode_Unary::IsVulnerable() const
 {
-	return _connectorSrc.GetNodeSrc().IsVulnerable();
+	return GetConnectorSrc().GetNodeSrc().IsVulnerable();
 }
 
 bool TrainNode_Unary::GatherMemberSymbol(SymbolList& symbols)
 {
 	symbols.push_back(Gurax_Symbol(input));
-	symbols.push_back(Gurax_Symbol(inputgrad));
+	symbols.push_back(Gurax_Symbol(inputGrad));
 	return TrainNode::GatherMemberSymbol(symbols);
 }
 
 Value* TrainNode_Unary::DoGetProperty(const Symbol* pSymbol, const Attribute& attr)
 {
 	if (pSymbol->IsIdentical(Gurax_Symbol(input))) {
-		return new Value_Array(_connectorSrc.GetArrayFwd().Reference());
-	} else if (pSymbol->IsIdentical(Gurax_Symbol(inputgrad))) {
-		return new Value_Array(_connectorSrc.GetArrayGrad().Reference());
+		return new Value_Array(GetConnectorSrc().GetArrayFwd().Reference());
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(inputGrad))) {
+		return new Value_Array(GetConnectorSrc().GetArrayGrad().Reference());
 	}
 	return TrainNode::DoGetProperty(pSymbol, attr);
 }
@@ -220,7 +218,7 @@ String TrainNode_Unary::ToString() const
 	String str;
 	char buff[128];
 	str += GetNodeTypeName();
-	::sprintf(buff, " [fwd:%p,grad:%p]", &_connectorSrc.GetArrayFwd(), &_connectorSrc.GetArrayGrad());
+	::sprintf(buff, " [fwd:%p,grad:%p]", &GetConnectorSrc().GetArrayFwd(), &GetConnectorSrc().GetArrayGrad());
 	str += buff;
 	return str;
 }
@@ -228,7 +226,7 @@ String TrainNode_Unary::ToString() const
 void TrainNode_Unary::Print(int indentLevel) const
 {
 	Print(indentLevel);
-	_connectorSrc.GetNodeSrc().Print(indentLevel + 1);
+	GetConnectorSrc().GetNodeSrc().Print(indentLevel + 1);
 }
 
 //-----------------------------------------------------------------------------
@@ -243,9 +241,9 @@ bool TrainNode_Neg::EvalBackward(Processor& processor)
 {
 	ConnectorList::iterator ppConnectorDst = _connectorsDst.begin();
 	if (ppConnectorDst == _connectorsDst.end()) return true;
-	if (_connectorSrc.GetNodeSrc().IsVulnerable()) {
+	if (GetConnectorSrc().GetNodeSrc().IsVulnerable()) {
 		// grad_src = -grad_out
-		if (!Array::Neg(_connectorSrc.GetArrayGradRefPtr(), (*ppConnectorDst)->GetArrayGrad())) return false;
+		if (!Array::Neg(GetConnectorSrc().GetArrayGradRefPtr(), (*ppConnectorDst)->GetArrayGrad())) return false;
 	}
 	return true;
 }
@@ -262,22 +260,22 @@ bool TrainNode_Binary::IsVulnerable() const
 
 bool TrainNode_Binary::GatherMemberSymbol(SymbolList& symbols)
 {
-	symbols.push_back(Gurax_Symbol(input_at_left));
-	symbols.push_back(Gurax_Symbol(input_at_right));
-	symbols.push_back(Gurax_Symbol(inputgrad_at_left));
-	symbols.push_back(Gurax_Symbol(inputgrad_at_right));
+	symbols.push_back(Gurax_Symbol(inputLeft));
+	symbols.push_back(Gurax_Symbol(inputRight));
+	symbols.push_back(Gurax_Symbol(inputGradLeft));
+	symbols.push_back(Gurax_Symbol(inputGradRight));
 	return TrainNode::GatherMemberSymbol(symbols);
 }
 
 Value* TrainNode_Binary::DoGetProperty(const Symbol* pSymbol, const Attribute& attr)
 {
-	if (pSymbol->IsIdentical(Gurax_Symbol(input_at_left))) {
+	if (pSymbol->IsIdentical(Gurax_Symbol(inputLeft))) {
 		return new Value_Array(GetConnectorSrcLeft().GetArrayFwd().Reference());
-	} else if (pSymbol->IsIdentical(Gurax_Symbol(input_at_right))) {
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(inputRight))) {
 		return new Value_Array(GetConnectorSrcRight().GetArrayFwd().Reference());
-	} else if (pSymbol->IsIdentical(Gurax_Symbol(inputgrad_at_left))) {
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(inputGradLeft))) {
 		return new Value_Array(GetConnectorSrcLeft().GetArrayGrad().Reference());
-	} else if (pSymbol->IsIdentical(Gurax_Symbol(inputgrad_at_right))) {
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(inputGradRight))) {
 		return new Value_Array(GetConnectorSrcRight().GetArrayGrad().Reference());
 	}
 	return TrainNode::DoGetProperty(pSymbol, attr);
@@ -462,7 +460,6 @@ bool TrainNode_Dot::EvalBackward(Processor& processor)
 	return true;
 }
 
-#if 0
 //-----------------------------------------------------------------------------
 // TrainNode_Gear
 //-----------------------------------------------------------------------------
@@ -470,17 +467,17 @@ bool TrainNode_Gear::GatherMemberSymbol(SymbolList& symbols)
 {
 	symbols.push_back(Gurax_Symbol(gear));
 	symbols.push_back(Gurax_Symbol(input));
-	symbols.push_back(Gurax_Symbol(inputgrad));
+	symbols.push_back(Gurax_Symbol(inputGrad));
 	return TrainNode::GatherMemberSymbol(symbols);
 }
 
 Value* TrainNode_Gear::DoGetProperty(const Symbol* pSymbol, const Attribute& attr)
 {
 	if (pSymbol->IsIdentical(Gurax_Symbol(gear))) {
-		//return Value(_pGear->ToObject());
+		return new Value_Gear(GetGear().Reference());
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(input))) {
 		return new Value_Array(GetConnectorSrc().GetArrayFwd().Reference());
-	} else if (pSymbol->IsIdentical(Gurax_Symbol(inputgrad))) {
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(inputGrad))) {
 		return new Value_Array(GetConnectorSrc().GetArrayGrad().Reference());
 	}
 	return TrainNode::DoGetProperty(pSymbol, attr);
@@ -501,6 +498,5 @@ void TrainNode_Gear::Print(int indentLevel) const
 	Print(indentLevel);
 	//GetConnectorSrc().GetNodeSrc().Print(indentLevel + 1);
 }
-#endif
 
 }

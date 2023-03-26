@@ -64,8 +64,8 @@ public:
 	const char* GetNodeTypeName() const { return _nodeTypeName; }
 	void AddConnectorDst(Connector* pConnectorDst) { _connectorsDst.push_back(pConnectorDst); }
 	Array& GetArrayFwd() { return *_pArrayFwd; }
-	RefPtr<Array>& GetArrayFwdRefPtr() { return _pArrayFwd; }
 	const Array& GetArrayFwd() const { return *_pArrayFwd; }
+	RefPtr<Array>& GetArrayFwdRefPtr() { return _pArrayFwd; }
 	virtual bool IsHead() const { return false; }
 	virtual bool IsBottom() const { return false; }
 	virtual bool IsUnary() const { return false; }
@@ -139,6 +139,8 @@ public:
 	TrainNode_Bottom() : TrainNode("Bottom"), _connectorSrc(this) {}
 	Connector& GetConnectorSrc() { return _connectorSrc; }
 	const Connector& GetConnectorSrc() const { return _connectorSrc; }
+	Array& GetArrayCorrect() { return *_pArrayCorrect; }
+	const Array& GetArrayCorrect() const { return *_pArrayCorrect; }
 	virtual bool IsBottom() const { return true; }
 	virtual bool IsVulnerable() const;
 	virtual bool EvalForward(Processor& processor);
@@ -279,6 +281,8 @@ protected:
 	Connector _connectorSrc;
 public:
 	TrainNode_Gear(Gear* pGear, Connector* pConnectorDst) : TrainNode(pGear->GetName(), pConnectorDst), _pGear(pGear), _connectorSrc(this) {}
+	Gear& GetGear() { return *_pGear; }
+	const Gear& GetGear() const { return *_pGear; }
 	Connector& GetConnectorSrc() { return _connectorSrc; }
 	const Connector& GetConnectorSrc() const { return _connectorSrc; }
 	virtual bool IsGear() const { return true; }
