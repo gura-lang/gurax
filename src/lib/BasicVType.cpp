@@ -33,6 +33,7 @@ void BasicVType::Prepare(Frame& frame)
 	frame.Assign(VTYPE_Expr);
 	frame.Assign(VTYPE_Frame);
 	frame.Assign(VTYPE_Function);
+	frame.Assign(VTYPE_Gear);
 	frame.Assign(VTYPE_Help);
 	frame.Assign(VTYPE_Iterator);
 	frame.Assign(VTYPE_Image);

@@ -474,17 +474,14 @@ bool TrainNode_Gear::GatherMemberSymbol(SymbolList& symbols)
 	return TrainNode::GatherMemberSymbol(symbols);
 }
 
-Value* TrainNode_Gear::DoGetProp(const Symbol *pSymbol, const SymbolSet &attrs, bool &evaluatedFlag)
+Value* TrainNode_Gear::DoGetProperty(const Symbol* pSymbol, const Attribute& attr)
 {
 	if (pSymbol->IsIdentical(Gurax_Symbol(gear))) {
-		evaluatedFlag = true;
-		return Value(_pGear->ToObject());
+		//return Value(_pGear->ToObject());
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(input))) {
-		evaluatedFlag = true;
-		return Array::ToValue(Array::Reference(_connectorSrc.GetArrayFwd()));
+		return new Value_Array(GetConnectorSrc().GetArrayFwd().Reference());
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(inputgrad))) {
-		evaluatedFlag = true;
-		return Array::ToValue(Array::Reference(_connectorSrc.GetArrayGrad()));
+		return new Value_Array(GetConnectorSrc().GetArrayGrad().Reference());
 	}
 	return TrainNode::DoGetProperty(pSymbol, attr);
 }
@@ -494,7 +491,7 @@ String TrainNode_Gear::ToString() const
 	String str;
 	char buff[128];
 	str += GetNodeTypeName();
-	::sprintf(buff, " [fwd:%p,grad:%p]", _connectorSrc.GetArrayFwd(), _connectorSrc.GetArrayGrad());
+	::sprintf(buff, " [fwd:%p,grad:%p]", &GetConnectorSrc().GetArrayFwd(), &GetConnectorSrc().GetArrayGrad());
 	str += buff;
 	return str;
 }
@@ -502,7 +499,7 @@ String TrainNode_Gear::ToString() const
 void TrainNode_Gear::Print(int indentLevel) const
 {
 	Print(indentLevel);
-	_connectorSrc.GetNodeSrc()->Print(indentLevel + 1);
+	//GetConnectorSrc().GetNodeSrc().Print(indentLevel + 1);
 }
 #endif
 

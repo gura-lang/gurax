@@ -4,10 +4,12 @@
 #ifndef GURAX_TRAINNODE_H
 #define GURAX_TRAINNODE_H
 #include "Array.h"
+#include "Gear.h"
 #include "TrainOptimizer.h"
 
 namespace Gurax {
 
+class Trainer; 
 //------------------------------------------------------------------------------
 // TrainNode
 //------------------------------------------------------------------------------
@@ -263,7 +265,6 @@ public:
 	virtual bool EvalBackward(Processor& processor);
 };
 
-#if 0
 //------------------------------------------------------------------------------
 // TrainNode_Gear
 //------------------------------------------------------------------------------
@@ -271,23 +272,21 @@ class TrainNode_Gear : public TrainNode {
 public:
 	class Creator {
 	public:
-		virtual TrainNode_Gear* Create(const Value &value, Connector* pConnectorDst, const Trainer* pTrainer) const = 0;
+		virtual TrainNode_Gear* Create(const Value &value, Connector* pConnectorDst, const Trainer& trainer) const = 0;
 	};
 protected:
 	RefPtr<Gear> _pGear;
 	Connector _connectorSrc;
 public:
-	TrainNode_Gear(Gear* pGear, Connector* pConnectorDst) :
-			TrainNode(pGear->GetName(), pConnectorDst), _pGear(pGear), _connectorSrc(this) {}
-	Connector* GetConnectorSrc() { return &_connectorSrc; }
-	const Connector* GetConnectorSrc() const { return &_connectorSrc; }
+	TrainNode_Gear(Gear* pGear, Connector* pConnectorDst) : TrainNode(pGear->GetName(), pConnectorDst), _pGear(pGear), _connectorSrc(this) {}
+	Connector& GetConnectorSrc() { return _connectorSrc; }
+	const Connector& GetConnectorSrc() const { return _connectorSrc; }
 	virtual bool IsGear() const { return true; }
 	virtual bool GatherMemberSymbol(SymbolList& symbols);
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr);
 	virtual String ToString() const;
 	virtual void Print(int indentLevel) const;
 };
-#endif
 
 }
 

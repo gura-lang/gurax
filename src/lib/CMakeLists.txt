@@ -60,6 +60,7 @@ target_sources(guraxcore PRIVATE
 	Frame.cpp
 	Function.cpp
 	FunctionCustom.cpp
+	Gear.cpp
 	Half.cpp
 	Help.cpp
 	Image.cpp
@@ -136,8 +137,8 @@ target_sources(guraxcore PRIVATE
 	VType_ErrorType.cpp
 	VType_Expr.cpp
 	VType_Frame.cpp
-	VType_Scope.cpp
 	VType_Function.cpp
+	VType_Gear.cpp
 	VType_Help.cpp
 	VType_Image.cpp
 	VType_ImageMgr.cpp
@@ -161,6 +162,7 @@ target_sources(guraxcore PRIVATE
 	VType_Quote.cpp
 	VType_Random.cpp
 	VType_Rational.cpp
+	VType_Scope.cpp
 	VType_Semaphore.cpp
 	VType_Stat.cpp
 	VType_Stream.cpp
