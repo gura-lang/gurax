@@ -87,6 +87,11 @@ public:
 		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Div_ArrayNumber;
 		std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>	Div_ComplexArray;
 		std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>	Div_ArrayComplex;
+		std::function<bool (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Pow_ArrayArray[ElemTypeIdMax];
+		std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>			Pow_NumberArray;
+		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Pow_ArrayNumber;
+		std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>	Pow_ComplexArray;
+		std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>	Pow_ArrayComplex;
 		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Or_ArrayArray[ElemTypeIdMax];
 		std::function<void (void* pvRtn, const void* pvL, UInt64 numR, size_t len)>			Or_ArrayNumber;
 		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Xor_ArrayArray[ElemTypeIdMax];
@@ -204,7 +209,7 @@ public:
 	void ExtractElemsSub(ValueOwner& values, size_t& offset, DimSizes::const_iterator pDimSize) const;
 	void ExtractElems(ValueOwner& values) const;
 public:
-	Array* Transpose() const;
+	bool Transpose(RefPtr<Array>& pArrayRtn) const;
 public:
 	static bool GenericUnaryOp(RefPtr<Array>& pArrayRtn, const Array& array,
 		const std::function<void (void* pvRtn, const void* pv, size_t len)>& func);
@@ -241,6 +246,11 @@ public:
 	static bool Div(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR);
 	static bool Div(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR);
 	static bool Div(RefPtr<Array>& pArrayRtn, const Complex& numL, const Array& arrayR);
+	static bool Pow(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
+	static bool Pow(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR);
+	static bool Pow(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR);
+	static bool Pow(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR);
+	static bool Pow(RefPtr<Array>& pArrayRtn, const Complex& numL, const Array& arrayR);
 	static bool Or(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
 	static bool Or(RefPtr<Array>& pArrayRtn, const Array& arrayL, UInt64 numR);
 	static bool Xor(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);

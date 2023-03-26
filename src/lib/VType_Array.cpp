@@ -317,8 +317,8 @@ Gurax_ImplementMethod(Array, Transpose)
 	auto& valueThis = GetValueThis(argument);
 	// Function body
 	Array& array = valueThis.GetArray();
-	RefPtr<Array> pArray(array.Transpose());
-	if (!pArray) return Value::nil();
+	RefPtr<Array> pArray;
+	if (!array.Transpose(pArray)) return Value::nil(); 
 	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
 }
 

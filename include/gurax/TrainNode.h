@@ -186,10 +186,10 @@ protected:
 public:
 	TrainNode_Binary(const char* nodeTypeName, Connector* pConnectorDst) :
 			TrainNode(nodeTypeName, pConnectorDst), _connectorSrcLeft(this), _connectorSrcRight(this) {}
-	Connector* GetConnectorSrcLeft() { return &_connectorSrcLeft; }
-	Connector* GetConnectorSrcRight() { return &_connectorSrcRight; }
-	const Connector* GetConnectorSrcLeft() const { return &_connectorSrcLeft; }
-	const Connector* GetConnectorSrcRight() const { return &_connectorSrcRight; }
+	Connector& GetConnectorSrcLeft() { return _connectorSrcLeft; }
+	Connector& GetConnectorSrcRight() { return _connectorSrcRight; }
+	const Connector& GetConnectorSrcLeft() const { return _connectorSrcLeft; }
+	const Connector& GetConnectorSrcRight() const { return _connectorSrcRight; }
 	virtual bool IsBinary() const { return true; }
 	virtual bool IsVulnerable() const;
 	virtual bool GatherMemberSymbol(SymbolList& symbols);
@@ -198,7 +198,6 @@ public:
 	virtual void Print(int indentLevel) const;
 };
 
-#if 0
 //------------------------------------------------------------------------------
 // TrainNode_Add
 //------------------------------------------------------------------------------
@@ -264,6 +263,7 @@ public:
 	virtual bool EvalBackward(Processor& processor);
 };
 
+#if 0
 //------------------------------------------------------------------------------
 // TrainNode_Gear
 //------------------------------------------------------------------------------

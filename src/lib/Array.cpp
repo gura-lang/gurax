@@ -894,6 +894,82 @@ bool Div_ComplexArray_T(void* pvRtn, const Complex& numL, const void* pvR, size_
 	return true;
 }
 
+Double Pow(Half base, Half exponent) { return std::pow(static_cast<Double>(base), static_cast<Double>(exponent)); }
+Double Pow(Double base, Double exponent) { return std::pow(base, exponent); }
+Complex Pow(Double base, const Complex& exponent) { return std::pow(base, exponent); }
+Complex Pow(const Complex& base, Double exponent) { return std::pow(base, exponent); }
+Complex Pow(const Complex& base, const Complex& exponent) { return std::pow(base, exponent); }
+
+template<typename T_ElemRtn, typename T_ElemL, typename T_ElemR>
+bool Pow_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
+{
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	T_ElemRtn* pRtnEnd = pRtn + len;
+	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
+	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
+	for( ; pRtn != pRtnEnd; pRtn++, pL++, pR++) {
+		auto elemR = *pR;
+		*pRtn = static_cast<T_ElemRtn>(Pow(static_cast<T_ElemRtn>(*pL), elemR));
+	}
+	return true;
+}
+
+template<typename T_ElemL>
+bool Pow_ArrayNumber_T(void* pvRtn, const void* pvL, Double numR, size_t len)
+{
+	using T_ElemRtn = T_ElemL;
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	T_ElemRtn* pRtnEnd = pRtn + len;
+	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
+	T_ElemRtn numRCasted = static_cast<T_ElemRtn>(numR);
+	for( ; pRtn != pRtnEnd; pRtn++, pL++) {
+		*pRtn = static_cast<T_ElemRtn>(Pow(static_cast<T_ElemRtn>(*pL), numRCasted));
+	}
+	return true;
+}
+
+template<typename T_ElemR>
+bool Pow_NumberArray_T(void* pvRtn, Double numL, const void* pvR, size_t len)
+{
+	using T_ElemRtn = T_ElemR;
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	T_ElemRtn* pRtnEnd = pRtn + len;
+	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
+	T_ElemRtn numLCasted = static_cast<T_ElemRtn>(numL);
+	for( ; pRtn != pRtnEnd; pRtn++, pR++) {
+		auto elemR = static_cast<T_ElemRtn>(*pR);
+		*pRtn = static_cast<T_ElemRtn>(Pow(numLCasted, elemR));
+	}
+	return true;
+}
+
+template<typename T_ElemL>
+bool Pow_ArrayComplex_T(void* pvRtn, const void* pvL, const Complex& numR, size_t len)
+{
+	using T_ElemRtn = Complex;
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	T_ElemRtn* pRtnEnd = pRtn + len;
+	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
+	for( ; pRtn != pRtnEnd; pRtn++, pL++) {
+		*pRtn = static_cast<T_ElemRtn>(Pow(static_cast<T_ElemRtn>(*pL), numR));
+	}
+	return true;
+}
+
+template<typename T_ElemR>
+bool Pow_ComplexArray_T(void* pvRtn, const Complex& numL, const void* pvR, size_t len)
+{
+	using T_ElemRtn = Complex;
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	T_ElemRtn* pRtnEnd = pRtn + len;
+	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
+	for( ; pRtn != pRtnEnd; pRtn++, pR++) {
+		auto elemR = *pR;
+		*pRtn = static_cast<T_ElemRtn>(Pow(numL, elemR));
+	}
+	return true;
+}
+
 template<typename T_ElemRtn, typename T_ElemL, typename T_ElemR>
 void Or_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
 {
@@ -1417,6 +1493,11 @@ void Array::Bootup()
 	SetFuncBurst1(Div_NumberArray,		Div_NumberArray_T);
 	SetFuncBurst1(Div_ArrayComplex,		Div_ArrayComplex_T);
 	SetFuncBurst1(Div_ComplexArray,		Div_ComplexArray_T);
+	SetFuncBurst3(Pow_ArrayArray,		Pow_ArrayArray_T);
+	SetFuncBurst1(Pow_ArrayNumber,		Pow_ArrayNumber_T);
+	SetFuncBurst1(Pow_NumberArray,		Pow_NumberArray_T);
+	SetFuncBurst1(Pow_ArrayComplex,		Pow_ArrayComplex_T);
+	SetFuncBurst1(Pow_ComplexArray,		Pow_ComplexArray_T);
 	SetFuncBurst3(Or_ArrayArray,		Or_ArrayArray_T);
 	SetFuncBurst1(Or_ArrayNumber,		Or_ArrayNumber_T);
 	SetFuncBurst3(Xor_ArrayArray,		Xor_ArrayArray_T);
@@ -1492,10 +1573,13 @@ void Array::ExtractElems(ValueOwner& values) const
 	ExtractElemsSub(values, offset, _dimSizes.begin());
 }
 
-Array* Array::Transpose() const
+bool Array::Transpose(RefPtr<Array>& pArrayRtn) const
 {
 	const DimSizes& dimSizes = GetDimSizes();
-	if (dimSizes.size() < 2) return Clone();
+	if (dimSizes.size() < 2) {
+		pArrayRtn.reset(Clone());
+		return true;
+	}
 	DimSizes dimSizesRtn;
 	dimSizesRtn.reserve(dimSizes.size());
 	size_t nUnits = 1;
@@ -1508,7 +1592,7 @@ Array* Array::Transpose() const
 	size_t lenFwd = nRows * nCols;
 	dimSizesRtn.push_back(nRows);
 	dimSizesRtn.push_back(nCols);
-	RefPtr<Array> pArrayRtn(Create(GetElemType(), dimSizesRtn));	
+	pArrayRtn.reset(Create(GetElemType(), dimSizesRtn));	
 	auto func = GetElemType().Transpose[GetElemType().id];
 	void* pvDst = pArrayRtn->GetPointerC<void>();
 	const void* pvSrc = GetPointerC<void>();
@@ -1729,6 +1813,31 @@ bool Array::Div(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& nu
 bool Array::Div(RefPtr<Array>& pArrayRtn, const Complex& numL, const Array& arrayR)
 {
 	return GenericBinaryOp(pArrayRtn, arrayR.GetElemType(), numL, arrayR, arrayR.GetElemType().Div_ComplexArray);
+}
+
+bool Array::Pow(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
+{
+	return GenericBinaryOp(pArrayRtn, GetElemTypeRtn(arrayL, arrayR), arrayL, arrayR, arrayL.GetElemType().Pow_ArrayArray[arrayR.GetElemType().id]);
+}
+
+bool Array::Pow(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
+{
+	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, arrayL.GetElemType().Pow_ArrayNumber);
+}
+
+bool Array::Pow(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR)
+{
+	return GenericBinaryOp(pArrayRtn, arrayR.GetElemType(), numL, arrayR, arrayR.GetElemType().Pow_NumberArray);
+}
+
+bool Array::Pow(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR)
+{
+	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, arrayL.GetElemType().Pow_ArrayComplex);
+}
+
+bool Array::Pow(RefPtr<Array>& pArrayRtn, const Complex& numL, const Array& arrayR)
+{
+	return GenericBinaryOp(pArrayRtn, arrayR.GetElemType(), numL, arrayR, arrayR.GetElemType().Pow_ComplexArray);
 }
 
 bool Array::Or(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
