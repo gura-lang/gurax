@@ -95,7 +95,7 @@ bool TrainNode_Head::EvalBackward(Processor& processor)
 {
 	ConnectorList::iterator ppConnectorDst = _connectorsDst.begin();
 	if (ppConnectorDst == _connectorsDst.end()) return true;
-	if (_pTrainOptimizer.get() != nullptr) {
+	if (!!_pTrainOptimizer) {
 		if (!_pTrainOptimizer->Update(processor, _pArrayFwd, (*ppConnectorDst)->GetArrayGrad())) return false;
 	}
 	return true;

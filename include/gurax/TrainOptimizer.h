@@ -17,32 +17,33 @@ public:
 	Gurax_DeclareReferable(TrainOptimizer);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("TrainOptimizer");
+protected:
+	const char* _name;
 public:
-	class GURAX_DLLDECLARE Factory : public Referable {
+	class GURAX_DLLDECLARE Instance : public Referable {
 	public:
 		// Referable declaration
-		Gurax_DeclareReferable(Factory);
+		Gurax_DeclareReferable(Instance);
 		// Uses MemoryPool allocator
-		Gurax_MemoryPoolAllocator("TrainOptimizer::Factory");
-	protected:
-		const char* _name;
+		Gurax_MemoryPoolAllocator("TrainOptimizer::Instance");
 	public:
 		// Constructor
-		Factory(const char* name) : _name(name) {}
+		Instance() {}
 		// Copy constructor/operator
-		Factory(const Factory& src) = delete;
-		Factory& operator=(const Factory& src) = delete;
+		Instance(const Instance& src) = delete;
+		Instance& operator=(const Instance& src) = delete;
 		// Move constructor/operator
-		Factory(Factory&& src) noexcept = delete;
-		Factory& operator=(Factory&& src) noexcept = delete;
+		Instance(Instance&& src) noexcept = delete;
+		Instance& operator=(Instance&& src) noexcept = delete;
 	protected:
-		~Factory() = default;
+		~Instance() = default;
 	public:
-		virtual TrainOptimizer* CreateInstance() const = 0;
+		virtual void Reset() {}
+		virtual bool Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad) = 0;
 	};
 public:
 	// Constructor
-	TrainOptimizer() {}
+	TrainOptimizer(const char* name) : _name(name) {}
 	// Copy constructor/operator
 	TrainOptimizer(const TrainOptimizer& src) = delete;
 	TrainOptimizer& operator=(const TrainOptimizer& src) = delete;
@@ -52,8 +53,7 @@ public:
 protected:
 	~TrainOptimizer() = default;
 public:
-	virtual void Reset() {}
-	virtual bool Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad) = 0;
+	virtual TrainOptimizer* CreateInstance() const = 0;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const TrainOptimizer& other) const { return this == &other; }
@@ -82,15 +82,15 @@ public:
 //-------------------------------------------------------------------------
 class TrainOptimizer_None : public TrainOptimizer {
 public:
-	class FactoryEx : public Factory {
+	class InstanceEx : public Instance {
 	public:
-		FactoryEx() : Factory("None") {}
-		virtual TrainOptimizer *CreateInstance() const override { return new TrainOptimizer_None(); }
+		InstanceEx() {}
+		virtual void Reset() override;
+		virtual bool Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad) override;
 	};
 public:
-	TrainOptimizer_None() {}
-	virtual void Reset() override;
-	virtual bool Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad) override;
+	TrainOptimizer_None() : TrainOptimizer("None") {}
+	virtual TrainOptimizer *CreateInstance() const override { return new TrainOptimizer_None(); }
 };
 
 //------------------------------------------------------------------------------
@@ -103,21 +103,20 @@ private:
 	RefPtr<Array> _pArrayH;
 	RefPtr<Array> _pArrayWork;
 public:
-	class FactoryEx : public Factory {
+	class InstanceEx : public Instance {
 	private:
 		Double _learningRate;
 		Double _epsilon;
 	public:
-		FactoryEx(Double learningRate, Double epsilon) : Factory("AdaGrad"),
-							_learningRate(learningRate), _epsilon(epsilon) {}
-		virtual TrainOptimizer* CreateInstance() const override {
-			return new TrainOptimizer_AdaGrad(_learningRate, _epsilon);
-		}
+		InstanceEx(Double learningRate, Double epsilon) : _learningRate(learningRate), _epsilon(epsilon) {}
+		virtual void Reset() override;
+		virtual bool Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad) override;
 	};
 public:
-	TrainOptimizer_AdaGrad(Double learningRate, Double epsilon) : _learningRate(learningRate), _epsilon(epsilon) {}
-	virtual void Reset() override;
-	virtual bool Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad) override;
+	TrainOptimizer_AdaGrad(Double learningRate, Double epsilon) : TrainOptimizer("AdaGrad"), _learningRate(learningRate), _epsilon(epsilon) {}
+	virtual TrainOptimizer* CreateInstance() const override {
+		return new TrainOptimizer_AdaGrad(_learningRate, _epsilon);
+	}
 };
 
 //------------------------------------------------------------------------------
@@ -125,15 +124,15 @@ public:
 //------------------------------------------------------------------------------
 class TrainOptimizer_Adam : public TrainOptimizer {
 public:
-	class FactoryEx : public Factory {
+	class InstanceEx : public Instance {
 	public:
-		FactoryEx() : Factory("Adam") {}
-		virtual TrainOptimizer *CreateInstance() const override { return new TrainOptimizer_Adam(); }
+		InstanceEx() {}
+		virtual void Reset() override;
+		virtual bool Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad) override;
 	};
 public:
-	TrainOptimizer_Adam() {}
-	virtual void Reset() override;
-	virtual bool Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad) override;
+	TrainOptimizer_Adam() : TrainOptimizer("Adam") {}
+	virtual TrainOptimizer *CreateInstance() const override { return new TrainOptimizer_Adam(); }
 };
 
 //------------------------------------------------------------------------------
@@ -141,20 +140,20 @@ public:
 //------------------------------------------------------------------------------
 class TrainOptimizer_GradientDescent : public TrainOptimizer {
 public:
-	class FactoryEx : public Factory {
+	class InstanceEx : public Instance {
 	private:
 		Double _learningRate;
+		RefPtr<Array> _pArrayWork;
 	public:
-		FactoryEx(Double learningRate) : Factory("GradientDescent"), _learningRate(learningRate) {}
-		virtual TrainOptimizer *CreateInstance() const override { return new TrainOptimizer_GradientDescent(_learningRate); }
+		InstanceEx(Double learningRate) : _learningRate(learningRate) {}
+		virtual void Reset() override;
+		virtual bool Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad) override;
 	};
 private:
 	Double _learningRate;
-	RefPtr<Array> _pArrayWork;
 public:
-	TrainOptimizer_GradientDescent(Double learningRate) : _learningRate(learningRate) {}
-	virtual void Reset() override;
-	virtual bool Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad) override;
+	TrainOptimizer_GradientDescent(Double learningRate) : TrainOptimizer("GradientDescent"), _learningRate(learningRate) {}
+	virtual TrainOptimizer *CreateInstance() const override { return new TrainOptimizer_GradientDescent(_learningRate); }
 };
 
 //------------------------------------------------------------------------------
@@ -162,24 +161,23 @@ public:
 //------------------------------------------------------------------------------
 class TrainOptimizer_Momentum : public TrainOptimizer {
 public:
-	class FactoryEx : public Factory {
+	class InstanceEx : public Instance {
 	private:
 		Double _learningRate;
 		Double _momentum;
+		RefPtr<Array> _pArrayVel;
+		RefPtr<Array> _pArrayWork;
 	public:
-		FactoryEx(Double learningRate, Double momentum) :
-				Factory("Momentum"), _learningRate(learningRate), _momentum(momentum) {}
-		virtual TrainOptimizer *CreateInstance() const override { return new TrainOptimizer_Momentum(_learningRate, _momentum); }
+		InstanceEx(Double learningRate, Double momentum) : _learningRate(learningRate), _momentum(momentum) {}
+		virtual void Reset() override;
+		virtual bool Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad) override;
 	};
 private:
 	Double _learningRate;
 	Double _momentum;
-	RefPtr<Array> _pArrayVel;
-	RefPtr<Array> _pArrayWork;
 public:
-	TrainOptimizer_Momentum(Double learningRate, Double momentum) : _learningRate(learningRate), _momentum(momentum) {}
-	virtual void Reset() override;
-	virtual bool Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad) override;
+	TrainOptimizer_Momentum(Double learningRate, Double momentum) : TrainOptimizer("Momentum"), _learningRate(learningRate), _momentum(momentum) {}
+	virtual TrainOptimizer *CreateInstance() const override { return new TrainOptimizer_Momentum(_learningRate, _momentum); }
 };
 
 //------------------------------------------------------------------------------
@@ -187,15 +185,15 @@ public:
 //------------------------------------------------------------------------------
 class TrainOptimizer_Nesterov : public TrainOptimizer {
 public:
-	class FactoryEx : public Factory {
+	class InstanceEx : public Instance {
 	public:
-		FactoryEx() : Factory("Nesterov") {}
-		virtual TrainOptimizer *CreateInstance() const override { return new TrainOptimizer_Nesterov(); }
+		InstanceEx() {}
+		virtual void Reset() override;
+		virtual bool Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad) override;
 	};
 public:
-	TrainOptimizer_Nesterov() {}
-	virtual void Reset() override;
-	virtual bool Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad) override;
+	TrainOptimizer_Nesterov() : TrainOptimizer("Nesterov") {}
+	virtual TrainOptimizer *CreateInstance() const override { return new TrainOptimizer_Nesterov(); }
 };
 
 //------------------------------------------------------------------------------
@@ -203,15 +201,15 @@ public:
 //------------------------------------------------------------------------------
 class TrainOptimizer_RMSprop : public TrainOptimizer {
 public:
-	class FactoryEx : public Factory {
+	class InstanceEx : public Instance {
 	public:
-		FactoryEx() : Factory("RMSprop") {}
-		virtual TrainOptimizer *CreateInstance() const override { return new TrainOptimizer_RMSprop(); }
+		InstanceEx() {}
+		virtual void Reset() override;
+		virtual bool Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad) override;
 	};
 public:
-	TrainOptimizer_RMSprop() {}
-	virtual void Reset() override;
-	virtual bool Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad) override;
+	TrainOptimizer_RMSprop() : TrainOptimizer("RMSprop") {}
+	virtual TrainOptimizer *CreateInstance() const override { return new TrainOptimizer_RMSprop(); }
 };
 
 }

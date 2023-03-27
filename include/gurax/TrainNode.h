@@ -110,9 +110,9 @@ protected:
 	RefPtr<Expr> _pExpr;
 	RefPtr<Array> _pArrayGradAdj;
 	Trait _trait;
-	RefPtr<TrainOptimizer> _pTrainOptimizer;
+	RefPtr<TrainOptimizer::Instance> _pTrainOptimizer;
 public:
-	TrainNode_Head(Connector* pConnectorDst, Expr* pExpr, Trait trait, TrainOptimizer* pTrainOptimizer) :
+	TrainNode_Head(Connector* pConnectorDst, Expr* pExpr, Trait trait, TrainOptimizer::Instance* pTrainOptimizer) :
 		TrainNode("Head", pConnectorDst), _pExpr(pExpr), _trait(trait), _pTrainOptimizer(pTrainOptimizer) {}
 	bool IsVariable() const { return _trait == Trait::Variable; }
 	bool IsConstant() const { return _trait == Trait::Constant; }

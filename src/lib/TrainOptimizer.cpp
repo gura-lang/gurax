@@ -29,11 +29,11 @@ void TrainOptimizerOwner::Clear()
 //------------------------------------------------------------------------------
 // TrainOptimizer_None
 //-------------------------------------------------------------------------
-void TrainOptimizer_None::Reset()
+void TrainOptimizer_None::InstanceEx::Reset()
 {
 }
 
-bool TrainOptimizer_None::Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad)
+bool TrainOptimizer_None::InstanceEx::Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad)
 {
 	return true;
 }
@@ -41,11 +41,11 @@ bool TrainOptimizer_None::Update(Processor& processor, RefPtr<Array>& pArray, co
 //------------------------------------------------------------------------------
 // TrainOptimizer_AdaGrad
 //------------------------------------------------------------------------------
-void TrainOptimizer_AdaGrad::Reset()
+void TrainOptimizer_AdaGrad::InstanceEx::Reset()
 {
 }
 
-bool TrainOptimizer_AdaGrad::Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad)
+bool TrainOptimizer_AdaGrad::InstanceEx::Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad)
 {
 	return true;
 }
@@ -53,11 +53,11 @@ bool TrainOptimizer_AdaGrad::Update(Processor& processor, RefPtr<Array>& pArray,
 //------------------------------------------------------------------------------
 // TrainOptimizer_Adam
 //------------------------------------------------------------------------------
-void TrainOptimizer_Adam::Reset()
+void TrainOptimizer_Adam::InstanceEx::Reset()
 {
 }
 
-bool TrainOptimizer_Adam::Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad)
+bool TrainOptimizer_Adam::InstanceEx::Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad)
 {
 	return true;
 }
@@ -65,11 +65,11 @@ bool TrainOptimizer_Adam::Update(Processor& processor, RefPtr<Array>& pArray, co
 //------------------------------------------------------------------------------
 // TrainOptimizer_GradientDescent
 //------------------------------------------------------------------------------
-void TrainOptimizer_GradientDescent::Reset()
+void TrainOptimizer_GradientDescent::InstanceEx::Reset()
 {
 }
 
-bool TrainOptimizer_GradientDescent::Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad)
+bool TrainOptimizer_GradientDescent::InstanceEx::Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad)
 {
 	// _pArrayWork <- arrayGrad * _learningRate
 	if (!Array::Mul(_pArrayWork, arrayGrad, _learningRate)) return false;
@@ -81,11 +81,11 @@ bool TrainOptimizer_GradientDescent::Update(Processor& processor, RefPtr<Array>&
 //------------------------------------------------------------------------------
 // TrainOptimizer_Momentum
 //------------------------------------------------------------------------------
-void TrainOptimizer_Momentum::Reset()
+void TrainOptimizer_Momentum::InstanceEx::Reset()
 {
 }
 
-bool TrainOptimizer_Momentum::Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad)
+bool TrainOptimizer_Momentum::InstanceEx::Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad)
 {
 	// _pArrayWork <- pArrayGrad * _learningRate
 	if (!Array::Mul(_pArrayWork, arrayGrad, _learningRate)) return false;
@@ -102,11 +102,11 @@ bool TrainOptimizer_Momentum::Update(Processor& processor, RefPtr<Array>& pArray
 //------------------------------------------------------------------------------
 // TrainOptimizer_Nesterov
 //------------------------------------------------------------------------------
-void TrainOptimizer_Nesterov::Reset()
+void TrainOptimizer_Nesterov::InstanceEx::Reset()
 {
 }
 
-bool TrainOptimizer_Nesterov::Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad)
+bool TrainOptimizer_Nesterov::InstanceEx::Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad)
 {
 	return true;
 }
@@ -114,11 +114,11 @@ bool TrainOptimizer_Nesterov::Update(Processor& processor, RefPtr<Array>& pArray
 //------------------------------------------------------------------------------
 // TrainOptimizer_RMSprop
 //------------------------------------------------------------------------------
-void TrainOptimizer_RMSprop::Reset()
+void TrainOptimizer_RMSprop::InstanceEx::Reset()
 {
 }
 
-bool TrainOptimizer_RMSprop::Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad)
+bool TrainOptimizer_RMSprop::InstanceEx::Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad)
 {
 	return true;
 }
