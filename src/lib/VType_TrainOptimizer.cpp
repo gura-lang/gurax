@@ -48,6 +48,25 @@ Gurax_ImplementClassMethod(TrainOptimizer, AdaGrad)
 	return new Value_TrainOptimizer(new TrainOptimizer_AdaGrad(learningRate, epsilon));
 }
 
+// TrainOptimizer.Adam()
+Gurax_DeclareClassMethod(TrainOptimizer, Adam)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementClassMethod(TrainOptimizer, Adam)
+{
+	// Arguments
+	//ArgPicker args(argument);
+	//Double learningRate = args.PickNumber<Double>();
+	//Double epsilon = args.PickNumber<Double>();
+	// Function body
+	return new Value_TrainOptimizer(new TrainOptimizer_Adam());
+}
+
 // TrainOptimizer.GradientDescent(learningRate as Number, epsilon as Number)
 Gurax_DeclareClassMethod(TrainOptimizer, GradientDescent)
 {
@@ -156,6 +175,11 @@ void VType_TrainOptimizer::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(TrainOptimizer, AdaGrad));
+	Assign(Gurax_CreateMethod(TrainOptimizer, Adam));
+	Assign(Gurax_CreateMethod(TrainOptimizer, GradientDescent));
+	Assign(Gurax_CreateMethod(TrainOptimizer, Momentum));
+	Assign(Gurax_CreateMethod(TrainOptimizer, Nesterov));
+	Assign(Gurax_CreateMethod(TrainOptimizer, RMSprop));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(TrainOptimizer, propSkeleton));
 }
