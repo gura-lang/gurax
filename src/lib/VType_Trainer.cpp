@@ -27,10 +27,13 @@ ${help.ComposeMethodHelp(Trainer, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Trainer() {block?}
+// Trainer(model as Expr, optimizer:nil as TrainOptimizer, inputs* as Symbol) {block?}
 Gurax_DeclareConstructor(Trainer)
 {
 	Declare(VTYPE_Trainer, Flag::None);
+	DeclareArg("model", VTYPE_Expr, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("optimizer", VTYPE_TrainOptimizer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("inputs", VTYPE_Symbol, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `Trainer` instance.
@@ -40,7 +43,9 @@ Creates a `Trainer` instance.
 Gurax_ImplementConstructor(Trainer)
 {
 	// Arguments
-	//ArgPicker args(argument);
+	ArgPicker args(argument);
+	const Expr& model = args.PickExpr();
+	//TrainOptimizer& trainOptimizer = args.PickValue<Value_TrainOptimizer>();
 	// Function body
 	RefPtr<Trainer> pTrainer(new Trainer());
 	return argument.ReturnValue(processor, new Value_Trainer(pTrainer.release()));
