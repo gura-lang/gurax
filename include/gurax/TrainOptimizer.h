@@ -53,7 +53,7 @@ public:
 protected:
 	~TrainOptimizer() = default;
 public:
-	virtual TrainOptimizer* CreateInstance() const = 0;
+	virtual Instance* CreateInstance() const = 0;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const TrainOptimizer& other) const { return this == &other; }
@@ -90,7 +90,7 @@ public:
 	};
 public:
 	TrainOptimizer_None() : TrainOptimizer("None") {}
-	virtual TrainOptimizer *CreateInstance() const override { return new TrainOptimizer_None(); }
+	virtual Instance* CreateInstance() const override { return new InstanceEx(); }
 };
 
 //------------------------------------------------------------------------------
@@ -114,9 +114,7 @@ public:
 	};
 public:
 	TrainOptimizer_AdaGrad(Double learningRate, Double epsilon) : TrainOptimizer("AdaGrad"), _learningRate(learningRate), _epsilon(epsilon) {}
-	virtual TrainOptimizer* CreateInstance() const override {
-		return new TrainOptimizer_AdaGrad(_learningRate, _epsilon);
-	}
+	virtual Instance* CreateInstance() const override { return new InstanceEx(_learningRate, _epsilon); }
 };
 
 //------------------------------------------------------------------------------
@@ -132,7 +130,7 @@ public:
 	};
 public:
 	TrainOptimizer_Adam() : TrainOptimizer("Adam") {}
-	virtual TrainOptimizer *CreateInstance() const override { return new TrainOptimizer_Adam(); }
+	virtual Instance* CreateInstance() const override { return new InstanceEx(); }
 };
 
 //------------------------------------------------------------------------------
@@ -153,7 +151,7 @@ private:
 	Double _learningRate;
 public:
 	TrainOptimizer_GradientDescent(Double learningRate) : TrainOptimizer("GradientDescent"), _learningRate(learningRate) {}
-	virtual TrainOptimizer *CreateInstance() const override { return new TrainOptimizer_GradientDescent(_learningRate); }
+	virtual Instance* CreateInstance() const override { return new InstanceEx(_learningRate); }
 };
 
 //------------------------------------------------------------------------------
@@ -177,7 +175,7 @@ private:
 	Double _momentum;
 public:
 	TrainOptimizer_Momentum(Double learningRate, Double momentum) : TrainOptimizer("Momentum"), _learningRate(learningRate), _momentum(momentum) {}
-	virtual TrainOptimizer *CreateInstance() const override { return new TrainOptimizer_Momentum(_learningRate, _momentum); }
+	virtual Instance* CreateInstance() const override { return new InstanceEx(_learningRate, _momentum); }
 };
 
 //------------------------------------------------------------------------------
@@ -193,7 +191,7 @@ public:
 	};
 public:
 	TrainOptimizer_Nesterov() : TrainOptimizer("Nesterov") {}
-	virtual TrainOptimizer *CreateInstance() const override { return new TrainOptimizer_Nesterov(); }
+	virtual Instance* CreateInstance() const override { return new InstanceEx(); }
 };
 
 //------------------------------------------------------------------------------
@@ -209,7 +207,7 @@ public:
 	};
 public:
 	TrainOptimizer_RMSprop() : TrainOptimizer("RMSprop") {}
-	virtual TrainOptimizer *CreateInstance() const override { return new TrainOptimizer_RMSprop(); }
+	virtual Instance* CreateInstance() const override { return new InstanceEx(); }
 };
 
 }

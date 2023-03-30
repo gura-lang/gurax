@@ -18,10 +18,12 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Trainer");
 public:
+	//using TrainNodeGearCreatorMap = std::map<ValueType, const NodeGear::Creator*>;
+public:
 	RefPtr<TrainOptimizer> _pTrainOptimizer;
-	//RefPtr<TrainNodeBottom> _pNodeBottom;
+	RefPtr<TrainNode_Bottom> _pNodeBottom;
 	TrainNodeOwner _nodeOwner;
-	//TrainNodeMap _nodeMap;
+	TrainNodeMap _nodeMap;
 	RefPtr<Expr> _pExprModel;
 	//static NodeGearCreatorMap _nodeGearCreatorMap;
 public:
@@ -35,6 +37,29 @@ public:
 	Trainer& operator=(Trainer&& src) noexcept = delete;
 protected:
 	~Trainer() = default;
+public:
+	bool CreateFromExpr(const Expr& exprModel, const SymbolSet& inputs);
+	void Reset();
+	bool EvalForward();
+	bool EvalBackward(const Array& arrayCorrect);
+	const Array* GetResult() const;
+	Double CalcMeanSquareError(const Array& arrayCorrect) const;
+	Double CalcCrossEntropyError(const Array& arrayCorrect, Double epsilon) const;
+	TrainNode_Bottom& GetNodeBottom() { return *_pNodeBottom; }
+	const TrainNode_Bottom& GetNodeBottom() const { return *_pNodeBottom; }
+	const TrainNodeOwner& GetNodeOwner() const { return _nodeOwner; }
+	const Expr& GetExprModel() const { return *_pExprModel; }
+	TrainOptimizer::Instance* CreateOptimizerInstance() const { return _pTrainOptimizer->CreateInstance(); }
+	TrainNode* FindNode(const Symbol* pSymbol) const;
+	void Print() const;
+	//static void RegisterNodeGearCreator(ValueType valType, const NodeGear::Creator* pCreator) {
+	//	_nodeGearCreatorMap[valType] = pCreator;
+	//}
+private:
+	TrainNode* CreateNode(const Expr& expr, TrainNode::Connector& connector, const SymbolSet& symbolsInput);
+	TrainNode* CreateNodeUnary(const Expr_UnaryOp& exprEx, TrainNode::Connector& connector, const SymbolSet& symbolsInput);
+	TrainNode* CreateNodeBinary(const Expr_BinaryOp& exprEx, TrainNode::Connector& connector, const SymbolSet& symbolsInput);
+	TrainNode* CreateNodeGear(const Expr_BinaryOp& exprEx, TrainNode::Connector& connector, const SymbolSet& symbolsInput);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Trainer& other) const { return this == &other; }

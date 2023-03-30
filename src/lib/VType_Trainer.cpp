@@ -44,10 +44,14 @@ Gurax_ImplementConstructor(Trainer)
 {
 	// Arguments
 	ArgPicker args(argument);
-	const Expr& model = args.PickExpr();
-	//TrainOptimizer& trainOptimizer = args.PickValue<Value_TrainOptimizer>();
+	const Expr& exprModel = args.PickExpr();
+	TrainOptimizer& trainOptimizer = args.Pick<Value_TrainOptimizer>().GetTrainOptimizer();
+	const ValueList& inputs = args.PickList();
 	// Function body
 	RefPtr<Trainer> pTrainer(new Trainer());
+	SymbolSet symbolsInput;
+	for (const Value* pValue : inputs) symbolsInput.Set(Value_Symbol::GetSymbol(*pValue));
+	if (!pTrainer->CreateFromExpr(exprModel, symbolsInput)) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Trainer(pTrainer.release()));
 }
 
