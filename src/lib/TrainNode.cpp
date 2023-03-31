@@ -8,12 +8,20 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // TrainNode
 //------------------------------------------------------------------------------
+#if 0
 TrainNode::TrainNode(const char* nodeTypeName, Connector* pConnectorDst) : _nodeTypeName(nodeTypeName)
 {
 	if (pConnectorDst) {
 		pConnectorDst->SetNodeSrc(this);
 		_connectorsDst.push_back(pConnectorDst);
 	}
+}
+#endif
+
+void TrainNode::AddConnectorDst(Connector& connectorDst)
+{
+	connectorDst.SetNodeSrc(this);
+	_connectorsDst.push_back(&connectorDst);
 }
 
 bool TrainNode::GatherMemberSymbol(SymbolList& symbols)
@@ -95,7 +103,7 @@ bool TrainNode_Head::EvalBackward(Processor& processor)
 {
 	ConnectorList::iterator ppConnectorDst = _connectorsDst.begin();
 	if (ppConnectorDst == _connectorsDst.end()) return true;
-	if (!!_pTrainOptimizer) {
+	if (_pTrainOptimizer) {
 		if (!_pTrainOptimizer->Update(processor, _pArrayFwd, (*ppConnectorDst)->GetArrayGrad())) return false;
 	}
 	return true;
