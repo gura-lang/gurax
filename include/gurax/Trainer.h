@@ -56,10 +56,10 @@ public:
 	//	_nodeGearCreatorMap[valType] = pCreator;
 	//}
 private:
-	TrainNode* CreateNode(const Expr& expr, TrainNode::Connector& connector, const SymbolSet& symbolsInput);
-	TrainNode* CreateNodeUnary(const Expr_UnaryOp& exprEx, TrainNode::Connector& connector, const SymbolSet& symbolsInput);
-	TrainNode* CreateNodeBinary(const Expr_BinaryOp& exprEx, TrainNode::Connector& connector, const SymbolSet& symbolsInput);
-	TrainNode* CreateNodeGear(const Expr_BinaryOp& exprEx, TrainNode::Connector& connector, const SymbolSet& symbolsInput);
+	TrainNode* CreateNode(const Expr& expr, const SymbolSet& symbolsInput);
+	TrainNode* CreateNodeUnary(const Expr_UnaryOp& exprEx, const SymbolSet& symbolsInput);
+	TrainNode* CreateNodeBinary(const Expr_BinaryOp& exprEx, const SymbolSet& symbolsInput);
+	TrainNode* CreateNodeGear(const Expr_BinaryOp& exprEx, const SymbolSet& symbolsInput);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Trainer& other) const { return this == &other; }

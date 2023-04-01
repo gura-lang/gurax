@@ -82,51 +82,56 @@ void Trainer::Print() const
 #endif
 }
 
-TrainNode* Trainer::CreateNode(const Expr& expr, TrainNode::Connector& connector, const SymbolSet& symbolsInput)
+TrainNode* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolsInput)
 {
-#if 0
-	if (pExpr->IsType(EXPRTYPE_Block)) {
+	if (expr.IsType<Expr_Block>()) {
 		TrainNode *pNodeRtn = nullptr;
-		const Expr_Block *pExprEx = dynamic_cast<const Expr_Block *>(pExpr);
-		const ExprOwner &exprOwner = pExprEx->GetExprOwner();
-		foreach_const (ExprOwner, ppExprEach, exprOwner) {
-			const Expr *pExprEach = *ppExprEach;
-			TrainNode::Connector *pConnectorEach = (ppExprEach + 1 == exprOwner.end())? pConnector : nullptr;
-			pNodeRtn = CreateNode(env, pExprEach, pConnectorEach, symbolsInput);
-			if (pNodeRtn == nullptr) return nullptr;
-		}
-		return pNodeRtn;
-	}
-	if (pExpr->IsType(EXPRTYPE_Assign)) {
-		const Expr_Assign *pExprEx = dynamic_cast<const Expr_Assign *>(pExpr);
-		if (pExprEx->GetOperatorToApply() != nullptr) {
-			env.SetError(ERR_SyntaxError, "invalid assignment");
+		const Expr_Block& exprEx = dynamic_cast<const Expr_Block&>(expr);
+		const Expr* pExprEach = exprEx.GetExprElemFirst();
+		if (!pExprEach) {
+			// returns dummy node
 			return nullptr;
 		}
-		if (!pExprEx->GetLeft()->IsIdentifier()) {
-			env.SetError(ERR_SyntaxError, "assignment to an identifier is only supported");
+		for ( ; pExprEach->GetExprNext(); pExprEach = pExprEach->GetExprNext()) {
+			RefPtr<TrainNode> pNode(CreateNode(*pExprEach, symbolsInput));
+			if (!pNode) return nullptr;
+			_nodeOwner.push_back(pNode.release());
+		}
+		RefPtr<TrainNode> pNode(CreateNode(*pExprEach, symbolsInput));
+		_nodeOwner.push_back(pNode.Reference());
+		return pNode.release();
+	} else if (expr.IsType<Expr_Assign>()) {
+		const Expr_Assign& exprEx = dynamic_cast<const Expr_Assign&>(expr);
+		if (exprEx.GetOperator() ) {
+			Error::Issue(ErrorType::SyntaxError, "invalid assignment");
 			return nullptr;
 		}
-		const Symbol *pSymbol = dynamic_cast<const Expr_Identifier *>(pExprEx->GetLeft())->GetSymbol();
-		TrainNode *pNode = CreateNode(env, pExprEx->GetRight(), pConnector, symbolsInput);
-		if (pNode == nullptr) return nullptr;
+		if (!exprEx.GetExprLeft().IsType<Expr_Identifier>()) {
+			Error::Issue(ErrorType::SyntaxError, "only the assignment to an identifier is supported");
+			return nullptr;
+		}
+		const Symbol* pSymbol = dynamic_cast<const Expr_Identifier&>(exprEx.GetExprLeft()).GetSymbol();
+		RefPtr<TrainNode> pNode(CreateNode(exprEx.GetExprRight(), symbolsInput));
+		if (!pNode) return nullptr;
 		if (_nodeMap.find(pSymbol) != _nodeMap.end()) {
-			env.SetError(ERR_SyntaxError, "duplicated assignment to the identifier %s", pSymbol->GetName());
+			Error::Issue(ErrorType::SyntaxError, "duplicated assignment to the identifier %s", pSymbol->GetName());
 			return nullptr;
 		}
-		_nodeMap[pSymbol] = pNode;
-		return pNode;
-	} else if (pExpr->IsType(EXPRTYPE_UnaryOp)) {
-		const Expr_UnaryOp *pExprEx = dynamic_cast<const Expr_UnaryOp *>(pExpr);
-		return CreateNodeUnary(env, pExprEx, pConnector, symbolsInput);
-	} else if (pExpr->IsType(EXPRTYPE_BinaryOp)) {
-		const Expr_BinaryOp *pExprEx = dynamic_cast<const Expr_BinaryOp *>(pExpr);
-		return pExprEx->GetOperator()->IsOpType(OPTYPE_Gear)?
-			CreateNodeGear(env, pExprEx, pConnector, symbolsInput) :
-			CreateNodeBinary(env, pExprEx, pConnector, symbolsInput);
-	} else if (pExpr->IsIdentifier()) {
-		const Expr_Identifier *pExprEx = dynamic_cast<const Expr_Identifier *>(pExpr);
-		const Symbol *pSymbol = pExprEx->GetSymbol();
+		_nodeMap[pSymbol] = pNode.get();
+		return pNode.release();
+	} else if (expr.IsType<Expr_UnaryOp>()) {
+		const Expr_UnaryOp& exprEx = dynamic_cast<const Expr_UnaryOp&>(expr);
+		RefPtr<TrainNode> pNode(CreateNodeUnary(exprEx, symbolsInput));
+		return pNode.release();
+	} else if (expr.IsType<Expr_BinaryOp>()) {
+		const Expr_BinaryOp& exprEx = dynamic_cast<const Expr_BinaryOp&>(expr);
+		RefPtr<TrainNode> pNode(exprEx.GetOperator()->IsType(OpType::Gear)?
+			CreateNodeGear(exprEx, symbolsInput) : CreateNodeBinary(exprEx, symbolsInput));
+		return pNode.release();
+#if 0
+	} else if (expr.IsIdentifier()) {
+		const Expr_Identifier& exprEx = dynamic_cast<const Expr_Identifier&>(expr);
+		const Symbol *pSymbol = exprEx.GetSymbol();
 		TrainNode *pNodeFound = FindNode(pSymbol);
 		if (pNodeFound != nullptr) return pNodeFound;
 		TrainNode::Trait trait = TrainNode::TRAIT_Input;
@@ -141,19 +146,19 @@ TrainNode* Trainer::CreateNode(const Expr& expr, TrainNode::Connector& connector
 	} else {
 		TrainNode::Trait trait = TrainNode::TRAIT_Constant;
 		Optimizer::Instance *pOptimizerInst = nullptr;
-		if (!pExpr->IsValue()) {
+		if (!expr.IsValue()) {
 			trait = TrainNode::TRAIT_Variable;
 			pOptimizerInst = _pOptimizer->CreateInstance();
 		}
 		AutoPtr<NodeHead> pNode(new NodeHead(pConnector, Expr::Reference(pExpr), trait, pOptimizerInst));
 		_nodeOwner.push_back(pNode.get());
 		return pNode.release();
-	}
 #endif
+	}
 	return nullptr;
 }
 
-TrainNode* Trainer::CreateNodeUnary(const Expr_UnaryOp& exprEx, TrainNode::Connector& connector, const SymbolSet& symbolsInput)
+TrainNode* Trainer::CreateNodeUnary(const Expr_UnaryOp& exprEx, const SymbolSet& symbolsInput)
 {
 	const Operator* pOperator = exprEx.GetOperator();
 	RefPtr<TrainNode_Unary> pNode;
@@ -165,13 +170,13 @@ TrainNode* Trainer::CreateNodeUnary(const Expr_UnaryOp& exprEx, TrainNode::Conne
 		Error::Issue(ErrorType::ValueError, "unsupported operator: %s", pOperator->GetName());
 		return nullptr;
 	}
-	pNode->AddConnectorDst(connector);
-	TrainNode::Connector& connectorSrc = pNode->GetConnectorSrc();
-	_nodeOwner.push_back(pNode->Reference());
-	return CreateNode(exprEx.GetExprChild(), connectorSrc, symbolsInput)? pNode.release() : nullptr;
+	RefPtr<TrainNode> pNodeChild(CreateNode(exprEx.GetExprChild(), symbolsInput));
+	if (!pNodeChild) return nullptr;
+	pNodeChild->AddConnectorDst(pNode->GetConnectorSrc());
+	return pNode.release();
 }
 
-TrainNode* Trainer::CreateNodeBinary(const Expr_BinaryOp& exprEx, TrainNode::Connector& connector, const SymbolSet& symbolsInput)
+TrainNode* Trainer::CreateNodeBinary(const Expr_BinaryOp& exprEx, const SymbolSet& symbolsInput)
 {
 	const Operator *pOperator = exprEx.GetOperator();
 	RefPtr<TrainNode_Binary> pNode;
@@ -191,20 +196,20 @@ TrainNode* Trainer::CreateNodeBinary(const Expr_BinaryOp& exprEx, TrainNode::Con
 		Error::Issue(ErrorType::ValueError, "unsupported operator: %s", pOperator->GetName());
 		return nullptr;
 	}
-	pNode->AddConnectorDst(connector);
-	TrainNode::Connector& connectorSrcLeft = pNode->GetConnectorSrcLeft();
-	TrainNode::Connector& connectorSrcRight = pNode->GetConnectorSrcRight();
-	_nodeOwner.push_back(pNode->Reference());;
-	return
-		(!CreateNode(exprEx.GetExprLeft(), connectorSrcLeft, symbolsInput) ||
-		!CreateNode(exprEx.GetExprRight(), connectorSrcRight, symbolsInput))?
-		nullptr : pNode.release();
+	RefPtr<TrainNode> pNodeLeft(CreateNode(exprEx.GetExprLeft(), symbolsInput));
+	RefPtr<TrainNode> pNodeRight(CreateNode(exprEx.GetExprRight(), symbolsInput));
+	if (!pNodeLeft || !pNodeRight) return nullptr;
+	pNodeLeft->AddConnectorDst(pNode->GetConnectorSrcLeft());
+	pNodeRight->AddConnectorDst(pNode->GetConnectorSrcRight());
+	_nodeOwner.push_back(pNodeLeft.release());
+	_nodeOwner.push_back(pNodeRight.release());
+	return pNode.release();
 }
 
-TrainNode* Trainer::CreateNodeGear(const Expr_BinaryOp& exprEx, TrainNode::Connector& connector, const SymbolSet& symbolsInput)
+TrainNode* Trainer::CreateNodeGear(const Expr_BinaryOp& exprEx, const SymbolSet& symbolsInput)
 {
 #if 0
-	Value value = pExprEx->GetRight()->Exec(env);
+	Value value = exprEx.GetRight()->Exec(env);
 	if (env.IsSignalled()) return nullptr;
 	if (!value.IsInstanceOf(VTYPE_gear)) {
 		env.SetError(ERR_ValueError, "gear instance is expected as a right-side operand of a gear operator");
@@ -220,7 +225,7 @@ TrainNode* Trainer::CreateNodeGear(const Expr_BinaryOp& exprEx, TrainNode::Conne
 	TrainNode::Connector *pConnectorSrc = pNode->GetConnectorSrc();
 	TrainNode *pNodeRtn = pNode.get();
 	_nodeOwner.push_back(pNode.release());
-	return (CreateNode(env, pExprEx->GetLeft(), pConnectorSrc, symbolsInput) == nullptr)?
+	return (CreateNode(env, exprEx.GetLeft(), pConnectorSrc, symbolsInput) == nullptr)?
 		nullptr : pNodeRtn;
 #endif
 	return nullptr;
