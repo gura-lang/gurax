@@ -160,7 +160,7 @@ Gurax_ImplementMethod(Trainer, Train)
 // Trainer#model
 Gurax_DeclareProperty_R(Trainer, model)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Expr, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
 )""");
@@ -168,8 +168,8 @@ Skeleton.
 
 Gurax_ImplementPropertyGetter(Trainer, model)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	Trainer& trainer = GetValueThis(valueTarget).GetTrainer();
+	return new Value_Expr(trainer.GetExprModel().Reference());
 }
 
 // Trainer#nodeBottom
@@ -183,14 +183,14 @@ Skeleton.
 
 Gurax_ImplementPropertyGetter(Trainer, nodeBottom)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	Trainer& trainer = GetValueThis(valueTarget).GetTrainer();
+	return new Value_TrainNode(trainer.GetNodeBottom().Reference());
 }
 
 // Trainer#result
 Gurax_DeclareProperty_R(Trainer, result)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
 )""");
@@ -198,8 +198,8 @@ Skeleton.
 
 Gurax_ImplementPropertyGetter(Trainer, result)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	Trainer& trainer = GetValueThis(valueTarget).GetTrainer();
+	return trainer.GetResult().ToValue();
 }
 
 //------------------------------------------------------------------------------
