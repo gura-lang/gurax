@@ -28,7 +28,7 @@ public:
 	//static NodeGearCreatorMap _nodeGearCreatorMap;
 public:
 	// Constructor
-	Trainer() {}
+	Trainer(TrainOptimizer* pTrainOptimizer) : _pTrainOptimizer(pTrainOptimizer) {}
 	// Copy constructor/operator
 	Trainer(const Trainer& src) = delete;
 	Trainer& operator=(const Trainer& src) = delete;
@@ -40,13 +40,14 @@ protected:
 public:
 	bool CreateFromExpr(const Expr& exprModel, const SymbolSet& inputs);
 	void Reset();
-	bool EvalForward();
-	bool EvalBackward(const Array& arrayCorrect);
-	const Array* GetResult() const;
+	bool EvalForward(Processor& processor);
+	bool EvalBackward(Processor& processor, const Array& arrayCorrect);
+	const Array& GetResult() const;
 	Double CalcMeanSquareError(const Array& arrayCorrect) const;
 	Double CalcCrossEntropyError(const Array& arrayCorrect, Double epsilon) const;
 	TrainNode_Bottom& GetNodeBottom() { return *_pNodeBottom; }
 	const TrainNode_Bottom& GetNodeBottom() const { return *_pNodeBottom; }
+	TrainNodeOwner& GetNodeOwner() { return _nodeOwner; }
 	const TrainNodeOwner& GetNodeOwner() const { return _nodeOwner; }
 	const Expr& GetExprModel() const { return *_pExprModel; }
 	TrainOptimizer::Instance* CreateOptimizerInstance() const { return _pTrainOptimizer->CreateInstance(); }

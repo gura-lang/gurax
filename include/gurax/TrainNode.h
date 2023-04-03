@@ -91,6 +91,10 @@ public:
 // TrainNodeList
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE TrainNodeList : public ListBase<TrainNode*> {
+public:
+	void Reset();
+	bool EvalForward(Processor& processor);
+	bool EvalBackward(Processor& processor);
 };
 
 //------------------------------------------------------------------------------
@@ -150,7 +154,7 @@ public:
 	virtual bool IsVulnerable() const;
 	virtual bool EvalForward(Processor& processor);
 	virtual bool EvalBackward(Processor& processor);
-	bool EvalBackwardTop(const Array& arrayCorrect);
+	bool EvalBackwardTop(Processor& processor, const Array& arrayCorrect);
 	virtual bool GatherMemberSymbol(SymbolList& symbols);
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr);
 	virtual String ToString() const;

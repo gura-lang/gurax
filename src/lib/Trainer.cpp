@@ -10,38 +10,30 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 bool Trainer::CreateFromExpr(const Expr& exprModel, const SymbolSet& inputs)
 {
+	RefPtr<TrainNode> pNode(CreateNode(exprModel, inputs));
+	if (!pNode) return false;
+	pNode->AddConnectorDst(GetNodeBottom().GetConnectorSrc());
 	return true;
 }
 
 void Trainer::Reset()
 {
-#if 0
-	_nodeOwner.Reset(env);
-#endif
+	GetNodeOwner().Reset();
 }
 
-bool Trainer::EvalForward()
+bool Trainer::EvalForward(Processor& processor)
 {
-#if 0
-	return _nodeOwner.EvalForward(env) && _pNodeBottom->EvalForward(env);
-#endif
-	return false;
+	return GetNodeOwner().EvalForward(processor) && GetNodeBottom().EvalForward(processor);
 }
 
-bool Trainer::EvalBackward(const Array& arrayCorrect)
+bool Trainer::EvalBackward(Processor& processor, const Array& arrayCorrect)
 {
-#if 0
-	return _pNodeBottom->EvalBackwardTop(env, pArrayCorrect) && _nodeOwner.EvalBackward(env);
-#endif
-	return false;
+	return GetNodeBottom().EvalBackwardTop(processor, arrayCorrect) && GetNodeOwner().EvalBackward(processor);
 }
 
-const Array* Trainer::GetResult() const
+const Array& Trainer::GetResult() const
 {
-#if 0
-	return _pNodeBottom->GetArrayFwd();
-#endif
-	return nullptr;
+	return GetNodeBottom().GetArrayFwd();
 }
 
 Double Trainer::CalcMeanSquareError(const Array& arrayCorrect) const
@@ -77,9 +69,7 @@ TrainNode* Trainer::FindNode(const Symbol* pSymbol) const
 
 void Trainer::Print() const
 {
-#if 0
-	_pNodeBottom->Print(0);
-#endif
+	GetNodeBottom().Print(0);
 }
 
 TrainNode* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolsInput)
@@ -128,32 +118,28 @@ TrainNode* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolsInput)
 		RefPtr<TrainNode> pNode(exprEx.GetOperator()->IsType(OpType::Gear)?
 			CreateNodeGear(exprEx, symbolsInput) : CreateNodeBinary(exprEx, symbolsInput));
 		return pNode.release();
-#if 0
-	} else if (expr.IsIdentifier()) {
+	} else if (expr.IsType<Expr_Identifier>()) {
 		const Expr_Identifier& exprEx = dynamic_cast<const Expr_Identifier&>(expr);
-		const Symbol *pSymbol = exprEx.GetSymbol();
+		const Symbol* pSymbol = exprEx.GetSymbol();
 		TrainNode *pNodeFound = FindNode(pSymbol);
 		if (pNodeFound != nullptr) return pNodeFound;
-		TrainNode::Trait trait = TrainNode::TRAIT_Input;
-		Optimizer::Instance *pOptimizerInst = nullptr;
+		TrainNode::Trait trait = TrainNode::Trait::Input;
+		TrainOptimizer::Instance* pTrainOptimizer = nullptr;
 		if (!symbolsInput.IsSet(pSymbol)) {
-			trait = TrainNode::TRAIT_Variable;
-			pOptimizerInst = _pOptimizer->CreateInstance();
+			trait = TrainNode::Trait::Variable;
+			pTrainOptimizer = CreateOptimizerInstance();
 		}
-		AutoPtr<NodeHead> pNode(new NodeHead(pConnector, Expr::Reference(pExpr), trait, pOptimizerInst));
-		_nodeOwner.push_back(pNode.get());
+		RefPtr<TrainNode_Head> pNode(new TrainNode_Head(expr.Reference(), trait, pTrainOptimizer));
 		return pNode.release();
 	} else {
-		TrainNode::Trait trait = TrainNode::TRAIT_Constant;
-		Optimizer::Instance *pOptimizerInst = nullptr;
-		if (!expr.IsValue()) {
-			trait = TrainNode::TRAIT_Variable;
-			pOptimizerInst = _pOptimizer->CreateInstance();
+		TrainNode::Trait trait = TrainNode::Trait::Constant;
+		TrainOptimizer::Instance* pTrainOptimizer = nullptr;
+		if (!expr.IsType<Expr_Value>()) {
+			trait = TrainNode::Trait::Variable;
+			pTrainOptimizer = CreateOptimizerInstance();
 		}
-		AutoPtr<NodeHead> pNode(new NodeHead(pConnector, Expr::Reference(pExpr), trait, pOptimizerInst));
-		_nodeOwner.push_back(pNode.get());
+		RefPtr<TrainNode_Head> pNode(new TrainNode_Head(expr.Reference(), trait, pTrainOptimizer));
 		return pNode.release();
-#endif
 	}
 	return nullptr;
 }

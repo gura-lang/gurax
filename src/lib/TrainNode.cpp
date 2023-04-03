@@ -54,6 +54,28 @@ String TrainNode::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // TrainNodeList
 //------------------------------------------------------------------------------
+void TrainNodeList::Reset()
+{
+	for (TrainNode* pNode : *this)  pNode->Reset();
+}
+
+bool TrainNodeList::EvalForward(Processor& processor)
+{
+	for (TrainNode* pNode : *this) {
+		if (!pNode->EvalForward(processor)) return false;
+	}
+	return true;
+}
+
+bool TrainNodeList::EvalBackward(Processor& processor)
+{
+	for (auto ppNode = rbegin(); ppNode != rend(); ppNode++) {
+		TrainNode* pNode = *ppNode;
+		if (!pNode->EvalBackward(processor)) return false;
+	}
+	return true;
+}
+
 
 //------------------------------------------------------------------------------
 // TrainNodeOwner
@@ -154,7 +176,7 @@ bool TrainNode_Bottom::EvalBackward(Processor& processor)
 	return true;
 }
 
-bool TrainNode_Bottom::EvalBackwardTop(const Array& arrayCorrect)
+bool TrainNode_Bottom::EvalBackwardTop(Processor& processor, const Array& arrayCorrect)
 {
 	_pArrayCorrect.reset(arrayCorrect.Reference());
 	if (GetConnectorSrc().GetNodeSrc().IsVulnerable()) {
