@@ -2026,6 +2026,11 @@ Value_List* Array::ToList() const
 	return new Value_List(vtypeOfElems, pValues.release());
 }
 
+Value* Array::ToValue() const
+{
+	return IsScalar()? IndexGetValue(0) : new Value_Array(Reference());
+}
+
 Array* Array::CreateLike() const
 {
 	return Create(GetElemType(), GetDimSizes());

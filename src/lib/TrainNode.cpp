@@ -34,7 +34,7 @@ bool TrainNode::GatherMemberSymbol(SymbolList& symbols)
 Value* TrainNode::DoGetProperty(const Symbol* pSymbol, const Attribute& attr)
 {
 	if (pSymbol->IsIdentical(Gurax_Symbol(output))) {
-		return new Value_Array(GetArrayFwd().Reference());
+		return GetArrayFwd().ToValue();
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(type))) {
 		return new Value_Symbol(Symbol::Add(GetNodeTypeName()));
 	}
@@ -195,9 +195,9 @@ bool TrainNode_Bottom::GatherMemberSymbol(SymbolList& symbols)
 Value* TrainNode_Bottom::DoGetProperty(const Symbol* pSymbol, const Attribute& attr)
 {
 	if (pSymbol->IsIdentical(Gurax_Symbol(input))) {
-		return new Value_Array(GetConnectorSrc().GetArrayFwd().Reference());
+		return GetConnectorSrc().GetArrayFwd().ToValue();
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(inputGrad))) {
-		return new Value_Array(GetConnectorSrc().GetArrayGrad().Reference());
+		return GetConnectorSrc().GetArrayGrad().ToValue();
 	}
 	return TrainNode::DoGetProperty(pSymbol, attr);
 }
@@ -236,9 +236,9 @@ bool TrainNode_Unary::GatherMemberSymbol(SymbolList& symbols)
 Value* TrainNode_Unary::DoGetProperty(const Symbol* pSymbol, const Attribute& attr)
 {
 	if (pSymbol->IsIdentical(Gurax_Symbol(input))) {
-		return new Value_Array(GetConnectorSrc().GetArrayFwd().Reference());
+		return GetConnectorSrc().GetArrayFwd().ToValue();
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(inputGrad))) {
-		return new Value_Array(GetConnectorSrc().GetArrayGrad().Reference());
+		return GetConnectorSrc().GetArrayGrad().ToValue();
 	}
 	return TrainNode::DoGetProperty(pSymbol, attr);
 }
@@ -300,13 +300,13 @@ bool TrainNode_Binary::GatherMemberSymbol(SymbolList& symbols)
 Value* TrainNode_Binary::DoGetProperty(const Symbol* pSymbol, const Attribute& attr)
 {
 	if (pSymbol->IsIdentical(Gurax_Symbol(inputLeft))) {
-		return new Value_Array(GetConnectorSrcLeft().GetArrayFwd().Reference());
+		return GetConnectorSrcLeft().GetArrayFwd().ToValue();
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(inputRight))) {
-		return new Value_Array(GetConnectorSrcRight().GetArrayFwd().Reference());
+		return GetConnectorSrcRight().GetArrayFwd().ToValue();
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(inputGradLeft))) {
-		return new Value_Array(GetConnectorSrcLeft().GetArrayGrad().Reference());
+		return GetConnectorSrcLeft().GetArrayGrad().ToValue();
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(inputGradRight))) {
-		return new Value_Array(GetConnectorSrcRight().GetArrayGrad().Reference());
+		return GetConnectorSrcRight().GetArrayGrad().ToValue();
 	}
 	return TrainNode::DoGetProperty(pSymbol, attr);
 }
@@ -506,9 +506,9 @@ Value* TrainNode_Gear::DoGetProperty(const Symbol* pSymbol, const Attribute& att
 	if (pSymbol->IsIdentical(Gurax_Symbol(gear))) {
 		return new Value_Gear(GetGear().Reference());
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(input))) {
-		return new Value_Array(GetConnectorSrc().GetArrayFwd().Reference());
+		return GetConnectorSrc().GetArrayFwd().ToValue();
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(inputGrad))) {
-		return new Value_Array(GetConnectorSrc().GetArrayGrad().Reference());
+		return GetConnectorSrc().GetArrayGrad().ToValue();
 	}
 	return TrainNode::DoGetProperty(pSymbol, attr);
 }

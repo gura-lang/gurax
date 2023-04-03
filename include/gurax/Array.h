@@ -185,6 +185,7 @@ public:
 	static Array* Create3d(ElemTypeT& elemType, size_t l, size_t m, size_t n) { return Create(elemType, DimSizes(l, m, n)); }
 	static Array* CreateIdentity(ElemTypeT& elemType, size_t n, Double mag);
 	ElemTypeT& GetElemType() const { return _elemType; }
+	bool IsElemType(const ElemTypeT& elemType) const { return _elemType.IsIdentical(elemType); }
 	Memory& GetMemory() { return *_pMemory; }
 	const Memory& GetMemory() const { return *_pMemory; }
 	const DimSizes& GetDimSizes() const { return _dimSizes; }
@@ -199,7 +200,6 @@ public:
 	bool IndexSetDouble(size_t idx, Double num) { return _elemType.IndexSetDouble(GetPointerC<void>(), idx, num); }
 	Value* IndexGetValue(size_t idx) const { return _elemType.IndexGetValue(GetPointerC<void>(), idx); }
 	Double IndexGetDouble(size_t idx) const { return _elemType.IndexGetDouble(GetPointerC<void>(), idx); }
-	
 	void InjectElems(ValueList& values, size_t offset, size_t len);
 	void InjectElems(ValueList& values, size_t offset = 0);
 	bool InjectElems(Iterator& iterator, size_t offset, size_t len);
@@ -274,6 +274,7 @@ public:
 	static bool Cross(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
 public:
 	Value_List* ToList() const;
+	Value* ToValue() const;
 	Array* CreateLike() const;
 	Array* CreateCasted(ElemTypeT& elemType) const;
 	void* FwdPointer(void* pv, int n) const { return GetElemType().FwdPointer(pv, n); }
