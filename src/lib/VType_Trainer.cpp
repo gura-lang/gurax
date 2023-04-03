@@ -32,7 +32,7 @@ Gurax_DeclareConstructor(Trainer)
 {
 	Declare(VTYPE_Trainer, Flag::None);
 	DeclareArg("model", VTYPE_Expr, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("optimizer", VTYPE_TrainOptimizer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("optimizer", VTYPE_TrainOptimizer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("inputs", VTYPE_Symbol, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(

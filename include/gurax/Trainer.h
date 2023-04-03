@@ -28,7 +28,7 @@ public:
 	//static NodeGearCreatorMap _nodeGearCreatorMap;
 public:
 	// Constructor
-	Trainer(TrainOptimizer* pTrainOptimizer) : _pTrainOptimizer(pTrainOptimizer) {}
+	Trainer(TrainOptimizer* pTrainOptimizer);
 	// Copy constructor/operator
 	Trainer(const Trainer& src) = delete;
 	Trainer& operator=(const Trainer& src) = delete;

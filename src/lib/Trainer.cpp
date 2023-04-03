@@ -8,6 +8,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Trainer
 //------------------------------------------------------------------------------
+Trainer::Trainer(TrainOptimizer* pTrainOptimizer) : _pTrainOptimizer(pTrainOptimizer), _pNodeBottom(new TrainNode_Bottom())
+{
+}
+
 bool Trainer::CreateFromExpr(const Expr& exprModel, const SymbolSet& inputs)
 {
 	RefPtr<TrainNode> pNode(CreateNode(exprModel, inputs));
