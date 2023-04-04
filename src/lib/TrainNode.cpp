@@ -8,16 +8,6 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // TrainNode
 //------------------------------------------------------------------------------
-#if 0
-TrainNode::TrainNode(const char* nodeTypeName, Connector* pConnectorDst) : _nodeTypeName(nodeTypeName)
-{
-	if (pConnectorDst) {
-		pConnectorDst->SetNodeSrc(this);
-		_connectorsDst.push_back(pConnectorDst);
-	}
-}
-#endif
-
 void TrainNode::AddConnectorDst(Connector& connectorDst)
 {
 	connectorDst.SetNodeSrc(this);
@@ -41,9 +31,9 @@ Value* TrainNode::DoGetProperty(const Symbol* pSymbol, const Attribute& attr)
 	return Value::nil();
 }
 
-void TrainNode::Print(int indentLevel) const
+void TrainNode::Print(Stream& stream, int indentLevel) const
 {
-	::printf("%-*s%s\n", indentLevel * 2, "", ToString(StringStyle::Empty).c_str());
+	stream.Printf("%-*s%s\n", indentLevel * 2, "", ToString(StringStyle::Empty).c_str());
 }
 
 String TrainNode::ToString(const StringStyle& ss) const
@@ -141,7 +131,7 @@ Value* TrainNode_Head::DoGetProperty(const Symbol* pSymbol, const Attribute& att
 	return TrainNode::DoGetProperty(pSymbol, attr);
 }
 
-String TrainNode_Head::ToString() const
+String TrainNode_Head::ToString(const StringStyle& ss) const
 {
 	String str;
 	str += GetNodeTypeName();
@@ -150,9 +140,9 @@ String TrainNode_Head::ToString() const
 	return str;
 }
 
-void TrainNode_Head::Print(int indentLevel) const
+void TrainNode_Head::Print(Stream& stream, int indentLevel) const
 {
-	Print(indentLevel);
+	TrainNode::Print(stream, indentLevel);
 }
 
 //-----------------------------------------------------------------------------
@@ -202,7 +192,7 @@ Value* TrainNode_Bottom::DoGetProperty(const Symbol* pSymbol, const Attribute& a
 	return TrainNode::DoGetProperty(pSymbol, attr);
 }
 
-String TrainNode_Bottom::ToString() const
+String TrainNode_Bottom::ToString(const StringStyle& ss) const
 {
 	String str;
 	char buff[128];
@@ -212,10 +202,10 @@ String TrainNode_Bottom::ToString() const
 	return str;
 }
 
-void TrainNode_Bottom::Print(int indentLevel) const
+void TrainNode_Bottom::Print(Stream& stream, int indentLevel) const
 {
-	Print(indentLevel);
-	GetConnectorSrc().GetNodeSrc().Print(indentLevel + 1);
+	TrainNode::Print(stream, indentLevel);
+	GetConnectorSrc().GetNodeSrc().Print(stream, indentLevel + 1);
 }
 
 //-----------------------------------------------------------------------------
@@ -243,7 +233,7 @@ Value* TrainNode_Unary::DoGetProperty(const Symbol* pSymbol, const Attribute& at
 	return TrainNode::DoGetProperty(pSymbol, attr);
 }
 
-String TrainNode_Unary::ToString() const
+String TrainNode_Unary::ToString(const StringStyle& ss) const
 {
 	String str;
 	char buff[128];
@@ -253,10 +243,10 @@ String TrainNode_Unary::ToString() const
 	return str;
 }
 
-void TrainNode_Unary::Print(int indentLevel) const
+void TrainNode_Unary::Print(Stream& stream, int indentLevel) const
 {
-	Print(indentLevel);
-	GetConnectorSrc().GetNodeSrc().Print(indentLevel + 1);
+	TrainNode::Print(stream, indentLevel);
+	GetConnectorSrc().GetNodeSrc().Print(stream, indentLevel + 1);
 }
 
 //-----------------------------------------------------------------------------
@@ -311,7 +301,7 @@ Value* TrainNode_Binary::DoGetProperty(const Symbol* pSymbol, const Attribute& a
 	return TrainNode::DoGetProperty(pSymbol, attr);
 }
 
-String TrainNode_Binary::ToString() const
+String TrainNode_Binary::ToString(const StringStyle& ss) const
 {
 	String str;
 	char buff[128];
@@ -323,11 +313,11 @@ String TrainNode_Binary::ToString() const
 	return str;
 }
 
-void TrainNode_Binary::Print(int indentLevel) const
+void TrainNode_Binary::Print(Stream& stream, int indentLevel) const
 {
-	Print(indentLevel);
-	GetConnectorSrcLeft().GetNodeSrc().Print(indentLevel + 1);
-	GetConnectorSrcRight().GetNodeSrc().Print(indentLevel + 1);
+	TrainNode::Print(stream, indentLevel);
+	GetConnectorSrcLeft().GetNodeSrc().Print(stream, indentLevel + 1);
+	GetConnectorSrcRight().GetNodeSrc().Print(stream, indentLevel + 1);
 }
 
 //-----------------------------------------------------------------------------
@@ -513,7 +503,7 @@ Value* TrainNode_Gear::DoGetProperty(const Symbol* pSymbol, const Attribute& att
 	return TrainNode::DoGetProperty(pSymbol, attr);
 }
 
-String TrainNode_Gear::ToString() const
+String TrainNode_Gear::ToString(const StringStyle& ss) const
 {
 	String str;
 	char buff[128];
@@ -523,10 +513,10 @@ String TrainNode_Gear::ToString() const
 	return str;
 }
 
-void TrainNode_Gear::Print(int indentLevel) const
+void TrainNode_Gear::Print(Stream& stream, int indentLevel) const
 {
-	Print(indentLevel);
-	//GetConnectorSrc().GetNodeSrc().Print(indentLevel + 1);
+	TrainNode::Print(stream, indentLevel);
+	//GetConnectorSrc().GetNodeSrc().Print(Stream& stream, indentLevel + 1);
 }
 
 }

@@ -77,14 +77,13 @@ public:
 	virtual bool EvalBackward(Processor& processor) = 0;
 	virtual bool GatherMemberSymbol(SymbolList& symbols);
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr);
-	virtual String ToString() const = 0;
-	virtual void Print(int indentLevel) const;
+	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const;
+	virtual void Print(Stream& stream, int indentLevel) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const TrainNode& other) const { return this == &other; }
 	bool IsEqualTo(const TrainNode& other) const { return IsIdentical(other); }
 	bool IsLessThan(const TrainNode& other) const { return this < &other; }
-	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
 //------------------------------------------------------------------------------
@@ -133,8 +132,8 @@ public:
 	virtual bool EvalBackward(Processor& processor);
 	virtual bool GatherMemberSymbol(SymbolList& symbols);
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr);
-	virtual String ToString() const;
-	virtual void Print(int indentLevel) const;
+	virtual String ToString(const StringStyle& ss) const;
+	virtual void Print(Stream& stream, int indentLevel) const;
 };
 
 //------------------------------------------------------------------------------
@@ -157,8 +156,8 @@ public:
 	bool EvalBackwardTop(Processor& processor, const Array& arrayCorrect);
 	virtual bool GatherMemberSymbol(SymbolList& symbols);
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr);
-	virtual String ToString() const;
-	virtual void Print(int indentLevel) const;
+	virtual String ToString(const StringStyle& ss) const;
+	virtual void Print(Stream& stream, int indentLevel) const;
 };
 
 //------------------------------------------------------------------------------
@@ -175,8 +174,8 @@ public:
 	virtual bool IsVulnerable() const;
 	virtual bool GatherMemberSymbol(SymbolList& symbols);
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr);
-	virtual String ToString() const;
-	virtual void Print(int indentLevel) const;
+	virtual String ToString(const StringStyle& ss) const;
+	virtual void Print(Stream& stream, int indentLevel) const;
 };
 
 //------------------------------------------------------------------------------
@@ -206,8 +205,8 @@ public:
 	virtual bool IsVulnerable() const;
 	virtual bool GatherMemberSymbol(SymbolList& symbols);
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr);
-	virtual String ToString() const;
-	virtual void Print(int indentLevel) const;
+	virtual String ToString(const StringStyle& ss) const;
+	virtual void Print(Stream& stream, int indentLevel) const;
 };
 
 //------------------------------------------------------------------------------
@@ -296,8 +295,8 @@ public:
 	virtual bool IsGear() const { return true; }
 	virtual bool GatherMemberSymbol(SymbolList& symbols);
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr);
-	virtual String ToString() const;
-	virtual void Print(int indentLevel) const;
+	virtual String ToString(const StringStyle& ss) const;
+	virtual void Print(Stream& stream, int indentLevel) const;
 };
 
 }

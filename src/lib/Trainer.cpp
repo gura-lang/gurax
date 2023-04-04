@@ -71,9 +71,9 @@ TrainNode* Trainer::FindNode(const Symbol* pSymbol) const
 	return nullptr;
 }
 
-void Trainer::Print() const
+void Trainer::Print(Stream& stream) const
 {
-	GetNodeBottom().Print(0);
+	GetNodeBottom().Print(stream, 0);
 }
 
 TrainNode* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolsInput)

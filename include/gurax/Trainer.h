@@ -52,7 +52,7 @@ public:
 	const Expr& GetExprModel() const { return *_pExprModel; }
 	TrainOptimizer::Instance* CreateOptimizerInstance() const { return _pTrainOptimizer->CreateInstance(); }
 	TrainNode* FindNode(const Symbol* pSymbol) const;
-	void Print() const;
+	void Print(Stream& stream) const;
 	//static void RegisterNodeGearCreator(ValueType valType, const NodeGear::Creator* pCreator) {
 	//	_nodeGearCreatorMap[valType] = pCreator;
 	//}

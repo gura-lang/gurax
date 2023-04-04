@@ -131,6 +131,28 @@ Gurax_ImplementMethod(Trainer, GetNode)
 	return argument.ReturnValue(processor, pValueRtn.release());
 }
 
+// Trainer#Print(stream? as Stream):void
+Gurax_DeclareMethod(Trainer, Print)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementMethod(Trainer, Print)
+{
+	// Target
+	Trainer& trainer = GetValueThis(argument).GetTrainer();
+	// Arguments
+	ArgPicker args(argument);
+	Stream& stream = args.IsValid()? args.PickStream() : *Stream::COut;
+	// Function body
+	trainer.Print(stream);
+	return Value::nil();
+}
+
 // Trainer#Train(correct as Array)
 Gurax_DeclareMethod(Trainer, Train)
 {
@@ -217,6 +239,7 @@ void VType_Trainer::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Trainer, Eval));
 	Assign(Gurax_CreateMethod(Trainer, EvalBwd));
 	Assign(Gurax_CreateMethod(Trainer, GetNode));
+	Assign(Gurax_CreateMethod(Trainer, Print));
 	Assign(Gurax_CreateMethod(Trainer, Train));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Trainer, model));
