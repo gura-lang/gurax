@@ -59,6 +59,17 @@ bool Expr::Prepare()
 	return Traverse(visitor);
 }
 
+bool Expr::PrepareAndCompose(Composer& composer)
+{
+	Prepare();
+	if (Error::IsIssued()) return false;
+	SetPUnitFirst(composer.PeekPUnitCont());
+	ComposeOrNil(composer);
+	composer.Add_Return(*this);
+	SetPUnitEnd(composer.PeekPUnitCont());
+	return !Error::IsIssued();
+}
+
 SymbolList Expr::GatherArgSymbols() const
 {
 	SymbolList symbolList;

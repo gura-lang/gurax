@@ -17,6 +17,7 @@ bool Trainer::CreateFromExpr(const Expr& exprModel, const SymbolSet& inputs)
 	RefPtr<TrainNode> pNode(CreateNode(exprModel, inputs));
 	if (!pNode) return false;
 	pNode->AddConnectorDst(GetNodeBottom().GetConnectorSrc());
+	_nodeOwner.push_back(pNode.release());
 	return true;
 }
 
@@ -133,6 +134,9 @@ TrainNode* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolsInput)
 			trait = TrainNode::Trait::Variable;
 			pTrainOptimizer = CreateOptimizerInstance();
 		}
+		//RefPtr<Expr> pExpr(expr.Reference());
+		//if (!pExpr->PrepareAndCompose(_composer)) return nullptr;
+		//RefPtr<TrainNode_Head> pNode(new TrainNode_Head(pExpr.release(), trait, pTrainOptimizer));
 		RefPtr<TrainNode_Head> pNode(new TrainNode_Head(expr.Reference(), trait, pTrainOptimizer));
 		return pNode.release();
 	} else {
@@ -142,6 +146,9 @@ TrainNode* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolsInput)
 			trait = TrainNode::Trait::Variable;
 			pTrainOptimizer = CreateOptimizerInstance();
 		}
+		//RefPtr<Expr> pExpr(expr.Reference());
+		//if (!pExpr->PrepareAndCompose(_composer)) return nullptr;
+		//RefPtr<TrainNode_Head> pNode(new TrainNode_Head(pExpr.release(), trait, pTrainOptimizer));
 		RefPtr<TrainNode_Head> pNode(new TrainNode_Head(expr.Reference(), trait, pTrainOptimizer));
 		return pNode.release();
 	}
@@ -163,6 +170,7 @@ TrainNode* Trainer::CreateNodeUnary(const Expr_UnaryOp& exprEx, const SymbolSet&
 	RefPtr<TrainNode> pNodeChild(CreateNode(exprEx.GetExprChild(), symbolsInput));
 	if (!pNodeChild) return nullptr;
 	pNodeChild->AddConnectorDst(pNode->GetConnectorSrc());
+	_nodeOwner.push_back(pNodeChild.release());
 	return pNode.release();
 }
 

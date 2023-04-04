@@ -70,6 +70,7 @@ bool Template::PrepareAndCompose()
 
 bool Template::PrepareAndCompose(Composer& composer)
 {
+#if 0
 	auto Sub = [](Composer& composer, Expr& expr) {
 		expr.Prepare();
 		if (Error::IsIssued()) return false;
@@ -80,6 +81,8 @@ bool Template::PrepareAndCompose(Composer& composer)
 		return !Error::IsIssued();
 	};
 	return Sub(composer, GetExprForInit()) && Sub(composer, GetExprForBody());
+#endif
+	return GetExprForInit().PrepareAndCompose(composer) && GetExprForBody().PrepareAndCompose(composer);
 }
 
 bool Template::Render(Processor& processor, Stream& streamDst)

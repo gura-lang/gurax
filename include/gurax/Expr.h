@@ -184,6 +184,7 @@ public:
 	template<typename T> bool IsType() const { return _typeInfo.IsIdentical(T::typeInfo); }
 	template<typename T> static bool IsType(const Expr* pExpr) { return pExpr && pExpr->IsType<T>(); }
 	bool Prepare();
+	bool PrepareAndCompose(Composer& composer);
 	SymbolList GatherArgSymbols() const;
 	Value* Eval(Processor& processor) const;
 	Value* Eval(Processor& processor, Event& event) const;

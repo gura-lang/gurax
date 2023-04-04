@@ -122,6 +122,7 @@ protected:
 public:
 	TrainNode_Head(Expr* pExpr, Trait trait, TrainOptimizer::Instance* pTrainOptimizer) :
 		TrainNode("Head"), _pExpr(pExpr), _trait(trait), _pTrainOptimizer(pTrainOptimizer) {}
+	const Expr& GetExpr() const { return *_pExpr; }
 	bool IsVariable() const { return _trait == Trait::Variable; }
 	bool IsConstant() const { return _trait == Trait::Constant; }
 	bool IsInput() const { return _trait == Trait::Input; }

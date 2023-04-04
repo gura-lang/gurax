@@ -91,9 +91,9 @@ void TrainNode_Head::Reset()
 
 bool TrainNode_Head::EvalForward(Processor& processor)
 {
-	//::printf("TrainNode_Head::EvalForward(Processor& processor)\n");
+	::printf("%s\n", GetExpr().ToString(StringStyle::Empty).c_str());
 	if (_pArrayFwd.IsNull() || IsInput()) {
-		RefPtr<Value> pValue(_pExpr->Eval(processor));
+		RefPtr<Value> pValue(GetExpr().Eval(processor));
 		if (Error::IsIssued()) return false;
 		if (pValue->IsType(VTYPE_Number)) {
 			_pArrayFwd.reset(Array::CreateScalar(Array::ElemType::Double, Value_Number::GetNumber<Double>(*pValue)));
@@ -101,7 +101,7 @@ bool TrainNode_Head::EvalForward(Processor& processor)
 			_pArrayFwd.reset(Array::CreateScalar(Array::ElemType::Complex, Value_Complex::GetComplex(*pValue)));
 		} else if (pValue->IsType(VTYPE_Array)) {
 			_pArrayFwd.reset(Value_Array::GetArray(*pValue).Reference());
-		//} else if (pValue->IsType(VTYPE_Gear)) {
+		} else if (pValue->IsType(VTYPE_Gear)) {
 		
 		} else {
 			Error::Issue(ErrorType::ValueError, "variable must be an array");
@@ -136,7 +136,7 @@ String TrainNode_Head::ToString(const StringStyle& ss) const
 	String str;
 	str += GetNodeTypeName();
 	str += ":";
-	str += _pExpr->ToString();
+	str += GetExpr().ToString();
 	return str;
 }
 

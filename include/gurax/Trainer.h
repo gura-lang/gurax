@@ -3,6 +3,7 @@
 //==============================================================================
 #ifndef GURAX_TRAINER_H
 #define GURAX_TRAINER_H
+#include "Composer.h"
 #include "TrainNode.h"
 #include "TrainOptimizer.h"
 
@@ -20,6 +21,7 @@ public:
 public:
 	//using TrainNodeGearCreatorMap = std::map<ValueType, const NodeGear::Creator*>;
 public:
+	Composer _composer;
 	RefPtr<TrainOptimizer> _pTrainOptimizer;
 	RefPtr<TrainNode_Bottom> _pNodeBottom;
 	TrainNodeOwner _nodeOwner;
