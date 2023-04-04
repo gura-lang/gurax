@@ -1601,7 +1601,7 @@ bool Array::Transpose(RefPtr<Array>& pArrayRtn) const
 		pvDst = pArrayRtn->FwdPointer(pvDst, lenFwd);
 		pvSrc = FwdPointer(pvSrc, lenFwd);
 	}
-	return pArrayRtn.release();
+	return true;
 }
 
 bool Array::GenericUnaryOp(RefPtr<Array>& pArrayRtn, const Array& array,
@@ -1614,7 +1614,6 @@ bool Array::GenericUnaryOp(RefPtr<Array>& pArrayRtn, const Array& array,
 	const void* pv = array.GetPointerC<void>();
 	size_t len = array.GetDimSizes().CalcLength();
 	func(pvRtn, pv, len);
-	//return pArrayRtn.release();
 	return true;
 }
 
@@ -1638,7 +1637,6 @@ bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, co
 		pvL = arrayL.FwdPointer(pvL, lenFwdL);
 		pvR = arrayR.FwdPointer(pvR, lenFwdR);
 	}
-	//return pArrayRtn.release();
 	return true;
 }
 
@@ -1651,7 +1649,6 @@ bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, co
 	const void* pvL = arrayL.GetPointerC<void>();
 	size_t len = arrayL.GetDimSizes().CalcLength();
 	func(pvRtn, pvL, numR, len);
-	//return pArrayRtn.release();
 	return true;
 }
 
@@ -1664,7 +1661,6 @@ bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, Do
 	const void* pvR = arrayR.GetPointerC<void>();
 	size_t len = arrayR.GetDimSizes().CalcLength();
 	func(pvRtn, numL, pvR, len);
-	//return pArrayRtn.release();
 	return true;
 }
 
@@ -1677,7 +1673,6 @@ bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, co
 	const void* pvL = arrayL.GetPointerC<void>();
 	size_t len = arrayL.GetDimSizes().CalcLength();
 	func(pvRtn, pvL, numR, len);
-	//return pArrayRtn.release();
 	return true;
 }
 
@@ -1690,7 +1685,6 @@ bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, UI
 	const void* pvR = arrayR.GetPointerC<void>();
 	size_t len = arrayR.GetDimSizes().CalcLength();
 	func(pvRtn, numL, pvR, len);
-	//return pArrayRtn.release();
 	return true;
 }
 
@@ -1703,7 +1697,6 @@ bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, co
 	const void* pvL = arrayL.GetPointerC<void>();
 	size_t len = arrayL.GetDimSizes().CalcLength();
 	func(pvRtn, pvL, numR, len);
-	//return pArrayRtn.release();
 	return true;
 }
 
@@ -1716,7 +1709,6 @@ bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, co
 	const void* pvR = arrayR.GetPointerC<void>();
 	size_t len = arrayR.GetDimSizes().CalcLength();
 	func(pvRtn, numL, pvR, len);
-	//return pArrayRtn.release();
 	return true;
 }
 

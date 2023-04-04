@@ -322,12 +322,12 @@ TestCase('Rotation/translation matrix') {
 }
 
 TestCase('Array#Trasnpose()') {
-	//Tester(`@float([[1, 2]]).Transpose()[])
-	//Tester(`@float([[1], [2]]).Transpose()[])
-	//Tester(`@float([[1, 2], [3, 4]]).Transpose()[])
-	//Tester(`@float([[1, 2, 3], [4, 5, 6]]).Transpose()[])
-	//Tester(`@float([[1, 2, 3, 4, 5, 6], [7, 8, 9, 10, 11, 12]]).Transpose()[])
-	//Tester(`@float([[[1, 2, 3], [4, 5, 6]], [[7, 8, 9], [10, 11, 12]]]).Transpose()[])
+	Tester(`@float([[1, 2]]).Transpose()[])
+	Tester(`@float([[1], [2]]).Transpose()[])
+	Tester(`@float([[1, 2], [3, 4]]).Transpose()[])
+	Tester(`@float([[1, 2, 3], [4, 5, 6]]).Transpose()[])
+	Tester(`@float([[1, 2, 3, 4, 5, 6], [7, 8, 9, 10, 11, 12]]).Transpose()[])
+	Tester(`@float([[[1, 2, 3], [4, 5, 6]], [[7, 8, 9], [10, 11, 12]]]).Transpose()[])
 }
 
 TestCase('Array#VerifyShape()') {
