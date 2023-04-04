@@ -52,6 +52,7 @@ void TrainNodeList::Reset()
 bool TrainNodeList::EvalForward(Processor& processor)
 {
 	for (TrainNode* pNode : *this) {
+		pNode->Print(*Stream::COut, 0);
 		if (!pNode->EvalForward(processor)) return false;
 	}
 	return true;

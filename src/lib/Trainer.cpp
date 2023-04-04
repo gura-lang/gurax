@@ -17,7 +17,7 @@ bool Trainer::CreateFromExpr(const Expr& exprModel, const SymbolSet& inputs)
 	RefPtr<TrainNode> pNode(CreateNode(exprModel, inputs));
 	if (!pNode) return false;
 	pNode->AddConnectorDst(GetNodeBottom().GetConnectorSrc());
-	_nodeOwner.push_back(pNode.release());
+	//_nodeOwner.push_back(pNode.release());
 	return true;
 }
 
@@ -75,6 +75,12 @@ TrainNode* Trainer::FindNode(const Symbol* pSymbol) const
 void Trainer::Print(Stream& stream) const
 {
 	GetNodeBottom().Print(stream, 0);
+	stream.Println();
+	size_t i = 0;
+	for (const TrainNode* pNode : _nodeOwner) {
+		stream.Printf("#%d %s\n", i, pNode->ToString().c_str());
+		i++;
+	}
 }
 
 TrainNode* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolsInput)
@@ -117,11 +123,13 @@ TrainNode* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolsInput)
 	} else if (expr.IsType<Expr_UnaryOp>()) {
 		const Expr_UnaryOp& exprEx = dynamic_cast<const Expr_UnaryOp&>(expr);
 		RefPtr<TrainNode> pNode(CreateNodeUnary(exprEx, symbolsInput));
+		_nodeOwner.push_back(pNode.Reference());
 		return pNode.release();
 	} else if (expr.IsType<Expr_BinaryOp>()) {
 		const Expr_BinaryOp& exprEx = dynamic_cast<const Expr_BinaryOp&>(expr);
 		RefPtr<TrainNode> pNode(exprEx.GetOperator()->IsType(OpType::Gear)?
 			CreateNodeGear(exprEx, symbolsInput) : CreateNodeBinary(exprEx, symbolsInput));
+		_nodeOwner.push_back(pNode.Reference());
 		return pNode.release();
 	} else if (expr.IsType<Expr_Identifier>()) {
 		const Expr_Identifier& exprEx = dynamic_cast<const Expr_Identifier&>(expr);
@@ -136,7 +144,9 @@ TrainNode* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolsInput)
 		}
 		RefPtr<Expr> pExpr(expr.Reference());
 		if (!pExpr->PrepareAndCompose(_composer)) return nullptr;
-		return new TrainNode_Head(pExpr.release(), trait, pTrainOptimizer);
+		RefPtr<TrainNode> pNode(new TrainNode_Head(pExpr.release(), trait, pTrainOptimizer));
+		_nodeOwner.push_back(pNode.Reference());
+		return pNode.release();
 	} else {
 		TrainNode::Trait trait = TrainNode::Trait::Constant;
 		TrainOptimizer::Instance* pTrainOptimizer = nullptr;
@@ -146,7 +156,9 @@ TrainNode* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolsInput)
 		}
 		RefPtr<Expr> pExpr(expr.Reference());
 		if (!pExpr->PrepareAndCompose(_composer)) return nullptr;
-		return new TrainNode_Head(pExpr.release(), trait, pTrainOptimizer);
+		RefPtr<TrainNode> pNode(new TrainNode_Head(pExpr.release(), trait, pTrainOptimizer));
+		_nodeOwner.push_back(pNode.Reference());
+		return pNode.release();
 	}
 	return nullptr;
 }
@@ -166,13 +178,13 @@ TrainNode* Trainer::CreateNodeUnary(const Expr_UnaryOp& exprEx, const SymbolSet&
 	RefPtr<TrainNode> pNodeChild(CreateNode(exprEx.GetExprChild(), symbolsInput));
 	if (!pNodeChild) return nullptr;
 	pNodeChild->AddConnectorDst(pNode->GetConnectorSrc());
-	_nodeOwner.push_back(pNodeChild.release());
+	//_nodeOwner.push_back(pNodeChild.release());
 	return pNode.release();
 }
 
 TrainNode* Trainer::CreateNodeBinary(const Expr_BinaryOp& exprEx, const SymbolSet& symbolsInput)
 {
-	const Operator *pOperator = exprEx.GetOperator();
+	const Operator* pOperator = exprEx.GetOperator();
 	RefPtr<TrainNode_Binary> pNode;
 	if (pOperator->IsType(OpType::Add)) {
 		pNode.reset(new TrainNode_Add());
@@ -195,8 +207,8 @@ TrainNode* Trainer::CreateNodeBinary(const Expr_BinaryOp& exprEx, const SymbolSe
 	if (!pNodeLeft || !pNodeRight) return nullptr;
 	pNodeLeft->AddConnectorDst(pNode->GetConnectorSrcLeft());
 	pNodeRight->AddConnectorDst(pNode->GetConnectorSrcRight());
-	_nodeOwner.push_back(pNodeLeft.release());
-	_nodeOwner.push_back(pNodeRight.release());
+	//_nodeOwner.push_back(pNodeLeft.release());
+	//_nodeOwner.push_back(pNodeRight.release());
 	return pNode.release();
 }
 
@@ -205,7 +217,7 @@ TrainNode* Trainer::CreateNodeGear(const Expr_BinaryOp& exprEx, const SymbolSet&
 #if 0
 	Value value = exprEx.GetRight()->Exec(env);
 	if (env.IsSignalled()) return nullptr;
-	if (!value.IsInstanceOf(VTYPE_gear)) {
+	if (!value.IsInstanceOf(VTfcYPE_gear)) {
 		env.SetError(ERR_ValueError, "gear instance is expected as a right-side operand of a gear operator");
 		return nullptr;
 	}
