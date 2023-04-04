@@ -70,18 +70,6 @@ bool Template::PrepareAndCompose()
 
 bool Template::PrepareAndCompose(Composer& composer)
 {
-#if 0
-	auto Sub = [](Composer& composer, Expr& expr) {
-		expr.Prepare();
-		if (Error::IsIssued()) return false;
-		expr.SetPUnitFirst(composer.PeekPUnitCont());
-		expr.ComposeOrNil(composer);
-		composer.Add_Return(expr);
-		expr.SetPUnitEnd(composer.PeekPUnitCont());
-		return !Error::IsIssued();
-	};
-	return Sub(composer, GetExprForInit()) && Sub(composer, GetExprForBody());
-#endif
 	return GetExprForInit().PrepareAndCompose(composer) && GetExprForBody().PrepareAndCompose(composer);
 }
 

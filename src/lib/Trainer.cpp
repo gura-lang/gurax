@@ -136,9 +136,7 @@ TrainNode* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolsInput)
 		}
 		RefPtr<Expr> pExpr(expr.Reference());
 		if (!pExpr->PrepareAndCompose(_composer)) return nullptr;
-		RefPtr<TrainNode_Head> pNode(new TrainNode_Head(pExpr.release(), trait, pTrainOptimizer));
-		//RefPtr<TrainNode_Head> pNode(new TrainNode_Head(expr.Reference(), trait, pTrainOptimizer));
-		return pNode.release();
+		return new TrainNode_Head(pExpr.release(), trait, pTrainOptimizer);
 	} else {
 		TrainNode::Trait trait = TrainNode::Trait::Constant;
 		TrainOptimizer::Instance* pTrainOptimizer = nullptr;
@@ -148,9 +146,7 @@ TrainNode* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolsInput)
 		}
 		RefPtr<Expr> pExpr(expr.Reference());
 		if (!pExpr->PrepareAndCompose(_composer)) return nullptr;
-		RefPtr<TrainNode_Head> pNode(new TrainNode_Head(pExpr.release(), trait, pTrainOptimizer));
-		//RefPtr<TrainNode_Head> pNode(new TrainNode_Head(expr.Reference(), trait, pTrainOptimizer));
-		return pNode.release();
+		return new TrainNode_Head(pExpr.release(), trait, pTrainOptimizer);
 	}
 	return nullptr;
 }
