@@ -52,7 +52,6 @@ void TrainNodeList::Reset()
 bool TrainNodeList::EvalForward(Processor& processor)
 {
 	for (TrainNode* pNode : *this) {
-		pNode->Print(*Stream::COut, 0);
 		if (!pNode->EvalForward(processor)) return false;
 	}
 	return true;
@@ -92,7 +91,7 @@ void TrainNode_Head::Reset()
 
 bool TrainNode_Head::EvalForward(Processor& processor)
 {
-	::printf("%s\n", GetExpr().ToString(StringStyle::Empty).c_str());
+	//::printf("%s\n", GetExpr().ToString(StringStyle::Empty).c_str());
 	if (_pArrayFwd.IsNull() || IsInput()) {
 		RefPtr<Value> pValue(GetExpr().Eval(processor));
 		if (Error::IsIssued()) return false;

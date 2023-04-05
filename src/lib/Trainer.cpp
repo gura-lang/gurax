@@ -16,6 +16,7 @@ bool Trainer::CreateFromExpr(const Expr& exprModel, const SymbolSet& inputs)
 {
 	RefPtr<TrainNode> pNode(CreateNode(exprModel, inputs));
 	if (!pNode) return false;
+	_composer.Add_Terminate();
 	pNode->AddConnectorDst(GetNodeBottom().GetConnectorSrc());
 	//_nodeOwner.push_back(pNode.release());
 	return true;
