@@ -126,6 +126,7 @@ public:
 	bool IsVariable() const { return _trait == Trait::Variable; }
 	bool IsConstant() const { return _trait == Trait::Constant; }
 	bool IsInput() const { return _trait == Trait::Input; }
+	const char* GetTraitName() const;
 	virtual bool IsHead() const { return true; }
 	virtual void Reset();
 	virtual bool IsVulnerable() const;

@@ -79,6 +79,11 @@ void TrainNodeOwner::Clear()
 //-----------------------------------------------------------------------------
 // TrainNode_Head
 //-----------------------------------------------------------------------------
+const char* TrainNode_Head::GetTraitName() const
+{
+	return IsVariable()? "variable" : IsConstant()? "constant" : IsInput()? "input" : "unknown";
+}
+
 bool TrainNode_Head::IsVulnerable() const
 {
 	return IsVariable();
@@ -133,11 +138,7 @@ Value* TrainNode_Head::DoGetProperty(const Symbol* pSymbol, const Attribute& att
 
 String TrainNode_Head::ToString(const StringStyle& ss) const
 {
-	String str;
-	str += GetNodeTypeName();
-	str += ":";
-	str += GetExpr().ToString();
-	return str;
+	return String().Format("%s(%s):%s", GetNodeTypeName(), GetTraitName(), GetExpr().ToString().c_str());
 }
 
 void TrainNode_Head::Print(Stream& stream, int indentLevel) const
