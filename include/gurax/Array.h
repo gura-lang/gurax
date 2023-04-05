@@ -36,6 +36,7 @@ public:
 	static const DimSizes* DetermineResult(const DimSizes& dimSizesL, const DimSizes& dimSizesR,
 					size_t* pnUnits, size_t* pLenUnit, size_t* pLenFwdL, size_t* pLenFwdR);
 	size_t CalcLength() const { return CalcLength(begin(), end()); }
+	bool IsEqual(const DimSizes& dimSizes) const;
 	bool DoesMatch(const DimSizes& dimSizes, size_t offset = 0) const;
 	bool DoesMatchDot(const DimSizes& dimSizes, size_t offset = 0) const;
 	size_t GetRowSize() const { return *(rbegin() + 1); }
@@ -59,6 +60,7 @@ public:
 		size_t bytes;
 		const Symbol* pSymbol;
 	public:
+#if 0
 		std::function<bool (void* pv, size_t idx, const Value& value)>						IndexSetValue;
 		std::function<bool (void* pv, size_t idx, Double num)>								IndexSetDouble;
 		std::function<Value* (const void* pv, size_t idx)>									IndexGetValue;
@@ -113,6 +115,7 @@ public:
 		std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>			Cmp_NumberArray;
 		std::function<void (void* pvRtn, size_t m, size_t n, const void* pvL, const void* pvR, size_t l)> Dot_ArrayArray[ElemTypeIdMax];
 		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t n)>		Cross_ArrayArray[ElemTypeIdMax];
+#endif
 	public:
 		ElemTypeT(size_t id) : id(id), bytes(0), pSymbol(nullptr) {}
 		bool IsNone() const;
@@ -152,12 +155,69 @@ public:
 		Double,
 		Complex,
 	};
-	using MapSymbolToElemType = std::unordered_map<
-			const Symbol*, ElemTypeT*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>;
+	struct Funcs {
+		std::function<bool (void* pv, size_t idx, const Value& value)>						IndexSetValue[ElemTypeIdMax];
+		std::function<bool (void* pv, size_t idx, Double num)>								IndexSetDouble[ElemTypeIdMax];
+		std::function<Value* (const void* pv, size_t idx)>									IndexGetValue[ElemTypeIdMax];
+		std::function<Double (const void* pv, size_t idx)>									IndexGetDouble[ElemTypeIdMax];
+		std::function<void (const ValueList& values, void* pv, size_t offset, size_t len)>	InjectFromValueList[ElemTypeIdMax];
+		std::function<bool (Iterator& iterator, void* pv, size_t offset, size_t len)>		InjectFromIterator[ElemTypeIdMax];
+		std::function<void (ValueOwner& values, const void* pv, size_t offset, size_t len)> ExtractToValueOwner[ElemTypeIdMax];
+		std::function<void (void* pvDst, const void* pvSrc, size_t offset, size_t len)> 	CopyElems[ElemTypeIdMax][ElemTypeIdMax];
+		std::function<void (void* pvDst, size_t nRows, size_t nCols, const void* pvSrc)>	Transpose[ElemTypeIdMax][ElemTypeIdMax];
+		std::function<void (void* pvDst, const void* pvSrc, size_t len)> 					Neg_Array[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Add_ArrayArray[ElemTypeIdMax][ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Add_ArrayNumber[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>	Add_ArrayComplex[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		And_ArrayArray[ElemTypeIdMax][ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, UInt64 numR, size_t len)>			And_ArrayNumber[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Sub_ArrayArray[ElemTypeIdMax][ElemTypeIdMax];
+		std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>			Sub_NumberArray[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Sub_ArrayNumber[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>	Sub_ComplexArray[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>	Sub_ArrayComplex[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Mul_ArrayArray[ElemTypeIdMax][ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Mul_ArrayNumber[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>	Mul_ArrayComplex[ElemTypeIdMax];
+		std::function<bool (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Div_ArrayArray[ElemTypeIdMax][ElemTypeIdMax];
+		std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>			Div_NumberArray[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Div_ArrayNumber[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>	Div_ComplexArray[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>	Div_ArrayComplex[ElemTypeIdMax];
+		std::function<bool (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Pow_ArrayArray[ElemTypeIdMax][ElemTypeIdMax];
+		std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>			Pow_NumberArray[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Pow_ArrayNumber[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>	Pow_ComplexArray[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>	Pow_ArrayComplex[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Or_ArrayArray[ElemTypeIdMax][ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, UInt64 numR, size_t len)>			Or_ArrayNumber[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Xor_ArrayArray[ElemTypeIdMax][ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, UInt64 numR, size_t len)>			Xor_ArrayNumber[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Eq_ArrayArray[ElemTypeIdMax][ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Eq_ArrayNumber[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>	Eq_ArrayComplex[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Ne_ArrayArray[ElemTypeIdMax][ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Ne_ArrayNumber[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>	Ne_ArrayComplex[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Lt_ArrayArray[ElemTypeIdMax][ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Lt_ArrayNumber[ElemTypeIdMax];
+		std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>			Lt_NumberArray[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Le_ArrayArray[ElemTypeIdMax][ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Le_ArrayNumber[ElemTypeIdMax];
+		std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>			Le_NumberArray[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Cmp_ArrayArray[ElemTypeIdMax][ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Cmp_ArrayNumber[ElemTypeIdMax];
+		std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>			Cmp_NumberArray[ElemTypeIdMax];
+		std::function<void (void* pvRtn, size_t m, size_t n, const void* pvL, const void* pvR, size_t l)> Dot_ArrayArray[ElemTypeIdMax][ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t n)>		Cross_ArrayArray[ElemTypeIdMax][ElemTypeIdMax];
+	};
+	using MapSymbolToElemType = std::unordered_map<const Symbol*, ElemTypeT*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>;
 protected:
 	ElemTypeT& _elemType;
 	RefPtr<Memory> _pMemory;
 	DimSizes _dimSizes;
+public:
+	static Funcs funcs;
 protected:
 	static ElemTypeT* _pElemTypeRtnTbl[ElemTypeIdMax][ElemTypeIdMax];
 	static MapSymbolToElemType _mapSymbolToElemType;
@@ -191,15 +251,16 @@ public:
 	const DimSizes& GetDimSizes() const { return _dimSizes; }
 	bool IsMultidemensional() const { return _dimSizes.size() > 1; }
 	bool IsScalar() const { return _dimSizes.empty(); }
+	bool HasSameShape(const Array& array) const { return _dimSizes.IsEqual(array.GetDimSizes()); }
 	template<typename T> T* GetPointerC() { return _pMemory->GetPointerC<T>(); }
 	template<typename T> T* GetPointerC(size_t offset) { return _pMemory->GetPointerC<T>(offset); }
 	template<typename T> const T* GetPointerC() const { return _pMemory->GetPointerC<T>(); }
 	template<typename T> const T* GetPointerC(size_t offset) const { return _pMemory->GetPointerC<T>(offset); }
 public:
-	bool IndexSetValue(size_t idx, const Value& value) { return _elemType.IndexSetValue(GetPointerC<void>(), idx, value); }
-	bool IndexSetDouble(size_t idx, Double num) { return _elemType.IndexSetDouble(GetPointerC<void>(), idx, num); }
-	Value* IndexGetValue(size_t idx) const { return _elemType.IndexGetValue(GetPointerC<void>(), idx); }
-	Double IndexGetDouble(size_t idx) const { return _elemType.IndexGetDouble(GetPointerC<void>(), idx); }
+	bool IndexSetValue(size_t idx, const Value& value) { return funcs.IndexSetValue[_elemType.id](GetPointerC<void>(), idx, value); }
+	bool IndexSetDouble(size_t idx, Double num) { return funcs.IndexSetDouble[_elemType.id](GetPointerC<void>(), idx, num); }
+	Value* IndexGetValue(size_t idx) const { return funcs.IndexGetValue[_elemType.id](GetPointerC<void>(), idx); }
+	Double IndexGetDouble(size_t idx) const { return funcs.IndexGetDouble[_elemType.id](GetPointerC<void>(), idx); }
 	void InjectElems(ValueList& values, size_t offset, size_t len);
 	void InjectElems(ValueList& values, size_t offset = 0);
 	bool InjectElems(Iterator& iterator, size_t offset, size_t len);

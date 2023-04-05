@@ -232,7 +232,7 @@ bool ValueList::CreateArraySub(Array::ElemTypeT& elemType, void* p, size_t& idx,
 		return false;
 	} else if (pDimSize + 1 == pDimSizeEnd) {
 		for (const Value* pValue : *this) {
-			if (!elemType.IndexSetValue(p, idx, *pValue)) return false;
+			if (!Array::funcs.IndexSetValue[elemType.id](p, idx, *pValue)) return false;
 			idx++;
 		}
 	} else {

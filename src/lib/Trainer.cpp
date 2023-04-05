@@ -44,12 +44,9 @@ const Array& Trainer::GetResult() const
 
 Double Trainer::CalcMeanSquareError(const Array& arrayCorrect) const
 {
-#if 0
-	const Array *pArrayResult = GetResult();
-	if (!Array::CheckSameShape(sig, pArrayResult, pArrayCorrect)) return 0;
-	// not implemented yet
-	return 0;
-#endif
+	const Array& arrayResult = GetResult();
+	if (!arrayResult.HasSameShape(arrayCorrect)) return 0;
+	
 	return 0;
 }
 
