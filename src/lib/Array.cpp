@@ -668,7 +668,7 @@ void Eq_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
 	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
 	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
 	for( ; pRtn != pRtnEnd; pRtn++, pL++, pR++) {
-		*pRtn = *pL == *pR;
+		*pRtn = (*pL == *pR);
 	}
 }
 
@@ -1249,7 +1249,6 @@ bool Array::Transpose(RefPtr<Array>& pArrayRtn) const
 bool Array::GenericUnaryOp(RefPtr<Array>& pArrayRtn, const Array& array,
 	const std::function<void (void* pvRtn, const void* pv, size_t len)>& func)
 {
-	//RefPtr<Array> pArrayRtn(Create(array.GetElemType(), array.GetDimSizes()));
 	if (!pArrayRtn) pArrayRtn.reset(Create(array.GetElemType(), array.GetDimSizes()));
 	if (!pArrayRtn) return false;
 	void* pvRtn = pArrayRtn->GetPointerC<void>();
@@ -1267,7 +1266,6 @@ bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, co
 	size_t lenFwdL = 0, lenFwdR = 0;
 	const DimSizes* pDimSizesRtn = DimSizes::DetermineResult(arrayL.GetDimSizes(), arrayR.GetDimSizes(), &nUnits, &lenUnit, &lenFwdL, &lenFwdR);
 	if (!pDimSizesRtn) return nullptr;
-	//RefPtr<Array> pArrayRtn(Create(GetElemTypeRtn(arrayL, arrayR), *pDimSizesRtn));
 	if (!pArrayRtn) pArrayRtn.reset(Create(elemTypeRtn, *pDimSizesRtn));
 	if (!pArrayRtn) return false;
 	void* pvRtn = pArrayRtn->GetPointerC<void>();

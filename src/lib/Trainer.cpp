@@ -8,13 +8,14 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Trainer
 //------------------------------------------------------------------------------
-Trainer::Trainer(TrainOptimizer* pTrainOptimizer) : _pTrainOptimizer(pTrainOptimizer), _pNodeBottom(new TrainNode_Bottom())
+Trainer::Trainer(Expr* pExprModel, TrainOptimizer* pTrainOptimizer) :
+		_pExprModel(pExprModel), _pTrainOptimizer(pTrainOptimizer), _pNodeBottom(new TrainNode_Bottom())
 {
 }
 
-bool Trainer::CreateFromExpr(const Expr& exprModel, const SymbolSet& inputs)
+bool Trainer::CreateFromExpr(const SymbolSet& inputs)
 {
-	RefPtr<TrainNode> pNode(CreateNode(exprModel, inputs));
+	RefPtr<TrainNode> pNode(CreateNode(GetExprModel(), inputs));
 	if (!pNode) return false;
 	_composer.Add_Terminate();
 	pNode->AddConnectorDst(GetNodeBottom().GetConnectorSrc());

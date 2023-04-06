@@ -22,15 +22,15 @@ public:
 	//using TrainNodeGearCreatorMap = std::map<ValueType, const NodeGear::Creator*>;
 public:
 	Composer _composer;
+	RefPtr<Expr> _pExprModel;
 	RefPtr<TrainOptimizer> _pTrainOptimizer;
 	RefPtr<TrainNode_Bottom> _pNodeBottom;
 	TrainNodeOwner _nodeOwner;
 	TrainNodeMap _nodeMap;
-	RefPtr<Expr> _pExprModel;
 	//static NodeGearCreatorMap _nodeGearCreatorMap;
 public:
 	// Constructor
-	Trainer(TrainOptimizer* pTrainOptimizer);
+	Trainer(Expr* pExprModel, TrainOptimizer* pTrainOptimizer);
 	// Copy constructor/operator
 	Trainer(const Trainer& src) = delete;
 	Trainer& operator=(const Trainer& src) = delete;
@@ -40,7 +40,7 @@ public:
 protected:
 	~Trainer() = default;
 public:
-	bool CreateFromExpr(const Expr& exprModel, const SymbolSet& inputs);
+	bool CreateFromExpr(const SymbolSet& inputs);
 	void Reset();
 	bool EvalForward(Processor& processor);
 	bool EvalBackward(Processor& processor, const Array& arrayCorrect);
