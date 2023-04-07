@@ -60,68 +60,13 @@ public:
 		size_t bytes;
 		const Symbol* pSymbol;
 	public:
-#if 0
-		std::function<bool (void* pv, size_t idx, const Value& value)>						IndexSetValue;
-		std::function<bool (void* pv, size_t idx, Double num)>								IndexSetDouble;
-		std::function<Value* (const void* pv, size_t idx)>									IndexGetValue;
-		std::function<Double (const void* pv, size_t idx)>									IndexGetDouble;
-		std::function<void (const ValueList& values, void* pv, size_t offset, size_t len)>	InjectFromValueList;
-		std::function<bool (Iterator& iterator, void* pv, size_t offset, size_t len)>		InjectFromIterator;
-		std::function<void (ValueOwner& values, const void* pv, size_t offset, size_t len)> ExtractToValueOwner;
-		std::function<void (void* pvDst, const void* pvSrc, size_t offset, size_t len)> 	CopyElems[ElemTypeIdMax];
-		std::function<void (void* pvDst, size_t nRows, size_t nCols, const void* pvSrc)>	Transpose[ElemTypeIdMax];
-		std::function<void (void* pvDst, const void* pvSrc, size_t len)> 					Neg_Array;
-		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Add_ArrayArray[ElemTypeIdMax];
-		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Add_ArrayNumber;
-		std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>	Add_ArrayComplex;
-		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		And_ArrayArray[ElemTypeIdMax];
-		std::function<void (void* pvRtn, const void* pvL, UInt64 numR, size_t len)>			And_ArrayNumber;
-		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Sub_ArrayArray[ElemTypeIdMax];
-		std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>			Sub_NumberArray;
-		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Sub_ArrayNumber;
-		std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>	Sub_ComplexArray;
-		std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>	Sub_ArrayComplex;
-		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Mul_ArrayArray[ElemTypeIdMax];
-		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Mul_ArrayNumber;
-		std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>	Mul_ArrayComplex;
-		std::function<bool (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Div_ArrayArray[ElemTypeIdMax];
-		std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>			Div_NumberArray;
-		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Div_ArrayNumber;
-		std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>	Div_ComplexArray;
-		std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>	Div_ArrayComplex;
-		std::function<bool (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Pow_ArrayArray[ElemTypeIdMax];
-		std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>			Pow_NumberArray;
-		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Pow_ArrayNumber;
-		std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>	Pow_ComplexArray;
-		std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>	Pow_ArrayComplex;
-		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Or_ArrayArray[ElemTypeIdMax];
-		std::function<void (void* pvRtn, const void* pvL, UInt64 numR, size_t len)>			Or_ArrayNumber;
-		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Xor_ArrayArray[ElemTypeIdMax];
-		std::function<void (void* pvRtn, const void* pvL, UInt64 numR, size_t len)>			Xor_ArrayNumber;
-		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Eq_ArrayArray[ElemTypeIdMax];
-		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Eq_ArrayNumber;
-		std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>	Eq_ArrayComplex;
-		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Ne_ArrayArray[ElemTypeIdMax];
-		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Ne_ArrayNumber;
-		std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>	Ne_ArrayComplex;
-		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Lt_ArrayArray[ElemTypeIdMax];
-		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Lt_ArrayNumber;
-		std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>			Lt_NumberArray;
-		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Le_ArrayArray[ElemTypeIdMax];
-		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Le_ArrayNumber;
-		std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>			Le_NumberArray;
-		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Cmp_ArrayArray[ElemTypeIdMax];
-		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Cmp_ArrayNumber;
-		std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>			Cmp_NumberArray;
-		std::function<void (void* pvRtn, size_t m, size_t n, const void* pvL, const void* pvR, size_t l)> Dot_ArrayArray[ElemTypeIdMax];
-		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t n)>		Cross_ArrayArray[ElemTypeIdMax];
-#endif
-	public:
+		ElemTypeT(const ElemTypeT& elemType) = delete;
 		ElemTypeT(size_t id) : id(id), bytes(0), pSymbol(nullptr) {}
 		bool IsNone() const;
 		bool IsIdentical(const ElemTypeT& elemType) const { return this == &elemType; }
 		void* FwdPointer(void* pv, int n) const { return reinterpret_cast<char*>(pv) + n * bytes; }
 		const void* FwdPointer(const void* pv, int n) const { return FwdPointer(const_cast<void*>(pv), n); }
+		const char* GetName() const { return pSymbol->GetName(); }
 	};
 	struct GURAX_DLLDECLARE ElemType {
 		static ElemTypeT None;
@@ -237,6 +182,7 @@ public:
 	static void Bootup();
 public:
 	Array* Clone() const { return new Array(*this); }
+	static Array* Create(ElemTypeT& elemType, Memory* pMemory, DimSizes dimSizes);
 	static Array* Create(ElemTypeT& elemType, DimSizes dimSizes);
 	static Array* CreateScalar(ElemTypeT& elemType, Double num);
 	static Array* CreateScalar(ElemTypeT& elemType, const Complex& num);

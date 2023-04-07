@@ -31,6 +31,11 @@ Array::Array(Array&& src) :
 {
 }
 
+Array* Array::Create(ElemTypeT& elemType, Memory* pMemory, DimSizes dimSizes)
+{
+	return new Array(elemType, pMemory, std::move(dimSizes));
+}
+
 Array* Array::Create(ElemTypeT& elemType, DimSizes dimSizes)
 {
 	RefPtr<Memory> pMemory(new MemoryHeap(elemType.bytes * dimSizes.CalcLength()));

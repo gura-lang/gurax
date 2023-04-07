@@ -1,0 +1,10 @@
+#!/usr/bin/env gurax
+//==============================================================================
+// test-ml_mnist.gura
+//==============================================================================
+import(util.tester) {*}
+import(ml.mnist)
+
+TestCase('Basic test') {
+	Println(ml.mnist.Test('hello', 4))
+}
