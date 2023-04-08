@@ -34,10 +34,10 @@ bool LabelSet::Read(Stream& stream)
 }
 
 template<typename T_Elem>
-Array *CreateArrayOfLabels(const Array::ElemTypeT& elemType, const UInt8* pElemSrc, size_t nLabels, bool onehotFlag)
+Array *CreateArrayOfLabels(const Array::ElemTypeT& elemType, const UInt8* pElemSrc, size_t nLabels, bool oneHotFlag)
 {
 	RefPtr<Array> pArray;
-	if (onehotFlag) {
+	if (oneHotFlag) {
 		size_t labelMax = 0;
 		for (size_t i = 0; i < nLabels; i++) {
 			UInt8 label = *(pElemSrc + i);
@@ -61,22 +61,22 @@ Array *CreateArrayOfLabels(const Array::ElemTypeT& elemType, const UInt8* pElemS
 	return pArray.release();
 }
 
-Array* LabelSet::ToArray(bool onehotFlag, const Array::ElemTypeT& elemType) const
+Array* LabelSet::ToArray(bool oneHotFlag, const Array::ElemTypeT& elemType) const
 {
 	RefPtr<Array> pArray;
 	const UInt8 *pElemSrc = _pMemory->GetPointerC<UInt8>();
 	if (elemType.IsIdentical(Array::ElemType::UInt8)) {
-		if (onehotFlag) {
-			pArray.reset(CreateArrayOfLabels<UInt8>(elemType, pElemSrc, _nLabels, onehotFlag));
+		if (oneHotFlag) {
+			pArray.reset(CreateArrayOfLabels<UInt8>(elemType, pElemSrc, _nLabels, oneHotFlag));
 		} else {
 			pArray.reset(Array::Create(elemType, _pMemory.Reference(), DimSizes(_nLabels)));
 		}
 	} else if (elemType.IsIdentical(Array::ElemType::Half)) {
-		pArray.reset(CreateArrayOfLabels<Half>(elemType, pElemSrc, _nLabels, onehotFlag));
+		pArray.reset(CreateArrayOfLabels<Half>(elemType, pElemSrc, _nLabels, oneHotFlag));
 	} else if (elemType.IsIdentical(Array::ElemType::Float)) {
-		pArray.reset(CreateArrayOfLabels<Float>(elemType, pElemSrc, _nLabels, onehotFlag));
+		pArray.reset(CreateArrayOfLabels<Float>(elemType, pElemSrc, _nLabels, oneHotFlag));
 	} else if (elemType.IsIdentical(Array::ElemType::Double)) {
-		pArray.reset(CreateArrayOfLabels<Double>(elemType, pElemSrc, _nLabels, onehotFlag));
+		pArray.reset(CreateArrayOfLabels<Double>(elemType, pElemSrc, _nLabels, oneHotFlag));
 	} else {
 		Error::Issue(ErrorType::ValueError, "can't create an array of %s", elemType.GetName());
 		return nullptr;

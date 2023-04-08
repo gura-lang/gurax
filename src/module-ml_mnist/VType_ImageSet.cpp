@@ -27,10 +27,11 @@ ${help.ComposeMethodHelp(ml.mnist.ImageSet, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// ml.mnist.ImageSet() {block?}
+// ml.mnist.ImageSet(stream as Stream):map {block?}
 Gurax_DeclareConstructor(ImageSet)
 {
-	Declare(VTYPE_ImageSet, Flag::None);
+	Declare(VTYPE_ImageSet, Flag::Map);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `ml.mnist.ImageSet` instance.
@@ -40,43 +41,62 @@ Creates a `ml.mnist.ImageSet` instance.
 Gurax_ImplementConstructor(ImageSet)
 {
 	// Arguments
-	//ArgPicker args(argument);
+	ArgPicker args(argument);
+	Stream& stream = args.PickStream();
 	// Function body
 	RefPtr<ImageSet> pImageSet(new ImageSet());
+	if (!pImageSet->Read(stream)) return Value::nil();
 	return argument.ReturnValue(processor, new Value_ImageSet(pImageSet.release()));
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// ml.mnist.ImageSet#MethodSkeleton(num1 as Number, num2 as Number)
-Gurax_DeclareMethod(ImageSet, MethodSkeleton)
+// ml.mnist.ImageSet#ToArray(shape? as Symbol, elemType? as Symbol, normalize? as Bool):map {block?}
+Gurax_DeclareMethod(ImageSet, ToArray)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("shape", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("normalize", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
 )""");
 }
 
-Gurax_ImplementMethod(ImageSet, MethodSkeleton)
+Gurax_ImplementMethod(ImageSet, ToArray)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
+	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	const Symbol* pSymbolShape = args.IsValid()? args.PickSymbol() : Gurax_Symbol(flat);
+	const Symbol* pSymbolElemType = args.IsValid()? args.PickSymbol() : Gurax_Symbol(float_);
+	bool normalizeFlag = args.IsValid()? args.PickBool() : true;
+	bool flattenFlag = true;
+	if (pSymbolShape->IsIdentical(Gurax_Symbol(flat))) {
+		flattenFlag = true;
+	} else if (pSymbolShape->IsIdentical(Gurax_Symbol(matrix))) {
+		flattenFlag = false;
+	} else {
+		Error::Issue(ErrorType::ValueError, "argument shape takes `` `flat` or `` `matrix``");
+		return Value::nil();
+	}
+	const Array::ElemTypeT& elemType = Array::SymbolToElemType(pSymbolElemType);
+	if (elemType.IsNone()) {
+		
+	}
 	// Function body
+	valueThis.GetImageSet().ToArray(flattenFlag, elemType, normalizeFlag);
 	return new Value_Number(num1 + num2);
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// ml.mnist.ImageSet#propSkeleton
-Gurax_DeclareProperty_R(ImageSet, propSkeleton)
+// ml.mnist.ImageSet#nImages
+Gurax_DeclareProperty_R(ImageSet, nImages)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -84,10 +104,10 @@ Skeleton.
 )""");
 }
 
-Gurax_ImplementPropertyGetter(ImageSet, propSkeleton)
+Gurax_ImplementPropertyGetter(ImageSet, nImages)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetImageSet().CountImages());
 }
 
 //------------------------------------------------------------------------------
@@ -102,9 +122,9 @@ void VType_ImageSet::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(ImageSet));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(ImageSet, MethodSkeleton));
+	Assign(Gurax_CreateMethod(ImageSet, ToArray));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(ImageSet, propSkeleton));
+	Assign(Gurax_CreateProperty(ImageSet, nImages));
 }
 
 //------------------------------------------------------------------------------

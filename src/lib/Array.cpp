@@ -893,6 +893,7 @@ void Array::Bootup()
 		_mapSymbolToElemType[pSymbol] = &elemType;
 		_mapAtSymbolToElemType[pAtSymbol] = &elemType;
 	};
+	//                       Return     Left        Right
 	InitElemTypeRtnForArithm(Bool,		Bool,		Bool);
 	InitElemTypeRtnForArithm(Int8,		Int8,		Bool);
 	InitElemTypeRtnForArithm(UInt8,		UInt8,		Bool);
@@ -1678,6 +1679,18 @@ Array* Array::CreateCasted(const ElemTypeT& elemType) const
 	RefPtr<Array> pArray(Create(elemType, _dimSizes));
 	pArray->InjectElems(GetPointerC<void>(), GetElemType(), 0, _dimSizes.CalcLength());
 	return pArray.release();
+}
+
+const Array::ElemTypeT& Array::SymbolToElemType(const Symbol* pSymbol)
+{
+	auto iter = _mapSymbolToElemType.find(pSymbol);
+	return (iter == _mapSymbolToElemType.end())? ElemType::None : *iter->second;
+}
+
+const Array::ElemTypeT& Array::AtSymbolToElemType(const Symbol* pSymbol)
+{
+	auto iter = _mapAtSymbolToElemType.find(pSymbol);
+	return (iter == _mapAtSymbolToElemType.end())? ElemType::None : *iter->second;
 }
 
 String Array::ToString(const StringStyle& ss) const

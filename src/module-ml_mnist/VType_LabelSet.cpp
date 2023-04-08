@@ -52,12 +52,13 @@ Gurax_ImplementConstructor(LabelSet)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// ml.mnist.LabelSet#ToArray(oneShot? as Bool, elemType? as Symbol)
+// ml.mnist.LabelSet#ToArray(oneHot? as Bool, elemType? as Symbol):map {block?}
 Gurax_DeclareMethod(LabelSet, ToArray)
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("oneShot", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	Declare(VTYPE_Number, Flag::Map);
+	DeclareArg("oneHot", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
 )""");
@@ -69,18 +70,18 @@ Gurax_ImplementMethod(LabelSet, ToArray)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Bool oneShot = args.IsValid()? args.PickBool() : true;
+	Bool oneHot = args.IsValid()? args.PickBool() : true;
 	const Symbol* pSymbolElemType = args.IsValid()? args.PickSymbol() : Gurax_Symbol(float_);
 	// Function body
 	const Array::ElemTypeT& elemType = Array::SymbolToElemType(pSymbolElemType);
-	return new Value_Number(num1 + num2);
+	return argument.ReturnValue(processor, new Value_Array(valueThis.GetLabelSet().ToArray(oneHot, elemType)));
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// ml.mnist.LabelSet#propSkeleton
-Gurax_DeclareProperty_R(LabelSet, propSkeleton)
+// ml.mnist.LabelSet#nLabels
+Gurax_DeclareProperty_R(LabelSet, nLabels)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -88,10 +89,10 @@ Skeleton.
 )""");
 }
 
-Gurax_ImplementPropertyGetter(LabelSet, propSkeleton)
+Gurax_ImplementPropertyGetter(LabelSet, nLabels)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetLabelSet().CountLabels());
 }
 
 //------------------------------------------------------------------------------
@@ -108,7 +109,7 @@ void VType_LabelSet::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(LabelSet, ToArray));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(LabelSet, propSkeleton));
+	Assign(Gurax_CreateProperty(LabelSet, nLabels));
 }
 
 //------------------------------------------------------------------------------

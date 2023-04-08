@@ -287,12 +287,8 @@ public:
 	void* FwdPointer(void* pv, int n) const { return GetElemType().FwdPointer(pv, n); }
 	const void* FwdPointer(const void* pv, int n) const { return GetElemType().FwdPointer(pv, n); }
 public:
-	static const ElemTypeT& SymbolToElemType(const Symbol* pSymbol) {
-		return *_mapSymbolToElemType.find(pSymbol)->second;
-	}
-	static const ElemTypeT& AtSymbolToElemType(const Symbol* pSymbol) {
-		return *_mapAtSymbolToElemType.find(pSymbol)->second;
-	}
+	static const ElemTypeT& SymbolToElemType(const Symbol* pSymbol);
+	static const ElemTypeT& AtSymbolToElemType(const Symbol* pSymbol);
 public:
 	static const ElemTypeT& GetElemTypeRtnForArithm(const ElemTypeT& elemTypeL, const ElemTypeT& elemTypeR) {
 		return *_pElemTypeRtnForArithmTbl[elemTypeL.id][elemTypeR.id];
