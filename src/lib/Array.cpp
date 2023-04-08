@@ -3,8 +3,8 @@
 //==============================================================================
 #include "stdafx.h"
 
-#define SetElemTypeRtn(elemTypeRtn, elemTypeL, elemTypeR) \
-_pElemTypeRtnTbl[ElemType::elemTypeL.id][ElemType::elemTypeR.id] = &ElemType::elemTypeRtn;
+#define InitElemTypeRtnForArithm(elemTypeRtn, elemTypeL, elemTypeR) \
+_pElemTypeRtnForArithmTbl[ElemType::elemTypeL.id][ElemType::elemTypeR.id] = &ElemType::elemTypeRtn;
 
 namespace Gurax {
 
@@ -12,7 +12,7 @@ namespace Gurax {
 // Array
 //------------------------------------------------------------------------------
 Array::Funcs Array::funcs;
-const Array::ElemTypeT* Array::_pElemTypeRtnTbl[ElemTypeIdMax][ElemTypeIdMax];
+const Array::ElemTypeT* Array::_pElemTypeRtnForArithmTbl[ElemTypeIdMax][ElemTypeIdMax];
 Array::MapSymbolToElemType Array::_mapSymbolToElemType;
 Array::MapSymbolToElemType Array::_mapAtSymbolToElemType;
 
@@ -893,175 +893,175 @@ void Array::Bootup()
 		_mapSymbolToElemType[pSymbol] = &elemType;
 		_mapAtSymbolToElemType[pAtSymbol] = &elemType;
 	};
-	SetElemTypeRtn(Bool, Bool, Bool);
-	SetElemTypeRtn(Int8, Int8, Bool);
-	SetElemTypeRtn(UInt8, UInt8, Bool);
-	SetElemTypeRtn(Int16, Int16, Bool);
-	SetElemTypeRtn(UInt16, UInt16, Bool);
-	SetElemTypeRtn(Int32, Int32, Bool);
-	SetElemTypeRtn(UInt32, UInt32, Bool);
-	SetElemTypeRtn(Int64, Int64, Bool);
-	SetElemTypeRtn(UInt64, UInt64, Bool);
-	SetElemTypeRtn(Half, Half, Bool);
-	SetElemTypeRtn(Float, Float, Bool);
-	SetElemTypeRtn(Double, Double, Bool);
-	SetElemTypeRtn(Complex, Complex, Bool);
-	SetElemTypeRtn(Int8, Bool, Int8);
-	SetElemTypeRtn(Int8, Int8, Int8);
-	SetElemTypeRtn(UInt8, UInt8, Int8);
-	SetElemTypeRtn(Int16, Int16, Int8);
-	SetElemTypeRtn(UInt16, UInt16, Int8);
-	SetElemTypeRtn(Int32, Int32, Int8);
-	SetElemTypeRtn(UInt32, UInt32, Int8);
-	SetElemTypeRtn(Int64, Int64, Int8);
-	SetElemTypeRtn(UInt64, UInt64, Int8);
-	SetElemTypeRtn(Half, Half, Int8);
-	SetElemTypeRtn(Float, Float, Int8);
-	SetElemTypeRtn(Double, Double, Int8);
-	SetElemTypeRtn(Complex, Complex, Int8);
-	SetElemTypeRtn(UInt8, Bool, UInt8);
-	SetElemTypeRtn(UInt8, Int8, UInt8);
-	SetElemTypeRtn(UInt8, UInt8, UInt8);
-	SetElemTypeRtn(Int16, Int16, UInt8);
-	SetElemTypeRtn(UInt16, UInt16, UInt8);
-	SetElemTypeRtn(Int32, Int32, UInt8);
-	SetElemTypeRtn(UInt32, UInt32, UInt8);
-	SetElemTypeRtn(Int64, Int64, UInt8);
-	SetElemTypeRtn(UInt64, UInt64, UInt8);
-	SetElemTypeRtn(Half, Half, UInt8);
-	SetElemTypeRtn(Float, Float, UInt8);
-	SetElemTypeRtn(Double, Double, UInt8);
-	SetElemTypeRtn(Complex, Complex, UInt8);
-	SetElemTypeRtn(Int16, Bool, Int16);
-	SetElemTypeRtn(Int16, Int8, Int16);
-	SetElemTypeRtn(Int16, UInt8, Int16);
-	SetElemTypeRtn(Int16, Int16, Int16);
-	SetElemTypeRtn(UInt16, UInt16, Int16);
-	SetElemTypeRtn(Int32, Int32, Int16);
-	SetElemTypeRtn(UInt32, UInt32, Int16);
-	SetElemTypeRtn(Int64, Int64, Int16);
-	SetElemTypeRtn(UInt64, UInt64, Int16);
-	SetElemTypeRtn(Half, Half, Int16);
-	SetElemTypeRtn(Float, Float, Int16);
-	SetElemTypeRtn(Double, Double, Int16);
-	SetElemTypeRtn(Complex, Complex, Int16);
-	SetElemTypeRtn(UInt16, Bool, UInt16);
-	SetElemTypeRtn(UInt16, Int8, UInt16);
-	SetElemTypeRtn(UInt16, UInt8, UInt16);
-	SetElemTypeRtn(UInt16, Int16, UInt16);
-	SetElemTypeRtn(UInt16, UInt16, UInt16);
-	SetElemTypeRtn(Int32, Int32, UInt16);
-	SetElemTypeRtn(UInt32, UInt32, UInt16);
-	SetElemTypeRtn(Int64, Int64, UInt16);
-	SetElemTypeRtn(UInt64, UInt64, UInt16);
-	SetElemTypeRtn(Half, Half, UInt16);
-	SetElemTypeRtn(Float, Float, UInt16);
-	SetElemTypeRtn(Double, Double, UInt16);
-	SetElemTypeRtn(Complex, Complex, UInt16);
-	SetElemTypeRtn(Int32, Bool, Int32);
-	SetElemTypeRtn(Int32, Int8, Int32);
-	SetElemTypeRtn(Int32, UInt8, Int32);
-	SetElemTypeRtn(Int32, Int16, Int32);
-	SetElemTypeRtn(Int32, UInt16, Int32);
-	SetElemTypeRtn(Int32, Int32, Int32);
-	SetElemTypeRtn(UInt32, UInt32, Int32);
-	SetElemTypeRtn(Int64, Int64, Int32);
-	SetElemTypeRtn(UInt64, UInt64, Int32);
-	SetElemTypeRtn(Half, Half, Int32);
-	SetElemTypeRtn(Float, Float, Int32);
-	SetElemTypeRtn(Double, Double, Int32);
-	SetElemTypeRtn(Complex, Complex, Int32);
-	SetElemTypeRtn(UInt32, Bool, UInt32);
-	SetElemTypeRtn(UInt32, Int8, UInt32);
-	SetElemTypeRtn(UInt32, UInt8, UInt32);
-	SetElemTypeRtn(UInt32, Int16, UInt32);
-	SetElemTypeRtn(UInt32, UInt16, UInt32);
-	SetElemTypeRtn(UInt32, Int32, UInt32);
-	SetElemTypeRtn(UInt32, UInt32, UInt32);
-	SetElemTypeRtn(Int64, Int64, UInt32);
-	SetElemTypeRtn(UInt64, UInt64, UInt32);
-	SetElemTypeRtn(Half, Half, UInt32);
-	SetElemTypeRtn(Float, Float, UInt32);
-	SetElemTypeRtn(Double, Double, UInt32);
-	SetElemTypeRtn(Complex, Complex, UInt32);
-	SetElemTypeRtn(Int64, Bool, Int64);
-	SetElemTypeRtn(Int64, Int8, Int64);
-	SetElemTypeRtn(Int64, UInt8, Int64);
-	SetElemTypeRtn(Int64, Int16, Int64);
-	SetElemTypeRtn(Int64, UInt16, Int64);
-	SetElemTypeRtn(Int64, Int32, Int64);
-	SetElemTypeRtn(Int64, UInt32, Int64);
-	SetElemTypeRtn(Int64, Int64, Int64);
-	SetElemTypeRtn(UInt64, UInt64, Int64);
-	SetElemTypeRtn(Half, Half, Int64);
-	SetElemTypeRtn(Float, Float, Int64);
-	SetElemTypeRtn(Double, Double, Int64);
-	SetElemTypeRtn(Complex, Complex, Int64);
-	SetElemTypeRtn(UInt64, Bool, UInt64);
-	SetElemTypeRtn(UInt64, Int8, UInt64);
-	SetElemTypeRtn(UInt64, UInt8, UInt64);
-	SetElemTypeRtn(UInt64, Int16, UInt64);
-	SetElemTypeRtn(UInt64, UInt16, UInt64);
-	SetElemTypeRtn(UInt64, Int32, UInt64);
-	SetElemTypeRtn(UInt64, UInt32, UInt64);
-	SetElemTypeRtn(UInt64, Int64, UInt64);
-	SetElemTypeRtn(UInt64, UInt64, UInt64);
-	SetElemTypeRtn(Half, Half, UInt64);
-	SetElemTypeRtn(Float, Float, UInt64);
-	SetElemTypeRtn(Double, Double, UInt64);
-	SetElemTypeRtn(Complex, Complex, UInt64);
-	SetElemTypeRtn(Half, Bool, Half);
-	SetElemTypeRtn(Half, Int8, Half);
-	SetElemTypeRtn(Half, UInt8, Half);
-	SetElemTypeRtn(Half, Int16, Half);
-	SetElemTypeRtn(Half, UInt16, Half);
-	SetElemTypeRtn(Half, Int32, Half);
-	SetElemTypeRtn(Half, UInt32, Half);
-	SetElemTypeRtn(Half, Int64, Half);
-	SetElemTypeRtn(Half, UInt64, Half);
-	SetElemTypeRtn(Half, Half, Half);
-	SetElemTypeRtn(Float, Float, Half);
-	SetElemTypeRtn(Double, Double, Half);
-	SetElemTypeRtn(Complex, Complex, Half);
-	SetElemTypeRtn(Float, Bool, Float);
-	SetElemTypeRtn(Float, Int8, Float);
-	SetElemTypeRtn(Float, UInt8, Float);
-	SetElemTypeRtn(Float, Int16, Float);
-	SetElemTypeRtn(Float, UInt16, Float);
-	SetElemTypeRtn(Float, Int32, Float);
-	SetElemTypeRtn(Float, UInt32, Float);
-	SetElemTypeRtn(Float, Int64, Float);
-	SetElemTypeRtn(Float, UInt64, Float);
-	SetElemTypeRtn(Float, Half, Float);
-	SetElemTypeRtn(Float, Float, Float);
-	SetElemTypeRtn(Double, Double, Float);
-	SetElemTypeRtn(Complex, Complex, Float);
-	SetElemTypeRtn(Double, Bool, Double);
-	SetElemTypeRtn(Double, Int8, Double);
-	SetElemTypeRtn(Double, UInt8, Double);
-	SetElemTypeRtn(Double, Int16, Double);
-	SetElemTypeRtn(Double, UInt16, Double);
-	SetElemTypeRtn(Double, Int32, Double);
-	SetElemTypeRtn(Double, UInt32, Double);
-	SetElemTypeRtn(Double, Int64, Double);
-	SetElemTypeRtn(Double, UInt64, Double);
-	SetElemTypeRtn(Double, Half, Double);
-	SetElemTypeRtn(Double, Float, Double);
-	SetElemTypeRtn(Double, Double, Double);
-	SetElemTypeRtn(Complex, Complex, Double);
-	SetElemTypeRtn(Complex, Bool, Complex);
-	SetElemTypeRtn(Complex, Int8, Complex);
-	SetElemTypeRtn(Complex, UInt8, Complex);
-	SetElemTypeRtn(Complex, Int16, Complex);
-	SetElemTypeRtn(Complex, UInt16, Complex);
-	SetElemTypeRtn(Complex, Int32, Complex);
-	SetElemTypeRtn(Complex, UInt32, Complex);
-	SetElemTypeRtn(Complex, Int64, Complex);
-	SetElemTypeRtn(Complex, UInt64, Complex);
-	SetElemTypeRtn(Complex, Half, Complex);
-	SetElemTypeRtn(Complex, Float, Complex);
-	SetElemTypeRtn(Complex, Double, Complex);
-	SetElemTypeRtn(Complex, Complex, Complex);
+	InitElemTypeRtnForArithm(Bool,		Bool,		Bool);
+	InitElemTypeRtnForArithm(Int8,		Int8,		Bool);
+	InitElemTypeRtnForArithm(UInt8,		UInt8,		Bool);
+	InitElemTypeRtnForArithm(Int16,		Int16,		Bool);
+	InitElemTypeRtnForArithm(UInt16,	UInt16,		Bool);
+	InitElemTypeRtnForArithm(Int32,		Int32,		Bool);
+	InitElemTypeRtnForArithm(UInt32,	UInt32,		Bool);
+	InitElemTypeRtnForArithm(Int64,		Int64,		Bool);
+	InitElemTypeRtnForArithm(UInt64,	UInt64,		Bool);
+	InitElemTypeRtnForArithm(Half,		Half,		Bool);
+	InitElemTypeRtnForArithm(Float,		Float,		Bool);
+	InitElemTypeRtnForArithm(Double,	Double,		Bool);
+	InitElemTypeRtnForArithm(Complex,	Complex,	Bool);
+	InitElemTypeRtnForArithm(Int8,		Bool,		Int8);
+	InitElemTypeRtnForArithm(Int8,		Int8,		Int8);
+	InitElemTypeRtnForArithm(UInt8,		UInt8,		Int8);
+	InitElemTypeRtnForArithm(Int16,		Int16,		Int8);
+	InitElemTypeRtnForArithm(UInt16,	UInt16,		Int8);
+	InitElemTypeRtnForArithm(Int32,		Int32,		Int8);
+	InitElemTypeRtnForArithm(UInt32,	UInt32,		Int8);
+	InitElemTypeRtnForArithm(Int64,		Int64,		Int8);
+	InitElemTypeRtnForArithm(UInt64,	UInt64,		Int8);
+	InitElemTypeRtnForArithm(Half,		Half,		Int8);
+	InitElemTypeRtnForArithm(Float,		Float,		Int8);
+	InitElemTypeRtnForArithm(Double,	Double,		Int8);
+	InitElemTypeRtnForArithm(Complex,	Complex,	Int8);
+	InitElemTypeRtnForArithm(UInt8,		Bool,		UInt8);
+	InitElemTypeRtnForArithm(UInt8,		Int8,		UInt8);
+	InitElemTypeRtnForArithm(UInt8,		UInt8,		UInt8);
+	InitElemTypeRtnForArithm(Int16,		Int16,		UInt8);
+	InitElemTypeRtnForArithm(UInt16,	UInt16,		UInt8);
+	InitElemTypeRtnForArithm(Int32,		Int32,		UInt8);
+	InitElemTypeRtnForArithm(UInt32,	UInt32,		UInt8);
+	InitElemTypeRtnForArithm(Int64,		Int64,		UInt8);
+	InitElemTypeRtnForArithm(UInt64,	UInt64,		UInt8);
+	InitElemTypeRtnForArithm(Half,		Half,		UInt8);
+	InitElemTypeRtnForArithm(Float,		Float,		UInt8);
+	InitElemTypeRtnForArithm(Double,	Double,		UInt8);
+	InitElemTypeRtnForArithm(Complex,	Complex,	UInt8);
+	InitElemTypeRtnForArithm(Int16,		Bool,		Int16);
+	InitElemTypeRtnForArithm(Int16,		Int8,		Int16);
+	InitElemTypeRtnForArithm(Int16,		UInt8,		Int16);
+	InitElemTypeRtnForArithm(Int16,		Int16,		Int16);
+	InitElemTypeRtnForArithm(UInt16,	UInt16,		Int16);
+	InitElemTypeRtnForArithm(Int32,		Int32,		Int16);
+	InitElemTypeRtnForArithm(UInt32,	UInt32,		Int16);
+	InitElemTypeRtnForArithm(Int64,		Int64,		Int16);
+	InitElemTypeRtnForArithm(UInt64,	UInt64,		Int16);
+	InitElemTypeRtnForArithm(Half,		Half,		Int16);
+	InitElemTypeRtnForArithm(Float,		Float,		Int16);
+	InitElemTypeRtnForArithm(Double,	Double,		Int16);
+	InitElemTypeRtnForArithm(Complex,	Complex,	Int16);
+	InitElemTypeRtnForArithm(UInt16,	Bool,		UInt16);
+	InitElemTypeRtnForArithm(UInt16,	Int8,		UInt16);
+	InitElemTypeRtnForArithm(UInt16,	UInt8,		UInt16);
+	InitElemTypeRtnForArithm(UInt16,	Int16,		UInt16);
+	InitElemTypeRtnForArithm(UInt16,	UInt16,		UInt16);
+	InitElemTypeRtnForArithm(Int32,		Int32,		UInt16);
+	InitElemTypeRtnForArithm(UInt32,	UInt32,		UInt16);
+	InitElemTypeRtnForArithm(Int64,		Int64,		UInt16);
+	InitElemTypeRtnForArithm(UInt64,	UInt64,		UInt16);
+	InitElemTypeRtnForArithm(Half,		Half,		UInt16);
+	InitElemTypeRtnForArithm(Float,		Float,		UInt16);
+	InitElemTypeRtnForArithm(Double,	Double,		UInt16);
+	InitElemTypeRtnForArithm(Complex,	Complex,	UInt16);
+	InitElemTypeRtnForArithm(Int32,		Bool,		Int32);
+	InitElemTypeRtnForArithm(Int32,		Int8,		Int32);
+	InitElemTypeRtnForArithm(Int32,		UInt8,		Int32);
+	InitElemTypeRtnForArithm(Int32,		Int16,		Int32);
+	InitElemTypeRtnForArithm(Int32,		UInt16,		Int32);
+	InitElemTypeRtnForArithm(Int32,		Int32,		Int32);
+	InitElemTypeRtnForArithm(UInt32,	UInt32,		Int32);
+	InitElemTypeRtnForArithm(Int64,		Int64,		Int32);
+	InitElemTypeRtnForArithm(UInt64,	UInt64,		Int32);
+	InitElemTypeRtnForArithm(Half,		Half,		Int32);
+	InitElemTypeRtnForArithm(Float,		Float,		Int32);
+	InitElemTypeRtnForArithm(Double,	Double,		Int32);
+	InitElemTypeRtnForArithm(Complex,	Complex,	Int32);
+	InitElemTypeRtnForArithm(UInt32,	Bool,		UInt32);
+	InitElemTypeRtnForArithm(UInt32,	Int8,		UInt32);
+	InitElemTypeRtnForArithm(UInt32,	UInt8,		UInt32);
+	InitElemTypeRtnForArithm(UInt32,	Int16,		UInt32);
+	InitElemTypeRtnForArithm(UInt32,	UInt16,		UInt32);
+	InitElemTypeRtnForArithm(UInt32,	Int32,		UInt32);
+	InitElemTypeRtnForArithm(UInt32,	UInt32,		UInt32);
+	InitElemTypeRtnForArithm(Int64,		Int64,		UInt32);
+	InitElemTypeRtnForArithm(UInt64,	UInt64,		UInt32);
+	InitElemTypeRtnForArithm(Half,		Half,		UInt32);
+	InitElemTypeRtnForArithm(Float,		Float,		UInt32);
+	InitElemTypeRtnForArithm(Double,	Double,		UInt32);
+	InitElemTypeRtnForArithm(Complex,	Complex,	UInt32);
+	InitElemTypeRtnForArithm(Int64,		Bool,		Int64);
+	InitElemTypeRtnForArithm(Int64,		Int8,		Int64);
+	InitElemTypeRtnForArithm(Int64,		UInt8,		Int64);
+	InitElemTypeRtnForArithm(Int64,		Int16,		Int64);
+	InitElemTypeRtnForArithm(Int64,		UInt16,		Int64);
+	InitElemTypeRtnForArithm(Int64,		Int32,		Int64);
+	InitElemTypeRtnForArithm(Int64,		UInt32,		Int64);
+	InitElemTypeRtnForArithm(Int64,		Int64,		Int64);
+	InitElemTypeRtnForArithm(UInt64,	UInt64,		Int64);
+	InitElemTypeRtnForArithm(Half,		Half,		Int64);
+	InitElemTypeRtnForArithm(Float,		Float,		Int64);
+	InitElemTypeRtnForArithm(Double,	Double,		Int64);
+	InitElemTypeRtnForArithm(Complex,	Complex,	Int64);
+	InitElemTypeRtnForArithm(UInt64,	Bool,		UInt64);
+	InitElemTypeRtnForArithm(UInt64,	Int8,		UInt64);
+	InitElemTypeRtnForArithm(UInt64,	UInt8,		UInt64);
+	InitElemTypeRtnForArithm(UInt64,	Int16,		UInt64);
+	InitElemTypeRtnForArithm(UInt64,	UInt16,		UInt64);
+	InitElemTypeRtnForArithm(UInt64,	Int32,		UInt64);
+	InitElemTypeRtnForArithm(UInt64,	UInt32,		UInt64);
+	InitElemTypeRtnForArithm(UInt64,	Int64,		UInt64);
+	InitElemTypeRtnForArithm(UInt64,	UInt64,		UInt64);
+	InitElemTypeRtnForArithm(Half,		Half,		UInt64);
+	InitElemTypeRtnForArithm(Float,		Float,		UInt64);
+	InitElemTypeRtnForArithm(Double,	Double,		UInt64);
+	InitElemTypeRtnForArithm(Complex,	Complex,	UInt64);
+	InitElemTypeRtnForArithm(Half,		Bool,		Half);
+	InitElemTypeRtnForArithm(Half,		Int8,		Half);
+	InitElemTypeRtnForArithm(Half,		UInt8,		Half);
+	InitElemTypeRtnForArithm(Half,		Int16,		Half);
+	InitElemTypeRtnForArithm(Half,		UInt16,		Half);
+	InitElemTypeRtnForArithm(Half,		Int32,		Half);
+	InitElemTypeRtnForArithm(Half,		UInt32,		Half);
+	InitElemTypeRtnForArithm(Half,		Int64,		Half);
+	InitElemTypeRtnForArithm(Half,		UInt64,		Half);
+	InitElemTypeRtnForArithm(Half,		Half,		Half);
+	InitElemTypeRtnForArithm(Float,		Float,		Half);
+	InitElemTypeRtnForArithm(Double,	Double,		Half);
+	InitElemTypeRtnForArithm(Complex,	Complex,	Half);
+	InitElemTypeRtnForArithm(Float,		Bool,		Float);
+	InitElemTypeRtnForArithm(Float,		Int8,		Float);
+	InitElemTypeRtnForArithm(Float,		UInt8,		Float);
+	InitElemTypeRtnForArithm(Float,		Int16,		Float);
+	InitElemTypeRtnForArithm(Float,		UInt16,		Float);
+	InitElemTypeRtnForArithm(Float,		Int32,		Float);
+	InitElemTypeRtnForArithm(Float,		UInt32,		Float);
+	InitElemTypeRtnForArithm(Float,		Int64,		Float);
+	InitElemTypeRtnForArithm(Float,		UInt64,		Float);
+	InitElemTypeRtnForArithm(Float,		Half,		Float);
+	InitElemTypeRtnForArithm(Float,		Float,		Float);
+	InitElemTypeRtnForArithm(Double,	Double,		Float);
+	InitElemTypeRtnForArithm(Complex,	Complex,	Float);
+	InitElemTypeRtnForArithm(Double,	Bool,		Double);
+	InitElemTypeRtnForArithm(Double,	Int8,		Double);
+	InitElemTypeRtnForArithm(Double,	UInt8,		Double);
+	InitElemTypeRtnForArithm(Double,	Int16,		Double);
+	InitElemTypeRtnForArithm(Double,	UInt16,		Double);
+	InitElemTypeRtnForArithm(Double,	Int32,		Double);
+	InitElemTypeRtnForArithm(Double,	UInt32,		Double);
+	InitElemTypeRtnForArithm(Double,	Int64,		Double);
+	InitElemTypeRtnForArithm(Double,	UInt64,		Double);
+	InitElemTypeRtnForArithm(Double,	Half,		Double);
+	InitElemTypeRtnForArithm(Double,	Float,		Double);
+	InitElemTypeRtnForArithm(Double,	Double,		Double);
+	InitElemTypeRtnForArithm(Complex,	Complex,	Double);
+	InitElemTypeRtnForArithm(Complex,	Bool,		Complex);
+	InitElemTypeRtnForArithm(Complex,	Int8,		Complex);
+	InitElemTypeRtnForArithm(Complex,	UInt8,		Complex);
+	InitElemTypeRtnForArithm(Complex,	Int16,		Complex);
+	InitElemTypeRtnForArithm(Complex,	UInt16,		Complex);
+	InitElemTypeRtnForArithm(Complex,	Int32,		Complex);
+	InitElemTypeRtnForArithm(Complex,	UInt32,		Complex);
+	InitElemTypeRtnForArithm(Complex,	Int64,		Complex);
+	InitElemTypeRtnForArithm(Complex,	UInt64,		Complex);
+	InitElemTypeRtnForArithm(Complex,	Half,		Complex);
+	InitElemTypeRtnForArithm(Complex,	Float,		Complex);
+	InitElemTypeRtnForArithm(Complex,	Double,		Complex);
+	InitElemTypeRtnForArithm(Complex,	Complex,	Complex);
 	AssocSymbol(Symbol::Empty,			Symbol::Empty,				ElemType::None);
 	AssocSymbol(Gurax_Symbol(bool_),	Gurax_Symbol(at_bool),		ElemType::Bool);
 	AssocSymbol(Gurax_Symbol(int8),		Gurax_Symbol(at_int8),		ElemType::Int8);
@@ -1111,60 +1111,60 @@ void Array::Bootup()
 	ElemType::Float.pSymbol				= Gurax_Symbol(float_);
 	ElemType::Double.pSymbol			= Gurax_Symbol(double_);
 	ElemType::Complex.pSymbol			= Gurax_Symbol(complex);
-	Gurax_SetArrayFunc1(funcs.IndexSetValue,		IndexSetValue_T);
-	Gurax_SetArrayFunc1(funcs.IndexGetValue,		IndexGetValue_T);
-	Gurax_SetArrayFunc1(funcs.IndexSetDouble,		IndexSetDouble_T);
-	Gurax_SetArrayFunc1(funcs.IndexGetDouble,		IndexGetDouble_T);
-	Gurax_SetArrayFunc1(funcs.InjectFromValueList,	InjectFromValueList_T);
-	Gurax_SetArrayFunc1(funcs.InjectFromIterator,	InjectFromIterator_T);
-	Gurax_SetArrayFunc1(funcs.ExtractToValueOwner,	ExtractToValueOwner_T);
-	Gurax_SetArrayFunc2(funcs.CopyElems,			CopyElems_T);
-	Gurax_SetArrayFunc2(funcs.Transpose,			Transpose_T);
-	Gurax_SetArrayFunc1(funcs.Neg_Array,			Neg_Array_T);
-	Gurax_SetArrayFunc3(funcs.Add_ArrayArray,		Add_ArrayArray_T);
-	Gurax_SetArrayFunc1(funcs.Add_ArrayNumber,		Add_ArrayNumber_T);
-	Gurax_SetArrayFunc1(funcs.Add_ArrayComplex,		Add_ArrayComplex_T);
-	Gurax_SetArrayFunc3(funcs.And_ArrayArray,		And_ArrayArray_T);
-	Gurax_SetArrayFunc1(funcs.And_ArrayNumber,		And_ArrayNumber_T);
-	Gurax_SetArrayFunc3(funcs.Sub_ArrayArray,		Sub_ArrayArray_T);
-	Gurax_SetArrayFunc1(funcs.Sub_ArrayNumber,		Sub_ArrayNumber_T);
-	Gurax_SetArrayFunc1(funcs.Sub_NumberArray,		Sub_NumberArray_T);
-	Gurax_SetArrayFunc1(funcs.Sub_ArrayComplex,		Sub_ArrayComplex_T);
-	Gurax_SetArrayFunc1(funcs.Sub_ComplexArray,		Sub_ComplexArray_T);
-	Gurax_SetArrayFunc3(funcs.Mul_ArrayArray,		Mul_ArrayArray_T);
-	Gurax_SetArrayFunc1(funcs.Mul_ArrayNumber,		Mul_ArrayNumber_T);
-	Gurax_SetArrayFunc1(funcs.Mul_ArrayComplex,		Mul_ArrayComplex_T);
-	Gurax_SetArrayFunc3(funcs.Div_ArrayArray,		Div_ArrayArray_T);
-	Gurax_SetArrayFunc1(funcs.Div_ArrayNumber,		Div_ArrayNumber_T);
-	Gurax_SetArrayFunc1(funcs.Div_NumberArray,		Div_NumberArray_T);
-	Gurax_SetArrayFunc1(funcs.Div_ArrayComplex,		Div_ArrayComplex_T);
-	Gurax_SetArrayFunc1(funcs.Div_ComplexArray,		Div_ComplexArray_T);
-	Gurax_SetArrayFunc3(funcs.Pow_ArrayArray,		Pow_ArrayArray_T);
-	Gurax_SetArrayFunc1(funcs.Pow_ArrayNumber,		Pow_ArrayNumber_T);
-	Gurax_SetArrayFunc1(funcs.Pow_NumberArray,		Pow_NumberArray_T);
-	Gurax_SetArrayFunc1(funcs.Pow_ArrayComplex,		Pow_ArrayComplex_T);
-	Gurax_SetArrayFunc1(funcs.Pow_ComplexArray,		Pow_ComplexArray_T);
-	Gurax_SetArrayFunc3(funcs.Or_ArrayArray,		Or_ArrayArray_T);
-	Gurax_SetArrayFunc1(funcs.Or_ArrayNumber,		Or_ArrayNumber_T);
-	Gurax_SetArrayFunc3(funcs.Xor_ArrayArray,		Xor_ArrayArray_T);
-	Gurax_SetArrayFunc1(funcs.Xor_ArrayNumber,		Xor_ArrayNumber_T);
-	Gurax_SetArrayFunc2(funcs.Eq_ArrayArray,		Eq_ArrayArray_T);
-	Gurax_SetArrayFunc1(funcs.Eq_ArrayNumber,		Eq_ArrayNumber_T);
-	Gurax_SetArrayFunc1(funcs.Eq_ArrayComplex,		Eq_ArrayComplex_T);
-	Gurax_SetArrayFunc2(funcs.Ne_ArrayArray,		Ne_ArrayArray_T);
-	Gurax_SetArrayFunc1(funcs.Ne_ArrayNumber,		Ne_ArrayNumber_T);
-	Gurax_SetArrayFunc1(funcs.Ne_ArrayComplex,		Ne_ArrayComplex_T);
-	Gurax_SetArrayFunc2(funcs.Lt_ArrayArray,		Lt_ArrayArray_T);
-	Gurax_SetArrayFunc1(funcs.Lt_ArrayNumber,		Lt_ArrayNumber_T);
-	Gurax_SetArrayFunc1(funcs.Lt_NumberArray,		Lt_NumberArray_T);
-	Gurax_SetArrayFunc2(funcs.Le_ArrayArray,		Le_ArrayArray_T);
-	Gurax_SetArrayFunc1(funcs.Le_ArrayNumber,		Le_ArrayNumber_T);
-	Gurax_SetArrayFunc1(funcs.Le_NumberArray,		Le_NumberArray_T);
-	Gurax_SetArrayFunc2(funcs.Cmp_ArrayArray,		Cmp_ArrayArray_T);
-	Gurax_SetArrayFunc1(funcs.Cmp_ArrayNumber,		Cmp_ArrayNumber_T);
-	Gurax_SetArrayFunc1(funcs.Cmp_NumberArray,		Cmp_NumberArray_T);
-	Gurax_SetArrayFunc3(funcs.Dot_ArrayArray,		Dot_ArrayArray_T);
-	Gurax_SetArrayFunc3(funcs.Cross_ArrayArray,		Cross_ArrayArray_T);
+	Gurax_SetArrayFuncSingle(funcs.IndexSetValue,		IndexSetValue_T);
+	Gurax_SetArrayFuncSingle(funcs.IndexGetValue,		IndexGetValue_T);
+	Gurax_SetArrayFuncSingle(funcs.IndexSetDouble,		IndexSetDouble_T);
+	Gurax_SetArrayFuncSingle(funcs.IndexGetDouble,		IndexGetDouble_T);
+	Gurax_SetArrayFuncSingle(funcs.InjectFromValueList,	InjectFromValueList_T);
+	Gurax_SetArrayFuncSingle(funcs.InjectFromIterator,	InjectFromIterator_T);
+	Gurax_SetArrayFuncSingle(funcs.ExtractToValueOwner,	ExtractToValueOwner_T);
+	Gurax_SetArrayFuncDouble(funcs.CopyElems,			CopyElems_T);
+	Gurax_SetArrayFuncDouble(funcs.Transpose,			Transpose_T);
+	Gurax_SetArrayFuncSingle(funcs.Neg_Array,			Neg_Array_T);
+	Gurax_SetArrayFuncArithm(funcs.Add_ArrayArray,		Add_ArrayArray_T);
+	Gurax_SetArrayFuncSingle(funcs.Add_ArrayNumber,		Add_ArrayNumber_T);
+	Gurax_SetArrayFuncSingle(funcs.Add_ArrayComplex,	Add_ArrayComplex_T);
+	Gurax_SetArrayFuncArithm(funcs.And_ArrayArray,		And_ArrayArray_T);
+	Gurax_SetArrayFuncSingle(funcs.And_ArrayNumber,		And_ArrayNumber_T);
+	Gurax_SetArrayFuncArithm(funcs.Sub_ArrayArray,		Sub_ArrayArray_T);
+	Gurax_SetArrayFuncSingle(funcs.Sub_ArrayNumber,		Sub_ArrayNumber_T);
+	Gurax_SetArrayFuncSingle(funcs.Sub_NumberArray,		Sub_NumberArray_T);
+	Gurax_SetArrayFuncSingle(funcs.Sub_ArrayComplex,	Sub_ArrayComplex_T);
+	Gurax_SetArrayFuncSingle(funcs.Sub_ComplexArray,	Sub_ComplexArray_T);
+	Gurax_SetArrayFuncArithm(funcs.Mul_ArrayArray,		Mul_ArrayArray_T);
+	Gurax_SetArrayFuncSingle(funcs.Mul_ArrayNumber,		Mul_ArrayNumber_T);
+	Gurax_SetArrayFuncSingle(funcs.Mul_ArrayComplex,	Mul_ArrayComplex_T);
+	Gurax_SetArrayFuncArithm(funcs.Div_ArrayArray,		Div_ArrayArray_T);
+	Gurax_SetArrayFuncSingle(funcs.Div_ArrayNumber,		Div_ArrayNumber_T);
+	Gurax_SetArrayFuncSingle(funcs.Div_NumberArray,		Div_NumberArray_T);
+	Gurax_SetArrayFuncSingle(funcs.Div_ArrayComplex,	Div_ArrayComplex_T);
+	Gurax_SetArrayFuncSingle(funcs.Div_ComplexArray,	Div_ComplexArray_T);
+	Gurax_SetArrayFuncArithm(funcs.Pow_ArrayArray,		Pow_ArrayArray_T);
+	Gurax_SetArrayFuncSingle(funcs.Pow_ArrayNumber,		Pow_ArrayNumber_T);
+	Gurax_SetArrayFuncSingle(funcs.Pow_NumberArray,		Pow_NumberArray_T);
+	Gurax_SetArrayFuncSingle(funcs.Pow_ArrayComplex,	Pow_ArrayComplex_T);
+	Gurax_SetArrayFuncSingle(funcs.Pow_ComplexArray,	Pow_ComplexArray_T);
+	Gurax_SetArrayFuncArithm(funcs.Or_ArrayArray,		Or_ArrayArray_T);
+	Gurax_SetArrayFuncSingle(funcs.Or_ArrayNumber,		Or_ArrayNumber_T);
+	Gurax_SetArrayFuncArithm(funcs.Xor_ArrayArray,		Xor_ArrayArray_T);
+	Gurax_SetArrayFuncSingle(funcs.Xor_ArrayNumber,		Xor_ArrayNumber_T);
+	Gurax_SetArrayFuncDouble(funcs.Eq_ArrayArray,		Eq_ArrayArray_T);
+	Gurax_SetArrayFuncSingle(funcs.Eq_ArrayNumber,		Eq_ArrayNumber_T);
+	Gurax_SetArrayFuncSingle(funcs.Eq_ArrayComplex,		Eq_ArrayComplex_T);
+	Gurax_SetArrayFuncDouble(funcs.Ne_ArrayArray,		Ne_ArrayArray_T);
+	Gurax_SetArrayFuncSingle(funcs.Ne_ArrayNumber,		Ne_ArrayNumber_T);
+	Gurax_SetArrayFuncSingle(funcs.Ne_ArrayComplex,		Ne_ArrayComplex_T);
+	Gurax_SetArrayFuncDouble(funcs.Lt_ArrayArray,		Lt_ArrayArray_T);
+	Gurax_SetArrayFuncSingle(funcs.Lt_ArrayNumber,		Lt_ArrayNumber_T);
+	Gurax_SetArrayFuncSingle(funcs.Lt_NumberArray,		Lt_NumberArray_T);
+	Gurax_SetArrayFuncDouble(funcs.Le_ArrayArray,		Le_ArrayArray_T);
+	Gurax_SetArrayFuncSingle(funcs.Le_ArrayNumber,		Le_ArrayNumber_T);
+	Gurax_SetArrayFuncSingle(funcs.Le_NumberArray,		Le_NumberArray_T);
+	Gurax_SetArrayFuncDouble(funcs.Cmp_ArrayArray,		Cmp_ArrayArray_T);
+	Gurax_SetArrayFuncSingle(funcs.Cmp_ArrayNumber,		Cmp_ArrayNumber_T);
+	Gurax_SetArrayFuncSingle(funcs.Cmp_NumberArray,		Cmp_NumberArray_T);
+	Gurax_SetArrayFuncArithm(funcs.Dot_ArrayArray,		Dot_ArrayArray_T);
+	Gurax_SetArrayFuncArithm(funcs.Cross_ArrayArray,	Cross_ArrayArray_T);
 }
 
 void Array::InjectElems(ValueList& values, size_t offset, size_t len)
@@ -1364,7 +1364,7 @@ bool Array::Neg(RefPtr<Array>& pArrayRtn, const Array& array)
 
 bool Array::Add(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, GetElemTypeRtn(arrayL, arrayR), arrayL, arrayR, funcs.Add_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Add_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
 }
 
 bool Array::Add(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
@@ -1379,7 +1379,7 @@ bool Array::Add(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& nu
 
 bool Array::And(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, GetElemTypeRtn(arrayL, arrayR), arrayL, arrayR, funcs.And_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.And_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
 }
 
 bool Array::And(RefPtr<Array>& pArrayRtn, const Array& arrayL, UInt64 numR)
@@ -1389,7 +1389,7 @@ bool Array::And(RefPtr<Array>& pArrayRtn, const Array& arrayL, UInt64 numR)
 
 bool Array::Sub(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, GetElemTypeRtn(arrayL, arrayR), arrayL, arrayR, funcs.Sub_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Sub_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
 }
 
 bool Array::Sub(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
@@ -1414,7 +1414,7 @@ bool Array::Sub(RefPtr<Array>& pArrayRtn, const Complex& numL, const Array& arra
 
 bool Array::Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, GetElemTypeRtn(arrayL, arrayR), arrayL, arrayR, funcs.Mul_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Mul_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
 }
 
 bool Array::Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
@@ -1429,7 +1429,7 @@ bool Array::Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& nu
 
 bool Array::Div(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, GetElemTypeRtn(arrayL, arrayR), arrayL, arrayR, funcs.Div_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Div_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
 }
 
 bool Array::Div(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
@@ -1454,7 +1454,7 @@ bool Array::Div(RefPtr<Array>& pArrayRtn, const Complex& numL, const Array& arra
 
 bool Array::Pow(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, GetElemTypeRtn(arrayL, arrayR), arrayL, arrayR, funcs.Pow_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Pow_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
 }
 
 bool Array::Pow(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
@@ -1479,7 +1479,7 @@ bool Array::Pow(RefPtr<Array>& pArrayRtn, const Complex& numL, const Array& arra
 
 bool Array::Or(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, GetElemTypeRtn(arrayL, arrayR), arrayL, arrayR, funcs.Or_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Or_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
 }
 
 bool Array::Or(RefPtr<Array>& pArrayRtn, const Array& arrayL, UInt64 numR)
@@ -1489,7 +1489,7 @@ bool Array::Or(RefPtr<Array>& pArrayRtn, const Array& arrayL, UInt64 numR)
 
 bool Array::Xor(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, GetElemTypeRtn(arrayL, arrayR), arrayL, arrayR, funcs.Xor_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Xor_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
 }
 
 bool Array::Xor(RefPtr<Array>& pArrayRtn, const Array& arrayL, UInt64 numR)
@@ -1584,7 +1584,7 @@ bool Array::Dot(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arra
 	}
 	DimSizes dimSizesRtn(dimSizesL.GetRowSize(), dimSizesR.GetColSize());
 	auto func = funcs.Dot_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id];
-	if (!pArrayRtn) pArrayRtn.reset(Create(GetElemTypeRtn(arrayL, arrayR), dimSizesRtn));
+	if (!pArrayRtn) pArrayRtn.reset(Create(GetElemTypeRtnForArithm(arrayL, arrayR), dimSizesRtn));
 	if (!pArrayRtn) return false;
 	void* pvRtn = pArrayRtn->GetPointerC<void>();
 	const void* pvL = arrayL.GetPointerC<void>();
@@ -1618,7 +1618,7 @@ bool Array::Dot(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arra
 		Error::Issue(ErrorType::RangeError, "unmatched array size");
 		return nullptr;
 	}
-	RefPtr<Array> pArrayRtn(Create(GetElemTypeRtn(arrayL, arrayR), *pDimSizesRtn));
+	RefPtr<Array> pArrayRtn(Create(GetElemTypeRtnForArithm(arrayL, arrayR), *pDimSizesRtn));
 	void* pvRtn = pArrayRtn->GetPointerC<void>();
 	const void* pvL = arrayL.GetPointerC<void>();
 	const void* pvR = arrayR.GetPointerC<void>();
@@ -1645,7 +1645,7 @@ bool Array::Cross(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& ar
 		return nullptr;
 	}
 	size_t n = 3;
-	if (!pArrayRtn) pArrayRtn.reset(Create(GetElemTypeRtn(arrayL, arrayR), DimSizes(n)));
+	if (!pArrayRtn) pArrayRtn.reset(Create(GetElemTypeRtnForArithm(arrayL, arrayR), DimSizes(n)));
 	if (!pArrayRtn) return false;
 	void* pvRtn = pArrayRtn->GetPointerC<void>();
 	const void* pvL = arrayL.GetPointerC<void>();

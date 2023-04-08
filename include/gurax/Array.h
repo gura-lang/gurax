@@ -164,7 +164,7 @@ protected:
 public:
 	static Funcs funcs;
 protected:
-	static const ElemTypeT* _pElemTypeRtnTbl[ElemTypeIdMax][ElemTypeIdMax];
+	static const ElemTypeT* _pElemTypeRtnForArithmTbl[ElemTypeIdMax][ElemTypeIdMax];
 	static MapSymbolToElemType _mapSymbolToElemType;
 	static MapSymbolToElemType _mapAtSymbolToElemType;
 public:
@@ -294,11 +294,11 @@ public:
 		return *_mapAtSymbolToElemType.find(pSymbol)->second;
 	}
 public:
-	static const ElemTypeT& GetElemTypeRtn(const ElemTypeT& elemTypeL, const ElemTypeT& elemTypeR) {
-		return *_pElemTypeRtnTbl[elemTypeL.id][elemTypeR.id];
+	static const ElemTypeT& GetElemTypeRtnForArithm(const ElemTypeT& elemTypeL, const ElemTypeT& elemTypeR) {
+		return *_pElemTypeRtnForArithmTbl[elemTypeL.id][elemTypeR.id];
 	}
-	static const ElemTypeT& GetElemTypeRtn(const Array& arrayL, const Array& arrayR) {
-		return GetElemTypeRtn(arrayL.GetElemType(), arrayR.GetElemType());
+	static const ElemTypeT& GetElemTypeRtnForArithm(const Array& arrayL, const Array& arrayR) {
+		return GetElemTypeRtnForArithm(arrayL.GetElemType(), arrayR.GetElemType());
 	}
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
@@ -310,7 +310,7 @@ public:
 
 }
 
-#define Gurax_SetArrayFunc1(func, funcTmpl) do { \
+#define Gurax_SetArrayFuncSingle(func, funcTmpl) do { \
 	func[Array::ElemType::Bool.id]						= funcTmpl<Bool>; \
 	func[Array::ElemType::Int8.id]						= funcTmpl<Int8>; \
 	func[Array::ElemType::UInt8.id]						= funcTmpl<UInt8>; \
@@ -326,7 +326,7 @@ public:
 	func[Array::ElemType::Complex.id]					= funcTmpl<Complex>; \
 } while (0)
 
-#define Gurax_SetArrayFunc2(func, funcTmpl) do { \
+#define Gurax_SetArrayFuncDouble(func, funcTmpl) do { \
 	func[Array::ElemType::Bool.id][Array::ElemType::Bool.id]		= funcTmpl<Bool, Bool>; \
 	func[Array::ElemType::Int8.id][Array::ElemType::Bool.id]		= funcTmpl<Int8, Bool>; \
 	func[Array::ElemType::UInt8.id][Array::ElemType::Bool.id]		= funcTmpl<UInt8, Bool>; \
@@ -498,7 +498,7 @@ public:
 	func[Array::ElemType::Complex.id][Array::ElemType::Complex.id]	= funcTmpl<Complex, Complex>; \
 } while (0)
 
-#define Gurax_SetArrayFunc3(func, funcTmpl) do { \
+#define Gurax_SetArrayFuncArithm(func, funcTmpl) do { \
 	func[Array::ElemType::Bool.id][Array::ElemType::Bool.id]		= funcTmpl<Bool, Bool, Bool>; \
 	func[Array::ElemType::Int8.id][Array::ElemType::Bool.id]		= funcTmpl<Int8, Int8, Bool>; \
 	func[Array::ElemType::UInt8.id][Array::ElemType::Bool.id]		= funcTmpl<UInt8, UInt8, Bool>; \
