@@ -299,6 +299,16 @@ bool Image::Allocate(size_t width, size_t height)
 	return !!_pMemory;
 }
 
+bool Image::SetMemory(Memory* pMemory, size_t width, size_t height)
+{
+	size_t bytes = WidthToBytes(width) * height;
+	if (pMemory->GetBytes() < bytes) return false;
+	_metrics.width = width, _metrics.height = height;
+	_metrics.Update();
+	_pMemory.reset(pMemory);
+	return true;
+}
+
 bool Image::Read(Stream& stream, const char* imgTypeName)
 {
 	const ImageMgrList& imageMgrList = Basement::Inst.GetImageMgrList();

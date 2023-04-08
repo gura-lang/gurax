@@ -86,7 +86,7 @@ Array* LabelSet::ToArray(bool oneHotFlag, const Array::ElemTypeT& elemType) cons
 
 String LabelSet::ToString(const StringStyle& ss) const
 {
-	return String().Format("ml.mnist.LabelSet");
+	return String().Format("ml.mnist.LabelSet:%zulabels", CountLabels());
 }
 
 //------------------------------------------------------------------------------

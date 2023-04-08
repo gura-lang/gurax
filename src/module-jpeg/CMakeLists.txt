@@ -65,10 +65,5 @@ target_link_libraries(jpeg.gurd PRIVATE guraxcore
 # Install
 #-------------------------------------------------------------------------------
 install(TARGETS jpeg.gurd RUNTIME DESTINATION module/site)
-install(PROGRAMS
-	script/jpeg.gura
-	DESTINATION module/site)
-install(PROGRAMS
-	script/jpeg-editexif.gura
-	script/jpeg-printexif.gura
-	DESTINATION script)
+install(PROGRAMS script/jpeg.gura DESTINATION module/site)
+install(PROGRAMS script/jpeg-editexif.gura script/jpeg-printexif.gura DESTINATION script)

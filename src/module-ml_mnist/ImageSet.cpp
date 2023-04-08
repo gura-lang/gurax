@@ -81,7 +81,7 @@ Array* ImageSet::ToArray(bool flattenFlag, const Array::ElemTypeT& elemType, boo
 
 String ImageSet::ToString(const StringStyle& ss) const
 {
-	return String().Format("ml.mnist.ImageSet");
+	return String().Format("ml.mnist.ImageSet:%zuimages:%zurows:%zucols", CountImages(), CountRows(), CountCols());
 }
 
 //------------------------------------------------------------------------------

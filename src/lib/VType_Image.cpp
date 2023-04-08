@@ -64,13 +64,13 @@ Gurax_ImplementConstructor(Image)
 //------------------------------------------------------------------------------
 // Implementation of class method
 //------------------------------------------------------------------------------
-// Image.Create(width as Number, height as Number, color? as Color):[rgb,rgba] {block?}
+// Image.Create(width as Number, height as Number, content? as Any):[rgb,rgba] {block?}
 Gurax_DeclareClassMethod(Image, Create)
 {
 	Declare(VTYPE_Image, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("color", VTYPE_Color, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("content", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(rgb));
 	DeclareAttrOpt(Gurax_Symbol(rgba));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
@@ -91,14 +91,27 @@ Gurax_ImplementClassMethod(Image, Create)
 	ArgPicker args(argument);
 	size_t width = args.PickNumberPos<size_t>();
 	size_t height = args.PickNumberPos<size_t>();
+	const Value& content = args.PickValue();
 	if (Error::IsIssued()) return Value::nil();
-	const Color& color = args.IsValid()? Value_Color::GetColor(args.PickValue()) : Color::black;
-	const Image::Format& format =
-		argument.IsSet(Gurax_Symbol(rgb))? Image::Format::RGB : Image::Format::RGBA;
+	const Image::Format& format = argument.IsSet(Gurax_Symbol(rgb))? Image::Format::RGB : Image::Format::RGBA;
 	// Function body
 	RefPtr<Image> pImage(new Image(format));
-	if (!pImage->Allocate(width, height)) return Value::nil();
-	pImage->Fill(color);
+	if (content.IsInvalid()) {
+		if (!pImage->Allocate(width, height)) return Value::nil();
+		pImage->Fill(Color::black);
+	} else if (content.IsType(VTYPE_Color)) {
+		if (!pImage->Allocate(width, height)) return Value::nil();
+		const Color& color = Value_Color::GetColor(content);
+		pImage->Fill(Value_Color::GetColor(content));
+	} else if (content.IsType(VTYPE_Array)) {
+		if (!pImage->SetMemory(Value_Array::GetArray(content).GetMemory().Reference(), width, height)) {
+			Error::Issue(ErrorType::MemoryError, "specified memory doesn't have enough size");
+			return Value::nil();
+		}
+	} else {
+		Error::Issue(ErrorType::ValueError, "the argument content takes Color or Array instance");
+		return Value::nil();
+	}
 	return argument.ReturnValue(processor, new Value_Image(pImage.release()));
 }
 

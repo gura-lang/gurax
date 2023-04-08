@@ -454,6 +454,7 @@ public:
 	void CopyRef(const Image& image);
 	bool Allocate(size_t width, size_t height);
 	void SetMemory(Memory* pMemory) { _pMemory.reset(pMemory); }
+	bool SetMemory(Memory* pMemory, size_t width, size_t height);
 	Memory* GetMemory() { return _pMemory.get(); }
 	const Memory* GetMemory() const { return _pMemory.get(); }
 	bool HasMemory() const { return !!_pMemory; }

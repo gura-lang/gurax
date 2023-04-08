@@ -6,5 +6,7 @@ import(util.tester) {*}
 import(ml.mnist)
 
 TestCase('Basic test') {
-	Println(ml.mnist.Test('hello', 4))
+	db = ml.mnist.Database('../../sample/resource/mnist')
+	Printf('%s %s\n', db.train.imageSet, db.train.imageSet.ToArray())
+	Printf('%s %s\n', db.train.labelSet, db.train.labelSet.ToArray())
 }
