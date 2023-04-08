@@ -36,7 +36,7 @@ bool ImageSet::Read(Stream& stream)
 }
 
 template<typename T_Elem>
-Array* CreateArrayOfImages(Array::ElemTypeT& elemType, DimSizes& dimSizes, const UInt8* pElemSrc, bool normalizeFlag)
+Array* CreateArrayOfImages(const Array::ElemTypeT& elemType, DimSizes& dimSizes, const UInt8* pElemSrc, bool normalizeFlag)
 {
 	RefPtr<Array> pArray(Array::Create(elemType, dimSizes));
 	size_t nElems = pArray->GetDimSizes().CalcLength();
@@ -53,7 +53,7 @@ Array* CreateArrayOfImages(Array::ElemTypeT& elemType, DimSizes& dimSizes, const
 	return pArray.release();
 }
 
-Array* ImageSet::ToArray(bool flattenFlag, Array::ElemTypeT& elemType, bool normalizeFlag) const
+Array* ImageSet::ToArray(bool flattenFlag, const Array::ElemTypeT& elemType, bool normalizeFlag) const
 {
 	RefPtr<Array> pArray;
 	DimSizes dimSizes;

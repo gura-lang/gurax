@@ -34,7 +34,7 @@ bool LabelSet::Read(Stream& stream)
 }
 
 template<typename T_Elem>
-Array *CreateArrayOfLabels(Array::ElemTypeT& elemType, const UInt8* pElemSrc, size_t nLabels, bool onehotFlag)
+Array *CreateArrayOfLabels(const Array::ElemTypeT& elemType, const UInt8* pElemSrc, size_t nLabels, bool onehotFlag)
 {
 	RefPtr<Array> pArray;
 	if (onehotFlag) {
@@ -61,7 +61,7 @@ Array *CreateArrayOfLabels(Array::ElemTypeT& elemType, const UInt8* pElemSrc, si
 	return pArray.release();
 }
 
-Array* LabelSet::ToArray(bool onehotFlag, Array::ElemTypeT& elemType) const
+Array* LabelSet::ToArray(bool onehotFlag, const Array::ElemTypeT& elemType) const
 {
 	RefPtr<Array> pArray;
 	const UInt8 *pElemSrc = _pMemory->GetPointerC<UInt8>();

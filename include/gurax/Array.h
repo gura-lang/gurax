@@ -156,20 +156,20 @@ public:
 		std::function<void (void* pvRtn, size_t m, size_t n, const void* pvL, const void* pvR, size_t l)> Dot_ArrayArray[ElemTypeIdMax][ElemTypeIdMax];
 		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t n)>		Cross_ArrayArray[ElemTypeIdMax][ElemTypeIdMax];
 	};
-	using MapSymbolToElemType = std::unordered_map<const Symbol*, ElemTypeT*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>;
+	using MapSymbolToElemType = std::unordered_map<const Symbol*, const ElemTypeT*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>;
 protected:
-	ElemTypeT& _elemType;
+	const ElemTypeT& _elemType;
 	RefPtr<Memory> _pMemory;
 	DimSizes _dimSizes;
 public:
 	static Funcs funcs;
 protected:
-	static ElemTypeT* _pElemTypeRtnTbl[ElemTypeIdMax][ElemTypeIdMax];
+	static const ElemTypeT* _pElemTypeRtnTbl[ElemTypeIdMax][ElemTypeIdMax];
 	static MapSymbolToElemType _mapSymbolToElemType;
 	static MapSymbolToElemType _mapAtSymbolToElemType;
 public:
 	// Constructor
-	Array(ElemTypeT& elemType, Memory* pMemory, DimSizes dimSizes);
+	Array(const ElemTypeT& elemType, Memory* pMemory, DimSizes dimSizes);
 	// Copy constructor/operator
 	Array(const Array& src);
 	Array& operator=(const Array& src) = delete;
@@ -182,15 +182,15 @@ public:
 	static void Bootup();
 public:
 	Array* Clone() const { return new Array(*this); }
-	static Array* Create(ElemTypeT& elemType, Memory* pMemory, DimSizes dimSizes);
-	static Array* Create(ElemTypeT& elemType, DimSizes dimSizes);
-	static Array* CreateScalar(ElemTypeT& elemType, Double num);
-	static Array* CreateScalar(ElemTypeT& elemType, const Complex& num);
-	static Array* Create1d(ElemTypeT& elemType, size_t n) { return Create(elemType, DimSizes(n)); }
-	static Array* Create2d(ElemTypeT& elemType, size_t m, size_t n) { return Create(elemType, DimSizes(m, n)); }
-	static Array* Create3d(ElemTypeT& elemType, size_t l, size_t m, size_t n) { return Create(elemType, DimSizes(l, m, n)); }
-	static Array* CreateIdentity(ElemTypeT& elemType, size_t n, Double mag);
-	ElemTypeT& GetElemType() const { return _elemType; }
+	static Array* Create(const ElemTypeT& elemType, Memory* pMemory, DimSizes dimSizes);
+	static Array* Create(const ElemTypeT& elemType, DimSizes dimSizes);
+	static Array* CreateScalar(const ElemTypeT& elemType, Double num);
+	static Array* CreateScalar(const ElemTypeT& elemType, const Complex& num);
+	static Array* Create1d(const ElemTypeT& elemType, size_t n) { return Create(elemType, DimSizes(n)); }
+	static Array* Create2d(const ElemTypeT& elemType, size_t m, size_t n) { return Create(elemType, DimSizes(m, n)); }
+	static Array* Create3d(const ElemTypeT& elemType, size_t l, size_t m, size_t n) { return Create(elemType, DimSizes(l, m, n)); }
+	static Array* CreateIdentity(const ElemTypeT& elemType, size_t n, Double mag);
+	const ElemTypeT& GetElemType() const { return _elemType; }
 	bool IsElemType(const ElemTypeT& elemType) const { return _elemType.IsIdentical(elemType); }
 	Memory& GetMemory() { return *_pMemory; }
 	const Memory& GetMemory() const { return *_pMemory; }
@@ -211,7 +211,7 @@ public:
 	void InjectElems(ValueList& values, size_t offset = 0);
 	bool InjectElems(Iterator& iterator, size_t offset, size_t len);
 	bool InjectElems(Iterator& iterator, size_t offset = 0);
-	void InjectElems(const void* pvSrc, ElemTypeT& elemType, size_t offset, size_t len);
+	void InjectElems(const void* pvSrc, const ElemTypeT& elemType, size_t offset, size_t len);
 	void ExtractElems(ValueOwner& values, size_t offset, size_t len) const;
 	void ExtractElemsSub(ValueOwner& values, size_t& offset, DimSizes::const_iterator pDimSize) const;
 	void ExtractElems(ValueOwner& values) const;
@@ -220,19 +220,19 @@ public:
 public:
 	static bool GenericUnaryOp(RefPtr<Array>& pArrayRtn, const Array& array,
 		const std::function<void (void* pvRtn, const void* pv, size_t len)>& func);
-	static bool GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, const Array& arrayL, const Array& arrayR,
+	static bool GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Array& arrayL, const Array& arrayR,
 		const std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>& func);
-	static bool GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, const Array& arrayL, UInt64 numR,
+	static bool GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Array& arrayL, UInt64 numR,
 		const std::function<void (void* pvRtn, const void* pvL, UInt64 numR, size_t len)>& func);
-	static bool GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, UInt64 numL, const Array& arrayR,
+	static bool GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, UInt64 numL, const Array& arrayR,
 		const std::function<void (void* pvRtn, UInt64 numL, const void* pvR, size_t len)>& func);
-	static bool GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, const Array& arrayL, Double numR,
+	static bool GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Array& arrayL, Double numR,
 		const std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>& func);
-	static bool GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, Double numL, const Array& arrayR,
+	static bool GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, Double numL, const Array& arrayR,
 		const std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>& func);
-	static bool GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, const Array& arrayL, const Complex& numR,
+	static bool GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Array& arrayL, const Complex& numR,
 		const std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>& func);
-	static bool GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, const Complex& numL, const Array& arrayR,
+	static bool GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Complex& numL, const Array& arrayR,
 		const std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>& func);
 	static bool Neg(RefPtr<Array>& pArrayRtn, const Array& array);
 	static bool Add(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
@@ -283,21 +283,21 @@ public:
 	Value_List* ToList() const;
 	Value* ToValue() const;
 	Array* CreateLike() const;
-	Array* CreateCasted(ElemTypeT& elemType) const;
+	Array* CreateCasted(const ElemTypeT& elemType) const;
 	void* FwdPointer(void* pv, int n) const { return GetElemType().FwdPointer(pv, n); }
 	const void* FwdPointer(const void* pv, int n) const { return GetElemType().FwdPointer(pv, n); }
 public:
-	static ElemTypeT& SymbolToElemType(const Symbol* pSymbol) {
+	static const ElemTypeT& SymbolToElemType(const Symbol* pSymbol) {
 		return *_mapSymbolToElemType.find(pSymbol)->second;
 	}
-	static ElemTypeT& AtSymbolToElemType(const Symbol* pSymbol) {
+	static const ElemTypeT& AtSymbolToElemType(const Symbol* pSymbol) {
 		return *_mapAtSymbolToElemType.find(pSymbol)->second;
 	}
 public:
-	static ElemTypeT& GetElemTypeRtn(ElemTypeT& elemTypeL, ElemTypeT& elemTypeR) {
+	static const ElemTypeT& GetElemTypeRtn(const ElemTypeT& elemTypeL, const ElemTypeT& elemTypeR) {
 		return *_pElemTypeRtnTbl[elemTypeL.id][elemTypeR.id];
 	}
-	static ElemTypeT& GetElemTypeRtn(const Array& arrayL, const Array& arrayR) {
+	static const ElemTypeT& GetElemTypeRtn(const Array& arrayL, const Array& arrayR) {
 		return GetElemTypeRtn(arrayL.GetElemType(), arrayR.GetElemType());
 	}
 public:

@@ -94,7 +94,7 @@ Gurax_ImplementConstructor(Array)
 {
 	// Arguments
 	ArgPicker args(argument);
-	Array::ElemTypeT& elemType = Array::SymbolToElemType(args.PickSymbol());
+	const Array::ElemTypeT& elemType = Array::SymbolToElemType(args.PickSymbol());
 	if (elemType.IsNone()) {
 		Error::Issue(ErrorType::SymbolError, "invalid symbol for elemType");
 		return Value::nil();
@@ -133,7 +133,7 @@ Gurax_ImplementFunction(ConstructArray)
 {
 	// Arguments
 	ArgPicker args(argument);
-	Array::ElemTypeT& elemType = Array::AtSymbolToElemType(GetSymbol());
+	const Array::ElemTypeT& elemType = Array::AtSymbolToElemType(GetSymbol());
 	const ValueList& values = args.PickList();
 	RefPtr<Array> pArray;
 	if (values.empty()) {
@@ -172,7 +172,7 @@ Gurax_ImplementClassMethod(Array, Identity)
 {
 	// Arguments
 	ArgPicker args(argument);
-	Array::ElemTypeT& elemType = Array::SymbolToElemType(args.PickSymbol());
+	const Array::ElemTypeT& elemType = Array::SymbolToElemType(args.PickSymbol());
 	if (elemType.IsNone()) {
 		Error::Issue(ErrorType::SymbolError, "invalid symbol for elemType");
 		return Value::nil();
@@ -204,7 +204,7 @@ Gurax_ImplementMethod(Array, Cast)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Array::ElemTypeT& elemType = Array::SymbolToElemType(args.PickSymbol());
+	const Array::ElemTypeT& elemType = Array::SymbolToElemType(args.PickSymbol());
 	if (elemType.IsNone()) {
 		Error::Issue(ErrorType::SymbolError, "invalid symbol for elemType");
 		return Value::nil();

@@ -12,11 +12,11 @@ namespace Gurax {
 // Array
 //------------------------------------------------------------------------------
 Array::Funcs Array::funcs;
-Array::ElemTypeT* Array::_pElemTypeRtnTbl[ElemTypeIdMax][ElemTypeIdMax];
+const Array::ElemTypeT* Array::_pElemTypeRtnTbl[ElemTypeIdMax][ElemTypeIdMax];
 Array::MapSymbolToElemType Array::_mapSymbolToElemType;
 Array::MapSymbolToElemType Array::_mapAtSymbolToElemType;
 
-Array::Array(ElemTypeT& elemType, Memory* pMemory, DimSizes dimSizes) :
+Array::Array(const ElemTypeT& elemType, Memory* pMemory, DimSizes dimSizes) :
 		_elemType(elemType), _pMemory(pMemory), _dimSizes(std::move(dimSizes))
 {
 }
@@ -31,33 +31,33 @@ Array::Array(Array&& src) :
 {
 }
 
-Array* Array::Create(ElemTypeT& elemType, Memory* pMemory, DimSizes dimSizes)
+Array* Array::Create(const ElemTypeT& elemType, Memory* pMemory, DimSizes dimSizes)
 {
 	return new Array(elemType, pMemory, std::move(dimSizes));
 }
 
-Array* Array::Create(ElemTypeT& elemType, DimSizes dimSizes)
+Array* Array::Create(const ElemTypeT& elemType, DimSizes dimSizes)
 {
 	RefPtr<Memory> pMemory(new MemoryHeap(elemType.bytes * dimSizes.CalcLength()));
 	pMemory->Fill(0);
 	return new Array(elemType, pMemory.release(), std::move(dimSizes));
 }
 
-Array* Array::CreateScalar(ElemTypeT& elemType, Double num)
+Array* Array::CreateScalar(const ElemTypeT& elemType, Double num)
 {
 	RefPtr<Array> pArray(Create(elemType, DimSizes()));
 	*pArray->GetPointerC<Double>() = num;
 	return pArray.release();
 }
 
-Array* Array::CreateScalar(ElemTypeT& elemType, const Complex& num)
+Array* Array::CreateScalar(const ElemTypeT& elemType, const Complex& num)
 {
 	RefPtr<Array> pArray(Create(elemType, DimSizes()));
 	*pArray->GetPointerC<Complex>() = num;
 	return pArray.release();
 }
 
-Array* Array::CreateIdentity(ElemTypeT& elemType, size_t n, Double mag)
+Array* Array::CreateIdentity(const ElemTypeT& elemType, size_t n, Double mag)
 {
 	RefPtr<Array> pArray(Create2d(elemType, n, n));
 	size_t idx = 0;
@@ -889,7 +889,7 @@ void Cross_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t n)
 
 void Array::Bootup()
 {
-	auto AssocSymbol = [](const Symbol* pSymbol, const Symbol* pAtSymbol, ElemTypeT& elemType) {
+	auto AssocSymbol = [](const Symbol* pSymbol, const Symbol* pAtSymbol, const ElemTypeT& elemType) {
 		_mapSymbolToElemType[pSymbol] = &elemType;
 		_mapAtSymbolToElemType[pAtSymbol] = &elemType;
 	};
@@ -1188,7 +1188,7 @@ bool Array::InjectElems(Iterator& iterator, size_t offset)
 	return InjectElems(iterator, offset, _dimSizes.CalcLength() - offset);
 }
 
-void Array::InjectElems(const void* pSrc, ElemTypeT& elemType, size_t offset, size_t len)
+void Array::InjectElems(const void* pSrc, const ElemTypeT& elemType, size_t offset, size_t len)
 {
 	funcs.CopyElems[_elemType.id][elemType.id](GetPointerC<void>(), pSrc, offset, len);
 }
@@ -1263,7 +1263,7 @@ bool Array::GenericUnaryOp(RefPtr<Array>& pArrayRtn, const Array& array,
 	return true;
 }
 
-bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, const Array& arrayL, const Array& arrayR,
+bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Array& arrayL, const Array& arrayR,
 	const std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>& func)
 {
 	size_t nUnits = 1;
@@ -1285,7 +1285,7 @@ bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, co
 	return true;
 }
 
-bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, const Array& arrayL, Double numR,
+bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Array& arrayL, Double numR,
 	const std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>& func)
 {
 	if (!pArrayRtn) pArrayRtn.reset(Create(elemTypeRtn, arrayL.GetDimSizes()));
@@ -1297,7 +1297,7 @@ bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, co
 	return true;
 }
 
-bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, Double numL, const Array& arrayR,
+bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, Double numL, const Array& arrayR,
 	const std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>& func)
 {
 	if (!pArrayRtn) pArrayRtn.reset(Create(elemTypeRtn, arrayR.GetDimSizes()));
@@ -1309,7 +1309,7 @@ bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, Do
 	return true;
 }
 
-bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, const Array& arrayL, UInt64 numR,
+bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Array& arrayL, UInt64 numR,
 	const std::function<void (void* pvRtn, const void* pvL, UInt64 numR, size_t len)>& func)
 {
 	if (!pArrayRtn) pArrayRtn.reset(Create(elemTypeRtn, arrayL.GetDimSizes()));
@@ -1321,7 +1321,7 @@ bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, co
 	return true;
 }
 
-bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, UInt64 numL, const Array& arrayR,
+bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, UInt64 numL, const Array& arrayR,
 	const std::function<void (void* pvRtn, UInt64 numL, const void* pvR, size_t len)>& func)
 {
 	if (!pArrayRtn) pArrayRtn.reset(Create(elemTypeRtn, arrayR.GetDimSizes()));
@@ -1333,7 +1333,7 @@ bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, UI
 	return true;
 }
 
-bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, const Array& arrayL, const Complex& numR,
+bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Array& arrayL, const Complex& numR,
 	const std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>& func)
 {
 	if (!pArrayRtn) pArrayRtn.reset(Create(elemTypeRtn, arrayL.GetDimSizes()));
@@ -1345,7 +1345,7 @@ bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, co
 	return true;
 }
 
-bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, ElemTypeT& elemTypeRtn, const Complex& numL, const Array& arrayR,
+bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Complex& numL, const Array& arrayR,
 	const std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>& func)
 {
 	if (!pArrayRtn) pArrayRtn.reset(Create(elemTypeRtn, arrayR.GetDimSizes()));
@@ -1673,7 +1673,7 @@ Array* Array::CreateLike() const
 	return Create(GetElemType(), GetDimSizes());
 }
 
-Array* Array::CreateCasted(ElemTypeT& elemType) const
+Array* Array::CreateCasted(const ElemTypeT& elemType) const
 {
 	RefPtr<Array> pArray(Create(elemType, _dimSizes));
 	pArray->InjectElems(GetPointerC<void>(), GetElemType(), 0, _dimSizes.CalcLength());

@@ -210,7 +210,7 @@ DimSizes ValueList::GetShape() const
 	return dimSizes;
 }
 
-Array* ValueList::CreateArray(Array::ElemTypeT& elemType) const
+Array* ValueList::CreateArray(const Array::ElemTypeT& elemType) const
 {
 	DimSizes dimSizes = GetShape();
 	if (dimSizes.CalcLength() == 0) {
@@ -224,7 +224,7 @@ Array* ValueList::CreateArray(Array::ElemTypeT& elemType) const
 	return pArray.release();
 }
 
-bool ValueList::CreateArraySub(Array::ElemTypeT& elemType, void* p, size_t& idx,
+bool ValueList::CreateArraySub(const Array::ElemTypeT& elemType, void* p, size_t& idx,
 		DimSizes::const_iterator pDimSize, DimSizes::const_iterator pDimSizeEnd) const
 {
 	if (*pDimSize != size()) {

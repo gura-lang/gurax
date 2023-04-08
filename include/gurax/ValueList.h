@@ -63,8 +63,8 @@ public:
 		return lst;
 	}
 	DimSizes GetShape() const;
-	Array* CreateArray(Array::ElemTypeT& elemType) const;
-	bool CreateArraySub(Array::ElemTypeT& elemType, void* p, size_t& idx,
+	Array* CreateArray(const Array::ElemTypeT& elemType) const;
+	bool CreateArraySub(const Array::ElemTypeT& elemType, void* p, size_t& idx,
 		DimSizes::const_iterator pDimSize, DimSizes::const_iterator pDimSizeEnd) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

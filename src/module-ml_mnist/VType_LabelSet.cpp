@@ -27,10 +27,11 @@ ${help.ComposeMethodHelp(ml.mnist.LabelSet, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// ml.mnist.LabelSet() {block?}
+// ml.mnist.LabelSet(stream as Stream):map {block?}
 Gurax_DeclareConstructor(LabelSet)
 {
-	Declare(VTYPE_LabelSet, Flag::None);
+	Declare(VTYPE_LabelSet, Flag::Map);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `ml.mnist.LabelSet` instance.
@@ -40,35 +41,38 @@ Creates a `ml.mnist.LabelSet` instance.
 Gurax_ImplementConstructor(LabelSet)
 {
 	// Arguments
-	//ArgPicker args(argument);
+	ArgPicker args(argument);
+	Stream& stream = args.PickStream();
 	// Function body
 	RefPtr<LabelSet> pLabelSet(new LabelSet());
+	if (!pLabelSet->Read(stream)) return Value::nil();
 	return argument.ReturnValue(processor, new Value_LabelSet(pLabelSet.release()));
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// ml.mnist.LabelSet#MethodSkeleton(num1 as Number, num2 as Number)
-Gurax_DeclareMethod(LabelSet, MethodSkeleton)
+// ml.mnist.LabelSet#ToArray(oneShot? as Bool, elemType? as Symbol)
+Gurax_DeclareMethod(LabelSet, ToArray)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("oneShot", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
 )""");
 }
 
-Gurax_ImplementMethod(LabelSet, MethodSkeleton)
+Gurax_ImplementMethod(LabelSet, ToArray)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
+	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	Bool oneShot = args.IsValid()? args.PickBool() : true;
+	const Symbol* pSymbolElemType = args.IsValid()? args.PickSymbol() : Gurax_Symbol(float_);
 	// Function body
+	const Array::ElemTypeT& elemType = Array::SymbolToElemType(pSymbolElemType);
 	return new Value_Number(num1 + num2);
 }
 
@@ -102,7 +106,7 @@ void VType_LabelSet::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(LabelSet));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(LabelSet, MethodSkeleton));
+	Assign(Gurax_CreateMethod(LabelSet, ToArray));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(LabelSet, propSkeleton));
 }
