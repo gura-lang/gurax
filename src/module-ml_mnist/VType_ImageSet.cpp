@@ -85,11 +85,12 @@ Gurax_ImplementMethod(ImageSet, ToArray)
 	}
 	const Array::ElemTypeT& elemType = Array::SymbolToElemType(pSymbolElemType);
 	if (elemType.IsNone()) {
-		
+		Error::Issue(ErrorType::ValueError, "invalid symbol for element type");
+		return Value::nil();
 	}
 	// Function body
-	valueThis.GetImageSet().ToArray(flattenFlag, elemType, normalizeFlag);
-	return new Value_Number(num1 + num2);
+	RefPtr<Array> pArray(valueThis.GetImageSet().ToArray(flattenFlag, elemType, normalizeFlag));
+	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
 }
 
 //-----------------------------------------------------------------------------
@@ -110,6 +111,36 @@ Gurax_ImplementPropertyGetter(ImageSet, nImages)
 	return new Value_Number(valueThis.GetImageSet().CountImages());
 }
 
+// ml.mnist.ImageSet#nRows
+Gurax_DeclareProperty_R(ImageSet, nRows)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementPropertyGetter(ImageSet, nRows)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetImageSet().CountRows());
+}
+
+// ml.mnist.ImageSet#nCols
+Gurax_DeclareProperty_R(ImageSet, nCols)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementPropertyGetter(ImageSet, nCols)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetImageSet().CountCols());
+}
+
 //------------------------------------------------------------------------------
 // VType_ImageSet
 //------------------------------------------------------------------------------
@@ -125,6 +156,8 @@ void VType_ImageSet::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(ImageSet, ToArray));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(ImageSet, nImages));
+	Assign(Gurax_CreateProperty(ImageSet, nRows));
+	Assign(Gurax_CreateProperty(ImageSet, nCols));
 }
 
 //------------------------------------------------------------------------------

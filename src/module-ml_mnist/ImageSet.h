@@ -42,7 +42,7 @@ protected:
 public:
 	size_t CountImages() const { return _nImages; }
 	size_t CountRows() const { return _nRows; }
-	size_t CountColumns() const { return _nCols; }
+	size_t CountCols() const { return _nCols; }
 	bool Read(Stream& stream);
 	Array* ToArray(bool flattenFlag, const Array::ElemTypeT& elemType, bool normalizeFlag) const;
 public:

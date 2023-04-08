@@ -74,7 +74,8 @@ Gurax_ImplementMethod(LabelSet, ToArray)
 	const Symbol* pSymbolElemType = args.IsValid()? args.PickSymbol() : Gurax_Symbol(float_);
 	// Function body
 	const Array::ElemTypeT& elemType = Array::SymbolToElemType(pSymbolElemType);
-	return argument.ReturnValue(processor, new Value_Array(valueThis.GetLabelSet().ToArray(oneHot, elemType)));
+	RefPtr<Array> pArray(valueThis.GetLabelSet().ToArray(oneHot, elemType));
+	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
 }
 
 //-----------------------------------------------------------------------------
