@@ -44,7 +44,7 @@ public:
 	size_t CountRows() const { return _nRows; }
 	size_t CountCols() const { return _nCols; }
 	bool Read(Stream& stream);
-	Array* ToArray(bool flattenFlag, const Array::ElemTypeT& elemType, bool normalizeFlag) const;
+	Array* ToArray(const Array::ElemTypeT& elemType, bool flattenFlag, Float numMax) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const ImageSet& other) const { return this == &other; }

@@ -52,12 +52,12 @@ Gurax_ImplementConstructor(LabelSet)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// ml.mnist.LabelSet#ToArray(oneHot? as Bool, elemType? as Symbol):map {block?}
+// ml.mnist.LabelSet#ToArray(elemType? as Symbol, oneHot? as Bool):map {block?}
 Gurax_DeclareMethod(LabelSet, ToArray)
 {
 	Declare(VTYPE_Number, Flag::Map);
-	DeclareArg("oneHot", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("oneHot", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
@@ -70,11 +70,14 @@ Gurax_ImplementMethod(LabelSet, ToArray)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Bool oneHot = args.IsValid()? args.PickBool() : true;
-	const Symbol* pSymbolElemType = args.IsValid()? args.PickSymbol() : Gurax_Symbol(float_);
+	const Array::ElemTypeT& elemType = args.IsValid()? Array::SymbolToElemType(args.PickSymbol()) : Array::ElemType::UInt8;
+	Bool oneHotFlag = args.IsValid()? args.PickBool() : true;
+	if (elemType.IsNone()) {
+		Error::Issue(ErrorType::ValueError, "invalid symbol for element type");
+		return Value::nil();
+	}
 	// Function body
-	const Array::ElemTypeT& elemType = Array::SymbolToElemType(pSymbolElemType);
-	RefPtr<Array> pArray(valueThis.GetLabelSet().ToArray(oneHot, elemType));
+	RefPtr<Array> pArray(valueThis.GetLabelSet().ToArray(elemType, oneHotFlag));
 	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
 }
 

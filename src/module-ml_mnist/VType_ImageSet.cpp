@@ -52,13 +52,13 @@ Gurax_ImplementConstructor(ImageSet)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// ml.mnist.ImageSet#ToArray(shape? as Symbol, elemType? as Symbol, normalize? as Bool):map {block?}
+// ml.mnist.ImageSet#ToArray(elemType? as Symbol, flatten? as Bool, numMax? as Number):map {block?}
 Gurax_DeclareMethod(ImageSet, ToArray)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("shape", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("normalize", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("flatten", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("numMax", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
@@ -71,25 +71,15 @@ Gurax_ImplementMethod(ImageSet, ToArray)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	const Symbol* pSymbolShape = args.IsValid()? args.PickSymbol() : Gurax_Symbol(flat);
-	const Symbol* pSymbolElemType = args.IsValid()? args.PickSymbol() : Gurax_Symbol(float_);
-	bool normalizeFlag = args.IsValid()? args.PickBool() : true;
-	bool flattenFlag = true;
-	if (pSymbolShape->IsIdentical(Gurax_Symbol(flat))) {
-		flattenFlag = true;
-	} else if (pSymbolShape->IsIdentical(Gurax_Symbol(matrix))) {
-		flattenFlag = false;
-	} else {
-		Error::Issue(ErrorType::ValueError, "argument shape takes `` `flat` or `` `matrix``");
-		return Value::nil();
-	}
-	const Array::ElemTypeT& elemType = Array::SymbolToElemType(pSymbolElemType);
+	const Array::ElemTypeT& elemType = args.IsValid()? Array::SymbolToElemType(args.PickSymbol()) : Array::ElemType::UInt8;
+	Bool flattenFlag = args.IsValid()? args.PickBool() : false;
+	Float numMax = args.IsValid()? args.PickNumber<Float>() : 0;
 	if (elemType.IsNone()) {
 		Error::Issue(ErrorType::ValueError, "invalid symbol for element type");
 		return Value::nil();
 	}
 	// Function body
-	RefPtr<Array> pArray(valueThis.GetImageSet().ToArray(flattenFlag, elemType, normalizeFlag));
+	RefPtr<Array> pArray(valueThis.GetImageSet().ToArray(elemType, flattenFlag, numMax));
 	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
 }
 

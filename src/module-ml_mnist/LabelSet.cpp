@@ -61,7 +61,7 @@ Array *CreateArrayOfLabels(const Array::ElemTypeT& elemType, const UInt8* pElemS
 	return pArray.release();
 }
 
-Array* LabelSet::ToArray(bool oneHotFlag, const Array::ElemTypeT& elemType) const
+Array* LabelSet::ToArray(const Array::ElemTypeT& elemType, bool oneHotFlag) const
 {
 	RefPtr<Array> pArray;
 	const UInt8 *pElemSrc = _pMemory->GetPointerC<UInt8>();

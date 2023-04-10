@@ -36,14 +36,14 @@ bool ImageSet::Read(Stream& stream)
 }
 
 template<typename T_Elem>
-Array* CreateArrayOfImages(const Array::ElemTypeT& elemType, DimSizes& dimSizes, const UInt8* pElemSrc, bool normalizeFlag)
+Array* CreateArrayOfImages(const Array::ElemTypeT& elemType, DimSizes& dimSizes, const UInt8* pElemSrc, Float numMax)
 {
 	RefPtr<Array> pArray(Array::Create(elemType, dimSizes));
 	size_t nElems = pArray->GetDimSizes().CalcLength();
-	T_Elem *pElemDst = pArray->GetPointerC<T_Elem>();
-	if (normalizeFlag) {
+	T_Elem* pElemDst = pArray->GetPointerC<T_Elem>();
+	if (numMax > 0) {
 		for (size_t i = 0; i < nElems; i++, pElemSrc++, pElemDst++) {
-			*pElemDst = static_cast<T_Elem>(*pElemSrc) / 255;
+			*pElemDst = static_cast<T_Elem>(numMax * *pElemSrc / 255);
 		}
 	} else {
 		for (size_t i = 0; i < nElems; i++, pElemSrc++, pElemDst++) {
@@ -53,7 +53,7 @@ Array* CreateArrayOfImages(const Array::ElemTypeT& elemType, DimSizes& dimSizes,
 	return pArray.release();
 }
 
-Array* ImageSet::ToArray(bool flattenFlag, const Array::ElemTypeT& elemType, bool normalizeFlag) const
+Array* ImageSet::ToArray(const Array::ElemTypeT& elemType, bool flattenFlag, Float numMax) const
 {
 	RefPtr<Array> pArray;
 	DimSizes dimSizes;
@@ -65,13 +65,13 @@ Array* ImageSet::ToArray(bool flattenFlag, const Array::ElemTypeT& elemType, boo
 		dimSizes.push_back(_nCols);
 	}
 	if (elemType.IsIdentical(Array::ElemType::UInt8)) {
-		pArray.reset(Array::Create(elemType, _pMemory.Reference(), dimSizes));
+		pArray.reset(CreateArrayOfImages<UInt8>(elemType, dimSizes, _pMemory->GetPointerC<UInt8>(), numMax));
 	} else if (elemType.IsIdentical(Array::ElemType::Half)) {
-		pArray.reset(CreateArrayOfImages<Half>(elemType, dimSizes, _pMemory->GetPointerC<UInt8>(), normalizeFlag));
+		pArray.reset(CreateArrayOfImages<Half>(elemType, dimSizes, _pMemory->GetPointerC<UInt8>(), numMax));
 	} else if (elemType.IsIdentical(Array::ElemType::Float)) {
-		pArray.reset(CreateArrayOfImages<Float>(elemType, dimSizes, _pMemory->GetPointerC<UInt8>(), normalizeFlag));
+		pArray.reset(CreateArrayOfImages<Float>(elemType, dimSizes, _pMemory->GetPointerC<UInt8>(), numMax));
 	} else if (elemType.IsIdentical(Array::ElemType::Double)) {
-		pArray.reset(CreateArrayOfImages<Double>(elemType, dimSizes, _pMemory->GetPointerC<UInt8>(), normalizeFlag));
+		pArray.reset(CreateArrayOfImages<Double>(elemType, dimSizes, _pMemory->GetPointerC<UInt8>(), numMax));
 	} else {
 		Error::Issue(ErrorType::ValueError, "can't create an array of %s", elemType.GetName());
 		return nullptr;

@@ -38,7 +38,7 @@ protected:
 public:
 	size_t CountLabels() const { return _nLabels; }
 	bool Read(Stream& stream);
-	Array* ToArray(bool oneHotFlag, const Array::ElemTypeT& elemType) const;
+	Array* ToArray(const Array::ElemTypeT& elemType, bool oneHotFlag) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const LabelSet& other) const { return this == &other; }
