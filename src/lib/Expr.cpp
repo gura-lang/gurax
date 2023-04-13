@@ -382,8 +382,7 @@ void Expr_Member::Compose(Composer& composer)
 void Expr_Member::ComposeWithinValueAssignment(Composer& composer, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol)
 {
 	if (pOp) {
-		Error::IssueWith(ErrorType::SyntaxError, *this,
-						"operator can not be applied in lister assigment");
+		Error::IssueWith(ErrorType::SyntaxError, *this, "operator can not be applied in lister assigment");
 		return;
 	}
 	switch (GetMemberMode()) {
