@@ -135,13 +135,14 @@ public:
 protected:
 	size_t _uniqId;
 	char* _name;
+	char _chEnd;
 	char _nameBuff[0];
 public:
 	static const Symbol* Empty;
 public:
 	// Constructor
 	Symbol() = delete;
-	Symbol(size_t uniqId, char* name) : _uniqId(uniqId), _name(name) {}
+	Symbol(size_t uniqId, char* name) : _uniqId(uniqId), _name(name), _chEnd('\0') {}
 	// Copy constructor/operator
 	Symbol(const Symbol& src) = delete;
 	Symbol& operator=(const Symbol& src) = delete;
@@ -151,13 +152,15 @@ public:
 	// Destructor
 	~Symbol() = default;
 public:
-	void Initialize(size_t uniqId, const char* name) {
+	void Initialize(size_t uniqId, const char* name, bool chEnd) {
 		_uniqId = uniqId;
 		::strcpy(_nameBuff, name);
 		_name = _nameBuff;
+		_chEnd = chEnd;
 	}
 	int GetUniqId() const { return _uniqId; }
 	const char* GetName() const { return _name; }
+	char GetEndChar() const { return _chEnd; }
 public:
 	size_t CalcHash() const { return static_cast<size_t>(GetUniqId()); }
 	bool IsIdentical(const Symbol* pSymbol) const { return GetUniqId() == pSymbol->GetUniqId(); }
@@ -166,11 +169,11 @@ public:
 	}
 	bool IsEqualTo(const Symbol* pSymbol) const { return IsIdentical(pSymbol); }
 	bool IsLessThan_UniqId(const Symbol* pSymbol) const { return GetUniqId() < pSymbol->GetUniqId(); }
-	//bool IsLessThan_Name(const Symbol* pSymbol) const { return ::strcmp(GetName(), pSymbol->GetName()) < 0; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 public:
 	bool IsEmpty() const { return IsIdentical(Empty); }
 	bool StartsWith(char ch) const { return *GetName() == ch; }
+	bool EndsWith(char ch) const { return GetEndChar() == ch; }
 	bool IsFlowControl() const;
 	static void Bootup();
 	static const Symbol* Add(const char* name);

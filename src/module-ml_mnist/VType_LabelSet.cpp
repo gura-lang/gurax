@@ -71,7 +71,7 @@ Gurax_ImplementMethod(LabelSet, ToArray)
 	// Arguments
 	ArgPicker args(argument);
 	const Array::ElemTypeT& elemType = args.IsValid()? Array::SymbolToElemType(args.PickSymbol()) : Array::ElemType::UInt8;
-	Bool oneHotFlag = args.IsValid()? args.PickBool() : true;
+	Bool oneHotFlag = args.IsValid()? args.PickBool() : false;
 	if (elemType.IsNone()) {
 		Error::Issue(ErrorType::ValueError, "invalid symbol for element type");
 		return Value::nil();

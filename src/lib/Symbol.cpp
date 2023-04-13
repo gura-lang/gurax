@@ -44,14 +44,13 @@ const Symbol* Symbol::Add(const char* name)
 {
 	SymbolPool& symbolPool = SymbolPool::GetInstance();
 	do {
-		Symbol symbol(0, const_cast<char *>(name));
+		Symbol symbol(0, const_cast<char*>(name));
 		auto ppSymbol = symbolPool.GetSet().find(&symbol);
 		if (ppSymbol != symbolPool.GetSet().end()) return *ppSymbol;
 	} while (0);
-	size_t bytes = sizeof(Symbol) + ::strlen(name) + 1;
-	//Symbol* pSymbol = reinterpret_cast<Symbol*>(MemoryPool::Global().Allocate(bytes, "Symbol"));
-	Symbol* pSymbol = reinterpret_cast<Symbol*>(::malloc(bytes));
-	pSymbol->Initialize(symbolPool.GetSet().size(), name);
+	size_t len = ::strlen(name);
+	Symbol* pSymbol = reinterpret_cast<Symbol*>(::malloc(sizeof(Symbol) + len + 1));
+	pSymbol->Initialize(symbolPool.GetSet().size(), name, (len == 0)? '\0' : *(name + len - 1));
 	symbolPool.GetSet().insert(pSymbol);
 	return pSymbol;
 }
