@@ -64,11 +64,8 @@ Double Trainer::CalcCrossEntropyError(const Array& arrayCorrect, Double epsilon)
 
 TrainNode* Trainer::FindNode(const Symbol* pSymbol) const
 {
-#if 0
-	NodeMap::const_iterator iter = _nodeMap.find(pSymbol);
+	auto iter = _nodeMap.find(pSymbol);
 	return (iter == _nodeMap.end())? nullptr : iter->second;
-#endif
-	return nullptr;
 }
 
 void Trainer::Print(Stream& stream) const
