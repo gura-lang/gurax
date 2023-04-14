@@ -131,7 +131,7 @@ TrainNode* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolsInput)
 		const Expr_Identifier& exprEx = dynamic_cast<const Expr_Identifier&>(expr);
 		const Symbol* pSymbol = exprEx.GetSymbol();
 		TrainNode *pNodeFound = FindNode(pSymbol);
-		if (pNodeFound != nullptr) return pNodeFound;
+		if (!pNodeFound) return pNodeFound;
 		TrainNode::Trait trait = TrainNode::Trait::Input;
 		TrainOptimizer::Instance* pTrainOptimizer = nullptr;
 		if (!symbolsInput.IsSet(pSymbol)) {
@@ -203,8 +203,6 @@ TrainNode* Trainer::CreateNodeBinary(const Expr_BinaryOp& exprEx, const SymbolSe
 	if (!pNodeLeft || !pNodeRight) return nullptr;
 	pNodeLeft->AddConnectorDst(pNode->GetConnectorSrcLeft());
 	pNodeRight->AddConnectorDst(pNode->GetConnectorSrcRight());
-	//_nodeOwner.push_back(pNodeLeft.release());
-	//_nodeOwner.push_back(pNodeRight.release());
 	return pNode.release();
 }
 

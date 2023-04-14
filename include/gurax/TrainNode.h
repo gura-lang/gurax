@@ -27,6 +27,9 @@ public:
 		TrainNode* _pNodeDst;
 		RefPtr<Array> _pArrayGrad;
 	public:
+		Connector() : _pNodeSrc(nullptr), _pNodeDst(nullptr) {}
+		Connector(const Connector& connector) :
+			_pNodeSrc(connector._pNodeSrc), _pNodeDst(connector._pNodeDst), _pArrayGrad(connector._pArrayGrad.Reference()) {}
 		Connector(TrainNode* pNodeDst) : _pNodeSrc(nullptr), _pNodeDst(pNodeDst) {}
 		TrainNode& GetNodeSrc() { return *_pNodeSrc; }
 		TrainNode& GetNodeDst() { return *_pNodeDst; }
@@ -39,6 +42,9 @@ public:
 		RefPtr<Array>& GetArrayGradRefPtr() { return _pArrayGrad; }
 		const Array& GetArrayFwd() const { return _pNodeSrc->GetArrayFwd(); }
 		const Array& GetArrayGrad() const { return *_pArrayGrad; }
+		void operator=(const Connector& connector) {
+			_pNodeSrc = connector._pNodeSrc, _pNodeDst = connector._pNodeDst, _pArrayGrad.reset(connector._pArrayGrad.Reference());
+		}
 	};
 	class ConnectorList : public ListBase<Connector*> {
 	public:
@@ -46,12 +52,10 @@ public:
 	};
 protected:
 	const char* _nodeTypeName;
-	ConnectorList _connectorsDst;
 	RefPtr<Array> _pArrayFwd;
 public:
 	// Constructor
 	explicit TrainNode(const char* nodeTypeName) : _nodeTypeName(nodeTypeName) {}
-	//TrainNode(const char* nodeTypeName, Connector& connectorDst);
 	// Copy constructor/operator
 	TrainNode(const TrainNode& src) = delete;
 	TrainNode& operator=(const TrainNode& src) = delete;
@@ -62,7 +66,7 @@ protected:
 	~TrainNode() = default;
 public:
 	const char* GetNodeTypeName() const { return _nodeTypeName; }
-	void AddConnectorDst(Connector& connectorDst);
+	virtual void AddConnectorDst(Connector& connectorDst) = 0;
 	Array& GetArrayFwd() { return *_pArrayFwd; }
 	const Array& GetArrayFwd() const { return *_pArrayFwd; }
 	RefPtr<Array>& GetArrayFwdRefPtr() { return _pArrayFwd; }
@@ -111,9 +115,31 @@ public:
 using TrainNodeMap = std::unordered_map<const Symbol*, TrainNode*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>;
 
 //------------------------------------------------------------------------------
+// TrainNode_SingleOut
+//------------------------------------------------------------------------------
+class TrainNode_SingleOut : public TrainNode {
+protected:
+	Connector _connectorDst;
+public:
+	TrainNode_SingleOut(const char* nodeTypeName) : TrainNode(nodeTypeName) {}
+	virtual void AddConnectorDst(Connector& connectorDst) override;
+};
+
+//------------------------------------------------------------------------------
+// TrainNode_Branch
+//------------------------------------------------------------------------------
+class TrainNode_Branch : public TrainNode {
+protected:
+	ConnectorList _connectorsDst;
+public:
+	TrainNode_Branch() : TrainNode("Branch") {}
+	virtual void AddConnectorDst(Connector& connectorDst) override;
+};
+
+//------------------------------------------------------------------------------
 // TrainNode_Head
 //------------------------------------------------------------------------------
-class TrainNode_Head : public TrainNode {
+class TrainNode_Head : public TrainNode_SingleOut {
 protected:
 	RefPtr<Expr> _pExpr;
 	RefPtr<Array> _pArrayGradAdj;
@@ -121,7 +147,7 @@ protected:
 	RefPtr<TrainOptimizer::Instance> _pTrainOptimizer;
 public:
 	TrainNode_Head(Expr* pExpr, Trait trait, TrainOptimizer::Instance* pTrainOptimizer) :
-		TrainNode("Head"), _pExpr(pExpr), _trait(trait), _pTrainOptimizer(pTrainOptimizer) {}
+		TrainNode_SingleOut("Head"), _pExpr(pExpr), _trait(trait), _pTrainOptimizer(pTrainOptimizer) {}
 	const Expr& GetExpr() const { return *_pExpr; }
 	bool IsVariable() const { return _trait == Trait::Variable; }
 	bool IsConstant() const { return _trait == Trait::Constant; }
@@ -141,12 +167,12 @@ public:
 //------------------------------------------------------------------------------
 // TrainNode_Bottom
 //------------------------------------------------------------------------------
-class TrainNode_Bottom : public TrainNode {
+class TrainNode_Bottom : public TrainNode_SingleOut {
 private:
 	Connector _connectorSrc;
 	RefPtr<Array> _pArrayCorrect;
 public:
-	TrainNode_Bottom() : TrainNode("Bottom"), _connectorSrc(this) {}
+	TrainNode_Bottom() : TrainNode_SingleOut("Bottom"), _connectorSrc(this) {}
 	Connector& GetConnectorSrc() { return _connectorSrc; }
 	const Connector& GetConnectorSrc() const { return _connectorSrc; }
 	Array& GetArrayCorrect() { return *_pArrayCorrect; }
@@ -165,11 +191,11 @@ public:
 //------------------------------------------------------------------------------
 // TrainNode_Unary
 //------------------------------------------------------------------------------
-class TrainNode_Unary : public TrainNode {
+class TrainNode_Unary : public TrainNode_SingleOut {
 protected:
 	Connector _connectorSrc;
 public:
-	TrainNode_Unary(const char* nodeTypeName) : TrainNode(nodeTypeName), _connectorSrc(this) {}
+	TrainNode_Unary(const char* nodeTypeName) : TrainNode_SingleOut(nodeTypeName), _connectorSrc(this) {}
 	Connector& GetConnectorSrc() { return _connectorSrc; }
 	const Connector& GetConnectorSrc() const { return _connectorSrc; }
 	virtual bool IsUnary() const { return true; }
@@ -193,12 +219,12 @@ public:
 //------------------------------------------------------------------------------
 // TrainNode_Binary
 //------------------------------------------------------------------------------
-class TrainNode_Binary : public TrainNode {
+class TrainNode_Binary : public TrainNode_SingleOut {
 protected:
 	Connector _connectorSrcLeft;
 	Connector _connectorSrcRight;
 public:
-	TrainNode_Binary(const char* nodeTypeName) : TrainNode(nodeTypeName), _connectorSrcLeft(this), _connectorSrcRight(this) {}
+	TrainNode_Binary(const char* nodeTypeName) : TrainNode_SingleOut(nodeTypeName), _connectorSrcLeft(this), _connectorSrcRight(this) {}
 	Connector& GetConnectorSrcLeft() { return _connectorSrcLeft; }
 	Connector& GetConnectorSrcRight() { return _connectorSrcRight; }
 	const Connector& GetConnectorSrcLeft() const { return _connectorSrcLeft; }
@@ -279,7 +305,7 @@ public:
 //------------------------------------------------------------------------------
 // TrainNode_Gear
 //------------------------------------------------------------------------------
-class TrainNode_Gear : public TrainNode {
+class TrainNode_Gear : public TrainNode_SingleOut {
 public:
 	class Creator {
 	public:
@@ -289,7 +315,7 @@ protected:
 	RefPtr<Gear> _pGear;
 	Connector _connectorSrc;
 public:
-	TrainNode_Gear(Gear* pGear) : TrainNode(pGear->GetName()), _pGear(pGear), _connectorSrc(this) {}
+	TrainNode_Gear(Gear* pGear) : TrainNode_SingleOut(pGear->GetName()), _pGear(pGear), _connectorSrc(this) {}
 	Gear& GetGear() { return *_pGear; }
 	const Gear& GetGear() const { return *_pGear; }
 	Connector& GetConnectorSrc() { return _connectorSrc; }
