@@ -75,6 +75,8 @@ public:
 			GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
+	virtual void GatherMemberSymbol(SymbolList& symbolList) const;
+	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag);
 };
 
 }

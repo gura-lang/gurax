@@ -80,9 +80,9 @@ void VType_TrainNode::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(TrainNode, MethodSkeleton));
+	//Assign(Gurax_CreateMethod(TrainNode, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(TrainNode, propSkeleton));
+	//Assign(Gurax_CreateProperty(TrainNode, propSkeleton));
 }
 
 //------------------------------------------------------------------------------
@@ -93,6 +93,19 @@ VType& Value_TrainNode::vtype = VTYPE_TrainNode;
 String Value_TrainNode::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetTrainNode().ToString(ss));
+}
+
+void Value_TrainNode::GatherMemberSymbol(SymbolList& symbolList) const
+{
+	GetTrainNode().GatherMemberSymbol(symbolList);
+	Value::GatherMemberSymbol(symbolList);
+}
+
+Value* Value_TrainNode::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
+{
+	RefPtr<Value> pValueRtn(GetTrainNode().DoGetProperty(pSymbol, attr));
+	if (pValueRtn) return pValueRtn.release();
+	return Value::DoGetProperty(pSymbol, attr, notFoundErrorFlag);
 }
 
 }

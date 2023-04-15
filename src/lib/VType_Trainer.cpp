@@ -78,18 +78,18 @@ Gurax_ImplementMethod(Trainer, Eval)
 	return argument.ReturnValue(processor, trainer.GetResult().ToValue());
 }
 
-// Trainer#EvalBwd(correct as Array):void
-Gurax_DeclareMethod(Trainer, EvalBwd)
+// Trainer#EvalBackward(correct as Array):void
+Gurax_DeclareMethod(Trainer, EvalBackward)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("correct", VTYPE_Array, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Given the `correct` data, it updates the weights of the neural network by computing the gradients of the loss function with respect to the weights using backpropagation.
-Therefore, the EvalBwd method updates the weights of the neural network associated with the Trainer object by performing the backward pass.
+Therefore, the EvalBackward method updates the weights of the neural network associated with the Trainer object by performing the backward pass.
 )""");
 }
 
-Gurax_ImplementMethod(Trainer, EvalBwd)
+Gurax_ImplementMethod(Trainer, EvalBackward)
 {
 	// Target
 	Trainer& trainer = GetValueThis(argument).GetTrainer();
@@ -239,7 +239,7 @@ void VType_Trainer::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Trainer));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Trainer, Eval));
-	Assign(Gurax_CreateMethod(Trainer, EvalBwd));
+	Assign(Gurax_CreateMethod(Trainer, EvalBackward));
 	Assign(Gurax_CreateMethod(Trainer, GetNode));
 	Assign(Gurax_CreateMethod(Trainer, Print));
 	Assign(Gurax_CreateMethod(Trainer, Train));

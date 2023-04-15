@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // TrainNode
 //------------------------------------------------------------------------------
-bool TrainNode::GatherMemberSymbol(SymbolList& symbols)
+bool TrainNode::GatherMemberSymbol(SymbolList& symbols) const
 {
 	symbols.push_back(Gurax_Symbol(output));
 	symbols.push_back(Gurax_Symbol(type));
@@ -55,6 +55,7 @@ bool TrainNodeList::EvalBackward(Processor& processor)
 {
 	for (auto ppNode = rbegin(); ppNode != rend(); ppNode++) {
 		TrainNode* pNode = *ppNode;
+		//::printf("*%s\n", pNode->ToString().c_str());
 		if (!pNode->EvalBackward(processor)) return false;
 	}
 	return true;
@@ -76,7 +77,7 @@ void TrainNodeOwner::Clear()
 void TrainNode_SingleOut::AddConnectorDst(Connector& connectorDst)
 {
 	connectorDst.SetNodeSrc(this);
-	_connectorDst = connectorDst;
+	_pConnectorDst = &connectorDst;
 }
 
 //------------------------------------------------------------------------------
@@ -131,12 +132,12 @@ bool TrainNode_Head::EvalForward(Processor& processor)
 bool TrainNode_Head::EvalBackward(Processor& processor)
 {
 	if (_pTrainOptimizer) {
-		if (!_pTrainOptimizer->Update(processor, _pArrayFwd, _connectorDst.GetArrayGrad())) return false;
+		if (!_pTrainOptimizer->Update(processor, _pArrayFwd, _pConnectorDst->GetArrayGrad())) return false;
 	}
 	return true;
 }
 
-bool TrainNode_Head::GatherMemberSymbol(SymbolList& symbols)
+bool TrainNode_Head::GatherMemberSymbol(SymbolList& symbols) const
 {
 	return TrainNode::GatherMemberSymbol(symbols);
 }
@@ -186,7 +187,7 @@ bool TrainNode_Bottom::EvalBackwardTop(Processor& processor, const Array& arrayC
 	return true;
 }
 
-bool TrainNode_Bottom::GatherMemberSymbol(SymbolList& symbols)
+bool TrainNode_Bottom::GatherMemberSymbol(SymbolList& symbols) const
 {
 	symbols.push_back(Gurax_Symbol(input));
 	symbols.push_back(Gurax_Symbol(inputGrad));
@@ -227,7 +228,7 @@ bool TrainNode_Unary::IsVulnerable() const
 	return GetConnectorSrc().GetNodeSrc().IsVulnerable();
 }
 
-bool TrainNode_Unary::GatherMemberSymbol(SymbolList& symbols)
+bool TrainNode_Unary::GatherMemberSymbol(SymbolList& symbols) const
 {
 	symbols.push_back(Gurax_Symbol(input));
 	symbols.push_back(Gurax_Symbol(inputGrad));
@@ -272,7 +273,7 @@ bool TrainNode_Neg::EvalBackward(Processor& processor)
 {
 	if (GetConnectorSrc().GetNodeSrc().IsVulnerable()) {
 		// inputGrad = -outputGrad
-		if (!Array::Neg(GetConnectorSrc().GetArrayGradRefPtr(), _connectorDst.GetArrayGrad())) return false;
+		if (!Array::Neg(GetConnectorSrc().GetArrayGradRefPtr(), _pConnectorDst->GetArrayGrad())) return false;
 	}
 	return true;
 }
@@ -287,7 +288,7 @@ bool TrainNode_Binary::IsVulnerable() const
 		GetConnectorSrcRight().GetNodeSrc().IsVulnerable();
 }
 
-bool TrainNode_Binary::GatherMemberSymbol(SymbolList& symbols)
+bool TrainNode_Binary::GatherMemberSymbol(SymbolList& symbols) const
 {
 	symbols.push_back(Gurax_Symbol(inputLeft));
 	symbols.push_back(Gurax_Symbol(inputRight));
@@ -339,7 +340,7 @@ bool TrainNode_Add::EvalForward(Processor& processor)
 
 bool TrainNode_Add::EvalBackward(Processor& processor)
 {
-	const Array& arrayGrad = _connectorDst.GetArrayGrad();
+	const Array& arrayGrad = _pConnectorDst->GetArrayGrad();
 	if (GetConnectorSrcLeft().GetNodeSrc().IsVulnerable()) {
 		// inputGradLeft = outputGrad
 		GetConnectorSrcLeft().SetArrayGrad(arrayGrad.Reference());
@@ -363,11 +364,11 @@ bool TrainNode_Sub::EvalBackward(Processor& processor)
 {
 	if (GetConnectorSrcLeft().GetNodeSrc().IsVulnerable()) {
 		// inputGradLeft = outputGrad
-		GetConnectorSrcLeft().SetArrayGrad(_connectorDst.GetArrayGrad().Reference());
+		GetConnectorSrcLeft().SetArrayGrad(_pConnectorDst->GetArrayGrad().Reference());
 	}
 	if (GetConnectorSrcRight().GetNodeSrc().IsVulnerable()) {
 		// inputGradRight = -outputGrad
-		if (!Array::Neg(GetConnectorSrcRight().GetArrayGradRefPtr(), _connectorDst.GetArrayGrad())) return false;
+		if (!Array::Neg(GetConnectorSrcRight().GetArrayGradRefPtr(), _pConnectorDst->GetArrayGrad())) return false;
 	}
 	return true;
 }
@@ -385,12 +386,12 @@ bool TrainNode_Mul::EvalBackward(Processor& processor)
 	if (GetConnectorSrcLeft().GetNodeSrc().IsVulnerable()) {
 		// inputGradLeft = outputGrad * inputRight
 		if (!Array::Mul(GetConnectorSrcLeft().GetArrayGradRefPtr(),
-						_connectorDst.GetArrayGrad(), GetConnectorSrcRight().GetArrayFwd())) return false;
+						_pConnectorDst->GetArrayGrad(), GetConnectorSrcRight().GetArrayFwd())) return false;
 	}
 	if (GetConnectorSrcRight().GetNodeSrc().IsVulnerable()) {
 		// inputGradRight = outputGrad * inputLeft
 		if (!Array::Mul(GetConnectorSrcRight().GetArrayGradRefPtr(),
-						_connectorDst.GetArrayGrad(), GetConnectorSrcLeft().GetArrayFwd())) return false;
+						_pConnectorDst->GetArrayGrad(), GetConnectorSrcLeft().GetArrayFwd())) return false;
 	}
 	return true;
 }
@@ -408,12 +409,12 @@ bool TrainNode_Div::EvalBackward(Processor& processor)
 	if (GetConnectorSrcLeft().GetNodeSrc().IsVulnerable()) {
 		// inputGradLeft = outputGrad / inputRight
 		if (!Array::Div(GetConnectorSrcLeft().GetArrayGradRefPtr(),
-						_connectorDst.GetArrayGrad(), GetConnectorSrcRight().GetArrayFwd())) return false;
+						_pConnectorDst->GetArrayGrad(), GetConnectorSrcRight().GetArrayFwd())) return false;
 	}
 	if (GetConnectorSrcRight().GetNodeSrc().IsVulnerable()) {
 		// inputGradRight = -outputGrad * inputLeft / (inputRight * inputRight) = -outputGrad * output / inputRight
 		if (!Array::Mul(GetConnectorSrcRight().GetArrayGradRefPtr(),
-						_connectorDst.GetArrayGrad(), GetArrayFwd())) return false;
+						_pConnectorDst->GetArrayGrad(), GetArrayFwd())) return false;
 		if (!Array::Div(GetConnectorSrcRight().GetArrayGradRefPtr(),
 						GetConnectorSrcRight().GetArrayGrad(), GetConnectorSrcRight().GetArrayFwd())) return false;
 		if (!Array::Neg(GetConnectorSrcRight().GetArrayGradRefPtr(),
@@ -435,7 +436,7 @@ bool TrainNode_Pow::EvalBackward(Processor& processor)
 	if (GetConnectorSrcLeft().GetNodeSrc().IsVulnerable()) {
 		// inputGradLeft = outputGrad * inputRight * inputLeft ** (inputRight - 1) = outputGrad * output * inputRight / inputLeft
 		if (!Array::Mul(GetConnectorSrcLeft().GetArrayGradRefPtr(),
-						_connectorDst.GetArrayGrad(), GetArrayFwd())) return false;
+						_pConnectorDst->GetArrayGrad(), GetArrayFwd())) return false;
 		if (!Array::Mul(GetConnectorSrcLeft().GetArrayGradRefPtr(),
 						GetConnectorSrcLeft().GetArrayGrad(), GetConnectorSrcRight().GetArrayFwd())) return false;
 		if (!Array::Div(GetConnectorSrcLeft().GetArrayGradRefPtr(),
@@ -445,7 +446,7 @@ bool TrainNode_Pow::EvalBackward(Processor& processor)
 		// inputGradRight = outputGrad * log(inputLeft) * inputLeft ** inputRight = outputGrad * output * log(inputLeft)
 		//if (!Array::Math_log(_pArrayWork, GetConnectorSrcLeft().GetArrayFwd())) return false;
 		if (!Array::Mul(GetConnectorSrcRight().GetArrayGradRefPtr(),
-						_connectorDst.GetArrayGrad(), GetArrayFwd())) return false;
+						_pConnectorDst->GetArrayGrad(), GetArrayFwd())) return false;
 		if (!Array::Mul(GetConnectorSrcRight().GetArrayGradRefPtr(),
 						GetConnectorSrcRight().GetArrayGrad(), *_pArrayWork)) return false;
 	}	
@@ -466,13 +467,13 @@ bool TrainNode_Dot::EvalBackward(Processor& processor)
 		// inputGradLeft = outputGrad |.| transpose(inputRight)
 		GetConnectorSrcRight().GetArrayFwd().Transpose(_pArrayFwdRightTrans);
 		if (!Array::Dot(GetConnectorSrcLeft().GetArrayGradRefPtr(),
-						_connectorDst.GetArrayGrad(), *_pArrayFwdRightTrans)) return false;
+						_pConnectorDst->GetArrayGrad(), *_pArrayFwdRightTrans)) return false;
 	}
 	if (GetConnectorSrcRight().GetNodeSrc().IsVulnerable()) {
 		// inputGradRight = transpose(inputLeft) |.| outputGrad
 		GetConnectorSrcLeft().GetArrayFwd().Transpose(_pArrayFwdLeftTrans);
 		if (!Array::Dot(GetConnectorSrcRight().GetArrayGradRefPtr(),
-						*_pArrayFwdLeftTrans, _connectorDst.GetArrayGrad())) return false;
+						*_pArrayFwdLeftTrans, _pConnectorDst->GetArrayGrad())) return false;
 	}
 	return true;
 }
@@ -480,7 +481,7 @@ bool TrainNode_Dot::EvalBackward(Processor& processor)
 //-----------------------------------------------------------------------------
 // TrainNode_Gear
 //-----------------------------------------------------------------------------
-bool TrainNode_Gear::GatherMemberSymbol(SymbolList& symbols)
+bool TrainNode_Gear::GatherMemberSymbol(SymbolList& symbols) const
 {
 	symbols.push_back(Gurax_Symbol(gear));
 	symbols.push_back(Gurax_Symbol(input));

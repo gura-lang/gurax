@@ -79,7 +79,7 @@ public:
 	virtual void Reset() {}
 	virtual bool EvalForward(Processor& processor) = 0;
 	virtual bool EvalBackward(Processor& processor) = 0;
-	virtual bool GatherMemberSymbol(SymbolList& symbols);
+	virtual bool GatherMemberSymbol(SymbolList& symbols) const;
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr);
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const;
 	virtual void Print(Stream& stream, int indentLevel) const;
@@ -119,9 +119,9 @@ using TrainNodeMap = std::unordered_map<const Symbol*, TrainNode*, Symbol::Hash_
 //------------------------------------------------------------------------------
 class TrainNode_SingleOut : public TrainNode {
 protected:
-	Connector _connectorDst;
+	Connector* _pConnectorDst;
 public:
-	TrainNode_SingleOut(const char* nodeTypeName) : TrainNode(nodeTypeName) {}
+	TrainNode_SingleOut(const char* nodeTypeName) : TrainNode(nodeTypeName), _pConnectorDst(nullptr) {}
 	virtual void AddConnectorDst(Connector& connectorDst) override;
 };
 
@@ -158,7 +158,7 @@ public:
 	virtual bool IsVulnerable() const;
 	virtual bool EvalForward(Processor& processor);
 	virtual bool EvalBackward(Processor& processor);
-	virtual bool GatherMemberSymbol(SymbolList& symbols);
+	virtual bool GatherMemberSymbol(SymbolList& symbols) const;
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr);
 	virtual String ToString(const StringStyle& ss) const;
 	virtual void Print(Stream& stream, int indentLevel) const;
@@ -182,7 +182,7 @@ public:
 	virtual bool EvalForward(Processor& processor);
 	virtual bool EvalBackward(Processor& processor);
 	bool EvalBackwardTop(Processor& processor, const Array& arrayCorrect);
-	virtual bool GatherMemberSymbol(SymbolList& symbols);
+	virtual bool GatherMemberSymbol(SymbolList& symbols) const;
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr);
 	virtual String ToString(const StringStyle& ss) const;
 	virtual void Print(Stream& stream, int indentLevel) const;
@@ -200,7 +200,7 @@ public:
 	const Connector& GetConnectorSrc() const { return _connectorSrc; }
 	virtual bool IsUnary() const { return true; }
 	virtual bool IsVulnerable() const;
-	virtual bool GatherMemberSymbol(SymbolList& symbols);
+	virtual bool GatherMemberSymbol(SymbolList& symbols) const;
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr);
 	virtual String ToString(const StringStyle& ss) const;
 	virtual void Print(Stream& stream, int indentLevel) const;
@@ -231,7 +231,7 @@ public:
 	const Connector& GetConnectorSrcRight() const { return _connectorSrcRight; }
 	virtual bool IsBinary() const { return true; }
 	virtual bool IsVulnerable() const;
-	virtual bool GatherMemberSymbol(SymbolList& symbols);
+	virtual bool GatherMemberSymbol(SymbolList& symbols) const;
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr);
 	virtual String ToString(const StringStyle& ss) const;
 	virtual void Print(Stream& stream, int indentLevel) const;
@@ -321,7 +321,7 @@ public:
 	Connector& GetConnectorSrc() { return _connectorSrc; }
 	const Connector& GetConnectorSrc() const { return _connectorSrc; }
 	virtual bool IsGear() const { return true; }
-	virtual bool GatherMemberSymbol(SymbolList& symbols);
+	virtual bool GatherMemberSymbol(SymbolList& symbols) const;
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr);
 	virtual String ToString(const StringStyle& ss) const;
 	virtual void Print(Stream& stream, int indentLevel) const;
