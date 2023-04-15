@@ -107,7 +107,8 @@ public:
 		std::function<Double (const void* pv, size_t idx)>									IndexGetDouble[ElemTypeIdMax];
 		std::function<void (const ValueList& values, void* pv, size_t offset, size_t len)>	InjectFromValueList[ElemTypeIdMax];
 		std::function<bool (Iterator& iterator, void* pv, size_t offset, size_t len)>		InjectFromIterator[ElemTypeIdMax];
-		std::function<void (ValueOwner& values, const void* pv, size_t offset, size_t len)> ExtractToValueOwner[ElemTypeIdMax];
+		std::function<void (ValueOwner& values, const void* pv, size_t offset, size_t len)> ExtractElems[ElemTypeIdMax];
+		std::function<void (const StringStyle& ss, String& str, const void* pv, size_t offset, size_t len)> ToString[ElemTypeIdMax];
 		std::function<void (void* pvDst, const void* pvSrc, size_t offset, size_t len)> 	CopyElems[ElemTypeIdMax][ElemTypeIdMax];
 		std::function<void (void* pvDst, size_t nRows, size_t nCols, const void* pvSrc)>	Transpose[ElemTypeIdMax][ElemTypeIdMax];
 		std::function<void (void* pvDst, const void* pvSrc, size_t len)> 					Neg_Array[ElemTypeIdMax];
@@ -215,6 +216,9 @@ public:
 	void ExtractElems(ValueOwner& values, size_t offset, size_t len) const;
 	void ExtractElemsSub(ValueOwner& values, size_t& offset, DimSizes::const_iterator pDimSize) const;
 	void ExtractElems(ValueOwner& values) const;
+	void ToString(const StringStyle& ss, String& str, size_t offset, size_t len) const;
+	void ToStringSub(const StringStyle& ss, String& str, size_t& offset, DimSizes::const_iterator pDimSize) const;
+	void ToString(const StringStyle& ss, String& str) const;
 public:
 	bool Transpose(RefPtr<Array>& pArrayRtn) const;
 public:

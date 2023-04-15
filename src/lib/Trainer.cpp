@@ -143,6 +143,7 @@ TrainNode* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolsInput)
 		if (!pExpr->PrepareAndCompose(_composer)) return nullptr;
 		RefPtr<TrainNode> pNode(new TrainNode_Head(pExpr.release(), trait, pTrainOptimizer));
 		_nodeOwner.push_back(pNode.Reference());
+		//_nodeMap[pSymbol] = pNode.get();
 		return pNode.release();
 	} else {
 		TrainNode::Trait trait = TrainNode::Trait::Constant;

@@ -1097,7 +1097,8 @@ VType& Value_Array::vtype = VTYPE_Array;
 
 String Value_Array::ToString(const StringStyle& ss) const
 {
-	return ToStringGeneric(ss, GetArray().ToString(ss));
+	if (ss.IsBracket()) return ToStringGeneric(ss, GetArray().ToString(ss));
+	return GetArray().ToString(ss);
 }
 
 Value* Value_Array::DoIndexGet(const Index& index) const

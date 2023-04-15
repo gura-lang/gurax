@@ -234,14 +234,14 @@ template<> bool InjectFromIterator_T<Complex>(Iterator& iterator, void* pv, size
 	return !Error::IsIssued();
 }
 
-template<typename T_Elem> void ExtractToValueOwner_T(ValueOwner& values, const void* pv, size_t offset, size_t len)
+template<typename T_Elem> void ExtractElems_T(ValueOwner& values, const void* pv, size_t offset, size_t len)
 {
 	const T_Elem* p = reinterpret_cast<const T_Elem*>(pv) + offset;
 	const T_Elem* pEnd = p + len;
 	for ( ; p != pEnd; p++) values.push_back(new Value_Number(*p));
 }
 
-template<> void ExtractToValueOwner_T<Bool>(ValueOwner& values, const void* pv, size_t offset, size_t len)
+template<> void ExtractElems_T<Bool>(ValueOwner& values, const void* pv, size_t offset, size_t len)
 {
 	using T_Elem = Bool;
 	const T_Elem* p = reinterpret_cast<const T_Elem*>(pv) + offset;
@@ -249,12 +249,90 @@ template<> void ExtractToValueOwner_T<Bool>(ValueOwner& values, const void* pv, 
 	for ( ; p != pEnd; p++) values.push_back(new Value_Bool(!!*p));
 }
 
-template<> void ExtractToValueOwner_T<Complex>(ValueOwner& values, const void* pv, size_t offset, size_t len)
+template<> void ExtractElems_T<Complex>(ValueOwner& values, const void* pv, size_t offset, size_t len)
 {
 	using T_Elem = Complex;
 	const T_Elem* p = reinterpret_cast<const T_Elem*>(pv) + offset;
 	const T_Elem* pEnd = p + len;
 	for ( ; p != pEnd; p++) values.push_back(new Value_Complex(*p));
+}
+
+template<typename T_Elem> void ToStringElem_T(const StringStyle& ss, String& str, const T_Elem* p) {}
+
+template<> void ToStringElem_T<Bool>(const StringStyle& ss, String& str, const Bool* p)
+{
+	str.Format("%s", *p? "true" : "false");
+}
+
+template<> void ToStringElem_T<Int8>(const StringStyle& ss, String& str, const Int8* p)
+{
+	str.Format("%d", *p);
+}
+
+template<> void ToStringElem_T<UInt8>(const StringStyle& ss, String& str, const UInt8* p)
+{
+	str.Format("%u", *p);
+}
+
+template<> void ToStringElem_T<Int16>(const StringStyle& ss, String& str, const Int16* p)
+{
+	str.Format("%d", *p);
+}
+
+template<> void ToStringElem_T<UInt16>(const StringStyle& ss, String& str, const UInt16* p)
+{
+	str.Format("%u", *p);
+}
+
+template<> void ToStringElem_T<Int32>(const StringStyle& ss, String& str, const Int32* p)
+{
+	str.Format("%d", *p);
+}
+
+template<> void ToStringElem_T<UInt32>(const StringStyle& ss, String& str, const UInt32* p)
+{
+	str.Format("%u", *p);
+}
+
+template<> void ToStringElem_T<Int64>(const StringStyle& ss, String& str, const Int64* p)
+{
+	str.Format("%lld", *p);
+}
+
+template<> void ToStringElem_T<UInt64>(const StringStyle& ss, String& str, const UInt64* p)
+{
+	str.Format("%llu", *p);
+}
+
+template<> void ToStringElem_T<Half>(const StringStyle& ss, String& str, const Half* p)
+{
+	str.Format("%g", p->ToFloat());
+}
+
+template<> void ToStringElem_T<Float>(const StringStyle& ss, String& str, const Float* p)
+{
+	str.Format("%g", *p);
+}
+
+template<> void ToStringElem_T<Double>(const StringStyle& ss, String& str, const Double* p)
+{
+	str.Format("%g", *p);
+}
+
+template<> void ToStringElem_T<Complex>(const StringStyle& ss, String& str, const Complex* p)
+{
+	str += p->ToString(ss);
+}
+
+template<typename T_Elem> void ToString_T(const StringStyle& ss, String& str, const void* pv, size_t offset, size_t len)
+{
+	const char* strComma = ss.IsCram()? "," : ", ";
+	const T_Elem* pBegin = reinterpret_cast<const T_Elem*>(pv) + offset;
+	const T_Elem* pEnd = pBegin + len;
+	for (const T_Elem* p = pBegin; p != pEnd; p++) {
+		if (p != pBegin) str += strComma;
+		ToStringElem_T(ss, str, p);
+	}
 }
 
 template<typename T_ElemDst, typename T_ElemSrc> void CopyElems_T(void* pvDst, const void* pvSrc, size_t offset, size_t len)
@@ -1118,7 +1196,8 @@ void Array::Bootup()
 	Gurax_SetArrayFuncSingle(funcs.IndexGetDouble,		IndexGetDouble_T);
 	Gurax_SetArrayFuncSingle(funcs.InjectFromValueList,	InjectFromValueList_T);
 	Gurax_SetArrayFuncSingle(funcs.InjectFromIterator,	InjectFromIterator_T);
-	Gurax_SetArrayFuncSingle(funcs.ExtractToValueOwner,	ExtractToValueOwner_T);
+	Gurax_SetArrayFuncSingle(funcs.ExtractElems,		ExtractElems_T);
+	Gurax_SetArrayFuncSingle(funcs.ToString,			ToString_T);
 	Gurax_SetArrayFuncDouble(funcs.CopyElems,			CopyElems_T);
 	Gurax_SetArrayFuncDouble(funcs.Transpose,			Transpose_T);
 	Gurax_SetArrayFuncSingle(funcs.Neg_Array,			Neg_Array_T);
@@ -1197,7 +1276,7 @@ void Array::InjectElems(const void* pSrc, const ElemTypeT& elemType, size_t offs
 void Array::ExtractElems(ValueOwner& values, size_t offset, size_t len) const
 {
 	values.reserve(values.size() + len);
-	funcs.ExtractToValueOwner[_elemType.id](values, GetPointerC<void>(), offset, len);
+	funcs.ExtractElems[_elemType.id](values, GetPointerC<void>(), offset, len);
 }
 
 void Array::ExtractElemsSub(ValueOwner& values, size_t& offset, DimSizes::const_iterator pDimSize) const
@@ -1219,6 +1298,33 @@ void Array::ExtractElems(ValueOwner& values) const
 {
 	size_t offset = 0;
 	ExtractElemsSub(values, offset, _dimSizes.begin());
+}
+
+void Array::ToString(const StringStyle& ss, String& str, size_t offset, size_t len) const
+{
+	funcs.ToString[_elemType.id](ss, str, GetPointerC<void>(), offset, len);
+}
+
+void Array::ToStringSub(const StringStyle& ss, String& str, size_t& offset, DimSizes::const_iterator pDimSize) const
+{
+	str += "[";
+	if (pDimSize + 1 == _dimSizes.end()) {
+		ToString(ss, str, offset, *pDimSize);
+		offset += *pDimSize;
+	} else {
+		const char* strComma = ss.IsCram()? "," : ", ";
+		for (size_t i = 0; i < *pDimSize; i++) {
+			if (i > 0) str += strComma;
+			ToStringSub(ss, str, offset, pDimSize + 1);
+		}
+	}
+	str += "]";
+}
+
+void Array::ToString(const StringStyle& ss, String& str) const
+{
+	size_t offset = 0;
+	ToStringSub(ss, str, offset, _dimSizes.begin());
 }
 
 bool Array::Transpose(RefPtr<Array>& pArrayRtn) const
@@ -1695,8 +1801,14 @@ const Array::ElemTypeT& Array::AtSymbolToElemType(const Symbol* pSymbol)
 
 String Array::ToString(const StringStyle& ss) const
 {
-	return String().Format("Array:%s:dim=%s",
-		_elemType.pSymbol->GetName(), _dimSizes.ToString(StringStyle::Cram).c_str());
+	if (ss.IsBracket()) {
+		return String().Format("Array:%s:dim=%s",
+			_elemType.pSymbol->GetName(), _dimSizes.ToString(StringStyle::Cram).c_str());
+	} else {
+		String str;
+		ToString(ss, str);
+		return str;
+	}
 }
 
 //------------------------------------------------------------------------------
