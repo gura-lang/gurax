@@ -81,6 +81,7 @@ void Trainer::Print(Stream& stream) const
 
 TrainNode* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolsInput)
 {
+	//::printf("CreateNode(%s)\n", expr.ToString().c_str());
 	if (expr.IsType<Expr_Block>()) {
 		TrainNode *pNodeRtn = nullptr;
 		const Expr_Block& exprEx = dynamic_cast<const Expr_Block&>(expr);
@@ -131,7 +132,7 @@ TrainNode* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolsInput)
 		const Expr_Identifier& exprEx = dynamic_cast<const Expr_Identifier&>(expr);
 		const Symbol* pSymbol = exprEx.GetSymbol();
 		TrainNode *pNodeFound = FindNode(pSymbol);
-		if (!pNodeFound) return pNodeFound;
+		if (pNodeFound) return pNodeFound;
 		TrainNode::Trait trait = TrainNode::Trait::Input;
 		TrainOptimizer::Instance* pTrainOptimizer = nullptr;
 		if (!symbolsInput.IsSet(pSymbol)) {
@@ -199,8 +200,9 @@ TrainNode* Trainer::CreateNodeBinary(const Expr_BinaryOp& exprEx, const SymbolSe
 		return nullptr;
 	}
 	RefPtr<TrainNode> pNodeLeft(CreateNode(exprEx.GetExprLeft(), symbolsInput));
+	if (!pNodeLeft) return nullptr;
 	RefPtr<TrainNode> pNodeRight(CreateNode(exprEx.GetExprRight(), symbolsInput));
-	if (!pNodeLeft || !pNodeRight) return nullptr;
+	if (!pNodeRight) return nullptr;
 	pNodeLeft->AddConnectorDst(pNode->GetConnectorSrcLeft());
 	pNodeRight->AddConnectorDst(pNode->GetConnectorSrcRight());
 	return pNode.release();
