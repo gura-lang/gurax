@@ -49,6 +49,12 @@ Value* Value::AsMember(const Value& valueTarget) const
 	}
 }
 
+const Symbol* Value::GetSymbol(const Value& value)
+{
+	return value.IsType(VTYPE_Symbol)? Value_Symbol::GetSymbol(value) :
+		value.IsType(VTYPE_Expr)? Value_Expr::GetExpr(value).GetPureSymbol() : nullptr;
+}
+
 Value* Value::EvalEasy(Processor& processor, RefPtr<Value> pValueArg, DeclCallable::Flags flags)
 {
 	const DeclCallable* pDeclCallable = GetDeclCallableWithError();

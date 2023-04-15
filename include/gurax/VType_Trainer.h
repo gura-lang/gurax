@@ -75,6 +75,7 @@ public:
 			GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
+	virtual bool DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const;
 };
 
 }

@@ -165,6 +165,7 @@ public:
 	bool IsInstanceOf(const VType& vtype) const;
 	Value* AsMember(const Value& valueTarget) const;
 	static bool IsInstanceOf(const Value* pValue, const VType& vtype) { return pValue && pValue->IsInstanceOf(vtype); }
+	static const Symbol* GetSymbol(const Value& value);
 	String ToString() const { return ToString(StringStyle::Empty); }
 	String ToStringGeneric(const StringStyle& ss, const char* strEntity) const;
 	String ToStringGeneric(const StringStyle& ss, const String& strEntity) const {

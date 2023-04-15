@@ -66,7 +66,7 @@ protected:
 	~TrainNode() = default;
 public:
 	const char* GetNodeTypeName() const { return _nodeTypeName; }
-	virtual void AddConnectorDst(Connector& connectorDst) = 0;
+	virtual void Connect(Connector& connectorDst) = 0;
 	Array& GetArrayFwd() { return *_pArrayFwd; }
 	const Array& GetArrayFwd() const { return *_pArrayFwd; }
 	RefPtr<Array>& GetArrayFwdRefPtr() { return _pArrayFwd; }
@@ -80,7 +80,7 @@ public:
 	virtual bool EvalForward(Processor& processor) = 0;
 	virtual bool EvalBackward(Processor& processor) = 0;
 	virtual bool GatherMemberSymbol(SymbolList& symbols) const;
-	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr);
+	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const;
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const;
 	virtual void Print(Stream& stream, int indentLevel) const;
 public:
@@ -122,7 +122,9 @@ protected:
 	Connector* _pConnectorDst;
 public:
 	TrainNode_SingleOut(const char* nodeTypeName) : TrainNode(nodeTypeName), _pConnectorDst(nullptr) {}
-	virtual void AddConnectorDst(Connector& connectorDst) override;
+	virtual void Connect(Connector& connectorDst) override;
+	virtual bool GatherMemberSymbol(SymbolList& symbols) const;
+	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const;
 };
 
 //------------------------------------------------------------------------------
@@ -133,7 +135,9 @@ protected:
 	ConnectorList _connectorsDst;
 public:
 	TrainNode_Branch() : TrainNode("Branch") {}
-	virtual void AddConnectorDst(Connector& connectorDst) override;
+	virtual void Connect(Connector& connectorDst) override;
+	virtual bool GatherMemberSymbol(SymbolList& symbols) const;
+	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const;
 };
 
 //------------------------------------------------------------------------------
@@ -159,7 +163,7 @@ public:
 	virtual bool EvalForward(Processor& processor);
 	virtual bool EvalBackward(Processor& processor);
 	virtual bool GatherMemberSymbol(SymbolList& symbols) const;
-	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr);
+	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const;
 	virtual String ToString(const StringStyle& ss) const;
 	virtual void Print(Stream& stream, int indentLevel) const;
 };
@@ -183,7 +187,7 @@ public:
 	virtual bool EvalBackward(Processor& processor);
 	bool EvalBackwardTop(Processor& processor, const Array& arrayCorrect);
 	virtual bool GatherMemberSymbol(SymbolList& symbols) const;
-	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr);
+	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const;
 	virtual String ToString(const StringStyle& ss) const;
 	virtual void Print(Stream& stream, int indentLevel) const;
 };
@@ -201,7 +205,7 @@ public:
 	virtual bool IsUnary() const { return true; }
 	virtual bool IsVulnerable() const;
 	virtual bool GatherMemberSymbol(SymbolList& symbols) const;
-	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr);
+	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const;
 	virtual String ToString(const StringStyle& ss) const;
 	virtual void Print(Stream& stream, int indentLevel) const;
 };
@@ -232,7 +236,7 @@ public:
 	virtual bool IsBinary() const { return true; }
 	virtual bool IsVulnerable() const;
 	virtual bool GatherMemberSymbol(SymbolList& symbols) const;
-	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr);
+	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const;
 	virtual String ToString(const StringStyle& ss) const;
 	virtual void Print(Stream& stream, int indentLevel) const;
 };
@@ -322,7 +326,7 @@ public:
 	const Connector& GetConnectorSrc() const { return _connectorSrc; }
 	virtual bool IsGear() const { return true; }
 	virtual bool GatherMemberSymbol(SymbolList& symbols) const;
-	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr);
+	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const;
 	virtual String ToString(const StringStyle& ss) const;
 	virtual void Print(Stream& stream, int indentLevel) const;
 };

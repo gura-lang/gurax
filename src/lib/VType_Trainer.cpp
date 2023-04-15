@@ -259,4 +259,20 @@ String Value_Trainer::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, GetTrainer().ToString(ss));
 }
 
+bool Value_Trainer::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const
+{
+	const Symbol* pSymbol = Value::GetSymbol(valueIndex);
+	if (!pSymbol) {
+		Error::Issue(ErrorType::KeyError, "the key must be a symbol");
+		return false;
+	}
+	TrainNode* pNode = GetTrainer().FindNode(pSymbol);
+	if (!pNode) {
+		Error::Issue(ErrorType::KeyError, "can't find a node named %s", pSymbol->GetName());
+		return false;
+	}	
+	*ppValue = new Value_TrainNode(pNode->Reference());
+	return true;
+}
+
 }
