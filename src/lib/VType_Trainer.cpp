@@ -124,7 +124,9 @@ Gurax_ImplementMethod(Trainer, GetNode)
 	// Function body
 	TrainNode* pNode = trainer.FindNode(pSymbol);
 	RefPtr<Value> pValueRtn(Value::nil());
-	if (!pNode && !nilFlag) {
+	if (pNode) {
+		pValueRtn.reset(new Value_TrainNode(pNode->Reference()));
+	} else if(!nilFlag) {
 		Error::Issue(ErrorType::KeyError, "can't find a node named %s", pSymbol->GetName());
 		return Value::nil();
 	}
