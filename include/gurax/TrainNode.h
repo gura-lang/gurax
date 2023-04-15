@@ -132,9 +132,12 @@ public:
 //------------------------------------------------------------------------------
 class TrainNode_Branch : public TrainNode {
 protected:
+	RefPtr<Array> _pArrayGrad;
 	ConnectorList _connectorsDst;
 public:
 	TrainNode_Branch() : TrainNode("Branch") {}
+	virtual bool EvalForward(Processor& processor);
+	virtual bool EvalBackward(Processor& processor);
 	virtual void Connect(Connector& connectorDst) override;
 	virtual bool GatherMemberSymbol(SymbolList& symbols) const;
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const;

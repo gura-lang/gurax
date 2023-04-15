@@ -11,6 +11,7 @@ namespace Gurax {
 bool TrainNode::GatherMemberSymbol(SymbolList& symbols) const
 {
 	symbols.push_back(Gurax_Symbol(output));
+	symbols.push_back(Gurax_Symbol(outputGrad));
 	symbols.push_back(Gurax_Symbol(type));
 	return true;
 }
@@ -83,6 +84,7 @@ void TrainNode_SingleOut::Connect(Connector& connectorDst)
 bool TrainNode_SingleOut::GatherMemberSymbol(SymbolList& symbols) const
 {
 	symbols.push_back(Gurax_Symbol(nodeDst));
+	symbols.push_back(Gurax_Symbol(outputGrad));
 	return TrainNode::GatherMemberSymbol(symbols);
 }
 
@@ -90,6 +92,8 @@ Value* TrainNode_SingleOut::DoGetProperty(const Symbol* pSymbol, const Attribute
 {
 	if (pSymbol->IsIdentical(Gurax_Symbol(nodeDst))) {
 		return new Value_TrainNode(_pConnectorDst->GetNodeDst().Reference());
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(outputGrad))) {
+		return _pConnectorDst->GetArrayGrad().ToValue();
 	}
 	return TrainNode::DoGetProperty(pSymbol, attr);
 }
@@ -101,6 +105,24 @@ void TrainNode_Branch::Connect(Connector& connectorDst)
 {
 	connectorDst.SetNodeSrc(this);
 	_connectorsDst.push_back(&connectorDst);
+}
+
+bool TrainNode_Branch::EvalForward(Processor& processor)
+{
+	return true;
+}
+
+bool TrainNode_Branch::EvalBackward(Processor& processor)
+{
+	auto ppConnector = _connectorsDst.begin();
+	const Connector* pConnector = *ppConnector;
+	_pArrayGrad.reset(pConnector->GetArrayGrad().Reference());
+	ppConnector++;
+	for ( ; ppConnector != _connectorsDst.end(); ppConnector++) {
+		const Connector* pConnector = *ppConnector;
+		Array::Add(_pArrayGrad, *_pArrayGrad, pConnector->GetArrayGrad());
+	}
+	return true;
 }
 
 bool TrainNode_Branch::GatherMemberSymbol(SymbolList& symbols) const
