@@ -211,6 +211,21 @@ Gurax_ImplementPropertyGetter(Trainer, nodeBottom)
 	return new Value_TrainNode(trainer.GetNodeBottom().Reference());
 }
 
+// Trainer#optimizer
+Gurax_DeclareProperty_R(Trainer, optimizer)
+{
+	Declare(VTYPE_TrainOptimizer, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementPropertyGetter(Trainer, optimizer)
+{
+	Trainer& trainer = GetValueThis(valueTarget).GetTrainer();
+	return new Value_TrainOptimizer(trainer.GetOptimizer().Reference());
+}
+
 // Trainer#result
 Gurax_DeclareProperty_R(Trainer, result)
 {
@@ -246,6 +261,7 @@ void VType_Trainer::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Trainer, model));
 	Assign(Gurax_CreateProperty(Trainer, nodeBottom));
+	Assign(Gurax_CreateProperty(Trainer, optimizer));
 	Assign(Gurax_CreateProperty(Trainer, result));
 }
 

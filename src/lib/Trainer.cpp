@@ -134,27 +134,31 @@ TrainNode* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolsInput)
 		TrainNode *pNodeFound = FindNode(pSymbol);
 		if (pNodeFound) return pNodeFound;
 		TrainNode::Trait trait = TrainNode::Trait::Input;
-		TrainOptimizer::Instance* pTrainOptimizer = nullptr;
+		RefPtr<TrainOptimizer::Instance> pTrainOptimizer;
 		if (!symbolsInput.IsSet(pSymbol)) {
 			trait = TrainNode::Trait::Variable;
-			pTrainOptimizer = CreateOptimizerInstance();
+			pTrainOptimizer.reset(CreateOptimizerInstance());
 		}
 		RefPtr<Expr> pExpr(expr.Reference());
 		if (!pExpr->PrepareAndCompose(_composer)) return nullptr;
-		RefPtr<TrainNode> pNode(new TrainNode_Head(pExpr.release(), trait, pTrainOptimizer));
+		RefPtr<TrainNode> pNode(new TrainNode_Head(pExpr.release(), trait, pTrainOptimizer.release()));
 		_nodeOwner.push_back(pNode.Reference());
 		//_nodeMap[pSymbol] = pNode.get();
 		return pNode.release();
-	} else {
+	} else if (expr.IsType<Expr_Value>()) {
 		TrainNode::Trait trait = TrainNode::Trait::Constant;
-		TrainOptimizer::Instance* pTrainOptimizer = nullptr;
-		if (!expr.IsType<Expr_Value>()) {
-			trait = TrainNode::Trait::Variable;
-			pTrainOptimizer = CreateOptimizerInstance();
-		}
+		RefPtr<TrainOptimizer::Instance> pTrainOptimizer;
 		RefPtr<Expr> pExpr(expr.Reference());
 		if (!pExpr->PrepareAndCompose(_composer)) return nullptr;
-		RefPtr<TrainNode> pNode(new TrainNode_Head(pExpr.release(), trait, pTrainOptimizer));
+		RefPtr<TrainNode> pNode(new TrainNode_Head(pExpr.release(), trait, pTrainOptimizer.release()));
+		_nodeOwner.push_back(pNode.Reference());
+		return pNode.release();
+	} else {
+		TrainNode::Trait trait = TrainNode::Trait::Variable;
+		RefPtr<TrainOptimizer::Instance> pTrainOptimizer(CreateOptimizerInstance());
+		RefPtr<Expr> pExpr(expr.Reference());
+		if (!pExpr->PrepareAndCompose(_composer)) return nullptr;
+		RefPtr<TrainNode> pNode(new TrainNode_Head(pExpr.release(), trait, pTrainOptimizer.release()));
 		_nodeOwner.push_back(pNode.Reference());
 		return pNode.release();
 	}

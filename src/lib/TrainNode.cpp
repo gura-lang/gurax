@@ -150,7 +150,7 @@ bool TrainNode_Head::IsVulnerable() const
 
 void TrainNode_Head::Reset()
 {
-	_pTrainOptimizer->Reset();
+	_pTrainOptimizerInst->Reset();
 }
 
 bool TrainNode_Head::EvalForward(Processor& processor)
@@ -177,8 +177,8 @@ bool TrainNode_Head::EvalForward(Processor& processor)
 
 bool TrainNode_Head::EvalBackward(Processor& processor)
 {
-	if (_pTrainOptimizer) {
-		if (!_pTrainOptimizer->Update(processor, _pArrayFwd, _pConnectorDst->GetArrayGrad())) return false;
+	if (_pTrainOptimizerInst) {
+		if (!_pTrainOptimizerInst->Update(processor, _pArrayFwd, _pConnectorDst->GetArrayGrad())) return false;
 	}
 	return true;
 }

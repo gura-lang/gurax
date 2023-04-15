@@ -151,10 +151,10 @@ protected:
 	RefPtr<Expr> _pExpr;
 	RefPtr<Array> _pArrayGradAdj;
 	Trait _trait;
-	RefPtr<TrainOptimizer::Instance> _pTrainOptimizer;
+	RefPtr<TrainOptimizer::Instance> _pTrainOptimizerInst;
 public:
-	TrainNode_Head(Expr* pExpr, Trait trait, TrainOptimizer::Instance* pTrainOptimizer) :
-		TrainNode_SingleOut("Head"), _pExpr(pExpr), _trait(trait), _pTrainOptimizer(pTrainOptimizer) {}
+	TrainNode_Head(Expr* pExpr, Trait trait, TrainOptimizer::Instance* pTrainOptimizerInst) :
+		TrainNode_SingleOut("Head"), _pExpr(pExpr), _trait(trait), _pTrainOptimizerInst(pTrainOptimizerInst) {}
 	const Expr& GetExpr() const { return *_pExpr; }
 	bool IsVariable() const { return _trait == Trait::Variable; }
 	bool IsConstant() const { return _trait == Trait::Constant; }

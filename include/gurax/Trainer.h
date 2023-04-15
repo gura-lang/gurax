@@ -52,6 +52,7 @@ public:
 	TrainNodeOwner& GetNodeOwner() { return _nodeOwner; }
 	const TrainNodeOwner& GetNodeOwner() const { return _nodeOwner; }
 	const Expr& GetExprModel() const { return *_pExprModel; }
+	const TrainOptimizer& GetOptimizer() const { return *_pTrainOptimizer; }
 	TrainOptimizer::Instance* CreateOptimizerInstance() const { return _pTrainOptimizer->CreateInstance(); }
 	TrainNode* FindNode(const Symbol* pSymbol) const;
 	void Print(Stream& stream) const;
