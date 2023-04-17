@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_TrainNode.cpp
+// VType_Node.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -13,22 +13,22 @@ static const char* g_docHelp_en = u8R"""(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(TrainNode, `en)}
+${help.ComposePropertyHelp(Node, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(TrainNode, `en)}
+${help.ComposeConstructorHelp(Node, `en)}
 
-${help.ComposeMethodHelp(TrainNode, `en)}
+${help.ComposeMethodHelp(Node, `en)}
 )""";
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// TrainNode#MethodSkeleton(num1 as Number, num2 as Number)
-Gurax_DeclareMethod(TrainNode, MethodSkeleton)
+// Node#MethodSkeleton(num1 as Number, num2 as Number)
+Gurax_DeclareMethod(Node, MethodSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -38,7 +38,7 @@ Skeleton.
 )""");
 }
 
-Gurax_ImplementMethod(TrainNode, MethodSkeleton)
+Gurax_ImplementMethod(Node, MethodSkeleton)
 {
 	// Target
 	//auto& valueThis = GetValueThis(argument);
@@ -53,8 +53,8 @@ Gurax_ImplementMethod(TrainNode, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// TrainNode#propSkeleton
-Gurax_DeclareProperty_R(TrainNode, propSkeleton)
+// Node#propSkeleton
+Gurax_DeclareProperty_R(Node, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -62,48 +62,48 @@ Skeleton.
 )""");
 }
 
-Gurax_ImplementPropertyGetter(TrainNode, propSkeleton)
+Gurax_ImplementPropertyGetter(Node, propSkeleton)
 {
 	//auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Number(3);
 }
 
 //------------------------------------------------------------------------------
-// VType_TrainNode
+// VType_Node
 //------------------------------------------------------------------------------
-VType_TrainNode VTYPE_TrainNode("TrainNode");
+VType_Node VTYPE_Node("Node");
 
-void VType_TrainNode::DoPrepare(Frame& frameOuter)
+void VType_Node::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
-	//Assign(Gurax_CreateMethod(TrainNode, MethodSkeleton));
+	//Assign(Gurax_CreateMethod(Node, MethodSkeleton));
 	// Assignment of property
-	//Assign(Gurax_CreateProperty(TrainNode, propSkeleton));
+	//Assign(Gurax_CreateProperty(Node, propSkeleton));
 }
 
 //------------------------------------------------------------------------------
-// Value_TrainNode
+// Value_Node
 //------------------------------------------------------------------------------
-VType& Value_TrainNode::vtype = VTYPE_TrainNode;
+VType& Value_Node::vtype = VTYPE_Node;
 
-String Value_TrainNode::ToString(const StringStyle& ss) const
+String Value_Node::ToString(const StringStyle& ss) const
 {
-	return ToStringGeneric(ss, GetTrainNode().ToString(ss));
+	return ToStringGeneric(ss, GetNode().ToString(ss));
 }
 
-void Value_TrainNode::GatherMemberSymbol(SymbolList& symbolList) const
+void Value_Node::GatherMemberSymbol(SymbolList& symbolList) const
 {
-	GetTrainNode().GatherMemberSymbol(symbolList);
+	GetNode().GatherMemberSymbol(symbolList);
 	Value::GatherMemberSymbol(symbolList);
 }
 
-Value* Value_TrainNode::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
+Value* Value_Node::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
 {
-	RefPtr<Value> pValueRtn(GetTrainNode().DoGetProperty(pSymbol, attr));
+	RefPtr<Value> pValueRtn(GetNode().DoGetProperty(pSymbol, attr));
 	if (pValueRtn) return pValueRtn.release();
 	return Value::DoGetProperty(pSymbol, attr, notFoundErrorFlag);
 }

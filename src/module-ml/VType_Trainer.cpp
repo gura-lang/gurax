@@ -27,12 +27,12 @@ ${help.ComposeMethodHelp(Trainer, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Trainer(model as Expr, optimizer:nil as TrainOptimizer, inputs* as Symbol) {block?}
+// Trainer(model as Expr, optimizer:nil as Optimizer, inputs* as Symbol) {block?}
 Gurax_DeclareConstructor(Trainer)
 {
 	Declare(VTYPE_Trainer, Flag::None);
 	DeclareArg("model", VTYPE_Expr, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("optimizer", VTYPE_TrainOptimizer, ArgOccur::Once, ArgFlag::Nil);
+	DeclareArg("optimizer", VTYPE_Optimizer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("inputs", VTYPE_Symbol, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -45,11 +45,11 @@ Gurax_ImplementConstructor(Trainer)
 	// Arguments
 	ArgPicker args(argument);
 	const Expr& exprModel = args.PickExpr();
-	RefPtr<TrainOptimizer> pTrainOptimizer(args.IsValid()?
-		args.Pick<Value_TrainOptimizer>().GetTrainOptimizer().Reference() : new TrainOptimizer_None());
+	RefPtr<Optimizer> pOptimizer(args.IsValid()?
+		args.Pick<Value_Optimizer>().GetOptimizer().Reference() : new Optimizer_None());
 	const ValueList& inputs = args.PickList();
 	// Function body
-	RefPtr<Trainer> pTrainer(new Trainer(exprModel.Reference(), pTrainOptimizer.release()));
+	RefPtr<Trainer> pTrainer(new Trainer(exprModel.Reference(), pOptimizer.release()));
 	SymbolSet symbolsInput;
 	for (const Value* pValue : inputs) symbolsInput.Set(Value_Symbol::GetSymbol(*pValue));
 	if (!pTrainer->CreateFromExpr(symbolsInput)) return Value::nil();
@@ -104,7 +104,7 @@ Gurax_ImplementMethod(Trainer, EvalBackward)
 // Trainer#GetNode(symbol as Symbol):map:[nil] {block?}
 Gurax_DeclareMethod(Trainer, GetNode)
 {
-	Declare(VTYPE_TrainNode, Flag::Map);
+	Declare(VTYPE_Node, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(nil));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
@@ -122,10 +122,10 @@ Gurax_ImplementMethod(Trainer, GetNode)
 	const Symbol* pSymbol = args.PickSymbol();
 	bool nilFlag = argument.IsSet(Gurax_Symbol(nil));
 	// Function body
-	TrainNode* pNode = trainer.FindNode(pSymbol);
+	Node* pNode = trainer.FindNode(pSymbol);
 	RefPtr<Value> pValueRtn(Value::nil());
 	if (pNode) {
-		pValueRtn.reset(new Value_TrainNode(pNode->Reference()));
+		pValueRtn.reset(new Value_Node(pNode->Reference()));
 	} else if(!nilFlag) {
 		Error::Issue(ErrorType::KeyError, "can't find a node named %s", pSymbol->GetName());
 		return Value::nil();
@@ -208,13 +208,13 @@ Skeleton.
 Gurax_ImplementPropertyGetter(Trainer, nodeBottom)
 {
 	Trainer& trainer = GetValueThis(valueTarget).GetTrainer();
-	return new Value_TrainNode(trainer.GetNodeBottom().Reference());
+	return new Value_Node(trainer.GetNodeBottom().Reference());
 }
 
 // Trainer#optimizer
 Gurax_DeclareProperty_R(Trainer, optimizer)
 {
-	Declare(VTYPE_TrainOptimizer, Flag::None);
+	Declare(VTYPE_Optimizer, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
 )""");
@@ -223,7 +223,7 @@ Skeleton.
 Gurax_ImplementPropertyGetter(Trainer, optimizer)
 {
 	Trainer& trainer = GetValueThis(valueTarget).GetTrainer();
-	return new Value_TrainOptimizer(trainer.GetOptimizer().Reference());
+	return new Value_Optimizer(trainer.GetOptimizer().Reference());
 }
 
 // Trainer#result
@@ -282,12 +282,12 @@ bool Value_Trainer::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) c
 		Error::Issue(ErrorType::KeyError, "the key must be a symbol");
 		return false;
 	}
-	TrainNode* pNode = GetTrainer().FindNode(pSymbol);
+	Node* pNode = GetTrainer().FindNode(pSymbol);
 	if (!pNode) {
 		Error::Issue(ErrorType::KeyError, "can't find a node named %s", pSymbol->GetName());
 		return false;
 	}	
-	*ppValue = new Value_TrainNode(pNode->Reference());
+	*ppValue = new Value_Node(pNode->Reference());
 	return true;
 }
 

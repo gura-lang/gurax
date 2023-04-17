@@ -6,8 +6,8 @@
 #include <gurax.h>
 #include "Util.h"
 #include "VType_Trainer.h"
-#include "VType_TrainNode.h"
-#include "VType_TrainOptimizer.h"
+#include "VType_Node.h"
+#include "VType_Optimizer.h"
 
 Gurax_BeginModuleHeader(ml)
 Gurax_EndModuleHeader(ml)

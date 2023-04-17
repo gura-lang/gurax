@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_TrainOptimizer.cpp
+// VType_Optimizer.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -13,22 +13,22 @@ static const char* g_docHelp_en = u8R"""(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(TrainOptimizer, `en)}
+${help.ComposePropertyHelp(Optimizer, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(TrainOptimizer, `en)}
+${help.ComposeConstructorHelp(Optimizer, `en)}
 
-${help.ComposeMethodHelp(TrainOptimizer, `en)}
+${help.ComposeMethodHelp(Optimizer, `en)}
 )""";
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// TrainOptimizer.AdaGrad(learningRate as Number, epsilon as Number)
-Gurax_DeclareClassMethod(TrainOptimizer, AdaGrad)
+// Optimizer.AdaGrad(learningRate as Number, epsilon as Number)
+Gurax_DeclareClassMethod(Optimizer, AdaGrad)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("learningRate", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -38,18 +38,18 @@ Skeleton.
 )""");
 }
 
-Gurax_ImplementClassMethod(TrainOptimizer, AdaGrad)
+Gurax_ImplementClassMethod(Optimizer, AdaGrad)
 {
 	// Arguments
 	ArgPicker args(argument);
 	Double learningRate = args.PickNumber<Double>();
 	Double epsilon = args.PickNumber<Double>();
 	// Function body
-	return new Value_TrainOptimizer(new TrainOptimizer_AdaGrad(learningRate, epsilon));
+	return new Value_Optimizer(new Optimizer_AdaGrad(learningRate, epsilon));
 }
 
-// TrainOptimizer.Adam()
-Gurax_DeclareClassMethod(TrainOptimizer, Adam)
+// Optimizer.Adam()
+Gurax_DeclareClassMethod(Optimizer, Adam)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -57,18 +57,18 @@ Skeleton.
 )""");
 }
 
-Gurax_ImplementClassMethod(TrainOptimizer, Adam)
+Gurax_ImplementClassMethod(Optimizer, Adam)
 {
 	// Arguments
 	//ArgPicker args(argument);
 	//Double learningRate = args.PickNumber<Double>();
 	//Double epsilon = args.PickNumber<Double>();
 	// Function body
-	return new Value_TrainOptimizer(new TrainOptimizer_Adam());
+	return new Value_Optimizer(new Optimizer_Adam());
 }
 
-// TrainOptimizer.GradientDescent(learningRate as Number, epsilon as Number)
-Gurax_DeclareClassMethod(TrainOptimizer, GradientDescent)
+// Optimizer.GradientDescent(learningRate as Number, epsilon as Number)
+Gurax_DeclareClassMethod(Optimizer, GradientDescent)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("learningRate", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -78,17 +78,17 @@ Skeleton.
 )""");
 }
 
-Gurax_ImplementClassMethod(TrainOptimizer, GradientDescent)
+Gurax_ImplementClassMethod(Optimizer, GradientDescent)
 {
 	// Arguments
 	ArgPicker args(argument);
 	Double learningRate = args.PickNumber<Double>();
 	// Function body
-	return new Value_TrainOptimizer(new TrainOptimizer_GradientDescent(learningRate));
+	return new Value_Optimizer(new Optimizer_GradientDescent(learningRate));
 }
 
-// TrainOptimizer.Momentum(learningRate as Number, epsilon as Number)
-Gurax_DeclareClassMethod(TrainOptimizer, Momentum)
+// Optimizer.Momentum(learningRate as Number, epsilon as Number)
+Gurax_DeclareClassMethod(Optimizer, Momentum)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("learningRate", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -98,18 +98,18 @@ Skeleton.
 )""");
 }
 
-Gurax_ImplementClassMethod(TrainOptimizer, Momentum)
+Gurax_ImplementClassMethod(Optimizer, Momentum)
 {
 	// Arguments
 	ArgPicker args(argument);
 	Double learningRate = args.PickNumber<Double>();
 	Double epsilon = args.PickNumber<Double>();
 	// Function body
-	return new Value_TrainOptimizer(new TrainOptimizer_Momentum(learningRate, epsilon));
+	return new Value_Optimizer(new Optimizer_Momentum(learningRate, epsilon));
 }
 
-// TrainOptimizer.Nesterov()
-Gurax_DeclareClassMethod(TrainOptimizer, Nesterov)
+// Optimizer.Nesterov()
+Gurax_DeclareClassMethod(Optimizer, Nesterov)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -117,16 +117,16 @@ Skeleton.
 )""");
 }
 
-Gurax_ImplementClassMethod(TrainOptimizer, Nesterov)
+Gurax_ImplementClassMethod(Optimizer, Nesterov)
 {
 	// Arguments
 	// ArgPicker args(argument);
 	// Function body
-	return new Value_TrainOptimizer(new TrainOptimizer_Nesterov());
+	return new Value_Optimizer(new Optimizer_Nesterov());
 }
 
-// TrainOptimizer.RMSProp()
-Gurax_DeclareClassMethod(TrainOptimizer, RMSprop)
+// Optimizer.RMSProp()
+Gurax_DeclareClassMethod(Optimizer, RMSprop)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -134,21 +134,21 @@ Skeleton.
 )""");
 }
 
-Gurax_ImplementClassMethod(TrainOptimizer, RMSprop)
+Gurax_ImplementClassMethod(Optimizer, RMSprop)
 {
 	// Arguments
 	//ArgPicker args(argument);
 	//Double learningRate = args.PickNumber<Double>();
 	//Double epsilon = args.PickNumber<Double>();
 	// Function body
-	return new Value_TrainOptimizer(new TrainOptimizer_RMSprop());
+	return new Value_Optimizer(new Optimizer_RMSprop());
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// TrainOptimizer#propSkeleton
-Gurax_DeclareProperty_R(TrainOptimizer, propSkeleton)
+// Optimizer#propSkeleton
+Gurax_DeclareProperty_R(Optimizer, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -156,42 +156,42 @@ Skeleton.
 )""");
 }
 
-Gurax_ImplementPropertyGetter(TrainOptimizer, propSkeleton)
+Gurax_ImplementPropertyGetter(Optimizer, propSkeleton)
 {
 	//auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Number(3);
 }
 
 //------------------------------------------------------------------------------
-// VType_TrainOptimizer
+// VType_Optimizer
 //------------------------------------------------------------------------------
-VType_TrainOptimizer VTYPE_TrainOptimizer("TrainOptimizer");
+VType_Optimizer VTYPE_Optimizer("Optimizer");
 
-void VType_TrainOptimizer::DoPrepare(Frame& frameOuter)
+void VType_Optimizer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(TrainOptimizer, AdaGrad));
-	Assign(Gurax_CreateMethod(TrainOptimizer, Adam));
-	Assign(Gurax_CreateMethod(TrainOptimizer, GradientDescent));
-	Assign(Gurax_CreateMethod(TrainOptimizer, Momentum));
-	Assign(Gurax_CreateMethod(TrainOptimizer, Nesterov));
-	Assign(Gurax_CreateMethod(TrainOptimizer, RMSprop));
+	Assign(Gurax_CreateMethod(Optimizer, AdaGrad));
+	Assign(Gurax_CreateMethod(Optimizer, Adam));
+	Assign(Gurax_CreateMethod(Optimizer, GradientDescent));
+	Assign(Gurax_CreateMethod(Optimizer, Momentum));
+	Assign(Gurax_CreateMethod(Optimizer, Nesterov));
+	Assign(Gurax_CreateMethod(Optimizer, RMSprop));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(TrainOptimizer, propSkeleton));
+	Assign(Gurax_CreateProperty(Optimizer, propSkeleton));
 }
 
 //------------------------------------------------------------------------------
-// Value_TrainOptimizer
+// Value_Optimizer
 //------------------------------------------------------------------------------
-VType& Value_TrainOptimizer::vtype = VTYPE_TrainOptimizer;
+VType& Value_Optimizer::vtype = VTYPE_Optimizer;
 
-String Value_TrainOptimizer::ToString(const StringStyle& ss) const
+String Value_Optimizer::ToString(const StringStyle& ss) const
 {
-	return ToStringGeneric(ss, GetTrainOptimizer().ToString(ss));
+	return ToStringGeneric(ss, GetOptimizer().ToString(ss));
 }
 
 Gurax_EndModuleScope(ml)

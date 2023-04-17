@@ -4,8 +4,8 @@
 #ifndef GURAX_MODULE_ML_TRAINER_H
 #define GURAX_MODULE_ML_TRAINER_H
 #include <gurax.h>
-#include "TrainNode.h"
-#include "TrainOptimizer.h"
+#include "Node.h"
+#include "Optimizer.h"
 
 Gurax_BeginModuleScope(ml)
 
@@ -19,18 +19,18 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Trainer");
 public:
-	//using TrainNodeGearCreatorMap = std::map<ValueType, const NodeGear::Creator*>;
+	//using NodeGearCreatorMap = std::map<ValueType, const NodeGear::Creator*>;
 public:
 	Composer _composer;
 	RefPtr<Expr> _pExprModel;
-	RefPtr<TrainOptimizer> _pTrainOptimizer;
-	RefPtr<TrainNode_Bottom> _pNodeBottom;
-	TrainNodeOwner _nodeOwner;
-	TrainNodeMap _nodeMap;
+	RefPtr<Optimizer> _pOptimizer;
+	RefPtr<Node_Bottom> _pNodeBottom;
+	NodeOwner _nodeOwner;
+	NodeMap _nodeMap;
 	//static NodeGearCreatorMap _nodeGearCreatorMap;
 public:
 	// Constructor
-	Trainer(Expr* pExprModel, TrainOptimizer* pTrainOptimizer);
+	Trainer(Expr* pExprModel, Optimizer* pOptimizer);
 	// Copy constructor/operator
 	Trainer(const Trainer& src) = delete;
 	Trainer& operator=(const Trainer& src) = delete;
@@ -47,23 +47,23 @@ public:
 	const Array& GetResult() const;
 	Double CalcMeanSquareError(const Array& arrayCorrect) const;
 	Double CalcCrossEntropyError(const Array& arrayCorrect, Double epsilon) const;
-	TrainNode_Bottom& GetNodeBottom() { return *_pNodeBottom; }
-	const TrainNode_Bottom& GetNodeBottom() const { return *_pNodeBottom; }
-	TrainNodeOwner& GetNodeOwner() { return _nodeOwner; }
-	const TrainNodeOwner& GetNodeOwner() const { return _nodeOwner; }
+	Node_Bottom& GetNodeBottom() { return *_pNodeBottom; }
+	const Node_Bottom& GetNodeBottom() const { return *_pNodeBottom; }
+	NodeOwner& GetNodeOwner() { return _nodeOwner; }
+	const NodeOwner& GetNodeOwner() const { return _nodeOwner; }
 	const Expr& GetExprModel() const { return *_pExprModel; }
-	const TrainOptimizer& GetOptimizer() const { return *_pTrainOptimizer; }
-	TrainOptimizer::Instance* CreateOptimizerInstance() const { return _pTrainOptimizer->CreateInstance(); }
-	TrainNode* FindNode(const Symbol* pSymbol) const;
+	const Optimizer& GetOptimizer() const { return *_pOptimizer; }
+	Optimizer::Instance* CreateOptimizerInstance() const { return _pOptimizer->CreateInstance(); }
+	Node* FindNode(const Symbol* pSymbol) const;
 	void Print(Stream& stream) const;
 	//static void RegisterNodeGearCreator(ValueType valType, const NodeGear::Creator* pCreator) {
 	//	_nodeGearCreatorMap[valType] = pCreator;
 	//}
 private:
-	TrainNode* CreateNode(const Expr& expr, const SymbolSet& symbolsInput);
-	TrainNode* CreateNodeUnary(const Expr_UnaryOp& exprEx, const SymbolSet& symbolsInput);
-	TrainNode* CreateNodeBinary(const Expr_BinaryOp& exprEx, const SymbolSet& symbolsInput);
-	TrainNode* CreateNodeGear(const Expr_BinaryOp& exprEx, const SymbolSet& symbolsInput);
+	Node* CreateNode(const Expr& expr, const SymbolSet& symbolsInput);
+	Node* CreateNodeUnary(const Expr_UnaryOp& exprEx, const SymbolSet& symbolsInput);
+	Node* CreateNodeBinary(const Expr_BinaryOp& exprEx, const SymbolSet& symbolsInput);
+	Node* CreateNodeGear(const Expr_BinaryOp& exprEx, const SymbolSet& symbolsInput);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Trainer& other) const { return this == &other; }

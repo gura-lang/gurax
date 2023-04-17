@@ -1,21 +1,21 @@
 //==============================================================================
-// TrainOptimizer.h
+// Optimizer.h
 //==============================================================================
-#ifndef GURAX_MODULE_ML_TRAINOPTIMIZER_H
-#define GURAX_MODULE_ML_TRAINOPTIMIZER_H
+#ifndef GURAX_MODULE_ML_OPTIMIZER_H
+#define GURAX_MODULE_ML_OPTIMIZER_H
 #include <gurax.h>
 
 Gurax_BeginModuleScope(ml)
 
 //------------------------------------------------------------------------------
-// TrainOptimizer
+// Optimizer
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE TrainOptimizer : public Referable {
+class GURAX_DLLDECLARE Optimizer : public Referable {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(TrainOptimizer);
+	Gurax_DeclareReferable(Optimizer);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("TrainOptimizer");
+	Gurax_MemoryPoolAllocator("Optimizer");
 protected:
 	const char* _name;
 public:
@@ -24,7 +24,7 @@ public:
 		// Referable declaration
 		Gurax_DeclareReferable(Instance);
 		// Uses MemoryPool allocator
-		Gurax_MemoryPoolAllocator("TrainOptimizer::Instance");
+		Gurax_MemoryPoolAllocator("Optimizer::Instance");
 	public:
 		// Constructor
 		Instance() {}
@@ -42,44 +42,44 @@ public:
 	};
 public:
 	// Constructor
-	TrainOptimizer(const char* name) : _name(name) {}
+	Optimizer(const char* name) : _name(name) {}
 	// Copy constructor/operator
-	TrainOptimizer(const TrainOptimizer& src) = delete;
-	TrainOptimizer& operator=(const TrainOptimizer& src) = delete;
+	Optimizer(const Optimizer& src) = delete;
+	Optimizer& operator=(const Optimizer& src) = delete;
 	// Move constructor/operator
-	TrainOptimizer(TrainOptimizer&& src) noexcept = delete;
-	TrainOptimizer& operator=(TrainOptimizer&& src) noexcept = delete;
+	Optimizer(Optimizer&& src) noexcept = delete;
+	Optimizer& operator=(Optimizer&& src) noexcept = delete;
 protected:
-	~TrainOptimizer() = default;
+	~Optimizer() = default;
 public:
 	virtual Instance* CreateInstance() const = 0;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-	bool IsIdentical(const TrainOptimizer& other) const { return this == &other; }
-	bool IsEqualTo(const TrainOptimizer& other) const { return IsIdentical(other); }
-	bool IsLessThan(const TrainOptimizer& other) const { return this < &other; }
+	bool IsIdentical(const Optimizer& other) const { return this == &other; }
+	bool IsEqualTo(const Optimizer& other) const { return IsIdentical(other); }
+	bool IsLessThan(const Optimizer& other) const { return this < &other; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
 //------------------------------------------------------------------------------
-// TrainOptimizerList
+// OptimizerList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE TrainOptimizerList : public ListBase<TrainOptimizer*> {
+class GURAX_DLLDECLARE OptimizerList : public ListBase<Optimizer*> {
 };
 
 //------------------------------------------------------------------------------
-// TrainOptimizerOwner
+// OptimizerOwner
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE TrainOptimizerOwner : public TrainOptimizerList {
+class GURAX_DLLDECLARE OptimizerOwner : public OptimizerList {
 public:
-	~TrainOptimizerOwner() { Clear(); }
+	~OptimizerOwner() { Clear(); }
 	void Clear();
 };
 
 //------------------------------------------------------------------------------
-// TrainOptimizer_None
+// Optimizer_None
 //-------------------------------------------------------------------------
-class TrainOptimizer_None : public TrainOptimizer {
+class Optimizer_None : public Optimizer {
 public:
 	class InstanceEx : public Instance {
 	public:
@@ -88,14 +88,14 @@ public:
 		virtual bool Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad) override;
 	};
 public:
-	TrainOptimizer_None() : TrainOptimizer("None") {}
+	Optimizer_None() : Optimizer("None") {}
 	virtual Instance* CreateInstance() const override { return new InstanceEx(); }
 };
 
 //------------------------------------------------------------------------------
-// TrainOptimizer_AdaGrad
+// Optimizer_AdaGrad
 //------------------------------------------------------------------------------
-class TrainOptimizer_AdaGrad : public TrainOptimizer {
+class Optimizer_AdaGrad : public Optimizer {
 private:
 	Double _learningRate;
 	Double _epsilon;
@@ -112,14 +112,14 @@ public:
 		virtual bool Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad) override;
 	};
 public:
-	TrainOptimizer_AdaGrad(Double learningRate, Double epsilon) : TrainOptimizer("AdaGrad"), _learningRate(learningRate), _epsilon(epsilon) {}
+	Optimizer_AdaGrad(Double learningRate, Double epsilon) : Optimizer("AdaGrad"), _learningRate(learningRate), _epsilon(epsilon) {}
 	virtual Instance* CreateInstance() const override { return new InstanceEx(_learningRate, _epsilon); }
 };
 
 //------------------------------------------------------------------------------
-// TrainOptimizer_Adam
+// Optimizer_Adam
 //------------------------------------------------------------------------------
-class TrainOptimizer_Adam : public TrainOptimizer {
+class Optimizer_Adam : public Optimizer {
 public:
 	class InstanceEx : public Instance {
 	public:
@@ -128,14 +128,14 @@ public:
 		virtual bool Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad) override;
 	};
 public:
-	TrainOptimizer_Adam() : TrainOptimizer("Adam") {}
+	Optimizer_Adam() : Optimizer("Adam") {}
 	virtual Instance* CreateInstance() const override { return new InstanceEx(); }
 };
 
 //------------------------------------------------------------------------------
-// TrainOptimizer_GradientDescent
+// Optimizer_GradientDescent
 //------------------------------------------------------------------------------
-class TrainOptimizer_GradientDescent : public TrainOptimizer {
+class Optimizer_GradientDescent : public Optimizer {
 public:
 	class InstanceEx : public Instance {
 	private:
@@ -149,14 +149,14 @@ public:
 private:
 	Double _learningRate;
 public:
-	TrainOptimizer_GradientDescent(Double learningRate) : TrainOptimizer("GradientDescent"), _learningRate(learningRate) {}
+	Optimizer_GradientDescent(Double learningRate) : Optimizer("GradientDescent"), _learningRate(learningRate) {}
 	virtual Instance* CreateInstance() const override { return new InstanceEx(_learningRate); }
 };
 
 //------------------------------------------------------------------------------
-// TrainOptimizer_Momentum
+// Optimizer_Momentum
 //------------------------------------------------------------------------------
-class TrainOptimizer_Momentum : public TrainOptimizer {
+class Optimizer_Momentum : public Optimizer {
 public:
 	class InstanceEx : public Instance {
 	private:
@@ -173,14 +173,14 @@ private:
 	Double _learningRate;
 	Double _momentum;
 public:
-	TrainOptimizer_Momentum(Double learningRate, Double momentum) : TrainOptimizer("Momentum"), _learningRate(learningRate), _momentum(momentum) {}
+	Optimizer_Momentum(Double learningRate, Double momentum) : Optimizer("Momentum"), _learningRate(learningRate), _momentum(momentum) {}
 	virtual Instance* CreateInstance() const override { return new InstanceEx(_learningRate, _momentum); }
 };
 
 //------------------------------------------------------------------------------
-// TrainOptimizer_Nesterov
+// Optimizer_Nesterov
 //------------------------------------------------------------------------------
-class TrainOptimizer_Nesterov : public TrainOptimizer {
+class Optimizer_Nesterov : public Optimizer {
 public:
 	class InstanceEx : public Instance {
 	public:
@@ -189,14 +189,14 @@ public:
 		virtual bool Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad) override;
 	};
 public:
-	TrainOptimizer_Nesterov() : TrainOptimizer("Nesterov") {}
+	Optimizer_Nesterov() : Optimizer("Nesterov") {}
 	virtual Instance* CreateInstance() const override { return new InstanceEx(); }
 };
 
 //------------------------------------------------------------------------------
-// TrainOptimizer_RMSprop
+// Optimizer_RMSprop
 //------------------------------------------------------------------------------
-class TrainOptimizer_RMSprop : public TrainOptimizer {
+class Optimizer_RMSprop : public Optimizer {
 public:
 	class InstanceEx : public Instance {
 	public:
@@ -205,7 +205,7 @@ public:
 		virtual bool Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad) override;
 	};
 public:
-	TrainOptimizer_RMSprop() : TrainOptimizer("RMSprop") {}
+	Optimizer_RMSprop() : Optimizer("RMSprop") {}
 	virtual Instance* CreateInstance() const override { return new InstanceEx(); }
 };
 

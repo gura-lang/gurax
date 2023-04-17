@@ -38,11 +38,11 @@ target_sources(ml.gurd PRIVATE
 	module-ml.cpp
 	Util.cpp
 	Trainer.cpp
-	TrainNode.cpp
-	TrainOptimizer.cpp
+	Node.cpp
+	Optimizer.cpp
 	VType_Trainer.cpp
-	VType_TrainNode.cpp
-	VType_TrainOptimizer.cpp)
+	VType_Node.cpp
+	VType_Optimizer.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------

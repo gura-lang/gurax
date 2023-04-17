@@ -1,40 +1,40 @@
 //==============================================================================
-// TrainNode.h
+// Node.h
 //==============================================================================
-#ifndef GURAX_MODULE_ML_TRAINNODE_H
-#define GURAX_MODULE_ML_TRAINNODE_H
+#ifndef GURAX_MODULE_ML_NODE_H
+#define GURAX_MODULE_ML_NODE_H
 #include <gurax.h>
-#include "TrainOptimizer.h"
+#include "Optimizer.h"
 
 Gurax_BeginModuleScope(ml)
 
 class Trainer; 
 //------------------------------------------------------------------------------
-// TrainNode
+// Node
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE TrainNode : public Referable {
+class GURAX_DLLDECLARE Node : public Referable {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(TrainNode);
+	Gurax_DeclareReferable(Node);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("TrainNode");
+	Gurax_MemoryPoolAllocator("Node");
 public:
 	enum class Trait { Variable, Constant, Input, };
 	class Connector {
 	private:
-		TrainNode* _pNodeSrc;
-		TrainNode* _pNodeDst;
+		Node* _pNodeSrc;
+		Node* _pNodeDst;
 		RefPtr<Array> _pArrayGrad;
 	public:
 		Connector() : _pNodeSrc(nullptr), _pNodeDst(nullptr) {}
 		Connector(const Connector& connector) :
 			_pNodeSrc(connector._pNodeSrc), _pNodeDst(connector._pNodeDst), _pArrayGrad(connector._pArrayGrad.Reference()) {}
-		Connector(TrainNode* pNodeDst) : _pNodeSrc(nullptr), _pNodeDst(pNodeDst) {}
-		TrainNode& GetNodeSrc() { return *_pNodeSrc; }
-		TrainNode& GetNodeDst() { return *_pNodeDst; }
-		const TrainNode& GetNodeSrc() const { return *_pNodeSrc; }
-		const TrainNode& GetNodeDst() const { return *_pNodeDst; }
-		void SetNodeSrc(TrainNode* pNodeSrc) { _pNodeSrc = pNodeSrc; }
+		Connector(Node* pNodeDst) : _pNodeSrc(nullptr), _pNodeDst(pNodeDst) {}
+		Node& GetNodeSrc() { return *_pNodeSrc; }
+		Node& GetNodeDst() { return *_pNodeDst; }
+		const Node& GetNodeSrc() const { return *_pNodeSrc; }
+		const Node& GetNodeDst() const { return *_pNodeDst; }
+		void SetNodeSrc(Node* pNodeSrc) { _pNodeSrc = pNodeSrc; }
 		void SetArrayGrad(Array* pArrayGrad) { _pArrayGrad.reset(pArrayGrad); }
 		Array& GetArrayFwd() { return _pNodeSrc->GetArrayFwd(); }
 		Array& GetArrayGrad() { return *_pArrayGrad; }
@@ -54,15 +54,15 @@ protected:
 	RefPtr<Array> _pArrayFwd;
 public:
 	// Constructor
-	explicit TrainNode(const char* nodeTypeName) : _nodeTypeName(nodeTypeName) {}
+	explicit Node(const char* nodeTypeName) : _nodeTypeName(nodeTypeName) {}
 	// Copy constructor/operator
-	TrainNode(const TrainNode& src) = delete;
-	TrainNode& operator=(const TrainNode& src) = delete;
+	Node(const Node& src) = delete;
+	Node& operator=(const Node& src) = delete;
 	// Move constructor/operator
-	TrainNode(TrainNode&& src) noexcept = delete;
-	TrainNode& operator=(TrainNode&& src) noexcept = delete;
+	Node(Node&& src) noexcept = delete;
+	Node& operator=(Node&& src) noexcept = delete;
 protected:
-	~TrainNode() = default;
+	~Node() = default;
 public:
 	const char* GetNodeTypeName() const { return _nodeTypeName; }
 	virtual void Connect(Connector& connectorDst) = 0;
@@ -84,15 +84,15 @@ public:
 	virtual void Print(Stream& stream, int indentLevel) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-	bool IsIdentical(const TrainNode& other) const { return this == &other; }
-	bool IsEqualTo(const TrainNode& other) const { return IsIdentical(other); }
-	bool IsLessThan(const TrainNode& other) const { return this < &other; }
+	bool IsIdentical(const Node& other) const { return this == &other; }
+	bool IsEqualTo(const Node& other) const { return IsIdentical(other); }
+	bool IsLessThan(const Node& other) const { return this < &other; }
 };
 
 //------------------------------------------------------------------------------
-// TrainNodeList
+// NodeList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE TrainNodeList : public ListBase<TrainNode*> {
+class GURAX_DLLDECLARE NodeList : public ListBase<Node*> {
 public:
 	void Reset();
 	bool EvalForward(Processor& processor);
@@ -100,41 +100,41 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// TrainNodeOwner
+// NodeOwner
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE TrainNodeOwner : public TrainNodeList {
+class GURAX_DLLDECLARE NodeOwner : public NodeList {
 public:
-	~TrainNodeOwner() { Clear(); }
+	~NodeOwner() { Clear(); }
 	void Clear();
 };
 
 //------------------------------------------------------------------------------
-// TrainNodeMap
+// NodeMap
 //------------------------------------------------------------------------------
-using TrainNodeMap = std::unordered_map<const Symbol*, TrainNode*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>;
+using NodeMap = std::unordered_map<const Symbol*, Node*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>;
 
 //------------------------------------------------------------------------------
-// TrainNode_SingleOut
+// Node_SingleOut
 //------------------------------------------------------------------------------
-class TrainNode_SingleOut : public TrainNode {
+class Node_SingleOut : public Node {
 protected:
 	Connector* _pConnectorDst;
 public:
-	TrainNode_SingleOut(const char* nodeTypeName) : TrainNode(nodeTypeName), _pConnectorDst(nullptr) {}
+	Node_SingleOut(const char* nodeTypeName) : Node(nodeTypeName), _pConnectorDst(nullptr) {}
 	virtual void Connect(Connector& connectorDst) override;
 	virtual bool GatherMemberSymbol(SymbolList& symbols) const;
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const;
 };
 
 //------------------------------------------------------------------------------
-// TrainNode_Branch
+// Node_Branch
 //------------------------------------------------------------------------------
-class TrainNode_Branch : public TrainNode {
+class Node_Branch : public Node {
 protected:
 	RefPtr<Array> _pArrayGrad;
 	ConnectorList _connectorsDst;
 public:
-	TrainNode_Branch() : TrainNode("Branch") {}
+	Node_Branch() : Node("Branch") {}
 	virtual bool EvalForward(Processor& processor);
 	virtual bool EvalBackward(Processor& processor);
 	virtual void Connect(Connector& connectorDst) override;
@@ -143,17 +143,17 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// TrainNode_Head
+// Node_Head
 //------------------------------------------------------------------------------
-class TrainNode_Head : public TrainNode_SingleOut {
+class Node_Head : public Node_SingleOut {
 protected:
 	RefPtr<Expr> _pExpr;
 	RefPtr<Array> _pArrayGradAdj;
 	Trait _trait;
-	RefPtr<TrainOptimizer::Instance> _pTrainOptimizerInst;
+	RefPtr<Optimizer::Instance> _pOptimizerInst;
 public:
-	TrainNode_Head(Expr* pExpr, Trait trait, TrainOptimizer::Instance* pTrainOptimizerInst) :
-		TrainNode_SingleOut("Head"), _pExpr(pExpr), _trait(trait), _pTrainOptimizerInst(pTrainOptimizerInst) {}
+	Node_Head(Expr* pExpr, Trait trait, Optimizer::Instance* pOptimizerInst) :
+		Node_SingleOut("Head"), _pExpr(pExpr), _trait(trait), _pOptimizerInst(pOptimizerInst) {}
 	const Expr& GetExpr() const { return *_pExpr; }
 	bool IsVariable() const { return _trait == Trait::Variable; }
 	bool IsConstant() const { return _trait == Trait::Constant; }
@@ -171,14 +171,14 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// TrainNode_Bottom
+// Node_Bottom
 //------------------------------------------------------------------------------
-class TrainNode_Bottom : public TrainNode_SingleOut {
+class Node_Bottom : public Node_SingleOut {
 private:
 	Connector _connectorSrc;
 	RefPtr<Array> _pArrayCorrect;
 public:
-	TrainNode_Bottom() : TrainNode_SingleOut("Bottom"), _connectorSrc(this) {}
+	Node_Bottom() : Node_SingleOut("Bottom"), _connectorSrc(this) {}
 	Connector& GetConnectorSrc() { return _connectorSrc; }
 	const Connector& GetConnectorSrc() const { return _connectorSrc; }
 	Array& GetArrayCorrect() { return *_pArrayCorrect; }
@@ -195,13 +195,13 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// TrainNode_Unary
+// Node_Unary
 //------------------------------------------------------------------------------
-class TrainNode_Unary : public TrainNode_SingleOut {
+class Node_Unary : public Node_SingleOut {
 protected:
 	Connector _connectorSrc;
 public:
-	TrainNode_Unary(const char* nodeTypeName) : TrainNode_SingleOut(nodeTypeName), _connectorSrc(this) {}
+	Node_Unary(const char* nodeTypeName) : Node_SingleOut(nodeTypeName), _connectorSrc(this) {}
 	Connector& GetConnectorSrc() { return _connectorSrc; }
 	const Connector& GetConnectorSrc() const { return _connectorSrc; }
 	virtual bool IsUnary() const { return true; }
@@ -213,24 +213,24 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// TrainNode_Neg
+// Node_Neg
 //------------------------------------------------------------------------------
-class TrainNode_Neg : public TrainNode_Unary {
+class Node_Neg : public Node_Unary {
 public:
-	TrainNode_Neg() : TrainNode_Unary("Neg") {}
+	Node_Neg() : Node_Unary("Neg") {}
 	virtual bool EvalForward(Processor& processor);
 	virtual bool EvalBackward(Processor& processor);
 };
 
 //------------------------------------------------------------------------------
-// TrainNode_Binary
+// Node_Binary
 //------------------------------------------------------------------------------
-class TrainNode_Binary : public TrainNode_SingleOut {
+class Node_Binary : public Node_SingleOut {
 protected:
 	Connector _connectorSrcLeft;
 	Connector _connectorSrcRight;
 public:
-	TrainNode_Binary(const char* nodeTypeName) : TrainNode_SingleOut(nodeTypeName), _connectorSrcLeft(this), _connectorSrcRight(this) {}
+	Node_Binary(const char* nodeTypeName) : Node_SingleOut(nodeTypeName), _connectorSrcLeft(this), _connectorSrcRight(this) {}
 	Connector& GetConnectorSrcLeft() { return _connectorSrcLeft; }
 	Connector& GetConnectorSrcRight() { return _connectorSrcRight; }
 	const Connector& GetConnectorSrcLeft() const { return _connectorSrcLeft; }
@@ -244,79 +244,79 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// TrainNode_Add
+// Node_Add
 //------------------------------------------------------------------------------
-class TrainNode_Add : public TrainNode_Binary {
+class Node_Add : public Node_Binary {
 public:
-	TrainNode_Add() : TrainNode_Binary("Add") {}
+	Node_Add() : Node_Binary("Add") {}
 	virtual bool EvalForward(Processor& processor);
 	virtual bool EvalBackward(Processor& processor);
 };
 
 //------------------------------------------------------------------------------
-// TrainNode_Sub
+// Node_Sub
 //------------------------------------------------------------------------------
-class TrainNode_Sub : public TrainNode_Binary {
+class Node_Sub : public Node_Binary {
 public:
-	TrainNode_Sub() : TrainNode_Binary("Sub") {}
+	Node_Sub() : Node_Binary("Sub") {}
 	virtual bool EvalForward(Processor& processor);
 	virtual bool EvalBackward(Processor& processor);
 };
 
 //------------------------------------------------------------------------------
-// TrainNode_Mul
+// Node_Mul
 //------------------------------------------------------------------------------
-class TrainNode_Mul : public TrainNode_Binary {
+class Node_Mul : public Node_Binary {
 public:
-	TrainNode_Mul() : TrainNode_Binary("Mul") {}
+	Node_Mul() : Node_Binary("Mul") {}
 	virtual bool EvalForward(Processor& processor);
 	virtual bool EvalBackward(Processor& processor);
 };
 
 //------------------------------------------------------------------------------
-// TrainNode_Div
+// Node_Div
 //------------------------------------------------------------------------------
-class TrainNode_Div : public TrainNode_Binary {
+class Node_Div : public Node_Binary {
 public:
-	TrainNode_Div() : TrainNode_Binary("Div") {}
+	Node_Div() : Node_Binary("Div") {}
 	virtual bool EvalForward(Processor& processor);
 	virtual bool EvalBackward(Processor& processor);
 };
 
 //------------------------------------------------------------------------------
-// TrainNode_Pow
+// Node_Pow
 //------------------------------------------------------------------------------
-class TrainNode_Pow : public TrainNode_Binary {
+class Node_Pow : public Node_Binary {
 private:
 	RefPtr<Array> _pArrayWork;
 public:
-	TrainNode_Pow() : TrainNode_Binary("Pow") {}
+	Node_Pow() : Node_Binary("Pow") {}
 	virtual bool EvalForward(Processor& processor);
 	virtual bool EvalBackward(Processor& processor);
 };
 
 //------------------------------------------------------------------------------
-// TrainNode_Dot
+// Node_Dot
 //------------------------------------------------------------------------------
-class TrainNode_Dot : public TrainNode_Binary {
+class Node_Dot : public Node_Binary {
 private:
 	RefPtr<Array> _pArrayFwdLeftTrans;
 	RefPtr<Array> _pArrayFwdRightTrans;
 public:
-	TrainNode_Dot() : TrainNode_Binary("Dot") {}
+	Node_Dot() : Node_Binary("Dot") {}
 	virtual bool EvalForward(Processor& processor);
 	virtual bool EvalBackward(Processor& processor);
 };
 
 //------------------------------------------------------------------------------
-// TrainNode_Gear
+// Node_Gear
 //------------------------------------------------------------------------------
-class TrainNode_Gear : public TrainNode_Unary {
+class Node_Gear : public Node_Unary {
 private:
 	RefPtr<Expr> _pExprRight;
 	RefPtr<Gear> _pGear;
 public:
-	TrainNode_Gear(Expr* pExprRight) : TrainNode_Unary("Gear"), _pExprRight(pExprRight) {}
+	Node_Gear(Expr* pExprRight) : Node_Unary("Gear"), _pExprRight(pExprRight) {}
 	virtual bool EvalForward(Processor& processor);
 	virtual bool EvalBackward(Processor& processor);
 	virtual bool GatherMemberSymbol(SymbolList& symbols) const;
