@@ -24,28 +24,6 @@ ${help.ComposeConstructorHelp(Gear, `en)}
 ${help.ComposeMethodHelp(Gear, `en)}
 )""";
 
-//------------------------------------------------------------------------------
-// Implementation of constructor
-//------------------------------------------------------------------------------
-// Gear() {block?}
-Gurax_DeclareConstructor(Gear)
-{
-	Declare(VTYPE_Gear, Flag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"""(
-Creates a `Gear` instance.
-)""");
-}
-
-Gurax_ImplementConstructor(Gear)
-{
-	// Arguments
-	//ArgPicker args(argument);
-	// Function body
-	RefPtr<Gear> pGear(new Gear());
-	return argument.ReturnValue(processor, new Value_Gear(pGear.release()));
-}
-
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
@@ -100,7 +78,7 @@ void VType_Gear::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Gear));
+	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Gear, MethodSkeleton));
 	// Assignment of property

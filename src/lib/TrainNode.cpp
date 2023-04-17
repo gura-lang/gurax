@@ -165,8 +165,6 @@ bool TrainNode_Head::EvalForward(Processor& processor)
 			_pArrayFwd.reset(Array::CreateScalar(Array::ElemType::Complex, Value_Complex::GetComplex(*pValue)));
 		} else if (pValue->IsType(VTYPE_Array)) {
 			_pArrayFwd.reset(Value_Array::GetArray(*pValue).Reference());
-		} else if (pValue->IsType(VTYPE_Gear)) {
-		
 		} else {
 			Error::Issue(ErrorType::ValueError, "variable must be an array");
 			return false;
@@ -539,40 +537,39 @@ bool TrainNode_Dot::EvalBackward(Processor& processor)
 //-----------------------------------------------------------------------------
 // TrainNode_Gear
 //-----------------------------------------------------------------------------
+bool TrainNode_Gear::EvalForward(Processor& processor)
+{
+	if (!_pGear) {
+		RefPtr<Value> pValue(_pExprRight->Eval(processor));
+		if (Error::IsIssued()) return false;
+		if (pValue->IsInstanceOf(VTYPE_Gear)) {
+			_pGear.reset(Value_Gear::GetGear(*pValue).Reference());
+		} else {
+			Error::Issue(ErrorType::ValueError, "variable must be an gear instance");
+			return false;
+		}
+	}
+	return _pGear->EvalForward(processor, _pArrayFwd, GetConnectorSrc().GetArrayFwd());
+}
+
+bool TrainNode_Gear::EvalBackward(Processor& processor)
+{
+	if (!GetConnectorSrc().GetNodeSrc().IsVulnerable()) return true;
+	return _pGear->EvalBackward(processor, GetConnectorSrc().GetArrayGradRefPtr(), _pConnectorDst->GetArrayGrad());
+}
+
 bool TrainNode_Gear::GatherMemberSymbol(SymbolList& symbols) const
 {
 	symbols.push_back(Gurax_Symbol(gear));
-	symbols.push_back(Gurax_Symbol(input));
-	symbols.push_back(Gurax_Symbol(inputGrad));
-	return TrainNode_SingleOut::GatherMemberSymbol(symbols);
+	return TrainNode_Unary::GatherMemberSymbol(symbols);
 }
 
 Value* TrainNode_Gear::DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const
 {
 	if (pSymbol->IsIdentical(Gurax_Symbol(gear))) {
-		return new Value_Gear(GetGear().Reference());
-	} else if (pSymbol->IsIdentical(Gurax_Symbol(input))) {
-		return GetConnectorSrc().GetArrayFwd().ToValue();
-	} else if (pSymbol->IsIdentical(Gurax_Symbol(inputGrad))) {
-		return GetConnectorSrc().GetArrayGrad().ToValue();
+		return _pGear? new Value_Gear(_pGear->Reference()) : Value::nil();
 	}
-	return TrainNode_SingleOut::DoGetProperty(pSymbol, attr);
-}
-
-String TrainNode_Gear::ToString(const StringStyle& ss) const
-{
-	String str;
-	char buff[128];
-	str += GetNodeTypeName();
-	::sprintf(buff, " [fwd:%p,grad:%p]", &GetConnectorSrc().GetArrayFwd(), &GetConnectorSrc().GetArrayGrad());
-	str += buff;
-	return str;
-}
-
-void TrainNode_Gear::Print(Stream& stream, int indentLevel) const
-{
-	TrainNode::Print(stream, indentLevel);
-	//GetConnectorSrc().GetNodeSrc().Print(Stream& stream, indentLevel + 1);
+	return TrainNode_Unary::DoGetProperty(pSymbol, attr);
 }
 
 }

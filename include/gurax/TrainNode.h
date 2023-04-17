@@ -312,26 +312,16 @@ public:
 //------------------------------------------------------------------------------
 // TrainNode_Gear
 //------------------------------------------------------------------------------
-class TrainNode_Gear : public TrainNode_SingleOut {
-public:
-	class Creator {
-	public:
-		virtual TrainNode_Gear* Create(const Value& value, const Trainer& trainer) const = 0;
-	};
-protected:
+class TrainNode_Gear : public TrainNode_Unary {
+private:
+	RefPtr<Expr> _pExprRight;
 	RefPtr<Gear> _pGear;
-	Connector _connectorSrc;
 public:
-	TrainNode_Gear(Gear* pGear) : TrainNode_SingleOut(pGear->GetName()), _pGear(pGear), _connectorSrc(this) {}
-	Gear& GetGear() { return *_pGear; }
-	const Gear& GetGear() const { return *_pGear; }
-	Connector& GetConnectorSrc() { return _connectorSrc; }
-	const Connector& GetConnectorSrc() const { return _connectorSrc; }
-	virtual bool IsGear() const { return true; }
+	TrainNode_Gear(Expr* pExprRight) : TrainNode_Unary("Gear"), _pExprRight(pExprRight) {}
+	virtual bool EvalForward(Processor& processor);
+	virtual bool EvalBackward(Processor& processor);
 	virtual bool GatherMemberSymbol(SymbolList& symbols) const;
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const;
-	virtual String ToString(const StringStyle& ss) const;
-	virtual void Print(Stream& stream, int indentLevel) const;
 };
 
 }

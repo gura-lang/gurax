@@ -215,27 +215,12 @@ TrainNode* Trainer::CreateNodeBinary(const Expr_BinaryOp& exprEx, const SymbolSe
 
 TrainNode* Trainer::CreateNodeGear(const Expr_BinaryOp& exprEx, const SymbolSet& symbolsInput)
 {
-#if 0
-	Value value = exprEx.GetRight()->Exec(env);
-	if (env.IsSignalled()) return nullptr;
-	if (!value.IsInstanceOf(VTfcYPE_gear)) {
-		env.SetError(ERR_ValueError, "gear instance is expected as a right-side operand of a gear operator");
-		return nullptr;
-	}
-	NodeGearCreatorMap::iterator iter = _nodeGearCreatorMap.find(value.GetValueType());
-	if (iter == _nodeGearCreatorMap.end()) {
-		env.SetError(ERR_ValueError, "unsupported gear type: %s", value.MakeValueTypeName().c_str());
-		return nullptr;
-	}
-	const NodeGear::Creator *pCreator = iter->second;
-	AutoPtr<NodeGear> pNode(pCreator->Create(value, pConnector, this));
-	TrainNode::Connector *pConnectorSrc = pNode->GetConnectorSrc();
-	TrainNode *pNodeRtn = pNode.get();
-	_nodeOwner.push_back(pNode.release());
-	return (CreateNode(env, exprEx.GetLeft(), pConnectorSrc, symbolsInput) == nullptr)?
-		nullptr : pNodeRtn;
-#endif
-	return nullptr;
+	RefPtr<TrainNode_Gear> pNode(new TrainNode_Gear(exprEx.GetExprRight().Reference()));
+	RefPtr<TrainNode> pNodeChild(CreateNode(exprEx.GetExprLeft(), symbolsInput));
+	if (!pNodeChild) return nullptr;
+	pNodeChild->Connect(pNode->GetConnectorSrc());
+	//_nodeOwner.push_back(pNodeChild.release());
+	return pNode.release();
 }
 
 String Trainer::ToString(const StringStyle& ss) const
