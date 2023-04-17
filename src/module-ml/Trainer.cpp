@@ -1,0 +1,244 @@
+//==============================================================================
+// Trainer.cpp
+//==============================================================================
+#include "stdafx.h"
+
+Gurax_BeginModuleScope(ml)
+
+//------------------------------------------------------------------------------
+// Trainer
+//------------------------------------------------------------------------------
+Trainer::Trainer(Expr* pExprModel, TrainOptimizer* pTrainOptimizer) :
+		_pExprModel(pExprModel), _pTrainOptimizer(pTrainOptimizer), _pNodeBottom(new TrainNode_Bottom())
+{
+}
+
+bool Trainer::CreateFromExpr(const SymbolSet& inputs)
+{
+	RefPtr<TrainNode> pNode(CreateNode(GetExprModel(), inputs));
+	if (!pNode) return false;
+	_composer.Add_Terminate();
+	pNode->Connect(GetNodeBottom().GetConnectorSrc());
+	//_nodeOwner.push_back(pNode.release());
+	return true;
+}
+
+void Trainer::Reset()
+{
+	GetNodeOwner().Reset();
+}
+
+bool Trainer::EvalForward(Processor& processor)
+{
+	return GetNodeOwner().EvalForward(processor) && GetNodeBottom().EvalForward(processor);
+}
+
+bool Trainer::EvalBackward(Processor& processor, const Array& arrayCorrect)
+{
+	return GetNodeBottom().EvalBackwardTop(processor, arrayCorrect) && GetNodeOwner().EvalBackward(processor);
+}
+
+const Array& Trainer::GetResult() const
+{
+	return GetNodeBottom().GetArrayFwd();
+}
+
+Double Trainer::CalcMeanSquareError(const Array& arrayCorrect) const
+{
+	const Array& arrayResult = GetResult();
+	if (!arrayResult.HasSameShape(arrayCorrect)) return 0;
+	
+	return 0;
+}
+
+Double Trainer::CalcCrossEntropyError(const Array& arrayCorrect, Double epsilon) const
+{
+#if 0
+	const Array *pArrayResult = GetResult();
+	if (!Array::CheckSameShape(sig, pArrayResult, pArrayCorrect)) return 0;
+	// not implemented yet
+	return 0;
+#endif
+	return 0;
+}
+
+TrainNode* Trainer::FindNode(const Symbol* pSymbol) const
+{
+	auto iter = _nodeMap.find(pSymbol);
+	return (iter == _nodeMap.end())? nullptr : iter->second;
+}
+
+void Trainer::Print(Stream& stream) const
+{
+	GetNodeBottom().Print(stream, 0);
+	stream.Println();
+	size_t i = 0;
+	for (const TrainNode* pNode : _nodeOwner) {
+		stream.Printf("#%d %s\n", i, pNode->ToString().c_str());
+		i++;
+	}
+}
+
+TrainNode* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolsInput)
+{
+	//::printf("CreateNode(%s)\n", expr.ToString().c_str());
+	if (expr.IsType<Expr_Block>()) {
+		TrainNode *pNodeRtn = nullptr;
+		const Expr_Block& exprEx = dynamic_cast<const Expr_Block&>(expr);
+		const Expr* pExprEach = exprEx.GetExprElemFirst();
+		if (!pExprEach) {
+			// returns dummy node
+			return nullptr;
+		}
+		for ( ; pExprEach->GetExprNext(); pExprEach = pExprEach->GetExprNext()) {
+			RefPtr<TrainNode> pNode(CreateNode(*pExprEach, symbolsInput));
+			if (!pNode) return nullptr;
+			_nodeOwner.push_back(pNode.release());
+		}
+		RefPtr<TrainNode> pNode(CreateNode(*pExprEach, symbolsInput));
+		_nodeOwner.push_back(pNode.Reference());
+		return pNode.release();
+	} else if (expr.IsType<Expr_Assign>()) {
+		const Expr_Assign& exprEx = dynamic_cast<const Expr_Assign&>(expr);
+		if (exprEx.GetOperator() ) {
+			Error::Issue(ErrorType::SyntaxError, "invalid assignment");
+			return nullptr;
+		}
+		if (!exprEx.GetExprLeft().IsType<Expr_Identifier>()) {
+			Error::Issue(ErrorType::SyntaxError, "only the assignment to an identifier is supported");
+			return nullptr;
+		}
+		const Symbol* pSymbol = dynamic_cast<const Expr_Identifier&>(exprEx.GetExprLeft()).GetSymbol();
+		RefPtr<TrainNode> pNode(CreateNode(exprEx.GetExprRight(), symbolsInput));
+		if (!pNode) return nullptr;
+		if (_nodeMap.find(pSymbol) != _nodeMap.end()) {
+			Error::Issue(ErrorType::SyntaxError, "duplicated assignment to the identifier %s", pSymbol->GetName());
+			return nullptr;
+		}
+		_nodeMap[pSymbol] = pNode.get();
+		return pNode.release();
+	} else if (expr.IsType<Expr_UnaryOp>()) {
+		const Expr_UnaryOp& exprEx = dynamic_cast<const Expr_UnaryOp&>(expr);
+		RefPtr<TrainNode> pNode(CreateNodeUnary(exprEx, symbolsInput));
+		_nodeOwner.push_back(pNode.Reference());
+		return pNode.release();
+	} else if (expr.IsType<Expr_BinaryOp>()) {
+		const Expr_BinaryOp& exprEx = dynamic_cast<const Expr_BinaryOp&>(expr);
+		RefPtr<TrainNode> pNode(exprEx.GetOperator()->IsType(OpType::Gear)?
+			CreateNodeGear(exprEx, symbolsInput) : CreateNodeBinary(exprEx, symbolsInput));
+		_nodeOwner.push_back(pNode.Reference());
+		return pNode.release();
+	} else if (expr.IsType<Expr_Identifier>()) {
+		const Expr_Identifier& exprEx = dynamic_cast<const Expr_Identifier&>(expr);
+		const Symbol* pSymbol = exprEx.GetSymbol();
+		TrainNode *pNodeFound = FindNode(pSymbol);
+		if (pNodeFound) return pNodeFound;
+		TrainNode::Trait trait = TrainNode::Trait::Input;
+		RefPtr<TrainOptimizer::Instance> pTrainOptimizer;
+		if (!symbolsInput.IsSet(pSymbol)) {
+			trait = TrainNode::Trait::Variable;
+			pTrainOptimizer.reset(CreateOptimizerInstance());
+		}
+		RefPtr<Expr> pExpr(expr.Reference());
+		if (!pExpr->PrepareAndCompose(_composer)) return nullptr;
+		RefPtr<TrainNode> pNode(new TrainNode_Head(pExpr.release(), trait, pTrainOptimizer.release()));
+		_nodeOwner.push_back(pNode.Reference());
+		//_nodeMap[pSymbol] = pNode.get();
+		return pNode.release();
+	} else if (expr.IsType<Expr_Value>()) {
+		TrainNode::Trait trait = TrainNode::Trait::Constant;
+		RefPtr<TrainOptimizer::Instance> pTrainOptimizer;
+		RefPtr<Expr> pExpr(expr.Reference());
+		if (!pExpr->PrepareAndCompose(_composer)) return nullptr;
+		RefPtr<TrainNode> pNode(new TrainNode_Head(pExpr.release(), trait, pTrainOptimizer.release()));
+		_nodeOwner.push_back(pNode.Reference());
+		return pNode.release();
+	} else {
+		TrainNode::Trait trait = TrainNode::Trait::Variable;
+		RefPtr<TrainOptimizer::Instance> pTrainOptimizer(CreateOptimizerInstance());
+		RefPtr<Expr> pExpr(expr.Reference());
+		if (!pExpr->PrepareAndCompose(_composer)) return nullptr;
+		RefPtr<TrainNode> pNode(new TrainNode_Head(pExpr.release(), trait, pTrainOptimizer.release()));
+		_nodeOwner.push_back(pNode.Reference());
+		return pNode.release();
+	}
+	return nullptr;
+}
+
+TrainNode* Trainer::CreateNodeUnary(const Expr_UnaryOp& exprEx, const SymbolSet& symbolsInput)
+{
+	const Operator* pOperator = exprEx.GetOperator();
+	RefPtr<TrainNode_Unary> pNode;
+	if (pOperator->IsType(OpType::Pos)) {
+		//pNode.reset(new TrainNode_Pos());
+	} else if (pOperator->IsType(OpType::Neg)) {
+		pNode.reset(new TrainNode_Neg());
+	} else {
+		Error::Issue(ErrorType::ValueError, "unsupported operator: %s", pOperator->GetName());
+		return nullptr;
+	}
+	RefPtr<TrainNode> pNodeChild(CreateNode(exprEx.GetExprChild(), symbolsInput));
+	if (!pNodeChild) return nullptr;
+	pNodeChild->Connect(pNode->GetConnectorSrc());
+	//_nodeOwner.push_back(pNodeChild.release());
+	return pNode.release();
+}
+
+TrainNode* Trainer::CreateNodeBinary(const Expr_BinaryOp& exprEx, const SymbolSet& symbolsInput)
+{
+	const Operator* pOperator = exprEx.GetOperator();
+	RefPtr<TrainNode_Binary> pNode;
+	if (pOperator->IsType(OpType::Add)) {
+		pNode.reset(new TrainNode_Add());
+	} else if (pOperator->IsType(OpType::Sub)) {
+		pNode.reset(new TrainNode_Sub());
+	} else if (pOperator->IsType(OpType::Mul)) {
+		pNode.reset(new TrainNode_Mul());
+	} else if (pOperator->IsType(OpType::Div)) {
+		pNode.reset(new TrainNode_Div());
+	} else if (pOperator->IsType(OpType::Pow)) {
+		pNode.reset(new TrainNode_Pow());
+	} else if (pOperator->IsType(OpType::Dot)) {
+		pNode.reset(new TrainNode_Dot());
+	} else {
+		Error::Issue(ErrorType::ValueError, "unsupported operator: %s", pOperator->GetName());
+		return nullptr;
+	}
+	RefPtr<TrainNode> pNodeLeft(CreateNode(exprEx.GetExprLeft(), symbolsInput));
+	if (!pNodeLeft) return nullptr;
+	RefPtr<TrainNode> pNodeRight(CreateNode(exprEx.GetExprRight(), symbolsInput));
+	if (!pNodeRight) return nullptr;
+	pNodeLeft->Connect(pNode->GetConnectorSrcLeft());
+	pNodeRight->Connect(pNode->GetConnectorSrcRight());
+	return pNode.release();
+}
+
+TrainNode* Trainer::CreateNodeGear(const Expr_BinaryOp& exprEx, const SymbolSet& symbolsInput)
+{
+	RefPtr<TrainNode_Gear> pNode(new TrainNode_Gear(exprEx.GetExprRight().Reference()));
+	RefPtr<TrainNode> pNodeChild(CreateNode(exprEx.GetExprLeft(), symbolsInput));
+	if (!pNodeChild) return nullptr;
+	pNodeChild->Connect(pNode->GetConnectorSrc());
+	//_nodeOwner.push_back(pNodeChild.release());
+	return pNode.release();
+}
+
+String Trainer::ToString(const StringStyle& ss) const
+{
+	return String().Format("Trainer");
+}
+
+//------------------------------------------------------------------------------
+// TrainerList
+//------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+// TrainerOwner
+//------------------------------------------------------------------------------
+void TrainerOwner::Clear()
+{
+	for (Trainer* pTrainer : *this) Trainer::Delete(pTrainer);
+	clear();
+}
+
+Gurax_EndModuleScope(ml)
