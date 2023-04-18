@@ -10,6 +10,7 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 template<typename T_Elem> void ReLU_Array_T(void* pvRtn, Bool* pBool, const void* pv, size_t len)
 {
+	::printf("check\n");
 	Bool* pRtn = reinterpret_cast<Bool*>(pvRtn);
 	Bool* pRtnEnd = pRtn + len;
 	const T_Elem* p = reinterpret_cast<const T_Elem*>(pv);

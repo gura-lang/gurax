@@ -39,8 +39,6 @@ Creates a `ml.ReLU` instance.
 
 Gurax_ImplementConstructor(ReLU)
 {
-	// Arguments
-	//ArgPicker args(argument);
 	// Function body
 	RefPtr<ReLU> pReLU(new ReLU());
 	return argument.ReturnValue(processor, new Value_ReLU(pReLU.release()));
