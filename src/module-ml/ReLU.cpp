@@ -13,8 +13,8 @@ template<typename T_Elem> void ReLU_Array_T(void* pvRtn, Bool* pBool, const void
 	Bool* pRtn = reinterpret_cast<Bool*>(pvRtn);
 	Bool* pRtnEnd = pRtn + len;
 	const T_Elem* p = reinterpret_cast<const T_Elem*>(pv);
-	for ( ; pRtn != pRtnEnd; pRtn++, p++) {
-		//*pRtn = -static_cast<T_Elem>(static_cast<T_Elem>(*p));
+	for ( ; pRtn != pRtnEnd; pRtn++, p++, pBool++) {
+		*pRtn = (*pBool = (*p > 0))? *pRtn : 0;
 	}
 }
 

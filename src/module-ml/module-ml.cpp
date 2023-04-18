@@ -39,6 +39,8 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
+	// Initialize Gear Operators
+	ReLU::Initialize();
 	// Assignment of VType
 	Assign(VTYPE_Trainer);
 	Assign(VTYPE_Node);
