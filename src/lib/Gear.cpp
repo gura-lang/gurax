@@ -10,7 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 String Gear::ToString(const StringStyle& ss) const
 {
-	return String().Format("Gear");
+	return String().Format("Gear:%s", GetName());
 }
 
 //------------------------------------------------------------------------------

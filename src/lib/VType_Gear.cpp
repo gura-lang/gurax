@@ -53,19 +53,19 @@ Gurax_ImplementMethod(Gear, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// Gear#propSkeleton
-Gurax_DeclareProperty_R(Gear, propSkeleton)
+// Gear#name
+Gurax_DeclareProperty_R(Gear, name)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
 )""");
 }
 
-Gurax_ImplementPropertyGetter(Gear, propSkeleton)
+Gurax_ImplementPropertyGetter(Gear, name)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(valueThis.GetGear().GetName());
 }
 
 //------------------------------------------------------------------------------
@@ -82,7 +82,7 @@ void VType_Gear::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Gear, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Gear, propSkeleton));
+	Assign(Gurax_CreateProperty(Gear, name));
 }
 
 //------------------------------------------------------------------------------

@@ -28,7 +28,7 @@ public:
 protected:
 	~Gear() = default;
 public:
-	virtual const char* GetName() = 0; 
+	virtual const char* GetName() const = 0; 
 	virtual bool EvalForward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array) = 0;
 	virtual bool EvalBackward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array) = 0;
 public:
