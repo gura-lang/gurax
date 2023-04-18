@@ -100,7 +100,7 @@ void VType_ReLU::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(ReLU));
+	Declare(VTYPE_Gear, Flag::Immutable, Gurax_CreateConstructor(ReLU));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(ReLU, MethodSkeleton));
 	// Assignment of property

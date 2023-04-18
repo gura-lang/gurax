@@ -215,7 +215,9 @@ Node* Trainer::CreateNodeBinary(const Expr_BinaryOp& exprEx, const SymbolSet& sy
 
 Node* Trainer::CreateNodeGear(const Expr_BinaryOp& exprEx, const SymbolSet& symbolsInput)
 {
-	RefPtr<Node_Gear> pNode(new Node_Gear(exprEx.GetExprRight().Reference()));
+	RefPtr<Expr> pExpr(exprEx.GetExprRight().Reference());
+	if (!pExpr->PrepareAndCompose(_composer)) return nullptr;
+	RefPtr<Node_Gear> pNode(new Node_Gear(pExpr.release()));
 	RefPtr<Node> pNodeChild(CreateNode(exprEx.GetExprLeft(), symbolsInput));
 	if (!pNodeChild) return nullptr;
 	pNodeChild->Connect(pNode->GetConnectorSrc());

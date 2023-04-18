@@ -545,7 +545,7 @@ bool Node_Gear::EvalForward(Processor& processor)
 		if (pValue->IsInstanceOf(VTYPE_Gear)) {
 			_pGear.reset(Value_Gear::GetGear(*pValue).Reference());
 		} else {
-			Error::Issue(ErrorType::ValueError, "variable must be an gear instance");
+			Error::Issue(ErrorType::ValueError, "variable must be a Gear instance");
 			return false;
 		}
 	}
