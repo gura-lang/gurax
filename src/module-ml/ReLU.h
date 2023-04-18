@@ -16,6 +16,8 @@ public:
 	Gurax_DeclareReferable(ReLU);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("ml.ReLU");
+private:
+	RefPtr<Array> _pArrayBool;
 public:
 	// Constructor
 	ReLU() {}

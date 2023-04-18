@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 // ReLU
 //------------------------------------------------------------------------------
-template<typename T_Elem> void ReLU_Array_T(void* pvRtn, const void* pv, size_t len)
+template<typename T_Elem> void ReLU_Array_T(void* pvRtn, Bool* pBool, const void* pv, size_t len)
 {
 	Bool* pRtn = reinterpret_cast<Bool*>(pvRtn);
 	Bool* pRtnEnd = pRtn + len;
@@ -18,7 +18,7 @@ template<typename T_Elem> void ReLU_Array_T(void* pvRtn, const void* pv, size_t 
 	}
 }
 
-std::function<void (void* pvDst, const void* pvSrc, size_t len)> ReLU_Array[Array::ElemTypeIdMax];
+std::function<void (void* pvDst, Bool* pBool, const void* pvSrc, size_t len)> ReLU_Array[Array::ElemTypeIdMax];
 
 void ReLU::Initialize()
 {
@@ -27,12 +27,21 @@ void ReLU::Initialize()
 
 bool ReLU::EvalForward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array)
 {
-	return Array::GenericUnaryOp(pArrayRtn, Array::ElemType::Bool, array, ReLU_Array[array.GetElemType().id]);
+	if (!pArrayRtn) pArrayRtn.reset(Array::Create(array.GetElemType(), array.GetDimSizes()));
+	if (!pArrayRtn) return false;
+	if (!_pArrayBool) _pArrayBool.reset(Array::Create(Array::ElemType::Bool, array.GetDimSizes()));
+	if (!_pArrayBool) return false;
+	void* pvRtn = pArrayRtn->GetPointerC<void>();
+	Bool* pBool = _pArrayBool->GetPointerC<Bool>();
+	const void* pv = array.GetPointerC<void>();
+	size_t len = array.GetDimSizes().CalcLength();
+	ReLU_Array[array.GetElemType().id](pvRtn, pBool, pv, len);
+	return true;
 }
 
 bool ReLU::EvalBackward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array)
 {
-	return false;
+	return Array::Mul(pArrayRtn, *_pArrayBool, array);
 }
 
 String ReLU::ToString(const StringStyle& ss) const
