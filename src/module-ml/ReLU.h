@@ -28,6 +28,8 @@ public:
 protected:
 	~ReLU() = default;
 public:
+	static void Initialize();
+public:
 	virtual const char* GetName() override { return "ReLU"; }
 	virtual bool EvalForward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array) override;
 	virtual bool EvalBackward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array) override;

@@ -222,7 +222,7 @@ public:
 public:
 	bool Transpose(RefPtr<Array>& pArrayRtn) const;
 public:
-	static bool GenericUnaryOp(RefPtr<Array>& pArrayRtn, const Array& array,
+	static bool GenericUnaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Array& array,
 		const std::function<void (void* pvRtn, const void* pv, size_t len)>& func);
 	static bool GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Array& arrayL, const Array& arrayR,
 		const std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>& func);
