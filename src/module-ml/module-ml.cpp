@@ -43,6 +43,7 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_Trainer);
 	Assign(VTYPE_Node);
 	Assign(VTYPE_Optimizer);
+	Assign(VTYPE_ReLU);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));
 	return true;

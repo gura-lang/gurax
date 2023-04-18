@@ -8,6 +8,7 @@
 #include "VType_Trainer.h"
 #include "VType_Node.h"
 #include "VType_Optimizer.h"
+#include "VType_ReLU.h"
 
 Gurax_BeginModuleHeader(ml)
 Gurax_EndModuleHeader(ml)
