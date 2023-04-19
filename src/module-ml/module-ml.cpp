@@ -8,25 +8,48 @@ Gurax_BeginModule(ml)
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
-// ml.Test()
-Gurax_DeclareFunction(Test)
+// ml.He(n as Number)
+Gurax_DeclareFunction(He)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
-Adds up the given two numbers and returns the result.
 )""");
 }
 
-Gurax_ImplementFunction(Test)
+Gurax_ImplementFunction(He)
 {
 	// Arguments
 	ArgPicker args(argument);
-	const char* str = args.PickString();
-	Int num = args.PickNumber<Int>();
+	Double n = args.PickNumber<Double>();
 	// Function body
-	return new Value_String(String::Repeat(str, num));
+	if (n == 0.) {
+		Error::Issue(ErrorType::DividedByZero, "zero can not be specified");
+		return Value::nil();
+	}
+	return new Value_Number(::sqrt(2 / n));
+}
+
+// ml.Xavier(n as Number)
+Gurax_DeclareFunction(Xavier)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
+}
+
+Gurax_ImplementFunction(Xavier)
+{
+	// Arguments
+	ArgPicker args(argument);
+	Double n = args.PickNumber<Double>();
+	// Function body
+	if (n == 0.) {
+		Error::Issue(ErrorType::DividedByZero, "zero can not be specified");
+		return Value::nil();
+	}
+	return new Value_Number(::sqrt(1 / n));
 }
 
 //------------------------------------------------------------------------------
@@ -47,7 +70,8 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_Optimizer);
 	Assign(VTYPE_ReLU);
 	// Assignment of function
-	Assign(Gurax_CreateFunction(Test));
+	Assign(Gurax_CreateFunction(He));
+	Assign(Gurax_CreateFunction(Xavier));
 	return true;
 }
 
