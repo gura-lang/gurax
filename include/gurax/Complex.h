@@ -11,10 +11,10 @@ namespace Gurax {
 // Complex
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Complex : public std::complex<Double> {
-protected:
-	static String _formatterFormat;
-	static String _formatterFormat_Real;
-	static String _formatterFormat_Imag;
+public:
+	static String formatterFormat;
+	static String formatterFormat_Real;
+	static String formatterFormat_Imag;
 public:
 	static const Complex Zero;
 public:
@@ -36,25 +36,6 @@ public:
 	explicit operator UInt64() const { return 0; }
 	explicit operator Float() const { return 0; }
 	explicit operator Double() const { return 0; }
-public:
-	static void SetFormatterFormat(String formatterFormat) {
-		_formatterFormat = formatterFormat;
-	}
-	static const char* GetFormatterFormat() {
-		return _formatterFormat.c_str();
-	}
-	static void SetFormatterFormat_Real(String formatterFormat) {
-		_formatterFormat_Real = formatterFormat;
-	}
-	static const char* GetFormatterFormat_Real() {
-		return _formatterFormat_Real.c_str();
-	}
-	static void SetFormatterFormat_Imag(String formatterFormat) {
-		_formatterFormat_Imag = formatterFormat;
-	}
-	static const char* GetFormatterFormat_Imag() {
-		return _formatterFormat_Imag.c_str();
-	}
 };
 
 //------------------------------------------------------------------------------

@@ -88,7 +88,7 @@ Format string used to convert a complex number into a string.
 
 Gurax_ImplementClassPropertyGetter(Complex, format)
 {
-	return new Value_String(Complex::GetFormatterFormat());
+	return new Value_String(Complex::formatterFormat);
 }
 
 Gurax_ImplementClassPropertySetter(Complex, format)
@@ -97,7 +97,7 @@ Gurax_ImplementClassPropertySetter(Complex, format)
 	if (!Formatter().VerifyFormat(format.c_str(),
 			Formatter::VaType::Float, Formatter::VaType::Float,
 			Formatter::VaType::None)) return;
-	Complex::SetFormatterFormat(format);
+	Complex::formatterFormat = format;
 }
 
 // Complex.formatImag:String
@@ -111,7 +111,7 @@ Format string used to convert the Imag part of a complex number into a string.
 
 Gurax_ImplementClassPropertyGetter(Complex, formatImag)
 {
-	return new Value_String(Complex::GetFormatterFormat_Imag());
+	return new Value_String(Complex::formatterFormat_Imag);
 }
 
 Gurax_ImplementClassPropertySetter(Complex, formatImag)
@@ -119,7 +119,7 @@ Gurax_ImplementClassPropertySetter(Complex, formatImag)
 	const String& format = Value_String::GetStringSTL(value);
 	if (!Formatter().VerifyFormat(format.c_str(),
 			Formatter::VaType::Float, Formatter::VaType::None)) return;
-	Complex::SetFormatterFormat_Imag(format);
+	Complex::formatterFormat_Imag = format;
 }
 
 // Complex.formatReal:String
@@ -133,7 +133,7 @@ Format string used to convert the real part of a complex number into a string.
 
 Gurax_ImplementClassPropertyGetter(Complex, formatReal)
 {
-	return new Value_String(Complex::GetFormatterFormat_Real());
+	return new Value_String(Complex::formatterFormat_Real);
 }
 
 Gurax_ImplementClassPropertySetter(Complex, formatReal)
@@ -141,7 +141,7 @@ Gurax_ImplementClassPropertySetter(Complex, formatReal)
 	const String& format = Value_String::GetStringSTL(value);
 	if (!Formatter().VerifyFormat(format.c_str(),
 			Formatter::VaType::Float, Formatter::VaType::None)) return;
-	Complex::SetFormatterFormat_Real(format);
+	Complex::formatterFormat_Real = format;
 }
 
 //------------------------------------------------------------------------------

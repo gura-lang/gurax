@@ -158,7 +158,7 @@ Gurax_ImplementMethod(Rational, Canonicalize)
 //-----------------------------------------------------------------------------
 // Implementation of class property
 //-----------------------------------------------------------------------------
-// Rational.format:String
+// Rational.format as String
 Gurax_DeclareClassProperty_RW(Rational, format)
 {
 	Declare(VTYPE_String, Flag::None);
@@ -169,7 +169,7 @@ Format string used to convert a rational into a string.
 
 Gurax_ImplementClassPropertyGetter(Rational, format)
 {
-	return new Value_String(Rational::GetFormatterFormat());
+	return new Value_String(Rational::formatterFormat);
 }
 
 Gurax_ImplementClassPropertySetter(Rational, format)
@@ -178,10 +178,10 @@ Gurax_ImplementClassPropertySetter(Rational, format)
 	if (!Formatter().VerifyFormat(format.c_str(),
 			Formatter::VaType::Int64, Formatter::VaType::Int64,
 			Formatter::VaType::None)) return;
-	Rational::SetFormatterFormat(format);
+	Rational::formatterFormat = format;
 }
 
-// Rational.formatInt:String
+// Rational.formatInt as String
 Gurax_DeclareClassProperty_RW(Rational, formatInt)
 {
 	Declare(VTYPE_String, Flag::None);
@@ -192,7 +192,7 @@ Format string used to convert a rational which demoninator is one into a string.
 
 Gurax_ImplementClassPropertyGetter(Rational, formatInt)
 {
-	return new Value_String(Rational::GetFormatterFormat_Int());
+	return new Value_String(Rational::formatterFormat_Int);
 }
 
 Gurax_ImplementClassPropertySetter(Rational, formatInt)
@@ -200,13 +200,13 @@ Gurax_ImplementClassPropertySetter(Rational, formatInt)
 	const String& format = Value_String::GetStringSTL(value);
 	if (!Formatter().VerifyFormat(format.c_str(),
 			Formatter::VaType::Int64, Formatter::VaType::None)) return;
-	Rational::SetFormatterFormat_Int(format);
+	Rational::formatterFormat_Int = format;
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// Rational#denom
+// Rational#denom as Number
 Gurax_DeclareProperty_R(Rational, denom)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -221,7 +221,7 @@ Gurax_ImplementPropertyGetter(Rational, denom)
 	return new Value_Number(valueThis.GetRational().GetDenom());
 }
 
-// Rational#numer
+// Rational#numer as Number
 Gurax_DeclareProperty_R(Rational, numer)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -236,7 +236,7 @@ Gurax_ImplementPropertyGetter(Rational, numer)
 	return new Value_Number(valueThis.GetRational().GetNumer());
 }
 
-// Rational#sign
+// Rational#sign as Number
 Gurax_DeclareProperty_R(Rational, sign)
 {
 	Declare(VTYPE_Number, Flag::None);

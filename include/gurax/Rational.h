@@ -17,9 +17,9 @@ public:
 protected:
 	Int64 _numer;
 	Int64 _denom;
-protected:
-	static String _formatterFormat;
-	static String _formatterFormat_Int;
+public:
+	static String formatterFormat;
+	static String formatterFormat_Int;
 public:
 	static const Rational Zero;
 public:
@@ -54,19 +54,6 @@ public:
 	bool IsNeg() const { return _numer < 0; }
 	bool IsNonPos() const { return _numer <= 0; }
 	bool IsNonNeg() const { return _numer >= 0; }
-public:
-	static void SetFormatterFormat(String formatterFormat) {
-		_formatterFormat = formatterFormat;
-	}
-	static const char* GetFormatterFormat() {
-		return _formatterFormat.c_str();
-	}
-	static void SetFormatterFormat_Int(String formatterFormat) {
-		_formatterFormat_Int = formatterFormat;
-	}
-	static const char* GetFormatterFormat_Int() {
-		return _formatterFormat_Int.c_str();
-	}
 public:
 	Rational Canonicalize() const;
 	Rational CanonicalizeQuick() const;

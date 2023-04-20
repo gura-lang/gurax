@@ -12,23 +12,11 @@ namespace Gurax {
 // NumberBase
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE NumberBase {
-protected:
-	static String _formatterFormat_Int;
-	static String _formatterFormat_Float;
+public:
+	static String formatterFormat_Int;
+	static String formatterFormat_Float;
 public:
 	static void Bootup();
-	static void SetFormatterFormat_Int(String formatterFormat) {
-		_formatterFormat_Int = formatterFormat;
-	}
-	static void SetFormatterFormat_Float(String formatterFormat) {
-		_formatterFormat_Float = formatterFormat;
-	}
-	static const char* GetFormatterFormat_Int() {
-		return _formatterFormat_Int.c_str();
-	}
-	static const char* GetFormatterFormat_Float() {
-		return _formatterFormat_Float.c_str();
-	}
 };
 
 //------------------------------------------------------------------------------

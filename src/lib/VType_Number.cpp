@@ -320,7 +320,7 @@ A format string used to convert a floating number into a string.
 
 Gurax_ImplementClassPropertyGetter(Number, format_at_float)
 {
-	return new Value_String(NumberBase::GetFormatterFormat_Float());
+	return new Value_String(NumberBase::formatterFormat_Float);
 }
 
 Gurax_ImplementClassPropertySetter(Number, format_at_float)
@@ -328,7 +328,7 @@ Gurax_ImplementClassPropertySetter(Number, format_at_float)
 	const String& format = Value_String::GetStringSTL(value);
 	if (!Formatter().VerifyFormat(format.c_str(),
 			Formatter::VaType::Float, Formatter::VaType::None)) return;
-	NumberBase::SetFormatterFormat_Float(format);
+	NumberBase::formatterFormat_Float = format;
 }
 
 // Number.format@int as String
@@ -342,7 +342,7 @@ A format string used to convert an integer number into a string.
 
 Gurax_ImplementClassPropertyGetter(Number, format_at_int)
 {
-	return new Value_String(NumberBase::GetFormatterFormat_Int());
+	return new Value_String(NumberBase::formatterFormat_Int);
 }
 
 Gurax_ImplementClassPropertySetter(Number, format_at_int)
@@ -350,7 +350,7 @@ Gurax_ImplementClassPropertySetter(Number, format_at_int)
 	const String& format = Value_String::GetStringSTL(value);
 	if (!Formatter().VerifyFormat(format.c_str(),
 			Formatter::VaType::Int64, Formatter::VaType::None)) return;
-	NumberBase::SetFormatterFormat_Int(format);
+	NumberBase::formatterFormat_Int = format;
 }
 
 //------------------------------------------------------------------------------

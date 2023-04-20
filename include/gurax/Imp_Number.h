@@ -13,8 +13,8 @@ String Number<T_Num>::ToString(T_Num num)
 {
 	Int64 numInt = static_cast<Int64>(num);
 	return (num == numInt)?
-		String().Format(Number::GetFormatterFormat_Int(), numInt) :
-		String().Format(Number::GetFormatterFormat_Float(), static_cast<Double>(num));
+		String().Format(Number::formatterFormat_Int.c_str(), numInt) :
+		String().Format(Number::formatterFormat_Float.c_str(), static_cast<Double>(num));
 }
 
 }

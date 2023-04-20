@@ -8,20 +8,20 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Complex
 //------------------------------------------------------------------------------
-String Complex::_formatterFormat = "%g%+gj";
-String Complex::_formatterFormat_Real = "%g";
-String Complex::_formatterFormat_Imag = "%gj";
+String Complex::formatterFormat = "%g%+gj";
+String Complex::formatterFormat_Real = "%g";
+String Complex::formatterFormat_Imag = "%gj";
 
 const Complex Complex::Zero;
 
 String Complex::ToString(const StringStyle& ss) const
 {
 	if (imag() == 0) {
-		return String().Format(GetFormatterFormat_Real(), real());
+		return String().Format(formatterFormat_Real.c_str(), real());
 	} else if (real() == 0) {
-		return String().Format(GetFormatterFormat_Imag(), imag());
+		return String().Format(formatterFormat_Imag.c_str(), imag());
 	} else {
-		return String().Format(GetFormatterFormat(), real(), imag());
+		return String().Format(formatterFormat.c_str(), real(), imag());
 	}
 }
 
