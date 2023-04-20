@@ -119,6 +119,50 @@ Gurax_ImplementConstructor(Array)
 	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
 }
 
+// Array.format@float as String
+Gurax_DeclareClassPropertyAlias_RW(Array, format_at_float, "format@float")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+A format string used to convert a floating number into a string.
+)""");
+}
+
+Gurax_ImplementClassPropertyGetter(Array, format_at_float)
+{
+	return new Value_String(Array::formatterFormat_Float);
+}
+
+Gurax_ImplementClassPropertySetter(Array, format_at_float)
+{
+	const String& format = Value_String::GetStringSTL(value);
+	if (!Formatter().VerifyFormat(format.c_str(),
+			Formatter::VaType::Float, Formatter::VaType::None)) return;
+	Array::formatterFormat_Float = format;
+}
+
+// Array.format@int as String
+Gurax_DeclareClassPropertyAlias_RW(Array, format_at_int, "format@int")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+A format string used to convert an integer number into a string.
+)""");
+}
+
+Gurax_ImplementClassPropertyGetter(Array, format_at_int)
+{
+	return new Value_String(Array::formatterFormat_Int);
+}
+
+Gurax_ImplementClassPropertySetter(Array, format_at_int)
+{
+	const String& format = Value_String::GetStringSTL(value);
+	if (!Formatter().VerifyFormat(format.c_str(),
+			Formatter::VaType::Int64, Formatter::VaType::None)) return;
+	Array::formatterFormat_Int = format;
+}
+
 // ConstructArray(init*)
 Gurax_DeclareFunction(ConstructArray)
 {
@@ -157,7 +201,7 @@ Gurax_ImplementFunction(ConstructArray)
 //-----------------------------------------------------------------------------
 // Implementation of class method
 //-----------------------------------------------------------------------------
-// Array.Identity(elemType as Symbol, n as Number)
+// Array.Identity(elemType as Symbol, n as Array)
 Gurax_DeclareClassMethod(Array, Identity)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -1014,6 +1058,8 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Array, len));
 	Assign(Gurax_CreateProperty(Array, p));
 	Assign(Gurax_CreateProperty(Array, shape));
+	Assign(Gurax_CreateProperty(Array, format_at_int));
+	Assign(Gurax_CreateProperty(Array, format_at_float));
 	// Assignment of operator
 	Gurax_AssignOpUnary(Neg,	Array);
 	Gurax_AssignOpBinary(Add,	Array, Array);
