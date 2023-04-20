@@ -20,10 +20,10 @@ Value* Node::DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const
 {
 	if (pSymbol->IsIdentical(Gurax_Symbol(output))) {
 		return GetArrayFwd().ToValue();
-	} else if (pSymbol->IsIdentical(Gurax_Symbol(type))) {
-		return new Value_Symbol(Symbol::Add(GetNodeTypeName()));
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(typeName))) {
+		return new Value_String(GetTypeName());
 	}
-	return Value::nil();
+	return nullptr;
 }
 
 void Node::Print(Stream& stream, int indentLevel) const
@@ -193,7 +193,7 @@ Value* Node_Head::DoGetProperty(const Symbol* pSymbol, const Attribute& attr) co
 
 String Node_Head::ToString(const StringStyle& ss) const
 {
-	return String().Format("%s(%s):%s", GetNodeTypeName(), GetTraitName(), GetExpr().ToString().c_str());
+	return String().Format("%s(%s):%s", GetTypeName().c_str(), GetTraitName(), GetExpr().ToString().c_str());
 }
 
 void Node_Head::Print(Stream& stream, int indentLevel) const
@@ -255,7 +255,7 @@ String Node_Bottom::ToString(const StringStyle& ss) const
 {
 	String str;
 	char buff[128];
-	str += GetNodeTypeName();
+	str += GetTypeName();
 	::sprintf(buff, " [fwd:%p,grad:%p]", &GetConnectorSrc().GetArrayFwd(), &GetConnectorSrc().GetArrayGrad());
 	str += buff;
 	return str;
@@ -299,7 +299,7 @@ String Node_Unary::ToString(const StringStyle& ss) const
 {
 	String str;
 	char buff[128];
-	str += GetNodeTypeName();
+	str += GetTypeName();
 	::sprintf(buff, " [fwd:%p,grad:%p]", &GetConnectorSrc().GetArrayFwd(), &GetConnectorSrc().GetArrayGrad());
 	str += buff;
 	return str;
@@ -371,7 +371,7 @@ String Node_Binary::ToString(const StringStyle& ss) const
 {
 	String str;
 	char buff[128];
-	str += GetNodeTypeName();
+	str += GetTypeName();
 	::sprintf(buff, " [fwd:%p,grad:%p][fwd:%p,grad:%p]",
 			&GetConnectorSrcLeft().GetArrayFwd(), &GetConnectorSrcLeft().GetArrayGrad(),
 			&GetConnectorSrcRight().GetArrayFwd(), &GetConnectorSrcRight().GetArrayGrad());
