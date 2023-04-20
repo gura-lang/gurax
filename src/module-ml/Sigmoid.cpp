@@ -8,28 +8,48 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 // Sigmoid
 //------------------------------------------------------------------------------
-template<typename T_Elem> void Sigmoid_Forward_Array_T(void* pvRtn, Bool* pBool, const void* pv, size_t len)
+template<typename T_Elem> void Sigmoid_Forward_Array_T(void* pvRtn, const void* pv, size_t len)
 {
 	T_Elem* pRtn = reinterpret_cast<T_Elem*>(pvRtn);
 	T_Elem* pRtnEnd = pRtn + len;
 	const T_Elem* p = reinterpret_cast<const T_Elem*>(pv);
-	for ( ; pRtn != pRtnEnd; pRtn++, p++, pBool++) {
-		*pRtn = (*pBool = (*p > 0))? *p : 0;
+	for ( ; pRtn != pRtnEnd; pRtn++, p++) {
+		*pRtn = 1. / (1. + ::exp(-*p));
 	}
 }
 
-template<typename T_Elem> void Sigmoid_Backward_Array_T(void* pvRtn, const Bool* pBool, const void* pv, size_t len)
+template<> void Sigmoid_Forward_Array_T<Complex>(void* pvRtn, const void* pv, size_t len)
 {
+	using T_Elem = Complex;
 	T_Elem* pRtn = reinterpret_cast<T_Elem*>(pvRtn);
 	T_Elem* pRtnEnd = pRtn + len;
 	const T_Elem* p = reinterpret_cast<const T_Elem*>(pv);
-	for ( ; pRtn != pRtnEnd; pRtn++, p++, pBool++) {
-		*pRtn = *pBool? *p : 0;
+	for ( ; pRtn != pRtnEnd; pRtn++, p++) {
+		*pRtn = 1. / (1. + std::exp(-*p));
 	}
 }
 
-std::function<void (void* pvDst, Bool* pBool, const void* pvSrc, size_t len)> Sigmoid_Forward_Array[Array::ElemTypeIdMax];
-std::function<void (void* pvDst, const Bool* pBool, const void* pvSrc, size_t len)> Sigmoid_Backward_Array[Array::ElemTypeIdMax];
+template<> void Sigmoid_Forward_Array_T<Half>(void* pvRtn, const void* pv, size_t len)
+{
+}
+
+template<typename T_Elem> void Sigmoid_Backward_Array_T(void* pvRtn, const void* pvFwd, const void* pv, size_t len)
+{
+	T_Elem* pRtn = reinterpret_cast<T_Elem*>(pvRtn);
+	const T_Elem* pFwd = reinterpret_cast<const T_Elem*>(pvFwd);
+	T_Elem* pRtnEnd = pRtn + len;
+	const T_Elem* p = reinterpret_cast<const T_Elem*>(pv);
+	for ( ; pRtn != pRtnEnd; pRtn++, p++, pFwd++) {
+		*pRtn = *p * (1. - *pFwd) * *pFwd;
+	}
+}
+
+template<> void Sigmoid_Backward_Array_T<Half>(void* pvRtn, const void* pvFwd, const void* pv, size_t len)
+{
+}
+
+std::function<void (void* pvDst, const void* pvSrc, size_t len)> Sigmoid_Forward_Array[Array::ElemTypeIdMax];
+std::function<void (void* pvDst, const void* pvFwd, const void* pvSrc, size_t len)> Sigmoid_Backward_Array[Array::ElemTypeIdMax];
 
 void Sigmoid::Initialize()
 {
@@ -39,15 +59,15 @@ void Sigmoid::Initialize()
 
 bool Sigmoid::EvalForward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array)
 {
-	if (!pArrayRtn) pArrayRtn.reset(Array::Create(array.GetElemType(), array.GetDimSizes()));
+	if (!pArrayRtn) {
+		pArrayRtn.reset(Array::Create(array.GetElemType(), array.GetDimSizes()));
+		_pArrayFwd.reset(pArrayRtn.Reference());
+	}
 	if (!pArrayRtn) return false;
-	if (!_pArrayBool) _pArrayBool.reset(Array::Create(Array::ElemType::Bool, array.GetDimSizes()));
-	if (!_pArrayBool) return false;
 	void* pvRtn = pArrayRtn->GetPointerC<void>();
-	Bool* pBool = _pArrayBool->GetPointerC<Bool>();
 	const void* pv = array.GetPointerC<void>();
 	size_t len = array.GetDimSizes().CalcLength();
-	Sigmoid_Forward_Array[array.GetElemType().id](pvRtn, pBool, pv, len);
+	Sigmoid_Forward_Array[array.GetElemType().id](pvRtn, pv, len);
 	return true;
 }
 
@@ -56,10 +76,10 @@ bool Sigmoid::EvalBackward(Processor& processor, RefPtr<Array>& pArrayRtn, const
 	if (!pArrayRtn) pArrayRtn.reset(Array::Create(array.GetElemType(), array.GetDimSizes()));
 	if (!pArrayRtn) return false;
 	void* pvRtn = pArrayRtn->GetPointerC<void>();
-	Bool* pBool = _pArrayBool->GetPointerC<Bool>();
+	void* pvFwd = _pArrayFwd->GetPointerC<void>();
 	const void* pv = array.GetPointerC<void>();
 	size_t len = array.GetDimSizes().CalcLength();
-	Sigmoid_Backward_Array[array.GetElemType().id](pvRtn, pBool, pv, len);
+	Sigmoid_Backward_Array[array.GetElemType().id](pvRtn, pvFwd, pv, len);
 	return true;
 }
 
