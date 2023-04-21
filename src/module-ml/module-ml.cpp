@@ -69,6 +69,7 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_Node);
 	Assign(VTYPE_Optimizer);
 	Assign(VTYPE_ReLU);
+	Assign(VTYPE_Softmax);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(He));
 	Assign(Gurax_CreateFunction(Xavier));

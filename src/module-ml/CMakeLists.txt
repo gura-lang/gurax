@@ -42,11 +42,13 @@ target_sources(ml.gurd PRIVATE
 	Optimizer.cpp
 	ReLU.cpp
 	Sigmoid.cpp
+	Softmax.cpp
 	VType_Trainer.cpp
 	VType_Node.cpp
 	VType_Optimizer.cpp
 	VType_ReLU.cpp
-	VType_Sigmoid.cpp)
+	VType_Sigmoid.cpp
+	VType_Softmax.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------

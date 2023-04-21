@@ -10,6 +10,7 @@
 #include "VType_Optimizer.h"
 #include "VType_ReLU.h"
 #include "VType_Sigmoid.h"
+#include "VType_Softmax.h"
 
 Gurax_BeginModuleHeader(ml)
 Gurax_EndModuleHeader(ml)
