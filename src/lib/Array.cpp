@@ -13,6 +13,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 Array::Funcs Array::funcs;
 String Array::formatterFormat_Int("%d");
+String Array::formatterFormat_UInt("%u");
 String Array::formatterFormat_Float("%g");
 String Array::formatterFormat_Complex("%g%+gj");
 const Array::ElemTypeT* Array::_pElemTypeRtnForArithmTbl[ElemTypeIdMax][ElemTypeIdMax];
@@ -269,57 +270,57 @@ template<> void ToStringElem_T<Bool>(const StringStyle& ss, String& str, const B
 
 template<> void ToStringElem_T<Int8>(const StringStyle& ss, String& str, const Int8* p)
 {
-	str.Format("%d", *p);
+	str.Format(Array::formatterFormat_Int.c_str(), *p);
 }
 
 template<> void ToStringElem_T<UInt8>(const StringStyle& ss, String& str, const UInt8* p)
 {
-	str.Format("%u", *p);
+	str.Format(Array::formatterFormat_UInt.c_str(), *p);
 }
 
 template<> void ToStringElem_T<Int16>(const StringStyle& ss, String& str, const Int16* p)
 {
-	str.Format("%d", *p);
+	str.Format(Array::formatterFormat_Int.c_str(), *p);
 }
 
 template<> void ToStringElem_T<UInt16>(const StringStyle& ss, String& str, const UInt16* p)
 {
-	str.Format("%u", *p);
+	str.Format(Array::formatterFormat_UInt.c_str(), *p);
 }
 
 template<> void ToStringElem_T<Int32>(const StringStyle& ss, String& str, const Int32* p)
 {
-	str.Format("%d", *p);
+	str.Format(Array::formatterFormat_Int.c_str(), *p);
 }
 
 template<> void ToStringElem_T<UInt32>(const StringStyle& ss, String& str, const UInt32* p)
 {
-	str.Format("%u", *p);
+	str.Format(Array::formatterFormat_UInt.c_str(), *p);
 }
 
 template<> void ToStringElem_T<Int64>(const StringStyle& ss, String& str, const Int64* p)
 {
-	str.Format("%lld", *p);
+	str.Format(Array::formatterFormat_Int.c_str(), *p);
 }
 
 template<> void ToStringElem_T<UInt64>(const StringStyle& ss, String& str, const UInt64* p)
 {
-	str.Format("%llu", *p);
+	str.Format(Array::formatterFormat_UInt.c_str(), *p);
 }
 
 template<> void ToStringElem_T<Half>(const StringStyle& ss, String& str, const Half* p)
 {
-	str.Format("%g", p->ToFloat());
+	str.Format(Array::formatterFormat_Float.c_str(), p->ToFloat());
 }
 
 template<> void ToStringElem_T<Float>(const StringStyle& ss, String& str, const Float* p)
 {
-	str.Format("%g", *p);
+	str.Format(Array::formatterFormat_Float.c_str(), *p);
 }
 
 template<> void ToStringElem_T<Double>(const StringStyle& ss, String& str, const Double* p)
 {
-	str.Format("%g", *p);
+	str.Format(Array::formatterFormat_Float.c_str(), *p);
 }
 
 template<> void ToStringElem_T<Complex>(const StringStyle& ss, String& str, const Complex* p)

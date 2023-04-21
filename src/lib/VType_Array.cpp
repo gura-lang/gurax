@@ -163,6 +163,28 @@ Gurax_ImplementClassPropertySetter(Array, format_at_int)
 	Array::formatterFormat_Int = format;
 }
 
+// Array.format@uint as String
+Gurax_DeclareClassPropertyAlias_RW(Array, format_at_uint, "format@uint")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+A format string used to convert an integer number into a string.
+)""");
+}
+
+Gurax_ImplementClassPropertyGetter(Array, format_at_uint)
+{
+	return new Value_String(Array::formatterFormat_UInt);
+}
+
+Gurax_ImplementClassPropertySetter(Array, format_at_uint)
+{
+	const String& format = Value_String::GetStringSTL(value);
+	if (!Formatter().VerifyFormat(format.c_str(),
+			Formatter::VaType::Int64, Formatter::VaType::None)) return;
+	Array::formatterFormat_UInt = format;
+}
+
 // ConstructArray(init*)
 Gurax_DeclareFunction(ConstructArray)
 {
@@ -1059,6 +1081,7 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Array, p));
 	Assign(Gurax_CreateProperty(Array, shape));
 	Assign(Gurax_CreateProperty(Array, format_at_int));
+	Assign(Gurax_CreateProperty(Array, format_at_uint));
 	Assign(Gurax_CreateProperty(Array, format_at_float));
 	// Assignment of operator
 	Gurax_AssignOpUnary(Neg,	Array);
