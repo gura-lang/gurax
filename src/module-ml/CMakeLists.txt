@@ -40,12 +40,18 @@ target_sources(ml.gurd PRIVATE
 	Trainer.cpp
 	Node.cpp
 	Optimizer.cpp
+	Conv1d.cpp
+	Conv2d.cpp
+	Conv3d.cpp
 	ReLU.cpp
 	Sigmoid.cpp
 	Softmax.cpp
 	VType_Trainer.cpp
 	VType_Node.cpp
 	VType_Optimizer.cpp
+	VType_Conv1d.cpp
+	VType_Conv2d.cpp
+	VType_Conv3d.cpp
 	VType_ReLU.cpp
 	VType_Sigmoid.cpp
 	VType_Softmax.cpp)

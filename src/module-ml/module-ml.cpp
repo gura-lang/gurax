@@ -68,6 +68,9 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_Trainer);
 	Assign(VTYPE_Node);
 	Assign(VTYPE_Optimizer);
+	Assign(VTYPE_Conv1d);
+	Assign(VTYPE_Conv2d);
+	Assign(VTYPE_Conv3d);
 	Assign(VTYPE_ReLU);
 	Assign(VTYPE_Softmax);
 	// Assignment of function
