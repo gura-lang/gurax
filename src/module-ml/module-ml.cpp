@@ -63,8 +63,12 @@ Gurax_ModuleValidate()
 Gurax_ModulePrepare()
 {
 	// Initialize Gear Operators
+	Conv1d::Initialize();
+	Conv2d::Initialize();
+	Conv3d::Initialize();
 	ReLU::Initialize();
 	Sigmoid::Initialize();
+	Softmax::Initialize();
 	// Assignment of VType
 	Assign(VTYPE_Trainer);
 	Assign(VTYPE_Node);

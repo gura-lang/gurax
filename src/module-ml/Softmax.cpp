@@ -8,48 +8,45 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 // Softmax
 //------------------------------------------------------------------------------
-template<typename T_Elem> void Softmax_Forward_Array_T(void* pvRtn, const void* pv, size_t len)
+template<typename T_Elem> void Softmax_Forward_Array_T(Array& arrayRtn, const Array& array)
 {
-	T_Elem* pRtn = reinterpret_cast<T_Elem*>(pvRtn);
+	const T_Elem* p = array.GetPointerC<T_Elem>();
+	size_t len = array.GetDimSizes().CalcLength();
+	T_Elem* pRtn = arrayRtn.GetPointerC<T_Elem>();
 	T_Elem* pRtnEnd = pRtn + len;
-	const T_Elem* p = reinterpret_cast<const T_Elem*>(pv);
-	for ( ; pRtn != pRtnEnd; pRtn++, p++) {
-		*pRtn = 1. / (1. + ::exp(-*p));
-	}
+	for ( ; pRtn != pRtnEnd; pRtn++, p++) *pRtn = 1. / (1. + ::exp(-*p));
 }
 
-template<> void Softmax_Forward_Array_T<Complex>(void* pvRtn, const void* pv, size_t len)
+template<> void Softmax_Forward_Array_T<Complex>(Array& arrayRtn, const Array& array)
 {
 	using T_Elem = Complex;
-	T_Elem* pRtn = reinterpret_cast<T_Elem*>(pvRtn);
+	const T_Elem* p = array.GetPointerC<T_Elem>();
+	size_t len = array.GetDimSizes().CalcLength();
+	T_Elem* pRtn = arrayRtn.GetPointerC<T_Elem>();
 	T_Elem* pRtnEnd = pRtn + len;
-	const T_Elem* p = reinterpret_cast<const T_Elem*>(pv);
-	for ( ; pRtn != pRtnEnd; pRtn++, p++) {
-		*pRtn = 1. / (1. + std::exp(-*p));
-	}
+	for ( ; pRtn != pRtnEnd; pRtn++, p++) *pRtn = 1. / (1. + std::exp(-*p));
 }
 
-template<> void Softmax_Forward_Array_T<Half>(void* pvRtn, const void* pv, size_t len)
+template<> void Softmax_Forward_Array_T<Half>(Array& arrayRtn, const Array& array)
 {
 }
 
-template<typename T_Elem> void Softmax_Backward_Array_T(void* pvRtn, const void* pvFwd, const void* pv, size_t len)
+template<typename T_Elem> void Softmax_Backward_Array_T(Array& arrayRtn, const Array& arrayFwd, const Array& array)
 {
-	T_Elem* pRtn = reinterpret_cast<T_Elem*>(pvRtn);
-	const T_Elem* pFwd = reinterpret_cast<const T_Elem*>(pvFwd);
+	const T_Elem* p = array.GetPointerC<T_Elem>();
+	size_t len = array.GetDimSizes().CalcLength();
+	T_Elem* pRtn = arrayRtn.GetPointerC<T_Elem>();
 	T_Elem* pRtnEnd = pRtn + len;
-	const T_Elem* p = reinterpret_cast<const T_Elem*>(pv);
-	for ( ; pRtn != pRtnEnd; pRtn++, p++, pFwd++) {
-		*pRtn = *p * (1. - *pFwd) * *pFwd;
-	}
+	const T_Elem* pFwd = arrayFwd.GetPointerC<T_Elem>();
+	for ( ; pRtn != pRtnEnd; pRtn++, p++, pFwd++) *pRtn = *p * (1. - *pFwd) * *pFwd;
 }
 
-template<> void Softmax_Backward_Array_T<Half>(void* pvRtn, const void* pvFwd, const void* pv, size_t len)
+template<> void Softmax_Backward_Array_T<Half>(Array& arrayRtn, const Array& arrayFwd, const Array& array)
 {
 }
 
-std::function<void (void* pvDst, const void* pvSrc, size_t len)> Softmax_Forward_Array[Array::ElemTypeIdMax];
-std::function<void (void* pvDst, const void* pvFwd, const void* pvSrc, size_t len)> Softmax_Backward_Array[Array::ElemTypeIdMax];
+std::function<void (Array& arrayRtn, const Array& array)> Softmax_Forward_Array[Array::ElemTypeIdMax];
+std::function<void (Array& arrayRtn, const Array& arrayFwd, const Array& array)> Softmax_Backward_Array[Array::ElemTypeIdMax];
 
 void Softmax::Initialize()
 {
@@ -61,25 +58,20 @@ bool Softmax::EvalForward(Processor& processor, RefPtr<Array>& pArrayRtn, const 
 {
 	if (!pArrayRtn) {
 		pArrayRtn.reset(Array::Create(array.GetElemType(), array.GetDimSizes()));
+		if (!pArrayRtn) return false;
 		_pArrayFwd.reset(pArrayRtn.Reference());
 	}
-	if (!pArrayRtn) return false;
-	void* pvRtn = pArrayRtn->GetPointerC<void>();
-	const void* pv = array.GetPointerC<void>();
-	size_t len = array.GetDimSizes().CalcLength();
-	Softmax_Forward_Array[array.GetElemType().id](pvRtn, pv, len);
+	Softmax_Forward_Array[array.GetElemType().id](*pArrayRtn, array);
 	return true;
 }
 
 bool Softmax::EvalBackward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array)
 {
-	if (!pArrayRtn) pArrayRtn.reset(Array::Create(array.GetElemType(), array.GetDimSizes()));
-	if (!pArrayRtn) return false;
-	void* pvRtn = pArrayRtn->GetPointerC<void>();
-	void* pvFwd = _pArrayFwd->GetPointerC<void>();
-	const void* pv = array.GetPointerC<void>();
-	size_t len = array.GetDimSizes().CalcLength();
-	Softmax_Backward_Array[array.GetElemType().id](pvRtn, pvFwd, pv, len);
+	if (!pArrayRtn) {
+		pArrayRtn.reset(Array::Create(array.GetElemType(), array.GetDimSizes()));
+		if (!pArrayRtn) return false;
+	}
+	Softmax_Backward_Array[array.GetElemType().id](*pArrayRtn, *_pArrayFwd, array);
 	return true;
 }
 
