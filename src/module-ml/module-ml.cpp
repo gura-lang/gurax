@@ -64,6 +64,7 @@ Gurax_ModulePrepare()
 {
 	// Initialize Gear Operators
 	ReLU::Initialize();
+	Sigmoid::Initialize();
 	// Assignment of VType
 	Assign(VTYPE_Trainer);
 	Assign(VTYPE_Node);
@@ -72,6 +73,7 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_Conv2d);
 	Assign(VTYPE_Conv3d);
 	Assign(VTYPE_ReLU);
+	Assign(VTYPE_Sigmoid);
 	Assign(VTYPE_Softmax);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(He));
