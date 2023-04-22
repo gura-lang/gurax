@@ -168,7 +168,6 @@ public:
 	static String formatterFormat_Int;
 	static String formatterFormat_UInt;
 	static String formatterFormat_Float;
-	static String formatterFormat_Complex;
 protected:
 	static const ElemTypeT* _pElemTypeRtnForArithmTbl[ElemTypeIdMax][ElemTypeIdMax];
 	static MapSymbolToElemType _mapSymbolToElemType;
