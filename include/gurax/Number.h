@@ -36,7 +36,8 @@ public:
 	static const T_Num Min;
 public:
 	static int GetSign(T_Num num) { return (num == 0)? 0 : (num > 0)? +1 : -1; }
-	static String ToString(T_Num num);
+	static String& ToString(String& str, T_Num num);
+	static String ToString(T_Num num) { String str; return ToString(str, num); }
 };
 
 //------------------------------------------------------------------------------

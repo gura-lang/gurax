@@ -23,7 +23,8 @@ public:
 	Complex(std::complex<Double>& num) : std::complex<Double>(num) {}
 public:
 	bool IsZero() const { return real() == 0. && imag() == 0.; }
-	String ToString(const StringStyle& ss) const;
+	String& ToString(String& str) const;
+	String ToString() const { String str; return ToString(str); }
 public:
 	explicit operator Bool() const { return !IsZero(); }
 	explicit operator Int8() const { return 0; }

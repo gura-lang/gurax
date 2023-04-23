@@ -260,71 +260,18 @@ template<> void ExtractElems_T<Complex>(ValueOwner& values, const void* pv, size
 	for ( ; p != pEnd; p++) values.push_back(new Value_Complex(*p));
 }
 
-template<typename T_Elem> void ToStringElem_T(const StringStyle& ss, String& str, const T_Elem* p) {}
+template<typename T_Elem> void ToStringElem_T(const StringStyle& ss, String& str, const T_Elem* p)
+{
+	Number<T_Elem>::ToString(str, *p);
+}
 
 template<> void ToStringElem_T<Bool>(const StringStyle& ss, String& str, const Bool* p)
 {
 	str.Format("%s", *p? "true" : "false");
 }
-
-template<> void ToStringElem_T<Int8>(const StringStyle& ss, String& str, const Int8* p)
-{
-	str.Format(Array::formatterFormat_Int.c_str(), *p);
-}
-
-template<> void ToStringElem_T<UInt8>(const StringStyle& ss, String& str, const UInt8* p)
-{
-	str.Format(Array::formatterFormat_UInt.c_str(), *p);
-}
-
-template<> void ToStringElem_T<Int16>(const StringStyle& ss, String& str, const Int16* p)
-{
-	str.Format(Array::formatterFormat_Int.c_str(), *p);
-}
-
-template<> void ToStringElem_T<UInt16>(const StringStyle& ss, String& str, const UInt16* p)
-{
-	str.Format(Array::formatterFormat_UInt.c_str(), *p);
-}
-
-template<> void ToStringElem_T<Int32>(const StringStyle& ss, String& str, const Int32* p)
-{
-	str.Format(Array::formatterFormat_Int.c_str(), *p);
-}
-
-template<> void ToStringElem_T<UInt32>(const StringStyle& ss, String& str, const UInt32* p)
-{
-	str.Format(Array::formatterFormat_UInt.c_str(), *p);
-}
-
-template<> void ToStringElem_T<Int64>(const StringStyle& ss, String& str, const Int64* p)
-{
-	str.Format(Array::formatterFormat_Int.c_str(), *p);
-}
-
-template<> void ToStringElem_T<UInt64>(const StringStyle& ss, String& str, const UInt64* p)
-{
-	str.Format(Array::formatterFormat_UInt.c_str(), *p);
-}
-
-template<> void ToStringElem_T<Half>(const StringStyle& ss, String& str, const Half* p)
-{
-	str.Format(Array::formatterFormat_Float.c_str(), p->ToFloat());
-}
-
-template<> void ToStringElem_T<Float>(const StringStyle& ss, String& str, const Float* p)
-{
-	str.Format(Array::formatterFormat_Float.c_str(), *p);
-}
-
-template<> void ToStringElem_T<Double>(const StringStyle& ss, String& str, const Double* p)
-{
-	str.Format(Array::formatterFormat_Float.c_str(), *p);
-}
-
 template<> void ToStringElem_T<Complex>(const StringStyle& ss, String& str, const Complex* p)
 {
-	str += p->ToString(ss);
+	p->ToString(str);
 }
 
 template<typename T_Elem> void ToString_T(const StringStyle& ss, String& str, const void* pv, size_t offset, size_t len)

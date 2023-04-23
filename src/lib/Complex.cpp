@@ -14,15 +14,16 @@ String Complex::formatterFormat_Imag = "%gj";
 
 const Complex Complex::Zero;
 
-String Complex::ToString(const StringStyle& ss) const
+String& Complex::ToString(String& str) const
 {
 	if (imag() == 0) {
-		return String().Format(formatterFormat_Real.c_str(), real());
+		str.Format(formatterFormat_Real.c_str(), real());
 	} else if (real() == 0) {
-		return String().Format(formatterFormat_Imag.c_str(), imag());
+		str.Format(formatterFormat_Imag.c_str(), imag());
 	} else {
-		return String().Format(formatterFormat.c_str(), real(), imag());
+		str.Format(formatterFormat.c_str(), real(), imag());
 	}
+	return str;
 }
 
 }

@@ -9,12 +9,15 @@
 namespace Gurax {
 
 template<typename T_Num>
-String Number<T_Num>::ToString(T_Num num)
+String& Number<T_Num>::ToString(String& str, T_Num num)
 {
 	Int64 numInt = static_cast<Int64>(num);
-	return (num == numInt)?
-		String().Format(Number::formatterFormat_Int.c_str(), numInt) :
-		String().Format(Number::formatterFormat_Float.c_str(), static_cast<Double>(num));
+	if (num == numInt) {
+		str.Format(formatterFormat_Int.c_str(), numInt);
+	} else {
+		str.Format(formatterFormat_Float.c_str(), static_cast<Double>(num));
+	}
+	return str;
 }
 
 }

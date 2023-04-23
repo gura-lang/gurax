@@ -469,7 +469,7 @@ VType& Value_Complex::vtype = VTYPE_Complex;
 
 String Value_Complex::ToString(const StringStyle& ss) const
 {
-	String strEntity = GetComplex().ToString(ss);
+	String strEntity = GetComplex().ToString();
 	if (ss.IsBracket()) return ToStringGeneric(ss, strEntity);
 	return strEntity;
 }

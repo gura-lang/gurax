@@ -80,7 +80,7 @@ void VType_Gear::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Gear, MethodSkeleton));
+	//Assign(Gurax_CreateMethod(Gear, MethodSkeleton));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Gear, name));
 }

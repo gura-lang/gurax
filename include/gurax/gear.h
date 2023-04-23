@@ -29,8 +29,8 @@ protected:
 	~Gear() = default;
 public:
 	virtual const char* GetName() const = 0; 
-	virtual bool EvalForward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array) = 0;
-	virtual bool EvalBackward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array) = 0;
+	virtual bool EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn) = 0;
+	virtual bool EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, const Array& arrayBwdIn) = 0;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Gear& other) const { return this == &other; }
