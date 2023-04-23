@@ -5,6 +5,7 @@
 #define GURAX_NUMBER_H
 #include "MemoryPool.h"
 #include "ListBase.h"
+#include "Half.h"
 
 namespace Gurax {
 
@@ -36,9 +37,40 @@ public:
 	static const T_Num Min;
 public:
 	static int GetSign(T_Num num) { return (num == 0)? 0 : (num > 0)? +1 : -1; }
-	static String& ToString(String& str, T_Num num);
+	static String& ToString(String& str, T_Num num) { return str.Format(formatterFormat_Int.c_str(), num); }
 	static String ToString(T_Num num) { String str; return ToString(str, num); }
 };
+
+template<> String& Number<Half>::ToString(String& str, Half num)
+{
+	Float numFloat = static_cast<Float>(num);
+	Int64 numInt = static_cast<Int64>(numFloat);
+	if (numFloat == numInt) {
+		return str.Format(formatterFormat_Int.c_str(), numInt);
+	} else {
+		return str.Format(formatterFormat_Float.c_str(), numFloat);
+	}
+}
+
+template<> String& Number<Float>::ToString(String& str, Float num)
+{
+	Int64 numInt = static_cast<Int64>(num);
+	if (num == numInt) {
+		return str.Format(formatterFormat_Int.c_str(), numInt);
+	} else {
+		return str.Format(formatterFormat_Float.c_str(), num);
+	}
+}
+
+template<> String& Number<Double>::ToString(String& str, Double num)
+{
+	Int64 numInt = static_cast<Int64>(num);
+	if (num == numInt) {
+		return str.Format(formatterFormat_Int.c_str(), numInt);
+	} else {
+		return str.Format(formatterFormat_Float.c_str(), num);
+	}
+}
 
 //------------------------------------------------------------------------------
 // NumList

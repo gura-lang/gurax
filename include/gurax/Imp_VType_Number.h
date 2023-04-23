@@ -4,7 +4,6 @@
 #ifndef GURAX_IMP_VTYPE_NUMBER_H
 #define GURAX_IMP_VTYPE_NUMBER_H
 #include "VType_Number.h"
-#include "Imp_Number.h"
 
 namespace Gurax {
 
@@ -13,8 +12,8 @@ T_Num Value_Number::GetNumberRanged(T_Num numMin, T_Num numMax) const
 {
 	if ((_num < static_cast<Double>(numMin) || static_cast<Double>(numMax) < _num) && !Error::IsIssued()) {
 		Error::Issue(ErrorType::RangeError, "the number must be between %s and %s",
-					 Number<Double>::ToString(static_cast<Double>(numMin)).c_str(),
-					 Number<Double>::ToString(static_cast<Double>(numMax)).c_str());
+					Number<Double>::ToString(static_cast<Double>(numMin)).c_str(),
+					Number<Double>::ToString(static_cast<Double>(numMax)).c_str());
 	}
 	return static_cast<T_Num>(_num);
 }
@@ -61,8 +60,8 @@ NumList<T_Num> Value_Number::GetNumListRanged(const ValueList& values, T_Num num
 		Double numRaw = Value_Number::GetNumberRaw(*pValue);
 		if ((numRaw < numMinDbl || numMaxDbl < numRaw)) {
 			Error::Issue(ErrorType::RangeError, "the number must be between %s and %s",
-						 Number<Double>::ToString(numMinDbl).c_str(),
-						 Number<Double>::ToString(numMaxDbl).c_str());
+						Number<Double>::ToString(numMinDbl).c_str(),
+						Number<Double>::ToString(numMaxDbl).c_str());
 			break;
 		}
 		nums.push_back(static_cast<T_Num>(numRaw));
