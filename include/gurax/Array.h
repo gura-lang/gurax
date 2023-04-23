@@ -35,7 +35,10 @@ public:
 	static size_t CalcLength(const_iterator pDimSizeBegin, const_iterator pDimSizeEnd);
 	static const DimSizes* DetermineResult(const DimSizes& dimSizesL, const DimSizes& dimSizesR,
 					size_t* pnUnits, size_t* pLenUnit, size_t* pLenFwdL, size_t* pLenFwdR);
-	size_t CalcLength() const { return CalcLength(begin(), end()); }
+	size_t CalcLength(const_iterator pDimSize) const { return CalcLength(pDimSize, end()); }
+	size_t CalcLength() const { return CalcLength(begin()); }
+	size_t CalcStrides(const_iterator pDimSize) const { return CalcLength(pDimSize + 1, end()); }
+	size_t CalcStrides() const { return CalcLength(begin()); }
 	bool IsEqual(const DimSizes& dimSizes) const;
 	bool DoesMatch(const DimSizes& dimSizes, size_t offset = 0) const;
 	bool DoesMatchDot(const DimSizes& dimSizes, size_t offset = 0) const;

@@ -10,86 +10,78 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 template<typename T_Elem> void Softmax_Forward_Array_T(Array& arrayFwdOut, const Array& arrayFwdIn, size_t axis)
 {
-	//const ArrayT<T_Elem> *pArrayT = dynamic_cast<const ArrayT<T_Elem> *>(pArray);
 	const DimSizes& dimSizesFwdIn = arrayFwdIn.GetDimSizes();
 	size_t lenFwdIn = dimSizesFwdIn.CalcLength();
-	//size_t axis = pGear->GetAxis();
 	if (axis > dimSizesFwdIn.size() - 1) axis = dimSizesFwdIn.size() - 1;
-	DimSizes::const_iterator pDimAxis = dimSizesFwdIn.begin() + axis;
-	//if (pArrayRtn.IsNull()) pArrayRtn.reset(ArrayT<T_Elem>::Create(dimSizesFwdIn));
-	//pArrayRtn->FillZero();
-	const T_Elem* pElemTop = arrayFwdIn.GetPointerC<T_Elem>();
-	T_Elem* pElemRtn = arrayFwdOut.GetPointerC<T_Elem>();
-	if (pDimAxis + 1 == dimSizesFwdIn.end()) {
-		//size_t axisSize = pDimAxis->GetSize();
-		size_t axisSize = 0;
+	//DimSizes::const_iterator pDimSizeAxis = dimSizesFwdIn.begin() + axis;
+	auto pDimSizeAxis = dimSizesFwdIn.begin();
+	std::advance(pDimSizeAxis, axis);
+	const T_Elem* pFwdInTop = arrayFwdIn.GetPointerC<T_Elem>();
+	T_Elem* pFwdOutTop = arrayFwdOut.GetPointerC<T_Elem>();
+	if (pDimSizeAxis + 1 == dimSizesFwdIn.end()) {
+		size_t axisSize = dimSizesFwdIn.CalcLength(pDimSizeAxis);
 		for (size_t offset = 0; offset < lenFwdIn; offset += axisSize) {
-			const T_Elem* pElemHead = pElemTop + offset;
-			T_Elem* pElemRtnHead = pElemRtn + offset;
-			T_Elem numMax = 0;
+			const T_Elem* pFwdInHead = pFwdInTop + offset;
+			T_Elem* pFwdOutHead = pFwdOutTop + offset;
+			T_Elem fwdInMax = 0;
 			do {
-				const T_Elem* pElemWk = pElemHead;
-				numMax = *pElemWk;
-				pElemWk++;
-				for (size_t i = 1; i < axisSize; i++, pElemWk++) {
-					if (numMax < *pElemWk) numMax = *pElemWk;
+				const T_Elem* pFwdIn = pFwdInHead;
+				fwdInMax = *pFwdIn;
+				pFwdIn++;
+				for (size_t i = 1; i < axisSize; i++, pFwdIn++) {
+					if (fwdInMax < *pFwdIn) fwdInMax = *pFwdIn;
 				}
 			} while (0);
-			T_Elem numSum = 0;
+			T_Elem fwdInSum = 0;
 			do {
-				const T_Elem* pElemWk = pElemHead;
-				T_Elem* pElemRtnWk = pElemRtnHead;
-				for (size_t i = 0; i < axisSize; i++, pElemWk++, pElemRtnWk++) {
-					//T_Elem num = *pElemWk;
-					T_Elem num = static_cast<T_Elem>(::exp(static_cast<Double>(*pElemWk - numMax)));
-					*pElemRtnWk = num;
-					numSum += num;
+				const T_Elem* pFwdIn = pFwdInHead;
+				T_Elem* pFwdOut = pFwdOutHead;
+				for (size_t i = 0; i < axisSize; i++, pFwdIn++, pFwdOut++) {
+					T_Elem fwdInExp = std::exp(*pFwdIn - fwdInMax);
+					*pFwdOut = fwdInExp;
+					fwdInSum += fwdInExp;
 				}
 			} while (0);
 			do {
-				const T_Elem* pElemWk = pElemHead;
-				T_Elem* pElemRtnWk = pElemRtnHead;
-				for (size_t i = 0; i < axisSize; i++, pElemWk++, pElemRtnWk++) {
-					*pElemRtnWk /= numSum;
+				const T_Elem* pFwdIn = pFwdInHead;
+				T_Elem* pFwdOut = pFwdOutHead;
+				for (size_t i = 0; i < axisSize; i++, pFwdIn++, pFwdOut++) {
+					*pFwdOut /= fwdInSum;
 				}
 			} while (0);
 		}
 	} else {
-		//size_t strides = pDimAxis->GetStrides();
-		//size_t axisSize = pDimAxis->GetSize();
-		//size_t stepSize = pDimAxis->GetSize() * strides;
-		size_t strides = 0;
-		size_t axisSize = 0;
-		size_t stepSize = 0;
-		for (size_t offset = 0; offset < lenFwdIn; offset += stepSize) {
+		::printf("check-5\n");
+		size_t strides = dimSizesFwdIn.CalcStrides(pDimSizeAxis);
+		size_t axisSize = dimSizesFwdIn.CalcLength(pDimSizeAxis);
+		for (size_t offset = 0; offset < lenFwdIn; offset += axisSize) {
 			for (size_t j = 0; j < strides; j++) {
-				const T_Elem* pElemHead = pElemTop + offset + j;
-				T_Elem* pElemRtnHead = pElemRtn + offset + j;
-				T_Elem numMax = 0;
+				const T_Elem* pFwdInHead = pFwdInTop + offset + j;
+				T_Elem* pFwdOutHead = pFwdOutTop + offset + j;
+				T_Elem fwdInMax = 0;
 				do {
-					const T_Elem* pElemWk = pElemHead;
-					numMax = *pElemWk;
-					pElemWk += strides;
-					for (size_t i = 1; i < axisSize; i++, pElemWk += strides) {
-						if (numMax < *pElemWk) numMax = *pElemWk;
+					const T_Elem* pFwdIn = pFwdInHead;
+					fwdInMax = *pFwdIn;
+					pFwdIn += strides;
+					for (size_t i = 1; i < axisSize; i++, pFwdIn += strides) {
+						if (fwdInMax < *pFwdIn) fwdInMax = *pFwdIn;
 					}
 				} while (0);
-				T_Elem numSum = 0;
+				T_Elem fwdInSum = 0;
 				do {
-					const T_Elem* pElemWk = pElemHead;
-					T_Elem *pElemRtnWk = pElemRtnHead;
-					for (size_t i = 0; i < axisSize; i++, pElemWk += strides, pElemRtnWk += strides) {
-						//T_Elem num = *pElemWk;
-						T_Elem num = static_cast<T_Elem>(::exp(static_cast<Double>(*pElemWk - numMax)));
-						*pElemRtnWk = num;
-						numSum += num;
+					const T_Elem* pFwdIn = pFwdInHead;
+					T_Elem *pFwdOut = pFwdOutHead;
+					for (size_t i = 0; i < axisSize; i++, pFwdIn += strides, pFwdOut += strides) {
+						T_Elem fwdInExp = std::exp(*pFwdIn - fwdInMax);
+						*pFwdOut = fwdInExp;
+						fwdInSum += fwdInExp;
 					}
 				} while (0);
 				do {
-					const T_Elem* pElemWk = pElemHead;
-					T_Elem *pElemRtnWk = pElemRtnHead;
-					for (size_t i = 0; i < axisSize; i++, pElemWk += strides, pElemRtnWk += strides) {
-						*pElemRtnWk /= numSum;
+					const T_Elem* pFwdIn = pFwdInHead;
+					T_Elem *pFwdOut = pFwdOutHead;
+					for (size_t i = 0; i < axisSize; i++, pFwdIn += strides, pFwdOut += strides) {
+						*pFwdOut /= fwdInSum;
 					}
 				} while (0);
 			}

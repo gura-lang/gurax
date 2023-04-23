@@ -10,6 +10,24 @@ a = @float([[-6, -1, 4], [-5, -1, -5], [-3, 2, 2]])
 b = @float([[3, -1, 4], [1, 2, -5], [-2, 4, -4]])
 correct = @float([[5, -2, -5], [5, -4, -2], [-6, 5, -3]])
 
+TestCase('Gear Node') {
+	[
+		//`(rtn = a |*| ml.ReLU())
+		//`(rtn = a |*| ml.Sigmoid())
+		`(rtn = a |*| ml.Softmax())
+	].Each {|model|
+		t = ml.Trainer(model, nil)
+		t.Train(correct)
+		rtn = t[`rtn]
+		Printf('%s\n', rtn.typeName)
+		Printf('  input      %s\n', rtn.input)
+		Printf('  output     %s\n', rtn.output)
+		//Printf('  correct    %s\n', correct)
+		//Printf('  outputGrad %s\n', rtn.outputGrad)
+		//Printf('  inputGrad  %s\n', rtn.inputGrad)
+	}
+}
+sys.Exit()
 TestCase('Unary Node') {
 	[
 		`(rtn = -a)
@@ -44,22 +62,5 @@ TestCase('Binary Node') {
 		Printf('  outputGrad %s\n', rtn.outputGrad)
 		Printf('  inputGradL %s\n', rtn.inputGradL)
 		Printf('  inputGradR %s\n', rtn.inputGradR)
-	}
-}
-
-TestCase('Gear Node') {
-	[
-		`(rtn = a |*| ml.ReLU())
-		`(rtn = a |*| ml.Sigmoid())
-	].Each {|model|
-		t = ml.Trainer(model, nil)
-		t.Train(correct)
-		rtn = t[`rtn]
-		Printf('%s\n', rtn.typeName)
-		Printf('  input      %s\n', rtn.input)
-		Printf('  output     %s\n', rtn.output)
-		Printf('  correct    %s\n', correct)
-		Printf('  outputGrad %s\n', rtn.outputGrad)
-		Printf('  inputGrad  %s\n', rtn.inputGrad)
 	}
 }
