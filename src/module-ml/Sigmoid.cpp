@@ -13,16 +13,22 @@ template<typename T_Elem> void Sigmoid_Forward_Array_T(Array& arrayFwdOut, const
 	const T_Elem* pFwdIn = arrayFwdIn.GetPointerC<T_Elem>();
 	const T_Elem* pFwdInEnd = pFwdIn + arrayFwdIn.GetDimSizes().CalcLength();
 	T_Elem* pFwdOut = arrayFwdOut.GetPointerC<T_Elem>();
-	for ( ; pFwdIn != pFwdInEnd; pFwdIn++, pFwdOut++) *pFwdOut = 1. / (1. + std::exp(-static_cast<Double>(*pFwdIn)));
+	for ( ; pFwdIn != pFwdInEnd; pFwdIn++, pFwdOut++) {
+		const T_Elem& fwdIn = *pFwdIn;
+		*pFwdOut = 1. / (1. + std::exp(-fwdIn));
+	}
 }
 
-template<> void Sigmoid_Forward_Array_T<Complex>(Array& arrayFwdOut, const Array& arrayFwdIn)
+template<> void Sigmoid_Forward_Array_T<Half>(Array& arrayFwdOut, const Array& arrayFwdIn)
 {
 	using T_Elem = Complex;
 	const T_Elem* pFwdIn = arrayFwdIn.GetPointerC<T_Elem>();
 	const T_Elem* pFwdInEnd = pFwdIn + arrayFwdIn.GetDimSizes().CalcLength();
 	T_Elem* pFwdOut = arrayFwdOut.GetPointerC<T_Elem>();
-	for ( ; pFwdIn != pFwdInEnd; pFwdIn++, pFwdOut++) *pFwdOut = 1. / (1. + std::exp(-*pFwdIn));
+	for ( ; pFwdIn != pFwdInEnd; pFwdIn++, pFwdOut++) {
+		Float fwdIn = static_cast<Float>(*pFwdIn);
+		*pFwdOut = 1. / (1. + std::exp(-fwdIn));
+	}
 }
 
 template<typename T_Elem> void Sigmoid_Backward_Array_T(Array& arrayBwdOut, const Array& arrayFwdSaved, const Array& arrayBwdIn)
@@ -32,21 +38,23 @@ template<typename T_Elem> void Sigmoid_Backward_Array_T(Array& arrayBwdOut, cons
 	T_Elem* pBwdOut = arrayBwdOut.GetPointerC<T_Elem>();
 	const T_Elem* pFwdSaved = arrayFwdSaved.GetPointerC<T_Elem>();
 	for ( ; pBwdIn != pBwdInEnd; pBwdIn++, pBwdOut++, pFwdSaved++) {
-		Double fwdSaved = static_cast<Double>(*pFwdSaved);
-		*pBwdOut = static_cast<Double>(*pBwdIn) * (1. - fwdSaved) * fwdSaved;
+		const T_Elem& bwdIn = *pBwdIn;
+		const T_Elem& fwdSaved = *pFwdSaved;
+		*pBwdOut = bwdIn * (1. - fwdSaved) * fwdSaved;
 	}
 }
 
-template<> void Sigmoid_Backward_Array_T<Complex>(Array& arrayBwdOut, const Array& arrayFwdSaved, const Array& arrayBwdIn)
+template<> void Sigmoid_Backward_Array_T<Half>(Array& arrayBwdOut, const Array& arrayFwdSaved, const Array& arrayBwdIn)
 {
-	using T_Elem = Complex;
+	using T_Elem = Half;
 	const T_Elem* pBwdIn = arrayBwdIn.GetPointerC<T_Elem>();
 	const T_Elem* pBwdInEnd = pBwdIn + arrayBwdIn.GetDimSizes().CalcLength();
 	T_Elem* pBwdOut = arrayBwdOut.GetPointerC<T_Elem>();
 	const T_Elem* pFwdSaved = arrayFwdSaved.GetPointerC<T_Elem>();
 	for ( ; pBwdIn != pBwdInEnd; pBwdIn++, pBwdOut++, pFwdSaved++) {
-		const Complex& fwdSaved = *pFwdSaved;
-		*pBwdOut = *pBwdIn * (1. - fwdSaved) * fwdSaved;
+		Float bwdIn = static_cast<Float>(*pBwdIn);
+		Float fwdSaved = static_cast<Float>(*pFwdSaved);
+		*pBwdOut = bwdIn * (1. - fwdSaved) * fwdSaved;
 	}
 }
 
