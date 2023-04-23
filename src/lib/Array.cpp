@@ -12,9 +12,6 @@ namespace Gurax {
 // Array
 //------------------------------------------------------------------------------
 Array::Funcs Array::funcs;
-String Array::formatterFormat_Int("%d");
-String Array::formatterFormat_UInt("%u");
-String Array::formatterFormat_Float("%g");
 const Array::ElemTypeT* Array::_pElemTypeRtnForArithmTbl[ElemTypeIdMax][ElemTypeIdMax];
 Array::MapSymbolToElemType Array::_mapSymbolToElemType;
 Array::MapSymbolToElemType Array::_mapAtSymbolToElemType;
