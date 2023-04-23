@@ -8,28 +8,26 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 // ReLU
 //------------------------------------------------------------------------------
-template<typename T_Elem> void ReLU_Forward_Array_T(Array& arrayRtn, Array& arrayBool, const Array& array)
+template<typename T_Elem> void ReLU_Forward_Array_T(Array& arrayFwdOut, Array& arrayBoolSaved, const Array& arrayFwdIn)
 {
-	const T_Elem* p = array.GetPointerC<T_Elem>();
-	size_t len = array.GetDimSizes().CalcLength();
-	T_Elem* pRtn = arrayRtn.GetPointerC<T_Elem>();
-	T_Elem* pRtnEnd = pRtn + len;
-	Bool* pBool = arrayBool.GetPointerC<Bool>();
-	for ( ; pRtn != pRtnEnd; pRtn++, p++, pBool++) *pRtn = (*pBool = (*p > 0))? *p : 0;
+	const T_Elem* pFwdIn = arrayFwdIn.GetPointerC<T_Elem>();
+	const T_Elem* pFwdInEnd = pFwdIn + arrayFwdIn.GetDimSizes().CalcLength();
+	T_Elem* pFwdOut = arrayFwdOut.GetPointerC<T_Elem>();
+	Bool* pBoolSaved = arrayBoolSaved.GetPointerC<Bool>();
+	for ( ; pFwdIn != pFwdInEnd; pFwdIn++, pFwdOut++, pBoolSaved++) *pFwdOut = (*pBoolSaved = (*pFwdIn > 0))? *pFwdIn : 0;
 }
 
-template<typename T_Elem> void ReLU_Backward_Array_T(Array& arrayRtn, const Array& arrayBool, const Array& array)
+template<typename T_Elem> void ReLU_Backward_Array_T(Array& arrayBwdOut, const Array& arrayBoolSaved, const Array& arrayBwdIn)
 {
-	const T_Elem* p = array.GetPointerC<T_Elem>();
-	size_t len = array.GetDimSizes().CalcLength();
-	T_Elem* pRtn = arrayRtn.GetPointerC<T_Elem>();
-	T_Elem* pRtnEnd = pRtn + len;
-	const Bool* pBool = arrayBool.GetPointerC<Bool>();
-	for ( ; pRtn != pRtnEnd; pRtn++, p++, pBool++) *pRtn = *pBool? *p : 0;
+	const T_Elem* pBwdIn = arrayBwdIn.GetPointerC<T_Elem>();
+	const T_Elem* pBwdInEnd = pBwdIn + arrayBwdIn.GetDimSizes().CalcLength();
+	T_Elem* pBwdOut = arrayBwdOut.GetPointerC<T_Elem>();
+	const Bool* pBoolSaved = arrayBoolSaved.GetPointerC<Bool>();
+	for ( ; pBwdIn != pBwdInEnd; pBwdIn++, pBwdOut++, pBoolSaved++) *pBwdOut = *pBoolSaved? *pBwdIn : 0;
 }
 
-std::function<void (Array& arrayRtn, Array& arrayBool, const Array& array)> ReLU_Forward_Array[Array::ElemTypeIdMax];
-std::function<void (Array& arrayRtn, const Array& arrayBool, const Array& array)> ReLU_Backward_Array[Array::ElemTypeIdMax];
+std::function<void (Array& arrayFwdOut, Array& arrayBoolSaved, const Array& arrayFwdIn)> ReLU_Forward_Array[Array::ElemTypeIdMax];
+std::function<void (Array& arrayBwdOut, const Array& arrayBoolSaved, const Array& arrayBwdIn)> ReLU_Backward_Array[Array::ElemTypeIdMax];
 
 void ReLU::Initialize()
 {
@@ -37,21 +35,21 @@ void ReLU::Initialize()
 	Gurax_SetArrayFuncSingle(ReLU_Backward_Array, ReLU_Backward_Array_T);
 }
 
-bool ReLU::EvalForward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array)
+bool ReLU::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn)
 {
-	if (!pArrayRtn) pArrayRtn.reset(Array::Create(array.GetElemType(), array.GetDimSizes()));
-	if (!pArrayRtn) return false;
-	if (!_pArrayBool) _pArrayBool.reset(Array::Create(Array::ElemType::Bool, array.GetDimSizes()));
-	if (!_pArrayBool) return false;
-	ReLU_Forward_Array[array.GetElemType().id](*pArrayRtn, *_pArrayBool, array);
+	if (!pArrayFwdOut) pArrayFwdOut.reset(Array::Create(arrayFwdIn.GetElemType(), arrayFwdIn.GetDimSizes()));
+	if (!pArrayFwdOut) return false;
+	if (!_pArrayBoolSaved) _pArrayBoolSaved.reset(Array::Create(Array::ElemType::Bool, arrayFwdIn.GetDimSizes()));
+	if (!_pArrayBoolSaved) return false;
+	ReLU_Forward_Array[arrayFwdIn.GetElemType().id](*pArrayFwdOut, *_pArrayBoolSaved, arrayFwdIn);
 	return true;
 }
 
-bool ReLU::EvalBackward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array)
+bool ReLU::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, const Array& arrayBwdIn)
 {
-	if (!pArrayRtn) pArrayRtn.reset(Array::Create(array.GetElemType(), array.GetDimSizes()));
-	if (!pArrayRtn) return false;
-	ReLU_Backward_Array[array.GetElemType().id](*pArrayRtn, *_pArrayBool, array);
+	if (!pArrayBwdOut) pArrayBwdOut.reset(Array::Create(arrayBwdIn.GetElemType(), arrayBwdIn.GetDimSizes()));
+	if (!pArrayBwdOut) return false;
+	ReLU_Backward_Array[arrayBwdIn.GetElemType().id](*pArrayBwdOut, *_pArrayBoolSaved, arrayBwdIn);
 	return true;
 }
 
