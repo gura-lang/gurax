@@ -493,3 +493,17 @@ TestCase('Array |^| Array') {
 	Tester(`(@float([2, 4, -3]) |^| @float([3, 8, -5]))[])
 	Tester(`(@float([3, 8, -5]) |^| @float([2, 4, -3]))[])
 }
+
+TestCase('Format') {
+	format@int = Number.format@int
+	format@float = Number.format@float
+	Number.format@int = '%04lld'
+	Number.format@float = '%.4f'
+	Tester(`@int([[0, 1, 2], [3, 4, 5]]))
+	Tester(`@float([[0, 1, 2], [3, 4, 5]]))
+	Tester(`(@float([[0, 1, 2], [3, 4, 5]]) / 3))
+	Number.format@float = '%.6f'
+	Tester(`(@float([[0, 1, 2], [3, 4, 5]]) / 3))
+	Number.format@int = format@int
+	Number.format@float = format@float
+}
