@@ -17,7 +17,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("ml.Conv3d");
 private:
-	RefPtr<Array> _pArrayFwd;
+	RefPtr<Array> _pArrayFwdSaved;
 public:
 	// Constructor
 	Conv3d() {}

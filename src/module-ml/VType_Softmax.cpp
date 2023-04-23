@@ -27,10 +27,11 @@ ${help.ComposeMethodHelp(ml.Softmax, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// ml.Softmax() {block?}
+// ml.Softmax(axis? as Number) {block?}
 Gurax_DeclareConstructor(Softmax)
 {
 	Declare(VTYPE_Softmax, Flag::None);
+	DeclareArg("axis", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `ml.Softmax` instance.
@@ -39,8 +40,12 @@ Creates a `ml.Softmax` instance.
 
 Gurax_ImplementConstructor(Softmax)
 {
+	// Arguments
+	ArgPicker args(argument);
+	size_t axis = args.IsValid()? args.PickNumberNonNeg<size_t>() : 0;
+	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	RefPtr<Softmax> pSoftmax(new Softmax());
+	RefPtr<Softmax> pSoftmax(new Softmax(axis));
 	return argument.ReturnValue(processor, new Value_Softmax(pSoftmax.release()));
 }
 

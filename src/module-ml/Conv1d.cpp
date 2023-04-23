@@ -8,45 +8,58 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 // Conv1d
 //------------------------------------------------------------------------------
-template<typename T_Elem> void Conv1d_Forward_Array_T(Array& arrayRtn, const Array& array)
+template<typename T_Elem> void Conv1d_Forward_Array_T(Array& arrayFwdOut, const Array& arrayFwdIn)
 {
-	const T_Elem* p = array.GetPointerC<T_Elem>();
-	size_t len = array.GetDimSizes().CalcLength();
-	T_Elem* pRtn = arrayRtn.GetPointerC<T_Elem>();
-	T_Elem* pRtnEnd = pRtn + len;
-	for ( ; pRtn != pRtnEnd; pRtn++, p++) *pRtn = 1. / (1. + ::exp(-*p));
+	const T_Elem* pFwdIn = arrayFwdIn.GetPointerC<T_Elem>();
+	const T_Elem* pFwdInEnd = pFwdIn + arrayFwdIn.GetDimSizes().CalcLength();
+	T_Elem* pFwdOut = arrayFwdOut.GetPointerC<T_Elem>();
+	for ( ; pFwdIn != pFwdInEnd; pFwdIn++, pFwdOut++) {
+		const T_Elem& fwdIn = *pFwdIn;
+		*pFwdOut = 1. / (1. + std::exp(-fwdIn));
+	}
 }
 
-template<> void Conv1d_Forward_Array_T<Complex>(Array& arrayRtn, const Array& array)
+template<> void Conv1d_Forward_Array_T<Half>(Array& arrayFwdOut, const Array& arrayFwdIn)
 {
 	using T_Elem = Complex;
-	const T_Elem* p = array.GetPointerC<T_Elem>();
-	size_t len = array.GetDimSizes().CalcLength();
-	T_Elem* pRtn = arrayRtn.GetPointerC<T_Elem>();
-	T_Elem* pRtnEnd = pRtn + len;
-	for ( ; pRtn != pRtnEnd; pRtn++, p++) *pRtn = 1. / (1. + std::exp(-*p));
+	const T_Elem* pFwdIn = arrayFwdIn.GetPointerC<T_Elem>();
+	const T_Elem* pFwdInEnd = pFwdIn + arrayFwdIn.GetDimSizes().CalcLength();
+	T_Elem* pFwdOut = arrayFwdOut.GetPointerC<T_Elem>();
+	for ( ; pFwdIn != pFwdInEnd; pFwdIn++, pFwdOut++) {
+		Float fwdIn = static_cast<Float>(*pFwdIn);
+		*pFwdOut = 1. / (1. + std::exp(-fwdIn));
+	}
 }
 
-template<> void Conv1d_Forward_Array_T<Half>(Array& arrayRtn, const Array& array)
+template<typename T_Elem> void Conv1d_Backward_Array_T(Array& arrayBwdOut, const Array& arrayFwdSaved, const Array& arrayBwdIn)
 {
+	const T_Elem* pBwdIn = arrayBwdIn.GetPointerC<T_Elem>();
+	const T_Elem* pBwdInEnd = pBwdIn + arrayBwdIn.GetDimSizes().CalcLength();
+	T_Elem* pBwdOut = arrayBwdOut.GetPointerC<T_Elem>();
+	const T_Elem* pFwdSaved = arrayFwdSaved.GetPointerC<T_Elem>();
+	for ( ; pBwdIn != pBwdInEnd; pBwdIn++, pBwdOut++, pFwdSaved++) {
+		const T_Elem& bwdIn = *pBwdIn;
+		const T_Elem& fwdSaved = *pFwdSaved;
+		*pBwdOut = bwdIn * (1. - fwdSaved) * fwdSaved;
+	}
 }
 
-template<typename T_Elem> void Conv1d_Backward_Array_T(Array& arrayRtn, const Array& arrayFwd, const Array& array)
+template<> void Conv1d_Backward_Array_T<Half>(Array& arrayBwdOut, const Array& arrayFwdSaved, const Array& arrayBwdIn)
 {
-	const T_Elem* p = array.GetPointerC<T_Elem>();
-	size_t len = array.GetDimSizes().CalcLength();
-	T_Elem* pRtn = arrayRtn.GetPointerC<T_Elem>();
-	T_Elem* pRtnEnd = pRtn + len;
-	const T_Elem* pFwd = arrayFwd.GetPointerC<T_Elem>();
-	for ( ; pRtn != pRtnEnd; pRtn++, p++, pFwd++) *pRtn = *p * (1. - *pFwd) * *pFwd;
+	using T_Elem = Half;
+	const T_Elem* pBwdIn = arrayBwdIn.GetPointerC<T_Elem>();
+	const T_Elem* pBwdInEnd = pBwdIn + arrayBwdIn.GetDimSizes().CalcLength();
+	T_Elem* pBwdOut = arrayBwdOut.GetPointerC<T_Elem>();
+	const T_Elem* pFwdSaved = arrayFwdSaved.GetPointerC<T_Elem>();
+	for ( ; pBwdIn != pBwdInEnd; pBwdIn++, pBwdOut++, pFwdSaved++) {
+		Float bwdIn = static_cast<Float>(*pBwdIn);
+		Float fwdSaved = static_cast<Float>(*pFwdSaved);
+		*pBwdOut = bwdIn * (1. - fwdSaved) * fwdSaved;
+	}
 }
 
-template<> void Conv1d_Backward_Array_T<Half>(Array& arrayRtn, const Array& arrayFwd, const Array& array)
-{
-}
-
-std::function<void (Array& arrayRtn, const Array& array)> Conv1d_Forward_Array[Array::ElemTypeIdMax];
-std::function<void (Array& arrayRtn, const Array& arrayFwd, const Array& array)> Conv1d_Backward_Array[Array::ElemTypeIdMax];
+std::function<void (Array& arrayFwdOut, const Array& arrayFwdIn)> Conv1d_Forward_Array[Array::ElemTypeIdMax];
+std::function<void (Array& arrayBwdOut, const Array& arrayFwdSaved, const Array& arrayBwdIn)> Conv1d_Backward_Array[Array::ElemTypeIdMax];
 
 void Conv1d::Initialize()
 {
@@ -54,24 +67,24 @@ void Conv1d::Initialize()
 	Gurax_SetArrayFuncSingle(Conv1d_Backward_Array, Conv1d_Backward_Array_T);
 }
 
-bool Conv1d::EvalForward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array)
+bool Conv1d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn)
 {
-	if (!pArrayRtn) {
-		pArrayRtn.reset(Array::Create(array.GetElemType(), array.GetDimSizes()));
-		if (!pArrayRtn) return false;
-		_pArrayFwd.reset(pArrayRtn.Reference());
+	if (!pArrayFwdOut) {
+		pArrayFwdOut.reset(Array::Create(arrayFwdIn.GetElemType(), arrayFwdIn.GetDimSizes()));
+		if (!pArrayFwdOut) return false;
+		_pArrayFwdSaved.reset(pArrayFwdOut.Reference());
 	}
-	Conv1d_Forward_Array[array.GetElemType().id](*pArrayRtn, array);
+	Conv1d_Forward_Array[arrayFwdIn.GetElemType().id](*pArrayFwdOut, arrayFwdIn);
 	return true;
 }
 
-bool Conv1d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array)
+bool Conv1d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, const Array& arrayBwdIn)
 {
-	if (!pArrayRtn) {
-		pArrayRtn.reset(Array::Create(array.GetElemType(), array.GetDimSizes()));
-		if (!pArrayRtn) return false;
+	if (!pArrayBwdOut) {
+		pArrayBwdOut.reset(Array::Create(arrayBwdIn.GetElemType(), arrayBwdIn.GetDimSizes()));
+		if (!pArrayBwdOut) return false;
 	}
-	Conv1d_Backward_Array[array.GetElemType().id](*pArrayRtn, *_pArrayFwd, array);
+	Conv1d_Backward_Array[arrayBwdIn.GetElemType().id](*pArrayBwdOut, *_pArrayFwdSaved, arrayBwdIn);
 	return true;
 }
 

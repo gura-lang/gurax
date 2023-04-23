@@ -17,10 +17,11 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("ml.Softmax");
 private:
-	RefPtr<Array> _pArrayFwd;
+	size_t _axis;
+	RefPtr<Array> _pArrayFwdSaved;
 public:
 	// Constructor
-	Softmax() {}
+	Softmax(size_t axis) : _axis(axis) {}
 	// Copy constructor/operator
 	Softmax(const Softmax& src) = delete;
 	Softmax& operator=(const Softmax& src) = delete;
