@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_Softmax.cpp
+// VType_Tanh.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -13,46 +13,42 @@ static const char* g_docHelp_en = u8R"""(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(ml.Softmax, `en)}
+${help.ComposePropertyHelp(ml.Tanh, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(ml.Softmax, `en)}
+${help.ComposeConstructorHelp(ml.Tanh, `en)}
 
-${help.ComposeMethodHelp(ml.Softmax, `en)}
+${help.ComposeMethodHelp(ml.Tanh, `en)}
 )""";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// ml.Softmax(axis? as Number) {block?}
-Gurax_DeclareConstructor(Softmax)
+// ml.Tanh() {block?}
+Gurax_DeclareConstructor(Tanh)
 {
-	Declare(VTYPE_Softmax, Flag::None);
-	DeclareArg("axis", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	Declare(VTYPE_Tanh, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
-Creates a `ml.Softmax` instance.
+Creates a `ml.Tanh` instance.
 )""");
 }
 
-Gurax_ImplementConstructor(Softmax)
+Gurax_ImplementConstructor(Tanh)
 {
-	// Arguments
-	ArgPicker args(argument);
-	int axis = args.IsValid()? args.PickNumber<int>() : -1;
 	// Function body
-	RefPtr<Softmax> pSoftmax(new Softmax(axis));
-	return argument.ReturnValue(processor, new Value_Softmax(pSoftmax.release()));
+	RefPtr<Tanh> pTanh(new Tanh());
+	return argument.ReturnValue(processor, new Value_Tanh(pTanh.release()));
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// ml.Softmax#MethodSkeleton(num1 as Number, num2 as Number)
-Gurax_DeclareMethod(Softmax, MethodSkeleton)
+// ml.Tanh#MethodSkeleton(num1 as Number, num2 as Number)
+Gurax_DeclareMethod(Tanh, MethodSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -62,7 +58,7 @@ Skeleton.
 )""");
 }
 
-Gurax_ImplementMethod(Softmax, MethodSkeleton)
+Gurax_ImplementMethod(Tanh, MethodSkeleton)
 {
 	// Target
 	//auto& valueThis = GetValueThis(argument);
@@ -77,8 +73,8 @@ Gurax_ImplementMethod(Softmax, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// ml.Softmax#propSkeleton
-Gurax_DeclareProperty_R(Softmax, propSkeleton)
+// ml.Tanh#propSkeleton
+Gurax_DeclareProperty_R(Tanh, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -86,37 +82,37 @@ Skeleton.
 )""");
 }
 
-Gurax_ImplementPropertyGetter(Softmax, propSkeleton)
+Gurax_ImplementPropertyGetter(Tanh, propSkeleton)
 {
 	//auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Number(3);
 }
 
 //------------------------------------------------------------------------------
-// VType_Softmax
+// VType_Tanh
 //------------------------------------------------------------------------------
-VType_Softmax VTYPE_Softmax("Softmax");
+VType_Tanh VTYPE_Tanh("Tanh");
 
-void VType_Softmax::DoPrepare(Frame& frameOuter)
+void VType_Tanh::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Gear, Flag::Immutable, Gurax_CreateConstructor(Softmax));
+	Declare(VTYPE_Gear, Flag::Immutable, Gurax_CreateConstructor(Tanh));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Softmax, MethodSkeleton));
+	Assign(Gurax_CreateMethod(Tanh, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Softmax, propSkeleton));
+	Assign(Gurax_CreateProperty(Tanh, propSkeleton));
 }
 
 //------------------------------------------------------------------------------
-// Value_Softmax
+// Value_Tanh
 //------------------------------------------------------------------------------
-VType& Value_Softmax::vtype = VTYPE_Softmax;
+VType& Value_Tanh::vtype = VTYPE_Tanh;
 
-String Value_Softmax::ToString(const StringStyle& ss) const
+String Value_Tanh::ToString(const StringStyle& ss) const
 {
-	return ToStringGeneric(ss, GetSoftmax().ToString(ss));
+	return ToStringGeneric(ss, GetTanh().ToString(ss));
 }
 
 Gurax_EndModuleScope(ml)

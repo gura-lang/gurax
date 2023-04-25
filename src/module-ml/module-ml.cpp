@@ -69,6 +69,7 @@ Gurax_ModulePrepare()
 	ReLU::Initialize();
 	Sigmoid::Initialize();
 	Softmax::Initialize();
+	Tanh::Initialize();
 	// Assignment of VType
 	Assign(VTYPE_Trainer);
 	Assign(VTYPE_Node);
@@ -79,6 +80,7 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_ReLU);
 	Assign(VTYPE_Sigmoid);
 	Assign(VTYPE_Softmax);
+	Assign(VTYPE_Tanh);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(He));
 	Assign(Gurax_CreateFunction(Xavier));

@@ -46,6 +46,7 @@ target_sources(ml.gurd PRIVATE
 	ReLU.cpp
 	Sigmoid.cpp
 	Softmax.cpp
+	Tanh.cpp
 	VType_Trainer.cpp
 	VType_Node.cpp
 	VType_Optimizer.cpp
@@ -54,7 +55,8 @@ target_sources(ml.gurd PRIVATE
 	VType_Conv3d.cpp
 	VType_ReLU.cpp
 	VType_Sigmoid.cpp
-	VType_Softmax.cpp)
+	VType_Softmax.cpp
+	VType_Tanh.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
