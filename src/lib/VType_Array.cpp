@@ -157,12 +157,13 @@ Gurax_ImplementFunction(ConstructArray)
 //-----------------------------------------------------------------------------
 // Implementation of class method
 //-----------------------------------------------------------------------------
-// Array.Identity(elemType as Symbol, n as Array)
+// Array.Identity(elemType as Symbol, n as Array) {block?}
 Gurax_DeclareClassMethod(Array, Identity)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 
 )""");
@@ -181,7 +182,7 @@ Gurax_ImplementClassMethod(Array, Identity)
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	RefPtr<Array> pArray(Array::CreateIdentity(elemType, n, 1.));
-	return new Value_Array(pArray.release());
+	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
 }
 
 //-----------------------------------------------------------------------------
