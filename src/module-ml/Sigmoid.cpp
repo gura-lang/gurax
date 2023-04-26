@@ -10,6 +10,7 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 template<typename T_Elem> void Sigmoid_Forward_Array_T(Array& arrayFwdOut, const Array& arrayFwdIn)
 {
+	// arrayFwdOUt = 1 / (1 + exp(-arrayFwdIn))
 	const T_Elem* pFwdIn = arrayFwdIn.GetPointerC<T_Elem>();
 	const T_Elem* pFwdInEnd = pFwdIn + arrayFwdIn.GetDimSizes().CalcLength();
 	T_Elem* pFwdOut = arrayFwdOut.GetPointerC<T_Elem>();
@@ -21,6 +22,7 @@ template<typename T_Elem> void Sigmoid_Forward_Array_T(Array& arrayFwdOut, const
 
 template<> void Sigmoid_Forward_Array_T<Half>(Array& arrayFwdOut, const Array& arrayFwdIn)
 {
+	// arrayFwdOUt = 1 / (1 + exp(-arrayFwdIn))
 	using T_Elem = Complex;
 	const T_Elem* pFwdIn = arrayFwdIn.GetPointerC<T_Elem>();
 	const T_Elem* pFwdInEnd = pFwdIn + arrayFwdIn.GetDimSizes().CalcLength();
@@ -33,6 +35,7 @@ template<> void Sigmoid_Forward_Array_T<Half>(Array& arrayFwdOut, const Array& a
 
 template<typename T_Elem> void Sigmoid_Backward_Array_T(Array& arrayBwdOut, const Array& arrayFwdSaved, const Array& arrayBwdIn)
 {
+	// arrayBwdOUt = arrayBwdIn / (1 - arrayFwdSaved) * arrayFwdSaved
 	const T_Elem* pBwdIn = arrayBwdIn.GetPointerC<T_Elem>();
 	const T_Elem* pBwdInEnd = pBwdIn + arrayBwdIn.GetDimSizes().CalcLength();
 	T_Elem* pBwdOut = arrayBwdOut.GetPointerC<T_Elem>();
@@ -46,6 +49,7 @@ template<typename T_Elem> void Sigmoid_Backward_Array_T(Array& arrayBwdOut, cons
 
 template<> void Sigmoid_Backward_Array_T<Half>(Array& arrayBwdOut, const Array& arrayFwdSaved, const Array& arrayBwdIn)
 {
+	// arrayBwdOUt = arrayBwdIn / (1 - arrayFwdSaved) * arrayFwdSaved
 	using T_Elem = Half;
 	const T_Elem* pBwdIn = arrayBwdIn.GetPointerC<T_Elem>();
 	const T_Elem* pBwdInEnd = pBwdIn + arrayBwdIn.GetDimSizes().CalcLength();

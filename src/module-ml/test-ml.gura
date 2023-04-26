@@ -15,6 +15,7 @@ TestCase('Gear Node') {
 		`(rtn = a |*| ml.ReLU())
 		`(rtn = a |*| ml.Sigmoid())
 		`(rtn = a |*| ml.Softmax())
+		`(rtn = a |*| ml.Tanh())
 	].Each {|model|
 		t = ml.Trainer(model, nil)
 		t.Train(correct)

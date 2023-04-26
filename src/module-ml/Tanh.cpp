@@ -10,6 +10,7 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 template<typename T_Elem> void Tanh_Forward_Array_T(Array& arrayFwdOut, const Array& arrayFwdIn)
 {
+	// arrayFwdOut = tanh(arrayFwdIn)
 	const T_Elem* pFwdIn = arrayFwdIn.GetPointerC<T_Elem>();
 	const T_Elem* pFwdInEnd = pFwdIn + arrayFwdIn.GetDimSizes().CalcLength();
 	T_Elem* pFwdOut = arrayFwdOut.GetPointerC<T_Elem>();
@@ -21,6 +22,7 @@ template<typename T_Elem> void Tanh_Forward_Array_T(Array& arrayFwdOut, const Ar
 
 template<> void Tanh_Forward_Array_T<Half>(Array& arrayFwdOut, const Array& arrayFwdIn)
 {
+	// arrayFwdOut = tanh(arrayFwdIn)
 	using T_Elem = Complex;
 	const T_Elem* pFwdIn = arrayFwdIn.GetPointerC<T_Elem>();
 	const T_Elem* pFwdInEnd = pFwdIn + arrayFwdIn.GetDimSizes().CalcLength();

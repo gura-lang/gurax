@@ -103,7 +103,7 @@ template<typename T_Elem> void Softmax_Backward_Array_T(Array& arrayBwdOut, cons
 	for ( ; pBwdIn != pBwdInEnd; pBwdIn++, pBwdOut++, pFwdSaved++) {
 		const T_Elem& bwdIn = *pBwdIn;
 		const T_Elem& fwdSaved = *pFwdSaved;
-		*pBwdOut = bwdIn * (1. - fwdSaved) * fwdSaved;
+		*pBwdOut = fwdSaved - bwdIn;
 	}
 }
 
