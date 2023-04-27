@@ -178,6 +178,53 @@ Gurax_ImplementMethod(Trainer, Train)
 	return Value::nil();
 }
 
+// Trainer#CalcCrossEntropyError(correct as Array)
+Gurax_DeclareMethod(Trainer, CalcCrossEntropyError)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("correct", VTYPE_Array, ArgOccur::Once, ArgFlag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementMethod(Trainer, CalcCrossEntropyError)
+{
+	// Target
+	Trainer& trainer = GetValueThis(argument).GetTrainer();
+	// Arguments
+	ArgPicker args(argument);
+	const Array& arrayCorrect = args.Pick<Value_Array>().GetArray();
+	Double epsilon = 1.e-6;
+	// Function body
+	Double entropyError = trainer.CalcCrossEntropyError(arrayCorrect, epsilon);
+	if (Error::IsIssued()) return Value::nil();
+	return new Value_Number(entropyError);
+}
+
+// Trainer#CalcMeanSquareError(correct as Array)
+Gurax_DeclareMethod(Trainer, CalcMeanSquareError)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("correct", VTYPE_Array, ArgOccur::Once, ArgFlag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementMethod(Trainer, CalcMeanSquareError)
+{
+	// Target
+	Trainer& trainer = GetValueThis(argument).GetTrainer();
+	// Arguments
+	ArgPicker args(argument);
+	const Array& arrayCorrect = args.Pick<Value_Array>().GetArray();
+	// Function body
+	if (!trainer.EvalForward(processor)) return Value::nil();
+	trainer.EvalBackward(processor, arrayCorrect);
+	return Value::nil();
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -258,6 +305,8 @@ void VType_Trainer::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Trainer, GetNode));
 	Assign(Gurax_CreateMethod(Trainer, Print));
 	Assign(Gurax_CreateMethod(Trainer, Train));
+	Assign(Gurax_CreateMethod(Trainer, CalcMeanSquareError));
+	Assign(Gurax_CreateMethod(Trainer, CalcCrossEntropyError));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Trainer, model));
 	Assign(Gurax_CreateProperty(Trainer, nodeBottom));

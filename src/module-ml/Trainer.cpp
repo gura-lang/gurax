@@ -8,9 +8,52 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 // Trainer
 //------------------------------------------------------------------------------
+std::function<Double (const Array& arrayFwdOut, const Array& arrayTrain)> CalcMeanSquareErrorTbl[Array::ElemTypeIdMax];
+std::function<Double (const Array& arrayFwdOut, const Array& arrayTrain)> CalcCrossEntropyErrorTbl[Array::ElemTypeIdMax];
+
+template<typename T_Elem> Double CalcMeanSquareError_T(const Array& arrayFwdOut, const Array& arrayTrain)
+{
+	Double rtn = 0;
+	const T_Elem* pFwdOut = arrayFwdOut.GetPointerC<T_Elem>();
+	const T_Elem* pFwdOutEnd = pFwdOut + arrayFwdOut.GetDimSizes().CalcLength();
+	const T_Elem* pTrain = arrayTrain.GetPointerC<T_Elem>();
+	for ( ; pFwdOut != pFwdOutEnd; pFwdOut++, pTrain++) {
+		Double tmp = *pFwdOut - *pTrain;
+		rtn += tmp * tmp;
+	}
+	rtn /= 2;
+	return rtn;
+}
+
+template<> Double CalcMeanSquareError_T<Complex>(const Array& arrayFwdOut, const Array& arrayTrain) { return 0; }
+template<> Double CalcMeanSquareError_T<Half>(const Array& arrayFwdOut, const Array& arrayTrain) { return 0; }
+
+template<typename T_Elem> Double CalcCrossEntropyError_T(const Array& arrayFwdOut, const Array& arrayTrain)
+{
+	Double rtn = 0;
+	const T_Elem* pFwdOut = arrayFwdOut.GetPointerC<T_Elem>();
+	const T_Elem* pFwdOutEnd = pFwdOut + arrayFwdOut.GetDimSizes().CalcLength();
+	const T_Elem* pTrain = arrayTrain.GetPointerC<T_Elem>();
+	for ( ; pFwdOut != pFwdOutEnd; pFwdOut++, pTrain++) {
+		Double tmp = *pFwdOut - *pTrain;
+		rtn += tmp * tmp;
+	}
+	rtn /= 2;
+	return rtn;
+}
+
+template<> Double CalcCrossEntropyError_T<Complex>(const Array& arrayFwdOut, const Array& arrayTrain) { return 0; }
+template<> Double CalcCrossEntropyError_T<Half>(const Array& arrayFwdOut, const Array& arrayTrain) { return 0; }
+
 Trainer::Trainer(Expr* pExprModel, Optimizer* pOptimizer) :
 		_pExprModel(pExprModel), _pOptimizer(pOptimizer), _pNodeBottom(new Node_Bottom())
 {
+}
+
+void Trainer::Initialize()
+{
+	Gurax_SetArrayFuncSingle(CalcMeanSquareErrorTbl, CalcMeanSquareError_T);
+	Gurax_SetArrayFuncSingle(CalcCrossEntropyErrorTbl, CalcCrossEntropyError_T);
 }
 
 bool Trainer::CreateFromExpr(const SymbolSet& inputs)
@@ -47,19 +90,14 @@ Double Trainer::CalcMeanSquareError(const Array& arrayCorrect) const
 {
 	const Array& arrayResult = GetResult();
 	if (!arrayResult.HasSameShape(arrayCorrect)) return 0;
-	
-	return 0;
+	return CalcMeanSquareErrorTbl[arrayResult.GetElemType().id](arrayResult, arrayCorrect);
 }
 
 Double Trainer::CalcCrossEntropyError(const Array& arrayCorrect, Double epsilon) const
 {
-#if 0
-	const Array *pArrayResult = GetResult();
-	if (!Array::CheckSameShape(sig, pArrayResult, pArrayCorrect)) return 0;
-	// not implemented yet
-	return 0;
-#endif
-	return 0;
+	const Array& arrayResult = GetResult();
+	if (!arrayResult.HasSameShape(arrayCorrect)) return 0;
+	return CalcCrossEntropyErrorTbl[arrayResult.GetElemType().id](arrayResult, arrayCorrect);
 }
 
 Node* Trainer::FindNode(const Symbol* pSymbol) const
@@ -162,6 +200,7 @@ Node* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolsInput)
 		_nodeOwner.push_back(pNode.Reference());
 		return pNode.release();
 	}
+
 	return nullptr;
 }
 
