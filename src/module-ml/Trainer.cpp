@@ -35,10 +35,9 @@ template<typename T_Elem> Double CalcCrossEntropyError_T(const Array& arrayFwdOu
 	const T_Elem* pFwdOutEnd = pFwdOut + arrayFwdOut.GetDimSizes().CalcLength();
 	const T_Elem* pTrain = arrayTrain.GetPointerC<T_Elem>();
 	for ( ; pFwdOut != pFwdOutEnd; pFwdOut++, pTrain++) {
-		Double tmp = *pFwdOut - *pTrain;
-		rtn += tmp * tmp;
+		rtn += *pTrain * std::log(*pFwdOut + 1.e-6);
 	}
-	rtn /= 2;
+	//rtn /= 2;
 	return rtn;
 }
 
