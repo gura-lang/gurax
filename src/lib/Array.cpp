@@ -1452,7 +1452,26 @@ bool Array::Add(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& nu
 
 bool Array::And(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.And_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	if (arrayL.IsArray() && arrayR.IsArray()) {
+		return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.And_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	} else if (arrayL.IsArray() && arrayR.IsScalarNumber()) {
+		return Add(pArrayRtn, arrayL, arrayR.GetScalarNumber());
+	} else if (arrayL.IsArray() && arrayR.IsScalarComplex()) {
+		return Add(pArrayRtn, arrayL, arrayR.GetScalarComplex());
+	} else if (arrayL.IsScalarNumber() && arrayR.IsArray()) {
+		return Add(pArrayRtn, arrayR, arrayL.GetScalarNumber());
+	} else if (arrayL.IsScalarComplex() && arrayR.IsArray()) {
+		return Add(pArrayRtn, arrayR, arrayL.GetScalarComplex());
+	} else if (arrayL.IsScalarNumber() && arrayR.IsScalarNumber()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Double, arrayL.GetScalarNumber() + arrayR.GetScalarNumber()));
+	} else if (arrayL.IsScalarNumber() && arrayR.IsScalarComplex()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarNumber() + arrayR.GetScalarComplex()));
+	} else if (arrayL.IsScalarComplex() && arrayR.IsScalarNumber()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarComplex() + arrayR.GetScalarNumber()));
+	} else {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarComplex() + arrayR.GetScalarComplex()));
+	}
+	return true;
 }
 
 bool Array::And(RefPtr<Array>& pArrayRtn, const Array& arrayL, UInt64 numR)
@@ -1462,7 +1481,26 @@ bool Array::And(RefPtr<Array>& pArrayRtn, const Array& arrayL, UInt64 numR)
 
 bool Array::Sub(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Sub_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	if (arrayL.IsArray() && arrayR.IsArray()) {
+		return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Sub_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	} else if (arrayL.IsArray() && arrayR.IsScalarNumber()) {
+		return Add(pArrayRtn, arrayL, arrayR.GetScalarNumber());
+	} else if (arrayL.IsArray() && arrayR.IsScalarComplex()) {
+		return Add(pArrayRtn, arrayL, arrayR.GetScalarComplex());
+	} else if (arrayL.IsScalarNumber() && arrayR.IsArray()) {
+		return Add(pArrayRtn, arrayR, arrayL.GetScalarNumber());
+	} else if (arrayL.IsScalarComplex() && arrayR.IsArray()) {
+		return Add(pArrayRtn, arrayR, arrayL.GetScalarComplex());
+	} else if (arrayL.IsScalarNumber() && arrayR.IsScalarNumber()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Double, arrayL.GetScalarNumber() + arrayR.GetScalarNumber()));
+	} else if (arrayL.IsScalarNumber() && arrayR.IsScalarComplex()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarNumber() + arrayR.GetScalarComplex()));
+	} else if (arrayL.IsScalarComplex() && arrayR.IsScalarNumber()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarComplex() + arrayR.GetScalarNumber()));
+	} else {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarComplex() + arrayR.GetScalarComplex()));
+	}
+	return true;
 }
 
 bool Array::Sub(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
@@ -1487,7 +1525,26 @@ bool Array::Sub(RefPtr<Array>& pArrayRtn, const Complex& numL, const Array& arra
 
 bool Array::Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Mul_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	if (arrayL.IsArray() && arrayR.IsArray()) {
+		return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Mul_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	} else if (arrayL.IsArray() && arrayR.IsScalarNumber()) {
+		return Add(pArrayRtn, arrayL, arrayR.GetScalarNumber());
+	} else if (arrayL.IsArray() && arrayR.IsScalarComplex()) {
+		return Add(pArrayRtn, arrayL, arrayR.GetScalarComplex());
+	} else if (arrayL.IsScalarNumber() && arrayR.IsArray()) {
+		return Add(pArrayRtn, arrayR, arrayL.GetScalarNumber());
+	} else if (arrayL.IsScalarComplex() && arrayR.IsArray()) {
+		return Add(pArrayRtn, arrayR, arrayL.GetScalarComplex());
+	} else if (arrayL.IsScalarNumber() && arrayR.IsScalarNumber()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Double, arrayL.GetScalarNumber() + arrayR.GetScalarNumber()));
+	} else if (arrayL.IsScalarNumber() && arrayR.IsScalarComplex()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarNumber() + arrayR.GetScalarComplex()));
+	} else if (arrayL.IsScalarComplex() && arrayR.IsScalarNumber()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarComplex() + arrayR.GetScalarNumber()));
+	} else {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarComplex() + arrayR.GetScalarComplex()));
+	}
+	return true;
 }
 
 bool Array::Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
@@ -1502,7 +1559,26 @@ bool Array::Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& nu
 
 bool Array::Div(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Div_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	if (arrayL.IsArray() && arrayR.IsArray()) {
+		return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Div_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	} else if (arrayL.IsArray() && arrayR.IsScalarNumber()) {
+		return Add(pArrayRtn, arrayL, arrayR.GetScalarNumber());
+	} else if (arrayL.IsArray() && arrayR.IsScalarComplex()) {
+		return Add(pArrayRtn, arrayL, arrayR.GetScalarComplex());
+	} else if (arrayL.IsScalarNumber() && arrayR.IsArray()) {
+		return Add(pArrayRtn, arrayR, arrayL.GetScalarNumber());
+	} else if (arrayL.IsScalarComplex() && arrayR.IsArray()) {
+		return Add(pArrayRtn, arrayR, arrayL.GetScalarComplex());
+	} else if (arrayL.IsScalarNumber() && arrayR.IsScalarNumber()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Double, arrayL.GetScalarNumber() + arrayR.GetScalarNumber()));
+	} else if (arrayL.IsScalarNumber() && arrayR.IsScalarComplex()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarNumber() + arrayR.GetScalarComplex()));
+	} else if (arrayL.IsScalarComplex() && arrayR.IsScalarNumber()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarComplex() + arrayR.GetScalarNumber()));
+	} else {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarComplex() + arrayR.GetScalarComplex()));
+	}
+	return true;
 }
 
 bool Array::Div(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
@@ -1527,7 +1603,26 @@ bool Array::Div(RefPtr<Array>& pArrayRtn, const Complex& numL, const Array& arra
 
 bool Array::Pow(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Pow_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	if (arrayL.IsArray() && arrayR.IsArray()) {
+		return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Pow_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	} else if (arrayL.IsArray() && arrayR.IsScalarNumber()) {
+		return Add(pArrayRtn, arrayL, arrayR.GetScalarNumber());
+	} else if (arrayL.IsArray() && arrayR.IsScalarComplex()) {
+		return Add(pArrayRtn, arrayL, arrayR.GetScalarComplex());
+	} else if (arrayL.IsScalarNumber() && arrayR.IsArray()) {
+		return Add(pArrayRtn, arrayR, arrayL.GetScalarNumber());
+	} else if (arrayL.IsScalarComplex() && arrayR.IsArray()) {
+		return Add(pArrayRtn, arrayR, arrayL.GetScalarComplex());
+	} else if (arrayL.IsScalarNumber() && arrayR.IsScalarNumber()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Double, arrayL.GetScalarNumber() + arrayR.GetScalarNumber()));
+	} else if (arrayL.IsScalarNumber() && arrayR.IsScalarComplex()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarNumber() + arrayR.GetScalarComplex()));
+	} else if (arrayL.IsScalarComplex() && arrayR.IsScalarNumber()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarComplex() + arrayR.GetScalarNumber()));
+	} else {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarComplex() + arrayR.GetScalarComplex()));
+	}
+	return true;
 }
 
 bool Array::Pow(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
@@ -1552,7 +1647,26 @@ bool Array::Pow(RefPtr<Array>& pArrayRtn, const Complex& numL, const Array& arra
 
 bool Array::Or(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Or_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	if (arrayL.IsArray() && arrayR.IsArray()) {
+		return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Or_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	} else if (arrayL.IsArray() && arrayR.IsScalarNumber()) {
+		return Add(pArrayRtn, arrayL, arrayR.GetScalarNumber());
+	} else if (arrayL.IsArray() && arrayR.IsScalarComplex()) {
+		return Add(pArrayRtn, arrayL, arrayR.GetScalarComplex());
+	} else if (arrayL.IsScalarNumber() && arrayR.IsArray()) {
+		return Add(pArrayRtn, arrayR, arrayL.GetScalarNumber());
+	} else if (arrayL.IsScalarComplex() && arrayR.IsArray()) {
+		return Add(pArrayRtn, arrayR, arrayL.GetScalarComplex());
+	} else if (arrayL.IsScalarNumber() && arrayR.IsScalarNumber()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Double, arrayL.GetScalarNumber() + arrayR.GetScalarNumber()));
+	} else if (arrayL.IsScalarNumber() && arrayR.IsScalarComplex()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarNumber() + arrayR.GetScalarComplex()));
+	} else if (arrayL.IsScalarComplex() && arrayR.IsScalarNumber()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarComplex() + arrayR.GetScalarNumber()));
+	} else {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarComplex() + arrayR.GetScalarComplex()));
+	}
+	return true;
 }
 
 bool Array::Or(RefPtr<Array>& pArrayRtn, const Array& arrayL, UInt64 numR)
@@ -1562,7 +1676,26 @@ bool Array::Or(RefPtr<Array>& pArrayRtn, const Array& arrayL, UInt64 numR)
 
 bool Array::Xor(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Xor_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	if (arrayL.IsArray() && arrayR.IsArray()) {
+		return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Xor_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	} else if (arrayL.IsArray() && arrayR.IsScalarNumber()) {
+		return Add(pArrayRtn, arrayL, arrayR.GetScalarNumber());
+	} else if (arrayL.IsArray() && arrayR.IsScalarComplex()) {
+		return Add(pArrayRtn, arrayL, arrayR.GetScalarComplex());
+	} else if (arrayL.IsScalarNumber() && arrayR.IsArray()) {
+		return Add(pArrayRtn, arrayR, arrayL.GetScalarNumber());
+	} else if (arrayL.IsScalarComplex() && arrayR.IsArray()) {
+		return Add(pArrayRtn, arrayR, arrayL.GetScalarComplex());
+	} else if (arrayL.IsScalarNumber() && arrayR.IsScalarNumber()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Double, arrayL.GetScalarNumber() + arrayR.GetScalarNumber()));
+	} else if (arrayL.IsScalarNumber() && arrayR.IsScalarComplex()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarNumber() + arrayR.GetScalarComplex()));
+	} else if (arrayL.IsScalarComplex() && arrayR.IsScalarNumber()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarComplex() + arrayR.GetScalarNumber()));
+	} else {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarComplex() + arrayR.GetScalarComplex()));
+	}
+	return true;
 }
 
 bool Array::Xor(RefPtr<Array>& pArrayRtn, const Array& arrayL, UInt64 numR)
@@ -1572,7 +1705,26 @@ bool Array::Xor(RefPtr<Array>& pArrayRtn, const Array& arrayL, UInt64 numR)
 
 bool Array::Eq(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, arrayR, funcs.Eq_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	if (arrayL.IsArray() && arrayR.IsArray()) {
+		return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, arrayR, funcs.Eq_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	} else if (arrayL.IsArray() && arrayR.IsScalarNumber()) {
+		return Add(pArrayRtn, arrayL, arrayR.GetScalarNumber());
+	} else if (arrayL.IsArray() && arrayR.IsScalarComplex()) {
+		return Add(pArrayRtn, arrayL, arrayR.GetScalarComplex());
+	} else if (arrayL.IsScalarNumber() && arrayR.IsArray()) {
+		return Add(pArrayRtn, arrayR, arrayL.GetScalarNumber());
+	} else if (arrayL.IsScalarComplex() && arrayR.IsArray()) {
+		return Add(pArrayRtn, arrayR, arrayL.GetScalarComplex());
+	} else if (arrayL.IsScalarNumber() && arrayR.IsScalarNumber()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Double, arrayL.GetScalarNumber() + arrayR.GetScalarNumber()));
+	} else if (arrayL.IsScalarNumber() && arrayR.IsScalarComplex()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarNumber() + arrayR.GetScalarComplex()));
+	} else if (arrayL.IsScalarComplex() && arrayR.IsScalarNumber()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarComplex() + arrayR.GetScalarNumber()));
+	} else {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarComplex() + arrayR.GetScalarComplex()));
+	}
+	return true;
 }
 
 bool Array::Eq(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
@@ -1587,7 +1739,26 @@ bool Array::Eq(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& num
 
 bool Array::Ne(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, arrayR, funcs.Ne_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	if (arrayL.IsArray() && arrayR.IsArray()) {
+		return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, arrayR, funcs.Ne_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	} else if (arrayL.IsArray() && arrayR.IsScalarNumber()) {
+		return Add(pArrayRtn, arrayL, arrayR.GetScalarNumber());
+	} else if (arrayL.IsArray() && arrayR.IsScalarComplex()) {
+		return Add(pArrayRtn, arrayL, arrayR.GetScalarComplex());
+	} else if (arrayL.IsScalarNumber() && arrayR.IsArray()) {
+		return Add(pArrayRtn, arrayR, arrayL.GetScalarNumber());
+	} else if (arrayL.IsScalarComplex() && arrayR.IsArray()) {
+		return Add(pArrayRtn, arrayR, arrayL.GetScalarComplex());
+	} else if (arrayL.IsScalarNumber() && arrayR.IsScalarNumber()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Double, arrayL.GetScalarNumber() + arrayR.GetScalarNumber()));
+	} else if (arrayL.IsScalarNumber() && arrayR.IsScalarComplex()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarNumber() + arrayR.GetScalarComplex()));
+	} else if (arrayL.IsScalarComplex() && arrayR.IsScalarNumber()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarComplex() + arrayR.GetScalarNumber()));
+	} else {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarComplex() + arrayR.GetScalarComplex()));
+	}
+	return true;
 }
 
 bool Array::Ne(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
@@ -1602,7 +1773,26 @@ bool Array::Ne(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& num
 
 bool Array::Lt(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, arrayR, funcs.Lt_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	if (arrayL.IsArray() && arrayR.IsArray()) {
+		return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, arrayR, funcs.Lt_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	} else if (arrayL.IsArray() && arrayR.IsScalarNumber()) {
+		return Add(pArrayRtn, arrayL, arrayR.GetScalarNumber());
+	} else if (arrayL.IsArray() && arrayR.IsScalarComplex()) {
+		return Add(pArrayRtn, arrayL, arrayR.GetScalarComplex());
+	} else if (arrayL.IsScalarNumber() && arrayR.IsArray()) {
+		return Add(pArrayRtn, arrayR, arrayL.GetScalarNumber());
+	} else if (arrayL.IsScalarComplex() && arrayR.IsArray()) {
+		return Add(pArrayRtn, arrayR, arrayL.GetScalarComplex());
+	} else if (arrayL.IsScalarNumber() && arrayR.IsScalarNumber()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Double, arrayL.GetScalarNumber() + arrayR.GetScalarNumber()));
+	} else if (arrayL.IsScalarNumber() && arrayR.IsScalarComplex()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarNumber() + arrayR.GetScalarComplex()));
+	} else if (arrayL.IsScalarComplex() && arrayR.IsScalarNumber()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarComplex() + arrayR.GetScalarNumber()));
+	} else {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarComplex() + arrayR.GetScalarComplex()));
+	}
+	return true;
 }
 
 bool Array::Lt(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
@@ -1617,7 +1807,26 @@ bool Array::Lt(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR)
 
 bool Array::Le(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, arrayR, funcs.Le_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	if (arrayL.IsArray() && arrayR.IsArray()) {
+		return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, arrayR, funcs.Le_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	} else if (arrayL.IsArray() && arrayR.IsScalarNumber()) {
+		return Add(pArrayRtn, arrayL, arrayR.GetScalarNumber());
+	} else if (arrayL.IsArray() && arrayR.IsScalarComplex()) {
+		return Add(pArrayRtn, arrayL, arrayR.GetScalarComplex());
+	} else if (arrayL.IsScalarNumber() && arrayR.IsArray()) {
+		return Add(pArrayRtn, arrayR, arrayL.GetScalarNumber());
+	} else if (arrayL.IsScalarComplex() && arrayR.IsArray()) {
+		return Add(pArrayRtn, arrayR, arrayL.GetScalarComplex());
+	} else if (arrayL.IsScalarNumber() && arrayR.IsScalarNumber()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Double, arrayL.GetScalarNumber() + arrayR.GetScalarNumber()));
+	} else if (arrayL.IsScalarNumber() && arrayR.IsScalarComplex()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarNumber() + arrayR.GetScalarComplex()));
+	} else if (arrayL.IsScalarComplex() && arrayR.IsScalarNumber()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarComplex() + arrayR.GetScalarNumber()));
+	} else {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarComplex() + arrayR.GetScalarComplex()));
+	}
+	return true;
 }
 
 bool Array::Le(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
@@ -1632,7 +1841,26 @@ bool Array::Le(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR)
 
 bool Array::Cmp(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, ElemType::Int8, arrayL, arrayR, funcs.Cmp_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	if (arrayL.IsArray() && arrayR.IsArray()) {
+		return GenericBinaryOp(pArrayRtn, ElemType::Int8, arrayL, arrayR, funcs.Cmp_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+	} else if (arrayL.IsArray() && arrayR.IsScalarNumber()) {
+		return Add(pArrayRtn, arrayL, arrayR.GetScalarNumber());
+	} else if (arrayL.IsArray() && arrayR.IsScalarComplex()) {
+		return Add(pArrayRtn, arrayL, arrayR.GetScalarComplex());
+	} else if (arrayL.IsScalarNumber() && arrayR.IsArray()) {
+		return Add(pArrayRtn, arrayR, arrayL.GetScalarNumber());
+	} else if (arrayL.IsScalarComplex() && arrayR.IsArray()) {
+		return Add(pArrayRtn, arrayR, arrayL.GetScalarComplex());
+	} else if (arrayL.IsScalarNumber() && arrayR.IsScalarNumber()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Double, arrayL.GetScalarNumber() + arrayR.GetScalarNumber()));
+	} else if (arrayL.IsScalarNumber() && arrayR.IsScalarComplex()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarNumber() + arrayR.GetScalarComplex()));
+	} else if (arrayL.IsScalarComplex() && arrayR.IsScalarNumber()) {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarComplex() + arrayR.GetScalarNumber()));
+	} else {
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarComplex() + arrayR.GetScalarComplex()));
+	}
+	return true;
 }
 
 bool Array::Cmp(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
@@ -1647,7 +1875,6 @@ bool Array::Cmp(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR)
 
 bool Array::Dot(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-#if 1
 	const DimSizes& dimSizesL = arrayL.GetDimSizes();
 	const DimSizes& dimSizesR = arrayR.GetDimSizes();
 	if (dimSizesL.size() != 2 || dimSizesR.size() != 2 ||
@@ -1664,49 +1891,6 @@ bool Array::Dot(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arra
 	const void* pvR = arrayR.GetPointerC<void>();
 	func(pvRtn, dimSizesRtn.GetRowSize(), dimSizesRtn.GetColSize(), pvL, pvR, dimSizesL.GetColSize());
 	return true;
-#else
-	size_t nUnits = 1;
-	size_t lenUnit = 0;;
-	size_t lenFwdL = 0, lenFwdR = 0;
-	const DimSizes& dimSizesL = arrayL.GetDimSizes();
-	const DimSizes& dimSizesR = arrayR.GetDimSizes();
-	const DimSizes* pDimSizesRtn = nullptr;;
-	bool matchFlag = false;
-	if (dimSizesL.size() >= dimSizesR.size()) {
-		size_t nDimsHead = dimSizesL.size() - dimSizesR.size();
-		nUnits = DimSizes::CalcLength(dimSizesL.begin(), dimSizesL.begin() + nDimsHead);
-		lenUnit = dimSizesR.CalcLength();
-		lenFwdL = lenUnit, lenFwdR = 0;
-		pDimSizesRtn = &dimSizesL;
-		matchFlag = dimSizesR.DoesMatchDot(dimSizesL, nDimsHead);
-	} else {
-		size_t nDimsHead = dimSizesR.size() - dimSizesL.size();
-		nUnits = DimSizes::CalcLength(dimSizesR.begin(), dimSizesR.begin() + nDimsHead);
-		lenUnit = dimSizesL.CalcLength();
-		lenFwdL = 0, lenFwdR = lenUnit;
-		pDimSizesRtn = &dimSizesR;
-		matchFlag = dimSizesL.DoesMatchDot(dimSizesR, nDimsHead);
-	}
-	if (!matchFlag) {
-		Error::Issue(ErrorType::RangeError, "unmatched array size");
-		return nullptr;
-	}
-	RefPtr<Array> pArrayRtn(Create(GetElemTypeRtnForArithm(arrayL, arrayR), *pDimSizesRtn));
-	void* pvRtn = pArrayRtn->GetPointerC<void>();
-	const void* pvL = arrayL.GetPointerC<void>();
-	const void* pvR = arrayR.GetPointerC<void>();
-	auto func = arrayL.GetElemType().Dot_ArrayArray[arrayR.GetElemType().id];
-	size_t m = pDimSizesRtn->GetRowSize();
-	size_t n = pDimSizesRtn->GetColSize();
-	size_t l = dimSizesL.GetColSize();
-	for (size_t iUnit = 0; iUnit < nUnits; iUnit++) {
-		func(pvRtn, m, n, pvL, pvR, l);
-		pvRtn = pArrayRtn->FwdPointer(pvRtn, lenUnit);
-		pvL = arrayL.FwdPointer(pvL, lenFwdL);
-		pvR = arrayR.FwdPointer(pvR, lenFwdR);
-	}
-	return pArrayRtn.release();
-#endif
 }
 
 bool Array::Cross(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
