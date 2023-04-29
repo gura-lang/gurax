@@ -200,15 +200,18 @@ public:
 	const Memory& GetMemory() const { return *_pMemory; }
 	const DimSizes& GetDimSizes() const { return _dimSizes; }
 	bool IsMultidemensional() const { return _dimSizes.size() > 1; }
-	bool IsArray() const { return !_dimSizes.empty(); }
-	bool IsScalar() const { return _dimSizes.empty(); }
-	bool IsScalarNumber() const { return _dimSizes.empty() && !IsElemType(ElemType::Complex); }
-	bool IsScalarComplex() const { return _dimSizes.empty() && IsElemType(ElemType::Complex); }
 	bool HasSameShape(const Array& array) const { return _dimSizes.IsEqual(array.GetDimSizes()); }
 	template<typename T> T* GetPointerC() { return _pMemory->GetPointerC<T>(); }
 	template<typename T> T* GetPointerC(size_t offset) { return _pMemory->GetPointerC<T>(offset); }
 	template<typename T> const T* GetPointerC() const { return _pMemory->GetPointerC<T>(); }
 	template<typename T> const T* GetPointerC(size_t offset) const { return _pMemory->GetPointerC<T>(offset); }
+public:
+	bool IsArray() const { return !_dimSizes.empty(); }
+	bool IsScalar() const { return _dimSizes.empty(); }
+	bool IsScalarNumber() const { return _dimSizes.empty() && !IsElemType(ElemType::Complex); }
+	bool IsScalarComplex() const { return _dimSizes.empty() && IsElemType(ElemType::Complex); }
+	Double GetScalarNumber() const { return *GetPointerC<Double>(); }
+	const Complex& GetScalarComplex() const { return *GetPointerC<Complex>(); }
 public:
 	bool IndexSetValue(size_t idx, const Value& value) { return funcs.IndexSetValue[_elemType.id](GetPointerC<void>(), idx, value); }
 	bool IndexSetDouble(size_t idx, Double num) { return funcs.IndexSetDouble[_elemType.id](GetPointerC<void>(), idx, num); }
