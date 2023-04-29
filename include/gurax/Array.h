@@ -210,7 +210,8 @@ public:
 	bool IsScalar() const { return _dimSizes.empty(); }
 	bool IsScalarNumber() const { return _dimSizes.empty() && !IsElemType(ElemType::Complex); }
 	bool IsScalarComplex() const { return _dimSizes.empty() && IsElemType(ElemType::Complex); }
-	Double GetScalarNumber() const { return *GetPointerC<Double>(); }
+	Double GetScalarDouble() const { return funcs.IndexGetDouble[_elemType.id](GetPointerC<void>(), 0); }
+	UInt64 GetScalarUInt64() const { return static_cast<UInt64>(funcs.IndexGetDouble[_elemType.id](GetPointerC<void>(), 0)); }
 	const Complex& GetScalarComplex() const { return *GetPointerC<Complex>(); }
 public:
 	bool IndexSetValue(size_t idx, const Value& value) { return funcs.IndexSetValue[_elemType.id](GetPointerC<void>(), idx, value); }
