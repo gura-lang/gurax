@@ -200,7 +200,10 @@ public:
 	const Memory& GetMemory() const { return *_pMemory; }
 	const DimSizes& GetDimSizes() const { return _dimSizes; }
 	bool IsMultidemensional() const { return _dimSizes.size() > 1; }
+	bool IsArray() const { return !_dimSizes.empty(); }
 	bool IsScalar() const { return _dimSizes.empty(); }
+	bool IsScalarNumber() const { return _dimSizes.empty() && !IsElemType(ElemType::Complex); }
+	bool IsScalarComplex() const { return _dimSizes.empty() && IsElemType(ElemType::Complex); }
 	bool HasSameShape(const Array& array) const { return _dimSizes.IsEqual(array.GetDimSizes()); }
 	template<typename T> T* GetPointerC() { return _pMemory->GetPointerC<T>(); }
 	template<typename T> T* GetPointerC(size_t offset) { return _pMemory->GetPointerC<T>(offset); }

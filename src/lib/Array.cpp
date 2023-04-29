@@ -1418,6 +1418,7 @@ bool Array::Neg(RefPtr<Array>& pArrayRtn, const Array& array)
 
 bool Array::Add(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
+	
 	return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Add_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
 }
 
