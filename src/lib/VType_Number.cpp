@@ -404,7 +404,8 @@ Gurax_ImplementOpBinary(Cmp, Number, Number)
 {
 	Double numL = Value_Number::GetNumber<Double>(valueL);
 	Double numR = Value_Number::GetNumber<Double>(valueR);
-	int rslt = (numL < numR)? -1 : (numL > numR)? +1 : 0;
+	//int rslt = (numL < numR)? -1 : (numL > numR)? +1 : 0;
+	int rslt = Number<Double>::Cmp(numL, numR);
 	return new Value_Number(rslt);
 }
 

@@ -37,6 +37,7 @@ public:
 	static const T_Num Min;
 public:
 	static int GetSign(T_Num num) { return (num == 0)? 0 : (num > 0)? +1 : -1; }
+	static int Cmp(T_Num numL, T_Num numR) { return (numL < numR)? -1 : (numL > numR)? +1 : 0; }
 	static String& ToString(String& str, T_Num num) { return str.Format(formatterFormat_Int.c_str(), num); }
 	static String ToString(T_Num num) { String str; return ToString(str, num); }
 };
