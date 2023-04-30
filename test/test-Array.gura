@@ -5,6 +5,24 @@ elemTypes = [
 	`int8,  `uint8,  `int16,  `uint16,  `int32,  `uint32,  `int64,  `uint64,  `half,  `float,  `double,  `complex
 ]
 
+TestCase('Scalar Test') {
+	Tester(`Array.Scalar(`int8, 3))
+	Tester(`Array.Scalar(`uint8, 3))
+	Tester(`Array.Scalar(`int16, 3))
+	Tester(`Array.Scalar(`uint16, 3))
+	Tester(`Array.Scalar(`int32, 3))
+	Tester(`Array.Scalar(`uint32, 3))
+	Tester(`Array.Scalar(`int64, 3))
+	Tester(`Array.Scalar(`uint64, 3))
+	Tester(`Array.Scalar(`half, 3))
+	Tester(`Array.Scalar(`float, 3))
+	Tester(`Array.Scalar(`double, 3))
+	Tester(`Array.Scalar(`complex, 3))
+	Tester(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) + Array(`double, [[3, 2, 1], [0, 2, 3]])))
+	Tester(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) + Array.Scalar(`double, 4)))
+	Tester(`(Array.Scalar(`double, 4) + Array(`double, [[1, 2, 3], [4, 5, 6]])))
+}
+sys.Exit()
 TestCase('Property') {
 	Array.PrintPropSlots()
 }

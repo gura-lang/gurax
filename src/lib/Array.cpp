@@ -46,7 +46,7 @@ Array* Array::Create(const ElemTypeT& elemType, DimSizes dimSizes)
 Array* Array::CreateScalar(const ElemTypeT& elemType, Double num)
 {
 	RefPtr<Array> pArray(Create(elemType, DimSizes()));
-	*pArray->GetPointerC<Double>() = num;
+	pArray->IndexSetDouble(0, num);
 	return pArray.release();
 }
 
@@ -273,12 +273,16 @@ template<> void ToStringElem_T<Complex>(const StringStyle& ss, String& str, cons
 
 template<typename T_Elem> void ToString_T(const StringStyle& ss, String& str, const void* pv, size_t offset, size_t len)
 {
-	const char* strComma = ss.IsCram()? "," : ", ";
 	const T_Elem* pBegin = reinterpret_cast<const T_Elem*>(pv) + offset;
-	const T_Elem* pEnd = pBegin + len;
-	for (const T_Elem* p = pBegin; p != pEnd; p++) {
-		if (p != pBegin) str += strComma;
-		ToStringElem_T(ss, str, p);
+	if (len == 0) {
+		ToStringElem_T(ss, str, pBegin);
+	} else {
+		const char* strComma = ss.IsCram()? "," : ", ";
+		const T_Elem* pEnd = pBegin + len;
+		for (const T_Elem* p = pBegin; p != pEnd; p++) {
+			if (p != pBegin) str += strComma;
+			ToStringElem_T(ss, str, p);
+		}
 	}
 }
 
@@ -1270,8 +1274,12 @@ void Array::ToStringSub(const StringStyle& ss, String& str, size_t& offset, DimS
 
 void Array::ToString(const StringStyle& ss, String& str) const
 {
-	size_t offset = 0;
-	ToStringSub(ss, str, offset, _dimSizes.begin());
+	if (_dimSizes.empty()) {
+		ToString(ss, str, 0, 0);
+	} else {
+		size_t offset = 0;
+		ToStringSub(ss, str, offset, _dimSizes.begin());
+	}
 }
 
 bool Array::Transpose(RefPtr<Array>& pArrayRtn) const

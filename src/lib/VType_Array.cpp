@@ -185,6 +185,50 @@ Gurax_ImplementClassMethod(Array, Identity)
 	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
 }
 
+// Array.Scalar(elemType as Symbol, num as Any) {block?}
+Gurax_DeclareClassMethod(Array, Scalar)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("num", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+
+)""");
+}
+
+Gurax_ImplementClassMethod(Array, Scalar)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const Array::ElemTypeT& elemType = Array::SymbolToElemType(args.PickSymbol());
+	if (elemType.IsNone()) {
+		Error::Issue(ErrorType::SymbolError, "invalid symbol for elemType");
+		return Value::nil();
+	}
+	const Value& value = args.PickValue();
+	// Function body
+	RefPtr<Array> pArray;
+	if (elemType.IsIdentical(Array::ElemType::Complex)) {
+		if (value.IsType(VTYPE_Number)) {
+			pArray.reset(Array::CreateScalar(elemType, Value_Number::GetNumber<Double>(value)));
+		} else if (value.IsType(VTYPE_Complex)) {
+			pArray.reset(Array::CreateScalar(elemType, Value_Complex::GetComplex(value)));
+		} else {
+			Error::Issue(ErrorType::TypeError, "Number or Complex value is expected");
+			return Value::nil();
+		}
+	} else {
+		if (value.IsType(VTYPE_Number)) {
+			pArray.reset(Array::CreateScalar(elemType, Value_Number::GetNumber<Double>(value)));
+		} else {
+			Error::Issue(ErrorType::TypeError, "Number value is expected");
+			return Value::nil();
+		}
+	}
+	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
@@ -1000,6 +1044,7 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	frameOuter.Assign(Gurax_CreateFunctionAlias(ConstructArray, "@ulong"));
 	// Assignment of class method
 	Assign(Gurax_CreateClassMethod(Array, Identity));
+	Assign(Gurax_CreateClassMethod(Array, Scalar));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Array, Cast));
 	Assign(Gurax_CreateMethod(Array, Each));
