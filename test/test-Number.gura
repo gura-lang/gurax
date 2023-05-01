@@ -64,11 +64,13 @@ TestCase('Operator') {
 TestCase('Number.format@int / Number.format@float') {
 	format@int = Number.format@int
 	format@float = Number.format@float
-	Tester(`(Number.format@int = '%lld'))
+	Tester(`(Number.format@int = '%d'))
+	Tester(`(Number.format@int64 = '%lld'))
 	Tester(`1234567891234)
 	Tester(`(Number.format@float = '%g'))
 	Tester(`123456789.123456789)
-	Tester(`(Number.format@int = '%llx'))
+	Tester(`(Number.format@int = '%x'))
+	Tester(`(Number.format@int64 = '%llx'))
 	Tester(`1234567891234)
 	Tester(`(Number.format@float = '%f'))
 	Tester(`123456789.123456789)
@@ -79,7 +81,7 @@ TestCase('Number.format@int / Number.format@float') {
 	Tester(`(Number.format@float = '%d'))
 	Tester(`(Number.format@int = ''))
 	Tester(`(Number.format@float = ''))
-	Tester(`(Number.format@int = '%lld %lld'))
+	Tester(`(Number.format@int = '%d %d'))
 	Tester(`(Number.format@float = '%f %f'))
 	Number.format@int = format@int
 	Number.format@float = format@float

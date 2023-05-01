@@ -349,8 +349,30 @@ Gurax_ImplementClassPropertySetter(Number, format_at_int)
 {
 	const String& format = Value_String::GetStringSTL(value);
 	if (!Formatter().VerifyFormat(format.c_str(),
-			Formatter::VaType::Int64, Formatter::VaType::None)) return;
+			Formatter::VaType::Int, Formatter::VaType::None)) return;
 	NumberBase::formatterFormat_Int = format;
+}
+
+// Number.format@int64 as String
+Gurax_DeclareClassPropertyAlias_RW(Number, format_at_int64, "format@int64")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+A format string used to convert an integer number into a string.
+)""");
+}
+
+Gurax_ImplementClassPropertyGetter(Number, format_at_int64)
+{
+	return new Value_String(NumberBase::formatterFormat_Int64);
+}
+
+Gurax_ImplementClassPropertySetter(Number, format_at_int64)
+{
+	const String& format = Value_String::GetStringSTL(value);
+	if (!Formatter().VerifyFormat(format.c_str(),
+			Formatter::VaType::Int64, Formatter::VaType::None)) return;
+	NumberBase::formatterFormat_Int64 = format;
 }
 
 //------------------------------------------------------------------------------
@@ -896,6 +918,7 @@ void VType_Number::DoPrepare(Frame& frameOuter)
 	// Assignment of class property
 	Assign(Gurax_CreateClassProperty(Number, format_at_float));
 	Assign(Gurax_CreateClassProperty(Number, format_at_int));
+	Assign(Gurax_CreateClassProperty(Number, format_at_int64));
 	// Assignment of operator
 	Gurax_AssignOpUnary(Inv,				Number);
 	Gurax_AssignOpUnary(Neg,				Number);

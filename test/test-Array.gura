@@ -18,26 +18,6 @@ TesterArray(expr as Expr):void = {
 	}
 }
 
-TestCase('Scalar Operation: Cmp') {
-	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) <=> Array(`double, [[3, 2, 1], [0, 2, 3]])))
-	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) <=> Array.Scalar(`double, 4)))
-	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) <=> Array.Scalar(`complex, 4)))
-	TesterArray(`(Array.Scalar(`double, 4) <=> Array(`double, [[1, 2, 3], [4, 5, 6]])))
-	TesterArray(`(Array.Scalar(`complex, 4) <=> Array(`double, [[1, 2, 3], [4, 5, 6]])))
-	TesterArray(`(Array.Scalar(`double, 4) <=> Array.Scalar(`double, 7)))
-	TesterArray(`(Array.Scalar(`double, 4) <=> Array.Scalar(`complex, 7)))
-	TesterArray(`(Array.Scalar(`complex, 4) <=> Array.Scalar(`double, 7)))
-	TesterArray(`(Array.Scalar(`complex, 4) <=> Array.Scalar(`complex, 7)))
-	TesterArray(`(Array.Scalar(`double, 7) <=> Array.Scalar(`double, 7)))
-	TesterArray(`(Array.Scalar(`double, 7) <=> Array.Scalar(`complex, 7)))
-	TesterArray(`(Array.Scalar(`complex, 7) <=> Array.Scalar(`double, 7)))
-	TesterArray(`(Array.Scalar(`complex, 7) <=> Array.Scalar(`complex, 7)))
-	TesterArray(`(Array.Scalar(`double, 7) <=> Array.Scalar(`double, 4)))
-	TesterArray(`(Array.Scalar(`double, 7) <=> Array.Scalar(`complex, 4)))
-	TesterArray(`(Array.Scalar(`complex, 7) <=> Array.Scalar(`double, 4)))
-	TesterArray(`(Array.Scalar(`complex, 7) <=> Array.Scalar(`complex, 4)))
-}
-sys.Exit()
 TestCase('Property') {
 	Array.PrintPropSlots()
 }
@@ -529,8 +509,10 @@ TestCase('Array |^| Array') {
 
 TestCase('Format') {
 	format@int = Number.format@int
+	format@int64 = Number.format@int64
 	format@float = Number.format@float
-	Number.format@int = '%04lld'
+	Number.format@int = '%04d'
+	Number.format@int64 = '%04lld'
 	Number.format@float = '%.4f'
 	Tester(`@int([[0, 1, 2], [3, 4, 5]]))
 	Tester(`@float([[0, 1, 2], [3, 4, 5]]))
@@ -538,6 +520,7 @@ TestCase('Format') {
 	Number.format@float = '%.6f'
 	Tester(`(@float([[0, 1, 2], [3, 4, 5]]) / 3))
 	Number.format@int = format@int
+	Number.format@int64 = format@int64
 	Number.format@float = format@float
 }
 
@@ -731,4 +714,24 @@ TestCase('Scalar Operation: Ge') {
 	TesterArray(`(Array.Scalar(`double, 7) >= Array.Scalar(`complex, 4)))
 	TesterArray(`(Array.Scalar(`complex, 7) >= Array.Scalar(`double, 4)))
 	TesterArray(`(Array.Scalar(`complex, 7) >= Array.Scalar(`complex, 4)))
+}
+
+TestCase('Scalar Operation: Cmp') {
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) <=> Array(`double, [[3, 2, 1], [0, 2, 3]])))
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) <=> Array.Scalar(`double, 4)))
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) <=> Array.Scalar(`complex, 4)))
+	TesterArray(`(Array.Scalar(`double, 4) <=> Array(`double, [[1, 2, 3], [4, 5, 6]])))
+	TesterArray(`(Array.Scalar(`complex, 4) <=> Array(`double, [[1, 2, 3], [4, 5, 6]])))
+	TesterArray(`(Array.Scalar(`double, 4) <=> Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`double, 4) <=> Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`complex, 4) <=> Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`complex, 4) <=> Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`double, 7) <=> Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`double, 7) <=> Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`complex, 7) <=> Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`complex, 7) <=> Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`double, 7) <=> Array.Scalar(`double, 4)))
+	TesterArray(`(Array.Scalar(`double, 7) <=> Array.Scalar(`complex, 4)))
+	TesterArray(`(Array.Scalar(`complex, 7) <=> Array.Scalar(`double, 4)))
+	TesterArray(`(Array.Scalar(`complex, 7) <=> Array.Scalar(`complex, 4)))
 }

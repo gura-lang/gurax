@@ -6,6 +6,7 @@ Number
   .float            NumberTrait  R
   .format@float     String       R/W
   .format@int       String       R/W
+  .format@int64     String       R/W
   .half             NumberTrait  R
   #imag             Number       R
   .int16            NumberTrait  R
@@ -67,29 +68,31 @@ Number('-0x1234') .. -4660
 3 * 5 .. 15
 3 - 5 .. -2
 ======== Number.format@int / Number.format@float ========
-Number.format@int = '%lld' .. %lld
+Number.format@int = '%d' .. %d
+Number.format@int64 = '%lld' .. %lld
 1234567891234 .. 1234567891234
 Number.format@float = '%g' .. %g
 123456789.123456789 .. 1.23457e+08
-Number.format@int = '%llx' .. %llx
+Number.format@int = '%x' .. %x
+Number.format@int64 = '%llx' .. %llx
 1234567891234 .. 11f71fb0922
 Number.format@float = '%f' .. %f
 123456789.123456789 .. 123456789.123457
 Number.format@float = '%.3f' .. %.3f
 123456789.123456789 .. 123456789.123
-Number.format@int = '%d' .. invalid format specifier
+Number.format@int = '%d' .. %d
 Number.format@int = '%f' .. invalid format specifier
 Number.format@float = '%d' .. invalid format specifier
 Number.format@int = '' .. too few format specifiers
 Number.format@float = '' .. too few format specifiers
-Number.format@int = '%lld %lld' .. too many format specifiers
+Number.format@int = '%d %d' .. too many format specifiers
 Number.format@float = '%f %f' .. too many format specifiers
 ======== Suffx f ========
 0f .. 0
 1f .. 1
-123456f .. 123456
+123456f .. 1e240
 1.23456f .. 1.23456
 ======== Number#sign ========
 0.sign .. 0
 9.sign .. 1
--9.sign .. -1
+-9.sign .. 8000000000000000
