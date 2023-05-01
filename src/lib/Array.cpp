@@ -1460,7 +1460,7 @@ bool Array::Add(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
 
 bool Array::Add(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR)
 {
-	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, funcs.Add_ArrayComplex[arrayL.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Complex, arrayL, numR, funcs.Add_ArrayComplex[arrayL.GetElemType().id]);
 }
 
 bool Array::And(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
@@ -1535,12 +1535,12 @@ bool Array::Sub(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR)
 
 bool Array::Sub(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR)
 {
-	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, funcs.Sub_ArrayComplex[arrayL.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Complex, arrayL, numR, funcs.Sub_ArrayComplex[arrayL.GetElemType().id]);
 }
 
 bool Array::Sub(RefPtr<Array>& pArrayRtn, const Complex& numL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, arrayR.GetElemType(), numL, arrayR, funcs.Sub_ComplexArray[arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Complex, numL, arrayR, funcs.Sub_ComplexArray[arrayR.GetElemType().id]);
 }
 
 bool Array::Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
@@ -1579,7 +1579,7 @@ bool Array::Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
 
 bool Array::Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR)
 {
-	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, funcs.Mul_ArrayComplex[arrayL.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Complex, arrayL, numR, funcs.Mul_ArrayComplex[arrayL.GetElemType().id]);
 }
 
 bool Array::Div(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
@@ -1643,12 +1643,12 @@ bool Array::Div(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR)
 
 bool Array::Div(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR)
 {
-	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, funcs.Div_ArrayComplex[arrayL.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Complex, arrayL, numR, funcs.Div_ArrayComplex[arrayL.GetElemType().id]);
 }
 
 bool Array::Div(RefPtr<Array>& pArrayRtn, const Complex& numL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, arrayR.GetElemType(), numL, arrayR, funcs.Div_ComplexArray[arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Complex, numL, arrayR, funcs.Div_ComplexArray[arrayR.GetElemType().id]);
 }
 
 bool Array::Pow(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
@@ -1692,12 +1692,12 @@ bool Array::Pow(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR)
 
 bool Array::Pow(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR)
 {
-	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, funcs.Pow_ArrayComplex[arrayL.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Complex, arrayL, numR, funcs.Pow_ArrayComplex[arrayL.GetElemType().id]);
 }
 
 bool Array::Pow(RefPtr<Array>& pArrayRtn, const Complex& numL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, arrayR.GetElemType(), numL, arrayR, funcs.Pow_ComplexArray[arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Complex, numL, arrayR, funcs.Pow_ComplexArray[arrayR.GetElemType().id]);
 }
 
 bool Array::Or(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
