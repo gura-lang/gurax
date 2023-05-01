@@ -18,93 +18,19 @@ TesterArray(expr as Expr):void = {
 	}
 }
 
-TestCase('Scalar Constructor') {
-	TesterArray(`Array.Scalar(`int8, 3))
-	TesterArray(`Array.Scalar(`uint8, 3))
-	TesterArray(`Array.Scalar(`int16, 3))
-	TesterArray(`Array.Scalar(`uint16, 3))
-	TesterArray(`Array.Scalar(`int32, 3))
-	TesterArray(`Array.Scalar(`uint32, 3))
-	TesterArray(`Array.Scalar(`int64, 3))
-	TesterArray(`Array.Scalar(`uint64, 3))
-	TesterArray(`Array.Scalar(`half, 3))
-	TesterArray(`Array.Scalar(`float, 3))
-	TesterArray(`Array.Scalar(`double, 3))
-	TesterArray(`Array.Scalar(`complex, 3))
-}
-
-TestCase('Scalar Operation: Add') {
-	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) + Array(`double, [[3, 2, 1], [0, 2, 3]])))
-	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) + Array.Scalar(`double, 4)))
-	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) + Array.Scalar(`complex, 4)))
-	TesterArray(`(Array.Scalar(`double, 4) + Array(`double, [[1, 2, 3], [4, 5, 6]])))
-	TesterArray(`(Array.Scalar(`complex, 4) + Array(`double, [[1, 2, 3], [4, 5, 6]])))
-	TesterArray(`(Array.Scalar(`double, 4) + Array.Scalar(`double, 7)))
-	TesterArray(`(Array.Scalar(`double, 4) + Array.Scalar(`complex, 7)))
-	TesterArray(`(Array.Scalar(`complex, 4) + Array.Scalar(`double, 7)))
-	TesterArray(`(Array.Scalar(`complex, 4) + Array.Scalar(`complex, 7)))
-}
-
-TestCase('Scalar Operation: Sub') {
-	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) - Array(`double, [[3, 2, 1], [0, 2, 3]])))
-	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) - Array.Scalar(`double, 4)))
-	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) - Array.Scalar(`complex, 4)))
-	TesterArray(`(Array.Scalar(`double, 4) - Array(`double, [[1, 2, 3], [4, 5, 6]])))
-	TesterArray(`(Array.Scalar(`complex, 4) - Array(`double, [[1, 2, 3], [4, 5, 6]])))
-	TesterArray(`(Array.Scalar(`double, 4) - Array.Scalar(`double, 7)))
-	TesterArray(`(Array.Scalar(`double, 4) - Array.Scalar(`complex, 7)))
-	TesterArray(`(Array.Scalar(`complex, 4) - Array.Scalar(`double, 7)))
-	TesterArray(`(Array.Scalar(`complex, 4) - Array.Scalar(`complex, 7)))
-}
-
-TestCase('Scalar Operation: Mul') {
-	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) * Array(`double, [[3, 2, 1], [0, 2, 3]])))
-	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) * Array.Scalar(`double, 4)))
-	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) * Array.Scalar(`complex, 4)))
-	TesterArray(`(Array.Scalar(`double, 4) * Array(`double, [[1, 2, 3], [4, 5, 6]])))
-	TesterArray(`(Array.Scalar(`complex, 4) * Array(`double, [[1, 2, 3], [4, 5, 6]])))
-	TesterArray(`(Array.Scalar(`double, 4) * Array.Scalar(`double, 7)))
-	TesterArray(`(Array.Scalar(`double, 4) * Array.Scalar(`complex, 7)))
-	TesterArray(`(Array.Scalar(`complex, 4) * Array.Scalar(`double, 7)))
-	TesterArray(`(Array.Scalar(`complex, 4) * Array.Scalar(`complex, 7)))
-}
-
-TestCase('Scalar Operation: Div') {
-	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) / Array(`double, [[3, 2, 1], [0, 2, 3]])))
-	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) / Array.Scalar(`double, 4)))
-	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) / Array.Scalar(`complex, 4)))
-	TesterArray(`(Array.Scalar(`double, 4) / Array(`double, [[1, 2, 3], [4, 5, 6]])))
-	TesterArray(`(Array.Scalar(`complex, 4) / Array(`double, [[1, 2, 3], [4, 5, 6]])))
-	TesterArray(`(Array.Scalar(`double, 4) / Array.Scalar(`double, 7)))
-	TesterArray(`(Array.Scalar(`double, 4) / Array.Scalar(`complex, 7)))
-	TesterArray(`(Array.Scalar(`complex, 4) / Array.Scalar(`double, 7)))
-	TesterArray(`(Array.Scalar(`complex, 4) / Array.Scalar(`complex, 7)))
-
-	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) / Array.Scalar(`double, 0)))
-	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) / Array.Scalar(`complex, 0)))
-	TesterArray(`(Array.Scalar(`double, 4) / Array(`double, [[1, 2, 3], [4, 5, 6]])))
-	TesterArray(`(Array.Scalar(`complex, 4) / Array(`double, [[1, 2, 3], [4, 5, 6]])))
-	TesterArray(`(Array.Scalar(`double, 4) / Array.Scalar(`double, 0)))
-	TesterArray(`(Array.Scalar(`double, 4) / Array.Scalar(`complex, 0)))
-	TesterArray(`(Array.Scalar(`complex, 4) / Array.Scalar(`double, 0)))
-	TesterArray(`(Array.Scalar(`complex, 4) / Array.Scalar(`complex, 0)))
-}
-
-
-sys.Exit()
 TestCase('Property') {
 	Array.PrintPropSlots()
 }
 
 TestCase('Array constructor (1)') {
-	Tester(`Array(`bool, [true, false, false, true])[])
-	Tester(`Array(`int, [0])[])
-	Tester(`Array(`int, [[0, 1, 2], [3, 4, 5]])[])
-	Tester(`Array(`int, [[0, 1, 2], [3, 4, 5], [6, 7, 8]])[])
-	Tester(`Array(`int, [[0, 1, 2], [3, 4, 5], [5]])[])
-	Tester(`Array(`int, [3j])[])
-	Tester(`Array(`int, ['hello'])[])
-	Tester(`Array(`complex, [[0, 1 + 1j, 2 + 2j], [3 + 3j, 4 + 4j, 5 + 5j]])[])
+	Tester(`Array(`bool, [true, false, false, true]))
+	Tester(`Array(`int, [0]))
+	Tester(`Array(`int, [[0, 1, 2], [3, 4, 5]]))
+	Tester(`Array(`int, [[0, 1, 2], [3, 4, 5], [6, 7, 8]]))
+	Tester(`Array(`int, [[0, 1, 2], [3, 4, 5], [5]]))
+	Tester(`Array(`int, [3j]))
+	Tester(`Array(`int, ['hello']))
+	Tester(`Array(`complex, [[0, 1 + 1j, 2 + 2j], [3 + 3j, 4 + 4j, 5 + 5j]]))
 }
 
 TestCase('Array constructor (2)') {
@@ -593,4 +519,196 @@ TestCase('Format') {
 	Tester(`(@float([[0, 1, 2], [3, 4, 5]]) / 3))
 	Number.format@int = format@int
 	Number.format@float = format@float
+}
+
+TestCase('Scalar Constructor') {
+	TesterArray(`Array.Scalar(`int8, 3))
+	TesterArray(`Array.Scalar(`uint8, 3))
+	TesterArray(`Array.Scalar(`int16, 3))
+	TesterArray(`Array.Scalar(`uint16, 3))
+	TesterArray(`Array.Scalar(`int32, 3))
+	TesterArray(`Array.Scalar(`uint32, 3))
+	TesterArray(`Array.Scalar(`int64, 3))
+	TesterArray(`Array.Scalar(`uint64, 3))
+	TesterArray(`Array.Scalar(`half, 3))
+	TesterArray(`Array.Scalar(`float, 3))
+	TesterArray(`Array.Scalar(`double, 3))
+	TesterArray(`Array.Scalar(`complex, 3))
+}
+
+TestCase('Scalar Operation: Add') {
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) + Array(`double, [[3, 2, 1], [0, 2, 3]])))
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) + Array.Scalar(`double, 4)))
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) + Array.Scalar(`complex, 4)))
+	TesterArray(`(Array.Scalar(`double, 4) + Array(`double, [[1, 2, 3], [4, 5, 6]])))
+	TesterArray(`(Array.Scalar(`complex, 4) + Array(`double, [[1, 2, 3], [4, 5, 6]])))
+	TesterArray(`(Array.Scalar(`double, 4) + Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`double, 4) + Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`complex, 4) + Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`complex, 4) + Array.Scalar(`complex, 7)))
+}
+
+TestCase('Scalar Operation: Sub') {
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) - Array(`double, [[3, 2, 1], [0, 2, 3]])))
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) - Array.Scalar(`double, 4)))
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) - Array.Scalar(`complex, 4)))
+	TesterArray(`(Array.Scalar(`double, 4) - Array(`double, [[1, 2, 3], [4, 5, 6]])))
+	TesterArray(`(Array.Scalar(`complex, 4) - Array(`double, [[1, 2, 3], [4, 5, 6]])))
+	TesterArray(`(Array.Scalar(`double, 4) - Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`double, 4) - Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`complex, 4) - Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`complex, 4) - Array.Scalar(`complex, 7)))
+}
+
+TestCase('Scalar Operation: Mul') {
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) * Array(`double, [[3, 2, 1], [0, 2, 3]])))
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) * Array.Scalar(`double, 4)))
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) * Array.Scalar(`complex, 4)))
+	TesterArray(`(Array.Scalar(`double, 4) * Array(`double, [[1, 2, 3], [4, 5, 6]])))
+	TesterArray(`(Array.Scalar(`complex, 4) * Array(`double, [[1, 2, 3], [4, 5, 6]])))
+	TesterArray(`(Array.Scalar(`double, 4) * Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`double, 4) * Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`complex, 4) * Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`complex, 4) * Array.Scalar(`complex, 7)))
+}
+
+TestCase('Scalar Operation: Div') {
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) / Array(`double, [[3, 2, 1], [0, 2, 3]])))
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) / Array.Scalar(`double, 4)))
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) / Array.Scalar(`complex, 4)))
+	TesterArray(`(Array.Scalar(`double, 4) / Array(`double, [[1, 2, 3], [4, 5, 6]])))
+	TesterArray(`(Array.Scalar(`complex, 4) / Array(`double, [[1, 2, 3], [4, 5, 6]])))
+	TesterArray(`(Array.Scalar(`double, 4) / Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`double, 4) / Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`complex, 4) / Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`complex, 4) / Array.Scalar(`complex, 7)))
+}
+
+TestCase('Scalar Operation: Div (divided by zero)') {
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) / Array.Scalar(`double, 0)))
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) / Array.Scalar(`complex, 0)))
+	TesterArray(`(Array.Scalar(`double, 4) / Array.Scalar(`double, 0)))
+	TesterArray(`(Array.Scalar(`double, 4) / Array.Scalar(`complex, 0)))
+	TesterArray(`(Array.Scalar(`complex, 4) / Array.Scalar(`double, 0)))
+	TesterArray(`(Array.Scalar(`complex, 4) / Array.Scalar(`complex, 0)))
+}
+
+TestCase('Scalar Operation: Eq') {
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) == Array(`double, [[3, 2, 1], [0, 2, 3]])))
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) == Array.Scalar(`double, 4)))
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) == Array.Scalar(`complex, 4)))
+	TesterArray(`(Array.Scalar(`double, 4) == Array(`double, [[1, 2, 3], [4, 5, 6]])))
+	TesterArray(`(Array.Scalar(`complex, 4) == Array(`double, [[1, 2, 3], [4, 5, 6]])))
+	TesterArray(`(Array.Scalar(`double, 4) == Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`double, 4) == Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`complex, 4) == Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`complex, 4) == Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`double, 7) == Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`double, 7) == Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`complex, 7) == Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`complex, 7) == Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`double, 7) == Array.Scalar(`double, 4)))
+	TesterArray(`(Array.Scalar(`double, 7) == Array.Scalar(`complex, 4)))
+	TesterArray(`(Array.Scalar(`complex, 7) == Array.Scalar(`double, 4)))
+	TesterArray(`(Array.Scalar(`complex, 7) == Array.Scalar(`complex, 4)))
+}
+
+TestCase('Scalar Operation: Neq') {
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) != Array(`double, [[3, 2, 1], [0, 2, 3]])))
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) != Array.Scalar(`double, 4)))
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) != Array.Scalar(`complex, 4)))
+	TesterArray(`(Array.Scalar(`double, 4) != Array(`double, [[1, 2, 3], [4, 5, 6]])))
+	TesterArray(`(Array.Scalar(`complex, 4) != Array(`double, [[1, 2, 3], [4, 5, 6]])))
+	TesterArray(`(Array.Scalar(`double, 4) != Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`double, 4) != Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`complex, 4) != Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`complex, 4) != Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`double, 7) != Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`double, 7) != Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`complex, 7) != Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`complex, 7) != Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`double, 7) != Array.Scalar(`double, 4)))
+	TesterArray(`(Array.Scalar(`double, 7) != Array.Scalar(`complex, 4)))
+	TesterArray(`(Array.Scalar(`complex, 7) != Array.Scalar(`double, 4)))
+	TesterArray(`(Array.Scalar(`complex, 7) != Array.Scalar(`complex, 4)))
+}
+
+TestCase('Scalar Operation: Lt') {
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) < Array(`double, [[3, 2, 1], [0, 2, 3]])))
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) < Array.Scalar(`double, 4)))
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) < Array.Scalar(`complex, 4)))
+	TesterArray(`(Array.Scalar(`double, 4) < Array(`double, [[1, 2, 3], [4, 5, 6]])))
+	TesterArray(`(Array.Scalar(`complex, 4) < Array(`double, [[1, 2, 3], [4, 5, 6]])))
+	TesterArray(`(Array.Scalar(`double, 4) < Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`double, 4) < Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`complex, 4) < Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`complex, 4) < Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`double, 7) < Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`double, 7) < Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`complex, 7) < Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`complex, 7) < Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`double, 7) < Array.Scalar(`double, 4)))
+	TesterArray(`(Array.Scalar(`double, 7) < Array.Scalar(`complex, 4)))
+	TesterArray(`(Array.Scalar(`complex, 7) < Array.Scalar(`double, 4)))
+	TesterArray(`(Array.Scalar(`complex, 7) < Array.Scalar(`complex, 4)))
+}
+
+TestCase('Scalar Operation: Le') {
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) <= Array(`double, [[3, 2, 1], [0, 2, 3]])))
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) <= Array.Scalar(`double, 4)))
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) <= Array.Scalar(`complex, 4)))
+	TesterArray(`(Array.Scalar(`double, 4) <= Array(`double, [[1, 2, 3], [4, 5, 6]])))
+	TesterArray(`(Array.Scalar(`complex, 4) <= Array(`double, [[1, 2, 3], [4, 5, 6]])))
+	TesterArray(`(Array.Scalar(`double, 4) <= Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`double, 4) <= Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`complex, 4) <= Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`complex, 4) <= Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`double, 7) <= Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`double, 7) <= Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`complex, 7) <= Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`complex, 7) <= Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`double, 7) <= Array.Scalar(`double, 4)))
+	TesterArray(`(Array.Scalar(`double, 7) <= Array.Scalar(`complex, 4)))
+	TesterArray(`(Array.Scalar(`complex, 7) <= Array.Scalar(`double, 4)))
+	TesterArray(`(Array.Scalar(`complex, 7) <= Array.Scalar(`complex, 4)))
+}
+
+TestCase('Scalar Operation: Gt') {
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) > Array(`double, [[3, 2, 1], [0, 2, 3]])))
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) > Array.Scalar(`double, 4)))
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) > Array.Scalar(`complex, 4)))
+	TesterArray(`(Array.Scalar(`double, 4) > Array(`double, [[1, 2, 3], [4, 5, 6]])))
+	TesterArray(`(Array.Scalar(`complex, 4) > Array(`double, [[1, 2, 3], [4, 5, 6]])))
+	TesterArray(`(Array.Scalar(`double, 4) > Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`double, 4) > Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`complex, 4) > Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`complex, 4) > Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`double, 7) > Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`double, 7) > Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`complex, 7) > Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`complex, 7) > Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`double, 7) > Array.Scalar(`double, 4)))
+	TesterArray(`(Array.Scalar(`double, 7) > Array.Scalar(`complex, 4)))
+	TesterArray(`(Array.Scalar(`complex, 7) > Array.Scalar(`double, 4)))
+	TesterArray(`(Array.Scalar(`complex, 7) > Array.Scalar(`complex, 4)))
+}
+
+TestCase('Scalar Operation: Ge') {
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) >= Array(`double, [[3, 2, 1], [0, 2, 3]])))
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) >= Array.Scalar(`double, 4)))
+	TesterArray(`(Array(`double, [[1, 2, 3], [4, 5, 6]]) >= Array.Scalar(`complex, 4)))
+	TesterArray(`(Array.Scalar(`double, 4) >= Array(`double, [[1, 2, 3], [4, 5, 6]])))
+	TesterArray(`(Array.Scalar(`complex, 4) >= Array(`double, [[1, 2, 3], [4, 5, 6]])))
+	TesterArray(`(Array.Scalar(`double, 4) >= Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`double, 4) >= Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`complex, 4) >= Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`complex, 4) >= Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`double, 7) >= Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`double, 7) >= Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`complex, 7) >= Array.Scalar(`double, 7)))
+	TesterArray(`(Array.Scalar(`complex, 7) >= Array.Scalar(`complex, 7)))
+	TesterArray(`(Array.Scalar(`double, 7) >= Array.Scalar(`double, 4)))
+	TesterArray(`(Array.Scalar(`double, 7) >= Array.Scalar(`complex, 4)))
+	TesterArray(`(Array.Scalar(`complex, 7) >= Array.Scalar(`double, 4)))
+	TesterArray(`(Array.Scalar(`complex, 7) >= Array.Scalar(`complex, 4)))
 }

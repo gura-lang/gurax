@@ -1775,16 +1775,16 @@ bool Array::Eq(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& array
 	} else if (arrayL.IsScalarComplex() && arrayR.IsArray()) {
 		return Eq(pArrayRtn, arrayR, arrayL.GetScalarComplex());
 	} else if (arrayL.IsScalarNumber() && arrayR.IsScalarNumber()) {
-		pArrayRtn.reset(Array::CreateScalar(ElemType::Double, arrayL.GetScalarDouble() == arrayR.GetScalarDouble()));
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Bool, arrayL.GetScalarDouble() == arrayR.GetScalarDouble()));
 		return true;
 	} else if (arrayL.IsScalarNumber() && arrayR.IsScalarComplex()) {
-		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarDouble() == arrayR.GetScalarComplex()));
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Bool, arrayL.GetScalarDouble() == arrayR.GetScalarComplex()));
 		return true;
 	} else if (arrayL.IsScalarComplex() && arrayR.IsScalarNumber()) {
-		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarComplex() == arrayR.GetScalarDouble()));
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Bool, arrayL.GetScalarComplex() == arrayR.GetScalarDouble()));
 		return true;
 	} else if (arrayL.IsScalarComplex() && arrayR.IsScalarComplex()) {
-		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarComplex() == arrayR.GetScalarComplex()));
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Bool, arrayL.GetScalarComplex() == arrayR.GetScalarComplex()));
 		return true;
 	}
 	Error::Issue(ErrorType::ValueError, "unsupported operation");
@@ -1814,16 +1814,16 @@ bool Array::Ne(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& array
 	} else if (arrayL.IsScalarComplex() && arrayR.IsArray()) {
 		return Ne(pArrayRtn, arrayR, arrayL.GetScalarComplex());
 	} else if (arrayL.IsScalarNumber() && arrayR.IsScalarNumber()) {
-		pArrayRtn.reset(Array::CreateScalar(ElemType::Double, arrayL.GetScalarDouble() != arrayR.GetScalarDouble()));
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Bool, arrayL.GetScalarDouble() != arrayR.GetScalarDouble()));
 		return true;
 	} else if (arrayL.IsScalarNumber() && arrayR.IsScalarComplex()) {
-		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarDouble() != arrayR.GetScalarComplex()));
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Bool, arrayL.GetScalarDouble() != arrayR.GetScalarComplex()));
 		return true;
 	} else if (arrayL.IsScalarComplex() && arrayR.IsScalarNumber()) {
-		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarComplex() != arrayR.GetScalarDouble()));
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Bool, arrayL.GetScalarComplex() != arrayR.GetScalarDouble()));
 		return true;
 	} else if (arrayL.IsScalarComplex() && arrayR.IsScalarComplex()) {
-		pArrayRtn.reset(Array::CreateScalar(ElemType::Complex, arrayL.GetScalarComplex() != arrayR.GetScalarComplex()));
+		pArrayRtn.reset(Array::CreateScalar(ElemType::Bool, arrayL.GetScalarComplex() != arrayR.GetScalarComplex()));
 		return true;
 	}
 	Error::Issue(ErrorType::ValueError, "unsupported operation");
