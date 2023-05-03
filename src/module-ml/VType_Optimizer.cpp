@@ -67,12 +67,11 @@ Gurax_ImplementClassMethod(Optimizer, Adam)
 	return new Value_Optimizer(new Optimizer_Adam());
 }
 
-// Optimizer.GradientDescent(learningRate as Number, epsilon as Number)
+// Optimizer.GradientDescent(learningRate as Number)
 Gurax_DeclareClassMethod(Optimizer, GradientDescent)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("learningRate", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("epsilon", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
 )""");

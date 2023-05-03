@@ -202,8 +202,8 @@ Gurax_ImplementMethod(Trainer, CalcCrossEntropyError)
 	return new Value_Number(entropyError);
 }
 
-// Trainer#CalcMeanSquareError(correct as Array)
-Gurax_DeclareMethod(Trainer, CalcMeanSquareError)
+// Trainer#CalcMeanSquaredError(correct as Array)
+Gurax_DeclareMethod(Trainer, CalcMeanSquaredError)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("correct", VTYPE_Array, ArgOccur::Once, ArgFlag::None);
@@ -212,7 +212,7 @@ Skeleton.
 )""");
 }
 
-Gurax_ImplementMethod(Trainer, CalcMeanSquareError)
+Gurax_ImplementMethod(Trainer, CalcMeanSquaredError)
 {
 	// Target
 	Trainer& trainer = GetValueThis(argument).GetTrainer();
@@ -305,7 +305,7 @@ void VType_Trainer::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Trainer, GetNode));
 	Assign(Gurax_CreateMethod(Trainer, Print));
 	Assign(Gurax_CreateMethod(Trainer, Train));
-	Assign(Gurax_CreateMethod(Trainer, CalcMeanSquareError));
+	Assign(Gurax_CreateMethod(Trainer, CalcMeanSquaredError));
 	Assign(Gurax_CreateMethod(Trainer, CalcCrossEntropyError));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Trainer, model));

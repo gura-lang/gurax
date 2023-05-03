@@ -270,19 +270,19 @@ Following format characters would take a `string` value from the argument list
 and pack them into a binary sequence.
 
 - `s` .. Packs a sequence of UTF-8 codes in the string.
-         The packing size `n` means the size of the room in bytes
-         where the character codes are to be packed.
-         Only the sequence within the allocated room would be packed.
-         If the string length is smaller than the room,
-         the lacking part would be filled with zero.
+        The packing size `n` means the size of the room in bytes
+        where the character codes are to be packed.
+        Only the sequence within the allocated room would be packed.
+        If the string length is smaller than the room,
+        the lacking part would be filled with zero.
 - `c` .. Picks the first byte of the string and packs it as a one-byte unsigned number.
-         The packing size `n` means the number of values to be packed.
+        The packing size `n` means the number of values to be packed.
 
 Following format character would take no value from the argument list.
 
 - `x` .. Fills the binary with zero.
-         The packing size `n` means the size of the room in bytes
-         to be filled with zero.
+        The packing size `n` means the size of the room in bytes
+        to be filled with zero.
 
 The default byte-order for numbers of two-byte, four-byte and eight-byte
 depends on the system the interpreter is currently running.
@@ -393,16 +393,16 @@ Following format characters would extract a string sequence from the binary
 and returns a `string` value.
 
 - `s` .. Extracts a sequence of UTF-8 codes and returns `string` instance containing it.
-         The unpacking size `n` means the size of the room in bytes
-         where the character codes are to be unpacked.
+        The unpacking size `n` means the size of the room in bytes
+        where the character codes are to be unpacked.
 - `c` .. Extracts a one-byte unsigned number and returns a `string` instance containing it.
-         The unpacking size `n` means the number of values to be extracted.
+        The unpacking size `n` means the number of values to be extracted.
 
 Following format character would not return any value.
 
 - `x` .. Advances the address by one byte.
-         If the unpacking size `n` is specifies,
-         it would advance the address by `n` bytes.
+        If the unpacking size `n` is specifies,
+        it would advance the address by `n` bytes.
 
 The default byte-order for numbers of two-byte, four-byte and eight-byte
 depends on the system the interpreter is currently running.
@@ -747,7 +747,7 @@ Gurax_ImplementOpBinary(Sub, Pointer, Pointer)
 	const Pointer& pointerR = Value_Pointer::GetPointer(valueR);
 	if (!pointerL.IsTargetIdentical(pointerR)) {
 		Error::Issue(ErrorType::ValueError,
-					 "pointers must have the same target when the offset difference is calculated");
+					"pointers must have the same target when the offset difference is calculated");
 		return Value::nil();
 	}
 	return new Value_Number(static_cast<Int64>(pointerL.GetOffset()) - static_cast<Int64>(pointerR.GetOffset()));
