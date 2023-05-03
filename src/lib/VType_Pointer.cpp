@@ -102,7 +102,7 @@ Gurax_ImplementConstructor(Pointer)
 //-----------------------------------------------------------------------------
 // Implementation of class method
 //-----------------------------------------------------------------------------
-// Pointer.HasSame(p1:Pointer, p2:Pointer)
+// Pointer.HasSame(p1 as Pointer, p2 as Pointer)
 Gurax_DeclareClassMethod(Pointer, HasSame)
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -129,7 +129,7 @@ Gurax_ImplementClassMethod(Pointer, HasSame)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// Pointer#Append(pointer:Pointer, bytes?:Number):reduce:[stay]
+// Pointer#Append(pointer as Pointer, bytes? as Number):reduce:[stay]
 Gurax_DeclareMethod(Pointer, Append)
 {
 	Declare(VTYPE_Pointer, Flag::Reduce);
@@ -164,7 +164,7 @@ Gurax_ImplementMethod(Pointer, Append)
 	return valueThis.Reference();
 }
 
-// Pointer#Decode(codec:Codec):String {block?}
+// Pointer#Decode(codec as Codec) as String {block?}
 Gurax_DeclareMethod(Pointer, Decode)
 {
 	Declare(VTYPE_String, Flag::None);
@@ -189,7 +189,7 @@ Gurax_ImplementMethod(Pointer, Decode)
 	return new Value_String(dst);
 }
 
-// Pointer#Dump(stream?:Stream:w, addrOffset?:Number):void:[addr,upper]
+// Pointer#Dump(stream:w? as Stream, addrOffset? as Number):void:[addr,upper]
 Gurax_DeclareMethod(Pointer, Dump)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -229,7 +229,7 @@ Gurax_ImplementMethod(Pointer, Dump)
 	return Value::nil();
 }
 
-// Pointer#Pack(format:String, args*):reduce:[stay]
+// Pointer#Pack(format as String, args*):reduce:[stay]
 Gurax_DeclareMethod(Pointer, Pack)
 {
 	Declare(VTYPE_Pointer, Flag::Reduce);
@@ -320,7 +320,7 @@ Gurax_ImplementMethod(Pointer, Pack)
 	return valueThis.Reference();
 }
 
-// Pointer#Put(elemType:Symbol, args*):reduce:[be,stay]
+// Pointer#Put(elemType as Symbol, args*):reduce:[be,stay]
 Gurax_DeclareMethod(Pointer, Put)
 {
 	Declare(VTYPE_Pointer, Flag::Reduce);
@@ -355,7 +355,7 @@ Gurax_ImplementMethod(Pointer, Put)
 	return valueThis.Reference();
 }
 
-// Pointer#Unpack(format:String):[raise,stay]
+// Pointer#Unpack(format as String):[raise,stay]
 Gurax_DeclareMethod(Pointer, Unpack)
 {
 	Declare(VTYPE_Pointer, Flag::None);

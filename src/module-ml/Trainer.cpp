@@ -31,13 +31,14 @@ template<> Double CalcMeanSquareError_T<Half>(const Array& arrayFwdOut, const Ar
 template<typename T_Elem> Double CalcCrossEntropyError_T(const Array& arrayFwdOut, const Array& arrayTrain)
 {
 	Double rtn = 0;
+	arrayFwdOut.GetDimSizes().CalcLength();
 	const T_Elem* pFwdOut = arrayFwdOut.GetPointerC<T_Elem>();
 	const T_Elem* pFwdOutEnd = pFwdOut + arrayFwdOut.GetDimSizes().CalcLength();
 	const T_Elem* pTrain = arrayTrain.GetPointerC<T_Elem>();
 	for ( ; pFwdOut != pFwdOutEnd; pFwdOut++, pTrain++) {
-		rtn += *pTrain * std::log(*pFwdOut + 1.e-6);
+		rtn += *pTrain * std::log(*pFwdOut + 1.e-7);
 	}
-	//rtn /= 2;
+	rtn = -rtn;
 	return rtn;
 }
 
