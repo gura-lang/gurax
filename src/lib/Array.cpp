@@ -65,6 +65,26 @@ Array* Array::CreateIdentity(const ElemTypeT& elemType, size_t n, Double mag)
 	return pArray.release();
 }
 
+Array* Array::Reshape(const ValueList& values) const
+{
+	DimSizes dimSizes;
+	size_t len = GetDimSizes().CalcLength();
+	dimSizes.reserve(values.size());
+	int iUndetermined = -1;
+	RefPtr<Array> pArray;
+	for (auto pValue : values) {
+		if (pValue->IsType(VTYPE_Number)) {
+			size_t nElems = Value_Number::GetNumberPos<size_t>(*pValue);
+			if (Error::IsIssued()) return nullptr;
+		} else if (pValue->IsInvalid()) {
+
+		} else {
+		}
+		iUndetermined++;
+	}
+	return pArray.release();
+}
+
 template<typename T_Elem> bool IndexSetValue_T(void* pv, size_t idx, const Value& value)
 {
 	T_Elem* p = reinterpret_cast<T_Elem*>(pv) + idx;

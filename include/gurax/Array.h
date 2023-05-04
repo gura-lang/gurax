@@ -27,9 +27,7 @@ public:
 	DimSizes(NumList&& src) : NumList(src) {}
 	DimSizes(size_t n) { reserve(1); push_back(n); }
 	DimSizes(size_t m, size_t n) { reserve(2); push_back(m); push_back(n); }
-	DimSizes(size_t l, size_t m, size_t n) {
-		reserve(3); push_back(l); push_back(m); push_back(n);
-	}
+	DimSizes(size_t l, size_t m, size_t n) { reserve(3); push_back(l); push_back(m); push_back(n); }
 	DimSizes(const ValueList& values);
 public:
 	static size_t CalcLength(const_iterator pDimSizeBegin, const_iterator pDimSizeEnd);
@@ -194,6 +192,7 @@ public:
 	static Array* Create2d(const ElemTypeT& elemType, size_t m, size_t n) { return Create(elemType, DimSizes(m, n)); }
 	static Array* Create3d(const ElemTypeT& elemType, size_t l, size_t m, size_t n) { return Create(elemType, DimSizes(l, m, n)); }
 	static Array* CreateIdentity(const ElemTypeT& elemType, size_t n, Double mag);
+	Array* Reshape(const ValueList& values) const;
 	const ElemTypeT& GetElemType() const { return _elemType; }
 	bool IsElemType(const ElemTypeT& elemType) const { return _elemType.IsIdentical(elemType); }
 	Memory& GetMemory() { return *_pMemory; }
