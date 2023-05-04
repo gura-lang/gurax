@@ -237,6 +237,21 @@ TestCase('Array#Each()') {
 TestCase('Array#Inject()') {
 }
 
+TestCase('Array#Reshape()') {
+	a = @float(3, 4, 2)
+	a.p.Put(`float, 0..)
+	Tester(`a)
+	Tester(`a.Reshape(3, 8))
+	Tester(`a.Reshape(3, nil))
+	Tester(`a.Reshape(4, nil))
+	Tester(`a.Reshape(nil, 8))
+	Tester(`a.Reshape(nil))
+	Tester(`a.Reshape(5, nil))
+	Tester(`a.Reshape(nil, nil, 1))
+	Tester(`a.Reshape(3, 4, 1))
+	Tester(`a.Reshape(3, 4, 3))
+}
+
 TestCase('Array#ToList()') {
 	Tester(`@int8([[1, 2, 3], [4, 5, 6]]).ToList())
 	Tester(`@uint8([[1, 2, 3], [4, 5, 6]]).ToList())

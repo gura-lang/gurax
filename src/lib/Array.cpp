@@ -71,22 +71,39 @@ Array* Array::Reshape(const ValueList& values) const
 	size_t len = GetDimSizes().CalcLength();
 	dimSizes.reserve(values.size());
 	int iUndetermined = -1;
-	RefPtr<Array> pArray;
-	size_t nElemsAccum = 1;
+	size_t dimSizeProd = 1;
+	size_t i = 0;
 	for (auto pValue : values) {
 		if (pValue->IsType(VTYPE_Number)) {
-			size_t nElems = Value_Number::GetNumberPos<size_t>(*pValue);
+			size_t dimSize = Value_Number::GetNumberPos<size_t>(*pValue);
 			if (Error::IsIssued()) return nullptr;
-			dimSizes.push_back(nElems);
-			nElemsAccum *= nElems;
+			dimSizes.push_back(dimSize);
+			dimSizeProd *= dimSize;
 		} else if (pValue->IsInvalid()) {
+			if (iUndetermined >= 0) {
+				Error::Issue(ErrorType::ValueError, "more than one undetermined dimension");
+				return nullptr;
+			}
 			dimSizes.push_back(0);
-			
+			iUndetermined = i;
 		} else {
+			Error::Issue(ErrorType::TypeError, "only Number value is acceptable");
+			return nullptr;
 		}
-		iUndetermined++;
+		i++;
 	}
-	return pArray.release();
+	if (len < dimSizeProd) {
+		Error::Issue(ErrorType::RangeError, "specified dimension exceeds the memory amount");
+		return nullptr;
+	} else if (iUndetermined < 0 && len != dimSizeProd) {
+		Error::Issue(ErrorType::ValueError, "specified dimension is less than the memory amount");
+		return nullptr;
+	} else if (len % dimSizeProd != 0) {
+		Error::Issue(ErrorType::ValueError, "invalid dimension");
+		return nullptr;
+	}
+	if (iUndetermined >= 0) dimSizes[iUndetermined] = len / dimSizeProd;
+	return new Array(GetElemType(), GetMemory().Reference(), dimSizes);
 }
 
 template<typename T_Elem> bool IndexSetValue_T(void* pv, size_t idx, const Value& value)

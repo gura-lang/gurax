@@ -396,6 +396,29 @@ Gurax_ImplementMethod(Array, VerifyShape)
 	return new Value_Bool(dimSizes.Verify(values));
 }
 
+// Array#Reshape(dimSizes:nil+ as Number) {block?}
+Gurax_DeclareMethod(Array, Reshape)
+{
+	Declare(VTYPE_Array, Flag::None);
+	DeclareArg("dimSizes", VTYPE_Number, ArgOccur::OnceOrMore, ArgFlag::Nil);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
+}
+
+Gurax_ImplementMethod(Array, Reshape)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const ValueList& values = args.PickList();
+	// Function body
+	RefPtr<Array> pArray(valueThis.GetArray().Reshape(values));
+	if (!pArray) return Value::nil();
+	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -1054,6 +1077,7 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Array, ToString));
 	Assign(Gurax_CreateMethod(Array, Transpose));
 	Assign(Gurax_CreateMethod(Array, VerifyShape));
+	Assign(Gurax_CreateMethod(Array, Reshape));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Array, bytes));
 	Assign(Gurax_CreateProperty(Array, bytesPerElem));
