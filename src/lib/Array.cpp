@@ -72,12 +72,16 @@ Array* Array::Reshape(const ValueList& values) const
 	dimSizes.reserve(values.size());
 	int iUndetermined = -1;
 	RefPtr<Array> pArray;
+	size_t nElemsAccum = 1;
 	for (auto pValue : values) {
 		if (pValue->IsType(VTYPE_Number)) {
 			size_t nElems = Value_Number::GetNumberPos<size_t>(*pValue);
 			if (Error::IsIssued()) return nullptr;
+			dimSizes.push_back(nElems);
+			nElemsAccum *= nElems;
 		} else if (pValue->IsInvalid()) {
-
+			dimSizes.push_back(0);
+			
 		} else {
 		}
 		iUndetermined++;
