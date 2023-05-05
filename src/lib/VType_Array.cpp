@@ -1179,6 +1179,7 @@ Value* Value_Array::DoIndexGet(const Index& index) const
 	const DimSizes& dimSizes = array.GetDimSizes();
 	if (valuesIndex.empty()) {
 		return array.ToList();
+	//} else if (valuesIndex.size() > dimSizes.size()) {
 	} else if (valuesIndex.size() != dimSizes.size()) {
 		Error::Issue(ErrorType::IndexError, "invalid number of indices");
 		return Value::nil();
@@ -1187,8 +1188,10 @@ Value* Value_Array::DoIndexGet(const Index& index) const
 	size_t idxMult = 1;
 	auto ppValueIndex = valuesIndex.rbegin();
 	auto pDimSize = dimSizes.rbegin();
-	for (;;) {
-		const Value& valueIndex = **ppValueIndex;
+	size_t nSkip = dimSizes.size() - valuesIndex.size();
+	for (size_t i = 0; i < nSkip; i++, pDimSize++) idxMult *= *pDimSize;
+	for ( ; pDimSize != dimSizes.rend(); pDimSize++) {
+		const Value& valueIndex = **ppValueIndex++;
 		if (!valueIndex.IsType(VTYPE_Number)) {
 			Error::Issue(ErrorType::IndexError, "invalid value type of indices");
 			return Value::nil();
@@ -1200,10 +1203,7 @@ Value* Value_Array::DoIndexGet(const Index& index) const
 			return Value::nil();
 		}
 		idx += dim * idxMult;
-		ppValueIndex++;
-		if (ppValueIndex == valuesIndex.rend()) break;
 		idxMult *= *pDimSize;
-		pDimSize++;
 	}
 	return array.IndexGetValue(idx);
 }
