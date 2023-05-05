@@ -161,8 +161,9 @@ public:
 	using MapSymbolToElemType = std::unordered_map<const Symbol*, const ElemTypeT*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>;
 protected:
 	const ElemTypeT& _elemType;
-	RefPtr<Memory> _pMemory;
+	RefPtr<Memory> _pMemory2;
 	DimSizes _dimSizes;
+	size_t _offset;
 public:
 	static Funcs funcs;
 protected:
@@ -171,7 +172,7 @@ protected:
 	static MapSymbolToElemType _mapAtSymbolToElemType;
 public:
 	// Constructor
-	Array(const ElemTypeT& elemType, Memory* pMemory, DimSizes dimSizes);
+	Array(const ElemTypeT& elemType, Memory* pMemory, DimSizes dimSizes, size_t offset);
 	// Copy constructor/operator
 	Array(const Array& src);
 	Array& operator=(const Array& src) = delete;
@@ -195,15 +196,15 @@ public:
 	Array* Reshape(const ValueList& values) const;
 	const ElemTypeT& GetElemType() const { return _elemType; }
 	bool IsElemType(const ElemTypeT& elemType) const { return _elemType.IsIdentical(elemType); }
-	Memory& GetMemory() { return *_pMemory; }
-	const Memory& GetMemory() const { return *_pMemory; }
+	Memory& GetMemory() { return *_pMemory2; }
+	const Memory& GetMemory() const { return *_pMemory2; }
 	const DimSizes& GetDimSizes() const { return _dimSizes; }
 	bool IsMultidemensional() const { return _dimSizes.size() > 1; }
 	bool HasSameShape(const Array& array) const { return _dimSizes.IsEqual(array.GetDimSizes()); }
-	template<typename T> T* GetPointerC() { return _pMemory->GetPointerC<T>(); }
-	template<typename T> T* GetPointerC(size_t offset) { return _pMemory->GetPointerC<T>(offset); }
-	template<typename T> const T* GetPointerC() const { return _pMemory->GetPointerC<T>(); }
-	template<typename T> const T* GetPointerC(size_t offset) const { return _pMemory->GetPointerC<T>(offset); }
+	//template<typename T> T* GetPointerC() { return _pMemory2->GetPointerC<T>(); }
+	template<typename T> T* GetPointerC(size_t offset = 0) { return _pMemory2->GetPointerC<T>(offset + _offset); }
+	//template<typename T> const T* GetPointerC() const { return _pMemory2->GetPointerC<T>(); }
+	template<typename T> const T* GetPointerC(size_t offset = 0) const { return _pMemory2->GetPointerC<T>(offset + _offset); }
 public:
 	bool IsArray() const { return !_dimSizes.empty(); }
 	bool IsScalar() const { return _dimSizes.empty(); }

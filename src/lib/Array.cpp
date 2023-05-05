@@ -16,31 +16,31 @@ const Array::ElemTypeT* Array::_pElemTypeRtnForArithmTbl[ElemTypeIdMax][ElemType
 Array::MapSymbolToElemType Array::_mapSymbolToElemType;
 Array::MapSymbolToElemType Array::_mapAtSymbolToElemType;
 
-Array::Array(const ElemTypeT& elemType, Memory* pMemory, DimSizes dimSizes) :
-		_elemType(elemType), _pMemory(pMemory), _dimSizes(std::move(dimSizes))
+Array::Array(const ElemTypeT& elemType, Memory* pMemory, DimSizes dimSizes, size_t offset) :
+		_elemType(elemType), _pMemory2(pMemory), _dimSizes(std::move(dimSizes)), _offset(offset)
 {
 }
 
 Array::Array(const Array& src) :
-		_elemType(src._elemType), _pMemory(src._pMemory->Clone()), _dimSizes(src._dimSizes)
+		_elemType(src._elemType), _pMemory2(src._pMemory2->Clone()), _dimSizes(src._dimSizes), _offset(src._offset)
 {
 }
 
 Array::Array(Array&& src) :
-		_elemType(src._elemType), _pMemory(src._pMemory->Reference()), _dimSizes(std::move(src._dimSizes))
+		_elemType(src._elemType), _pMemory2(src._pMemory2->Reference()), _dimSizes(std::move(src._dimSizes)), _offset(src._offset)
 {
 }
 
 Array* Array::Create(const ElemTypeT& elemType, Memory* pMemory, DimSizes dimSizes)
 {
-	return new Array(elemType, pMemory, std::move(dimSizes));
+	return new Array(elemType, pMemory, std::move(dimSizes), 0);
 }
 
 Array* Array::Create(const ElemTypeT& elemType, DimSizes dimSizes)
 {
 	RefPtr<Memory> pMemory(new MemoryHeap(elemType.bytes * dimSizes.CalcLength()));
 	pMemory->Fill(0);
-	return new Array(elemType, pMemory.release(), std::move(dimSizes));
+	return new Array(elemType, pMemory.release(), std::move(dimSizes), 0);
 }
 
 Array* Array::CreateScalar(const ElemTypeT& elemType, Double num)
@@ -103,7 +103,7 @@ Array* Array::Reshape(const ValueList& values) const
 		return nullptr;
 	}
 	if (iUndetermined >= 0) dimSizes[iUndetermined] = len / dimSizeProd;
-	return new Array(GetElemType(), GetMemory().Reference(), dimSizes);
+	return new Array(GetElemType(), GetMemory().Reference(), dimSizes, _offset);
 }
 
 template<typename T_Elem> bool IndexSetValue_T(void* pv, size_t idx, const Value& value)
