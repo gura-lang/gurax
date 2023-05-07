@@ -1179,12 +1179,11 @@ Value* Value_Array::DoIndexGet(const Index& index) const
 	const DimSizes& dimSizes = array.GetDimSizes();
 	if (valuesIndex.empty()) {
 		return array.ToList();
-	//} else if (valuesIndex.size() > dimSizes.size()) {
-	} else if (valuesIndex.size() != dimSizes.size()) {
+	} else if (valuesIndex.size() > dimSizes.size()) {
 		Error::Issue(ErrorType::IndexError, "invalid number of indices");
 		return Value::nil();
 	}
-	size_t idx = 0;
+	size_t idxOffset = 0;
 	size_t idxMult = 1;
 	auto ppValueIndex = valuesIndex.rbegin();
 	auto pDimSize = dimSizes.rbegin();
@@ -1202,10 +1201,14 @@ Value* Value_Array::DoIndexGet(const Index& index) const
 			Error::Issue(ErrorType::IndexError, "index is out of range");
 			return Value::nil();
 		}
-		idx += dim * idxMult;
+		idxOffset += dim * idxMult;
 		idxMult *= *pDimSize;
 	}
-	return array.IndexGetValue(idx);
+	if (nSkip == 0) return array.IndexGetValue(idxOffset);
+	const Array::ElemTypeT& elemType = array.GetElemType();
+	size_t byteOffset = array.GetByteOffset() + idxOffset * elemType.bytes;
+	return new Value_Array(new Array(elemType, array.GetMemory().Reference(),
+		DimSizes(dimSizes.begin() + dimSizes.size() - nSkip, dimSizes.end()), byteOffset));
 }
 
 void Value_Array::DoIndexSet(const Index& index, RefPtr<Value> pValue)

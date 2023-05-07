@@ -94,6 +94,7 @@ public:
 	NumList(size_t n) : ListBase<T_Num>(n) {}
 	NumList(size_t n, T_Num num) : ListBase<T_Num>(n, num) {}
 	NumList(std::initializer_list<T_Num> initList) : ListBase<T_Num>(initList) {}
+	NumList(const_iterator first, const_iterator last) : ListBase<T_Num>(first, last) {}
 public:
 	NumList& Sort() { std::sort(ListBase<T_Num>::begin(), ListBase<T_Num>::end()); return *this; }
 	NumList& Sort(SortOrder sortOrder);

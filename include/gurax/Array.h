@@ -29,6 +29,7 @@ public:
 	DimSizes(size_t m, size_t n) { reserve(2); push_back(m); push_back(n); }
 	DimSizes(size_t l, size_t m, size_t n) { reserve(3); push_back(l); push_back(m); push_back(n); }
 	DimSizes(const ValueList& values);
+	DimSizes(const_iterator first, const_iterator last) : NumList(first, last) {}
 public:
 	static size_t CalcLength(const_iterator pDimSizeBegin, const_iterator pDimSizeEnd);
 	static const DimSizes* DetermineResult(const DimSizes& dimSizesL, const DimSizes& dimSizesR,
@@ -161,9 +162,9 @@ public:
 	using MapSymbolToElemType = std::unordered_map<const Symbol*, const ElemTypeT*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>;
 protected:
 	const ElemTypeT& _elemType;
-	RefPtr<Memory> _pMemory2;
+	RefPtr<Memory> _pMemory;
 	DimSizes _dimSizes;
-	size_t _offset;
+	size_t _byteOffset;
 public:
 	static Funcs funcs;
 protected:
@@ -196,15 +197,14 @@ public:
 	Array* Reshape(const ValueList& values) const;
 	const ElemTypeT& GetElemType() const { return _elemType; }
 	bool IsElemType(const ElemTypeT& elemType) const { return _elemType.IsIdentical(elemType); }
-	Memory& GetMemory() { return *_pMemory2; }
-	const Memory& GetMemory() const { return *_pMemory2; }
+	Memory& GetMemory() { return *_pMemory; }
+	const Memory& GetMemory() const { return *_pMemory; }
 	const DimSizes& GetDimSizes() const { return _dimSizes; }
+	size_t GetByteOffset() const { return _byteOffset; }
 	bool IsMultidemensional() const { return _dimSizes.size() > 1; }
 	bool HasSameShape(const Array& array) const { return _dimSizes.IsEqual(array.GetDimSizes()); }
-	//template<typename T> T* GetPointerC() { return _pMemory2->GetPointerC<T>(); }
-	template<typename T> T* GetPointerC(size_t offset = 0) { return _pMemory2->GetPointerC<T>(offset + _offset); }
-	//template<typename T> const T* GetPointerC() const { return _pMemory2->GetPointerC<T>(); }
-	template<typename T> const T* GetPointerC(size_t offset = 0) const { return _pMemory2->GetPointerC<T>(offset + _offset); }
+	template<typename T> T* GetPointerC(size_t byteOffset = 0) { return _pMemory->GetPointerC<T>(byteOffset + _byteOffset); }
+	template<typename T> const T* GetPointerC(size_t byteOffset = 0) const { return _pMemory->GetPointerC<T>(byteOffset + _byteOffset); }
 public:
 	bool IsArray() const { return !_dimSizes.empty(); }
 	bool IsScalar() const { return _dimSizes.empty(); }

@@ -37,7 +37,7 @@ public:
 	virtual bool IsSloth() const { return false; }
 	size_t GetBytes() const { return _bytes; }
 	template<typename T> T* GetPointerC() const { return reinterpret_cast<T*>(_buff); }
-	template<typename T> T* GetPointerC(size_t offset) const { return reinterpret_cast<T*>(_buff + offset); }
+	template<typename T> T* GetPointerC(size_t byteOffset) const { return reinterpret_cast<T*>(_buff + byteOffset); }
 	void Fill(UInt8 data) { ::memset(_buff, data, _bytes); }
 	String MakeId() const;
 	virtual Memory* Clone() const = 0;
