@@ -53,19 +53,6 @@ Gurax_ImplementFunction(Xavier)
 }
 
 //------------------------------------------------------------------------------
-// Operators
-//------------------------------------------------------------------------------
-// Array |*| ml.Softmax
-Gurax_ImplementOpBinary(Gear, Array, Softmax)
-{
-	const Array& arrayL = Value_Array::GetArray(valueL);
-	Softmax& gear = Value_Softmax::GetSoftmax(valueR);
-	RefPtr<Array> pArrayRtn;
-	if (!gear.EvalForward(processor, pArrayRtn, arrayL)) return Value::nil();
-	return new Value_Array(pArrayRtn.release());
-}
-
-//------------------------------------------------------------------------------
 // Entries
 //------------------------------------------------------------------------------
 Gurax_ModuleValidate()
@@ -97,8 +84,6 @@ Gurax_ModulePrepare()
 	// Assignment of function
 	Assign(Gurax_CreateFunction(He));
 	Assign(Gurax_CreateFunction(Xavier));
-	// Assignment of operator
-	Gurax_AssignOpBinary(Gear, Array, Softmax);
 	return true;
 }
 

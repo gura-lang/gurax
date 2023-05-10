@@ -69,6 +69,19 @@ Gurax_ImplementPropertyGetter(Gear, name)
 }
 
 //------------------------------------------------------------------------------
+// Operators
+//------------------------------------------------------------------------------
+// Array |*| Gear
+Gurax_ImplementOpBinary(Gear, Array, Gear)
+{
+	const Array& arrayL = Value_Array::GetArray(valueL);
+	Gear& gear = Value_Gear::GetGear(valueR);
+	RefPtr<Array> pArrayRtn;
+	if (!gear.EvalForward(processor, pArrayRtn, arrayL)) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+//------------------------------------------------------------------------------
 // VType_Gear
 //------------------------------------------------------------------------------
 VType_Gear VTYPE_Gear("Gear");
@@ -83,6 +96,8 @@ void VType_Gear::DoPrepare(Frame& frameOuter)
 	//Assign(Gurax_CreateMethod(Gear, MethodSkeleton));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Gear, name));
+	// Assignment of operator
+	Gurax_AssignOpBinary(Gear, Array, Gear);
 }
 
 //------------------------------------------------------------------------------
