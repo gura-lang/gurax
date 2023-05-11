@@ -135,6 +135,19 @@ const TokenType& Operator::GetTokenType() const
 	return TokenType::OpTypeToTokenType(_opType);
 }
 
+void Operator::AssignEntry(VType& vtype, OpEntry* pOpEntry)
+{
+	_opEntryMap.Assign(vtype, pOpEntry);
+	vtype.AddOpEntry(pOpEntry);
+}
+
+void Operator::AssignEntry(VType& vtypeL, VType& vtypeR, OpEntry* pOpEntry)
+{
+	_opEntryMap.Assign(vtypeL, vtypeR, pOpEntry);
+	vtypeL.AddOpEntry(pOpEntry);
+	vtypeR.AddOpEntry(pOpEntry);
+}
+
 const OpEntry* Operator::FindMatchedEntry(const VType& vtype) const
 {
 	const OpEntry* pOpEntry = nullptr;

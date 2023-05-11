@@ -374,12 +374,8 @@ public:
 	const Symbol* GetStyleAsSymbol() const;
 	const TokenType& GetTokenType() const;
 public:
-	void AssignEntry(const VType& vtype, OpEntry* pOpEntry) {
-		_opEntryMap.Assign(vtype, pOpEntry);
-	}
-	void AssignEntry(const VType& vtypeL, const VType& vtypeR, OpEntry* pOpEntry) {
-		_opEntryMap.Assign(vtypeL, vtypeR, pOpEntry);
-	}
+	void AssignEntry(VType& vtype, OpEntry* pOpEntry);
+	void AssignEntry(VType& vtypeL, VType& vtypeR, OpEntry* pOpEntry);
 	OpEntry* LookupEntry(const VType& vtype) const {
 		return _opEntryMap.Lookup(vtype);
 	}

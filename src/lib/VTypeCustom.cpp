@@ -158,7 +158,7 @@ Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& arg
 	Function& constructorInh = vtypeInh.GetConstructor();
 	if (constructorInh.IsEmpty()) {
 		Error::Issue(ErrorType::ValueError,
-			 "value type %s does not have a constructor", vtypeInh.MakeFullName().c_str());
+			"value type %s does not have a constructor", vtypeInh.MakeFullName().c_str());
 		return Value::nil();
 	}
 	bool dynamicScopeFlag = false;
@@ -214,7 +214,7 @@ Value* VTypeCustom::ConstructorClassDefault::DoEval(Processor& processor, Argume
 	Function& constructorInh = vtypeInh.GetConstructor();
 	if (constructorInh.IsEmpty()) {
 		Error::Issue(ErrorType::ValueError,
-			 "value type %s does not have a constructor", vtypeInh.MakeFullName().c_str());
+			"value type %s does not have a constructor", vtypeInh.MakeFullName().c_str());
 		return Value::nil();
 	}
 	RefPtr<Expr_Block> pExprBlock(argument.SuspendExprOfBlock());

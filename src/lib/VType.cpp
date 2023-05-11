@@ -26,7 +26,6 @@ VType::VType(const Symbol* pSymbol) :
 void VType::Assign(Function* pFunction)
 {
 	pFunction->SetVTypeOfOwner(*this);
-
 	GetFrameOfMember().Assign(pFunction);
 }
 
