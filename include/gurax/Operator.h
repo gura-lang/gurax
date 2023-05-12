@@ -147,9 +147,13 @@ enum class OpType {
 class GURAX_DLLDECLARE OpEntry {
 public:
 	static const OpEntry Empty;
+private:
+	Operator* _pOperator;
+	VType* _pVTypeL;
+	VType* _pVTypeR;
 public:
 	// Constructor
-	OpEntry() = default;
+	OpEntry();
 	// Copy constructor/operator
 	OpEntry(const OpEntry& src) = delete;
 	OpEntry& operator=(const OpEntry& src) = delete;
@@ -158,6 +162,26 @@ public:
 	OpEntry& operator=(OpEntry&& src) noexcept = delete;
 	// Destructor
 	virtual ~OpEntry() = default;
+public:
+	bool IsBinary() const;
+	bool IsUnary() const { return !IsBinary(); }
+	void SetOperatorInfo(Operator* pOperator, VType& vtypeL, VType& vtypeR) {
+		if (_pOperator) return;
+		_pOperator = pOperator, _pVTypeL = &vtypeL, _pVTypeR = &vtypeR;
+	}
+	void SetOperatorInfo(Operator* pOperator, VType& vtype) {
+		if (_pOperator) return;
+		_pOperator = pOperator, _pVTypeL = &vtype;
+	}
+	bool CheckVTypeUnary(const VType& vtype) const { return _pVTypeL->IsIdentical(vtype); }
+	bool CheckVTypeBinary(const VType& vtypeL, const VType& vtypeR) const {
+		return _pVTypeL->IsIdentical(vtypeL) && _pVTypeR->IsIdentical(vtypeR);
+	}
+	bool CheckVTypeL(const VType& vtype) const { return _pVTypeL->IsIdentical(vtype); }
+	bool CheckVTypeR(const VType& vtype) const { return _pVTypeR->IsIdentical(vtype); }
+public:
+	void ReassignEntry(VType& vtype);
+	void ReassignEntry(VType& vtypeL, VType& vtypeR);
 public:
 	virtual Value* EvalUnary(Processor& processor, Value& value) const;
 	virtual Value* EvalBinary(Processor& processor, Value& valueL, Value& valueR) const;
@@ -197,8 +221,9 @@ public:
 	~OpEntryMap() {
 		for (auto pair : _map) delete pair.second;
 	}
-public:
+private:
 	void Assign(UInt64 key, OpEntry *pOpEntry);
+public:
 	void Assign(const VType& vtype, OpEntry* pOpEntry) {
 		Assign(GenKey(vtype), pOpEntry);
 	}

@@ -75,6 +75,9 @@ void VType::Declare(VType& vtypeInh, Flags flags, Constructor* pConstructor)
 	} else {
 		_pConstructor.reset(Constructor::Empty.Reference());
 	}
+	for (auto pOpEntry : vtypeInh._opEntryList) {
+		_opEntryList.push_back(pOpEntry);
+	}
 }
 
 String VType::MakeFullName() const

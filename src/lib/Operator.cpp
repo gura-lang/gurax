@@ -137,12 +137,14 @@ const TokenType& Operator::GetTokenType() const
 
 void Operator::AssignEntry(VType& vtype, OpEntry* pOpEntry)
 {
+	pOpEntry->SetOperatorInfo(this, vtype);
 	_opEntryMap.Assign(vtype, pOpEntry);
 	vtype.AddOpEntry(pOpEntry);
 }
 
 void Operator::AssignEntry(VType& vtypeL, VType& vtypeR, OpEntry* pOpEntry)
 {
+	pOpEntry->SetOperatorInfo(this, vtypeL, vtypeR);
 	_opEntryMap.Assign(vtypeL, vtypeR, pOpEntry);
 	vtypeL.AddOpEntry(pOpEntry);
 	vtypeR.AddOpEntry(pOpEntry);
@@ -349,6 +351,23 @@ void Operator_OrOr::ComposeBinary(Composer& composer, Expr_Binary& expr) const
 // OpEntry
 //------------------------------------------------------------------------------
 const OpEntry OpEntry::Empty;
+
+OpEntry::OpEntry() : _pOperator(nullptr), _pVTypeL(&VTYPE_Undefined), _pVTypeR(&VTYPE_Undefined) {}
+
+bool OpEntry::IsBinary() const
+{
+	return !_pVTypeL->IsIdentical(VTYPE_Undefined) && !_pVTypeR->IsIdentical(VTYPE_Undefined);
+}
+
+void OpEntry::ReassignEntry(VType& vtype)
+{
+	_pOperator->AssignEntry(vtype, this);
+}
+
+void OpEntry::ReassignEntry(VType& vtypeL, VType& vtypeR)
+{
+	_pOperator->AssignEntry(vtypeL, vtypeR, this);
+}
 
 Value* OpEntry::EvalUnary(Processor& processor, Value& value) const
 {
