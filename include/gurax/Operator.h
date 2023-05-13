@@ -173,12 +173,9 @@ public:
 		if (_pOperator) return;
 		_pOperator = pOperator, _pVTypeL = &vtype;
 	}
-	bool CheckVTypeUnary(const VType& vtype) const { return _pVTypeL->IsIdentical(vtype); }
-	bool CheckVTypeBinary(const VType& vtypeL, const VType& vtypeR) const {
-		return _pVTypeL->IsIdentical(vtypeL) && _pVTypeR->IsIdentical(vtypeR);
-	}
-	bool CheckVTypeL(const VType& vtype) const { return _pVTypeL->IsIdentical(vtype); }
-	bool CheckVTypeR(const VType& vtype) const { return _pVTypeR->IsIdentical(vtype); }
+	VType& GetVType() const { return *_pVTypeL; }
+	VType& GetVTypeL() const { return *_pVTypeL; }
+	VType& GetVTypeR() const { return *_pVTypeR; }
 public:
 	void ReassignEntry(VType& vtype);
 	void ReassignEntry(VType& vtypeL, VType& vtypeR);
