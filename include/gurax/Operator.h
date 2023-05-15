@@ -398,6 +398,7 @@ public:
 public:
 	void AssignEntry(VType& vtype, OpEntry* pOpEntry);
 	void AssignEntry(VType& vtypeL, VType& vtypeR, OpEntry* pOpEntry);
+	OpEntryMap& GetOpEntryMap() { return _opEntryMap; }
 	OpEntry* LookupEntry(const VType& vtype) const {
 		return _opEntryMap.Lookup(vtype);
 	}

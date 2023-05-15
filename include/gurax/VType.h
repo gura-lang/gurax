@@ -74,7 +74,7 @@ public:
 	DottedSymbol* MakeDottedSymbol() const;
 	void AddHelp(const Symbol* pLangCode, const char* doc) { _pHelpHolder->AddHelp(pLangCode, doc); }
 	void AddHelp(const char* langCode, const char* doc) { _pHelpHolder->AddHelp(langCode, doc); }
-	void AddOpEntry(OpEntry* pOpEntry) { _opEntryList.push_back(pOpEntry); }
+	void AddOpEntry(OpEntry* pOpEntry) { if (!_opEntryList.IsExist(pOpEntry)) _opEntryList.push_back(pOpEntry); }
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const VType& vtype) const { return this == &vtype; }
 	bool IsEqualTo(const VType& vtype) const { return IsIdentical(vtype); }

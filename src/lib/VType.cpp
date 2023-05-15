@@ -76,8 +76,7 @@ void VType::Declare(VType& vtypeInh, Flags flags, Constructor* pConstructor)
 		_pConstructor.reset(Constructor::Empty.Reference());
 	}
 	for (auto pOpEntry : vtypeInh._opEntryList) {
-		_opEntryList.push_back(pOpEntry);
-#if 0
+		AddOpEntry(pOpEntry);
 		if (pOpEntry->IsUnary()) {
 			pOpEntry->ReassignEntry(*this);
 		} else {
@@ -87,7 +86,6 @@ void VType::Declare(VType& vtypeInh, Flags flags, Constructor* pConstructor)
 			if (vtypeR.IsIdentical(vtypeInh)) pOpEntry->ReassignEntry(vtypeL, *this);
 			if (vtypeL.IsIdentical(vtypeInh) && vtypeR.IsIdentical(vtypeInh)) pOpEntry->ReassignEntry(*this, *this);
 		}
-#endif
 	}
 }
 

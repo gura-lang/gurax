@@ -68,6 +68,8 @@ public:
 	void erase(const_iterator pos) { _container.erase(pos); }
 	void erase(const_iterator first, const_iterator last) { _container.erase(first, last); }
 public:
+	bool IsExist(const_reference elem) { return std::find(_container.begin(), _container.end(), elem) != _container.end(); }
+public:
 	template<typename T_LessThan, typename T_GreaterThan>
 	void SortByOrder(SortOrder sortOrder) {
 		if (sortOrder == SortOrder::Ascend) {

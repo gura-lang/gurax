@@ -361,12 +361,12 @@ bool OpEntry::IsBinary() const
 
 void OpEntry::ReassignEntry(VType& vtype)
 {
-	_pOperator->AssignEntry(vtype, this);
+	_pOperator->GetOpEntryMap().Assign(vtype, this);
 }
 
 void OpEntry::ReassignEntry(VType& vtypeL, VType& vtypeR)
 {
-	_pOperator->AssignEntry(vtypeL, vtypeR, this);
+	_pOperator->GetOpEntryMap().Assign(vtypeL, vtypeR, this);
 }
 
 Value* OpEntry::EvalUnary(Processor& processor, Value& value) const
