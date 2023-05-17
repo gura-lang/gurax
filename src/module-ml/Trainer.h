@@ -40,7 +40,7 @@ public:
 protected:
 	~Trainer() = default;
 public:
-	void Initialize();
+	static void Initialize();
 	bool CreateFromExpr(const SymbolSet& inputs);
 	void Reset();
 	bool EvalForward(Processor& processor);

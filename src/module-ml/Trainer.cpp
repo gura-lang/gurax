@@ -89,7 +89,10 @@ const Array& Trainer::GetResult() const
 Double Trainer::CalcMeanSquareError(const Array& arrayCorrect) const
 {
 	const Array& arrayResult = GetResult();
-	if (!arrayResult.HasSameShape(arrayCorrect)) return 0;
+	if (!arrayResult.HasSameShape(arrayCorrect)) {
+		Error::Issue(ErrorType::RangeError, "unmathced size of arrays");
+		return 0;
+	}
 	return CalcMeanSquareErrorTbl[arrayResult.GetElemType().id](arrayResult, arrayCorrect);
 }
 

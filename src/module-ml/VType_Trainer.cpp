@@ -220,9 +220,9 @@ Gurax_ImplementMethod(Trainer, CalcMeanSquaredError)
 	ArgPicker args(argument);
 	const Array& arrayCorrect = args.Pick<Value_Array>().GetArray();
 	// Function body
-	if (!trainer.EvalForward(processor)) return Value::nil();
-	trainer.EvalBackward(processor, arrayCorrect);
-	return Value::nil();
+	Double meanSquareError = trainer.CalcMeanSquareError(arrayCorrect);
+	if (Error::IsIssued()) return Value::nil();
+	return new Value_Number(meanSquareError);
 }
 
 //-----------------------------------------------------------------------------

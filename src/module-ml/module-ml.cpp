@@ -70,6 +70,7 @@ Gurax_ModulePrepare()
 	Sigmoid::Initialize();
 	Softmax::Initialize();
 	Tanh::Initialize();
+	Trainer::Initialize();
 	// Assignment of VType
 	Assign(VTYPE_Trainer);
 	Assign(VTYPE_Node);

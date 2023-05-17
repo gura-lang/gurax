@@ -2148,7 +2148,7 @@ const DimSizes* DimSizes::DetermineResult(const DimSizes& dimSizesL, const DimSi
 
 bool DimSizes::IsEqual(const DimSizes& dimSizes) const
 {
-	if (size() == dimSizes.size()) return false;
+	if (size() != dimSizes.size()) return false;
 	auto pDimSize1 = begin();
 	auto pDimSize2 = dimSizes.begin();
 	for ( ; pDimSize1 != end(); pDimSize1++, pDimSize2++) {
