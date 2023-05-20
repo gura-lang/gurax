@@ -10,7 +10,7 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 String Optimizer::ToString(const StringStyle& ss) const
 {
-	return String().Format("Optimizer");
+	return String().Format("Optimizer:%s", GetName());
 }
 
 //------------------------------------------------------------------------------

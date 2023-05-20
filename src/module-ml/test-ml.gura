@@ -8,7 +8,8 @@ import(ml)
 Number.format@float = '%.3f'
 a = @float([[-6, -1, 4], [-5, -1, -5], [-3, 2, 2]])
 b = @float([[3, -1, 4], [1, 2, -5], [-2, 4, -4]])
-correct = @float([[5, -2, -5], [5, -4, -2], [-6, 5, -3]])
+//correct = @float([[5, -2, -5], [5, -4, -2], [-6, 5, -3]])
+correct = @float([[1, 0, 0], [0, 0, 0], [0, 0, 0]])
 
 PrintNodeHead(node as ml.Node) = {
 	Printf('%s\n', node.typeName)
@@ -19,26 +20,32 @@ PrintNodeHead(node as ml.Node) = {
 PrintNodeUnary(node as ml.Node) = {
 	Printf('%s\n', node.typeName)
 	Printf('  input      %s\n', node.input)
+	Printf('  inputGrad  %s\n', node.inputGrad)
 	Printf('  output     %s\n', node.output)
 	Printf('  outputGrad %s\n', node.outputGrad)
-	Printf('  inputGrad  %s\n', node.inputGrad)
 }
 
 PrintNodeBinary(node as ml.Node) = {
 	Printf('%s\n', node.typeName)
 	Printf('  inputL     %s\n', node.inputL)
 	Printf('  inputR     %s\n', node.inputR)
-	Printf('  output     %s\n', node.output)
-	Printf('  outputGrad %s\n', node.outputGrad)
 	Printf('  inputGradL %s\n', node.inputGradL)
 	Printf('  inputGradR %s\n', node.inputGradR)
+	Printf('  output     %s\n', node.output)
+	Printf('  outputGrad %s\n', node.outputGrad)
 }
 
 TestCase('') {
-	t = ml.Trainer(`(rtn = a + b), nil)
-	t.Train(correct)
-	PrintNodeHead(t[`a])
-	PrintNodeHead(t[`b])
+	//model = `(rtn = a |.| b |*| ml.Softmax())
+	model = `(rtn = a |*| ml.Softmax())
+	t = ml.Trainer(model, ml.Optimizer.GradientDescent(0.01))
+	Println(t.optimizer)
+	repeat (10) {
+		t.Train(correct)
+		PrintNodeHead(t[`a])
+		//PrintNodeHead(t[`b])
+		PrintNodeUnary(t[`rtn])
+	}
 }
 sys.Exit()
 

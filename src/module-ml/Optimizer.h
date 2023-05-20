@@ -52,6 +52,7 @@ public:
 protected:
 	~Optimizer() = default;
 public:
+	const char* GetName() const { return _name; }
 	virtual Instance* CreateInstance() const = 0;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
