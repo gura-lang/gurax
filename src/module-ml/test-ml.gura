@@ -10,6 +10,38 @@ a = @float([[-6, -1, 4], [-5, -1, -5], [-3, 2, 2]])
 b = @float([[3, -1, 4], [1, 2, -5], [-2, 4, -4]])
 correct = @float([[5, -2, -5], [5, -4, -2], [-6, 5, -3]])
 
+PrintNodeHead(node as ml.Node) = {
+	Printf('%s\n', node.typeName)
+	Printf('  output     %s\n', node.output)
+	Printf('  outputGrad %s\n', node.outputGrad)
+}
+
+PrintNodeUnary(node as ml.Node) = {
+	Printf('%s\n', node.typeName)
+	Printf('  input      %s\n', node.input)
+	Printf('  output     %s\n', node.output)
+	Printf('  outputGrad %s\n', node.outputGrad)
+	Printf('  inputGrad  %s\n', node.inputGrad)
+}
+
+PrintNodeBinary(node as ml.Node) = {
+	Printf('%s\n', node.typeName)
+	Printf('  inputL     %s\n', node.inputL)
+	Printf('  inputR     %s\n', node.inputR)
+	Printf('  output     %s\n', node.output)
+	Printf('  outputGrad %s\n', node.outputGrad)
+	Printf('  inputGradL %s\n', node.inputGradL)
+	Printf('  inputGradR %s\n', node.inputGradR)
+}
+
+TestCase('') {
+	t = ml.Trainer(`(rtn = a + b), nil)
+	t.Train(correct)
+	PrintNodeHead(t[`a])
+	PrintNodeHead(t[`b])
+}
+sys.Exit()
+
 TestCase('Gear Node') {
 	[
 		`(rtn = a |*| ml.ReLU())
@@ -19,13 +51,7 @@ TestCase('Gear Node') {
 	].Each {|model|
 		t = ml.Trainer(model, nil)
 		t.Train(correct)
-		rtn = t[`rtn]
-		Printf('%s\n', rtn.typeName)
-		Printf('  input      %s\n', rtn.input)
-		Printf('  output     %s\n', rtn.output)
-		Printf('  correct    %s\n', correct)
-		Printf('  outputGrad %s\n', rtn.outputGrad)
-		Printf('  inputGrad  %s\n', rtn.inputGrad)
+		PrintNodeUnary(t[`rtn])
 	}
 }
 
@@ -35,13 +61,7 @@ TestCase('Unary Node') {
 	].Each {|model|
 		t = ml.Trainer(model, nil)
 		t.Train(correct)
-		rtn = t[`rtn]
-		Printf('%s\n', rtn.typeName)
-		Printf('  input      %s\n', rtn.input)
-		Printf('  output     %s\n', rtn.output)
-		Printf('  correct    %s\n', correct)
-		Printf('  outputGrad %s\n', rtn.outputGrad)
-		Printf('  inputGrad  %s\n', rtn.inputGrad)
+		PrintNodeUnary(t[`rtn])
 	}
 }
 
@@ -55,13 +75,6 @@ TestCase('Binary Node') {
 		t = ml.Trainer(model, nil)
 		t.Train(correct)
 		rtn = t[`rtn]
-		Printf('%s\n', rtn.typeName)
-		Printf('  inputL     %s\n', rtn.inputL)
-		Printf('  inputR     %s\n', rtn.inputR)
-		Printf('  output     %s\n', rtn.output)
-		Printf('  correct    %s\n', correct)
-		Printf('  outputGrad %s\n', rtn.outputGrad)
-		Printf('  inputGradL %s\n', rtn.inputGradL)
-		Printf('  inputGradR %s\n', rtn.inputGradR)
+		PrintNodeBinary(t[`rtn])
 	}
 }

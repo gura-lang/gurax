@@ -184,7 +184,7 @@ Node* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolsInput)
 		if (!pExpr->PrepareAndCompose(_composer)) return nullptr;
 		RefPtr<Node> pNode(new Node_Head(pExpr.release(), trait, pOptimizer.release()));
 		_nodeOwner.push_back(pNode.Reference());
-		//_nodeMap[pSymbol] = pNode.get();
+		_nodeMap[pSymbol] = pNode.get();
 		return pNode.release();
 	} else if (expr.IsType<Expr_Value>()) {
 		Node::Trait trait = Node::Trait::Constant;

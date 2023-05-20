@@ -11,8 +11,7 @@ Gurax_BeginModuleScope(ml)
 bool Node::GatherMemberSymbol(SymbolList& symbols) const
 {
 	symbols.push_back(Gurax_Symbol(output));
-	symbols.push_back(Gurax_Symbol(outputGrad));
-	symbols.push_back(Gurax_Symbol(type));
+	symbols.push_back(Gurax_Symbol(typeName));
 	return true;
 }
 
@@ -183,12 +182,12 @@ bool Node_Head::EvalBackward(Processor& processor)
 
 bool Node_Head::GatherMemberSymbol(SymbolList& symbols) const
 {
-	return Node::GatherMemberSymbol(symbols);
+	return Node_SingleOut::GatherMemberSymbol(symbols);
 }
 
 Value* Node_Head::DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const
 {
-	return Node::DoGetProperty(pSymbol, attr);
+	return Node_SingleOut::DoGetProperty(pSymbol, attr);
 }
 
 String Node_Head::ToString(const StringStyle& ss) const
@@ -198,7 +197,7 @@ String Node_Head::ToString(const StringStyle& ss) const
 
 void Node_Head::Print(Stream& stream, int indentLevel) const
 {
-	Node::Print(stream, indentLevel);
+	Node_SingleOut::Print(stream, indentLevel);
 }
 
 //-----------------------------------------------------------------------------
