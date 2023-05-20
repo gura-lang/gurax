@@ -235,7 +235,7 @@ bool Node_Bottom::GatherMemberSymbol(SymbolList& symbols) const
 	symbols.push_back(Gurax_Symbol(input));
 	symbols.push_back(Gurax_Symbol(inputGrad));
 	symbols.push_back(Gurax_Symbol(nodeSrc));
-	return Node::GatherMemberSymbol(symbols);
+	return Node_SingleOut::GatherMemberSymbol(symbols);
 }
 
 Value* Node_Bottom::DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const
@@ -247,7 +247,7 @@ Value* Node_Bottom::DoGetProperty(const Symbol* pSymbol, const Attribute& attr) 
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(nodeSrc))) {
 		return new Value_Node(GetConnectorSrc().GetNodeSrc().Reference());
 	}
-	return Node::DoGetProperty(pSymbol, attr);
+	return Node_SingleOut::DoGetProperty(pSymbol, attr);
 }
 
 String Node_Bottom::ToString(const StringStyle& ss) const
@@ -262,7 +262,7 @@ String Node_Bottom::ToString(const StringStyle& ss) const
 
 void Node_Bottom::Print(Stream& stream, int indentLevel) const
 {
-	Node::Print(stream, indentLevel);
+	Node_SingleOut::Print(stream, indentLevel);
 	GetConnectorSrc().GetNodeSrc().Print(stream, indentLevel + 1);
 }
 
@@ -306,7 +306,7 @@ String Node_Unary::ToString(const StringStyle& ss) const
 
 void Node_Unary::Print(Stream& stream, int indentLevel) const
 {
-	Node::Print(stream, indentLevel);
+	Node_SingleOut::Print(stream, indentLevel);
 	GetConnectorSrc().GetNodeSrc().Print(stream, indentLevel + 1);
 }
 
@@ -380,7 +380,7 @@ String Node_Binary::ToString(const StringStyle& ss) const
 
 void Node_Binary::Print(Stream& stream, int indentLevel) const
 {
-	Node::Print(stream, indentLevel);
+	Node_SingleOut::Print(stream, indentLevel);
 	GetConnectorSrcLeft().GetNodeSrc().Print(stream, indentLevel + 1);
 	GetConnectorSrcRight().GetNodeSrc().Print(stream, indentLevel + 1);
 }
