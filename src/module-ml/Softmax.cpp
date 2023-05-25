@@ -34,13 +34,11 @@ template<typename T_Elem> void Softmax_Forward_Array_T(Array& arrayFwdOut, const
 				const T_Elem* pFwdIn = pFwdInHead;
 				T_Elem* pFwdOut = pFwdOutHead;
 				for (size_t i = 0; i < axisSize; i++, pFwdIn++, pFwdOut++) {
-					//::printf("%f\n", std::exp(*pFwdIn - fwdInMax));
 					T_Elem fwdInExp = std::exp(*pFwdIn - fwdInMax);
 					*pFwdOut = fwdInExp;
 					fwdInSum += fwdInExp;
 				}
 			} while (0);
-			const T_Elem* pFwdIn = pFwdInHead;
 			do {
 				T_Elem* pFwdOut = pFwdOutHead;
 				for (size_t i = 0; i < axisSize; i++, pFwdOut++) {
@@ -104,8 +102,9 @@ template<typename T_Elem> void Softmax_Backward_Array_T(Array& arrayBwdOut, cons
 	const T_Elem* pFwdSaved = arrayFwdSaved.GetPointerC<T_Elem>();
 	for ( ; pBwdIn != pBwdInEnd; pBwdIn++, pBwdOut++, pFwdSaved++) {
 		const T_Elem& bwdIn = *pBwdIn;
-		const T_Elem& fwdSaved = *pFwdSaved;
-		*pBwdOut = fwdSaved - bwdIn;
+		//const T_Elem& fwdSaved = *pFwdSaved;
+		//*pBwdOut = fwdSaved - bwdIn;
+		*pBwdOut = bwdIn;
 	}
 }
 

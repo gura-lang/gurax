@@ -36,15 +36,19 @@ PrintNodeBinary(node as ml.Node) = {
 }
 
 TestCase('') {
-	//model = `(rtn = a |.| b |*| ml.Softmax())
-	model = `(rtn = a |*| ml.Softmax())
-	t = ml.Trainer(model, ml.Optimizer.GradientDescent(0.01))
-	Println(t.optimizer)
-	repeat (10) {
-		t.Train(correct)
-		PrintNodeHead(t[`a])
-		//PrintNodeHead(t[`b])
-		PrintNodeUnary(t[`rtn])
+	//model = `((a |.| b) |*| ml.Softmax())
+	model = `(a + b)
+	a = @float([[1, 2, 3]])
+	b = @float([[4, 5, 6]])
+	//b = @float([[3, 2, 1], [3, 1, 2], [4, 1, 2]])
+	correct = @float([[1, 0, 0]])
+	ml.Trainer(model, ml.Optimizer.GradientDescent(0.00000001)) {|t|
+		repeat (100) {|i|
+			printFlag = ((i % 10) == 0)
+			printFlag && Printf('%d: %s |.| %s = ', i, a, b)
+			t.Train(correct)
+			printFlag && Printf('%s %f\n', t.result, t.CalcMeanSquaredError(correct))
+		}
 	}
 }
 sys.Exit()
@@ -83,5 +87,19 @@ TestCase('Binary Node') {
 		t.Train(correct)
 		rtn = t[`rtn]
 		PrintNodeBinary(t[`rtn])
+	}
+}
+
+TestCase('training of ml.Softmax') {
+	model = `(x |*| ml.Softmax())
+	x = @float([[1, 2, 3]])
+	correct = @float([[1, 0, 0]])
+	ml.Trainer(model, ml.Optimizer.GradientDescent(0.01)) {|t|
+		repeat (10000) {|i|
+			printFlag = ((i % 1000) == 0)
+			printFlag && Printf('%d: %s .. ', i, x)
+			t.Train(correct)
+			printFlag && Printf('%f\n', t.CalcMeanSquaredError(correct))
+		}
 	}
 }
