@@ -44,7 +44,7 @@ TestCase('Gear Node') {
 	].Each {|model|
 		t = ml.Trainer(model, nil)
 		t.Train(correct)
-		PrintNodeUnary(t[`rtn])
+		PrintNodeUnary(t.node.rtn)
 	}
 }
 
@@ -54,7 +54,7 @@ TestCase('Unary Node') {
 	].Each {|model|
 		t = ml.Trainer(model, nil)
 		t.Train(correct)
-		PrintNodeUnary(t[`rtn])
+		PrintNodeUnary(t.node.rtn)
 	}
 }
 
@@ -67,8 +67,7 @@ TestCase('Binary Node') {
 	].Each {|model|
 		t = ml.Trainer(model, nil)
 		t.Train(correct)
-		rtn = t[`rtn]
-		PrintNodeBinary(t[`rtn])
+		PrintNodeBinary(t.node.rtn)
 	}
 }
 

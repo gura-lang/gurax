@@ -243,10 +243,25 @@ Gurax_ImplementPropertyGetter(Trainer, model)
 	return new Value_Expr(trainer.GetExprModel().Reference());
 }
 
+// Trainer#node
+Gurax_DeclareProperty_R(Trainer, node)
+{
+	Declare(VTYPE_NodeMap, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementPropertyGetter(Trainer, node)
+{
+	Trainer& trainer = GetValueThis(valueTarget).GetTrainer();
+	return new Value_NodeMap(trainer.GetNodeMap().Reference());
+}
+
 // Trainer#nodeBottom
 Gurax_DeclareProperty_R(Trainer, nodeBottom)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Node, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
 )""");
@@ -309,6 +324,7 @@ void VType_Trainer::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Trainer, CalcCrossEntropyError));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Trainer, model));
+	Assign(Gurax_CreateProperty(Trainer, node));
 	Assign(Gurax_CreateProperty(Trainer, nodeBottom));
 	Assign(Gurax_CreateProperty(Trainer, optimizer));
 	Assign(Gurax_CreateProperty(Trainer, result));
@@ -322,22 +338,6 @@ VType& Value_Trainer::vtype = VTYPE_Trainer;
 String Value_Trainer::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetTrainer().ToString(ss));
-}
-
-bool Value_Trainer::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const
-{
-	const Symbol* pSymbol = Value::GetSymbol(valueIndex);
-	if (!pSymbol) {
-		Error::Issue(ErrorType::KeyError, "the key must be a symbol");
-		return false;
-	}
-	Node* pNode = GetTrainer().FindNode(pSymbol);
-	if (!pNode) {
-		Error::Issue(ErrorType::KeyError, "can't find a node named %s", pSymbol->GetName());
-		return false;
-	}	
-	*ppValue = new Value_Node(pNode->Reference());
-	return true;
 }
 
 Gurax_EndModuleScope(ml)

@@ -54,6 +54,7 @@ public:
 	const Expr& GetExprModel() const { return *_pExprModel; }
 	const Optimizer& GetOptimizer() const { return *_pOptimizer; }
 	Optimizer::Instance* CreateOptimizerInstance() const { return _pOptimizer->CreateInstance(); }
+	const NodeMap& GetNodeMap() const { return *_pNodeMap; }
 	Node* FindNode(const Symbol* pSymbol) const { return _pNodeMap->FindNode(pSymbol); }
 	void Print(Stream& stream) const;
 private:
