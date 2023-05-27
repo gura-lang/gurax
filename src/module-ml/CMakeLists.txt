@@ -39,6 +39,7 @@ target_sources(ml.gurd PRIVATE
 	Util.cpp
 	Trainer.cpp
 	Node.cpp
+	NodeStruct.cpp
 	Optimizer.cpp
 	Conv1d.cpp
 	Conv2d.cpp
@@ -49,6 +50,7 @@ target_sources(ml.gurd PRIVATE
 	Tanh.cpp
 	VType_Trainer.cpp
 	VType_Node.cpp
+	VType_NodeStruct.cpp
 	VType_Optimizer.cpp
 	VType_Conv1d.cpp
 	VType_Conv2d.cpp
