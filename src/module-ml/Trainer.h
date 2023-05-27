@@ -5,7 +5,7 @@
 #define GURAX_MODULE_ML_TRAINER_H
 #include <gurax.h>
 #include "Node.h"
-#include "NodeStruct.h"
+#include "NodeMap.h"
 #include "Optimizer.h"
 
 Gurax_BeginModuleScope(ml)
@@ -25,7 +25,7 @@ public:
 	RefPtr<Optimizer> _pOptimizer;
 	RefPtr<Node_Bottom> _pNodeBottom;
 	NodeOwner _nodeOwner;
-	RefPtr<NodeStruct> _pNodeStruct;
+	RefPtr<NodeMap> _pNodeMap;
 	//NodeMap _nodeMap;
 public:
 	// Constructor
@@ -54,7 +54,7 @@ public:
 	const Expr& GetExprModel() const { return *_pExprModel; }
 	const Optimizer& GetOptimizer() const { return *_pOptimizer; }
 	Optimizer::Instance* CreateOptimizerInstance() const { return _pOptimizer->CreateInstance(); }
-	Node* FindNode(const Symbol* pSymbol) const { return _pNodeStruct->FindNode(pSymbol); }
+	Node* FindNode(const Symbol* pSymbol) const { return _pNodeMap->FindNode(pSymbol); }
 	void Print(Stream& stream) const;
 private:
 	Node* CreateNode(const Expr& expr, const SymbolSet& symbolsInput);

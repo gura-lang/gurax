@@ -7,7 +7,7 @@
 #include "Util.h"
 #include "VType_Trainer.h"
 #include "VType_Node.h"
-#include "VType_NodeStruct.h"
+#include "VType_NodeMap.h"
 #include "VType_Optimizer.h"
 #include "VType_Conv1d.h"
 #include "VType_Conv2d.h"

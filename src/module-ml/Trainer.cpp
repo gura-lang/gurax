@@ -47,7 +47,7 @@ template<> Double CalcCrossEntropyError_T<Half>(const Array& arrayFwdOut, const 
 
 Trainer::Trainer(Expr* pExprModel, Optimizer* pOptimizer) :
 		_pExprModel(pExprModel), _pOptimizer(pOptimizer), _pNodeBottom(new Node_Bottom()),
-		_pNodeStruct(new NodeStruct())
+		_pNodeMap(new NodeMap())
 {
 }
 
@@ -147,11 +147,11 @@ Node* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolsInput)
 		const Symbol* pSymbol = dynamic_cast<const Expr_Identifier&>(exprEx.GetExprLeft()).GetSymbol();
 		RefPtr<Node> pNode(CreateNode(exprEx.GetExprRight(), symbolsInput));
 		if (!pNode) return nullptr;
-		if (_pNodeStruct->FindNode(pSymbol)) {
+		if (_pNodeMap->FindNode(pSymbol)) {
 			Error::Issue(ErrorType::SyntaxError, "duplicated assignment to the identifier %s", pSymbol->GetName());
 			return nullptr;
 		}
-		_pNodeStruct->AddNode(pSymbol, pNode.Reference());
+		_pNodeMap->AddNode(pSymbol, pNode.Reference());
 		return pNode.release();
 	} else if (expr.IsType<Expr_UnaryOp>()) {
 		const Expr_UnaryOp& exprEx = dynamic_cast<const Expr_UnaryOp&>(expr);
@@ -167,7 +167,7 @@ Node* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolsInput)
 	} else if (expr.IsType<Expr_Identifier>()) {
 		const Expr_Identifier& exprEx = dynamic_cast<const Expr_Identifier&>(expr);
 		const Symbol* pSymbol = exprEx.GetSymbol();
-		Node *pNodeFound = _pNodeStruct->FindNode(pSymbol);
+		Node *pNodeFound = _pNodeMap->FindNode(pSymbol);
 		if (pNodeFound) return pNodeFound;
 		Node::Trait trait = Node::Trait::Input;
 		RefPtr<Optimizer::Instance> pOptimizer;
@@ -179,7 +179,7 @@ Node* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolsInput)
 		if (!pExpr->PrepareAndCompose(_composer)) return nullptr;
 		RefPtr<Node> pNode(new Node_Head(pExpr.release(), trait, pOptimizer.release()));
 		_nodeOwner.push_back(pNode.Reference());
-		_pNodeStruct->AddNode(pSymbol, pNode.Reference());
+		_pNodeMap->AddNode(pSymbol, pNode.Reference());
 		return pNode.release();
 	} else if (expr.IsType<Expr_Value>()) {
 		Node::Trait trait = Node::Trait::Constant;

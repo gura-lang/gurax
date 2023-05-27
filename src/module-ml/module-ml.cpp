@@ -74,7 +74,7 @@ Gurax_ModulePrepare()
 	// Assignment of VType
 	Assign(VTYPE_Trainer);
 	Assign(VTYPE_Node);
-	Assign(VTYPE_NodeStruct);
+	Assign(VTYPE_NodeMap);
 	Assign(VTYPE_Optimizer);
 	Assign(VTYPE_Conv1d);
 	Assign(VTYPE_Conv2d);
