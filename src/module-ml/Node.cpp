@@ -201,6 +201,49 @@ void Node_Head::Print(Stream& stream, int indentLevel) const
 }
 
 //-----------------------------------------------------------------------------
+// Node_Input
+//-----------------------------------------------------------------------------
+bool Node_Input::IsVulnerable() const
+{
+	return false;
+}
+
+void Node_Input::Reset()
+{
+}
+
+bool Node_Input::EvalForward(Processor& processor)
+{
+	_pArrayFwd.reset(_pArray.Reference());
+	return true;
+}
+
+bool Node_Input::EvalBackward(Processor& processor)
+{
+	return true;
+}
+
+bool Node_Input::GatherMemberSymbol(SymbolList& symbols) const
+{
+	return Node_SingleOut::GatherMemberSymbol(symbols);
+}
+
+Value* Node_Input::DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const
+{
+	return Node_SingleOut::DoGetProperty(pSymbol, attr);
+}
+
+String Node_Input::ToString(const StringStyle& ss) const
+{
+	return String().Format("%s:%s", GetTypeName().c_str(), GetArray().GetDimSizes().ToString(ss).c_str());
+}
+
+void Node_Input::Print(Stream& stream, int indentLevel) const
+{
+	Node_SingleOut::Print(stream, indentLevel);
+}
+
+//-----------------------------------------------------------------------------
 // Node_Bottom
 //-----------------------------------------------------------------------------
 bool Node_Bottom::IsVulnerable() const

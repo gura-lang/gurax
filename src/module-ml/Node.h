@@ -167,6 +167,27 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// Node_Input
+//------------------------------------------------------------------------------
+class Node_Input : public Node_SingleOut {
+protected:
+	RefPtr<Array> _pArray;
+public:
+	Node_Input() {}
+	const Array& GetArray() const { return *_pArray; }
+	virtual String GetTypeName() const override { return "Input"; }
+	virtual bool IsHead() const { return true; }
+	virtual void Reset();
+	virtual bool IsVulnerable() const;
+	virtual bool EvalForward(Processor& processor) override;
+	virtual bool EvalBackward(Processor& processor) override;
+	virtual bool GatherMemberSymbol(SymbolList& symbols) const;
+	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const;
+	virtual String ToString(const StringStyle& ss) const;
+	virtual void Print(Stream& stream, int indentLevel) const;
+};
+
+//------------------------------------------------------------------------------
 // Node_Bottom
 //------------------------------------------------------------------------------
 class Node_Bottom : public Node_SingleOut {
