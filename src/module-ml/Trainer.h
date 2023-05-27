@@ -40,7 +40,7 @@ protected:
 	~Trainer() = default;
 public:
 	static void Initialize();
-	bool CreateFromExpr(const SymbolSet& inputs);
+	bool CreateFromExpr(const SymbolSet& symbolSetInput);
 	void Reset();
 	bool EvalForward(Processor& processor);
 	bool EvalBackward(Processor& processor, const Array& arrayCorrect);
@@ -58,10 +58,10 @@ public:
 	Node* FindNode(const Symbol* pSymbol) const { return _pNodeMap->FindNode(pSymbol); }
 	void Print(Stream& stream) const;
 private:
-	Node* CreateNode(const Expr& expr, const SymbolSet& symbolsInput);
-	Node* CreateNodeUnary(const Expr_UnaryOp& exprEx, const SymbolSet& symbolsInput);
-	Node* CreateNodeBinary(const Expr_BinaryOp& exprEx, const SymbolSet& symbolsInput);
-	Node* CreateNodeGear(const Expr_BinaryOp& exprEx, const SymbolSet& symbolsInput);
+	Node* CreateNode(const Expr& expr, const SymbolSet& symbolSetInput);
+	Node* CreateNodeUnary(const Expr_UnaryOp& exprEx, const SymbolSet& symbolSetInput);
+	Node* CreateNodeBinary(const Expr_BinaryOp& exprEx, const SymbolSet& symbolSetInput);
+	Node* CreateNodeGear(const Expr_BinaryOp& exprEx, const SymbolSet& symbolSetInput);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Trainer& other) const { return this == &other; }

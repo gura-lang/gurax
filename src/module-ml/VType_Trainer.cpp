@@ -27,13 +27,13 @@ ${help.ComposeMethodHelp(Trainer, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Trainer(model as Expr, optimizer:nil as Optimizer, inputs* as Symbol) {block?}
+// Trainer(model as Expr, optimizer:nil as Optimizer, symbolsInput* as Symbol) {block?}
 Gurax_DeclareConstructor(Trainer)
 {
 	Declare(VTYPE_Trainer, Flag::None);
 	DeclareArg("model", VTYPE_Expr, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("optimizer", VTYPE_Optimizer, ArgOccur::Once, ArgFlag::Nil);
-	DeclareArg("inputs", VTYPE_Symbol, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareArg("symbolsInput", VTYPE_Symbol, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `Trainer` instance.
@@ -47,12 +47,12 @@ Gurax_ImplementConstructor(Trainer)
 	const Expr& exprModel = args.PickExpr();
 	RefPtr<Optimizer> pOptimizer(args.IsValid()?
 		args.Pick<Value_Optimizer>().GetOptimizer().Reference() : new Optimizer_None());
-	const ValueList& inputs = args.PickList();
+	const ValueList& symbolsInput = args.PickList();
 	// Function body
 	RefPtr<Trainer> pTrainer(new Trainer(exprModel.Reference(), pOptimizer.release()));
-	SymbolSet symbolsInput;
-	for (const Value* pValue : inputs) symbolsInput.Set(Value_Symbol::GetSymbol(*pValue));
-	if (!pTrainer->CreateFromExpr(symbolsInput)) return Value::nil();
+	SymbolSet symbolSetInput;
+	for (const Value* pValue : symbolsInput) symbolSetInput.Set(Value_Symbol::GetSymbol(*pValue));
+	if (!pTrainer->CreateFromExpr(symbolSetInput)) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Trainer(pTrainer.release()));
 }
 

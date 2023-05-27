@@ -57,13 +57,12 @@ void Trainer::Initialize()
 	Gurax_SetArrayFuncSingle(CalcCrossEntropyErrorTbl, CalcCrossEntropyError_T);
 }
 
-bool Trainer::CreateFromExpr(const SymbolSet& inputs)
+bool Trainer::CreateFromExpr(const SymbolSet& symbolSetInput)
 {
-	RefPtr<Node> pNode(CreateNode(GetExprModel(), inputs));
+	RefPtr<Node> pNode(CreateNode(GetExprModel(), symbolSetInput));
 	if (!pNode) return false;
 	_composer.Add_Terminate();
 	pNode->Connect(GetNodeBottom().GetConnectorSrc());
-	//_nodeOwner.push_back(pNode.release());
 	return true;
 }
 
@@ -115,7 +114,7 @@ void Trainer::Print(Stream& stream) const
 	}
 }
 
-Node* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolsInput)
+Node* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolSetInput)
 {
 	//::printf("CreateNode(%s)\n", expr.ToString().c_str());
 	if (expr.IsType<Expr_Block>()) {
@@ -127,11 +126,11 @@ Node* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolsInput)
 			return nullptr;
 		}
 		for ( ; pExprEach->GetExprNext(); pExprEach = pExprEach->GetExprNext()) {
-			RefPtr<Node> pNode(CreateNode(*pExprEach, symbolsInput));
+			RefPtr<Node> pNode(CreateNode(*pExprEach, symbolSetInput));
 			if (!pNode) return nullptr;
 			_nodeOwner.push_back(pNode.release());
 		}
-		RefPtr<Node> pNode(CreateNode(*pExprEach, symbolsInput));
+		RefPtr<Node> pNode(CreateNode(*pExprEach, symbolSetInput));
 		_nodeOwner.push_back(pNode.Reference());
 		return pNode.release();
 	} else if (expr.IsType<Expr_Assign>()) {
@@ -145,7 +144,7 @@ Node* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolsInput)
 			return nullptr;
 		}
 		const Symbol* pSymbol = dynamic_cast<const Expr_Identifier&>(exprEx.GetExprLeft()).GetSymbol();
-		RefPtr<Node> pNode(CreateNode(exprEx.GetExprRight(), symbolsInput));
+		RefPtr<Node> pNode(CreateNode(exprEx.GetExprRight(), symbolSetInput));
 		if (!pNode) return nullptr;
 		if (_pNodeMap->FindNode(pSymbol)) {
 			Error::Issue(ErrorType::SyntaxError, "duplicated assignment to the identifier %s", pSymbol->GetName());
@@ -155,13 +154,13 @@ Node* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolsInput)
 		return pNode.release();
 	} else if (expr.IsType<Expr_UnaryOp>()) {
 		const Expr_UnaryOp& exprEx = dynamic_cast<const Expr_UnaryOp&>(expr);
-		RefPtr<Node> pNode(CreateNodeUnary(exprEx, symbolsInput));
+		RefPtr<Node> pNode(CreateNodeUnary(exprEx, symbolSetInput));
 		_nodeOwner.push_back(pNode.Reference());
 		return pNode.release();
 	} else if (expr.IsType<Expr_BinaryOp>()) {
 		const Expr_BinaryOp& exprEx = dynamic_cast<const Expr_BinaryOp&>(expr);
 		RefPtr<Node> pNode(exprEx.GetOperator()->IsType(OpType::Gear)?
-			CreateNodeGear(exprEx, symbolsInput) : CreateNodeBinary(exprEx, symbolsInput));
+			CreateNodeGear(exprEx, symbolSetInput) : CreateNodeBinary(exprEx, symbolSetInput));
 		_nodeOwner.push_back(pNode.Reference());
 		return pNode.release();
 	} else if (expr.IsType<Expr_Identifier>()) {
@@ -171,7 +170,7 @@ Node* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolsInput)
 		if (pNodeFound) return pNodeFound;
 		Node::Trait trait = Node::Trait::Input;
 		RefPtr<Optimizer::Instance> pOptimizer;
-		if (!symbolsInput.IsSet(pSymbol)) {
+		if (!symbolSetInput.IsSet(pSymbol)) {
 			trait = Node::Trait::Variable;
 			pOptimizer.reset(CreateOptimizerInstance());
 		}
@@ -202,7 +201,7 @@ Node* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolsInput)
 	return nullptr;
 }
 
-Node* Trainer::CreateNodeUnary(const Expr_UnaryOp& exprEx, const SymbolSet& symbolsInput)
+Node* Trainer::CreateNodeUnary(const Expr_UnaryOp& exprEx, const SymbolSet& symbolSetInput)
 {
 	const Operator* pOperator = exprEx.GetOperator();
 	RefPtr<Node_Unary> pNode;
@@ -214,14 +213,14 @@ Node* Trainer::CreateNodeUnary(const Expr_UnaryOp& exprEx, const SymbolSet& symb
 		Error::Issue(ErrorType::ValueError, "unsupported operator: %s", pOperator->GetName());
 		return nullptr;
 	}
-	RefPtr<Node> pNodeChild(CreateNode(exprEx.GetExprChild(), symbolsInput));
+	RefPtr<Node> pNodeChild(CreateNode(exprEx.GetExprChild(), symbolSetInput));
 	if (!pNodeChild) return nullptr;
 	pNodeChild->Connect(pNode->GetConnectorSrc());
 	//_nodeOwner.push_back(pNodeChild.release());
 	return pNode.release();
 }
 
-Node* Trainer::CreateNodeBinary(const Expr_BinaryOp& exprEx, const SymbolSet& symbolsInput)
+Node* Trainer::CreateNodeBinary(const Expr_BinaryOp& exprEx, const SymbolSet& symbolSetInput)
 {
 	const Operator* pOperator = exprEx.GetOperator();
 	RefPtr<Node_Binary> pNode;
@@ -241,21 +240,21 @@ Node* Trainer::CreateNodeBinary(const Expr_BinaryOp& exprEx, const SymbolSet& sy
 		Error::Issue(ErrorType::ValueError, "unsupported operator: %s", pOperator->GetName());
 		return nullptr;
 	}
-	RefPtr<Node> pNodeLeft(CreateNode(exprEx.GetExprLeft(), symbolsInput));
+	RefPtr<Node> pNodeLeft(CreateNode(exprEx.GetExprLeft(), symbolSetInput));
 	if (!pNodeLeft) return nullptr;
-	RefPtr<Node> pNodeRight(CreateNode(exprEx.GetExprRight(), symbolsInput));
+	RefPtr<Node> pNodeRight(CreateNode(exprEx.GetExprRight(), symbolSetInput));
 	if (!pNodeRight) return nullptr;
 	pNodeLeft->Connect(pNode->GetConnectorSrcLeft());
 	pNodeRight->Connect(pNode->GetConnectorSrcRight());
 	return pNode.release();
 }
 
-Node* Trainer::CreateNodeGear(const Expr_BinaryOp& exprEx, const SymbolSet& symbolsInput)
+Node* Trainer::CreateNodeGear(const Expr_BinaryOp& exprEx, const SymbolSet& symbolSetInput)
 {
 	RefPtr<Expr> pExpr(exprEx.GetExprRight().Reference());
 	if (!pExpr->PrepareAndCompose(_composer)) return nullptr;
 	RefPtr<Node_Gear> pNode(new Node_Gear(pExpr.release()));
-	RefPtr<Node> pNodeChild(CreateNode(exprEx.GetExprLeft(), symbolsInput));
+	RefPtr<Node> pNodeChild(CreateNode(exprEx.GetExprLeft(), symbolSetInput));
 	if (!pNodeChild) return nullptr;
 	pNodeChild->Connect(pNode->GetConnectorSrc());
 	//_nodeOwner.push_back(pNodeChild.release());
