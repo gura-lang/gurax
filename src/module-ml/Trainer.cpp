@@ -45,9 +45,9 @@ template<typename T_Elem> Double CalcCrossEntropyError_T(const Array& arrayFwdOu
 template<> Double CalcCrossEntropyError_T<Complex>(const Array& arrayFwdOut, const Array& arrayTrain) { return 0; }
 template<> Double CalcCrossEntropyError_T<Half>(const Array& arrayFwdOut, const Array& arrayTrain) { return 0; }
 
-Trainer::Trainer(Expr* pExprModel, Optimizer* pOptimizer) :
-		_pExprModel(pExprModel), _pOptimizer(pOptimizer), _pNodeBottom(new Node_Bottom()),
-		_pNodeMap(new NodeMap())
+Trainer::Trainer(Expr* pExprModel, SymbolList symbolListInput, Optimizer* pOptimizer) :
+		_pExprModel(pExprModel), _symbolListInput(symbolListInput), _pOptimizer(pOptimizer),
+		_pNodeBottom(new Node_Bottom()), _pNodeMap(new NodeMap())
 {
 }
 
@@ -168,15 +168,14 @@ Node* Trainer::CreateNode(const Expr& expr, const SymbolSet& symbolSetInput)
 		const Symbol* pSymbol = exprEx.GetSymbol();
 		Node *pNodeFound = _pNodeMap->FindNode(pSymbol);
 		if (pNodeFound) return pNodeFound;
-		Node::Trait trait = Node::Trait::Input;
-		RefPtr<Optimizer::Instance> pOptimizer;
-		if (!symbolSetInput.IsSet(pSymbol)) {
-			trait = Node::Trait::Variable;
-			pOptimizer.reset(CreateOptimizerInstance());
-		}
 		RefPtr<Expr> pExpr(expr.Reference());
 		if (!pExpr->PrepareAndCompose(_composer)) return nullptr;
-		RefPtr<Node> pNode(new Node_Head(pExpr.release(), trait, pOptimizer.release()));
+		RefPtr<Node> pNode;
+		if (symbolSetInput.IsSet(pSymbol)) {
+			pNode.reset(new Node_Head(pExpr.release(), Node::Trait::Input, nullptr));
+		} else {
+			pNode.reset(new Node_Head(pExpr.release(), Node::Trait::Variable, CreateOptimizerInstance()));
+		}
 		_nodeOwner.push_back(pNode.Reference());
 		_pNodeMap->AddNode(pSymbol, pNode.Reference());
 		return pNode.release();

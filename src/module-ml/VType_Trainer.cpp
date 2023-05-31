@@ -49,9 +49,14 @@ Gurax_ImplementConstructor(Trainer)
 		args.Pick<Value_Optimizer>().GetOptimizer().Reference() : new Optimizer_None());
 	const ValueList& symbolsInput = args.PickList();
 	// Function body
-	RefPtr<Trainer> pTrainer(new Trainer(exprModel.Reference(), pOptimizer.release()));
+	SymbolList symbolListInput;
 	SymbolSet symbolSetInput;
-	for (const Value* pValue : symbolsInput) symbolSetInput.Set(Value_Symbol::GetSymbol(*pValue));
+	for (const Value* pValue : symbolsInput) {
+		const Symbol* pSymbol = Value_Symbol::GetSymbol(*pValue);
+		symbolListInput.push_back(pSymbol);
+		symbolSetInput.Set(pSymbol);
+	}
+	RefPtr<Trainer> pTrainer(new Trainer(exprModel.Reference(), symbolListInput, pOptimizer.release()));
 	if (!pTrainer->CreateFromExpr(symbolSetInput)) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Trainer(pTrainer.release()));
 }

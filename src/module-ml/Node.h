@@ -50,10 +50,11 @@ public:
 		ConnectorList() {}
 	};
 protected:
+	const Symbol* _pSymbol;
 	RefPtr<Array> _pArrayFwd;
 public:
 	// Constructor
-	Node() {}
+	Node();
 	// Copy constructor/operator
 	Node(const Node& src) = delete;
 	Node& operator=(const Node& src) = delete;
@@ -63,6 +64,8 @@ public:
 protected:
 	~Node() = default;
 public:
+	void SetSymbol(const Symbol* pSymbol) { _pSymbol = pSymbol; }
+	const Symbol* GetSymbol() const { return _pSymbol; }
 	virtual void Connect(Connector& connectorDst) = 0;
 	Array& GetArrayFwd() { return *_pArrayFwd; }
 	const Array& GetArrayFwd() const { return *_pArrayFwd; }

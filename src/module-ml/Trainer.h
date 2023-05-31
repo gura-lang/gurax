@@ -22,14 +22,15 @@ public:
 public:
 	Composer _composer;
 	RefPtr<Expr> _pExprModel;
+	SymbolList _symbolListInput;
 	RefPtr<Optimizer> _pOptimizer;
 	RefPtr<Node_Bottom> _pNodeBottom;
 	NodeOwner _nodeOwner;
 	RefPtr<NodeMap> _pNodeMap;
-	//NodeMap _nodeMap;
+	NodeList _nodesInput;
 public:
 	// Constructor
-	Trainer(Expr* pExprModel, Optimizer* pOptimizer);
+	Trainer(Expr* pExprModel, SymbolList symbolListInput, Optimizer* pOptimizer);
 	// Copy constructor/operator
 	Trainer(const Trainer& src) = delete;
 	Trainer& operator=(const Trainer& src) = delete;

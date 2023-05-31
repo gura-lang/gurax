@@ -8,6 +8,10 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 // Node
 //------------------------------------------------------------------------------
+Node::Node() : _pSymbol(Symbol::Empty)
+{
+}
+
 bool Node::GatherMemberSymbol(SymbolList& symbols) const
 {
 	symbols.push_back(Gurax_Symbol(output));
