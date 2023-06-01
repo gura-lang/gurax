@@ -177,6 +177,7 @@ protected:
 	RefPtr<Array> _pArray;
 public:
 	Node_Input() {}
+	void SetArray(Array* pArray) { _pArray.reset(pArray); }
 	const Array& GetArray() const { return *_pArray; }
 	virtual String GetTypeName() const override { return "Input"; }
 	virtual bool IsHead() const { return true; }

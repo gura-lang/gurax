@@ -59,8 +59,16 @@ void Trainer::Initialize()
 
 bool Trainer::CreateFromExpr()
 {
+	_nodesInput.clear();
+	for (size_t i = 0; i < _symbolsInput.size(); i++) _nodesInput.push_back(nullptr);
 	RefPtr<Node> pNode(CreateNode(GetExprModel()));
 	if (!pNode) return false;
+	for (auto pNodeInput : _nodesInput) {
+		if (!pNodeInput) {
+			Error::Issue(ErrorType::ValueError, "insufficient number of input nodes");
+			return false;
+		}
+	}
 	_composer.Add_Terminate();
 	pNode->Connect(GetNodeBottom().GetConnectorSrc());
 	return true;
@@ -73,11 +81,17 @@ void Trainer::Reset()
 
 bool Trainer::EvalForward(Processor& processor, const ValueList& valuesList)
 {
-	auto ppValue = valuesList.begin();
-	auto ppNode = _nodesInput.begin();
+	if (valuesList.size() < _nodesInput.size()) {
+		Error::Issue(ErrorType::ArgumentError, "insufficient number of values for inputs");
+		return false;
+	} else if (valuesList.size() > _nodesInput.size()) {
+		Error::Issue(ErrorType::ArgumentError, "too many values for inputs");
+		return false;
+	}
+	auto ppNodeInput = _nodesInput.begin();
 	for (auto pValue : valuesList) {
 		const Array& array = Value_Array::GetArray(*pValue);
-
+		(*ppNodeInput)->SetArray(array.Reference());
 	}
 	return GetNodeOwner().EvalForward(processor) && GetNodeBottom().EvalForward(processor);
 }
@@ -177,8 +191,11 @@ Node* Trainer::CreateNode(const Expr& expr)
 		RefPtr<Expr> pExpr(expr.Reference());
 		if (!pExpr->PrepareAndCompose(_composer)) return nullptr;
 		RefPtr<Node> pNode;
-		if (int idx = _symbolsInput.WhereExist(pSymbol)) {
-			pNode.reset(new Node_Head(pExpr.release(), Node::Trait::Input, nullptr));
+		int idx = _symbolsInput.WhereExist(pSymbol);
+		if (idx >= 0) {
+			RefPtr<Node_Input> pNodeInput(new Node_Input());
+			_nodesInput[idx] = pNodeInput.get();
+			pNode.reset(pNodeInput.release());
 		} else {
 			pNode.reset(new Node_Head(pExpr.release(), Node::Trait::Variable, CreateOptimizerInstance()));
 		}
