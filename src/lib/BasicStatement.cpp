@@ -960,18 +960,18 @@ Gurax_ImplementStatement(import)
 		for ( ; pExpr; pExpr = pExpr->GetExprNext()) {
 			if (!pExpr->IsType<Expr_Identifier>()) {
 				Error::IssueWith(ErrorType::ImportError, *pExpr,
-							 "the block of import statement must contain symbols");
+							"the block of import statement must contain symbols");
 				return;
 			}
 			const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(pExpr)->GetSymbol();
-			if (pSymbolList->DoesContain(pSymbol)) {
+			if (pSymbolList->DoesExist(pSymbol)) {
 				Error::IssueWith(ErrorType::ImportError, *pExpr,
-							 "duplicated symbol in the import's block: %s", pSymbol->GetName());
+							"duplicated symbol in the import's block: %s", pSymbol->GetName());
 				return;
 			}
 			pSymbolList->push_back(pSymbol);
 		}
-		mixInFlag = pSymbolList->DoesContain(Gurax_SymbolMark(Mul));
+		mixInFlag = pSymbolList->DoesExist(Gurax_SymbolMark(Mul));
 	}
 	composer.Add_Import(pDottedSymbol.release(), pSymbolList.release(),
 						binaryFlag, mixInFlag, overwriteFlag, symbolForModuleFlag, exprCaller);

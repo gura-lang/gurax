@@ -115,6 +115,16 @@ bool SymbolList::IsEqualTo(const SymbolList& symbolList) const
 	return std::equal(begin(), end(), symbolList.begin(), symbolList.end(), Symbol::EqualTo_UniqId());
 }
 
+int SymbolList::WhereExist(const Symbol* pSymbol) const
+{
+	int idx = 0;
+	for (auto pSymbolEach : *this) {
+		if (pSymbolEach->IsIdentical(pSymbol)) return idx;
+		idx++;
+	}
+	return -1;
+}
+
 String SymbolList::ToString(const StringStyle& ss) const
 {
 	String str;

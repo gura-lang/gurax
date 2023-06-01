@@ -50,24 +50,20 @@ Gurax_ImplementConstructor(Trainer)
 	const ValueList& symbolsInput = args.PickList();
 	// Function body
 	SymbolList symbolListInput;
-	SymbolSet symbolSetInput;
-	for (const Value* pValue : symbolsInput) {
-		const Symbol* pSymbol = Value_Symbol::GetSymbol(*pValue);
-		symbolListInput.push_back(pSymbol);
-		symbolSetInput.Set(pSymbol);
-	}
+	for (const Value* pValue : symbolsInput) symbolListInput.push_back(Value_Symbol::GetSymbol(*pValue));
 	RefPtr<Trainer> pTrainer(new Trainer(exprModel.Reference(), symbolListInput, pOptimizer.release()));
-	if (!pTrainer->CreateFromExpr(symbolSetInput)) return Value::nil();
+	if (!pTrainer->CreateFromExpr()) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Trainer(pTrainer.release()));
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// Trainer#Eval() {block?}
+// Trainer#Eval(inputs* as Array) {block?}
 Gurax_DeclareMethod(Trainer, Eval)
 {
 	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("inputs", VTYPE_Array, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Runs the forward pass of a neural network model associated with a Trainer object and returns the result.
@@ -78,8 +74,11 @@ Gurax_ImplementMethod(Trainer, Eval)
 {
 	// Target
 	Trainer& trainer = GetValueThis(argument).GetTrainer();
+	// Arguments
+	ArgPicker args(argument);
+	const ValueList& valuesInput = args.PickList();
 	// Function body
-	if (!trainer.EvalForward(processor)) return Value::nil();
+	if (!trainer.EvalForward(processor, valuesInput)) return Value::nil();
 	return argument.ReturnValue(processor, trainer.GetResult().ToValue());
 }
 
@@ -160,11 +159,12 @@ Gurax_ImplementMethod(Trainer, Print)
 	return Value::nil();
 }
 
-// Trainer#Train(correct as Array)
+// Trainer#Train(correct as Array, inputs* as Array)
 Gurax_DeclareMethod(Trainer, Train)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("correct", VTYPE_Array, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("inputs", VTYPE_Array, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
 )""");
@@ -177,8 +177,9 @@ Gurax_ImplementMethod(Trainer, Train)
 	// Arguments
 	ArgPicker args(argument);
 	const Array& arrayCorrect = args.Pick<Value_Array>().GetArray();
+	const ValueList& valuesInput = args.PickList();
 	// Function body
-	if (!trainer.EvalForward(processor)) return Value::nil();
+	if (!trainer.EvalForward(processor, valuesInput)) return Value::nil();
 	trainer.EvalBackward(processor, arrayCorrect);
 	return Value::nil();
 }

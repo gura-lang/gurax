@@ -22,15 +22,15 @@ public:
 public:
 	Composer _composer;
 	RefPtr<Expr> _pExprModel;
-	SymbolList _symbolListInput;
+	SymbolList _symbolsInput;
 	RefPtr<Optimizer> _pOptimizer;
 	RefPtr<Node_Bottom> _pNodeBottom;
 	NodeOwner _nodeOwner;
 	RefPtr<NodeMap> _pNodeMap;
-	NodeList _nodesInput;
+	NodeList_Input _nodesInput;
 public:
 	// Constructor
-	Trainer(Expr* pExprModel, SymbolList symbolListInput, Optimizer* pOptimizer);
+	Trainer(Expr* pExprModel, SymbolList symbolsInput, Optimizer* pOptimizer);
 	// Copy constructor/operator
 	Trainer(const Trainer& src) = delete;
 	Trainer& operator=(const Trainer& src) = delete;
@@ -41,9 +41,9 @@ protected:
 	~Trainer() = default;
 public:
 	static void Initialize();
-	bool CreateFromExpr(const SymbolSet& symbolSetInput);
+	bool CreateFromExpr();
 	void Reset();
-	bool EvalForward(Processor& processor);
+	bool EvalForward(Processor& processor, const ValueList& valuesInput);
 	bool EvalBackward(Processor& processor, const Array& arrayCorrect);
 	const Array& GetResult() const;
 	Double CalcMeanSquareError(const Array& arrayCorrect) const;
@@ -59,10 +59,10 @@ public:
 	Node* FindNode(const Symbol* pSymbol) const { return _pNodeMap->FindNode(pSymbol); }
 	void Print(Stream& stream) const;
 private:
-	Node* CreateNode(const Expr& expr, const SymbolSet& symbolSetInput);
-	Node* CreateNodeUnary(const Expr_UnaryOp& exprEx, const SymbolSet& symbolSetInput);
-	Node* CreateNodeBinary(const Expr_BinaryOp& exprEx, const SymbolSet& symbolSetInput);
-	Node* CreateNodeGear(const Expr_BinaryOp& exprEx, const SymbolSet& symbolSetInput);
+	Node* CreateNode(const Expr& expr);
+	Node* CreateNodeUnary(const Expr_UnaryOp& exprEx);
+	Node* CreateNodeBinary(const Expr_BinaryOp& exprEx);
+	Node* CreateNodeGear(const Expr_BinaryOp& exprEx);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Trainer& other) const { return this == &other; }
