@@ -106,6 +106,18 @@ Array* Array::Reshape(const ValueList& values) const
 	return new Array(GetElemType(), GetMemory().Reference(), dimSizes, _byteOffset);
 }
 
+template<typename T_Elem> Value* FindMax_T(const Array& array, size_t axis, const ValueList& valuesDim)
+{
+	const T_Elem* pElem = array.GetPointerC<T_Elem>(array.GetDimSizes().CalcOffset(axis, valuesDim) * sizeof(T_Elem));
+	const T_Elem* pElemEnd = pElem + array.GetDimSizes()[axis];
+	if (pElem == pElemEnd) return Value::nil();
+	T_Elem numMax = *pElem++;
+	for ( ; pElem != pElemEnd; pElem++) if (numMax < *pElem) numMax = *pElem;
+	return new Value_Number(numMax);
+}
+
+template<> Value* FindMax_T<Complex>(const Array& array, size_t axis, const ValueList& valuesDim) { return Value::nil(); }
+
 template<typename T_Elem> bool IndexSetValue_T(void* pv, size_t idx, const Value& value)
 {
 	T_Elem* p = reinterpret_cast<T_Elem*>(pv) + idx;
@@ -1182,6 +1194,7 @@ void Array::Bootup()
 	ElemType::Float.pSymbol				= Gurax_Symbol(float_);
 	ElemType::Double.pSymbol			= Gurax_Symbol(double_);
 	ElemType::Complex.pSymbol			= Gurax_Symbol(complex);
+	Gurax_SetArrayFuncSingle(funcs.FindMax,				FindMax_T);
 	Gurax_SetArrayFuncSingle(funcs.IndexSetValue,		IndexSetValue_T);
 	Gurax_SetArrayFuncSingle(funcs.IndexGetValue,		IndexGetValue_T);
 	Gurax_SetArrayFuncSingle(funcs.IndexSetDouble,		IndexSetDouble_T);
@@ -1239,9 +1252,18 @@ void Array::Bootup()
 	Gurax_SetArrayFuncArithm(funcs.Cross_ArrayArray,	Cross_ArrayArray_T);
 }
 
+Value* Array::FindMax(size_t axis, const ValueList& valuesDim) const
+{
+	if (GetDimSizes().size() != valuesDim.size() + 1) {
+		Error::Issue(ErrorType::ArgumentError, "insufficient number of arguments");
+		return Value::nil();
+	}
+	return funcs.FindMax[_elemType.id](*this, axis, valuesDim);
+}
+
 void Array::InjectElems(ValueList& values, size_t offset, size_t len)
 {
-	::printf("%p\n", &funcs.InjectFromValueList[_elemType.id]);
+	//::printf("%p\n", &funcs.InjectFromValueList[_elemType.id]);
 	funcs.InjectFromValueList[_elemType.id](values, GetPointerC<void>(), offset, len);
 }
 
@@ -2117,6 +2139,23 @@ size_t DimSizes::CalcLength(const_iterator pDimSizeBegin, const_iterator pDimSiz
 	size_t len = 1;
 	for (auto pDimSize = pDimSizeBegin; pDimSize != pDimSizeEnd; pDimSize++) len *= *pDimSize;
 	return len;
+}
+
+size_t DimSizes::CalcOffset(size_t axis, const ValueList& valuesDim) const
+{
+	size_t offset = 0;
+	auto ppValueDim = valuesDim.rbegin();
+	size_t axisEach = size() - 1;
+	size_t strides = 1;
+	for (auto pDimSize = rbegin(); pDimSize != rend(); pDimSize++, axisEach--) {
+		if (axis != axisEach) {
+			int dim = Value_Number::GetNumber<int>(**ppValueDim);
+			offset += dim * strides;
+			ppValueDim++;
+		}
+		strides *= *pDimSize;
+	}
+	return offset;
 }
 
 const DimSizes* DimSizes::DetermineResult(const DimSizes& dimSizesL, const DimSizes& dimSizesR,

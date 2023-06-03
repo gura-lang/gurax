@@ -279,6 +279,31 @@ Gurax_ImplementMethod(Array, Each)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
+// Array#FindMax(axis as Number, dims* as Number) {block?}
+Gurax_DeclareMethod(Array, FindMax)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareArg("axis", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dims", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+
+)""");
+}
+
+Gurax_ImplementMethod(Array, FindMax)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	const Array& array = Value_Array::GetArray(valueThis);
+	// Arguments
+	ArgPicker args(argument);
+	size_t axis = args.PickNumber<size_t>();
+	const ValueList& valuesDim = args.PickList();
+	// Function body
+	return array.FindMax(axis, valuesDim);
+}
+
 // Array#Inject(values as Iterator, offset? as Number):reduce
 Gurax_DeclareMethod(Array, Inject)
 {
@@ -1072,6 +1097,7 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Array, Cast));
 	Assign(Gurax_CreateMethod(Array, Each));
+	Assign(Gurax_CreateMethod(Array, FindMax));
 	Assign(Gurax_CreateMethod(Array, Inject));
 	Assign(Gurax_CreateMethod(Array, ToList));
 	Assign(Gurax_CreateMethod(Array, ToString));

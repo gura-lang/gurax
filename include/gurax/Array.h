@@ -31,13 +31,15 @@ public:
 	DimSizes(const ValueList& values);
 	DimSizes(const_iterator first, const_iterator last) : NumList(first, last) {}
 public:
-	static size_t CalcLength(const_iterator pDimSizeBegin, const_iterator pDimSizeEnd);
 	static const DimSizes* DetermineResult(const DimSizes& dimSizesL, const DimSizes& dimSizesR,
 					size_t* pnUnits, size_t* pLenUnit, size_t* pLenFwdL, size_t* pLenFwdR);
+	static size_t CalcLength(const_iterator pDimSizeBegin, const_iterator pDimSizeEnd);
 	size_t CalcLength(const_iterator pDimSize) const { return CalcLength(pDimSize, end()); }
 	size_t CalcLength() const { return CalcLength(begin()); }
+	size_t CalcStrides(size_t axis) const { return CalcLength(begin() + axis, end()); }
 	size_t CalcStrides(const_iterator pDimSize) const { return CalcLength(pDimSize + 1, end()); }
 	size_t CalcStrides() const { return CalcLength(begin()); }
+	size_t CalcOffset(size_t axis, const ValueList& valuesDim) const;
 	bool IsEqual(const DimSizes& dimSizes) const;
 	bool DoesMatch(const DimSizes& dimSizes, size_t offset = 0) const;
 	bool DoesMatchDot(const DimSizes& dimSizes, size_t offset = 0) const;
@@ -103,6 +105,7 @@ public:
 		Complex,
 	};
 	struct Funcs {
+		std::function<Value* (const Array& array, size_t axis, const ValueList& valuesDim)>	FindMax[ElemTypeIdMax];
 		std::function<bool (void* pv, size_t idx, const Value& value)>						IndexSetValue[ElemTypeIdMax];
 		std::function<bool (void* pv, size_t idx, Double num)>								IndexSetDouble[ElemTypeIdMax];
 		std::function<Value* (const void* pv, size_t idx)>									IndexGetValue[ElemTypeIdMax];
@@ -218,6 +221,7 @@ public:
 	bool IndexSetDouble(size_t idx, Double num) { return funcs.IndexSetDouble[_elemType.id](GetPointerC<void>(), idx, num); }
 	Value* IndexGetValue(size_t idx) const { return funcs.IndexGetValue[_elemType.id](GetPointerC<void>(), idx); }
 	Double IndexGetDouble(size_t idx) const { return funcs.IndexGetDouble[_elemType.id](GetPointerC<void>(), idx); }
+	Value* FindMax(size_t axis, const ValueList& valuesDim) const;
 	void InjectElems(ValueList& values, size_t offset, size_t len);
 	void InjectElems(ValueList& values, size_t offset = 0);
 	bool InjectElems(Iterator& iterator, size_t offset, size_t len);
