@@ -36,9 +36,9 @@ public:
 	static size_t CalcLength(const_iterator pDimSizeBegin, const_iterator pDimSizeEnd);
 	size_t CalcLength(const_iterator pDimSize) const { return CalcLength(pDimSize, end()); }
 	size_t CalcLength() const { return CalcLength(begin()); }
-	size_t CalcStrides(size_t axis) const { return CalcLength(begin() + axis, end()); }
 	size_t CalcStrides(const_iterator pDimSize) const { return CalcLength(pDimSize + 1, end()); }
-	size_t CalcStrides() const { return CalcLength(begin()); }
+	size_t CalcStrides(size_t axis) const { return CalcStrides(begin() + axis); }
+	size_t CalcStrides() const { return CalcStrides(begin()); }
 	size_t CalcOffset(size_t axis, const ValueList& valuesDim) const;
 	bool IsEqual(const DimSizes& dimSizes) const;
 	bool DoesMatch(const DimSizes& dimSizes, size_t offset = 0) const;

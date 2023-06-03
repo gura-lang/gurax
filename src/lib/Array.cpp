@@ -108,11 +108,20 @@ Array* Array::Reshape(const ValueList& values) const
 
 template<typename T_Elem> Value* FindMax_T(const Array& array, size_t axis, const ValueList& valuesDim)
 {
-	const T_Elem* pElem = array.GetPointerC<T_Elem>(array.GetDimSizes().CalcOffset(axis, valuesDim) * sizeof(T_Elem));
-	const T_Elem* pElemEnd = pElem + array.GetDimSizes()[axis];
-	if (pElem == pElemEnd) return Value::nil();
-	T_Elem numMax = *pElem++;
-	for ( ; pElem != pElemEnd; pElem++) if (numMax < *pElem) numMax = *pElem;
+	size_t offset = array.GetDimSizes().CalcOffset(axis, valuesDim);
+	const T_Elem* pElem = array.GetPointerC<T_Elem>() + offset;
+	size_t strides = array.GetDimSizes().CalcStrides(axis);
+	size_t dimSize = array.GetDimSizes()[axis];
+	//::printf("offset=%zu strides=%zu\n", offset, strides);
+	if (dimSize == 0) return Value::nil();
+	int i = 0;
+	T_Elem numMax = *pElem;
+	pElem += strides;
+	i++;
+	for ( ; i < dimSize; pElem += strides, i++) {
+		//::printf("%f\n", *pElem);
+		if (numMax < *pElem) numMax = *pElem;
+	}
 	return new Value_Number(numMax);
 }
 
@@ -1254,6 +1263,10 @@ void Array::Bootup()
 
 Value* Array::FindMax(size_t axis, const ValueList& valuesDim) const
 {
+	if (axis >= GetDimSizes().size()) {
+		Error::Issue(ErrorType::RangeError, "specified axis is out of range");
+		return Value::nil();
+	}
 	if (GetDimSizes().size() != valuesDim.size() + 1) {
 		Error::Issue(ErrorType::ArgumentError, "insufficient number of arguments");
 		return Value::nil();
