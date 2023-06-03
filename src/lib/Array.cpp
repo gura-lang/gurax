@@ -1261,12 +1261,9 @@ void Array::Bootup()
 	Gurax_SetArrayFuncArithm(funcs.Cross_ArrayArray,	Cross_ArrayArray_T);
 }
 
-Value* Array::FindMax(size_t axis, const ValueList& valuesDim) const
+Value* Array::FindMax(int axis, const ValueList& valuesDim) const
 {
-	if (axis >= GetDimSizes().size()) {
-		Error::Issue(ErrorType::RangeError, "specified axis is out of range");
-		return Value::nil();
-	}
+	if (!GetDimSizes().RegulateAxis(&axis)) return Value::nil();
 	if (GetDimSizes().size() != valuesDim.size() + 1) {
 		Error::Issue(ErrorType::ArgumentError, "insufficient number of arguments");
 		return Value::nil();
@@ -2240,6 +2237,16 @@ bool DimSizes::Verify(const ValueList& values) const
 		if (*pDimSize != Value_Number::GetNumber<size_t>(**ppValue)) return false;
 	}
 	return pDimSize == end() && ppValue == values.end();
+}
+
+bool DimSizes::RegulateAxis(int *pAxis) const
+{
+	if (*pAxis < 0) *pAxis += size();
+	if (*pAxis < 0 || *pAxis >= size()) {
+		Error::Issue(ErrorType::RangeError, "specified axis is out of range");
+		return false;
+	}
+	return true;
 }
 
 String DimSizes::ToString(const StringStyle& ss) const

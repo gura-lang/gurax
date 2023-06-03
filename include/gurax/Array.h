@@ -46,6 +46,7 @@ public:
 	size_t GetRowSize() const { return *(rbegin() + 1); }
 	size_t GetColSize() const { return back(); }
 	bool Verify(const ValueList& values) const;
+	bool RegulateAxis(int *pAxis) const;
 	String ToString(const StringStyle& ss) const;
 };
 
@@ -221,7 +222,7 @@ public:
 	bool IndexSetDouble(size_t idx, Double num) { return funcs.IndexSetDouble[_elemType.id](GetPointerC<void>(), idx, num); }
 	Value* IndexGetValue(size_t idx) const { return funcs.IndexGetValue[_elemType.id](GetPointerC<void>(), idx); }
 	Double IndexGetDouble(size_t idx) const { return funcs.IndexGetDouble[_elemType.id](GetPointerC<void>(), idx); }
-	Value* FindMax(size_t axis, const ValueList& valuesDim) const;
+	Value* FindMax(int axis, const ValueList& valuesDim) const;
 	void InjectElems(ValueList& values, size_t offset, size_t len);
 	void InjectElems(ValueList& values, size_t offset = 0);
 	bool InjectElems(Iterator& iterator, size_t offset, size_t len);

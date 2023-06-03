@@ -298,7 +298,7 @@ Gurax_ImplementMethod(Array, FindMax)
 	const Array& array = Value_Array::GetArray(valueThis);
 	// Arguments
 	ArgPicker args(argument);
-	size_t axis = args.IsValid()? args.PickNumber<size_t>() : 0;
+	int axis = args.IsValid()? args.PickNumber<int>() : 0;
 	const ValueList& valuesDim = args.PickList();
 	// Function body
 	return array.FindMax(axis, valuesDim);
