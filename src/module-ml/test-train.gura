@@ -1,0 +1,61 @@
+#!/usr/bin/env gurax
+import(ml.mnist)
+
+db = ml.mnist.Database('../../sample/resource/mnist')
+
+if (true) {
+	//model = `((x |.| weight + bias) |*| ml.Softmax())
+	model = `(x |.| weight |*| ml.Softmax())
+	weight = @float(784, 10)
+	weight.Inject(Random.NormalSeq(0, ml.Xavier(784)))
+	bias = @float(1, 10)
+	bias.Inject(Random.NormalSeq(0, ml.Xavier(10)))
+} else {
+	model = `(((x |.| weight1 + bias1) |*| ml.Sigmoid() |.| weight2 + bias2) |*| ml.Softmax())
+	weight1 = array@float.rands@normal([784, 100], 0, ml.Xavier(784))
+	weight2 = array@float.rands@normal([100, 10], 0, ml.Xavier(100))
+	bias1 = array@float.rands@normal([1, 100], 0, ml.Xavier(100))
+	bias2 = array@float.rands@normal([1, 10], 0, ml.Xavier(10))
+}
+
+scope {
+	nTraining = 100
+	arrayImage = db.train.imageSet.ToArray(`float, flatten = true) / 255
+	arrayLabel = db.train.labelSet.ToArray(`float, oneHot = true)
+	optimizer = ml.Optimizer.GradientDescent(0.01)
+	ml.Trainer(model, optimizer, `x) {|trainer|
+		repeat (nTraining) {|iRepeat|
+			repeat (1000) {|i|
+				x = arrayImage[i].Reshape(1, nil)
+				correct = arrayLabel[i].Reshape(1, nil)
+				trainer.Train(correct, x)
+			}
+			Printf('#%d error=%g\n', iRepeat + 1, trainer.CalcMeanSquaredError(correct))
+		}
+	}
+}
+pattern = [' ', '.', ':', '#', '#']
+scope {
+	// evaluation
+	arrayImageScaled = db.test.imageSet.ToArray(`uint8, false, 4)
+	arrayImage = db.test.imageSet.ToArray(`float, flatten = true) / 255
+	arrayLabel = db.test.labelSet.ToArray(`float, oneHot = true)
+	nCorrects = 0
+	nTests = arrayImage.shape[0]
+	repeat (nTests) {|i|
+		x = arrayImage[i].Reshape(1, nil)
+		t = arrayLabel[i].Reshape(1, nil)
+		y = model.Eval()
+		idxResult = y.ArgMax(-1, 0)
+		idxCorrect = t.ArgMax(-1, 0)
+		if (idxResult == idxCorrect) {
+			Printf(' "%d" .. correct with likelihood %.1f%%\n', idxResult, y[0, idxResult] * 100)
+			nCorrects += 1
+		} else {
+			arrayImageScaled[i].ToList().Each {|row| Printf('%s\n', pattern.Get(row).Join())}
+			Printf(' "%d" .. wrong. correct is "%d"\n', idxResult, idxCorrect)
+		}
+		Println('-' * 70)
+	}
+	Printf('accuracy: %d/%d (%.1f%%)\n', nCorrects, nTests, nCorrects / nTests * 100)
+}
