@@ -108,24 +108,85 @@ Array* Array::Reshape(const ValueList& values) const
 
 template<typename T_Elem> Value* FindMax_T(const Array& array, size_t axis, const ValueList& valuesDim)
 {
-	size_t offset = array.GetDimSizes().CalcOffset(axis, valuesDim);
-	const T_Elem* pElem = array.GetPointerC<T_Elem>() + offset;
-	size_t strides = array.GetDimSizes().CalcStrides(axis);
+	size_t strides = 0;
+	const T_Elem* pElem = array.GetPointerC<T_Elem>() + array.GetDimSizes().CalcOffset(axis, valuesDim, &strides);
+	if (Error::IsIssued()) return Value::nil();
 	size_t dimSize = array.GetDimSizes()[axis];
-	//::printf("offset=%zu strides=%zu\n", offset, strides);
 	if (dimSize == 0) return Value::nil();
-	int i = 0;
+	int idx = 0;
 	T_Elem numMax = *pElem;
 	pElem += strides;
-	i++;
-	for ( ; i < dimSize; pElem += strides, i++) {
-		//::printf("%f\n", *pElem);
+	idx++;
+	for ( ; idx < dimSize; pElem += strides, idx++) {
 		if (numMax < *pElem) numMax = *pElem;
 	}
 	return new Value_Number(numMax);
 }
 
 template<> Value* FindMax_T<Complex>(const Array& array, size_t axis, const ValueList& valuesDim) { return Value::nil(); }
+
+template<typename T_Elem> Value* FindMin_T(const Array& array, size_t axis, const ValueList& valuesDim)
+{
+	size_t strides = 0;
+	const T_Elem* pElem = array.GetPointerC<T_Elem>() + array.GetDimSizes().CalcOffset(axis, valuesDim, &strides);
+	if (Error::IsIssued()) return Value::nil();
+	size_t dimSize = array.GetDimSizes()[axis];
+	if (dimSize == 0) return Value::nil();
+	int idx = 0;
+	T_Elem numMin = *pElem;
+	pElem += strides;
+	idx++;
+	for ( ; idx < dimSize; pElem += strides, idx++) {
+		if (numMin > *pElem) numMin = *pElem;
+	}
+	return new Value_Number(numMin);
+}
+
+template<> Value* FindMin_T<Complex>(const Array& array, size_t axis, const ValueList& valuesDim) { return Value::nil(); }
+
+template<typename T_Elem> Value* ArgMax_T(const Array& array, size_t axis, const ValueList& valuesDim)
+{
+	size_t strides = 0;
+	const T_Elem* pElem = array.GetPointerC<T_Elem>() + array.GetDimSizes().CalcOffset(axis, valuesDim, &strides);
+	if (Error::IsIssued()) return Value::nil();
+	size_t dimSize = array.GetDimSizes()[axis];
+	if (dimSize == 0) return Value::nil();
+	int idx = 0, idxMax = 0;
+	T_Elem numMax = *pElem;
+	pElem += strides;
+	idx++;
+	for ( ; idx < dimSize; pElem += strides, idx++) {
+		if (numMax < *pElem) {
+			numMax = *pElem;
+			idxMax = idx;
+		}
+	}
+	return new Value_Number(idxMax);
+}
+
+template<> Value* ArgMax_T<Complex>(const Array& array, size_t axis, const ValueList& valuesDim) { return Value::nil(); }
+
+template<typename T_Elem> Value* ArgMin_T(const Array& array, size_t axis, const ValueList& valuesDim)
+{
+	size_t strides = 0;
+	const T_Elem* pElem = array.GetPointerC<T_Elem>() + array.GetDimSizes().CalcOffset(axis, valuesDim, &strides);
+	if (Error::IsIssued()) return Value::nil();
+	size_t dimSize = array.GetDimSizes()[axis];
+	if (dimSize == 0) return Value::nil();
+	int idx = 0, idxMin = 0;
+	T_Elem numMin = *pElem;
+	pElem += strides;
+	idx++;
+	for ( ; idx < dimSize; pElem += strides, idx++) {
+		if (numMin > *pElem) {
+			numMin = *pElem;
+			idxMin = idx;
+		}
+	}
+	return new Value_Number(idxMin);
+}
+
+template<> Value* ArgMin_T<Complex>(const Array& array, size_t axis, const ValueList& valuesDim) { return Value::nil(); }
 
 template<typename T_Elem> bool IndexSetValue_T(void* pv, size_t idx, const Value& value)
 {
@@ -1204,6 +1265,9 @@ void Array::Bootup()
 	ElemType::Double.pSymbol			= Gurax_Symbol(double_);
 	ElemType::Complex.pSymbol			= Gurax_Symbol(complex);
 	Gurax_SetArrayFuncSingle(funcs.FindMax,				FindMax_T);
+	Gurax_SetArrayFuncSingle(funcs.FindMin,				FindMin_T);
+	Gurax_SetArrayFuncSingle(funcs.ArgMax,				ArgMax_T);
+	Gurax_SetArrayFuncSingle(funcs.ArgMin,				ArgMin_T);
 	Gurax_SetArrayFuncSingle(funcs.IndexSetValue,		IndexSetValue_T);
 	Gurax_SetArrayFuncSingle(funcs.IndexGetValue,		IndexGetValue_T);
 	Gurax_SetArrayFuncSingle(funcs.IndexSetDouble,		IndexSetDouble_T);
@@ -1265,10 +1329,40 @@ Value* Array::FindMax(int axis, const ValueList& valuesDim) const
 {
 	if (!GetDimSizes().RegulateAxis(&axis)) return Value::nil();
 	if (GetDimSizes().size() != valuesDim.size() + 1) {
-		Error::Issue(ErrorType::ArgumentError, "insufficient number of arguments");
+		Error::Issue(ErrorType::ArgumentError, "invalid number of arguments");
 		return Value::nil();
 	}
 	return funcs.FindMax[_elemType.id](*this, axis, valuesDim);
+}
+
+Value* Array::FindMin(int axis, const ValueList& valuesDim) const
+{
+	if (!GetDimSizes().RegulateAxis(&axis)) return Value::nil();
+	if (GetDimSizes().size() != valuesDim.size() + 1) {
+		Error::Issue(ErrorType::ArgumentError, "invalid number of arguments");
+		return Value::nil();
+	}
+	return funcs.FindMin[_elemType.id](*this, axis, valuesDim);
+}
+
+Value* Array::ArgMax(int axis, const ValueList& valuesDim) const
+{
+	if (!GetDimSizes().RegulateAxis(&axis)) return Value::nil();
+	if (GetDimSizes().size() != valuesDim.size() + 1) {
+		Error::Issue(ErrorType::ArgumentError, "invalid number of arguments");
+		return Value::nil();
+	}
+	return funcs.ArgMax[_elemType.id](*this, axis, valuesDim);
+}
+
+Value* Array::ArgMin(int axis, const ValueList& valuesDim) const
+{
+	if (!GetDimSizes().RegulateAxis(&axis)) return Value::nil();
+	if (GetDimSizes().size() != valuesDim.size() + 1) {
+		Error::Issue(ErrorType::ArgumentError, "invalid number of arguments");
+		return Value::nil();
+	}
+	return funcs.ArgMin[_elemType.id](*this, axis, valuesDim);
 }
 
 void Array::InjectElems(ValueList& values, size_t offset, size_t len)
@@ -2151,19 +2245,27 @@ size_t DimSizes::CalcLength(const_iterator pDimSizeBegin, const_iterator pDimSiz
 	return len;
 }
 
-size_t DimSizes::CalcOffset(size_t axis, const ValueList& valuesDim) const
+size_t DimSizes::CalcOffset(size_t axis, const ValueList& valuesDim, size_t* pStrides) const
 {
 	size_t offset = 0;
 	auto ppValueDim = valuesDim.rbegin();
 	size_t axisEach = size() - 1;
 	size_t strides = 1;
 	for (auto pDimSize = rbegin(); pDimSize != rend(); pDimSize++, axisEach--) {
-		if (axis != axisEach) {
+		size_t dimSize = *pDimSize;
+		if (axis == axisEach) {
+			*pStrides = strides;
+		} else {
 			int dim = Value_Number::GetNumber<int>(**ppValueDim);
+			if (dim < 0) dim += dimSize;
+			if (dim < 0 || dim >= dimSize) {
+				Error::Issue(ErrorType::RangeError, "specified dimension is out of range");
+				return 0;
+			}
 			offset += dim * strides;
 			ppValueDim++;
 		}
-		strides *= *pDimSize;
+		strides *= dimSize;
 	}
 	return offset;
 }

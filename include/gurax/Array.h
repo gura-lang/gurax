@@ -39,7 +39,7 @@ public:
 	size_t CalcStrides(const_iterator pDimSize) const { return CalcLength(pDimSize + 1, end()); }
 	size_t CalcStrides(size_t axis) const { return CalcStrides(begin() + axis); }
 	size_t CalcStrides() const { return CalcStrides(begin()); }
-	size_t CalcOffset(size_t axis, const ValueList& valuesDim) const;
+	size_t CalcOffset(size_t axis, const ValueList& valuesDim, size_t* pStrides) const;
 	bool IsEqual(const DimSizes& dimSizes) const;
 	bool DoesMatch(const DimSizes& dimSizes, size_t offset = 0) const;
 	bool DoesMatchDot(const DimSizes& dimSizes, size_t offset = 0) const;
@@ -107,6 +107,9 @@ public:
 	};
 	struct Funcs {
 		std::function<Value* (const Array& array, size_t axis, const ValueList& valuesDim)>	FindMax[ElemTypeIdMax];
+		std::function<Value* (const Array& array, size_t axis, const ValueList& valuesDim)>	FindMin[ElemTypeIdMax];
+		std::function<Value* (const Array& array, size_t axis, const ValueList& valuesDim)>	ArgMax[ElemTypeIdMax];
+		std::function<Value* (const Array& array, size_t axis, const ValueList& valuesDim)>	ArgMin[ElemTypeIdMax];
 		std::function<bool (void* pv, size_t idx, const Value& value)>						IndexSetValue[ElemTypeIdMax];
 		std::function<bool (void* pv, size_t idx, Double num)>								IndexSetDouble[ElemTypeIdMax];
 		std::function<Value* (const void* pv, size_t idx)>									IndexGetValue[ElemTypeIdMax];
@@ -223,6 +226,9 @@ public:
 	Value* IndexGetValue(size_t idx) const { return funcs.IndexGetValue[_elemType.id](GetPointerC<void>(), idx); }
 	Double IndexGetDouble(size_t idx) const { return funcs.IndexGetDouble[_elemType.id](GetPointerC<void>(), idx); }
 	Value* FindMax(int axis, const ValueList& valuesDim) const;
+	Value* FindMin(int axis, const ValueList& valuesDim) const;
+	Value* ArgMax(int axis, const ValueList& valuesDim) const;
+	Value* ArgMin(int axis, const ValueList& valuesDim) const;
 	void InjectElems(ValueList& values, size_t offset, size_t len);
 	void InjectElems(ValueList& values, size_t offset = 0);
 	bool InjectElems(Iterator& iterator, size_t offset, size_t len);

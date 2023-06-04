@@ -233,6 +233,56 @@ Gurax_ImplementClassMethod(Array, Scalar)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// Array#ArgMax(axis? as Number, dims* as Number) {block?}
+Gurax_DeclareMethod(Array, ArgMax)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareArg("axis", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("dims", VTYPE_Number, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+
+)""");
+}
+
+Gurax_ImplementMethod(Array, ArgMax)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	const Array& array = Value_Array::GetArray(valueThis);
+	// Arguments
+	ArgPicker args(argument);
+	int axis = args.IsValid()? args.PickNumber<int>() : 0;
+	const ValueList& valuesDim = args.PickList();
+	// Function body
+	return array.ArgMax(axis, valuesDim);
+}
+
+// Array#ArgMin(axis? as Number, dims* as Number) {block?}
+Gurax_DeclareMethod(Array, ArgMin)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareArg("axis", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("dims", VTYPE_Number, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+
+)""");
+}
+
+Gurax_ImplementMethod(Array, ArgMin)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	const Array& array = Value_Array::GetArray(valueThis);
+	// Arguments
+	ArgPicker args(argument);
+	int axis = args.IsValid()? args.PickNumber<int>() : 0;
+	const ValueList& valuesDim = args.PickList();
+	// Function body
+	return array.ArgMin(axis, valuesDim);
+}
+
 // Array#Cast(elemType as Symbol) {block?}
 Gurax_DeclareMethod(Array, Cast)
 {
@@ -302,6 +352,31 @@ Gurax_ImplementMethod(Array, FindMax)
 	const ValueList& valuesDim = args.PickList();
 	// Function body
 	return array.FindMax(axis, valuesDim);
+}
+
+// Array#FindMin(axis? as Number, dims* as Number) {block?}
+Gurax_DeclareMethod(Array, FindMin)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareArg("axis", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("dims", VTYPE_Number, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+
+)""");
+}
+
+Gurax_ImplementMethod(Array, FindMin)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	const Array& array = Value_Array::GetArray(valueThis);
+	// Arguments
+	ArgPicker args(argument);
+	int axis = args.IsValid()? args.PickNumber<int>() : 0;
+	const ValueList& valuesDim = args.PickList();
+	// Function body
+	return array.FindMin(axis, valuesDim);
 }
 
 // Array#Inject(values as Iterator, offset? as Number):reduce
@@ -1095,9 +1170,12 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateClassMethod(Array, Identity));
 	Assign(Gurax_CreateClassMethod(Array, Scalar));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(Array, ArgMax));
+	Assign(Gurax_CreateMethod(Array, ArgMin));
 	Assign(Gurax_CreateMethod(Array, Cast));
 	Assign(Gurax_CreateMethod(Array, Each));
 	Assign(Gurax_CreateMethod(Array, FindMax));
+	Assign(Gurax_CreateMethod(Array, FindMin));
 	Assign(Gurax_CreateMethod(Array, Inject));
 	Assign(Gurax_CreateMethod(Array, ToList));
 	Assign(Gurax_CreateMethod(Array, ToString));
