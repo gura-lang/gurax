@@ -4,8 +4,8 @@ import(ml.mnist)
 db = ml.mnist.Database('../../sample/resource/mnist')
 
 if (true) {
-	//model = `((x |.| weight + bias) |*| ml.Softmax())
-	model = `(x |.| weight |*| ml.Softmax())
+	model = `((x |.| weight + bias) |*| ml.Softmax())
+	//model = `(x |.| weight |*| ml.Softmax())
 	weight = @float(784, 10)
 	weight.Inject(Random.NormalSeq(0, ml.Xavier(784)))
 	bias = @float(1, 10)
@@ -20,7 +20,7 @@ if (true) {
 
 scope {
 	nTraining = 100
-	arrayImage = db.train.imageSet.ToArray(`float, flatten = true) / 255
+	arrayImage = db.train.imageSet.ToArray(`float, flatten = true, numMax = 1)
 	arrayLabel = db.train.labelSet.ToArray(`float, oneHot = true)
 	optimizer = ml.Optimizer.GradientDescent(0.01)
 	ml.Trainer(model, optimizer, `x) {|trainer|
@@ -37,8 +37,7 @@ scope {
 pattern = [' ', '.', ':', '#', '#']
 scope {
 	// evaluation
-	arrayImageScaled = db.test.imageSet.ToArray(`uint8, false, 4)
-	arrayImage = db.test.imageSet.ToArray(`float, flatten = true) / 255
+	arrayImage = db.test.imageSet.ToArray(`float, flatten = true, numMax = 1)
 	arrayLabel = db.test.labelSet.ToArray(`float, oneHot = true)
 	nCorrects = 0
 	nTests = arrayImage.shape[0]
@@ -52,10 +51,9 @@ scope {
 			Printf(' "%d" .. correct with likelihood %.1f%%\n', idxResult, y[0, idxResult] * 100)
 			nCorrects += 1
 		} else {
-			arrayImageScaled[i].ToList().Each {|row| Printf('%s\n', pattern.Get(row).Join())}
+			arrayImage[i].ToList().Fold(db.test.imageSet.nCols) {|row| Printf('%s\n', pattern.Get(row * 4).Join())}
 			Printf(' "%d" .. wrong. correct is "%d"\n', idxResult, idxCorrect)
 		}
-		Println('-' * 70)
 	}
 	Printf('accuracy: %d/%d (%.1f%%)\n', nCorrects, nTests, nCorrects / nTests * 100)
 }
