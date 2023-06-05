@@ -12,10 +12,14 @@ if (true) {
 	bias.Inject(Random.NormalSeq(0, ml.Xavier(10)))
 } else {
 	model = `(((x |.| weight1 + bias1) |*| ml.Sigmoid() |.| weight2 + bias2) |*| ml.Softmax())
-	weight1 = array@float.rands@normal([784, 100], 0, ml.Xavier(784))
-	weight2 = array@float.rands@normal([100, 10], 0, ml.Xavier(100))
-	bias1 = array@float.rands@normal([1, 100], 0, ml.Xavier(100))
-	bias2 = array@float.rands@normal([1, 10], 0, ml.Xavier(10))
+	weight1 = @float(784, 100)
+	weight2 = @float(100, 10)
+	bias1 = @float(1, 100)
+	bias2 = @float(1, 10)
+	weight1.Inject(Random.NormalSeq(0, ml.Xavier(784)))
+	weight2.Inject(Random.NormalSeq(0, ml.Xavier(100)))
+	bias1.Inject(Random.NormalSeq(0, ml.Xavier(100)))
+	bias1.Inject(Random.NormalSeq(0, ml.Xavier(10)))
 }
 
 scope {
@@ -48,11 +52,11 @@ scope {
 		idxResult = y.ArgMax(-1, 0)
 		idxCorrect = t.ArgMax(-1, 0)
 		if (idxResult == idxCorrect) {
-			Printf(' "%d" .. correct with likelihood %.1f%%\n', idxResult, y[0, idxResult] * 100)
+			//Printf(' "%d" .. correct with likelihood %.1f%%\n', idxResult, y[0, idxResult] * 100)
 			nCorrects += 1
 		} else {
-			arrayImage[i].ToList().Fold(db.test.imageSet.nCols) {|row| Printf('%s\n', pattern.Get(row * 4).Join())}
-			Printf(' "%d" .. wrong. correct is "%d"\n', idxResult, idxCorrect)
+			//arrayImage[i].ToList().Fold(db.test.imageSet.nCols) {|row| Printf('%s\n', pattern.Get(row * 4).Join())}
+			//Printf(' "%d" .. wrong. correct is "%d"\n', idxResult, idxCorrect)
 		}
 	}
 	Printf('accuracy: %d/%d (%.1f%%)\n', nCorrects, nTests, nCorrects / nTests * 100)
