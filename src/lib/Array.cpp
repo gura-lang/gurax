@@ -2201,10 +2201,10 @@ String Array::ToString(const StringStyle& ss) const
 {
 	if (ss.IsBracket()) {
 		return String().Format("Array:@%s(%s)",
-				GetElemTypeName(), GetDimSizes().ToString(StringStyle::Cram, ",").c_str());
+				GetElemTypeName(), GetDimSizes().ToString(StringStyle::Cram, ss.GetComma()).c_str());
 	} else if (ss.IsBrief()) {
 		return String().Format("@%s(%s)",
-				GetElemTypeName(), GetDimSizes().ToString(ss, ss.IsCram()? "," : ", ").c_str());
+				GetElemTypeName(), GetDimSizes().ToString(ss, ss.GetComma()).c_str());
 	} else {
 		String str;
 		ToString(ss, str);
