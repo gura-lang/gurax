@@ -47,7 +47,7 @@ public:
 	size_t GetColSize() const { return back(); }
 	bool Verify(const ValueList& values) const;
 	bool RegulateAxis(int *pAxis) const;
-	String ToString(const StringStyle& ss) const;
+	String ToString(const StringStyle& ss, const char* sep) const;
 };
 
 //------------------------------------------------------------------------------
@@ -204,6 +204,7 @@ public:
 	Array* Reshape(const ValueList& values) const;
 	const ElemTypeT& GetElemType() const { return _elemType; }
 	bool IsElemType(const ElemTypeT& elemType) const { return _elemType.IsIdentical(elemType); }
+	const char* GetElemTypeName() const { return _elemType.GetName(); }
 	Memory& GetMemory() { return *_pMemory; }
 	const Memory& GetMemory() const { return *_pMemory; }
 	const DimSizes& GetDimSizes() const { return _dimSizes; }
@@ -246,19 +247,19 @@ public:
 	static bool GenericUnaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Array& array,
 		const std::function<void (void* pvRtn, const void* pv, size_t len)>& func);
 	static bool GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Array& arrayL, const Array& arrayR,
-		const std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>& func);
+		const std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>& func, const char* opDisp);
 	static bool GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Array& arrayL, UInt64 numR,
-		const std::function<void (void* pvRtn, const void* pvL, UInt64 numR, size_t len)>& func);
+		const std::function<void (void* pvRtn, const void* pvL, UInt64 numR, size_t len)>& func, const char* opDisp);
 	static bool GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, UInt64 numL, const Array& arrayR,
-		const std::function<void (void* pvRtn, UInt64 numL, const void* pvR, size_t len)>& func);
+		const std::function<void (void* pvRtn, UInt64 numL, const void* pvR, size_t len)>& func, const char* opDisp);
 	static bool GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Array& arrayL, Double numR,
-		const std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>& func);
+		const std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>& func, const char* opDisp);
 	static bool GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, Double numL, const Array& arrayR,
-		const std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>& func);
+		const std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>& func, const char* opDisp);
 	static bool GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Array& arrayL, const Complex& numR,
-		const std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>& func);
+		const std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>& func, const char* opDisp);
 	static bool GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Complex& numL, const Array& arrayR,
-		const std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>& func);
+		const std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>& func, const char* opDisp);
 	static bool Neg(RefPtr<Array>& pArrayRtn, const Array& array);
 	static bool Add(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
 	static bool Add(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR);

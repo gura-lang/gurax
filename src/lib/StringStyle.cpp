@@ -9,7 +9,9 @@ namespace Gurax {
 // StringStyle
 //------------------------------------------------------------------------------
 const StringStyle StringStyle::Empty;
-const StringStyle StringStyle::Bracket(StringStyle::Flag::Bracket);
+const StringStyle StringStyle::BracketCram(StringStyle::Flag::Bracket | StringStyle::Flag::Cram);
+const StringStyle StringStyle::Brief(StringStyle::Flag::Brief);
+const StringStyle StringStyle::BriefCram(StringStyle::Flag::Brief | StringStyle::Flag::Cram);
 const StringStyle StringStyle::Unbracket(StringStyle::Flag::Unbracket);
 const StringStyle StringStyle::QuoteString(StringStyle::Flag::QuoteString);
 const StringStyle StringStyle::QuoteSymbol(StringStyle::Flag::QuoteSymbol);

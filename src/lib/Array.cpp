@@ -1493,13 +1493,17 @@ bool Array::GenericUnaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRt
 }
 
 bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Array& arrayL, const Array& arrayR,
-	const std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>& func)
+	const std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>& func, const char* opDisp)
 {
 	size_t nUnits = 1;
 	size_t lenUnit = 0;
 	size_t lenFwdL = 0, lenFwdR = 0;
 	const DimSizes* pDimSizesRtn = DimSizes::DetermineResult(arrayL.GetDimSizes(), arrayR.GetDimSizes(), &nUnits, &lenUnit, &lenFwdL, &lenFwdR);
-	if (!pDimSizesRtn) return nullptr;
+	if (!pDimSizesRtn) {
+		Error::Issue(ErrorType::SizeError, "unmatched array size: %s %s %s",
+				arrayL.ToString(StringStyle::BriefCram), opDisp, arrayR.ToString(StringStyle::BriefCram));
+		return nullptr;
+	}
 	if (!pArrayRtn) pArrayRtn.reset(Create(elemTypeRtn, *pDimSizesRtn));
 	if (!pArrayRtn) return false;
 	void* pvRtn = pArrayRtn->GetPointerC<void>();
@@ -1515,7 +1519,7 @@ bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeR
 }
 
 bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Array& arrayL, Double numR,
-	const std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>& func)
+	const std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>& func, const char* opDisp)
 {
 	if (!pArrayRtn) pArrayRtn.reset(Create(elemTypeRtn, arrayL.GetDimSizes()));
 	if (!pArrayRtn) return false;
@@ -1527,7 +1531,7 @@ bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeR
 }
 
 bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, Double numL, const Array& arrayR,
-	const std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>& func)
+	const std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>& func, const char* opDisp)
 {
 	if (!pArrayRtn) pArrayRtn.reset(Create(elemTypeRtn, arrayR.GetDimSizes()));
 	if (!pArrayRtn) return false;
@@ -1539,7 +1543,7 @@ bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeR
 }
 
 bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Array& arrayL, UInt64 numR,
-	const std::function<void (void* pvRtn, const void* pvL, UInt64 numR, size_t len)>& func)
+	const std::function<void (void* pvRtn, const void* pvL, UInt64 numR, size_t len)>& func, const char* opDisp)
 {
 	if (!pArrayRtn) pArrayRtn.reset(Create(elemTypeRtn, arrayL.GetDimSizes()));
 	if (!pArrayRtn) return false;
@@ -1551,7 +1555,7 @@ bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeR
 }
 
 bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, UInt64 numL, const Array& arrayR,
-	const std::function<void (void* pvRtn, UInt64 numL, const void* pvR, size_t len)>& func)
+	const std::function<void (void* pvRtn, UInt64 numL, const void* pvR, size_t len)>& func, const char* opDisp)
 {
 	if (!pArrayRtn) pArrayRtn.reset(Create(elemTypeRtn, arrayR.GetDimSizes()));
 	if (!pArrayRtn) return false;
@@ -1563,7 +1567,7 @@ bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeR
 }
 
 bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Array& arrayL, const Complex& numR,
-	const std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>& func)
+	const std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>& func, const char* opDisp)
 {
 	if (!pArrayRtn) pArrayRtn.reset(Create(elemTypeRtn, arrayL.GetDimSizes()));
 	if (!pArrayRtn) return false;
@@ -1575,7 +1579,7 @@ bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeR
 }
 
 bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Complex& numL, const Array& arrayR,
-	const std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>& func)
+	const std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>& func, const char* opDisp)
 {
 	if (!pArrayRtn) pArrayRtn.reset(Create(elemTypeRtn, arrayR.GetDimSizes()));
 	if (!pArrayRtn) return false;
@@ -1594,7 +1598,7 @@ bool Array::Neg(RefPtr<Array>& pArrayRtn, const Array& array)
 bool Array::Add(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
 	if (arrayL.IsArray() && arrayR.IsArray()) {
-		return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Add_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+		return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Add_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "+");
 	} else if (arrayL.IsArray() && arrayR.IsScalarNumber()) {
 		return Add(pArrayRtn, arrayL, arrayR.GetScalarDouble());
 	} else if (arrayL.IsArray() && arrayR.IsScalarComplex()) {
@@ -1622,18 +1626,18 @@ bool Array::Add(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arra
 
 bool Array::Add(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
 {
-	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, funcs.Add_ArrayNumber[arrayL.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, funcs.Add_ArrayNumber[arrayL.GetElemType().id], "+");
 }
 
 bool Array::Add(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR)
 {
-	return GenericBinaryOp(pArrayRtn, ElemType::Complex, arrayL, numR, funcs.Add_ArrayComplex[arrayL.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Complex, arrayL, numR, funcs.Add_ArrayComplex[arrayL.GetElemType().id], "+");
 }
 
 bool Array::And(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
 	if (arrayL.IsArray() && arrayR.IsArray()) {
-		return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.And_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+		return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.And_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "+");
 	} else if (arrayL.IsArray() && arrayR.IsScalarNumber()) {
 		return And(pArrayRtn, arrayL, arrayR.GetScalarUInt64());
 	} else if (arrayL.IsArray() && arrayR.IsScalarComplex()) {
@@ -1658,13 +1662,13 @@ bool Array::And(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arra
 
 bool Array::And(RefPtr<Array>& pArrayRtn, const Array& arrayL, UInt64 numR)
 {
-	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, funcs.And_ArrayNumber[arrayL.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, funcs.And_ArrayNumber[arrayL.GetElemType().id], "&");
 }
 
 bool Array::Sub(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
 	if (arrayL.IsArray() && arrayR.IsArray()) {
-		return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Sub_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+		return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Sub_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "&");
 	} else if (arrayL.IsArray() && arrayR.IsScalarNumber()) {
 		return Sub(pArrayRtn, arrayL, arrayR.GetScalarDouble());
 	} else if (arrayL.IsArray() && arrayR.IsScalarComplex()) {
@@ -1692,28 +1696,28 @@ bool Array::Sub(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arra
 
 bool Array::Sub(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
 {
-	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, funcs.Sub_ArrayNumber[arrayL.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, funcs.Sub_ArrayNumber[arrayL.GetElemType().id], "-");
 }
 
 bool Array::Sub(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, arrayR.GetElemType(), numL, arrayR, funcs.Sub_NumberArray[arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, arrayR.GetElemType(), numL, arrayR, funcs.Sub_NumberArray[arrayR.GetElemType().id], "-");
 }
 
 bool Array::Sub(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR)
 {
-	return GenericBinaryOp(pArrayRtn, ElemType::Complex, arrayL, numR, funcs.Sub_ArrayComplex[arrayL.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Complex, arrayL, numR, funcs.Sub_ArrayComplex[arrayL.GetElemType().id], "-");
 }
 
 bool Array::Sub(RefPtr<Array>& pArrayRtn, const Complex& numL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, ElemType::Complex, numL, arrayR, funcs.Sub_ComplexArray[arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Complex, numL, arrayR, funcs.Sub_ComplexArray[arrayR.GetElemType().id], "-");
 }
 
 bool Array::Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
 	if (arrayL.IsArray() && arrayR.IsArray()) {
-		return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Mul_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+		return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Mul_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "*");
 	} else if (arrayL.IsArray() && arrayR.IsScalarNumber()) {
 		return Mul(pArrayRtn, arrayL, arrayR.GetScalarDouble());
 	} else if (arrayL.IsArray() && arrayR.IsScalarComplex()) {
@@ -1741,18 +1745,18 @@ bool Array::Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arra
 
 bool Array::Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
 {
-	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, funcs.Mul_ArrayNumber[arrayL.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, funcs.Mul_ArrayNumber[arrayL.GetElemType().id], "*");
 }
 
 bool Array::Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR)
 {
-	return GenericBinaryOp(pArrayRtn, ElemType::Complex, arrayL, numR, funcs.Mul_ArrayComplex[arrayL.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Complex, arrayL, numR, funcs.Mul_ArrayComplex[arrayL.GetElemType().id], "*");
 }
 
 bool Array::Div(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
 	if (arrayL.IsArray() && arrayR.IsArray()) {
-		return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Div_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+		return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Div_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "*");
 	} else if (arrayL.IsArray() && arrayR.IsScalarNumber()) {
 		return Div(pArrayRtn, arrayL, arrayR.GetScalarDouble());
 	} else if (arrayL.IsArray() && arrayR.IsScalarComplex()) {
@@ -1800,28 +1804,28 @@ bool Array::Div(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arra
 
 bool Array::Div(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
 {
-	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, funcs.Div_ArrayNumber[arrayL.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, funcs.Div_ArrayNumber[arrayL.GetElemType().id], "/");
 }
 
 bool Array::Div(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, arrayR.GetElemType(), numL, arrayR, funcs.Div_NumberArray[arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, arrayR.GetElemType(), numL, arrayR, funcs.Div_NumberArray[arrayR.GetElemType().id], "/");
 }
 
 bool Array::Div(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR)
 {
-	return GenericBinaryOp(pArrayRtn, ElemType::Complex, arrayL, numR, funcs.Div_ArrayComplex[arrayL.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Complex, arrayL, numR, funcs.Div_ArrayComplex[arrayL.GetElemType().id], "/");
 }
 
 bool Array::Div(RefPtr<Array>& pArrayRtn, const Complex& numL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, ElemType::Complex, numL, arrayR, funcs.Div_ComplexArray[arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Complex, numL, arrayR, funcs.Div_ComplexArray[arrayR.GetElemType().id], "/");
 }
 
 bool Array::Pow(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
 	if (arrayL.IsArray() && arrayR.IsArray()) {
-		return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Pow_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+		return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Pow_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "**");
 	} else if (arrayL.IsArray() && arrayR.IsScalarNumber()) {
 		return Pow(pArrayRtn, arrayL, arrayR.GetScalarDouble());
 	} else if (arrayL.IsArray() && arrayR.IsScalarComplex()) {
@@ -1849,28 +1853,28 @@ bool Array::Pow(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arra
 
 bool Array::Pow(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
 {
-	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, funcs.Pow_ArrayNumber[arrayL.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, funcs.Pow_ArrayNumber[arrayL.GetElemType().id], "**");
 }
 
 bool Array::Pow(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, arrayR.GetElemType(), numL, arrayR, funcs.Pow_NumberArray[arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, arrayR.GetElemType(), numL, arrayR, funcs.Pow_NumberArray[arrayR.GetElemType().id], "**");
 }
 
 bool Array::Pow(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR)
 {
-	return GenericBinaryOp(pArrayRtn, ElemType::Complex, arrayL, numR, funcs.Pow_ArrayComplex[arrayL.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Complex, arrayL, numR, funcs.Pow_ArrayComplex[arrayL.GetElemType().id], "**");
 }
 
 bool Array::Pow(RefPtr<Array>& pArrayRtn, const Complex& numL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, ElemType::Complex, numL, arrayR, funcs.Pow_ComplexArray[arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Complex, numL, arrayR, funcs.Pow_ComplexArray[arrayR.GetElemType().id], "**");
 }
 
 bool Array::Or(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
 	if (arrayL.IsArray() && arrayR.IsArray()) {
-		return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Or_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+		return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Or_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "|");
 	} else if (arrayL.IsArray() && arrayR.IsScalarNumber()) {
 		return Or(pArrayRtn, arrayL, arrayR.GetScalarUInt64());
 	} else if (arrayL.IsArray() && arrayR.IsScalarComplex()) {
@@ -1895,13 +1899,13 @@ bool Array::Or(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& array
 
 bool Array::Or(RefPtr<Array>& pArrayRtn, const Array& arrayL, UInt64 numR)
 {
-	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, funcs.Or_ArrayNumber[arrayL.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, funcs.Or_ArrayNumber[arrayL.GetElemType().id], "|");
 }
 
 bool Array::Xor(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
 	if (arrayL.IsArray() && arrayR.IsArray()) {
-		return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Xor_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+		return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Xor_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "|");
 	} else if (arrayL.IsArray() && arrayR.IsScalarNumber()) {
 		return Xor(pArrayRtn, arrayL, arrayR.GetScalarUInt64());
 	} else if (arrayL.IsArray() && arrayR.IsScalarComplex()) {
@@ -1926,13 +1930,13 @@ bool Array::Xor(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arra
 
 bool Array::Xor(RefPtr<Array>& pArrayRtn, const Array& arrayL, UInt64 numR)
 {
-	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, funcs.Xor_ArrayNumber[arrayL.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, funcs.Xor_ArrayNumber[arrayL.GetElemType().id], "^");
 }
 
 bool Array::Eq(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
 	if (arrayL.IsArray() && arrayR.IsArray()) {
-		return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, arrayR, funcs.Eq_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+		return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, arrayR, funcs.Eq_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "==");
 	} else if (arrayL.IsArray() && arrayR.IsScalarNumber()) {
 		return Eq(pArrayRtn, arrayL, arrayR.GetScalarDouble());
 	} else if (arrayL.IsArray() && arrayR.IsScalarComplex()) {
@@ -1960,18 +1964,18 @@ bool Array::Eq(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& array
 
 bool Array::Eq(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
 {
-	return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, numR, funcs.Eq_ArrayNumber[arrayL.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, numR, funcs.Eq_ArrayNumber[arrayL.GetElemType().id], "==");
 }
 
 bool Array::Eq(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR)
 {
-	return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, numR, funcs.Eq_ArrayComplex[arrayL.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, numR, funcs.Eq_ArrayComplex[arrayL.GetElemType().id], "==");
 }
 
 bool Array::Ne(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
 	if (arrayL.IsArray() && arrayR.IsArray()) {
-		return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, arrayR, funcs.Ne_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+		return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, arrayR, funcs.Ne_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "!=");
 	} else if (arrayL.IsArray() && arrayR.IsScalarNumber()) {
 		return Ne(pArrayRtn, arrayL, arrayR.GetScalarDouble());
 	} else if (arrayL.IsArray() && arrayR.IsScalarComplex()) {
@@ -1999,18 +2003,18 @@ bool Array::Ne(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& array
 
 bool Array::Ne(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
 {
-	return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, numR, funcs.Ne_ArrayNumber[arrayL.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, numR, funcs.Ne_ArrayNumber[arrayL.GetElemType().id], "!=");
 }
 
 bool Array::Ne(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR)
 {
-	return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, numR, funcs.Ne_ArrayComplex[arrayL.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, numR, funcs.Ne_ArrayComplex[arrayL.GetElemType().id], "!=");
 }
 
 bool Array::Lt(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
 	if (arrayL.IsArray() && arrayR.IsArray()) {
-		return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, arrayR, funcs.Lt_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+		return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, arrayR, funcs.Lt_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "<");
 	} else if (arrayL.IsArray() && arrayR.IsScalarNumber()) {
 		return Lt(pArrayRtn, arrayL, arrayR.GetScalarDouble());
 	} else if (arrayL.IsArray() && arrayR.IsScalarComplex()) {
@@ -2035,18 +2039,18 @@ bool Array::Lt(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& array
 
 bool Array::Lt(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
 {
-	return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, numR, funcs.Lt_ArrayNumber[arrayL.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, numR, funcs.Lt_ArrayNumber[arrayL.GetElemType().id], "<");
 }
 
 bool Array::Lt(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, ElemType::Bool, numL, arrayR, funcs.Lt_NumberArray[arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Bool, numL, arrayR, funcs.Lt_NumberArray[arrayR.GetElemType().id], "<");
 }
 
 bool Array::Le(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
 	if (arrayL.IsArray() && arrayR.IsArray()) {
-		return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, arrayR, funcs.Le_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+		return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, arrayR, funcs.Le_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "<=");
 	} else if (arrayL.IsArray() && arrayR.IsScalarNumber()) {
 		return Le(pArrayRtn, arrayL, arrayR.GetScalarDouble());
 	} else if (arrayL.IsArray() && arrayR.IsScalarComplex()) {
@@ -2071,18 +2075,18 @@ bool Array::Le(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& array
 
 bool Array::Le(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
 {
-	return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, numR, funcs.Le_ArrayNumber[arrayL.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Bool, arrayL, numR, funcs.Le_ArrayNumber[arrayL.GetElemType().id], "<=");
 }
 
 bool Array::Le(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, ElemType::Bool, numL, arrayR, funcs.Le_NumberArray[arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Bool, numL, arrayR, funcs.Le_NumberArray[arrayR.GetElemType().id], "<=");
 }
 
 bool Array::Cmp(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
 	if (arrayL.IsArray() && arrayR.IsArray()) {
-		return GenericBinaryOp(pArrayRtn, ElemType::Int8, arrayL, arrayR, funcs.Cmp_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id]);
+		return GenericBinaryOp(pArrayRtn, ElemType::Int8, arrayL, arrayR, funcs.Cmp_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "<=>");
 	} else if (arrayL.IsArray() && arrayR.IsScalarNumber()) {
 		return Cmp(pArrayRtn, arrayL, arrayR.GetScalarDouble());
 	} else if (arrayL.IsArray() && arrayR.IsScalarComplex()) {
@@ -2107,12 +2111,12 @@ bool Array::Cmp(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arra
 
 bool Array::Cmp(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
 {
-	return GenericBinaryOp(pArrayRtn, ElemType::Int8, arrayL, numR, funcs.Cmp_ArrayNumber[arrayL.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Int8, arrayL, numR, funcs.Cmp_ArrayNumber[arrayL.GetElemType().id], "<=>");
 }
 
 bool Array::Cmp(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, ElemType::Int8, numL, arrayR, funcs.Cmp_NumberArray[arrayR.GetElemType().id]);
+	return GenericBinaryOp(pArrayRtn, ElemType::Int8, numL, arrayR, funcs.Cmp_NumberArray[arrayR.GetElemType().id], "<=>");
 }
 
 bool Array::Dot(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
@@ -2121,7 +2125,8 @@ bool Array::Dot(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arra
 	const DimSizes& dimSizesR = arrayR.GetDimSizes();
 	if (dimSizesL.size() != 2 || dimSizesR.size() != 2 ||
 					dimSizesL.GetColSize() != dimSizesR.GetRowSize()) {
-		Error::Issue(ErrorType::RangeError, "unmatched array size");
+		Error::Issue(ErrorType::SizeError, "unmatched array size: %s |.| %s",
+				arrayL.ToString(StringStyle::BriefCram), arrayR.ToString(StringStyle::BriefCram));
 		return nullptr;
 	}
 	DimSizes dimSizesRtn(dimSizesL.GetRowSize(), dimSizesR.GetColSize());
@@ -2140,7 +2145,8 @@ bool Array::Cross(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& ar
 	const DimSizes& dimSizesL = arrayL.GetDimSizes();
 	const DimSizes& dimSizesR = arrayR.GetDimSizes();
 	if (dimSizesL.size() != 1 || dimSizesR.size() != 1 || dimSizesL[0] != 3 || dimSizesR[0] != 3) {
-		Error::Issue(ErrorType::RangeError, "unmatched array size");
+		Error::Issue(ErrorType::SizeError, "unmatched array size: %s |^| %s",
+				arrayL.ToString(StringStyle::BriefCram), arrayR.ToString(StringStyle::BriefCram));
 		return nullptr;
 	}
 	size_t n = 3;
@@ -2194,8 +2200,11 @@ const Array::ElemTypeT& Array::AtSymbolToElemType(const Symbol* pSymbol)
 String Array::ToString(const StringStyle& ss) const
 {
 	if (ss.IsBracket()) {
-		return String().Format("Array:%s:dim=%s",
-			_elemType.pSymbol->GetName(), _dimSizes.ToString(StringStyle::Cram).c_str());
+		return String().Format("Array:@%s(%s)",
+				GetElemTypeName(), GetDimSizes().ToString(StringStyle::Cram, ",").c_str());
+	} else if (ss.IsBrief()) {
+		return String().Format("@%s(%s)",
+				GetElemTypeName(), GetDimSizes().ToString(ss, ss.IsCram()? "," : ", ").c_str());
 	} else {
 		String str;
 		ToString(ss, str);
@@ -2273,28 +2282,20 @@ size_t DimSizes::CalcOffset(size_t axis, const ValueList& valuesDim, size_t* pSt
 const DimSizes* DimSizes::DetermineResult(const DimSizes& dimSizesL, const DimSizes& dimSizesR,
 					size_t* pnUnits, size_t* pLenUnit, size_t* pLenFwdL, size_t* pLenFwdR)
 {
-	const DimSizes* pDimSizesRtn = nullptr;
-	bool matchFlag = false;
 	if (dimSizesL.size() >= dimSizesR.size()) {
 		size_t nDimsHead = dimSizesL.size() - dimSizesR.size();
 		*pnUnits = CalcLength(dimSizesL.begin(), dimSizesL.begin() + nDimsHead);
 		*pLenFwdL = *pLenUnit = dimSizesR.CalcLength();
 		*pLenFwdR = 0;
-		pDimSizesRtn = &dimSizesL;
-		matchFlag = dimSizesR.DoesMatch(dimSizesL, nDimsHead);
+		if (dimSizesR.DoesMatch(dimSizesL, nDimsHead)) return &dimSizesL;
 	} else {
 		size_t nDimsHead = dimSizesR.size() - dimSizesL.size();
 		*pnUnits = CalcLength(dimSizesR.begin(), dimSizesR.begin() + nDimsHead);
 		*pLenFwdR = *pLenUnit = dimSizesL.CalcLength();
 		*pLenFwdL = 0;
-		pDimSizesRtn = &dimSizesR;
-		matchFlag = dimSizesL.DoesMatch(dimSizesR, nDimsHead);
+		if (dimSizesL.DoesMatch(dimSizesR, nDimsHead)) return &dimSizesR;
 	}
-	if (!matchFlag) {
-		Error::Issue(ErrorType::RangeError, "unmatched array size");
-		return nullptr;
-	}
-	return pDimSizesRtn;
+	return nullptr;
 }
 
 bool DimSizes::IsEqual(const DimSizes& dimSizes) const
@@ -2351,12 +2352,12 @@ bool DimSizes::RegulateAxis(int *pAxis) const
 	return true;
 }
 
-String DimSizes::ToString(const StringStyle& ss) const
+String DimSizes::ToString(const StringStyle& ss, const char* sep) const
 {
 	if (empty()) return "scalar";
 	String str;
 	for (size_t dimSize : *this) {
-		if (!str.empty()) str += 'x';
+		if (!str.empty()) str += sep;
 		str.Format("%zu", dimSize);
 	}
 	return str;

@@ -28,6 +28,7 @@ const ErrorType ErrorType::MemoryError			("MemoryError",			"memory error");
 const ErrorType ErrorType::PathError			("PathError",			"path error");
 const ErrorType ErrorType::PropertyError		("PropertyError",		"property error");
 const ErrorType ErrorType::RangeError			("RangeError",			"range error");
+const ErrorType ErrorType::SizeError			("SizeError",			"size error");
 const ErrorType ErrorType::StreamError			("StreamError",			"stream error");
 const ErrorType ErrorType::SuffixError			("SuffixError",			"suffix error");
 const ErrorType ErrorType::SymbolError			("SymbolError",			"symbol error");

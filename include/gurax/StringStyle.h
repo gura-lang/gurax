@@ -43,7 +43,9 @@ private:
 	static const char* _strsSemicolon[2];
 public:
 	static const StringStyle Empty;
-	static const StringStyle Bracket;
+	static const StringStyle BracketCram;
+	static const StringStyle Brief;
+	static const StringStyle BriefCram;
 	static const StringStyle Unbracket;
 	static const StringStyle QuoteString;
 	static const StringStyle QuoteSymbol;

@@ -40,6 +40,7 @@ public:
 	static const ErrorType PathError;
 	static const ErrorType PropertyError;
 	static const ErrorType RangeError;
+	static const ErrorType SizeError;
 	static const ErrorType StreamError;
 	static const ErrorType SuffixError;
 	static const ErrorType SymbolError;
