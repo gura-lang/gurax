@@ -71,6 +71,11 @@ public:
 		bool IsIdentical(const ElemTypeT& elemType) const { return this == &elemType; }
 		void* FwdPointer(void* pv, int n) const { return reinterpret_cast<char*>(pv) + n * bytes; }
 		const void* FwdPointer(const void* pv, int n) const { return FwdPointer(const_cast<void*>(pv), n); }
+		size_t FillZero(void* pv, int n) const {
+			size_t bytesToFill = n * bytes;
+			::memset(pv, 0x00, bytesToFill);
+			return bytesToFill;
+		}
 		const char* GetName() const { return pSymbol->GetName(); }
 	};
 	struct GURAX_DLLDECLARE ElemType {
