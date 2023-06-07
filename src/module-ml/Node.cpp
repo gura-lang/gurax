@@ -239,7 +239,7 @@ Value* Node_Input::DoGetProperty(const Symbol* pSymbol, const Attribute& attr) c
 
 String Node_Input::ToString(const StringStyle& ss) const
 {
-	return String().Format("%s:%s", GetTypeName().c_str(), GetArray().GetDimSizes().ToString(ss).c_str());
+	return String().Format("%s:%s", GetTypeName().c_str(), GetArray().GetDimSizes().ToString(ss, ss.GetComma()).c_str());
 }
 
 void Node_Input::Print(Stream& stream, int indentLevel) const
