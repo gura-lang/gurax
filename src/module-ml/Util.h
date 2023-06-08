@@ -6,6 +6,7 @@
 #include <gurax.h>
 
 Gurax_BeginModuleScope(ml)
+bool Img2dToCol(RefPtr<Array>& pArrayOut, const Array& arrayIn, size_t nRowsFilter, size_t nColsFilter, size_t strides, size_t padding);
 Gurax_EndModuleScope(ml)
 
 #endif

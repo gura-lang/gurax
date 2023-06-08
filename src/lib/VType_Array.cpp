@@ -233,13 +233,13 @@ Gurax_ImplementClassMethod(Array, Scalar)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// Array#ArgMax(axis? as Number, dims* as Number) {block?}
+// Array#ArgMax(axis? as Number, dims* as Number)
 Gurax_DeclareMethod(Array, ArgMax)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("axis", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("dims", VTYPE_Number, ArgOccur::ZeroOrMore, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
+	DeclareBlock(BlkOccur::Zero);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 
 )""");
@@ -258,13 +258,13 @@ Gurax_ImplementMethod(Array, ArgMax)
 	return array.ArgMax(axis, valuesDim);
 }
 
-// Array#ArgMin(axis? as Number, dims* as Number) {block?}
+// Array#ArgMin(axis? as Number, dims* as Number)
 Gurax_DeclareMethod(Array, ArgMin)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("axis", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("dims", VTYPE_Number, ArgOccur::ZeroOrMore, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
+	DeclareBlock(BlkOccur::Zero);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 
 )""");

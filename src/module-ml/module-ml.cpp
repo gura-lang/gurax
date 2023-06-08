@@ -52,6 +52,39 @@ Gurax_ImplementFunction(Xavier)
 	return new Value_Number(::sqrt(1 / n));
 }
 
+//-----------------------------------------------------------------------------
+// Implementation of method for Array
+//-----------------------------------------------------------------------------
+// Array#Img2dToCol(nRowsFilter as Number, nColsFilter as Number, strides? as Number, padding? as Number) {block?}
+Gurax_DeclareMethod(Array, Img2dToCol)
+{
+	Declare(VTYPE_List, Flag::None);
+	DeclareArg("nRowsFilter", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("nColsFilter", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("strides", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("padding", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
+}
+
+Gurax_ImplementMethod(Array, Img2dToCol)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	size_t nRowsFilter = args.PickNumberPos<size_t>();
+	size_t nColsFilter = args.PickNumberPos<size_t>();
+	size_t strides = args.IsValid()? args.PickNumberPos<size_t>() : 1;
+	size_t padding = args.IsValid()? args.PickNumberNonNeg<size_t>() : 0;
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	RefPtr<Array> pArrayOut;
+	Img2dToCol(pArrayOut, valueThis.GetArray(), nRowsFilter, nColsFilter, strides, padding);
+	return argument.ReturnValue(processor, new Value_Array(pArrayOut.release()));
+}
+
 //------------------------------------------------------------------------------
 // Entries
 //------------------------------------------------------------------------------
@@ -86,6 +119,8 @@ Gurax_ModulePrepare()
 	// Assignment of function
 	Assign(Gurax_CreateFunction(He));
 	Assign(Gurax_CreateFunction(Xavier));
+	// Assignment of method for Array
+	VTYPE_Array.Assign(Gurax_CreateMethod(Array, Img2dToCol));
 	return true;
 }
 
