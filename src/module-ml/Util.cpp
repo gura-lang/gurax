@@ -5,10 +5,14 @@
 
 Gurax_BeginModuleScope(ml)
 
-void ImageToColumn(RefPtr<Array> pArrayOut, const Array& arrayIn, size_t nRowsFilter, size_t nColsFilter, size_t strides, size_t padding)
+bool Img2dToCol(RefPtr<Array> pArrayOut, const Array& arrayIn, size_t nRowsFilter, size_t nColsFilter, size_t strides, size_t padding)
 {
 	const Array::ElemTypeT& elemType = arrayIn.GetElemType();
 	const DimSizes& dimSizesIn = arrayIn.GetDimSizes();
+	if (dimSizesIn.size() != 4) {
+		Error::Issue(ErrorType::SizeError, "the array must have four dimensions");
+		return false;
+	}
 	size_t nSamples = dimSizesIn[0];
 	size_t nChannels = dimSizesIn[1];
 	size_t nRowsIn = dimSizesIn[2];
@@ -22,6 +26,7 @@ void ImageToColumn(RefPtr<Array> pArrayOut, const Array& arrayIn, size_t nRowsFi
 	size_t bytesStridesRow = strides * bytesPerRow;
 	pArrayOut.reset(Array::Create2d(elemType, nSamples * nRowsOut * nColsOut, nChannels * nRowsFilter * nColsFilter));
 	UInt8* pElemOut = pArrayOut->GetPointerC<UInt8>();
+	size_t bytesPadding = padding * elemType.bytes;
 	size_t bytesToCopy = nColsFilter * elemType.bytes;
 	const UInt8* pElemSample = arrayIn.GetPointerC<UInt8>();
 	for (size_t iSample = 0; iSample < nSamples; iSample++, pElemSample += bytesPerSample) {
@@ -33,15 +38,15 @@ void ImageToColumn(RefPtr<Array> pArrayOut, const Array& arrayIn, size_t nRowsFi
 				for (size_t iChannel = 0; iChannel < nChannels; iChannel++, pElemChannel += bytesPerChannel) {
 					const UInt8* pElemIn = pElemChannel;
 					for (size_t iRowFilter = 0; iRowFilter < nRowsFilter; iRowFilter++, pElemIn += bytesPerRow) {
-						pElemOut += elemType.FillZero(pElemOut, padding);
+						pElemOut += bytesPadding;
 						::memcpy(pElemOut, pElemIn, bytesToCopy);
-						pElemOut += bytesToCopy;
-						pElemOut += elemType.FillZero(pElemOut, padding);
+						pElemOut += bytesToCopy + bytesPadding;
 					}
 				}
 			}
 		}
 	}
+	return true;
 }
 
 Gurax_EndModuleScope(ml)

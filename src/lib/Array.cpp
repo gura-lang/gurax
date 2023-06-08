@@ -419,7 +419,7 @@ template<typename T_ElemDst, typename T_ElemSrc> void CopyElems_T(void* pvDst, c
 	}
 }
 
-template<typename T_ElemDst, typename T_ElemSrc> void Transpose_T(void* pvDst, size_t nRows, size_t nCols, const void* pvSrc)
+template<typename T_ElemDst, typename T_ElemSrc> void Transpose2d_T(void* pvDst, const void* pvSrc, size_t nRows, size_t nCols)
 {
 	T_ElemDst* pDst = reinterpret_cast<T_ElemDst*>(pvDst);
 	const T_ElemSrc* pSrcSave = reinterpret_cast<const T_ElemSrc*>(pvSrc);
@@ -427,6 +427,22 @@ template<typename T_ElemDst, typename T_ElemSrc> void Transpose_T(void* pvDst, s
 		const T_ElemSrc* pSrc = pSrcSave;
 		for (size_t iCol = 0; iCol < nCols; iCol++, pDst++, pSrc += nRows) {
 			*pDst = static_cast<T_ElemDst>(*pSrc);
+		}
+	}
+}
+
+template<typename T_ElemDst, typename T_ElemSrc> void TransposeMulti_T(void** ppvDst, const void* pvSrc,
+		const DimSizes& dimSizesSrc, NumList<size_t>::const_iterator pAxis, NumList<size_t>::const_iterator pAxisEnd)
+{
+	T_ElemDst*& pDst = *reinterpret_cast<T_ElemDst**>(ppvDst);
+	const T_ElemSrc* pSrc = reinterpret_cast<const T_ElemSrc*>(pvSrc);
+	const size_t dimSizeSrc = dimSizesSrc[*pAxis];
+	size_t stridesSrc = dimSizesSrc.CalcStrides(*pAxis);
+	if (pAxis + 1 == pAxisEnd) {
+		for (size_t i = 0; i < dimSizeSrc; i++, pSrc += stridesSrc, pDst++) *pDst = static_cast<T_ElemDst>(*pSrc);
+	} else {
+		for (size_t i = 0; i < dimSizeSrc; i++, pSrc += stridesSrc) {
+			TransposeMulti_T<T_ElemDst, T_ElemSrc>(reinterpret_cast<void **>(&pDst), reinterpret_cast<const void *>(pSrc), dimSizesSrc, pAxis + 1, pAxisEnd);
 		}
 	}
 }
@@ -1277,7 +1293,8 @@ void Array::Bootup()
 	Gurax_SetArrayFuncSingle(funcs.ExtractElems,		ExtractElems_T);
 	Gurax_SetArrayFuncSingle(funcs.ToString,			ToString_T);
 	Gurax_SetArrayFuncDouble(funcs.CopyElems,			CopyElems_T);
-	Gurax_SetArrayFuncDouble(funcs.Transpose,			Transpose_T);
+	Gurax_SetArrayFuncDouble(funcs.Transpose2d,			Transpose2d_T);
+	Gurax_SetArrayFuncDouble(funcs.TransposeMulti,		TransposeMulti_T);
 	Gurax_SetArrayFuncSingle(funcs.Neg_Array,			Neg_Array_T);
 	Gurax_SetArrayFuncArithm(funcs.Add_ArrayArray,		Add_ArrayArray_T);
 	Gurax_SetArrayFuncSingle(funcs.Add_ArrayNumber,		Add_ArrayNumber_T);
@@ -1449,7 +1466,7 @@ void Array::ToString(const StringStyle& ss, String& str) const
 	}
 }
 
-bool Array::Transpose(RefPtr<Array>& pArrayRtn) const
+bool Array::Transpose2d(RefPtr<Array>& pArrayRtn) const
 {
 	const DimSizes& dimSizes = GetDimSizes();
 	if (dimSizes.size() < 2) {
@@ -1468,15 +1485,33 @@ bool Array::Transpose(RefPtr<Array>& pArrayRtn) const
 	size_t lenFwd = nRows * nCols;
 	dimSizesRtn.push_back(nRows);
 	dimSizesRtn.push_back(nCols);
-	pArrayRtn.reset(Create(GetElemType(), dimSizesRtn));	
-	auto func = funcs.Transpose[GetElemType().id][GetElemType().id];
+	pArrayRtn.reset(Create(GetElemType(), dimSizesRtn));
+	auto func = funcs.Transpose2d[GetElemType().id][GetElemType().id];
 	void* pvDst = pArrayRtn->GetPointerC<void>();
 	const void* pvSrc = GetPointerC<void>();
 	for (size_t iUnit = 0; iUnit < nUnits; iUnit++) {
-		func(pvDst, nRows, nCols, pvSrc);
+		func(pvDst, pvSrc, nRows, nCols);
 		pvDst = pArrayRtn->FwdPointer(pvDst, lenFwd);
 		pvSrc = FwdPointer(pvSrc, lenFwd);
 	}
+	return true;
+}
+
+bool Array::TransposeMulti(RefPtr<Array>& pArrayRtn, const NumList<size_t>& axes) const
+{
+	DimSizes dimSizesRtn;
+	for (size_t axis : axes) {
+		if (axis >= _dimSizes.size()) {
+			Error::Issue(ErrorType::RangeError, "specified axis is out of range");
+			return false;
+		}
+		dimSizesRtn.push_back(_dimSizes[axis]);
+	}
+	pArrayRtn.reset(Create(GetElemType(), dimSizesRtn));
+	auto func = funcs.TransposeMulti[GetElemType().id][GetElemType().id];
+	void* pvDst = pArrayRtn->GetPointerC<void>();
+	const void* pvSrc = GetPointerC<void>();
+	func(&pvDst, pvSrc, _dimSizes, axes.begin(), axes.end());
 	return true;
 }
 

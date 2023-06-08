@@ -447,13 +447,13 @@ Gurax_ImplementMethod(Array, ToString)
 	return new Value_String(str);
 }
 
-// Array#Transpose() {block?}
+// Array#Transpose(axes* as Number) {block?}
 Gurax_DeclareMethod(Array, Transpose)
 {
 	Declare(VTYPE_Array, Flag::None);
+	DeclareArg("axes", VTYPE_Number, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
-
 )""");
 }
 
@@ -461,11 +461,22 @@ Gurax_ImplementMethod(Array, Transpose)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const NumList<size_t> axes = args.PickNumList<size_t>();
 	// Function body
 	Array& array = valueThis.GetArray();
-	RefPtr<Array> pArray;
-	if (!array.Transpose(pArray)) return Value::nil(); 
-	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
+	RefPtr<Array> pArrayRtn;
+	if (axes.empty()) {
+		if (!array.Transpose2d(pArrayRtn)) return Value::nil(); 
+	} else {
+		if (array.GetDimSizes().size() != axes.size()) {
+			Error::Issue(ErrorType::SizeError, "invalid number of axes");
+			return Value::nil();
+		}
+		if (!array.TransposeMulti(pArrayRtn, axes)) return Value::nil();
+	}
+	return argument.ReturnValue(processor, new Value_Array(pArrayRtn.release()));
 }
 
 // Array#VerifyShape(dim+ as Number)

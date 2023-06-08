@@ -124,7 +124,9 @@ public:
 		std::function<void (ValueOwner& values, const void* pv, size_t offset, size_t len)> ExtractElems[ElemTypeIdMax];
 		std::function<void (const StringStyle& ss, String& str, const void* pv, size_t offset, size_t len)> ToString[ElemTypeIdMax];
 		std::function<void (void* pvDst, const void* pvSrc, size_t offset, size_t len)> 	CopyElems[ElemTypeIdMax][ElemTypeIdMax];
-		std::function<void (void* pvDst, size_t nRows, size_t nCols, const void* pvSrc)>	Transpose[ElemTypeIdMax][ElemTypeIdMax];
+		std::function<void (void* pvDst, const void* pvSrc, size_t nRows, size_t nCols)>	Transpose2d[ElemTypeIdMax][ElemTypeIdMax];
+		std::function<void (void** ppvDst, const void* pvSrc, const DimSizes& dimSizesSrc,
+			NumList<size_t>::const_iterator pAxis, NumList<size_t>::const_iterator pAxisEnd)> TransposeMulti[ElemTypeIdMax][ElemTypeIdMax];
 		std::function<void (void* pvDst, const void* pvSrc, size_t len)> 					Neg_Array[ElemTypeIdMax];
 		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Add_ArrayArray[ElemTypeIdMax][ElemTypeIdMax];
 		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Add_ArrayNumber[ElemTypeIdMax];
@@ -247,7 +249,8 @@ public:
 	void ToStringSub(const StringStyle& ss, String& str, size_t& offset, DimSizes::const_iterator pDimSize) const;
 	void ToString(const StringStyle& ss, String& str) const;
 public:
-	bool Transpose(RefPtr<Array>& pArrayRtn) const;
+	bool Transpose2d(RefPtr<Array>& pArrayRtn) const;
+	bool TransposeMulti(RefPtr<Array>& pArrayRtn, const NumList<size_t>& axes) const;
 public:
 	static bool GenericUnaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Array& array,
 		const std::function<void (void* pvRtn, const void* pv, size_t len)>& func);
