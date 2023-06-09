@@ -41,6 +41,33 @@ String Iterator_ConstN::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
+// Iterator_Concat
+//------------------------------------------------------------------------------
+Iterator::Flags Iterator_Concat::GetFlags() const
+{
+	return _pIteratorFirst->GetFlags() & _pIteratorSecond->GetFlags() & (Flag::Finite | Flag::LenDetermined);
+}
+
+size_t Iterator_Concat::GetLength() const
+{
+	return (_pIteratorFirst->IsLenDetermined() && _pIteratorSecond->IsLenDetermined())?
+		_pIteratorFirst->GetLength() + _pIteratorSecond->GetLength() : -1;
+}
+
+Value* Iterator_Concat:: DoNextValue()
+{
+	RefPtr<Value> pValue(_pIteratorFirst->DoNextValue());
+	if (pValue) return pValue.release();
+	return _pIteratorSecond->DoNextValue();
+}
+
+String Iterator_Concat::ToString(const StringStyle& ss) const
+{
+	return String().Format("Concat:(%s)%s(%s)", _pIteratorFirst->ToString(ss).c_str(),
+			ss.IsCram()? "|+|" : " |+| ", _pIteratorSecond->ToString(ss).c_str());
+}
+
+//------------------------------------------------------------------------------
 // Iterator_Counter
 //------------------------------------------------------------------------------
 Value* Iterator_Counter::DoNextValue()

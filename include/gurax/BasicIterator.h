@@ -66,6 +66,24 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// Iterator_Concat
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_Concat : public Iterator {
+private:
+	RefPtr<Iterator> _pIteratorFirst;
+	RefPtr<Iterator> _pIteratorSecond;
+public:
+	Iterator_Concat(Iterator* pIteratorFirst, Iterator* pIteratorSecond) :
+					_pIteratorFirst(pIteratorFirst), _pIteratorSecond(pIteratorSecond) {}
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override;
+	virtual size_t GetLength() const override;
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
 // Iterator_Counter
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Iterator_Counter : public Iterator {
@@ -301,7 +319,7 @@ private:
 	bool _contFlag;
 public:
 	Iterator_for(Processor* pProcessor, Expr_Block* pExprOfBlock, DeclArgOwner* pDeclArgOwner,
-				 IteratorOwner* pIteratorOwner, bool skipNilFlag) :
+				IteratorOwner* pIteratorOwner, bool skipNilFlag) :
 		_pProcessor(pProcessor), _pFrame(pProcessor->CreateFrame<Frame_Scope>()),
 		_pExprOfBlock(pExprOfBlock), _pArgument(Argument::CreateForBlockCall(*pProcessor, *pExprOfBlock)),
 		_pDeclArgOwner(pDeclArgOwner), _pIteratorOwner(pIteratorOwner),
@@ -702,7 +720,7 @@ private:
 	bool _doneFlag;
 public:
 	Iterator_Fold(Iterator* pIteratorSrc, size_t nSize, size_t nAdvance,
-				  bool itemAsIterFlag, bool neatFlag);
+				bool itemAsIterFlag, bool neatFlag);
 public:
 	Iterator& GetIteratorSrc() { return *_pIteratorSrc; }
 	const Iterator& GetIteratorSrc() const { return *_pIteratorSrc; }

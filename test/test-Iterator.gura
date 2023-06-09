@@ -21,6 +21,19 @@ TestCase('PUnit') {
 	exprs::PrintPUnitWithLabel()
 }
 
+TestCase('Concatenation') {
+	Tester(`(Range(6) |+| Range(4)).Join(', '))
+	Tester(`(Range(6) |+| Range(4) |+| Range(7)).Join(', '))
+	x = Range(6) |+| Range(4)
+	Tester(`x)
+	Tester(`x.IsFinite())
+	Tester(`x.len)
+	x = Range(6) |+| (0..)
+	Tester(`x)
+	Tester(`x.IsFinite())
+	Tester(`x.len)
+}
+
 TestCase('Iterator#tuple') {
 	Tester(`Range(10).tuple)
 }

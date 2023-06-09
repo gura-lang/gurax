@@ -26,7 +26,6 @@ bool Img2dToCol(RefPtr<Array>& pArrayOut, const Array& arrayIn, size_t nRowsFilt
 	size_t bytesStridesRow = strides * bytesPerRow;
 	pArrayOut.reset(Array::Create2d(elemType, nSamples * nRowsOut * nColsOut, nChannels * nRowsFilter * nColsFilter));
 	UInt8* pElemOut = pArrayOut->GetPointerC<UInt8>();
-	size_t bytesPadding = padding * elemType.bytes;
 	size_t bytesToCopy = nColsFilter * elemType.bytes;
 	const UInt8* pElemSample = arrayIn.GetPointerC<UInt8>();
 	for (size_t iSample = 0; iSample < nSamples; iSample++, pElemSample += bytesPerSample) {
@@ -38,9 +37,7 @@ bool Img2dToCol(RefPtr<Array>& pArrayOut, const Array& arrayIn, size_t nRowsFilt
 				for (size_t iChannel = 0; iChannel < nChannels; iChannel++, pElemChannel += bytesPerChannel) {
 					const UInt8* pElemIn = pElemChannel;
 					for (size_t iRowFilter = 0; iRowFilter < nRowsFilter; iRowFilter++, pElemIn += bytesPerRow) {
-						pElemOut += bytesPadding;
 						::memcpy(pElemOut, pElemIn, bytesToCopy);
-						pElemOut += bytesToCopy + bytesPadding;
 					}
 				}
 			}

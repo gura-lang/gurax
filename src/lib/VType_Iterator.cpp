@@ -350,8 +350,7 @@ Value* VType_Iterator::Method_Combination(
 		Error::Issue(ErrorType::RangeError, "range over");
 		return Value::nil();
 	}
-	RefPtr<Iterator> pIterator(new Iterator_Combination(
-								   valueTypedOwner.GetValueOwnerReference(), n));
+	RefPtr<Iterator> pIterator(new Iterator_Combination(valueTypedOwner.GetValueOwnerReference(), n));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
@@ -1584,6 +1583,25 @@ Value* VType_Iterator::Method_While(Processor& processor, Argument& argument, It
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
+// #len
+Gurax_DeclareProperty_R(Iterator, len)
+{
+	Declare(VTYPE_Number, Flag::Nil);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+The number of elements in the iterator.
+)""");
+	AddHelp(Gurax_Symbol(ja), u8R"""(
+イテレータ中の要素数。
+)""");
+}
+
+Gurax_ImplementPropertyGetter(Iterator, len)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const Iterator& iterator = valueThis.GetIterator();
+	return iterator.IsLenDetermined()? new Value_Number(iterator.GetLength()) : Value::nil();
+}
+
 // Iterator#tuple
 Gurax_DeclareProperty_R(Iterator, tuple)
 {
@@ -1600,6 +1618,17 @@ Gurax_ImplementPropertyGetter(Iterator, tuple)
 	RefPtr<ValueOwner> pValueOwner(ValueOwner::CreateFromIterator(iterator, false));
 	if (Error::IsIssued()) return Value::nil();
 	return new Value_Tuple(pValueOwner.release());
+}
+
+//------------------------------------------------------------------------------
+// Implementation of operator
+//------------------------------------------------------------------------------
+// Iterator |+| Iterator
+Gurax_ImplementOpBinary(Concat, Iterator, Iterator)
+{
+	Iterator& iteratorL = Value_Iterator::GetIterator(valueL);
+	Iterator& iteratorR = Value_Iterator::GetIterator(valueR);
+	return new Value_Iterator(new Iterator_Concat(iteratorL.Reference(), iteratorR.Reference()));
 }
 
 //------------------------------------------------------------------------------
@@ -1668,7 +1697,10 @@ void VType_Iterator::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Iterator, Var));
 	Assign(Gurax_CreateMethod(Iterator, While));
 	// Assignment of property
+	Assign(Gurax_CreateProperty(Iterator, len));
 	Assign(Gurax_CreateProperty(Iterator, tuple));
+	// Assignment of operator
+	Gurax_AssignOpBinary(Concat, Iterator, Iterator);
 }
 
 Value* VType_Iterator::DoCastFrom(const Value& value, DeclArg::Flags flags) const
