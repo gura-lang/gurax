@@ -13,35 +13,69 @@ bool Img2dToCol(RefPtr<Array>& pArrayOut, const Array& arrayIn, size_t nRowsFilt
 		Error::Issue(ErrorType::SizeError, "the array must have four dimensions");
 		return false;
 	}
+	size_t stridesRow = strides, stridesCol = strides;
+	size_t paddingRow = padding, paddingCol = padding;
 	size_t nSamples = dimSizesIn[0];
 	size_t nChannels = dimSizesIn[1];
 	size_t nRowsIn = dimSizesIn[2];
 	size_t nColsIn = dimSizesIn[3];
-	size_t nRowsOut = (nRowsIn + 2 * padding - nRowsFilter) / strides + 1;
-	size_t nColsOut = (nColsIn + 2 * padding - nColsFilter) / strides + 1;
+	size_t nRowsOut = (nRowsIn + 2 * paddingRow - nRowsFilter) / stridesRow + 1;
+	size_t nColsOut = (nColsIn + 2 * paddingCol - nColsFilter) / stridesCol + 1;
 	size_t bytesPerRow = nColsIn * elemType.bytes;
 	size_t bytesPerChannel = bytesPerRow * nRowsIn;
 	size_t bytesPerSample = bytesPerChannel * nChannels;
-	size_t bytesStridesCol = strides * elemType.bytes;
-	size_t bytesStridesRow = strides * bytesPerRow;
+	size_t bytesStridesCol = stridesCol * elemType.bytes;
+	size_t bytesStridesRow = stridesRow * bytesPerRow;
 	pArrayOut.reset(Array::Create2d(elemType, nSamples * nRowsOut * nColsOut, nChannels * nRowsFilter * nColsFilter));
 	UInt8* pElemOut = pArrayOut->GetPointerC<UInt8>();
-	size_t bytesToCopy = nColsFilter * elemType.bytes;
+	size_t bytesFilterCol = nColsFilter * elemType.bytes;
 	const UInt8* pElemSample = arrayIn.GetPointerC<UInt8>();
 	for (size_t iSample = 0; iSample < nSamples; iSample++, pElemSample += bytesPerSample) {
 		const UInt8* pElemKernelRow = pElemSample;
-		for (size_t iRowOut = 0; iRowOut < nRowsOut; iRowOut++, pElemKernelRow += bytesStridesRow) {
-			const UInt8* pElemKernelCol = pElemKernelRow;
-			for (size_t iColOut = 0; iColOut < nColsOut; iColOut++, pElemKernelCol += bytesStridesCol) {
-				const UInt8* pElemChannel = pElemKernelCol;
-				for (size_t iChannel = 0; iChannel < nChannels; iChannel++, pElemChannel += bytesPerChannel) {
-					const UInt8* pElemIn = pElemChannel;
-					for (size_t iRowFilter = 0; iRowFilter < nRowsFilter; iRowFilter++, pElemIn += bytesPerRow) {
-						::memcpy(pElemOut, pElemIn, bytesToCopy);
+		for (size_t iRowIn = 0, iRowOut = 0; iRowOut < nRowsOut; iRowIn += stridesRow, iRowOut++, pElemKernelRow += bytesStridesRow) {
+			if (iRowIn < paddingRow) {
+			} else if (iRowIn < paddingRow + nRowsIn) {
+				const UInt8* pElemKernelCol = pElemKernelRow;
+				for (size_t iColIn = 0, iColOut = 0; iColOut < nColsOut; iColIn += stridesCol, iColOut++) {
+					if (iColIn < paddingCol) {
+						size_t nColsSkip = paddingCol - iColIn;
+						if (nColsFilter > nColsSkip) {
+							size_t bytesToSkip = nColsSkip * elemType.bytes;
+							size_t bytesFilterColPart = bytesFilterCol - bytesToSkip;
+							const UInt8* pElemChannel = pElemKernelCol;
+							for (size_t iChannel = 0; iChannel < nChannels; iChannel++, pElemChannel += bytesPerChannel) {
+								const UInt8* pElemIn = pElemChannel;
+								for (size_t iRowFilter = 0; iRowFilter < nRowsFilter; iRowFilter++, pElemIn += bytesPerRow) {
+									pElemOut += bytesToSkip;
+									::memcpy(pElemOut, pElemIn, bytesFilterColPart);
+									pElemOut += bytesFilterColPart;
+								}
+							}
+						} else {
+							pElemOut += bytesFilterCol;
+						}
+						if (iColIn + stridesCol > paddingCol) {
+							pElemKernelCol = pElemKernelRow + (iColIn + stridesCol - paddingCol) * elemType.bytes;
+						}
+					} else if (iColIn + nColsFilter <= paddingCol + nColsIn) {
+						const UInt8* pElemChannel = pElemKernelCol;
+						for (size_t iChannel = 0; iChannel < nChannels; iChannel++, pElemChannel += bytesPerChannel) {
+							const UInt8* pElemIn = pElemChannel;
+							for (size_t iRowFilter = 0; iRowFilter < nRowsFilter; iRowFilter++, pElemIn += bytesPerRow) {
+								::memcpy(pElemOut, pElemIn, bytesFilterCol);
+								pElemOut += bytesFilterCol;
+							}
+						}
+						pElemKernelCol += bytesStridesCol;
+					} else { // iColIn + nColsFilter > paddingCol + nColsIn
+						//size_t nColsFilterPart = 
 					}
 				}
+			} else {
+
 			}
 		}
+
 	}
 	return true;
 }
