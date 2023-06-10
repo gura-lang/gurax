@@ -34,30 +34,26 @@ bool Img2dToCol(RefPtr<Array>& pArrayOut, const Array& arrayIn, size_t nRowsFilt
 		const UInt8* pElemKernelRow = pElemSample;
 		for (size_t iRowIn = 0, iRowOut = 0; iRowOut < nRowsOut; iRowIn += stridesRow, iRowOut++, pElemKernelRow += bytesStridesRow) {
 			if (iRowIn < paddingRow) {
+				
 			} else if (iRowIn < paddingRow + nRowsIn) {
 				const UInt8* pElemKernelCol = pElemKernelRow;
 				for (size_t iColIn = 0, iColOut = 0; iColOut < nColsOut; iColIn += stridesCol, iColOut++) {
-					if (iColIn < paddingCol) {
-						size_t nColsSkip = paddingCol - iColIn;
-						if (nColsFilter > nColsSkip) {
-							size_t bytesToSkip = nColsSkip * elemType.bytes;
-							size_t bytesFilterColPart = bytesFilterCol - bytesToSkip;
-							const UInt8* pElemChannel = pElemKernelCol;
-							for (size_t iChannel = 0; iChannel < nChannels; iChannel++, pElemChannel += bytesPerChannel) {
-								const UInt8* pElemIn = pElemChannel;
-								for (size_t iRowFilter = 0; iRowFilter < nRowsFilter; iRowFilter++, pElemIn += bytesPerRow) {
-									pElemOut += bytesToSkip;
-									::memcpy(pElemOut, pElemIn, bytesFilterColPart);
-									pElemOut += bytesFilterColPart;
-								}
+					size_t iColInFilterRight = iColIn + nColsFilter;
+					if (iColInFilterRight <= paddingCol) {
+						pElemOut += bytesFilterCol * nRowsFilter * nChannels;
+					} else if (iColIn < paddingCol) {
+						size_t bytesToSkip = (paddingCol - iColIn) * elemType.bytes;
+						size_t bytesFilterColPart = bytesFilterCol - bytesToSkip;
+						const UInt8* pElemChannel = pElemKernelCol;
+						for (size_t iChannel = 0; iChannel < nChannels; iChannel++, pElemChannel += bytesPerChannel) {
+							const UInt8* pElemIn = pElemChannel;
+							for (size_t iRowFilter = 0; iRowFilter < nRowsFilter; iRowFilter++, pElemIn += bytesPerRow) {
+								pElemOut += bytesToSkip;
+								::memcpy(pElemOut, pElemIn, bytesFilterColPart);
+								pElemOut += bytesFilterColPart;
 							}
-						} else {
-							pElemOut += bytesFilterCol;
 						}
-						if (iColIn + stridesCol > paddingCol) {
-							pElemKernelCol = pElemKernelRow + (iColIn + stridesCol - paddingCol) * elemType.bytes;
-						}
-					} else if (iColIn + nColsFilter <= paddingCol + nColsIn) {
+					} else if (iColInFilterRight <= paddingCol + nColsIn) {
 						const UInt8* pElemChannel = pElemKernelCol;
 						for (size_t iChannel = 0; iChannel < nChannels; iChannel++, pElemChannel += bytesPerChannel) {
 							const UInt8* pElemIn = pElemChannel;
@@ -67,8 +63,20 @@ bool Img2dToCol(RefPtr<Array>& pArrayOut, const Array& arrayIn, size_t nRowsFilt
 							}
 						}
 						pElemKernelCol += bytesStridesCol;
-					} else { // iColIn + nColsFilter > paddingCol + nColsIn
-						//size_t nColsFilterPart = 
+					} else if (iColIn < paddingCol + nColsIn) {
+						size_t bytesFilterColPart = (paddingCol + nColsIn - iColIn) * elemType.bytes;
+						size_t bytesToSkip = bytesFilterCol - bytesFilterColPart;
+						const UInt8* pElemChannel = pElemKernelCol;
+						for (size_t iChannel = 0; iChannel < nChannels; iChannel++, pElemChannel += bytesPerChannel) {
+							const UInt8* pElemIn = pElemChannel;
+							for (size_t iRowFilter = 0; iRowFilter < nRowsFilter; iRowFilter++, pElemIn += bytesPerRow) {
+								::memcpy(pElemOut, pElemIn, bytesFilterColPart);
+								pElemOut += bytesFilterColPart;
+								pElemOut += bytesToSkip;
+							}
+						}
+					} else {
+						pElemOut += bytesFilterCol * nRowsFilter * nChannels;
 					}
 				}
 			} else {
