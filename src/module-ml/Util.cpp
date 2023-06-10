@@ -5,7 +5,7 @@
 
 Gurax_BeginModuleScope(ml)
 
-bool Img2dToCol(RefPtr<Array>& pArrayOut, const Array& arrayIn, size_t nRowsFilter, size_t nColsFilter, size_t strides, size_t padding)
+bool Img2dToCol(RefPtr<Array>& pArrayOut, const Array& arrayIn, size_t nRowsFilter, size_t nColsFilter, size_t stridesRow, size_t stridesCol, size_t paddingRow, size_t paddingCol)
 {
 	const Array::ElemTypeT& elemType = arrayIn.GetElemType();
 	const DimSizes& dimSizesIn = arrayIn.GetDimSizes();
@@ -13,8 +13,6 @@ bool Img2dToCol(RefPtr<Array>& pArrayOut, const Array& arrayIn, size_t nRowsFilt
 		Error::Issue(ErrorType::SizeError, "the array must have four dimensions");
 		return false;
 	}
-	size_t stridesRow = strides, stridesCol = strides;
-	size_t paddingRow = padding, paddingCol = padding;
 	size_t nSamples = dimSizesIn[0];
 	size_t nChannels = dimSizesIn[1];
 	size_t nRowsIn = dimSizesIn[2];
@@ -75,6 +73,7 @@ bool Img2dToCol(RefPtr<Array>& pArrayOut, const Array& arrayIn, size_t nRowsFilt
 								pElemOut += bytesToSkip;
 							}
 						}
+						pElemKernelCol += bytesStridesCol;
 					} else {
 						pElemOut += bytesFilterCol * nRowsFilter * nChannels;
 					}

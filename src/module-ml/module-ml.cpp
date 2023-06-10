@@ -81,7 +81,7 @@ Gurax_ImplementMethod(Array, Img2dToCol)
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	RefPtr<Array> pArrayOut;
-	if (!Img2dToCol(pArrayOut, valueThis.GetArray(), nRowsFilter, nColsFilter, strides, padding)) return Value::nil();
+	if (!Img2dToCol(pArrayOut, valueThis.GetArray(), nRowsFilter, nColsFilter, strides, strides, 0, padding)) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Array(pArrayOut.release()));
 }
 
