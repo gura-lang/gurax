@@ -5,6 +5,15 @@
 
 Gurax_BeginModuleScope(ml)
 
+void PrintCol(const void* pv, size_t bytes)
+{
+	const Float* p = reinterpret_cast<const Float*>(pv);
+	for (size_t i = 0; i < bytes / sizeof(Float); i++, p++) {
+		::printf("  %g", *p);
+	}
+	::printf("\n");
+}
+
 bool Img2dToCol(RefPtr<Array>& pArrayOut, const Array& arrayIn, size_t nRowsFilter, size_t nColsFilter, size_t stridesRow, size_t stridesCol, size_t paddingRow, size_t paddingCol)
 {
 	const Array::ElemTypeT& elemType = arrayIn.GetElemType();
@@ -36,14 +45,16 @@ bool Img2dToCol(RefPtr<Array>& pArrayOut, const Array& arrayIn, size_t nRowsFilt
 			size_t bytesSkipRowPre = 0;
 			size_t bytesSkipRowPost = 0;
 			size_t nRowsFilterPart = 0;
-			const UInt8* pElemKernelCol = pElemKernelRow;
+			const UInt8* pElemKernelColBase = pElemKernelRow;
 			if (iRowIn + nRowsFilter < paddingRow) {
 				// nothing to do
 			} else if (iRowIn < paddingRow) {
 				size_t nRowsSkipPre = paddingRow - iRowIn;
 				bytesSkipRowPre = bytesFilterCol * nRowsSkipPre;
 				nRowsFilterPart = nRowsFilter - nRowsSkipPre;
-				pElemKernelRow = pElemSample + (iRowIn + stridesRow - paddingRow) * bytesPerRow;
+				if (iRowIn + stridesRow >= paddingRow) {
+					pElemKernelRow = pElemSample + (iRowIn + stridesRow - paddingRow) * bytesPerRow;
+				}
 			} else if (iRowIn + nRowsFilter <= paddingRow + nRowsIn) {
 				nRowsFilterPart = nRowsFilter;
 				pElemKernelRow += bytesStridesRow;
@@ -58,6 +69,7 @@ bool Img2dToCol(RefPtr<Array>& pArrayOut, const Array& arrayIn, size_t nRowsFilt
 			do {
 				size_t iColIn = 0, iColOut = 0;
 				size_t bytesFilterColRowChannel = bytesFilterCol * nRowsFilterPart * nChannels;
+				const UInt8* pElemKernelCol = pElemKernelColBase;
 				if (nColsFilter < paddingCol) {
 					size_t n = paddingCol - nColsFilter;
 					iColIn += stridesCol * n;
@@ -79,6 +91,7 @@ bool Img2dToCol(RefPtr<Array>& pArrayOut, const Array& arrayIn, size_t nRowsFilt
 						pElemOut += bytesSkipRowPost;
 					}
 				}
+				pElemKernelCol = pElemKernelColBase + (iColIn - paddingCol) * bytesPerCol;
 				for ( ; iColOut < nColsOut && iColIn + nColsFilter <= paddingCol + nColsIn; iColIn += stridesCol, iColOut++) {
 					const UInt8* pElemChannel = pElemKernelCol;
 					for (size_t iChannel = 0; iChannel < nChannels; iChannel++, pElemChannel += bytesPerChannel) {
