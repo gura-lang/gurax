@@ -32,24 +32,30 @@ bool Img2dToCol(RefPtr<Array>& pArrayOut, const Array& arrayIn, size_t nRowsFilt
 	for (size_t iSample = 0; iSample < nSamples; iSample++, pElemSample += bytesPerSample) {
 		const UInt8* pElemKernelRow = pElemSample;
 		size_t iRowIn = 0, iRowOut = 0;
-		for ( ; iRowOut < nRowsOut; iRowIn += stridesRow, iRowOut++, pElemKernelRow += bytesStridesRow) {
-			size_t nRowsFilterPart = nRowsFilter;
+		for ( ; iRowOut < nRowsOut; iRowIn += stridesRow, iRowOut++) {
+			size_t bytesSkipRowPre = 0;
+			size_t bytesSkipRowPost = 0;
+			size_t nRowsFilterPart = 0;
+			const UInt8* pElemKernelCol = pElemKernelRow;
 			if (iRowIn + nRowsFilter < paddingRow) {
-				//size_t nRowsSkip = paddingRow - (iRowIn + nRowsFilter);
-				
-			} else if (iRowIn < paddingRow) {
-				size_t nRowsSkip = paddingRow - iRowIn;
-				size_t bytesToSkip = nRowsSkip * bytesPerRow;
-				pElemOut += bytesToSkip;
-				nRowsFilterPart = nRowsFilter - nRowsSkip;
-			} else if (iRowIn + nRowsFilter <= paddingRow + nRowsIn) {
 				// nothing to do
+			} else if (iRowIn < paddingRow) {
+				size_t nRowsSkipPre = paddingRow - iRowIn;
+				bytesSkipRowPre = bytesFilterCol * nRowsSkipPre;
+				nRowsFilterPart = nRowsFilter - nRowsSkipPre;
+			} else if (iRowIn + nRowsFilter <= paddingRow + nRowsIn) {
+				pElemKernelRow += bytesStridesRow;
+				nRowsFilterPart = nRowsFilter;
 			} else if (iRowIn < paddingRow + nRowsIn) {
 				nRowsFilterPart = paddingRow + nRowsIn - iRowIn;
+				size_t nRowsSkipPost = nRowsFilter - nRowsFilterPart;
+				bytesSkipRowPost = bytesFilterCol * nRowsSkipPost;
+				pElemKernelRow += bytesStridesRow;
+			} else {
+				// nothing to do
 			}
 			do {
 				size_t iColIn = 0, iColOut = 0;
-				const UInt8* pElemKernelCol = pElemKernelRow;
 				size_t bytesFilterColRowChannel = bytesFilterCol * nRowsFilterPart * nChannels;
 				if (nColsFilter < paddingCol) {
 					size_t n = paddingCol - nColsFilter;
@@ -58,40 +64,46 @@ bool Img2dToCol(RefPtr<Array>& pArrayOut, const Array& arrayIn, size_t nRowsFilt
 					pElemOut += bytesFilterColRowChannel * n;
 				}
 				for ( ; iColOut < nColsOut && iColIn < paddingCol; iColIn += stridesCol, iColOut++) {
-					size_t bytesToSkip = (paddingCol - iColIn) * bytesPerCol;
-					size_t bytesFilterColPart = bytesFilterCol - bytesToSkip;
+					size_t bytesSkipColPre = (paddingCol - iColIn) * bytesPerCol;
+					size_t bytesFilterColPart = bytesFilterCol - bytesSkipColPre;
 					const UInt8* pElemChannel = pElemKernelCol;
 					for (size_t iChannel = 0; iChannel < nChannels; iChannel++, pElemChannel += bytesPerChannel) {
 						const UInt8* pElemIn = pElemChannel;
-						for (size_t iRowFilter = 0; iRowFilter < nRowsFilterPart; iRowFilter++, pElemIn += bytesPerRow) {
-							pElemOut += bytesToSkip;
+						pElemOut += bytesSkipRowPre;
+						for (size_t n = 0; n < nRowsFilterPart; n++, pElemIn += bytesPerRow) {
+							pElemOut += bytesSkipColPre;
 							::memcpy(pElemOut, pElemIn, bytesFilterColPart);
 							pElemOut += bytesFilterColPart;
 						}
+						pElemOut += bytesSkipRowPost;
 					}
 				}
 				for ( ; iColOut < nColsOut && iColIn + nColsFilter <= paddingCol + nColsIn; iColIn += stridesCol, iColOut++) {
 					const UInt8* pElemChannel = pElemKernelCol;
 					for (size_t iChannel = 0; iChannel < nChannels; iChannel++, pElemChannel += bytesPerChannel) {
 						const UInt8* pElemIn = pElemChannel;
-						for (size_t iRowFilter = 0; iRowFilter < nRowsFilterPart; iRowFilter++, pElemIn += bytesPerRow) {
+						pElemOut += bytesSkipRowPre;
+						for (size_t n = 0; n < nRowsFilterPart; n++, pElemIn += bytesPerRow) {
 							::memcpy(pElemOut, pElemIn, bytesFilterCol);
 							pElemOut += bytesFilterCol;
 						}
+						pElemOut += bytesSkipRowPost;
 					}
 					pElemKernelCol += bytesStridesCol;
 				}
 				for ( ; iColOut < nColsOut && iColIn < paddingCol + nColsIn; iColIn += stridesCol, iColOut++) {
 					size_t bytesFilterColPart = (paddingCol + nColsIn - iColIn) * bytesPerCol;
-					size_t bytesToSkip = bytesFilterCol - bytesFilterColPart;
+					size_t bytesSkipColPost = bytesFilterCol - bytesFilterColPart;
 					const UInt8* pElemChannel = pElemKernelCol;
 					for (size_t iChannel = 0; iChannel < nChannels; iChannel++, pElemChannel += bytesPerChannel) {
 						const UInt8* pElemIn = pElemChannel;
-						for (size_t iRowFilter = 0; iRowFilter < nRowsFilterPart; iRowFilter++, pElemIn += bytesPerRow) {
+						pElemOut += bytesSkipRowPre;
+						for (size_t n = 0; n < nRowsFilterPart; n++, pElemIn += bytesPerRow) {
 							::memcpy(pElemOut, pElemIn, bytesFilterColPart);
 							pElemOut += bytesFilterColPart;
-							pElemOut += bytesToSkip;
+							pElemOut += bytesSkipColPost;
 						}
+						pElemOut += bytesSkipRowPost;
 					}
 					pElemKernelCol += bytesStridesCol;
 				}
