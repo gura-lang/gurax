@@ -43,9 +43,10 @@ bool Img2dToCol(RefPtr<Array>& pArrayOut, const Array& arrayIn, size_t nRowsFilt
 				size_t nRowsSkipPre = paddingRow - iRowIn;
 				bytesSkipRowPre = bytesFilterCol * nRowsSkipPre;
 				nRowsFilterPart = nRowsFilter - nRowsSkipPre;
+				pElemKernelRow = pElemSample + (iRowIn + stridesRow - paddingRow) * bytesPerRow;
 			} else if (iRowIn + nRowsFilter <= paddingRow + nRowsIn) {
-				pElemKernelRow += bytesStridesRow;
 				nRowsFilterPart = nRowsFilter;
+				pElemKernelRow += bytesStridesRow;
 			} else if (iRowIn < paddingRow + nRowsIn) {
 				nRowsFilterPart = paddingRow + nRowsIn - iRowIn;
 				size_t nRowsSkipPost = nRowsFilter - nRowsFilterPart;
