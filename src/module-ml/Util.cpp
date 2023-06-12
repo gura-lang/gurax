@@ -77,7 +77,9 @@ bool Img2dToCol(RefPtr<Array>& pArrayExp, const Array& arrayImg, size_t nRowsFil
 					pElemExp += bytesFilterColRowChannel * n;
 				}
 				for ( ; iColExp < nColsExp && iColImg < paddingCol; iColImg += stridesCol, iColExp++) {
-					size_t bytesSkipColPre = (paddingCol - iColImg) * bytesPerCol;
+					size_t nColsSkipPre = paddingCol - iColImg;
+					size_t bytesSkipColPre = nColsSkipPre * bytesPerCol;
+					//size_t nColsFilterPart = nColsFilter - nColsSkipPre;
 					size_t bytesFilterColPart = bytesFilterCol - bytesSkipColPre;
 					const UInt8* pElemChannel = pElemKernelCol;
 					for (size_t iChannel = 0; iChannel < nChannels; iChannel++, pElemChannel += bytesPerChannel) {
@@ -85,7 +87,7 @@ bool Img2dToCol(RefPtr<Array>& pArrayExp, const Array& arrayImg, size_t nRowsFil
 						pElemExp += bytesSkipRowPre;
 						for (size_t n = 0; n < nRowsFilterPart; n++, pElemImg += bytesPerRow) {
 							pElemExp += bytesSkipColPre;
-							//::memcpy(pElemExp, pElemImg, bytesFilterColPart);
+							::memcpy(pElemExp, pElemImg, bytesFilterColPart);
 							pElemExp += bytesFilterColPart;
 						}
 						pElemExp += bytesSkipRowPost;
@@ -106,7 +108,8 @@ bool Img2dToCol(RefPtr<Array>& pArrayExp, const Array& arrayImg, size_t nRowsFil
 					pElemKernelCol += bytesStridesCol;
 				}
 				for ( ; iColExp < nColsExp && iColImg < paddingCol + nColsImg; iColImg += stridesCol, iColExp++) {
-					size_t bytesFilterColPart = (paddingCol + nColsImg - iColImg) * bytesPerCol;
+					size_t nColsFilterPart = paddingCol + nColsImg - iColImg;
+					size_t bytesFilterColPart = nColsFilterPart * bytesPerCol;
 					size_t bytesSkipColPost = bytesFilterCol - bytesFilterColPart;
 					const UInt8* pElemChannel = pElemKernelCol;
 					for (size_t iChannel = 0; iChannel < nChannels; iChannel++, pElemChannel += bytesPerChannel) {
