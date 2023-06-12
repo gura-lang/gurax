@@ -14,52 +14,52 @@ void PrintCol(const void* pv, size_t bytes)
 	::printf("\n");
 }
 
-bool Img2dToCol(RefPtr<Array>& pArrayOut, const Array& arrayIn, size_t nRowsFilter, size_t nColsFilter, size_t stridesRow, size_t stridesCol, size_t paddingRow, size_t paddingCol)
+bool Img2dToCol(RefPtr<Array>& pArrayExp, const Array& arrayImg, size_t nRowsFilter, size_t nColsFilter, size_t stridesRow, size_t stridesCol, size_t paddingRow, size_t paddingCol)
 {
-	const Array::ElemTypeT& elemType = arrayIn.GetElemType();
-	const DimSizes& dimSizesIn = arrayIn.GetDimSizes();
-	if (dimSizesIn.size() != 4) {
+	const Array::ElemTypeT& elemType = arrayImg.GetElemType();
+	const DimSizes& dimSizesImg = arrayImg.GetDimSizes();
+	if (dimSizesImg.size() != 4) {
 		Error::Issue(ErrorType::SizeError, "the array must have four dimensions");
 		return false;
 	}
-	size_t nSamples = dimSizesIn[0];
-	size_t nChannels = dimSizesIn[1];
-	size_t nRowsIn = dimSizesIn[2];
-	size_t nColsIn = dimSizesIn[3];
-	size_t nRowsOut = (nRowsIn + 2 * paddingRow - nRowsFilter) / stridesRow + 1;
-	size_t nColsOut = (nColsIn + 2 * paddingCol - nColsFilter) / stridesCol + 1;
+	size_t nSamples = dimSizesImg[0];
+	size_t nChannels = dimSizesImg[1];
+	size_t nRowsImg = dimSizesImg[2];
+	size_t nColsImg = dimSizesImg[3];
+	size_t nRowsExp = (nRowsImg + 2 * paddingRow - nRowsFilter) / stridesRow + 1;
+	size_t nColsExp = (nColsImg + 2 * paddingCol - nColsFilter) / stridesCol + 1;
 	size_t bytesPerCol = elemType.bytes;
-	size_t bytesPerRow = nColsIn * bytesPerCol;
-	size_t bytesPerChannel = bytesPerRow * nRowsIn;
+	size_t bytesPerRow = nColsImg * bytesPerCol;
+	size_t bytesPerChannel = bytesPerRow * nRowsImg;
 	size_t bytesPerSample = bytesPerChannel * nChannels;
 	size_t bytesStridesCol = stridesCol * bytesPerCol;
 	size_t bytesStridesRow = stridesRow * bytesPerRow;
-	pArrayOut.reset(Array::Create2d(elemType, nSamples * nRowsOut * nColsOut, nChannels * nRowsFilter * nColsFilter));
-	UInt8* pElemOut = pArrayOut->GetPointerC<UInt8>();
+	pArrayExp.reset(Array::Create2d(elemType, nSamples * nRowsExp * nColsExp, nChannels * nRowsFilter * nColsFilter));
+	UInt8* pElemExp = pArrayExp->GetPointerC<UInt8>();
 	size_t bytesFilterCol = nColsFilter * bytesPerCol;
-	const UInt8* pElemSample = arrayIn.GetPointerC<UInt8>();
+	const UInt8* pElemSample = arrayImg.GetPointerC<UInt8>();
 	for (size_t iSample = 0; iSample < nSamples; iSample++, pElemSample += bytesPerSample) {
 		const UInt8* pElemKernelRow = pElemSample;
-		size_t iRowIn = 0, iRowOut = 0;
-		for ( ; iRowOut < nRowsOut; iRowIn += stridesRow, iRowOut++) {
+		size_t iRowImg = 0, iRowExp = 0;
+		for ( ; iRowExp < nRowsExp; iRowImg += stridesRow, iRowExp++) {
 			size_t bytesSkipRowPre = 0;
 			size_t bytesSkipRowPost = 0;
 			size_t nRowsFilterPart = 0;
 			const UInt8* pElemKernelColBase = pElemKernelRow;
-			if (iRowIn + nRowsFilter < paddingRow) {
+			if (iRowImg + nRowsFilter < paddingRow) {
 				// nothing to do
-			} else if (iRowIn < paddingRow) {
-				size_t nRowsSkipPre = paddingRow - iRowIn;
+			} else if (iRowImg < paddingRow) {
+				size_t nRowsSkipPre = paddingRow - iRowImg;
 				bytesSkipRowPre = bytesFilterCol * nRowsSkipPre;
 				nRowsFilterPart = nRowsFilter - nRowsSkipPre;
-				if (iRowIn + stridesRow >= paddingRow) {
-					pElemKernelRow = pElemSample + (iRowIn + stridesRow - paddingRow) * bytesPerRow;
+				if (iRowImg + stridesRow >= paddingRow) {
+					pElemKernelRow = pElemSample + (iRowImg + stridesRow - paddingRow) * bytesPerRow;
 				}
-			} else if (iRowIn + nRowsFilter <= paddingRow + nRowsIn) {
+			} else if (iRowImg + nRowsFilter <= paddingRow + nRowsImg) {
 				nRowsFilterPart = nRowsFilter;
 				pElemKernelRow += bytesStridesRow;
-			} else if (iRowIn < paddingRow + nRowsIn) {
-				nRowsFilterPart = paddingRow + nRowsIn - iRowIn;
+			} else if (iRowImg < paddingRow + nRowsImg) {
+				nRowsFilterPart = paddingRow + nRowsImg - iRowImg;
 				size_t nRowsSkipPost = nRowsFilter - nRowsFilterPart;
 				bytesSkipRowPost = bytesFilterCol * nRowsSkipPost;
 				pElemKernelRow += bytesStridesRow;
@@ -67,63 +67,63 @@ bool Img2dToCol(RefPtr<Array>& pArrayOut, const Array& arrayIn, size_t nRowsFilt
 				// nothing to do
 			}
 			do {
-				size_t iColIn = 0, iColOut = 0;
+				size_t iColImg = 0, iColExp = 0;
 				size_t bytesFilterColRowChannel = bytesFilterCol * nRowsFilterPart * nChannels;
 				const UInt8* pElemKernelCol = pElemKernelColBase;
 				if (nColsFilter < paddingCol) {
 					size_t n = paddingCol - nColsFilter;
-					iColIn += stridesCol * n;
-					iColOut += n;
-					pElemOut += bytesFilterColRowChannel * n;
+					iColImg += stridesCol * n;
+					iColExp += n;
+					pElemExp += bytesFilterColRowChannel * n;
 				}
-				for ( ; iColOut < nColsOut && iColIn < paddingCol; iColIn += stridesCol, iColOut++) {
-					size_t bytesSkipColPre = (paddingCol - iColIn) * bytesPerCol;
+				for ( ; iColExp < nColsExp && iColImg < paddingCol; iColImg += stridesCol, iColExp++) {
+					size_t bytesSkipColPre = (paddingCol - iColImg) * bytesPerCol;
 					size_t bytesFilterColPart = bytesFilterCol - bytesSkipColPre;
 					const UInt8* pElemChannel = pElemKernelCol;
 					for (size_t iChannel = 0; iChannel < nChannels; iChannel++, pElemChannel += bytesPerChannel) {
 						const UInt8* pElemIn = pElemChannel;
-						pElemOut += bytesSkipRowPre;
+						pElemExp += bytesSkipRowPre;
 						for (size_t n = 0; n < nRowsFilterPart; n++, pElemIn += bytesPerRow) {
-							pElemOut += bytesSkipColPre;
-							::memcpy(pElemOut, pElemIn, bytesFilterColPart);
-							pElemOut += bytesFilterColPart;
+							pElemExp += bytesSkipColPre;
+							::memcpy(pElemExp, pElemIn, bytesFilterColPart);
+							pElemExp += bytesFilterColPart;
 						}
-						pElemOut += bytesSkipRowPost;
+						pElemExp += bytesSkipRowPost;
 					}
 				}
-				pElemKernelCol = pElemKernelColBase + (iColIn - paddingCol) * bytesPerCol;
-				for ( ; iColOut < nColsOut && iColIn + nColsFilter <= paddingCol + nColsIn; iColIn += stridesCol, iColOut++) {
+				pElemKernelCol = pElemKernelColBase + (iColImg - paddingCol) * bytesPerCol;
+				for ( ; iColExp < nColsExp && iColImg + nColsFilter <= paddingCol + nColsImg; iColImg += stridesCol, iColExp++) {
 					const UInt8* pElemChannel = pElemKernelCol;
 					for (size_t iChannel = 0; iChannel < nChannels; iChannel++, pElemChannel += bytesPerChannel) {
 						const UInt8* pElemIn = pElemChannel;
-						pElemOut += bytesSkipRowPre;
+						pElemExp += bytesSkipRowPre;
 						for (size_t n = 0; n < nRowsFilterPart; n++, pElemIn += bytesPerRow) {
-							::memcpy(pElemOut, pElemIn, bytesFilterCol);
-							pElemOut += bytesFilterCol;
+							::memcpy(pElemExp, pElemIn, bytesFilterCol);
+							pElemExp += bytesFilterCol;
 						}
-						pElemOut += bytesSkipRowPost;
+						pElemExp += bytesSkipRowPost;
 					}
 					pElemKernelCol += bytesStridesCol;
 				}
-				for ( ; iColOut < nColsOut && iColIn < paddingCol + nColsIn; iColIn += stridesCol, iColOut++) {
-					size_t bytesFilterColPart = (paddingCol + nColsIn - iColIn) * bytesPerCol;
+				for ( ; iColExp < nColsExp && iColImg < paddingCol + nColsImg; iColImg += stridesCol, iColExp++) {
+					size_t bytesFilterColPart = (paddingCol + nColsImg - iColImg) * bytesPerCol;
 					size_t bytesSkipColPost = bytesFilterCol - bytesFilterColPart;
 					const UInt8* pElemChannel = pElemKernelCol;
 					for (size_t iChannel = 0; iChannel < nChannels; iChannel++, pElemChannel += bytesPerChannel) {
 						const UInt8* pElemIn = pElemChannel;
-						pElemOut += bytesSkipRowPre;
+						pElemExp += bytesSkipRowPre;
 						for (size_t n = 0; n < nRowsFilterPart; n++, pElemIn += bytesPerRow) {
-							::memcpy(pElemOut, pElemIn, bytesFilterColPart);
-							pElemOut += bytesFilterColPart;
-							pElemOut += bytesSkipColPost;
+							::memcpy(pElemExp, pElemIn, bytesFilterColPart);
+							pElemExp += bytesFilterColPart;
+							pElemExp += bytesSkipColPost;
 						}
-						pElemOut += bytesSkipRowPost;
+						pElemExp += bytesSkipRowPost;
 					}
 					pElemKernelCol += bytesStridesCol;
 				}
-				if (iColOut < nColsOut) {
-					size_t n = nColsOut - iColOut;
-					pElemOut += bytesFilterColRowChannel * n;
+				if (iColExp < nColsExp) {
+					size_t n = nColsExp - iColExp;
+					pElemExp += bytesFilterColRowChannel * n;
 				}
 			} while (0);
 		}
