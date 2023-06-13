@@ -80,9 +80,53 @@ Gurax_ImplementMethod(Array, Img2dToCol)
 	size_t padding = args.IsValid()? args.PickNumberNonNeg<size_t>() : 0;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	RefPtr<Array> pArrayOut;
-	if (!Img2dToCol(pArrayOut, valueThis.GetArray(), nRowsFilter, nColsFilter, strides, strides, padding, padding)) return Value::nil();
-	return argument.ReturnValue(processor, new Value_Array(pArrayOut.release()));
+	RefPtr<Array> pArrayExp;
+	if (!Img2dToCol(pArrayExp, valueThis.GetArray(), nRowsFilter, nColsFilter, strides, strides, padding, padding)) return Value::nil();
+	return argument.ReturnValue(processor, new Value_Array(pArrayExp.release()));
+}
+
+// Array#ColToImg2d(nRowsFilter as Number, nColsFilter as Number, strides? as Number, padding? as Number) {block?}
+Gurax_DeclareMethod(Array, ColToImg2d)
+{
+	Declare(VTYPE_List, Flag::None);
+	DeclareArg("nSamples", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("nChannels", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("nRowsImg", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("nColsImg", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("nRowsFilter", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("nColsFilter", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("strides", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("padding", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
+}
+
+Gurax_ImplementMethod(Array, ColToImg2d)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	size_t nSamples = args.PickNumberPos<size_t>();
+	size_t nChannels = args.PickNumberPos<size_t>();
+	size_t nRowsImg = args.PickNumberPos<size_t>();
+	size_t nColsImg = args.PickNumberPos<size_t>();
+	size_t nRowsFilter = args.PickNumberPos<size_t>();
+	size_t nColsFilter = args.PickNumberPos<size_t>();
+	size_t strides = args.IsValid()? args.PickNumberPos<size_t>() : 1;
+	size_t padding = args.IsValid()? args.PickNumberNonNeg<size_t>() : 0;
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	DimSizes dimSizesImg;
+	dimSizesImg.reserve(4);
+	dimSizesImg.push_back(nSamples);
+	dimSizesImg.push_back(nChannels);
+	dimSizesImg.push_back(nRowsImg);
+	dimSizesImg.push_back(nColsImg);
+	RefPtr<Array> pArrayImg;
+	if (!ColToImg2d(pArrayImg, dimSizesImg, valueThis.GetArray(), nRowsFilter, nColsFilter, strides, strides, padding, padding)) return Value::nil();
+	return argument.ReturnValue(processor, new Value_Array(pArrayImg.release()));
 }
 
 //------------------------------------------------------------------------------
@@ -121,6 +165,7 @@ Gurax_ModulePrepare()
 	Assign(Gurax_CreateFunction(Xavier));
 	// Assignment of method for Array
 	VTYPE_Array.Assign(Gurax_CreateMethod(Array, Img2dToCol));
+	VTYPE_Array.Assign(Gurax_CreateMethod(Array, ColToImg2d));
 	return true;
 }
 

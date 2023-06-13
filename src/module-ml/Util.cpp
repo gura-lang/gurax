@@ -135,7 +135,7 @@ bool Img2dToCol(RefPtr<Array>& pArrayExp, const Array& arrayImg, size_t nRowsFil
 	return true;
 }
 
-bool Img2dToCol(RefPtr<Array>& pArrayImg, const DimSizes& dimSizesImg, const Array& arrayExp, size_t nRowsFilter, size_t nColsFilter,
+bool ColToImg2d(RefPtr<Array>& pArrayImg, const DimSizes& dimSizesImg, const Array& arrayExp, size_t nRowsFilter, size_t nColsFilter,
 				size_t stridesRow, size_t stridesCol, size_t paddingRow, size_t paddingCol)
 {
 	const Array::ElemTypeT& elemType = arrayExp.GetElemType();

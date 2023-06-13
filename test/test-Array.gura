@@ -218,6 +218,15 @@ TestCase('Array#p') {
 	}
 }
 
+TestCase('Array#shape') {
+	Tester(`@float(1).shape)
+	Tester(`@float(3).shape)
+	Tester(`@float(3, 4).shape)
+	Tester(`@float(3, 4, 5).shape)
+	Tester(`@float(3, 4, 5, 6).shape)
+	Tester(`Array.Scalar(`float, 3).shape)
+}
+
 TestCase('Array#Cast()') {
 	arr = Array(`uint8, 0x100)
 	arr.Inject(0..)

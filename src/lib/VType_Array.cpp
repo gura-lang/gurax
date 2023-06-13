@@ -613,7 +613,7 @@ Gurax_ImplementPropertyGetter(Array, p)
 // Array#shape
 Gurax_DeclareProperty_R(Array, shape)
 {
-	Declare(VTYPE_Pointer, Flag::None);
+	Declare(VTYPE_Pointer, Flag::Nil);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 A list of dimension of the array.
 )""");
@@ -622,11 +622,12 @@ A list of dimension of the array.
 Gurax_ImplementPropertyGetter(Array, shape)
 {
 	auto& valueThis = GetValueThis(valueTarget);
+	if (valueThis.GetArray().IsScalar()) return Value::nil();
 	const DimSizes& dimSizes = valueThis.GetArray().GetDimSizes();
 	RefPtr<ValueOwner> pValues(new ValueOwner());
 	pValues->reserve(dimSizes.size());
 	for (size_t dimSize : dimSizes) pValues->push_back(new Value_Number(dimSize));
-	return new Value_List(VTYPE_Number, pValues.release());
+	return new Value_Tuple(pValues.release());
 }
 
 //------------------------------------------------------------------------------
