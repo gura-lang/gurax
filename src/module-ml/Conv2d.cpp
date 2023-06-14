@@ -61,10 +61,20 @@ template<> void Conv2d_Backward_Array_T<Half>(Array& arrayBwdOut, const Array& a
 std::function<void (Array& arrayFwdOut, const Array& arrayFwdIn)> Conv2d_Forward_Array[Array::ElemTypeIdMax];
 std::function<void (Array& arrayBwdOut, const Array& arrayFwdSaved, const Array& arrayBwdIn)> Conv2d_Backward_Array[Array::ElemTypeIdMax];
 
+Conv2d::Conv2d()
+{
+}
+
 void Conv2d::Initialize()
 {
 	Gurax_SetArrayFuncSingle(Conv2d_Forward_Array, Conv2d_Forward_Array_T);
 	Gurax_SetArrayFuncSingle(Conv2d_Backward_Array, Conv2d_Backward_Array_T);
+}
+
+bool Conv2d::SetFilter(Array* pArrayFilter)
+{
+	_pArrayFilter.reset(pArrayFilter); 
+	return true;
 }
 
 bool Conv2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn)
@@ -74,7 +84,8 @@ bool Conv2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, cons
 		if (!pArrayFwdOut) return false;
 		_pArrayFwdSaved.reset(pArrayFwdOut.Reference());
 	}
-	Conv2d_Forward_Array[arrayFwdIn.GetElemType().id](*pArrayFwdOut, arrayFwdIn);
+
+	//Conv2d_Forward_Array[arrayFwdIn.GetElemType().id](*pArrayFwdOut, arrayFwdIn);
 	return true;
 }
 
