@@ -46,6 +46,7 @@ public:
 	size_t GetRowSize() const { return *(rbegin() + 1); }
 	size_t GetColSize() const { return back(); }
 	bool Verify(const ValueList& values) const;
+	bool Reshape(DimSizes& dimSizesRtn, const ValueList& values) const;
 	bool RegulateAxis(int *pAxis) const;
 	String ToString(const StringStyle& ss, const char* sep) const;
 };
@@ -208,6 +209,7 @@ public:
 	static Array* Create2d(const ElemTypeT& elemType, size_t m, size_t n) { return Create(elemType, DimSizes(m, n)); }
 	static Array* Create3d(const ElemTypeT& elemType, size_t l, size_t m, size_t n) { return Create(elemType, DimSizes(l, m, n)); }
 	static Array* CreateIdentity(const ElemTypeT& elemType, size_t n, Double mag);
+	Array* Reshape(const DimSizes& dimSizes) const;
 	Array* Reshape(const ValueList& values) const;
 	const ElemTypeT& GetElemType() const { return _elemType; }
 	bool IsElemType(const ElemTypeT& elemType) const { return _elemType.IsIdentical(elemType); }

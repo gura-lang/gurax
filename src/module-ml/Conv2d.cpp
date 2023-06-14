@@ -84,7 +84,9 @@ bool Conv2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, cons
 		if (!pArrayFwdOut) return false;
 		_pArrayFwdSaved.reset(pArrayFwdOut.Reference());
 	}
-
+	RefPtr<Array> pArrayExp;
+	size_t nRowsFilter, nColsFilter, stridesRow, stridesCol, paddingRow, paddingCol, nRowsOut, nColsOut;
+	Img2dToCol(pArrayExp, arrayFwdIn, nRowsFilter, nColsFilter, stridesRow, stridesCol, paddingRow, paddingCol, &nRowsOut, &nColsOut);
 	//Conv2d_Forward_Array[arrayFwdIn.GetElemType().id](*pArrayFwdOut, arrayFwdIn);
 	return true;
 }

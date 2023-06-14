@@ -65,6 +65,18 @@ Array* Array::CreateIdentity(const ElemTypeT& elemType, size_t n, Double mag)
 	return pArray.release();
 }
 
+Array* Array::Reshape(const DimSizes& dimSizes) const
+{
+	return new Array(GetElemType(), GetMemory().Reference(), dimSizes, _byteOffset);
+}
+
+Array* Array::Reshape(const ValueList& values) const
+{
+	DimSizes dimSizes;
+	return GetDimSizes().Reshape(dimSizes, values)? Reshape(dimSizes) : nullptr;
+}
+
+#if 0
 Array* Array::Reshape(const ValueList& values) const
 {
 	DimSizes dimSizes;
@@ -105,6 +117,7 @@ Array* Array::Reshape(const ValueList& values) const
 	if (iUndetermined >= 0) dimSizes[iUndetermined] = len / dimSizeProd;
 	return new Array(GetElemType(), GetMemory().Reference(), dimSizes, _byteOffset);
 }
+#endif
 
 template<typename T_Elem> Value* FindMax_T(const Array& array, size_t axis, const ValueList& valuesDim)
 {
@@ -2375,6 +2388,46 @@ bool DimSizes::Verify(const ValueList& values) const
 		if (*pDimSize != Value_Number::GetNumber<size_t>(**ppValue)) return false;
 	}
 	return pDimSize == end() && ppValue == values.end();
+}
+
+bool DimSizes::Reshape(DimSizes& dimSizesRtn, const ValueList& values) const
+{
+	size_t len = CalcLength();
+	dimSizesRtn.reserve(values.size());
+	int iUndetermined = -1;
+	size_t dimSizeProd = 1;
+	size_t i = 0;
+	for (auto pValue : values) {
+		if (pValue->IsType(VTYPE_Number)) {
+			size_t dimSize = Value_Number::GetNumberPos<size_t>(*pValue);
+			if (Error::IsIssued()) return false;
+			dimSizesRtn.push_back(dimSize);
+			dimSizeProd *= dimSize;
+		} else if (pValue->IsInvalid()) {
+			if (iUndetermined >= 0) {
+				Error::Issue(ErrorType::ValueError, "more than one undetermined dimension");
+				return false;
+			}
+			dimSizesRtn.push_back(0);
+			iUndetermined = i;
+		} else {
+			Error::Issue(ErrorType::TypeError, "only Number value is acceptable");
+			return false;
+		}
+		i++;
+	}
+	if (len < dimSizeProd) {
+		Error::Issue(ErrorType::RangeError, "specified dimension exceeds the memory amount");
+		return false;
+	} else if (iUndetermined < 0 && len != dimSizeProd) {
+		Error::Issue(ErrorType::ValueError, "specified dimension is less than the memory amount");
+		return false;
+	} else if (len % dimSizeProd != 0) {
+		Error::Issue(ErrorType::ValueError, "invalid dimension");
+		return false;
+	}
+	if (iUndetermined >= 0) dimSizesRtn[iUndetermined] = len / dimSizeProd;
+	return true;
 }
 
 bool DimSizes::RegulateAxis(int *pAxis) const
