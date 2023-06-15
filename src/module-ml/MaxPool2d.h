@@ -17,13 +17,13 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("ml.MaxPool2d");
 private:
-	RefPtr<Array> _pArrayFilter;
-	size_t _padding;
+	size_t _nRowsKernel;
+	size_t _nColsKernel;
 	size_t _strides;
 	RefPtr<Array> _pArrayFwdSaved;
 public:
 	// Constructor
-	MaxPool2d(Array* pArrayFilter, size_t padding, size_t strides);
+	MaxPool2d(size_t nRowsKernel, size_t nColsKernel, size_t strides);
 	// Copy constructor/operator
 	MaxPool2d(const MaxPool2d& src) = delete;
 	MaxPool2d& operator=(const MaxPool2d& src) = delete;

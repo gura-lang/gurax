@@ -27,13 +27,13 @@ ${help.ComposeMethodHelp(ml.MaxPool2d, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// ml.MaxPool2d(arrayFilter as Array, strides? as Number, padding? as Number) {block?}
+// ml.MaxPool2d(nColsKernel as Number, nRowsKernel as Number, strides? as Number) {block?}
 Gurax_DeclareConstructor(MaxPool2d)
 {
 	Declare(VTYPE_MaxPool2d, Flag::None);
-	DeclareArg("arrayFilter", VTYPE_Array, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("nRowsKernel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("nColsKernel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("strides", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("padding", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `ml.MaxPool2d` instance.
@@ -44,13 +44,12 @@ Gurax_ImplementConstructor(MaxPool2d)
 {
 	// Arguments
 	ArgPicker args(argument);
-	const Array& arrayFilter = args.Pick<Value_Array>().GetArray();
+	size_t nRowsKernel = args.PickNumberPos<size_t>();
+	size_t nColsKernel = args.PickNumberPos<size_t>();
 	size_t strides = args.IsValid()? args.PickNumberPos<size_t>() : 1;
-	size_t padding = args.IsValid()? args.PickNumberNonNeg<size_t>() : 0;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	if (!MaxPool2d::ValidateArrayFilter(arrayFilter)) return Value::nil();
-	RefPtr<MaxPool2d> pMaxPool2d(new MaxPool2d(arrayFilter.Reference(), strides, padding));
+	RefPtr<MaxPool2d> pMaxPool2d(new MaxPool2d(nRowsKernel, nColsKernel, strides));
 	return argument.ReturnValue(processor, new Value_MaxPool2d(pMaxPool2d.release()));
 }
 
