@@ -61,7 +61,7 @@ template<> void Conv2d_Backward_Array_T<Half>(Array& arrayBwdOut, const Array& a
 std::function<void (Array& arrayFwdOut, const Array& arrayFwdIn)> Conv2d_Forward_Array[Array::ElemTypeIdMax];
 std::function<void (Array& arrayBwdOut, const Array& arrayFwdSaved, const Array& arrayBwdIn)> Conv2d_Backward_Array[Array::ElemTypeIdMax];
 
-Conv2d::Conv2d()
+Conv2d::Conv2d(Array* pArrayFilter, size_t padding, size_t strides) : _pArrayFilter(pArrayFilter), _padding(padding), _strides(strides)
 {
 }
 
@@ -71,9 +71,8 @@ void Conv2d::Initialize()
 	Gurax_SetArrayFuncSingle(Conv2d_Backward_Array, Conv2d_Backward_Array_T);
 }
 
-bool Conv2d::SetFilter(Array* pArrayFilter)
+bool Conv2d::ValidateArrayFilter(const Array& arrayFilter)
 {
-	_pArrayFilter.reset(pArrayFilter); 
 	return true;
 }
 
@@ -84,10 +83,21 @@ bool Conv2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, cons
 		if (!pArrayFwdOut) return false;
 		_pArrayFwdSaved.reset(pArrayFwdOut.Reference());
 	}
-	RefPtr<Array> pArrayExp;
-	size_t nRowsFilter, nColsFilter, stridesRow, stridesCol, paddingRow, paddingCol, nRowsOut, nColsOut;
-	Img2dToCol(pArrayExp, arrayFwdIn, nRowsFilter, nColsFilter, stridesRow, stridesCol, paddingRow, paddingCol, &nRowsOut, &nColsOut);
-	//Conv2d_Forward_Array[arrayFwdIn.GetElemType().id](*pArrayFwdOut, arrayFwdIn);
+	RefPtr<Array> pArrayExp; // (nSamples * nRowsOut * nColsOut, nChannels * nRowsFilter * nColsFilter)
+	const DimSizes& dimSizesFilter = _pArrayFilter->GetDimSizes();
+	size_t nFilters = dimSizesFilter[0], nChannels = dimSizesFilter[1];
+	size_t nRowsFilter = dimSizesFilter[2], nColsFilter = dimSizesFilter[3];
+	size_t nRowsOut, nColsOut;
+	Img2dToCol(pArrayExp, arrayFwdIn, nRowsFilter, nColsFilter, _strides, _strides, _padding, _padding, &nRowsOut, &nColsOut);
+	DimSizes dimSizes;
+	dimSizes.push_back(nFilters);
+	dimSizes.push_back(nChannels * nRowsFilter * nColsFilter);
+	RefPtr<Array> pArrayFilterReshaped(_pArrayFilter->Reshape(dimSizes));
+	RefPtr<Array> pArrayFilterReshapedT; // (nChannels * nRowsFilter * nColsFilter, nFilters)
+	if (!pArrayFilterReshaped->Transpose2d(pArrayFilterReshapedT)) return false;
+	RefPtr<Array> pArrayFwdOutExp; // (nSamples * nRowsOut * nColsOut, nFilters)
+	Array::Mul(pArrayFwdOutExp, *pArrayExp, *pArrayFilterReshapedT);
+	// (nSamples, nFilters, nRowsOut, nColsOut)
 	return true;
 }
 

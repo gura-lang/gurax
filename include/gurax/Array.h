@@ -123,6 +123,9 @@ public:
 		std::function<void (const ValueList& values, void* pv, size_t offset, size_t len)>	InjectFromValueList[ElemTypeIdMax];
 		std::function<bool (Iterator& iterator, void* pv, size_t offset, size_t len)>		InjectFromIterator[ElemTypeIdMax];
 		std::function<void (ValueOwner& values, const void* pv, size_t offset, size_t len)> ExtractElems[ElemTypeIdMax];
+		std::function<void (void* pvDst, const void* pvSrc)>								Put[ElemTypeIdMax];
+		std::function<void (void* pvPool, const void* pvSrc, size_t len)>					MaxPool[ElemTypeIdMax];
+		std::function<void (void* pvPool, const void* pvSrc, size_t len)>					MinPool[ElemTypeIdMax];
 		std::function<void (const StringStyle& ss, String& str, const void* pv, size_t offset, size_t len)> ToString[ElemTypeIdMax];
 		std::function<void (void* pvDst, const void* pvSrc, size_t offset, size_t len)> 	CopyElems[ElemTypeIdMax][ElemTypeIdMax];
 		std::function<void (void* pvDst, const void* pvSrc, size_t nRows, size_t nCols)>	Transpose2d[ElemTypeIdMax][ElemTypeIdMax];

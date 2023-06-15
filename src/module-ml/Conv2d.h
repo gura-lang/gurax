@@ -18,10 +18,12 @@ public:
 	Gurax_MemoryPoolAllocator("ml.Conv2d");
 private:
 	RefPtr<Array> _pArrayFilter;
+	size_t _padding;
+	size_t _strides;
 	RefPtr<Array> _pArrayFwdSaved;
 public:
 	// Constructor
-	Conv2d();
+	Conv2d(Array* pArrayFilter, size_t padding, size_t strides);
 	// Copy constructor/operator
 	Conv2d(const Conv2d& src) = delete;
 	Conv2d& operator=(const Conv2d& src) = delete;
@@ -32,8 +34,7 @@ protected:
 	~Conv2d() = default;
 public:
 	static void Initialize();
-public:
-	bool SetFilter(Array* pArrayFilter);
+	static bool ValidateArrayFilter(const Array& arrayFilter);
 public:
 	virtual const char* GetName() const override { return "ml.Conv2d"; }
 	virtual bool EvalForward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array) override;

@@ -15,7 +15,7 @@ void PrintCol(const void* pv, size_t bytes)
 }
 
 bool Img2dToCol(RefPtr<Array>& pArrayExp, const Array& arrayImg, size_t nRowsFilter, size_t nColsFilter,
-	size_t stridesRow, size_t stridesCol, size_t paddingRow, size_t paddingCol, , size_t* pnRowsOut, size_t* pnColsOut)
+	size_t stridesRow, size_t stridesCol, size_t paddingRow, size_t paddingCol, size_t* pnRowsOut, size_t* pnColsOut)
 {
 	const Array::ElemTypeT& elemType = arrayImg.GetElemType();
 	const DimSizes& dimSizesImg = arrayImg.GetDimSizes();
@@ -29,7 +29,7 @@ bool Img2dToCol(RefPtr<Array>& pArrayExp, const Array& arrayImg, size_t nRowsFil
 	size_t nColsImg = dimSizesImg[3];
 	size_t nRowsOut = (nRowsImg + 2 * paddingRow - nRowsFilter) / stridesRow + 1;
 	size_t nColsOut = (nColsImg + 2 * paddingCol - nColsFilter) / stridesCol + 1;
-	if (pnRowsOut) *pnRowsOut = nRowsOut
+	if (pnRowsOut) *pnRowsOut = nRowsOut;
 	if (pnColsOut) *pnColsOut = nColsOut;
 	size_t bytesPerCol = elemType.bytes;
 	size_t bytesPerRow = nColsImg * bytesPerCol;

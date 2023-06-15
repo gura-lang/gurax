@@ -393,6 +393,31 @@ template<> void ExtractElems_T<Complex>(ValueOwner& values, const void* pv, size
 	for ( ; p != pEnd; p++) values.push_back(new Value_Complex(*p));
 }
 
+template<typename T_Elem> void Put_T(void* pvDst, const void* pvSrc)
+{
+	*reinterpret_cast<T_Elem*>(pvDst) = *reinterpret_cast<const T_Elem*>(pvSrc);
+}
+
+template<typename T_Elem> void MaxPool_T(void* pvPool, const void* pvSrc, size_t len)
+{
+	T_Elem* pPool = reinterpret_cast<T_Elem*>(pvPool);
+	const T_Elem* pSrc = reinterpret_cast<const T_Elem*>(pvSrc);
+	const T_Elem* pSrcEnd = pSrc + len;
+	for ( ; pSrc != pSrcEnd; pSrc++) if (*pPool < *pSrc) *pPool = *pSrc;
+}
+
+template<> void MaxPool_T<Complex>(void* pvPool, const void* pvSrc, size_t len) {}
+
+template<typename T_Elem> void MinPool_T(void* pvPool, const void* pvSrc, size_t len)
+{
+	T_Elem* pPool = reinterpret_cast<T_Elem*>(pvPool);
+	const T_Elem* pSrc = reinterpret_cast<const T_Elem*>(pvSrc);
+	const T_Elem* pSrcEnd = pSrc + len;
+	for ( ; pSrc != pSrcEnd; pSrc++) if (*pPool > *pSrc) *pPool = *pSrc;
+}
+
+template<> void MinPool_T<Complex>(void* pvPool, const void* pvSrc, size_t len) {}
+
 template<typename T_Elem> void ToStringElem_T(const StringStyle& ss, String& str, const T_Elem* p)
 {
 	Number<T_Elem>::ToString(str, *p);
@@ -1304,6 +1329,9 @@ void Array::Bootup()
 	Gurax_SetArrayFuncSingle(funcs.InjectFromValueList,	InjectFromValueList_T);
 	Gurax_SetArrayFuncSingle(funcs.InjectFromIterator,	InjectFromIterator_T);
 	Gurax_SetArrayFuncSingle(funcs.ExtractElems,		ExtractElems_T);
+	Gurax_SetArrayFuncSingle(funcs.Put,					Put_T);
+	Gurax_SetArrayFuncSingle(funcs.MaxPool,				MaxPool_T);
+	Gurax_SetArrayFuncSingle(funcs.MinPool,				MinPool_T);
 	Gurax_SetArrayFuncSingle(funcs.ToString,			ToString_T);
 	Gurax_SetArrayFuncDouble(funcs.CopyElems,			CopyElems_T);
 	Gurax_SetArrayFuncDouble(funcs.Transpose2d,			Transpose2d_T);
