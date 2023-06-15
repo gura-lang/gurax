@@ -44,6 +44,7 @@ target_sources(ml.gurd PRIVATE
 	Conv1d.cpp
 	Conv2d.cpp
 	Conv3d.cpp
+	MaxPool2d.cpp
 	ReLU.cpp
 	Sigmoid.cpp
 	Softmax.cpp
@@ -55,6 +56,7 @@ target_sources(ml.gurd PRIVATE
 	VType_Conv1d.cpp
 	VType_Conv2d.cpp
 	VType_Conv3d.cpp
+	VType_MaxPool2d.cpp
 	VType_ReLU.cpp
 	VType_Sigmoid.cpp
 	VType_Softmax.cpp

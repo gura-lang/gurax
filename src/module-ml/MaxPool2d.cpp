@@ -1,27 +1,27 @@
 //==============================================================================
-// Conv2d.cpp
+// MaxPool2d.cpp
 //==============================================================================
 #include "stdafx.h"
 
 Gurax_BeginModuleScope(ml)
 
 //------------------------------------------------------------------------------
-// Conv2d
+// MaxPool2d
 //------------------------------------------------------------------------------
-Conv2d::Conv2d(Array* pArrayFilter, size_t padding, size_t strides) : _pArrayFilter(pArrayFilter), _padding(padding), _strides(strides)
+MaxPool2d::MaxPool2d(Array* pArrayFilter, size_t padding, size_t strides) : _pArrayFilter(pArrayFilter), _padding(padding), _strides(strides)
 {
 }
 
-void Conv2d::Initialize()
+void MaxPool2d::Initialize()
 {
 }
 
-bool Conv2d::ValidateArrayFilter(const Array& arrayFilter)
+bool MaxPool2d::ValidateArrayFilter(const Array& arrayFilter)
 {
 	return true;
 }
 
-bool Conv2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn)
+bool MaxPool2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn)
 {
 	if (!pArrayFwdOut) {
 		pArrayFwdOut.reset(Array::Create(arrayFwdIn.GetElemType(), arrayFwdIn.GetDimSizes()));
@@ -46,7 +46,7 @@ bool Conv2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, cons
 	return true;
 }
 
-bool Conv2d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, const Array& arrayBwdIn)
+bool MaxPool2d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, const Array& arrayBwdIn)
 {
 	if (!pArrayBwdOut) {
 		pArrayBwdOut.reset(Array::Create(arrayBwdIn.GetElemType(), arrayBwdIn.GetDimSizes()));
@@ -55,21 +55,21 @@ bool Conv2d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, con
 	return true;
 }
 
-String Conv2d::ToString(const StringStyle& ss) const
+String MaxPool2d::ToString(const StringStyle& ss) const
 {
-	return String().Format("ml.Conv2d");
+	return String().Format("ml.MaxPool2d");
 }
 
 //------------------------------------------------------------------------------
-// Conv2dList
+// MaxPool2dList
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Conv2dOwner
+// MaxPool2dOwner
 //------------------------------------------------------------------------------
-void Conv2dOwner::Clear()
+void MaxPool2dOwner::Clear()
 {
-	for (Conv2d* pConv2d : *this) Conv2d::Delete(pConv2d);
+	for (MaxPool2d* pMaxPool2d : *this) MaxPool2d::Delete(pMaxPool2d);
 	clear();
 }
 

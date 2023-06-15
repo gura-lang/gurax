@@ -267,7 +267,7 @@ bool ColToImg2d(RefPtr<Array>& pArrayImg, const DimSizes& dimSizesImg, const Arr
 	return true;
 }
 
-bool MaxPool2d(RefPtr<Array>& pArrayPool, const Array& arraySrc, size_t nRowsKernel, size_t nColsKernel, size_t stridesRow, size_t stridesCol)
+bool CalcMaxPool2d(RefPtr<Array>& pArrayPool, const Array& arraySrc, size_t nRowsKernel, size_t nColsKernel, size_t stridesRow, size_t stridesCol)
 {
 	const Array::ElemTypeT& elemType = arraySrc.GetElemType();
 	const DimSizes& dimSizesSrc = arraySrc.GetDimSizes();

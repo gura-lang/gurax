@@ -156,6 +156,7 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_Conv1d);
 	Assign(VTYPE_Conv2d);
 	Assign(VTYPE_Conv3d);
+	Assign(VTYPE_MaxPool2d);
 	Assign(VTYPE_ReLU);
 	Assign(VTYPE_Sigmoid);
 	Assign(VTYPE_Softmax);
