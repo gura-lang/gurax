@@ -267,47 +267,4 @@ bool ColToImg2d(RefPtr<Array>& pArrayImg, const DimSizes& dimSizesImg, const Arr
 	return true;
 }
 
-bool CalcMaxPool2d(RefPtr<Array>& pArrayPool, const Array& arraySrc, size_t nRowsKernel, size_t nColsKernel, size_t stridesRow, size_t stridesCol)
-{
-	const Array::ElemTypeT& elemType = arraySrc.GetElemType();
-	const DimSizes& dimSizesSrc = arraySrc.GetDimSizes();
-	if (dimSizesSrc.size() < 2) {
-		Error::Issue(ErrorType::SizeError, "the array must have at least two dimensions");
-		return false;
-	}
-	size_t nRowsSrc = *(dimSizesSrc.rbegin() + 1);
-	size_t nColsSrc = *dimSizesSrc.rbegin();
-	size_t nRowsOut = (nRowsSrc - nRowsKernel) / stridesRow + 1;
-	size_t nColsOut = (nColsSrc - nColsKernel) / stridesCol + 1;
-	DimSizes dimSizesPool(dimSizesSrc.begin(), dimSizesSrc.begin() + dimSizesSrc.size() - 2);
-	dimSizesPool.push_back(nRowsOut);
-	dimSizesPool.push_back(nColsOut);
-	size_t bytesPerCol = elemType.bytes;
-	size_t bytesPerRow = nColsSrc * bytesPerCol;
-	size_t bytesStridesCol = stridesCol * bytesPerCol;
-	size_t bytesStridesRow = stridesRow * bytesPerRow;
-	size_t bytesPerPlane = bytesPerRow * nRowsSrc;
-	pArrayPool.reset(Array::Create(elemType, dimSizesPool));
-	auto pElemSrc = arraySrc.GetPointerC<UInt8>();
-	auto pElemPool = pArrayPool->GetPointerC<UInt8>();
-	auto funcPut = Array::funcs.Put[elemType.id];
-	auto funcMaxPool = Array::funcs.MaxPool[elemType.id];
-	auto pElemPlane = pElemSrc;
-	size_t nPlanes = DimSizes::CalcLength(dimSizesSrc.begin(), dimSizesSrc.begin() + dimSizesSrc.size() - 2);
-	for (size_t iPlane = 0; iPlane < nPlanes; iPlane++) {
-		auto pElemKernelRow = pElemPlane;
-		for (size_t iRowOut = 0; iRowOut < nRowsOut; iRowOut++, pElemKernelRow += bytesStridesRow) {
-			auto pElemKernelCol = pElemKernelRow;
-			for (size_t iColOut = 0; iColOut < nColsOut; iColOut++, pElemKernelCol += bytesStridesCol, pElemPool++) {
-				auto pElemKernel = pElemKernelCol;
-				funcPut(pElemPool, pElemKernel);
-				for (size_t iRowKernel = 0; iRowKernel < nRowsKernel; iRowKernel++, pElemKernel += bytesStridesRow) {
-					funcMaxPool(pElemPool, pElemKernel, nColsKernel);
-				}
-			}
-		}
-	}
-	return true;
-}
-
 Gurax_EndModuleScope(ml)

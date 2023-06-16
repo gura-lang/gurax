@@ -19,11 +19,12 @@ public:
 private:
 	size_t _nRowsKernel;
 	size_t _nColsKernel;
-	size_t _strides;
+	size_t _stridesRow;
+	size_t _stridesCol;
 	RefPtr<Array> _pArrayFwdSaved;
 public:
 	// Constructor
-	MaxPool2d(size_t nRowsKernel, size_t nColsKernel, size_t strides);
+	MaxPool2d(size_t nRowsKernel, size_t nColsKernel, size_t stridesRow, size_t stridesCol);
 	// Copy constructor/operator
 	MaxPool2d(const MaxPool2d& src) = delete;
 	MaxPool2d& operator=(const MaxPool2d& src) = delete;
@@ -34,7 +35,6 @@ protected:
 	~MaxPool2d() = default;
 public:
 	static void Initialize();
-	static bool ValidateArrayFilter(const Array& arrayFilter);
 public:
 	virtual const char* GetName() const override { return "ml.MaxPool2d"; }
 	virtual bool EvalForward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array) override;

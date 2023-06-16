@@ -49,7 +49,7 @@ Gurax_ImplementConstructor(MaxPool2d)
 	size_t strides = args.IsValid()? args.PickNumberPos<size_t>() : 1;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	RefPtr<MaxPool2d> pMaxPool2d(new MaxPool2d(nRowsKernel, nColsKernel, strides));
+	RefPtr<MaxPool2d> pMaxPool2d(new MaxPool2d(nRowsKernel, nColsKernel, strides, strides));
 	return argument.ReturnValue(processor, new Value_MaxPool2d(pMaxPool2d.release()));
 }
 
