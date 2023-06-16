@@ -102,7 +102,7 @@ Gurax_ImplementConstructor(Array)
 	const ValueList& values = args.PickList();
 	RefPtr<Array> pArray;
 	if (values.empty()) {
-		pArray.reset(Array::Create1d(elemType, 1));
+		pArray.reset(Array::Create(elemType, DimSizes(1)));
 	} else if (values.size() == 1 && values.front()->IsType(VTYPE_List)) {
 		pArray.reset(Value_List::GetValueOwner(*values.front()).CreateArray(elemType));
 	} else if (values.size() == 1 && values.front()->IsType(VTYPE_Tuple)) {
@@ -138,7 +138,7 @@ Gurax_ImplementFunction(ConstructArray)
 	const ValueList& values = args.PickList();
 	RefPtr<Array> pArray;
 	if (values.empty()) {
-		pArray.reset(Array::Create1d(elemType, 1));
+		pArray.reset(Array::Create(elemType, DimSizes(1)));
 	} else if (values.size() == 1 && values.front()->IsType(VTYPE_List)) {
 		pArray.reset(Value_List::GetValueOwner(*values.front()).CreateArray(elemType));
 	} else if (values.size() == 1 && values.front()->IsType(VTYPE_Tuple)) {

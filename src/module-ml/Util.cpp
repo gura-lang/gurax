@@ -37,7 +37,7 @@ bool Img2dToCol(RefPtr<Array>& pArrayExp, const Array& arrayImg, size_t nRowsKer
 	size_t bytesPerSample = bytesPerChannel * nChannels;
 	size_t bytesStridesCol = stridesCol * bytesPerCol;
 	size_t bytesStridesRow = stridesRow * bytesPerRow;
-	pArrayExp.reset(Array::Create2d(elemType, nSamples * nRowsOut * nColsOut, nChannels * nRowsKernel * nColsKernel));
+	pArrayExp.reset(Array::Create(elemType, DimSizes(nSamples * nRowsOut * nColsOut, nChannels * nRowsKernel * nColsKernel)));
 	auto pElemExp = pArrayExp->GetPointerC<UInt8>();
 	size_t bytesKernelCol = nColsKernel * bytesPerCol;
 	auto pElemSample = arrayImg.GetPointerC<UInt8>();

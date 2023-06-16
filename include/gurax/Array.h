@@ -25,9 +25,16 @@ public:
 	DimSizes() {}
 	DimSizes(const NumList& src) : NumList(src) {}
 	DimSizes(NumList&& src) : NumList(src) {}
-	DimSizes(size_t n) { reserve(1); push_back(n); }
-	DimSizes(size_t m, size_t n) { reserve(2); push_back(m); push_back(n); }
-	DimSizes(size_t l, size_t m, size_t n) { reserve(3); push_back(l); push_back(m); push_back(n); }
+	DimSizes(size_t d) { reserve(1); push_back(d); }
+	DimSizes(size_t d1, size_t d2) { reserve(2); push_back(d1); push_back(d2); }
+	DimSizes(size_t d1, size_t d2, size_t d3) { reserve(3); push_back(d1); push_back(d2); push_back(d3); }
+	DimSizes(size_t d1, size_t d2, size_t d3, size_t d4) { reserve(4); push_back(d1); push_back(d2); push_back(d3); push_back(d4); }
+	DimSizes(size_t d1, size_t d2, size_t d3, size_t d4, size_t d5) {
+		reserve(5); push_back(d1); push_back(d2); push_back(d3); push_back(d4); push_back(d5);
+	}
+	DimSizes(size_t d1, size_t d2, size_t d3, size_t d4, size_t d5, size_t d6) {
+		reserve(6); push_back(d1); push_back(d2); push_back(d3); push_back(d4); push_back(d5); push_back(d6);
+	}
 	DimSizes(const ValueList& values);
 	DimSizes(const_iterator first, const_iterator last) : NumList(first, last) {}
 public:
@@ -208,9 +215,6 @@ public:
 	static Array* Create(const ElemTypeT& elemType, DimSizes dimSizes);
 	static Array* CreateScalar(const ElemTypeT& elemType, Double num);
 	static Array* CreateScalar(const ElemTypeT& elemType, const Complex& num);
-	static Array* Create1d(const ElemTypeT& elemType, size_t n) { return Create(elemType, DimSizes(n)); }
-	static Array* Create2d(const ElemTypeT& elemType, size_t m, size_t n) { return Create(elemType, DimSizes(m, n)); }
-	static Array* Create3d(const ElemTypeT& elemType, size_t l, size_t m, size_t n) { return Create(elemType, DimSizes(l, m, n)); }
 	static Array* CreateIdentity(const ElemTypeT& elemType, size_t n, Double mag);
 	Array* Reshape(const DimSizes& dimSizes) const;
 	Array* Reshape(const ValueList& values) const;

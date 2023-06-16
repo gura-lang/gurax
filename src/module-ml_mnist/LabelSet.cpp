@@ -44,7 +44,7 @@ Array *CreateArrayOfLabels(const Array::ElemTypeT& elemType, const UInt8* pElemS
 			if (labelMax < label) labelMax = label;
 		}
 		size_t nCols = labelMax + 1;
-		pArray.reset(Array::Create2d(elemType, nLabels, nCols));
+		pArray.reset(Array::Create(elemType, DimSizes(nLabels, nCols)));
 		//pArray->FillZero();
 		T_Elem *pElemDst = pArray->GetPointerC<T_Elem>();
 		for (size_t i = 0; i < nLabels; i++, pElemDst += nCols) {
@@ -52,7 +52,7 @@ Array *CreateArrayOfLabels(const Array::ElemTypeT& elemType, const UInt8* pElemS
 			*(pElemDst + label) = 1;
 		}
 	} else {
-		pArray.reset(Array::Create1d(elemType, nLabels));
+		pArray.reset(Array::Create(elemType, DimSizes(nLabels)));
 		T_Elem *pElemDst = pArray->GetPointerC<T_Elem>();
 		for (size_t i = 0; i < nLabels; i++, pElemSrc++, pElemDst++) {
 			*pElemDst = static_cast<T_Elem>(*pElemSrc);

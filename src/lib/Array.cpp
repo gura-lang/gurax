@@ -59,7 +59,7 @@ Array* Array::CreateScalar(const ElemTypeT& elemType, const Complex& num)
 
 Array* Array::CreateIdentity(const ElemTypeT& elemType, size_t n, Double mag)
 {
-	RefPtr<Array> pArray(Create2d(elemType, n, n));
+	RefPtr<Array> pArray(Create(elemType, DimSizes(n, n)));
 	size_t idx = 0;
 	for (size_t i = 0; i < n; i++, idx += n + 1) pArray->IndexSetDouble(idx, mag);
 	return pArray.release();
