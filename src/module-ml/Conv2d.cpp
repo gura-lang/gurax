@@ -23,26 +23,26 @@ bool Conv2d::ValidateArrayFilter(const Array& arrayFilter)
 
 bool Conv2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn)
 {
-	//if (!pArrayFwdOut) {
-	//	pArrayFwdOut.reset(Array::Create(arrayFwdIn.GetElemType(), arrayFwdIn.GetDimSizes()));
-	//	if (!pArrayFwdOut) return false;
-	//	_pArrayFwdSaved.reset(pArrayFwdOut.Reference());
-	//}
-	RefPtr<Array> pArrayWork1; // (nSamples * nRowsOut * nColsOut, nChannels * nRowsFilter * nColsFilter)
+	// _pArrayWork1 .. (nSamples * nRowsOut * nColsOut, nChannels * nRowsFilter * nColsFilter)
+	// _pArrayWork2 .. (nFilters, nChannels * nRowsFilter * nColsFilter)
+	// _pArrayWork3 .. (nChannels * nRowsFilter * nColsFilter, nFilters)
+	// _pArrayWork4 .. (nSamples * nRowsOut * nColsOut, nFilters)
+	// _pArrayWork5 .. (nSamples, nRowsOut, nColsOut, nFilters)
 	const DimSizes& dimSizesFilter = _pArrayFilter->GetDimSizes();
 	size_t nFilters = dimSizesFilter[0], nChannels = dimSizesFilter[1];
 	size_t nRowsFilter = dimSizesFilter[2], nColsFilter = dimSizesFilter[3];
 	size_t nSamples = arrayFwdIn.GetDimSizes()[0];
 	size_t nRowsOut, nColsOut;
-	Img2dToCol(pArrayWork1, arrayFwdIn, nRowsFilter, nColsFilter, _strides, _strides, _padding, _padding, &nRowsOut, &nColsOut);
-	RefPtr<Array> pArrayWork2(_pArrayFilter->Reshape(DimSizes(nFilters, nChannels * nRowsFilter * nColsFilter)));
-	RefPtr<Array> pArrayWork3; // (nChannels * nRowsFilter * nColsFilter, nFilters)
-	if (!pArrayWork2->Transpose2d(pArrayWork3)) return false;
-
-	RefPtr<Array> pArrayWork4; // (nSamples * nRowsOut * nColsOut, nFilters)
-	Array::Mul(pArrayWork4, *pArrayWork1, *pArrayWork3);
-	RefPtr<Array> pArrayWork5(pArrayWork4->Reshape(DimSizes(nSamples, nRowsOut, nColsOut, nFilters))); // (nSamples, nRowsOut, nColsOut, nFilters)
-	// (nSamples, nFilters, nRowsOut, nColsOut)
+	Img2dToCol(_pArrayWork1, arrayFwdIn, nRowsFilter, nColsFilter, _strides, _strides, _padding, _padding, &nRowsOut, &nColsOut);
+	_pArrayFilter->Reshape(_pArrayWork2, DimSizes(nFilters, nChannels * nRowsFilter * nColsFilter));
+	if (!_pArrayWork2->Transpose2d(_pArrayWork3)) return false;
+	Array::Mul(_pArrayWork4, *_pArrayWork1, *_pArrayWork3);
+	_pArrayWork4->Reshape(_pArrayWork5, DimSizes(nSamples, nRowsOut, nColsOut, nFilters));
+	NumList<size_t> axes;
+	axes.reserve(4);
+	axes.push_back(0); axes.push_back(3); axes.push_back(1); axes.push_back(2);
+	_pArrayWork5->TransposeMulti(pArrayFwdOut, axes); // (nSamples, nFilters, nRowsOut, nColsOut)
+	_pArrayFwdSaved.reset(pArrayFwdOut.Reference());
 	return true;
 }
 

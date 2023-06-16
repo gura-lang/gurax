@@ -65,15 +65,19 @@ Array* Array::CreateIdentity(const ElemTypeT& elemType, size_t n, Double mag)
 	return pArray.release();
 }
 
-Array* Array::Reshape(const DimSizes& dimSizes) const
+void Array::Reshape(RefPtr<Array>& pArrayRtn, const DimSizes& dimSizes) const
 {
-	return new Array(GetElemType(), GetMemory().Reference(), dimSizes, _byteOffset);
+	pArrayRtn.reset(new Array(GetElemType(), GetMemory().Reference(), dimSizes, _byteOffset));
 }
 
-Array* Array::Reshape(const ValueList& values) const
+bool Array::Reshape(RefPtr<Array>& pArrayRtn, const ValueList& values) const
 {
 	DimSizes dimSizes;
-	return GetDimSizes().Reshape(dimSizes, values)? Reshape(dimSizes) : nullptr;
+	if (GetDimSizes().Reshape(dimSizes, values)) {
+		Reshape(pArrayRtn, dimSizes);
+		return true;
+	}
+	return false;
 }
 
 #if 0

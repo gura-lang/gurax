@@ -525,10 +525,9 @@ Gurax_ImplementMethod(Array, Reshape)
 	ArgPicker args(argument);
 	const ValueList& values = args.PickList();
 	// Function body
-	
-	RefPtr<Array> pArray(valueThis.GetArray().Reshape(values));
-	if (!pArray) return Value::nil();
-	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
+	RefPtr<Array> pArrayRtn;
+	if (!valueThis.GetArray().Reshape(pArrayRtn, values)) return Value::nil();
+	return argument.ReturnValue(processor, new Value_Array(pArrayRtn.release()));
 }
 
 //-----------------------------------------------------------------------------

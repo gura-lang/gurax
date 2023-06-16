@@ -216,8 +216,8 @@ public:
 	static Array* CreateScalar(const ElemTypeT& elemType, Double num);
 	static Array* CreateScalar(const ElemTypeT& elemType, const Complex& num);
 	static Array* CreateIdentity(const ElemTypeT& elemType, size_t n, Double mag);
-	Array* Reshape(const DimSizes& dimSizes) const;
-	Array* Reshape(const ValueList& values) const;
+	void Reshape(RefPtr<Array>& pArrayRtn, const DimSizes& dimSizes) const;
+	bool Reshape(RefPtr<Array>& pArrayRtn, const ValueList& values) const;
 	const ElemTypeT& GetElemType() const { return _elemType; }
 	bool IsElemType(const ElemTypeT& elemType) const { return _elemType.IsIdentical(elemType); }
 	const char* GetElemTypeName() const { return _elemType.GetName(); }

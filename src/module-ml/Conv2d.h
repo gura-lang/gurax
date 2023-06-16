@@ -21,6 +21,11 @@ private:
 	size_t _padding;
 	size_t _strides;
 	RefPtr<Array> _pArrayFwdSaved;
+	RefPtr<Array> _pArrayWork1; // (nSamples * nRowsOut * nColsOut, nChannels * nRowsFilter * nColsFilter)
+	RefPtr<Array> _pArrayWork2; // (nFilters, nChannels * nRowsFilter * nColsFilter)
+	RefPtr<Array> _pArrayWork3; // (nChannels * nRowsFilter * nColsFilter, nFilters)
+	RefPtr<Array> _pArrayWork4; // (nSamples * nRowsOut * nColsOut, nFilters)
+	RefPtr<Array> _pArrayWork5; // (nSamples, nRowsOut, nColsOut, nFilters)
 public:
 	// Constructor
 	Conv2d(Array* pArrayFilter, size_t padding, size_t strides);
