@@ -1581,7 +1581,7 @@ bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeR
 	const DimSizes* pDimSizesRtn = DimSizes::DetermineResult(arrayL.GetDimSizes(), arrayR.GetDimSizes(), &nUnits, &lenUnit, &lenFwdL, &lenFwdR);
 	if (!pDimSizesRtn) {
 		Error::Issue(ErrorType::SizeError, "unmatched array size: %s %s %s",
-				arrayL.ToString(StringStyle::BriefCram), opDisp, arrayR.ToString(StringStyle::BriefCram));
+				arrayL.ToString(StringStyle::BriefCram).c_str(), opDisp, arrayR.ToString(StringStyle::BriefCram).c_str());
 		return nullptr;
 	}
 	if (!pArrayRtn) pArrayRtn.reset(Create(elemTypeRtn, *pDimSizesRtn));
@@ -2203,11 +2203,10 @@ bool Array::Dot(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arra
 {
 	const DimSizes& dimSizesL = arrayL.GetDimSizes();
 	const DimSizes& dimSizesR = arrayR.GetDimSizes();
-	if (dimSizesL.size() != 2 || dimSizesR.size() != 2 ||
-					dimSizesL.GetColSize() != dimSizesR.GetRowSize()) {
+	if (dimSizesL.size() != 2 || dimSizesR.size() != 2 || dimSizesL.GetColSize() != dimSizesR.GetRowSize()) {
 		Error::Issue(ErrorType::SizeError, "unmatched array size: %s |.| %s",
-				arrayL.ToString(StringStyle::BriefCram), arrayR.ToString(StringStyle::BriefCram));
-		return nullptr;
+				arrayL.ToString(StringStyle::BriefCram).c_str(), arrayR.ToString(StringStyle::BriefCram).c_str());
+		return false;
 	}
 	DimSizes dimSizesRtn(dimSizesL.GetRowSize(), dimSizesR.GetColSize());
 	auto func = funcs.Dot_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id];
@@ -2226,7 +2225,7 @@ bool Array::Cross(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& ar
 	const DimSizes& dimSizesR = arrayR.GetDimSizes();
 	if (dimSizesL.size() != 1 || dimSizesR.size() != 1 || dimSizesL[0] != 3 || dimSizesR[0] != 3) {
 		Error::Issue(ErrorType::SizeError, "unmatched array size: %s |^| %s",
-				arrayL.ToString(StringStyle::BriefCram), arrayR.ToString(StringStyle::BriefCram));
+				arrayL.ToString(StringStyle::BriefCram).c_str(), arrayR.ToString(StringStyle::BriefCram).c_str());
 		return nullptr;
 	}
 	size_t n = 3;

@@ -5,7 +5,7 @@
 import(util.tester) {*}
 import(ml)
 
-//Number.format@float = '%.3f'
+Number.format@float = '%.3f'
 a = @float([[-6, -1, 4], [-5, -1, -5], [-3, 2, 2]])
 b = @float([[3, -1, 4], [1, 2, -5], [-2, 4, -4]])
 //correct = @float([[5, -2, -5], [5, -4, -2], [-6, 5, -3]])

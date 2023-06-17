@@ -18,17 +18,17 @@ public:
 	Gurax_MemoryPoolAllocator("ml.Conv2d");
 private:
 	RefPtr<Array> _pArrayFilter;
-	size_t _padding;
 	size_t _strides;
+	size_t _padding;
 	RefPtr<Array> _pArrayFwdSaved;
-	RefPtr<Array> _pArrayWork1; // (nSamples * nRowsOut * nColsOut, nChannels * nRowsFilter * nColsFilter)
-	RefPtr<Array> _pArrayWork2; // (nFilters, nChannels * nRowsFilter * nColsFilter)
-	RefPtr<Array> _pArrayWork3; // (nChannels * nRowsFilter * nColsFilter, nFilters)
-	RefPtr<Array> _pArrayWork4; // (nSamples * nRowsOut * nColsOut, nFilters)
-	RefPtr<Array> _pArrayWork5; // (nSamples, nRowsOut, nColsOut, nFilters)
+	RefPtr<Array> _pArrayFwd1; // (nSamples * nRowsOut * nColsOut, nChannels * nRowsFilter * nColsFilter)
+	RefPtr<Array> _pArrayFwd2; // (nFilters, nChannels * nRowsFilter * nColsFilter)
+	RefPtr<Array> _pArrayFwd3; // (nChannels * nRowsFilter * nColsFilter, nFilters)
+	RefPtr<Array> _pArrayFwd4; // (nSamples * nRowsOut * nColsOut, nFilters)
+	RefPtr<Array> _pArrayFwd5; // (nSamples, nRowsOut, nColsOut, nFilters)
 public:
 	// Constructor
-	Conv2d(Array* pArrayFilter, size_t padding, size_t strides);
+	Conv2d(Array* pArrayFilter, size_t strides, size_t padding);
 	// Copy constructor/operator
 	Conv2d(const Conv2d& src) = delete;
 	Conv2d& operator=(const Conv2d& src) = delete;
