@@ -20,12 +20,20 @@ private:
 	RefPtr<Array> _pArrayFilter;
 	size_t _strides;
 	size_t _padding;
-	RefPtr<Array> _pArrayFwdSaved;
-	RefPtr<Array> _pArrayFwd1; // (nSamples * nRowsOut * nColsOut, nChannels * nRowsFilter * nColsFilter)
-	RefPtr<Array> _pArrayFwd2; // (nFilters, nChannels * nRowsFilter * nColsFilter)
-	RefPtr<Array> _pArrayFwd3; // (nChannels * nRowsFilter * nColsFilter, nFilters)
-	RefPtr<Array> _pArrayFwd4; // (nSamples * nRowsOut * nColsOut, nFilters)
-	RefPtr<Array> _pArrayFwd5; // (nSamples, nRowsOut, nColsOut, nFilters)
+	RefPtr<Array> _pArrayFwdInSaved;
+	RefPtr<Array> _pArrayFwdOutSaved;
+	RefPtr<Array> _pArrayFwd1;	// (nSamples * nRowsFwdOut * nColsFwdOut, nChannels * nRowsFilter * nColsFilter)
+	RefPtr<Array> _pArrayFwd2;	// (nFilters, nChannels * nRowsFilter * nColsFilter)
+	RefPtr<Array> _pArrayFwd3;	// (nChannels * nRowsFilter * nColsFilter, nFilters)
+	RefPtr<Array> _pArrayFwd4;	// (nSamples * nRowsFwdOut * nColsFwdOut, nFilters)
+	RefPtr<Array> _pArrayFwd5;	// (nSamples, nRowsFwdOut, nColsFwdOut, nFilters)
+	RefPtr<Array> _pArrayBwd1;	// (nSamples, nRowsBwdIn, nColsBwdIn, nFilters)
+	RefPtr<Array> _pArrayBwd2;	// (nSamples * nRowsBwdIn * nColsBwdIn, nFilters)
+	RefPtr<Array> _pArrayBwd3;	// (nChannels * nRowsFilter * nColsFilter, nSamples * nRowsFwdOut * nColsFwdOut)
+	RefPtr<Array> _pArrayBwd4;	// (nChannels * nRowsFilter * nColsFilter, nFilters)
+	RefPtr<Array> _pArrayBwd5;	// (nFilters, nChannels * nRowsFilter * nColsFilter)
+	RefPtr<Array> _pArrayBwd6;	// (nFilters, nChannels, nRowsFilter, nColsFIlter)
+	RefPtr<Array> _pArrayBwd7;	// (nSamples * nRowsBwdIn * nColsBwdIn, nChannels * nRowsFilter * nColsFilter)
 public:
 	// Constructor
 	Conv2d(Array* pArrayFilter, size_t strides, size_t padding);
