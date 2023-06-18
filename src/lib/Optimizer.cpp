@@ -26,16 +26,4 @@ void OptimizerOwner::Clear()
 	clear();
 }
 
-//------------------------------------------------------------------------------
-// Optimizer_None
-//-------------------------------------------------------------------------
-void Optimizer_None::InstanceEx::Reset()
-{
-}
-
-bool Optimizer_None::InstanceEx::Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad)
-{
-	return true;
-}
-
 }

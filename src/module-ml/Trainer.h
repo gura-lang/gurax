@@ -6,7 +6,7 @@
 #include <gurax.h>
 #include "Node.h"
 #include "NodeMap.h"
-#include "Optimizer.h"
+#include "Optimizers.h"
 
 Gurax_BeginModuleScope(ml)
 

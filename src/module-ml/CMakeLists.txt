@@ -40,7 +40,7 @@ target_sources(ml.gurd PRIVATE
 	Trainer.cpp
 	Node.cpp
 	NodeMap.cpp
-	Optimizer.cpp
+	Optimizers.cpp
 	Conv1d.cpp
 	Conv2d.cpp
 	Conv3d.cpp

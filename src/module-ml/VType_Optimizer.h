@@ -4,7 +4,7 @@
 #ifndef GURAX_MODULE_ML_VTYPE_OPTIMIZER_H
 #define GURAX_MODULE_ML_VTYPE_OPTIMIZER_H
 #include <gurax.h>
-#include "Optimizer.h"
+#include "Optimizers.h"
 
 Gurax_BeginModuleScope(ml)
 

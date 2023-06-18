@@ -81,22 +81,6 @@ public:
 	void Clear();
 };
 
-//------------------------------------------------------------------------------
-// Optimizer_None
-//-------------------------------------------------------------------------
-class Optimizer_None : public Optimizer {
-public:
-	class InstanceEx : public Instance {
-	public:
-		InstanceEx() {}
-		virtual void Reset() override;
-		virtual bool Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad) override;
-	};
-public:
-	Optimizer_None() : Optimizer("None") {}
-	virtual Instance* CreateInstance() const override { return new InstanceEx(); }
-};
-
 }
 
 #endif
