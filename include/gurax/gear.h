@@ -3,6 +3,7 @@
 //==============================================================================
 #ifndef GURAX_GEAR_H
 #define GURAX_GEAR_H
+#include "Optimizer.h"
 #include "String.h"
 
 namespace Gurax {
@@ -28,6 +29,7 @@ public:
 protected:
 	~Gear() = default;
 public:
+	virtual void SetOptimizer(const Optimizer& optimizer) {}
 	virtual const char* GetName() const = 0; 
 	virtual bool EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn) = 0;
 	virtual bool EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, const Array& arrayBwdIn) = 0;
