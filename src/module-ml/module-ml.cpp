@@ -139,6 +139,8 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
+	// Initialize Util
+	InitializeUtil();
 	// Initialize Gear Operators
 	Conv1d::Initialize();
 	Conv2d::Initialize();

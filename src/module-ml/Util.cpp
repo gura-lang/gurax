@@ -5,6 +5,23 @@
 
 Gurax_BeginModuleScope(ml)
 
+Funcs funcs;
+
+template<typename T_Elem> void MaxPool_T(void* pvPool, const void* pvSrc, size_t len)
+{
+	T_Elem* pPool = reinterpret_cast<T_Elem*>(pvPool);
+	const T_Elem* pSrc = reinterpret_cast<const T_Elem*>(pvSrc);
+	const T_Elem* pSrcEnd = pSrc + len;
+	for ( ; pSrc != pSrcEnd; pSrc++) if (*pPool < *pSrc) *pPool = *pSrc;
+}
+
+template<> void MaxPool_T<Complex>(void* pvPool, const void* pvSrc, size_t len) {}
+
+void InitializeUtil()
+{
+	Gurax_SetArrayFuncSingle(funcs.MaxPool, MaxPool_T);
+}
+
 void PrintCol(const void* pv, size_t bytes)
 {
 	const Float* p = reinterpret_cast<const Float*>(pv);

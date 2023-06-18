@@ -47,7 +47,7 @@ bool MaxPool2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, c
 	size_t bytesStridesRow = _stridesRow * bytesPerRow;
 	size_t bytesPerPlane = bytesPerRow * nRowsSrc;
 	auto funcPut = Array::funcs.Put[elemType.id];
-	auto funcMaxPool = Array::funcs.MaxPool[elemType.id];
+	auto funcMaxPool = funcs.MaxPool[elemType.id];
 	auto pElemPool = pArrayFwdOut->GetPointerC<UInt8>();
 	auto pElemPlane = arrayFwdIn.GetPointerC<UInt8>();
 	size_t nPlanes = DimSizes::CalcLength(dimSizesSrc.begin(), dimSizesSrc.begin() + dimSizesSrc.size() - 2);
