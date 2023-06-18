@@ -18,22 +18,13 @@ public:
 	Gurax_MemoryPoolAllocator("ml.Conv2d");
 private:
 	RefPtr<Array> _pArrayFilter;
+	RefPtr<Array> _pArrayFilterGrad;
 	size_t _strides;
 	size_t _padding;
 	RefPtr<Array> _pArrayFwdInSaved;
 	RefPtr<Array> _pArrayFwdOutSaved;
-	RefPtr<Array> _pArrayFwd1;	// (nSamples * nRowsFwdOut * nColsFwdOut, nChannels * nRowsFilter * nColsFilter)
-	RefPtr<Array> _pArrayFwd2;	// (nFilters, nChannels * nRowsFilter * nColsFilter)
-	RefPtr<Array> _pArrayFwd3;	// (nChannels * nRowsFilter * nColsFilter, nFilters)
-	RefPtr<Array> _pArrayFwd4;	// (nSamples * nRowsFwdOut * nColsFwdOut, nFilters)
-	RefPtr<Array> _pArrayFwd5;	// (nSamples, nRowsFwdOut, nColsFwdOut, nFilters)
-	RefPtr<Array> _pArrayBwd1;	// (nSamples, nRowsBwdIn, nColsBwdIn, nFilters)
-	RefPtr<Array> _pArrayBwd2;	// (nSamples * nRowsBwdIn * nColsBwdIn, nFilters)
-	RefPtr<Array> _pArrayBwd3;	// (nChannels * nRowsFilter * nColsFilter, nSamples * nRowsFwdOut * nColsFwdOut)
-	RefPtr<Array> _pArrayBwd4;	// (nChannels * nRowsFilter * nColsFilter, nFilters)
-	RefPtr<Array> _pArrayBwd5;	// (nFilters, nChannels * nRowsFilter * nColsFilter)
-	RefPtr<Array> _pArrayBwd6;	// (nFilters, nChannels, nRowsFilter, nColsFIlter)
-	RefPtr<Array> _pArrayBwd7;	// (nSamples * nRowsBwdIn * nColsBwdIn, nChannels * nRowsFilter * nColsFilter)
+	RefPtr<Array> _pArrayFwd1, _pArrayFwd2, _pArrayFwd3, _pArrayFwd4, _pArrayFwd5;
+	RefPtr<Array> _pArrayBwd1, _pArrayBwd2, _pArrayBwd3, _pArrayBwd4, _pArrayBwd5, _pArrayBwd6;
 public:
 	// Constructor
 	Conv2d(Array* pArrayFilter, size_t strides, size_t padding);
@@ -52,6 +43,10 @@ public:
 	virtual const char* GetName() const override { return "ml.Conv2d"; }
 	virtual bool EvalForward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array) override;
 	virtual bool EvalBackward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array) override;
+public:
+	const Array& GetArrayFilter() const { return *_pArrayFilter; }
+	const Array& GetArrayFilterGrad() const { return *_pArrayFilterGrad; }
+	bool IsValidArrayFilterGrad() const { return !_pArrayFilterGrad.IsNull(); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Conv2d& other) const { return this == &other; }

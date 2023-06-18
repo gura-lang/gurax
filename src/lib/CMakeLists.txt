@@ -75,6 +75,7 @@ target_sources(guraxcore PRIVATE
 	Number.cpp
 	OAL.cpp
 	Operator.cpp
+	Optimizer.cpp
 	Packer.cpp
 	Palette.cpp
 	Parser.cpp

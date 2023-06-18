@@ -53,6 +53,7 @@
 #include "gurax/Number.h"
 #include "gurax/OAL.h"
 #include "gurax/Operator.h"
+#include "gurax/Optimizer.h"
 #include "gurax/PackedNumber.h"
 #include "gurax/Packer.h"
 #include "gurax/Palette.h"

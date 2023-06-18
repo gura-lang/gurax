@@ -150,8 +150,8 @@ protected:
 	Trait _trait;
 	RefPtr<Optimizer::Instance> _pOptimizerInst;
 public:
-	Node_Head(Expr* pExpr, Trait trait, Optimizer::Instance* pOptimizerInst) :
-		_pExpr(pExpr), _trait(trait), _pOptimizerInst(pOptimizerInst) {}
+	Node_Head(Expr* pExpr, Trait trait, const Optimizer& optimizer) :
+		_pExpr(pExpr), _trait(trait), _pOptimizerInst(optimizer.CreateInstance()) {}
 	const Expr& GetExpr() const { return *_pExpr; }
 	bool IsVariable() const { return _trait == Trait::Variable; }
 	bool IsConstant() const { return _trait == Trait::Constant; }
