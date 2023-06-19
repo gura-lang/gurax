@@ -82,7 +82,7 @@ bool Sigmoid::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, con
 	return true;
 }
 
-bool Sigmoid::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, const Array& arrayBwdIn)
+bool Sigmoid::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bool bwdPropagationFlag, const Array& arrayBwdIn)
 {
 	if (!pArrayBwdOut) {
 		pArrayBwdOut.reset(Array::Create(arrayBwdIn.GetElemType(), arrayBwdIn.GetDimSizes()));

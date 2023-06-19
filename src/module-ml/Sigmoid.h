@@ -20,7 +20,7 @@ private:
 	RefPtr<Array> _pArrayFwdSaved;
 public:
 	// Constructor
-	Sigmoid() {}
+	Sigmoid() : Gear(false) {}
 	// Copy constructor/operator
 	Sigmoid(const Sigmoid& src) = delete;
 	Sigmoid& operator=(const Sigmoid& src) = delete;
@@ -34,7 +34,7 @@ public:
 public:
 	virtual const char* GetName() const override { return "ml.Sigmoid"; }
 	virtual bool EvalForward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array) override;
-	virtual bool EvalBackward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array) override;
+	virtual bool EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bool bwdPropagationFlag, const Array& array) override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Sigmoid& other) const { return this == &other; }

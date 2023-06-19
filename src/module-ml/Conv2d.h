@@ -25,6 +25,7 @@ private:
 	RefPtr<Array> _pArrayFwdOutSaved;
 	RefPtr<Array> _pArrayFwd1, _pArrayFwd2, _pArrayFwd3, _pArrayFwd4, _pArrayFwd5;
 	RefPtr<Array> _pArrayBwd1, _pArrayBwd2, _pArrayBwd3, _pArrayBwd4, _pArrayBwd5, _pArrayBwd6;
+	RefPtr<Optimizer::Instance> _pOptimizerInstance;
 public:
 	// Constructor
 	Conv2d(Array* pArrayFilter, size_t strides, size_t padding);
@@ -40,9 +41,10 @@ public:
 	static void Initialize();
 	static bool ValidateArrayFilter(const Array& arrayFilter);
 public:
+	virtual void SetOptimizer(const Optimizer& optimizer) override { _pOptimizerInstance.reset(optimizer.CreateInstance()); }
 	virtual const char* GetName() const override { return "ml.Conv2d"; }
 	virtual bool EvalForward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array) override;
-	virtual bool EvalBackward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array) override;
+	virtual bool EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bool bwdPropagationFlag, const Array& array) override;
 public:
 	const Array& GetArrayFilter() const { return *_pArrayFilter; }
 	const Array& GetArrayFilterGrad() const { return *_pArrayFilterGrad; }

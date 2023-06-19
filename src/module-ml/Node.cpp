@@ -583,6 +583,11 @@ bool Node_Dot::EvalBackward(Processor& processor)
 //-----------------------------------------------------------------------------
 // Node_Gear
 //-----------------------------------------------------------------------------
+bool Node_Gear::IsVulnerable() const
+{
+	return GetConnectorSrc().GetNodeSrc().IsVulnerable() || _pGear->HasVulnerableParam();
+}
+
 bool Node_Gear::EvalForward(Processor& processor)
 {
 	if (!_pGear) {
@@ -590,6 +595,7 @@ bool Node_Gear::EvalForward(Processor& processor)
 		if (Error::IsIssued()) return false;
 		if (pValue->IsInstanceOf(VTYPE_Gear)) {
 			_pGear.reset(Value_Gear::GetGear(*pValue).Reference());
+			_pGear->SetOptimizer(GetOptimizer());
 		} else {
 			Error::Issue(ErrorType::ValueError, "variable must be a Gear instance");
 			return false;
@@ -600,8 +606,8 @@ bool Node_Gear::EvalForward(Processor& processor)
 
 bool Node_Gear::EvalBackward(Processor& processor)
 {
-	if (!GetConnectorSrc().GetNodeSrc().IsVulnerable()) return true;
-	return _pGear->EvalBackward(processor, GetConnectorSrc().GetArrayGradRefPtr(), _pConnectorDst->GetArrayGrad());
+	return _pGear->EvalBackward(processor, GetConnectorSrc().GetArrayGradRefPtr(),
+				GetConnectorSrc().GetNodeSrc().IsVulnerable(), _pConnectorDst->GetArrayGrad());
 }
 
 bool Node_Gear::GatherMemberSymbol(SymbolList& symbols) const

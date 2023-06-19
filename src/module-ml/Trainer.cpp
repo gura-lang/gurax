@@ -273,7 +273,7 @@ Node* Trainer::CreateNodeGear(const Expr_BinaryOp& exprEx)
 {
 	RefPtr<Expr> pExpr(exprEx.GetExprRight().Reference());
 	if (!pExpr->PrepareAndCompose(_composer)) return nullptr;
-	RefPtr<Node_Gear> pNode(new Node_Gear(pExpr.release()));
+	RefPtr<Node_Gear> pNode(new Node_Gear(GetOptimizer().Reference(), pExpr.release()));
 	RefPtr<Node> pNodeChild(CreateNode(exprEx.GetExprLeft()));
 	if (!pNodeChild) return nullptr;
 	pNodeChild->Connect(pNode->GetConnectorSrc());

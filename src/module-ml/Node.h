@@ -347,13 +347,16 @@ public:
 //------------------------------------------------------------------------------
 class Node_Gear : public Node_Unary {
 private:
+	RefPtr<Optimizer> _pOptimizer;
 	RefPtr<Expr> _pExprRight;
 	RefPtr<Gear> _pGear;
 public:
-	Node_Gear(Expr* pExprRight) : _pExprRight(pExprRight) {}
+	Node_Gear(Optimizer* pOptimizer, Expr* pExprRight) : _pOptimizer(pOptimizer), _pExprRight(pExprRight) {}
+	const Optimizer& GetOptimizer() const { return *_pOptimizer; }
 	virtual String GetTypeName() const override {
 		return String().Format("Gear:%s", _pGear? _pGear->GetName() : "nil");
 	}
+	virtual bool IsVulnerable() const override;
 	virtual bool EvalForward(Processor& processor) override;
 	virtual bool EvalBackward(Processor& processor) override;
 	virtual bool GatherMemberSymbol(SymbolList& symbols) const;

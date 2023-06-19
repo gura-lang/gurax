@@ -82,7 +82,7 @@ bool Tanh::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const 
 	return true;
 }
 
-bool Tanh::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, const Array& arrayBwdIn)
+bool Tanh::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bool bwdPropagationFlag, const Array& arrayBwdIn)
 {
 	if (!pArrayBwdOut) {
 		pArrayBwdOut.reset(Array::Create(arrayBwdIn.GetElemType(), arrayBwdIn.GetDimSizes()));

@@ -78,7 +78,7 @@ bool Conv1d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, cons
 	return true;
 }
 
-bool Conv1d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, const Array& arrayBwdIn)
+bool Conv1d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bool bwdPropagationFlag, const Array& arrayBwdIn)
 {
 	if (!pArrayBwdOut) {
 		pArrayBwdOut.reset(Array::Create(arrayBwdIn.GetElemType(), arrayBwdIn.GetDimSizes()));

@@ -8,7 +8,8 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 // Conv2d
 //------------------------------------------------------------------------------
-Conv2d::Conv2d(Array* pArrayFilter, size_t strides, size_t padding) : _pArrayFilter(pArrayFilter), _strides(strides), _padding(padding)
+Conv2d::Conv2d(Array* pArrayFilter, size_t strides, size_t padding) : Gear(true),
+	_pArrayFilter(pArrayFilter), _strides(strides), _padding(padding), _pOptimizerInstance(new Optimizer_None::InstanceEx())
 {
 }
 
@@ -20,6 +21,7 @@ bool Conv2d::ValidateArrayFilter(const Array& arrayFilter)
 {
 	return true;
 }
+
 
 bool Conv2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn)
 {
@@ -54,7 +56,7 @@ bool Conv2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, cons
 	return true;
 }
 
-bool Conv2d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, const Array& arrayBwdIn)
+bool Conv2d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bool bwdPropagationFlag, const Array& arrayBwdIn)
 {
 	// arrayBwdIn                                .. (nSamples, nFilters, nRowsBwdIn, nColsBwdIn)
 	// _pArrayFilter                             .. (nFilters, nChannels, nRowsFilter, nColsFilter)
@@ -80,13 +82,13 @@ bool Conv2d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, con
 	arrayBwdIn.TransposeMulti(_pArrayBwd1, axes);
 	_pArrayBwd1->Reshape(_pArrayBwd2, DimSizes(nSamples * nRowsBwdIn * nColsBwdIn, nFilters));
 	_pArrayFwd1->Transpose2d(_pArrayBwd3);
-	Array::Dot(_pArrayBwd4, *_pArrayBwd3, *_pArrayBwd2);
+	if (!Array::Dot(_pArrayBwd4, *_pArrayBwd3, *_pArrayBwd2)) return false;
 	_pArrayBwd4->Transpose2d(_pArrayBwd5);
 	_pArrayBwd5->Reshape(_pArrayFilterGrad, DimSizes(nFilters, nChannels, nRowsFilter, nColsFilter));
-	Array::Dot(_pArrayBwd6, *_pArrayBwd2, *_pArrayFwd2);
-	if (!ColToImg2d(pArrayBwdOut, _pArrayFwdInSaved->GetDimSizes(), *_pArrayBwd6,
+	if (!Array::Dot(_pArrayBwd6, *_pArrayBwd2, *_pArrayFwd2)) return false;
+	if (bwdPropagationFlag && !ColToImg2d(pArrayBwdOut, _pArrayFwdInSaved->GetDimSizes(), *_pArrayBwd6,
 				nRowsFilter, nColsFilter, _strides, _strides, _padding, _padding)) return false;
-	return true;
+	return _pOptimizerInstance->Update(processor, _pArrayFilter, *_pArrayFilterGrad);
 }
 
 String Conv2d::ToString(const StringStyle& ss) const

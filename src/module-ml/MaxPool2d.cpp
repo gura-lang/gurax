@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 // MaxPool2d
 //------------------------------------------------------------------------------
-MaxPool2d::MaxPool2d(size_t nRowsKernel, size_t nColsKernel, size_t stridesRow, size_t stridesCol) :
+MaxPool2d::MaxPool2d(size_t nRowsKernel, size_t nColsKernel, size_t stridesRow, size_t stridesCol) : Gear(false),
 	_nRowsKernel(nRowsKernel), _nColsKernel(nColsKernel), _stridesRow(stridesRow), _stridesCol(stridesCol)
 {
 }
@@ -67,7 +67,7 @@ bool MaxPool2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, c
 	return true;
 }
 
-bool MaxPool2d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, const Array& arrayBwdIn)
+bool MaxPool2d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bool bwdPropagationFlag, const Array& arrayBwdIn)
 {
 	//if (!pArrayBwdOut) {
 	//	pArrayBwdOut.reset(Array::Create(arrayBwdIn.GetElemType(), arrayBwdIn.GetDimSizes()));

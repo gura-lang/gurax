@@ -20,7 +20,7 @@ private:
 	RefPtr<Array> _pArrayFwdSaved;
 public:
 	// Constructor
-	Conv1d() {}
+	Conv1d() : Gear(false) {}
 	// Copy constructor/operator
 	Conv1d(const Conv1d& src) = delete;
 	Conv1d& operator=(const Conv1d& src) = delete;
@@ -34,7 +34,7 @@ public:
 public:
 	virtual const char* GetName() const override { return "ml.Conv1d"; }
 	virtual bool EvalForward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array) override;
-	virtual bool EvalBackward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array) override;
+	virtual bool EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bool bwdPropagationFlag, const Array& array) override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Conv1d& other) const { return this == &other; }

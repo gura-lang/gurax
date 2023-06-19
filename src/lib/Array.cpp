@@ -1726,7 +1726,7 @@ bool Array::And(RefPtr<Array>& pArrayRtn, const Array& arrayL, UInt64 numR)
 bool Array::Sub(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
 	if (arrayL.IsArray() && arrayR.IsArray()) {
-		return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Sub_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "&");
+		return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Sub_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "-");
 	} else if (arrayL.IsArray() && arrayR.IsScalarNumber()) {
 		return Sub(pArrayRtn, arrayL, arrayR.GetScalarDouble());
 	} else if (arrayL.IsArray() && arrayR.IsScalarComplex()) {
@@ -1814,7 +1814,7 @@ bool Array::Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& nu
 bool Array::Div(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
 	if (arrayL.IsArray() && arrayR.IsArray()) {
-		return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Div_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "*");
+		return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Div_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "/");
 	} else if (arrayL.IsArray() && arrayR.IsScalarNumber()) {
 		return Div(pArrayRtn, arrayL, arrayR.GetScalarDouble());
 	} else if (arrayL.IsArray() && arrayR.IsScalarComplex()) {
@@ -1963,7 +1963,7 @@ bool Array::Or(RefPtr<Array>& pArrayRtn, const Array& arrayL, UInt64 numR)
 bool Array::Xor(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
 	if (arrayL.IsArray() && arrayR.IsArray()) {
-		return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Xor_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "|");
+		return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Xor_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "^");
 	} else if (arrayL.IsArray() && arrayR.IsScalarNumber()) {
 		return Xor(pArrayRtn, arrayL, arrayR.GetScalarUInt64());
 	} else if (arrayL.IsArray() && arrayR.IsScalarComplex()) {

@@ -21,7 +21,7 @@ private:
 	RefPtr<Array> _pArrayFwdSaved;
 public:
 	// Constructor
-	Softmax(int axis) : _axis(axis) {}
+	Softmax(int axis) : Gear(false), _axis(axis) {}
 	// Copy constructor/operator
 	Softmax(const Softmax& src) = delete;
 	Softmax& operator=(const Softmax& src) = delete;
@@ -35,7 +35,7 @@ public:
 public:
 	virtual const char* GetName() const override { return "ml.Softmax"; }
 	virtual bool EvalForward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array) override;
-	virtual bool EvalBackward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array) override;
+	virtual bool EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bool bwdPropagationFlag, const Array& array) override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Softmax& other) const { return this == &other; }

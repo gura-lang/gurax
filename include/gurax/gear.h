@@ -17,9 +17,11 @@ public:
 	Gurax_DeclareReferable(Gear);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Gear");
+private:
+	bool _hasVulnerableParamFlag;
 public:
 	// Constructor
-	Gear() {}
+	Gear(bool hasVulnerableParamFlag) : _hasVulnerableParamFlag(hasVulnerableParamFlag) {}
 	// Copy constructor/operator
 	Gear(const Gear& src) = delete;
 	Gear& operator=(const Gear& src) = delete;
@@ -29,10 +31,12 @@ public:
 protected:
 	~Gear() = default;
 public:
+	bool HasVulnerableParam() const { return _hasVulnerableParamFlag; }
+public:
 	virtual void SetOptimizer(const Optimizer& optimizer) {}
 	virtual const char* GetName() const = 0; 
 	virtual bool EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn) = 0;
-	virtual bool EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, const Array& arrayBwdIn) = 0;
+	virtual bool EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bool bwdPropagationFlag, const Array& arrayBwdIn) = 0;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Gear& other) const { return this == &other; }
