@@ -53,14 +53,16 @@ bool MaxPool2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, c
 	size_t nPlanes = DimSizes::CalcLength(dimSizesSrc.begin(), dimSizesSrc.begin() + dimSizesSrc.size() - 2);
 	for (size_t iPlane = 0; iPlane < nPlanes; iPlane++, pElemPlane += bytesPerPlane) {
 		auto pElemKernelRow = pElemPlane;
-		for (size_t iRowOut = 0; iRowOut < nRowsOut; iRowOut++, pElemKernelRow += bytesStridesRow) {
+		for (size_t iRowIn = 0, iRowOut = 0; iRowOut < nRowsOut; iRowIn += _stridesRow, iRowOut++, pElemKernelRow += bytesStridesRow) {
 			auto pElemKernelCol = pElemKernelRow;
-			for (size_t iColOut = 0; iColOut < nColsOut; iColOut++, pElemKernelCol += bytesStridesCol, pElemPool += bytesPerCol) {
+			for (size_t iColIn =0, iColOut = 0; iColOut < nColsOut; iColIn += _stridesCol, iColOut++, pElemKernelCol += bytesStridesCol, pElemPool += bytesPerCol) {
 				auto pElemKernel = pElemKernelCol;
+				size_t iRowInSel = iRowIn, iColInSel = iColIn;
 				funcPut(pElemPool, pElemKernel);
 				for (size_t iRowKernel = 0; iRowKernel < _nRowsKernel; iRowKernel++, pElemKernel += bytesPerRow) {
-					funcMaxPool(pElemPool, pElemKernel, _nColsKernel);
+					funcMaxPool(pElemPool, pElemKernel, _nColsKernel, iRowIn + iRowKernel, iColIn, &iRowInSel, &iColInSel);
 				}
+				
 			}
 		}
 	}

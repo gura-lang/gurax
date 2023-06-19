@@ -7,15 +7,20 @@ Gurax_BeginModuleScope(ml)
 
 Funcs funcs;
 
-template<typename T_Elem> void MaxPool_T(void* pvPool, const void* pvSrc, size_t len)
+template<typename T_Elem> void MaxPool_T(void* pvPool, const void* pvSrc, size_t len, size_t iRowIn, size_t iColIn, size_t* piRowInSel, size_t* piColInSel)
 {
 	T_Elem* pPool = reinterpret_cast<T_Elem*>(pvPool);
 	const T_Elem* pSrc = reinterpret_cast<const T_Elem*>(pvSrc);
 	const T_Elem* pSrcEnd = pSrc + len;
-	for ( ; pSrc != pSrcEnd; pSrc++) if (*pPool < *pSrc) *pPool = *pSrc;
+	for ( ; pSrc != pSrcEnd; pSrc++, iColIn++) {
+		if (*pPool < *pSrc) {
+			*pPool = *pSrc;
+			*piRowInSel = iRowIn, *piColInSel = iColIn;
+		}
+	}
 }
 
-template<> void MaxPool_T<Complex>(void* pvPool, const void* pvSrc, size_t len) {}
+template<> void MaxPool_T<Complex>(void* pvPool, const void* pvSrc, size_t len, size_t iRowIn, size_t iColIn, size_t* piRowInSel, size_t* piColInSel) {}
 
 void InitializeUtil()
 {
