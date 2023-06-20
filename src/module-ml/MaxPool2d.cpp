@@ -38,6 +38,7 @@ bool MaxPool2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, c
 		dimSizesPool.push_back(nRowsOut);
 		dimSizesPool.push_back(nColsOut);
 		pArrayFwdOut.reset(Array::Create(elemType, dimSizesPool));
+		_pArrayScanPosInSel.reset(Array::Create(Array::ElemType::UInt32, dimSizesPool));
 		if (!pArrayFwdOut) return false;
 		_pArrayFwdSaved.reset(pArrayFwdOut.Reference());
 	}
@@ -50,19 +51,21 @@ bool MaxPool2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, c
 	auto funcMaxPool = funcs.MaxPool[elemType.id];
 	auto pElemPool = pArrayFwdOut->GetPointerC<UInt8>();
 	auto pElemPlane = arrayFwdIn.GetPointerC<UInt8>();
+	auto pScanPosInSel = _pArrayScanPosInSel->GetPointerC<UInt32>();
 	size_t nPlanes = DimSizes::CalcLength(dimSizesSrc.begin(), dimSizesSrc.begin() + dimSizesSrc.size() - 2);
 	for (size_t iPlane = 0; iPlane < nPlanes; iPlane++, pElemPlane += bytesPerPlane) {
 		auto pElemKernelRow = pElemPlane;
-		for (size_t iRowIn = 0, iRowOut = 0; iRowOut < nRowsOut; iRowIn += _stridesRow, iRowOut++, pElemKernelRow += bytesStridesRow) {
+		for (UInt32 scanPosInRow = 0, iRowOut = 0; iRowOut < nRowsOut; scanPosInRow += nColsSrc, iRowOut++, pElemKernelRow += bytesStridesRow) {
 			auto pElemKernelCol = pElemKernelRow;
-			for (size_t iColIn =0, iColOut = 0; iColOut < nColsOut; iColIn += _stridesCol, iColOut++, pElemKernelCol += bytesStridesCol, pElemPool += bytesPerCol) {
+			for (UInt32 scanPosInCol = scanPosInRow, iColOut = 0; iColOut < nColsOut;
+							scanPosInCol++, iColOut++, pElemKernelCol += bytesStridesCol, pElemPool += bytesPerCol, pScanPosInSel++) {
 				auto pElemKernel = pElemKernelCol;
-				size_t iRowInSel = iRowIn, iColInSel = iColIn;
+				UInt32 scanPosIn = scanPosInCol;
+				*pScanPosInSel = scanPosInCol;
 				funcPut(pElemPool, pElemKernel);
 				for (size_t iRowKernel = 0; iRowKernel < _nRowsKernel; iRowKernel++, pElemKernel += bytesPerRow) {
-					funcMaxPool(pElemPool, pElemKernel, _nColsKernel, iRowIn + iRowKernel, iColIn, &iRowInSel, &iColInSel);
+					funcMaxPool(pElemPool, pElemKernel, _nColsKernel, scanPosIn, pScanPosInSel);
 				}
-				
 			}
 		}
 	}
@@ -71,10 +74,6 @@ bool MaxPool2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, c
 
 bool MaxPool2d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bool bwdPropagationFlag, const Array& arrayBwdIn)
 {
-	//if (!pArrayBwdOut) {
-	//	pArrayBwdOut.reset(Array::Create(arrayBwdIn.GetElemType(), arrayBwdIn.GetDimSizes()));
-	//	if (!pArrayBwdOut) return false;
-	//}
 	return true;
 }
 

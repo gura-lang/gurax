@@ -8,7 +8,7 @@
 Gurax_BeginModuleScope(ml)
 
 struct Funcs {
-	std::function<void (void* pvPool, const void* pvSrc, size_t len, size_t iRowIn, size_t iColIn, size_t* piRowInSel, size_t* piColInSel)> MaxPool[Array::ElemTypeIdMax];
+	std::function<void (void* pvPool, const void* pvSrc, size_t len, UInt32 scanPosIn, UInt32* pScanPosInSel)> MaxPool[Array::ElemTypeIdMax];
 };
 
 extern Funcs funcs;

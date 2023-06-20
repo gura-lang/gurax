@@ -22,6 +22,7 @@ private:
 	size_t _stridesRow;
 	size_t _stridesCol;
 	RefPtr<Array> _pArrayFwdSaved;
+	RefPtr<Array> _pArrayScanPosInSel;
 public:
 	// Constructor
 	MaxPool2d(size_t nRowsKernel, size_t nColsKernel, size_t stridesRow, size_t stridesCol);
