@@ -40,7 +40,7 @@ bool MaxPool2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, c
 		pArrayFwdOut.reset(Array::Create(elemType, dimSizesPool));
 		_pArrayScanPosInSel.reset(Array::Create(Array::ElemType::UInt32, dimSizesPool));
 		if (!pArrayFwdOut) return false;
-		_pArrayFwdSaved.reset(pArrayFwdOut.Reference());
+		_pArrayFwdOutSaved.reset(pArrayFwdOut.Reference());
 	}
 	size_t bytesPerCol = elemType.bytes;
 	size_t bytesPerRow = nColsSrc * bytesPerCol;

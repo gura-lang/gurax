@@ -72,7 +72,7 @@ bool Conv1d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, cons
 	if (!pArrayFwdOut) {
 		pArrayFwdOut.reset(Array::Create(arrayFwdIn.GetElemType(), arrayFwdIn.GetDimSizes()));
 		if (!pArrayFwdOut) return false;
-		_pArrayFwdSaved.reset(pArrayFwdOut.Reference());
+		_pArrayFwdOutSaved.reset(pArrayFwdOut.Reference());
 	}
 	Conv1d_Forward_Array[arrayFwdIn.GetElemType().id](*pArrayFwdOut, arrayFwdIn);
 	return true;
@@ -84,7 +84,7 @@ bool Conv1d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, boo
 		pArrayBwdOut.reset(Array::Create(arrayBwdIn.GetElemType(), arrayBwdIn.GetDimSizes()));
 		if (!pArrayBwdOut) return false;
 	}
-	Conv1d_Backward_Array[arrayBwdIn.GetElemType().id](*pArrayBwdOut, *_pArrayFwdSaved, arrayBwdIn);
+	Conv1d_Backward_Array[arrayBwdIn.GetElemType().id](*pArrayBwdOut, *_pArrayFwdOutSaved, arrayBwdIn);
 	return true;
 }
 

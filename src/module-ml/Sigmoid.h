@@ -17,7 +17,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("ml.Sigmoid");
 private:
-	RefPtr<Array> _pArrayFwdSaved;
+	RefPtr<Array> _pArrayFwdOutSaved;
 public:
 	// Constructor
 	Sigmoid() : Gear(false) {}

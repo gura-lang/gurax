@@ -22,9 +22,15 @@ template<typename T_Elem> void MaxPool_T(void* pvPool, const void* pvSrc, size_t
 
 template<> void MaxPool_T<Complex>(void* pvPool, const void* pvSrc, size_t len, UInt32 scanPosIn, UInt32* pScanPosInSel) {}
 
+template<typename T_Elem> void PoolBackward_T(void* pvBwdOut, UInt32 scanPos, const void* pvBwdIn)
+{
+	*(reinterpret_cast<T_Elem*>(pvBwdOut) + scanPos) += *reinterpret_cast<const T_Elem*>(pvBwdIn);
+}
+
 void InitializeUtil()
 {
 	Gurax_SetArrayFuncSingle(funcs.MaxPool, MaxPool_T);
+	Gurax_SetArrayFuncSingle(funcs.PoolBackward, PoolBackward_T);
 }
 
 void PrintCol(const void* pv, size_t bytes)

@@ -33,13 +33,13 @@ template<> void Sigmoid_Forward_Array_T<Half>(Array& arrayFwdOut, const Array& a
 	}
 }
 
-template<typename T_Elem> void Sigmoid_Backward_Array_T(Array& arrayBwdOut, const Array& arrayFwdSaved, const Array& arrayBwdIn)
+template<typename T_Elem> void Sigmoid_Backward_Array_T(Array& arrayBwdOut, const Array& arrayFwdOutSaved, const Array& arrayBwdIn)
 {
-	// arrayBwdOUt = arrayBwdIn / (1 - arrayFwdSaved) * arrayFwdSaved
+	// arrayBwdOUt = arrayBwdIn / (1 - arrayFwdOutSaved) * arrayFwdOutSaved
 	const T_Elem* pBwdIn = arrayBwdIn.GetPointerC<T_Elem>();
 	const T_Elem* pBwdInEnd = pBwdIn + arrayBwdIn.GetDimSizes().CalcLength();
 	T_Elem* pBwdOut = arrayBwdOut.GetPointerC<T_Elem>();
-	const T_Elem* pFwdSaved = arrayFwdSaved.GetPointerC<T_Elem>();
+	const T_Elem* pFwdSaved = arrayFwdOutSaved.GetPointerC<T_Elem>();
 	for ( ; pBwdIn != pBwdInEnd; pBwdIn++, pBwdOut++, pFwdSaved++) {
 		const T_Elem& bwdIn = *pBwdIn;
 		const T_Elem& fwdSaved = *pFwdSaved;
@@ -47,14 +47,14 @@ template<typename T_Elem> void Sigmoid_Backward_Array_T(Array& arrayBwdOut, cons
 	}
 }
 
-template<> void Sigmoid_Backward_Array_T<Half>(Array& arrayBwdOut, const Array& arrayFwdSaved, const Array& arrayBwdIn)
+template<> void Sigmoid_Backward_Array_T<Half>(Array& arrayBwdOut, const Array& arrayFwdOutSaved, const Array& arrayBwdIn)
 {
-	// arrayBwdOUt = arrayBwdIn / (1 - arrayFwdSaved) * arrayFwdSaved
+	// arrayBwdOUt = arrayBwdIn / (1 - arrayFwdOutSaved) * arrayFwdOutSaved
 	using T_Elem = Half;
 	const T_Elem* pBwdIn = arrayBwdIn.GetPointerC<T_Elem>();
 	const T_Elem* pBwdInEnd = pBwdIn + arrayBwdIn.GetDimSizes().CalcLength();
 	T_Elem* pBwdOut = arrayBwdOut.GetPointerC<T_Elem>();
-	const T_Elem* pFwdSaved = arrayFwdSaved.GetPointerC<T_Elem>();
+	const T_Elem* pFwdSaved = arrayFwdOutSaved.GetPointerC<T_Elem>();
 	for ( ; pBwdIn != pBwdInEnd; pBwdIn++, pBwdOut++, pFwdSaved++) {
 		Float bwdIn = static_cast<Float>(*pBwdIn);
 		Float fwdSaved = static_cast<Float>(*pFwdSaved);
@@ -63,7 +63,7 @@ template<> void Sigmoid_Backward_Array_T<Half>(Array& arrayBwdOut, const Array& 
 }
 
 std::function<void (Array& arrayFwdOut, const Array& arrayFwdIn)> Sigmoid_Forward_Array[Array::ElemTypeIdMax];
-std::function<void (Array& arrayBwdOut, const Array& arrayFwdSaved, const Array& arrayBwdIn)> Sigmoid_Backward_Array[Array::ElemTypeIdMax];
+std::function<void (Array& arrayBwdOut, const Array& arrayFwdOutSaved, const Array& arrayBwdIn)> Sigmoid_Backward_Array[Array::ElemTypeIdMax];
 
 void Sigmoid::Initialize()
 {
@@ -76,7 +76,7 @@ bool Sigmoid::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, con
 	if (!pArrayFwdOut) {
 		pArrayFwdOut.reset(Array::Create(arrayFwdIn.GetElemType(), arrayFwdIn.GetDimSizes()));
 		if (!pArrayFwdOut) return false;
-		_pArrayFwdSaved.reset(pArrayFwdOut.Reference());
+		_pArrayFwdOutSaved.reset(pArrayFwdOut.Reference());
 	}
 	Sigmoid_Forward_Array[arrayFwdIn.GetElemType().id](*pArrayFwdOut, arrayFwdIn);
 	return true;
@@ -89,7 +89,7 @@ bool Sigmoid::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bo
 		pArrayBwdOut.reset(Array::Create(arrayBwdIn.GetElemType(), arrayBwdIn.GetDimSizes()));
 		if (!pArrayBwdOut) return false;
 	}
-	Sigmoid_Backward_Array[arrayBwdIn.GetElemType().id](*pArrayBwdOut, *_pArrayFwdSaved, arrayBwdIn);
+	Sigmoid_Backward_Array[arrayBwdIn.GetElemType().id](*pArrayBwdOut, *_pArrayFwdOutSaved, arrayBwdIn);
 	return true;
 }
 

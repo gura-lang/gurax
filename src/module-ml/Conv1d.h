@@ -17,7 +17,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("ml.Conv1d");
 private:
-	RefPtr<Array> _pArrayFwdSaved;
+	RefPtr<Array> _pArrayFwdOutSaved;
 public:
 	// Constructor
 	Conv1d() : Gear(false) {}

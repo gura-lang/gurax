@@ -17,7 +17,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("ml.Tanh");
 private:
-	RefPtr<Array> _pArrayFwdSaved;
+	RefPtr<Array> _pArrayFwdOutSaved;
 public:
 	// Constructor
 	Tanh() : Gear(false) {}

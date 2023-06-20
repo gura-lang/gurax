@@ -94,26 +94,24 @@ template<> void Softmax_Forward_Array_T<Half>(Array& arrayFwdOut, const Array& a
 
 template<> void Softmax_Forward_Array_T<Complex>(Array& arrayFwdOut, const Array& arrayFwdIn, int axis) {}
 
-template<typename T_Elem> void Softmax_Backward_Array_T(Array& arrayBwdOut, const Array& arrayFwdSaved, const Array& arrayBwdIn)
+template<typename T_Elem> void Softmax_Backward_Array_T(Array& arrayBwdOut, const Array& arrayFwdOutSaved, const Array& arrayBwdIn)
 {
 	const T_Elem* pBwdIn = arrayBwdIn.GetPointerC<T_Elem>();
 	const T_Elem* pBwdInEnd = pBwdIn + arrayBwdIn.GetDimSizes().CalcLength();
 	T_Elem* pBwdOut = arrayBwdOut.GetPointerC<T_Elem>();
-	const T_Elem* pFwdSaved = arrayFwdSaved.GetPointerC<T_Elem>();
-	for ( ; pBwdIn != pBwdInEnd; pBwdIn++, pBwdOut++, pFwdSaved++) {
+	const T_Elem* pFwdOutSaved = arrayFwdOutSaved.GetPointerC<T_Elem>();
+	for ( ; pBwdIn != pBwdInEnd; pBwdIn++, pBwdOut++, pFwdOutSaved++) {
 		const T_Elem& bwdIn = *pBwdIn;
-		//const T_Elem& fwdSaved = *pFwdSaved;
-		//*pBwdOut = fwdSaved - bwdIn;
 		*pBwdOut = bwdIn;
 	}
 }
 
-template<> void Softmax_Backward_Array_T<Half>(Array& arrayBwdOut, const Array& arrayFwdSaved, const Array& arrayBwdIn)
+template<> void Softmax_Backward_Array_T<Half>(Array& arrayBwdOut, const Array& arrayFwdOutSaved, const Array& arrayBwdIn)
 {
 }
 
 std::function<void (Array& arrayFwdOut, const Array& arrayFwdIn, int axis)> Softmax_Forward_Array[Array::ElemTypeIdMax];
-std::function<void (Array& arrayBwdOut, const Array& arrayFwdSaved, const Array& arrayBwdIn)> Softmax_Backward_Array[Array::ElemTypeIdMax];
+std::function<void (Array& arrayBwdOut, const Array& arrayFwdOutSaved, const Array& arrayBwdIn)> Softmax_Backward_Array[Array::ElemTypeIdMax];
 
 void Softmax::Initialize()
 {
@@ -126,7 +124,7 @@ bool Softmax::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, con
 	if (!pArrayFwdOut) {
 		pArrayFwdOut.reset(Array::Create(arrayFwdIn.GetElemType(), arrayFwdIn.GetDimSizes()));
 		if (!pArrayFwdOut) return false;
-		_pArrayFwdSaved.reset(pArrayFwdOut.Reference());
+		_pArrayFwdOutSaved.reset(pArrayFwdOut.Reference());
 	}
 	int axis = _axis;
 	if (axis < 0) axis += arrayFwdIn.GetDimSizes().size();
@@ -145,7 +143,7 @@ bool Softmax::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bo
 		pArrayBwdOut.reset(Array::Create(arrayBwdIn.GetElemType(), arrayBwdIn.GetDimSizes()));
 		if (!pArrayBwdOut) return false;
 	}
-	Softmax_Backward_Array[arrayBwdIn.GetElemType().id](*pArrayBwdOut, *_pArrayFwdSaved, arrayBwdIn);
+	Softmax_Backward_Array[arrayBwdIn.GetElemType().id](*pArrayBwdOut, *_pArrayFwdOutSaved, arrayBwdIn);
 	return true;
 }
 
