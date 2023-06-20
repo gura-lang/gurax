@@ -47,6 +47,7 @@ bool ReLU::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const 
 
 bool ReLU::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bool bwdPropagationFlag, const Array& arrayBwdIn)
 {
+	if (!bwdPropagationFlag) return true;
 	if (!pArrayBwdOut) pArrayBwdOut.reset(Array::Create(arrayBwdIn.GetElemType(), arrayBwdIn.GetDimSizes()));
 	if (!pArrayBwdOut) return false;
 	ReLU_Backward_Array[arrayBwdIn.GetElemType().id](*pArrayBwdOut, *_pArrayBoolSaved, arrayBwdIn);

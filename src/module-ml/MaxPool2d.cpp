@@ -74,6 +74,7 @@ bool MaxPool2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, c
 
 bool MaxPool2d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bool bwdPropagationFlag, const Array& arrayBwdIn)
 {
+	if (!bwdPropagationFlag) return true;
 	return true;
 }
 
