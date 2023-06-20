@@ -47,6 +47,8 @@ bool MaxPool2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, c
 	size_t bytesPerRow = nColsFwdIn * bytesPerCol;
 	size_t bytesStridesCol = _stridesCol * bytesPerCol;
 	size_t bytesStridesRow = _stridesRow * bytesPerRow;
+	size_t scanPosStridesCol = _stridesCol;
+	size_t scanPosStridesRow = _stridesRow * nColsFwdIn;
 	size_t bytesPerPlane = bytesPerRow * nRowsFwdIn;
 	auto funcPut = Array::funcs.Put[elemType.id];
 	auto funcMaxPool = funcs.MaxPool[elemType.id];
@@ -57,16 +59,16 @@ bool MaxPool2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, c
 	for (size_t iPlane = 0; iPlane < nPlanes; iPlane++, pElemPlane += bytesPerPlane) {
 		auto pElemKernelRow = pElemPlane;
 		UInt32 scanPosInRow = 0;
-		for (size_t iRowOut = 0; iRowOut < nRowsFwdOut; scanPosInRow += nColsFwdIn, iRowOut++, pElemKernelRow += bytesStridesRow) {
+		for (size_t iRowOut = 0; iRowOut < nRowsFwdOut; scanPosInRow += scanPosStridesRow, iRowOut++, pElemKernelRow += bytesStridesRow) {
 			auto pElemKernelCol = pElemKernelRow;
 			UInt32 scanPosInCol = scanPosInRow;
 			for (size_t iColOut = 0; iColOut < nColsFwdOut;
-							scanPosInCol++, iColOut++, pElemKernelCol += bytesStridesCol, pElemPool += bytesPerCol, pScanPosInSel++) {
+					scanPosInCol += scanPosStridesCol, iColOut++, pElemKernelCol += bytesStridesCol, pElemPool += bytesPerCol, pScanPosInSel++) {
 				auto pElemKernel = pElemKernelCol;
 				UInt32 scanPosIn = scanPosInCol;
 				*pScanPosInSel = scanPosInCol;
 				funcPut(pElemPool, pElemKernel);
-				for (size_t iRowKernel = 0; iRowKernel < _nRowsKernel; iRowKernel++, pElemKernel += bytesPerRow) {
+				for (size_t iRowKernel = 0; iRowKernel < _nRowsKernel; scanPosIn += nColsFwdIn, iRowKernel++, pElemKernel += bytesPerRow) {
 					funcMaxPool(pElemPool, pElemKernel, _nColsKernel, scanPosIn, pScanPosInSel);
 				}
 			}
