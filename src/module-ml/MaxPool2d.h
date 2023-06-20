@@ -21,6 +21,7 @@ private:
 	size_t _nColsKernel;
 	size_t _stridesRow;
 	size_t _stridesCol;
+	RefPtr<Array> _pArrayFwdInSaved;
 	RefPtr<Array> _pArrayFwdOutSaved;
 	RefPtr<Array> _pArrayScanPosInSel;
 public:
