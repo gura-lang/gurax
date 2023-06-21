@@ -20,9 +20,6 @@
 #include "VType_Random.h"
 #include "VType_Stat.h"
 #include "VType_Template.h"
-
-
-
 #include "VType_DateTime.h"
 #include "VType_Expr.h"
 #include "VType_List.h"

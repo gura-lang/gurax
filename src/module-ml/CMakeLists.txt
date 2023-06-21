@@ -46,6 +46,7 @@ target_sources(ml.gurd PRIVATE
 	Conv3d.cpp
 	MaxPool2d.cpp
 	ReLU.cpp
+	Reshape.cpp
 	Sigmoid.cpp
 	Softmax.cpp
 	Tanh.cpp
@@ -58,6 +59,7 @@ target_sources(ml.gurd PRIVATE
 	VType_Conv3d.cpp
 	VType_MaxPool2d.cpp
 	VType_ReLU.cpp
+	VType_Reshape.cpp
 	VType_Sigmoid.cpp
 	VType_Softmax.cpp
 	VType_Tanh.cpp)
