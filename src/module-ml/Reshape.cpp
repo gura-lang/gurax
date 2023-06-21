@@ -10,29 +10,20 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 bool Reshape::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn)
 {
-	pArrayFwdOut.reset(arrayFwdIn.Reshape(*pValuesDimSize));
-	if (!pArrayFwdOut) {
-		pArrayFwdOut.reset(Array::Create(arrayFwdIn.GetElemType(), arrayFwdIn.GetDimSizes()));
-		if (!pArrayFwdOut) return false;
-		_pArrayFwdOutSaved.reset(pArrayFwdOut.Reference());
-	}
-	pArrayFwdOut
-	return true;
+	_pArrayFwdInSaved.reset(arrayFwdIn.Reference());
+	return arrayFwdIn.Reshape(pArrayFwdOut, *_pValuesDimSize);
 }
 
 bool Reshape::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bool bwdPropagationFlag, const Array& arrayBwdIn)
 {
 	if (!bwdPropagationFlag) return true;
-	if (!pArrayBwdOut) {
-		pArrayBwdOut.reset(Array::Create(arrayBwdIn.GetElemType(), arrayBwdIn.GetDimSizes()));
-		if (!pArrayBwdOut) return false;
-	}
+	arrayBwdIn.Reshape(pArrayBwdOut, _pArrayFwdInSaved->GetDimSizes());
 	return true;
 }
 
 String Reshape::ToString(const StringStyle& ss) const
 {
-	return String().Format("ml.Reshape");
+	return String().Format("ml.Reshape:%s", _pValuesDimSize->ToString(StringStyle::Cram).c_str());
 }
 
 //------------------------------------------------------------------------------

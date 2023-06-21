@@ -18,7 +18,7 @@ public:
 	Gurax_MemoryPoolAllocator("ml.Reshape");
 private:
 	RefPtr<ValueOwner> _pValuesDimSize; // all values are Number or Nil
-	RefPtr<Array> _pArrayFwdOutSaved;
+	RefPtr<Array> _pArrayFwdInSaved;
 public:
 	// Constructor
 	Reshape(ValueOwner* pValuesDimSize) : Gear(false), _pValuesDimSize(pValuesDimSize) {}

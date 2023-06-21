@@ -42,12 +42,12 @@ Gurax_ImplementConstructor(Reshape)
 {
 	// Arguments
 	ArgPicker args(argument);
-	const ValueList& values = args.PickList();
+	const ValueList& valuesDimSize = args.PickList();
 	// Function body
-	RefPtr<ValueOwner> pValuesDimSizes(new ValueOwner());
-	pValuesDimSizes->reserve(values.size());
-	for (Value* pValue : values) pValuesDimSizes->push_back(pValue->Reference());
-	RefPtr<Reshape> pReshape(new Reshape(pValuesDimSizes.release()));
+	RefPtr<ValueOwner> pValuesDimSize(new ValueOwner());
+	pValuesDimSize->reserve(valuesDimSize.size());
+	for (Value* pValue : valuesDimSize) pValuesDimSize->push_back(pValue->Reference());
+	RefPtr<Reshape> pReshape(new Reshape(pValuesDimSize.release()));
 	return argument.ReturnValue(processor, new Value_Reshape(pReshape.release()));
 }
 
