@@ -2191,7 +2191,19 @@ bool Array::Dot(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arra
 	size_t nFwdRtn = 0;
 	size_t nFwdL = 0, nFwdR = 0;
 	DimSizes dimSizesRtn;
-
+	if (dimSizesL.size() >= 2 && dimSizesR.size() == 2) {
+		auto pBegin = dimSizesL.begin(), pEnd = dimSizesL.begin() + dimSizesL.size() - 2;
+		dimSizesRtn.insert(dimSizesRtn.begin(), pBegin, pEnd);
+		nFwdL = DimSizes::CalcLength(pBegin, pEnd) * dimSizesL.GetColSize() * dimSizesL.GetRowSize();
+	} else if (dimSizesL.size() == 2 && dimSizesR.size() >= 2) {
+		auto pBegin = dimSizesR.begin(), pEnd = dimSizesR.begin() + dimSizesR.size() - 2;
+		dimSizesRtn.insert(dimSizesRtn.begin(), pBegin, pEnd);
+		nFwdR = DimSizes::CalcLength(pBegin, pEnd) * dimSizesR.GetColSize() * dimSizesR.GetRowSize();
+	} else {
+		Error::Issue(ErrorType::SizeError, "unmatched array size: %s |.| %s",
+				arrayL.ToString(StringStyle::BriefCram).c_str(), arrayR.ToString(StringStyle::BriefCram).c_str());
+		return false;
+	}
 	dimSizesRtn.push_back(dimSizesL.GetRowSize());
 	dimSizesRtn.push_back(dimSizesR.GetColSize());
 	if (!pArrayRtn) pArrayRtn.reset(Create(GetElemTypeRtnForArithm(arrayL, arrayR), dimSizesRtn));
@@ -2199,7 +2211,12 @@ bool Array::Dot(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arra
 	void* pvRtn = pArrayRtn->GetPointerC<void>();
 	const void* pvL = arrayL.GetPointerC<void>();
 	const void* pvR = arrayR.GetPointerC<void>();
-	func(pvRtn, dimSizesRtn.GetRowSize(), dimSizesRtn.GetColSize(), pvL, pvR, dimSizesL.GetColSize());
+	for (size_t iRtn = 0; iRtn < nRtns; iRtn++) {
+		func(pvRtn, dimSizesRtn.GetRowSize(), dimSizesRtn.GetColSize(), pvL, pvR, dimSizesL.GetColSize());
+		pvRtn = pArrayRtn->FwdPointer(pvRtn, nFwdRtn);
+		pvL = arrayL.FwdPointer(pvL, nFwdL);
+		pvR = arrayR.FwdPointer(pvR, nFwdR);
+	}
 	return true;
 }
 
