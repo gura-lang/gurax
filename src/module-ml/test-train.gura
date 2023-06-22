@@ -3,28 +3,35 @@ import(ml.mnist)
 
 db = ml.mnist.Database('../../sample/resource/mnist')
 
-if (false) {
+if (true) {
 	//model = `(x |.| weight |*| ml.Softmax())
-	weight = @float(784, 10)
-	weight.Inject(Random.NormalSeq(0, ml.Xavier(784)))
+	weight = @float(28 * 28, 10)
+	weight.Inject(Random.NormalSeq(0, ml.Xavier(28 * 28)))
 	bias = @float(1, 10)
 	bias.Inject(Random.NormalSeq(0, ml.Xavier(10)))
 	model = `((x |.| weight + bias) |*| ml.Softmax())
 } elsif (false) {
-	weight1 = @float(784, 100)
+	weight1 = @float(28 * 28, 100)
 	weight2 = @float(100, 10)
 	bias1 = @float(1, 100)
 	bias2 = @float(1, 10)
-	weight1.Inject(Random.NormalSeq(0, ml.Xavier(784)))
+	weight1.Inject(Random.NormalSeq(0, ml.Xavier(28 * 28)))
 	weight2.Inject(Random.NormalSeq(0, ml.Xavier(100)))
 	bias1.Inject(Random.NormalSeq(0, ml.Xavier(100)))
 	bias1.Inject(Random.NormalSeq(0, ml.Xavier(10)))
 	model = `(((x |.| weight1 + bias1) |*| ml.Sigmoid() |.| weight2 + bias2) |*| ml.Softmax())
 } else {
-
+	nFilters = 30
+	filters = @float(nFilters, 1, 5, 5)
 	conv = ml.Conv2d(filters, stride = 1, padding = 0)
+	convSize = conv.CalcSizeOut(28, 28)
 	maxPool = ml.MaxPool2d(2, 2, stride = 2)
-	model = `(x |*| conv |*| ml.ReLU() |*| ml.MaxPool2d())
+	maxPoolSize = maxPool.CalcSizeOut(convSize*)
+	bias1 = @float(nFilters)
+
+	model = `((((x |*| conv + bias1) |*| ml.ReLU() |*| maxPool \
+				|.| weight1 + bias2) |*| ml.ReLU() \
+				|.| weight2 + bias3) |*| ml.Softmax())
 }
 
 scope {

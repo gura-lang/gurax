@@ -1498,24 +1498,24 @@ bool Array::Transpose2d(RefPtr<Array>& pArrayRtn) const
 	}
 	DimSizes dimSizesRtn;
 	dimSizesRtn.reserve(dimSizes.size());
-	size_t nUnits = 1;
+	size_t nRtns = 1;
 	for (auto pDim = dimSizes.begin(); pDim != dimSizes.begin() + dimSizes.size() - 2; pDim++) {
-		nUnits *= *pDim;
+		nRtns *= *pDim;
 		dimSizesRtn.push_back(*pDim);
 	}
 	size_t nRows = dimSizes.GetColSize();
 	size_t nCols = dimSizes.GetRowSize();
-	size_t lenFwd = nRows * nCols;
+	size_t nFwd = nRows * nCols;
 	dimSizesRtn.push_back(nRows);
 	dimSizesRtn.push_back(nCols);
 	pArrayRtn.reset(Create(GetElemType(), dimSizesRtn));
 	auto func = funcs.Transpose2d[GetElemType().id][GetElemType().id];
 	void* pvDst = pArrayRtn->GetPointerC<void>();
 	const void* pvSrc = GetPointerC<void>();
-	for (size_t iUnit = 0; iUnit < nUnits; iUnit++) {
+	for (size_t iRtn = 0; iRtn < nRtns; iRtn++) {
 		func(pvDst, pvSrc, nRows, nCols);
-		pvDst = pArrayRtn->FwdPointer(pvDst, lenFwd);
-		pvSrc = FwdPointer(pvSrc, lenFwd);
+		pvDst = pArrayRtn->FwdPointer(pvDst, nFwd);
+		pvSrc = FwdPointer(pvSrc, nFwd);
 	}
 	return true;
 }
@@ -1553,10 +1553,10 @@ bool Array::GenericUnaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRt
 bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Array& arrayL, const Array& arrayR,
 	const std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>& func, const char* opDisp)
 {
-	size_t nUnits = 1;
-	size_t lenUnit = 0;
-	size_t lenFwdL = 0, lenFwdR = 0;
-	const DimSizes* pDimSizesRtn = DimSizes::DetermineResult(arrayL.GetDimSizes(), arrayR.GetDimSizes(), &nUnits, &lenUnit, &lenFwdL, &lenFwdR);
+	size_t nRtns = 1;
+	size_t nFwdRtn = 0;
+	size_t nFwdL = 0, nFwdR = 0;
+	const DimSizes* pDimSizesRtn = DimSizes::DetermineResult(arrayL.GetDimSizes(), arrayR.GetDimSizes(), &nRtns, &nFwdRtn, &nFwdL, &nFwdR);
 	if (!pDimSizesRtn) {
 		Error::Issue(ErrorType::SizeError, "unmatched array size: %s %s %s",
 				arrayL.ToString(StringStyle::BriefCram).c_str(), opDisp, arrayR.ToString(StringStyle::BriefCram).c_str());
@@ -1567,11 +1567,11 @@ bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeR
 	void* pvRtn = pArrayRtn->GetPointerC<void>();
 	const void* pvL = arrayL.GetPointerC<void>();
 	const void* pvR = arrayR.GetPointerC<void>();
-	for (size_t iUnit = 0; iUnit < nUnits; iUnit++) {
-		func(pvRtn, pvL, pvR, lenUnit);
-		pvRtn = pArrayRtn->FwdPointer(pvRtn, lenUnit);
-		pvL = arrayL.FwdPointer(pvL, lenFwdL);
-		pvR = arrayR.FwdPointer(pvR, lenFwdR);
+	for (size_t iRtn = 0; iRtn < nRtns; iRtn++) {
+		func(pvRtn, pvL, pvR, nFwdRtn);
+		pvRtn = pArrayRtn->FwdPointer(pvRtn, nFwdRtn);
+		pvL = arrayL.FwdPointer(pvL, nFwdL);
+		pvR = arrayR.FwdPointer(pvR, nFwdR);
 	}
 	return true;
 }
@@ -2179,15 +2179,21 @@ bool Array::Cmp(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR)
 
 bool Array::Dot(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
+	auto func = funcs.Dot_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id];
 	const DimSizes& dimSizesL = arrayL.GetDimSizes();
 	const DimSizes& dimSizesR = arrayR.GetDimSizes();
-	if (dimSizesL.size() != 2 || dimSizesR.size() != 2 || dimSizesL.GetColSize() != dimSizesR.GetRowSize()) {
+	if (dimSizesL.size() < 2 || dimSizesR.size() < 2 || dimSizesL.GetColSize() != dimSizesR.GetRowSize()) {
 		Error::Issue(ErrorType::SizeError, "unmatched array size: %s |.| %s",
 				arrayL.ToString(StringStyle::BriefCram).c_str(), arrayR.ToString(StringStyle::BriefCram).c_str());
 		return false;
 	}
-	DimSizes dimSizesRtn(dimSizesL.GetRowSize(), dimSizesR.GetColSize());
-	auto func = funcs.Dot_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id];
+	size_t nRtns = 1;
+	size_t nFwdRtn = 0;
+	size_t nFwdL = 0, nFwdR = 0;
+	DimSizes dimSizesRtn;
+
+	dimSizesRtn.push_back(dimSizesL.GetRowSize());
+	dimSizesRtn.push_back(dimSizesR.GetColSize());
 	if (!pArrayRtn) pArrayRtn.reset(Create(GetElemTypeRtnForArithm(arrayL, arrayR), dimSizesRtn));
 	if (!pArrayRtn) return false;
 	void* pvRtn = pArrayRtn->GetPointerC<void>();
@@ -2337,19 +2343,19 @@ size_t DimSizes::CalcOffset(size_t axis, const ValueList& valuesDim, size_t* pSt
 }
 
 const DimSizes* DimSizes::DetermineResult(const DimSizes& dimSizesL, const DimSizes& dimSizesR,
-					size_t* pnUnits, size_t* pLenUnit, size_t* pLenFwdL, size_t* pLenFwdR)
+					size_t* pnRtns, size_t* pnFwdRtn, size_t* pnFwdL, size_t* pnFwdR)
 {
 	if (dimSizesL.size() >= dimSizesR.size()) {
 		size_t nDimsHead = dimSizesL.size() - dimSizesR.size();
-		*pnUnits = CalcLength(dimSizesL.begin(), dimSizesL.begin() + nDimsHead);
-		*pLenFwdL = *pLenUnit = dimSizesR.CalcLength();
-		*pLenFwdR = 0;
+		*pnRtns = CalcLength(dimSizesL.begin(), dimSizesL.begin() + nDimsHead);
+		*pnFwdL = *pnFwdRtn = dimSizesR.CalcLength();
+		*pnFwdR = 0;
 		if (dimSizesR.DoesMatch(dimSizesL, nDimsHead)) return &dimSizesL;
 	} else {
 		size_t nDimsHead = dimSizesR.size() - dimSizesL.size();
-		*pnUnits = CalcLength(dimSizesR.begin(), dimSizesR.begin() + nDimsHead);
-		*pLenFwdR = *pLenUnit = dimSizesL.CalcLength();
-		*pLenFwdL = 0;
+		*pnRtns = CalcLength(dimSizesR.begin(), dimSizesR.begin() + nDimsHead);
+		*pnFwdR = *pnFwdRtn = dimSizesL.CalcLength();
+		*pnFwdL = 0;
 		if (dimSizesL.DoesMatch(dimSizesR, nDimsHead)) return &dimSizesR;
 	}
 	return nullptr;

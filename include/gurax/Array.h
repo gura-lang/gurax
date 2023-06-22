@@ -39,7 +39,7 @@ public:
 	DimSizes(const_iterator first, const_iterator last) : NumList(first, last) {}
 public:
 	static const DimSizes* DetermineResult(const DimSizes& dimSizesL, const DimSizes& dimSizesR,
-					size_t* pnUnits, size_t* pLenUnit, size_t* pLenFwdL, size_t* pLenFwdR);
+					size_t* pnRtns, size_t* pnFwdRtn, size_t* pnFwdL, size_t* pnFwdR);
 	static size_t CalcLength(const_iterator pDimSizeBegin, const_iterator pDimSizeEnd);
 	size_t CalcLength(const_iterator pDimSize) const { return CalcLength(pDimSize, end()); }
 	size_t CalcLength() const { return CalcLength(begin()); }
