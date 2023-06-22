@@ -3,23 +3,24 @@ import(ml.mnist)
 
 db = ml.mnist.Database('../../sample/resource/mnist')
 
-if (true) {
+if (false) {
 	//model = `(x |.| weight |*| ml.Softmax())
 	weight = @float(28 * 28, 10)
-	weight.Inject(Random.NormalSeq(0, ml.Xavier(28 * 28)))
+	weight.Inject(Random.NormalSeq(0, ml.Xavier(weight.shape[0])))
 	bias = @float(1, 10)
-	bias.Inject(Random.NormalSeq(0, ml.Xavier(10)))
+	bias.Inject(Random.NormalSeq(0, ml.Xavier(bias.shape[-1])))
 	model = `((x |.| weight + bias) |*| ml.Softmax())
-} elsif (false) {
+} elsif (true) {
 	weight1 = @float(28 * 28, 100)
 	weight2 = @float(100, 10)
 	bias1 = @float(1, 100)
 	bias2 = @float(1, 10)
-	weight1.Inject(Random.NormalSeq(0, ml.Xavier(28 * 28)))
-	weight2.Inject(Random.NormalSeq(0, ml.Xavier(100)))
-	bias1.Inject(Random.NormalSeq(0, ml.Xavier(100)))
-	bias1.Inject(Random.NormalSeq(0, ml.Xavier(10)))
-	model = `(((x |.| weight1 + bias1) |*| ml.Sigmoid() |.| weight2 + bias2) |*| ml.Softmax())
+	weight1.Inject(Random.NormalSeq(0, ml.Xavier(weight1.shape[0])))
+	weight2.Inject(Random.NormalSeq(0, ml.Xavier(weight2.shape[0])))
+	bias1.Inject(Random.NormalSeq(0, ml.Xavier(bias1.shape[-1])))
+	bias2.Inject(Random.NormalSeq(0, ml.Xavier(bias2.shape[-1])))
+	//model = `(((x |.| weight1 + bias1) |*| ml.Sigmoid() |.| weight2 + bias2) |*| ml.Softmax())
+	model = `(((x |.| weight1 + bias1) |*| ml.ReLU() |.| weight2 + bias2) |*| ml.Softmax())
 } else {
 	nFilters = 30
 	filters = @float(nFilters, 1, 5, 5)
