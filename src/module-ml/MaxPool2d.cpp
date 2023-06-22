@@ -8,8 +8,8 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 // MaxPool2d
 //------------------------------------------------------------------------------
-MaxPool2d::MaxPool2d(size_t nRowsKernel, size_t nColsKernel, size_t stridesRow, size_t stridesCol) : Gear(false),
-	_nRowsKernel(nRowsKernel), _nColsKernel(nColsKernel), _stridesRow(stridesRow), _stridesCol(stridesCol)
+MaxPool2d::MaxPool2d(size_t nRowsKernel, size_t nColsKernel, size_t strideRow, size_t strideCol) : Gear(false),
+	_nRowsKernel(nRowsKernel), _nColsKernel(nColsKernel), _strideRow(strideRow), _strideCol(strideCol)
 {
 }
 
@@ -19,8 +19,8 @@ void MaxPool2d::Initialize()
 
 bool MaxPool2d::CalcSizeOut(size_t nRowsIn, size_t nColsIn, size_t* pnRowsOut, size_t* pnColsOut) const
 {
-	*pnRowsOut = (nRowsIn - _nRowsKernel) / _stridesRow + 1;
-	*pnColsOut = (nColsIn - _nColsKernel) / _stridesCol + 1;
+	*pnRowsOut = (nRowsIn - _nRowsKernel) / _strideRow + 1;
+	*pnColsOut = (nColsIn - _nColsKernel) / _strideCol + 1;
 	return true;
 }
 
@@ -38,8 +38,8 @@ bool MaxPool2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, c
 		Error::Issue(ErrorType::SizeError, "the array is smaller than the kernel size");
 		return false;
 	}
-	size_t nRowsFwdOut = (nRowsFwdIn - _nRowsKernel) / _stridesRow + 1;
-	size_t nColsFwdOut = (nColsFwdIn - _nColsKernel) / _stridesCol + 1;
+	size_t nRowsFwdOut = (nRowsFwdIn - _nRowsKernel) / _strideRow + 1;
+	size_t nColsFwdOut = (nColsFwdIn - _nColsKernel) / _strideCol + 1;
 	_pArrayFwdInSaved.reset(arrayFwdIn.Reference());
 	if (!pArrayFwdOut) {
 		DimSizes dimSizesFwdOut(dimSizesFwdIn.begin(), dimSizesFwdIn.begin() + dimSizesFwdIn.size() - 2);
@@ -52,10 +52,10 @@ bool MaxPool2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, c
 	}
 	size_t bytesPerCol = elemType.bytes;
 	size_t bytesPerRow = nColsFwdIn * bytesPerCol;
-	size_t bytesStridesCol = _stridesCol * bytesPerCol;
-	size_t bytesStridesRow = _stridesRow * bytesPerRow;
-	size_t scanPosStridesCol = _stridesCol;
-	size_t scanPosStridesRow = _stridesRow * nColsFwdIn;
+	size_t bytesStrideCol = _strideCol * bytesPerCol;
+	size_t bytesStrideRow = _strideRow * bytesPerRow;
+	size_t scanPosStrideCol = _strideCol;
+	size_t scanPosStrideRow = _strideRow * nColsFwdIn;
 	size_t bytesPerPlane = bytesPerRow * nRowsFwdIn;
 	auto funcPut = Array::funcs.Put[elemType.id];
 	auto funcMaxPool = funcs.MaxPool[elemType.id];
@@ -66,11 +66,11 @@ bool MaxPool2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, c
 	for (size_t iPlane = 0; iPlane < nPlanes; iPlane++, pElemPlane += bytesPerPlane) {
 		auto pElemKernelRow = pElemPlane;
 		UInt32 scanPosInRow = 0;
-		for (size_t iRowOut = 0; iRowOut < nRowsFwdOut; scanPosInRow += scanPosStridesRow, iRowOut++, pElemKernelRow += bytesStridesRow) {
+		for (size_t iRowOut = 0; iRowOut < nRowsFwdOut; scanPosInRow += scanPosStrideRow, iRowOut++, pElemKernelRow += bytesStrideRow) {
 			auto pElemKernelCol = pElemKernelRow;
 			UInt32 scanPosInCol = scanPosInRow;
 			for (size_t iColOut = 0; iColOut < nColsFwdOut;
-					scanPosInCol += scanPosStridesCol, iColOut++, pElemKernelCol += bytesStridesCol, pElemPool += bytesPerCol, pScanPosInSel++) {
+					scanPosInCol += scanPosStrideCol, iColOut++, pElemKernelCol += bytesStrideCol, pElemPool += bytesPerCol, pScanPosInSel++) {
 				auto pElemKernel = pElemKernelCol;
 				UInt32 scanPosIn = scanPosInCol;
 				*pScanPosInSel = scanPosInCol;
@@ -102,8 +102,8 @@ bool MaxPool2d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, 
 	if (!pArrayBwdOut) pArrayBwdOut.reset(_pArrayFwdInSaved->CreateLike());
 	size_t bytesPerCol = elemType.bytes;
 	size_t bytesPerRow = nColsFwdIn * bytesPerCol;
-	size_t bytesStridesCol = _stridesCol * bytesPerCol;
-	size_t bytesStridesRow = _stridesRow * bytesPerRow;
+	size_t bytesStrideCol = _strideCol * bytesPerCol;
+	size_t bytesStrideRow = _strideRow * bytesPerRow;
 	size_t bytesPerPlane = bytesPerRow * nRowsFwdIn;
 	auto funcPut = Array::funcs.Put[elemType.id];
 	auto funcPoolBackward = funcs.PoolBackward[elemType.id];

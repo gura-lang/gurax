@@ -27,12 +27,12 @@ ${help.ComposeMethodHelp(ml.Conv2d, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// ml.Conv2d(filter as Array, strides? as Number, padding? as Number) {block?}
+// ml.Conv2d(filter as Array, stride? as Number, padding? as Number) {block?}
 Gurax_DeclareConstructor(Conv2d)
 {
 	Declare(VTYPE_Conv2d, Flag::None);
 	DeclareArg("filter", VTYPE_Array, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("strides", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("stride", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("padding", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -45,12 +45,12 @@ Gurax_ImplementConstructor(Conv2d)
 	// Arguments
 	ArgPicker args(argument);
 	const Array& arrayFilter = args.Pick<Value_Array>().GetArray();
-	size_t strides = args.IsValid()? args.PickNumberPos<size_t>() : 1;
+	size_t stride = args.IsValid()? args.PickNumberPos<size_t>() : 1;
 	size_t padding = args.IsValid()? args.PickNumberNonNeg<size_t>() : 0;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	if (!Conv2d::ValidateArrayFilter(arrayFilter)) return Value::nil();
-	RefPtr<Conv2d> pConv2d(new Conv2d(arrayFilter.Reference(), strides, padding));
+	RefPtr<Conv2d> pConv2d(new Conv2d(arrayFilter.Reference(), stride, padding));
 	return argument.ReturnValue(processor, new Value_Conv2d(pConv2d.release()));
 }
 

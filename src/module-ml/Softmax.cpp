@@ -49,19 +49,19 @@ template<typename T_Elem> void Softmax_Forward_Array_T(Array& arrayFwdOut, const
 	} else {
 		//::printf("check\n");
 #if 0
-		size_t strides = dimSizesFwdIn.CalcStrides(pDimSizeAxis);
+		size_t stride = dimSizesFwdIn.CalcStride(pDimSizeAxis);
 		size_t axisSize = dimSizesFwdIn.CalcLength(pDimSizeAxis);
-		::printf("lenFwdIn:%zu strides:%zu axisSize:%zu\n", lenFwdIn, strides, axisSize);
+		::printf("lenFwdIn:%zu stride:%zu axisSize:%zu\n", lenFwdIn, stride, axisSize);
 		for (size_t offset = 0; offset < lenFwdIn; offset += axisSize) {
-			for (size_t j = 0; j < strides; j++) {
+			for (size_t j = 0; j < stride; j++) {
 				const T_Elem* pFwdInHead = pFwdInTop + offset + j;
 				T_Elem* pFwdOutHead = pFwdOutTop + offset + j;
 				T_Elem fwdInMax = 0;
 				do {
 					const T_Elem* pFwdIn = pFwdInHead;
 					fwdInMax = *pFwdIn;
-					pFwdIn += strides;
-					for (size_t i = 1; i < axisSize; i++, pFwdIn += strides) {
+					pFwdIn += stride;
+					for (size_t i = 1; i < axisSize; i++, pFwdIn += stride) {
 						if (fwdInMax < *pFwdIn) fwdInMax = *pFwdIn;
 					}
 				} while (0);
@@ -69,7 +69,7 @@ template<typename T_Elem> void Softmax_Forward_Array_T(Array& arrayFwdOut, const
 				do {
 					const T_Elem* pFwdIn = pFwdInHead;
 					T_Elem *pFwdOut = pFwdOutHead;
-					for (size_t i = 0; i < axisSize; i++, pFwdIn += strides, pFwdOut += strides) {
+					for (size_t i = 0; i < axisSize; i++, pFwdIn += stride, pFwdOut += stride) {
 						T_Elem fwdInExp = std::exp(*pFwdIn - fwdInMax);
 						*pFwdOut = fwdInExp;
 						fwdInSum += fwdInExp;
@@ -78,7 +78,7 @@ template<typename T_Elem> void Softmax_Forward_Array_T(Array& arrayFwdOut, const
 				do {
 					const T_Elem* pFwdIn = pFwdInHead;
 					T_Elem *pFwdOut = pFwdOutHead;
-					for (size_t i = 0; i < axisSize; i++, pFwdIn += strides, pFwdOut += strides) {
+					for (size_t i = 0; i < axisSize; i++, pFwdIn += stride, pFwdOut += stride) {
 						*pFwdOut /= fwdInSum;
 					}
 				} while (0);

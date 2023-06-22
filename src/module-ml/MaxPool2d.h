@@ -19,14 +19,14 @@ public:
 private:
 	size_t _nRowsKernel;
 	size_t _nColsKernel;
-	size_t _stridesRow;
-	size_t _stridesCol;
+	size_t _strideRow;
+	size_t _strideCol;
 	RefPtr<Array> _pArrayFwdInSaved;
 	RefPtr<Array> _pArrayFwdOutSaved;
 	RefPtr<Array> _pArrayScanPosInSel;
 public:
 	// Constructor
-	MaxPool2d(size_t nRowsKernel, size_t nColsKernel, size_t stridesRow, size_t stridesCol);
+	MaxPool2d(size_t nRowsKernel, size_t nColsKernel, size_t strideRow, size_t strideCol);
 	// Copy constructor/operator
 	MaxPool2d(const MaxPool2d& src) = delete;
 	MaxPool2d& operator=(const MaxPool2d& src) = delete;

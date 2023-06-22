@@ -19,7 +19,7 @@ public:
 private:
 	RefPtr<Array> _pArrayFilter;
 	RefPtr<Array> _pArrayFilterGrad;
-	size_t _strides;
+	size_t _stride;
 	size_t _padding;
 	RefPtr<Array> _pArrayFwdInSaved;
 	RefPtr<Array> _pArrayFwdOutSaved;
@@ -28,7 +28,7 @@ private:
 	RefPtr<Optimizer::Instance> _pOptimizerInstance;
 public:
 	// Constructor
-	Conv2d(Array* pArrayFilter, size_t strides, size_t padding);
+	Conv2d(Array* pArrayFilter, size_t stride, size_t padding);
 	// Copy constructor/operator
 	Conv2d(const Conv2d& src) = delete;
 	Conv2d& operator=(const Conv2d& src) = delete;

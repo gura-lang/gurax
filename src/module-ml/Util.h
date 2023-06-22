@@ -17,9 +17,9 @@ extern Funcs funcs;
 void InitializeUtil();
 
 bool Img2dToCol(RefPtr<Array>& pArrayExp, const Array& arrayImg, size_t nRowsFilter, size_t nColsFilter,
-	size_t stridesRow, size_t stridesCol, size_t paddingRow, size_t paddingCol, size_t* pnRowsOut = nullptr, size_t* pnColsOut = nullptr);
+	size_t strideRow, size_t strideCol, size_t paddingRow, size_t paddingCol, size_t* pnRowsOut = nullptr, size_t* pnColsOut = nullptr);
 bool ColToImg2d(RefPtr<Array>& pArrayImg, const DimSizes& dimSizesImg, const Array& arrayExp, size_t nRowsFilter, size_t nColsFilter,
-	size_t stridesRow, size_t stridesCol, size_t paddingRow, size_t paddingCol);
+	size_t strideRow, size_t strideCol, size_t paddingRow, size_t paddingCol);
 
 Gurax_EndModuleScope(ml)
 
