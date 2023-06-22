@@ -17,6 +17,13 @@ void MaxPool2d::Initialize()
 {
 }
 
+bool MaxPool2d::CalcSizeOut(size_t nRowsIn, size_t nColsIn, size_t* pnRowsOut, size_t* pnColsOut) const
+{
+	*pnRowsOut = (nRowsIn - _nRowsKernel) / _stridesRow + 1;
+	*pnColsOut = (nColsIn - _nColsKernel) / _stridesCol + 1;
+	return true;
+}
+
 bool MaxPool2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn)
 {
 	const Array::ElemTypeT& elemType = arrayFwdIn.GetElemType();

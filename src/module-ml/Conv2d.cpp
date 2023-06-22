@@ -22,6 +22,12 @@ bool Conv2d::ValidateArrayFilter(const Array& arrayFilter)
 	return true;
 }
 
+bool Conv2d::CalcSizeOut(size_t nRowsIn, size_t nColsIn, size_t* pnRowsOut, size_t* pnColsOut) const
+{
+	*pnRowsOut = (nRowsIn + 2 * _padding - _pArrayFilter->GetDimSizes().GetRowSize()) / _strides + 1;
+	*pnColsOut = (nColsIn + 2 * _padding - _pArrayFilter->GetDimSizes().GetColSize()) / _strides + 1;
+	return true;
+}
 
 bool Conv2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn)
 {

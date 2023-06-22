@@ -38,6 +38,7 @@ protected:
 public:
 	static void Initialize();
 public:
+	bool CalcSizeOut(size_t nRowsIn, size_t nColsIn, size_t* pnRowsOut, size_t* pnColsOut) const;
 	virtual const char* GetName() const override { return "ml.MaxPool2d"; }
 	virtual bool EvalForward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array) override;
 	virtual bool EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bool bwdPropagationFlag, const Array& array) override;

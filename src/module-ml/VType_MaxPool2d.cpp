@@ -56,27 +56,29 @@ Gurax_ImplementConstructor(MaxPool2d)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// ml.MaxPool2d#MethodSkeleton(num1 as Number, num2 as Number)
-Gurax_DeclareMethod(MaxPool2d, MethodSkeleton)
+// MaxPool2d#CalcSizeOut(nRowsIn as Number, nColsIn as Number) as Tuple
+Gurax_DeclareMethod(MaxPool2d, CalcSizeOut)
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Tuple, Flag::None);
+	DeclareArg("nRowsIn", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("nColsIn", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
 )""");
 }
 
-Gurax_ImplementMethod(MaxPool2d, MethodSkeleton)
+Gurax_ImplementMethod(MaxPool2d, CalcSizeOut)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
+	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	size_t nRowsIn = args.PickNumberPos<size_t>();
+	size_t nColsIn = args.PickNumberPos<size_t>();
 	// Function body
-	return new Value_Number(num1 + num2);
+	size_t nRowsOut, nColsOut;
+	valueThis.GetMaxPool2d().CalcSizeOut(nRowsIn, nColsIn, &nRowsOut, &nColsOut);
+	return Value_Tuple::Create(new Value_Number(nRowsOut), new Value_Number(nColsOut));
 }
 
 //-----------------------------------------------------------------------------
@@ -109,7 +111,7 @@ void VType_MaxPool2d::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Gear, Flag::Immutable, Gurax_CreateConstructor(MaxPool2d));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(MaxPool2d, MethodSkeleton));
+	Assign(Gurax_CreateMethod(MaxPool2d, CalcSizeOut));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(MaxPool2d, propSkeleton));
 }

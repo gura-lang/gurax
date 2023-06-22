@@ -41,6 +41,7 @@ public:
 	static void Initialize();
 	static bool ValidateArrayFilter(const Array& arrayFilter);
 public:
+	bool CalcSizeOut(size_t nRowsIn, size_t nColsIn, size_t* pnRowsOut, size_t* pnColsOut) const;
 	virtual void SetOptimizer(const Optimizer& optimizer) override { _pOptimizerInstance.reset(optimizer.CreateInstance()); }
 	virtual const char* GetName() const override { return "ml.Conv2d"; }
 	virtual bool EvalForward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array) override;

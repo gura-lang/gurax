@@ -3,15 +3,14 @@ import(ml.mnist)
 
 db = ml.mnist.Database('../../sample/resource/mnist')
 
-if (true) {
-	model = `((x |.| weight + bias) |*| ml.Softmax())
+if (false) {
 	//model = `(x |.| weight |*| ml.Softmax())
 	weight = @float(784, 10)
 	weight.Inject(Random.NormalSeq(0, ml.Xavier(784)))
 	bias = @float(1, 10)
 	bias.Inject(Random.NormalSeq(0, ml.Xavier(10)))
-} else {
-	model = `(((x |.| weight1 + bias1) |*| ml.Sigmoid() |.| weight2 + bias2) |*| ml.Softmax())
+	model = `((x |.| weight + bias) |*| ml.Softmax())
+} elsif (false) {
 	weight1 = @float(784, 100)
 	weight2 = @float(100, 10)
 	bias1 = @float(1, 100)
@@ -20,6 +19,9 @@ if (true) {
 	weight2.Inject(Random.NormalSeq(0, ml.Xavier(100)))
 	bias1.Inject(Random.NormalSeq(0, ml.Xavier(100)))
 	bias1.Inject(Random.NormalSeq(0, ml.Xavier(10)))
+	model = `(((x |.| weight1 + bias1) |*| ml.Sigmoid() |.| weight2 + bias2) |*| ml.Softmax())
+} else {
+	model = `(x |*| ml.Conv2d(filters, strides = 1, padding = 0) |*| ml.ReLU() |*| ml.MaxPool2d())
 }
 
 scope {
