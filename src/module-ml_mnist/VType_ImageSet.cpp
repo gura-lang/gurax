@@ -51,8 +51,8 @@ Gurax_ImplementConstructor(ImageSet)
 
 //-----------------------------------------------------------------------------
 // Implementation of method
-// flatten = false ... (nImages, nRows, nCols)
-// flatten = true  ... (nImage, nRows * nCols)
+//   flatten = false ... (nSamples, nRows, nCols)
+//   flatten = true  ... (nSamples, nRows * nCols)
 //-----------------------------------------------------------------------------
 // ml.mnist.ImageSet#ToArray(elemType? as Symbol, flatten? as Bool, numMax? as Number):map {block?}
 Gurax_DeclareMethod(ImageSet, ToArray)
@@ -88,8 +88,8 @@ Gurax_ImplementMethod(ImageSet, ToArray)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// ml.mnist.ImageSet#nImages
-Gurax_DeclareProperty_R(ImageSet, nImages)
+// ml.mnist.ImageSet#nSamples
+Gurax_DeclareProperty_R(ImageSet, nSamples)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -97,7 +97,7 @@ Skeleton.
 )""");
 }
 
-Gurax_ImplementPropertyGetter(ImageSet, nImages)
+Gurax_ImplementPropertyGetter(ImageSet, nSamples)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Number(valueThis.GetImageSet().CountImages());
@@ -147,7 +147,7 @@ void VType_ImageSet::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(ImageSet, ToArray));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(ImageSet, nImages));
+	Assign(Gurax_CreateProperty(ImageSet, nSamples));
 	Assign(Gurax_CreateProperty(ImageSet, nRows));
 	Assign(Gurax_CreateProperty(ImageSet, nCols));
 }

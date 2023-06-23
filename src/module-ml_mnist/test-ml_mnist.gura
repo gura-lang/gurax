@@ -5,8 +5,15 @@
 import(util.tester) {*}
 import(ml.mnist)
 
+db = ml.mnist.Database('../../sample/resource/mnist')
+
 TestCase('Basic test') {
-	db = ml.mnist.Database('../../sample/resource/mnist')
-	Printf('%s %s\n', db.train.imageSet, db.train.imageSet.ToArray())
-	Printf('%s %s\n', db.train.labelSet, db.train.labelSet.ToArray())
+	//Printf('%s %s\n', db.train.imageSet, db.train.imageSet.ToArray())
+	//Printf('%s %s\n', db.train.labelSet, db.train.labelSet.ToArray())
+	Printf('%s\n', db.train.imageSet)
+	Printf('%s\n', db.train.labelSet)
+}
+
+TestCase('') {
+	db.train.Print()
 }

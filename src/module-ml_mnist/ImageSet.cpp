@@ -7,7 +7,6 @@ Gurax_BeginModuleScope(ml_mnist)
 
 //------------------------------------------------------------------------------
 // ImageSet
-// nImages x nRows x nCols
 //------------------------------------------------------------------------------
 bool ImageSet::Read(Stream& stream)
 {
@@ -82,7 +81,7 @@ Array* ImageSet::ToArray(const Array::ElemTypeT& elemType, bool flattenFlag, Flo
 
 String ImageSet::ToString(const StringStyle& ss) const
 {
-	return String().Format("ml.mnist.ImageSet:%zuimages:%zurows:%zucols", CountImages(), CountRows(), CountCols());
+	return String().Format("ml.mnist.ImageSet:%zusamples:%zurows:%zucols", CountImages(), CountRows(), CountCols());
 }
 
 //------------------------------------------------------------------------------
