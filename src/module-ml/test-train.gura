@@ -2,19 +2,21 @@
 import(ml.mnist)
 
 db = ml.mnist.Database('../../sample/resource/mnist')
-
+nRows = db.train.imageSet.nRows
+nCols = db.train.imageSet.nCols
+nResults = 10
 if (false) {
-	//model = `(x |.| weight |*| ml.Softmax())
-	weight = @float(28 * 28, 10)
+	weight = @float(nRows * nCols, nResults)
 	weight.Inject(Random.NormalSeq(0, ml.Xavier(weight.shape[0])))
-	bias = @float(1, 10)
+	bias = @float(1, nResults)
 	bias.Inject(Random.NormalSeq(0, ml.Xavier(bias.shape[-1])))
 	model = `((x |.| weight + bias) |*| ml.Softmax())
 } elsif (true) {
-	weight1 = @float(28 * 28, 100)
-	weight2 = @float(100, 10)
-	bias1 = @float(1, 100)
-	bias2 = @float(1, 10)
+	nHidden = 100
+	weight1 = @float(nRows * nCols, nHidden)
+	weight2 = @float(nHidden, nResults)
+	bias1 = @float(1, nHidden)
+	bias2 = @float(1, nResults)
 	weight1.Inject(Random.NormalSeq(0, ml.Xavier(weight1.shape[0])))
 	weight2.Inject(Random.NormalSeq(0, ml.Xavier(weight2.shape[0])))
 	bias1.Inject(Random.NormalSeq(0, ml.Xavier(bias1.shape[-1])))
@@ -25,7 +27,7 @@ if (false) {
 	nFilters = 30
 	filters = @float(nFilters, 1, 5, 5)
 	conv = ml.Conv2d(filters, stride = 1, padding = 0)
-	convSize = conv.CalcSizeOut(28, 28)
+	convSize = conv.CalcSizeOut(nRows, nCols)
 	maxPool = ml.MaxPool2d(2, 2, stride = 2)
 	maxPoolSize = maxPool.CalcSizeOut(convSize*)
 	bias1 = @float(nFilters)
@@ -37,12 +39,12 @@ if (false) {
 
 scope {
 	nTraining = 100
-	arrayImage = db.train.imageSet.ToArray(`float, flatten = true, numMax = 1)	// 
-	arrayLabel = db.train.labelSet.ToArray(`float, oneHot = true)				// 
+	arrayImage = db.train.imageSet.ToArray(`float, flatten = true, numMax = 1)	// (nSamples, nRows * nCols)
+	arrayLabel = db.train.labelSet.ToArray(`float, oneHot = true)				// (nSamples, nResults)
 	optimizer = ml.Optimizer.GradientDescent(0.01)
 	ml.Trainer(model, optimizer, `x) {|trainer|
 		repeat (nTraining) {|iRepeat|
-			repeat (1000) {|i|
+			repeat (100) {|i|
 				x = arrayImage[i].Reshape(1, nil)
 				correct = arrayLabel[i].Reshape(1, nil)
 				trainer.Train(correct, x)
@@ -54,8 +56,8 @@ scope {
 pattern = [' ', '.', ':', '#', '#']
 scope {
 	// evaluation
-	arrayImage = db.test.imageSet.ToArray(`float, flatten = true, numMax = 1)
-	arrayLabel = db.test.labelSet.ToArray(`float, oneHot = true)
+	arrayImage = db.test.imageSet.ToArray(`float, flatten = true, numMax = 1)	// (nSamples, nRows * nCols)
+	arrayLabel = db.test.labelSet.ToArray(`float, oneHot = true)				// (nSamples, nResults)
 	nCorrects = 0
 	nTests = arrayImage.shape[0]
 	repeat (nTests) {|i|
