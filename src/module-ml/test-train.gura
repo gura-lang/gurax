@@ -37,8 +37,8 @@ if (false) {
 
 scope {
 	nTraining = 100
-	arrayImage = db.train.imageSet.ToArray(`float, flatten = true, numMax = 1)
-	arrayLabel = db.train.labelSet.ToArray(`float, oneHot = true)
+	arrayImage = db.train.imageSet.ToArray(`float, flatten = true, numMax = 1)	// 
+	arrayLabel = db.train.labelSet.ToArray(`float, oneHot = true)				// 
 	optimizer = ml.Optimizer.GradientDescent(0.01)
 	ml.Trainer(model, optimizer, `x) {|trainer|
 		repeat (nTraining) {|iRepeat|

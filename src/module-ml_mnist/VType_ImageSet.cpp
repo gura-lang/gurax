@@ -51,6 +51,8 @@ Gurax_ImplementConstructor(ImageSet)
 
 //-----------------------------------------------------------------------------
 // Implementation of method
+// flatten = false ... (nImages, nRows, nCols)
+// flatten = true  ... (nImage, nRows * nCols)
 //-----------------------------------------------------------------------------
 // ml.mnist.ImageSet#ToArray(elemType? as Symbol, flatten? as Bool, numMax? as Number):map {block?}
 Gurax_DeclareMethod(ImageSet, ToArray)

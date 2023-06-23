@@ -7,6 +7,7 @@ Gurax_BeginModuleScope(ml_mnist)
 
 //------------------------------------------------------------------------------
 // ImageSet
+// nImages x nRows x nCols
 //------------------------------------------------------------------------------
 bool ImageSet::Read(Stream& stream)
 {

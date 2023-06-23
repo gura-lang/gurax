@@ -92,6 +92,8 @@ public:
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 public:
+	virtual const DeclCallable* GetDeclCallable();
+	virtual Value* DoEval(Processor& processor, Argument& argument) const;
 	virtual Value* DoIndexGet(const Index& index) const override;
 	virtual void DoIndexSet(const Index& index, RefPtr<Value> pValue) override;
 	virtual bool DoEmptyIndexGet(Value** ppValue) const override;

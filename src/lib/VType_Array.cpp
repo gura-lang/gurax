@@ -1288,6 +1288,25 @@ String Value_Array::ToString(const StringStyle& ss) const
 	return GetArray().ToString(ss);
 }
 
+const DeclCallable* Value_Array::GetDeclCallable()
+{
+#if 0
+	static DeclCallable* pDeclCallable = nullptr;
+	if (!pDeclCallable) {
+		pDeclCallable = new DeclCallable();
+		pDeclCallable->SetFlags(DeclCallable::Flag::Map);
+		pDeclCallable->DeclareArg("dims", VTYPE_Number, DeclArg::Occur::OnceOrMore, DeclArg::Flag::None);
+	}
+	return pDeclCallable;
+#endif
+	return nullptr;
+}
+
+Value* Value_Array::DoEval(Processor& processor, Argument& argument) const
+{
+	return Value::nil();
+}
+
 Value* Value_Array::DoIndexGet(const Index& index) const
 {
 	const Array& array = GetArray();
