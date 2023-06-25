@@ -58,15 +58,15 @@ bool MaxPool2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, c
 	size_t bytesStrideRow = _strideRow * bytesPerRow;
 	size_t scanPosStrideCol = _strideCol;
 	size_t scanPosStrideRow = _strideRow * nColsFwdIn;
-	size_t bytesPerPlane = bytesPerRow * nRowsFwdIn;
+	size_t bytesPerUnit = bytesPerRow * nRowsFwdIn;
 	auto funcPut = Array::funcs.Put[elemType.id];
 	auto funcMaxPool = funcs.MaxPool[elemType.id];
 	auto pElemPool = pArrayFwdOut->GetPointerC<UInt8>();
-	auto pElemPlane = arrayFwdIn.GetPointerC<UInt8>();
+	auto pElemUnit = arrayFwdIn.GetPointerC<UInt8>();
 	auto pScanPosInSel = _pArrayScanPosInSel->GetPointerC<UInt32>();
-	size_t nPlanes = DimSizes::CalcLength(dimSizesFwdIn.begin(), dimSizesFwdIn.begin() + dimSizesFwdIn.size() - 2);
-	for (size_t iPlane = 0; iPlane < nPlanes; iPlane++, pElemPlane += bytesPerPlane) {
-		auto pElemKernelRow = pElemPlane;
+	size_t nUnits = DimSizes::CalcLength(dimSizesFwdIn.begin(), dimSizesFwdIn.begin() + dimSizesFwdIn.size() - 2);
+	for (size_t iUnit = 0; iUnit < nUnits; iUnit++, pElemUnit += bytesPerUnit) {
+		auto pElemKernelRow = pElemUnit;
 		UInt32 scanPosInRow = 0;
 		for (size_t iRowOut = 0; iRowOut < nRowsFwdOut; scanPosInRow += scanPosStrideRow, iRowOut++, pElemKernelRow += bytesStrideRow) {
 			auto pElemKernelCol = pElemKernelRow;
@@ -108,14 +108,14 @@ bool MaxPool2d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, 
 	size_t bytesPerRow = nColsFwdIn * bytesPerCol;
 	size_t bytesStrideCol = _strideCol * bytesPerCol;
 	size_t bytesStrideRow = _strideRow * bytesPerRow;
-	size_t bytesPerPlane = bytesPerRow * nRowsFwdIn;
+	size_t bytesPerUnit = bytesPerRow * nRowsFwdIn;
 	auto funcPut = Array::funcs.Put[elemType.id];
 	auto funcPoolBackward = funcs.PoolBackward[elemType.id];
 	auto pElemBwdIn = arrayBwdIn.GetPointerC<UInt8>();
 	auto pElemBwdOut = pArrayBwdOut->GetPointerC<UInt8>();
 	auto pScanPosInSel = _pArrayScanPosInSel->GetPointerC<UInt32>();
-	size_t nPlanes = DimSizes::CalcLength(dimSizesFwdIn.begin(), dimSizesFwdIn.begin() + dimSizesFwdIn.size() - 2);
-	for (size_t iPlane = 0; iPlane < nPlanes; iPlane++, pElemBwdOut += bytesPerPlane) {
+	size_t nUnits = DimSizes::CalcLength(dimSizesFwdIn.begin(), dimSizesFwdIn.begin() + dimSizesFwdIn.size() - 2);
+	for (size_t iUnit = 0; iUnit < nUnits; iUnit++, pElemBwdOut += bytesPerUnit) {
 		for (size_t i = 0; i < nRowsColsBwdIn; i++, pElemBwdIn += bytesPerCol, pScanPosInSel++) {
 			funcPoolBackward(pElemBwdOut, *pScanPosInSel, pElemBwdIn);
 		}
