@@ -51,7 +51,7 @@ Gurax_ImplementConstructor(LabelSet)
 
 //-----------------------------------------------------------------------------
 // Implementation of method
-//   oneHot = true  ... (nSamples, nResults)
+//   oneHot = true  ... (nSamples, nLabels)
 //   oneHot = false ... (nSamples)
 //-----------------------------------------------------------------------------
 // ml.mnist.LabelSet#ToArray(elemType? as Symbol, oneHot? as Bool):map {block?}
@@ -98,6 +98,21 @@ Skeleton.
 Gurax_ImplementPropertyGetter(LabelSet, nSamples)
 {
 	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetLabelSet().CountSamples());
+}
+
+// ml.mnist.LabelSet#nLabels
+Gurax_DeclareProperty_R(LabelSet, nLabels)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementPropertyGetter(LabelSet, nLabels)
+{
+	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Number(valueThis.GetLabelSet().CountLabels());
 }
 
@@ -116,6 +131,7 @@ void VType_LabelSet::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(LabelSet, ToArray));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(LabelSet, nSamples));
+	Assign(Gurax_CreateProperty(LabelSet, nLabels));
 }
 
 //------------------------------------------------------------------------------

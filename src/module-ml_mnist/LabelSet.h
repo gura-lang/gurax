@@ -19,14 +19,15 @@ public:
 public:
 	struct Header {
 		Gurax_PackedUInt32_BE(magicNumber);
-		Gurax_PackedUInt32_BE(nLabels);
+		Gurax_PackedUInt32_BE(nSamples);
 	};
 private:
+	size_t _nSamples;
 	size_t _nLabels;
 	RefPtr<Memory> _pMemory;
 public:
 	// Constructor
-	LabelSet() : _nLabels(0) {}
+	LabelSet() : _nSamples(0), _nLabels(0) {}
 	// Copy constructor/operator
 	LabelSet(const LabelSet& src) = delete;
 	LabelSet& operator=(const LabelSet& src) = delete;
@@ -36,6 +37,7 @@ public:
 protected:
 	~LabelSet() = default;
 public:
+	size_t CountSamples() const { return _nSamples; }
 	size_t CountLabels() const { return _nLabels; }
 	bool Read(Stream& stream);
 	Array* ToArray(const Array::ElemTypeT& elemType, bool oneHotFlag) const;

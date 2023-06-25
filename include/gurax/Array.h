@@ -227,6 +227,7 @@ public:
 	bool HasSameShape(const Array& array) const { return _dimSizes.IsEqual(array.GetDimSizes()); }
 	template<typename T> T* GetPointerC(size_t byteOffset = 0) { return _pMemory->GetPointerC<T>(byteOffset + _byteOffset); }
 	template<typename T> const T* GetPointerC(size_t byteOffset = 0) const { return _pMemory->GetPointerC<T>(byteOffset + _byteOffset); }
+	void FillZero() { _pMemory->Fill(0); }
 public:
 	bool IsArray() const { return !_dimSizes.empty(); }
 	bool IsScalar() const { return _dimSizes.empty(); }

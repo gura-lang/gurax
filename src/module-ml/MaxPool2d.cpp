@@ -103,7 +103,11 @@ bool MaxPool2d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, 
 	size_t nRowsBwdIn = dimSizesBwdIn.GetRowSize();
 	size_t nColsBwdIn = dimSizesBwdIn.GetColSize();
 	size_t nRowsColsBwdIn = nRowsBwdIn * nColsBwdIn;
-	if (!pArrayBwdOut) pArrayBwdOut.reset(_pArrayFwdInSaved->CreateLike());
+	if (pArrayBwdOut) {
+		pArrayBwdOut->FillZero();
+	} else {
+		pArrayBwdOut.reset(_pArrayFwdInSaved->CreateLike());
+	}
 	size_t bytesPerCol = elemType.bytes;
 	size_t bytesPerRow = nColsFwdIn * bytesPerCol;
 	size_t bytesStrideCol = _strideCol * bytesPerCol;

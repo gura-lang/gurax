@@ -8,12 +8,13 @@ import(ml.mnist)
 db = ml.mnist.Database('../../sample/resource/mnist')
 
 TestCase('Basic test') {
-	//Printf('%s %s\n', db.train.imageSet, db.train.imageSet.ToArray())
-	//Printf('%s %s\n', db.train.labelSet, db.train.labelSet.ToArray())
+	Printf('nRows=%d, nCols=%d, nLabels=%d\n', db.nRows, db.nCols, db.nLabels)
 	Printf('%s\n', db.train.imageSet)
 	Printf('%s\n', db.train.labelSet)
+	Printf('%s\n', db.test.imageSet)
+	Printf('%s\n', db.test.labelSet)
 }
 
-TestCase('') {
+TestCase('ml.mnist.DBPair#Print()') {
 	db.train.Print()
 }
