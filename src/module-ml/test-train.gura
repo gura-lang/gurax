@@ -4,54 +4,65 @@ import(ml.mnist)
 nTraining = 10
 db = ml.mnist.Database('../../sample/resource/mnist')
 if (false) {
-	model = `((x |.| weight + bias) |*| ml.Softmax())
+	model = `((x |.| affineWeight + affineBias) |*| ml.Softmax())
 	shapeImage = (1, db.nRows * db.nCols)
-	weight = @float(db.nRows * db.nCols, db.nLabels)
-	weight.Inject(Random.NormalSeq(0, ml.Xavier(weight.shape[0])))
-	bias = @float(1, db.nLabels)
-	bias.Inject(Random.NormalSeq(0, ml.Xavier(bias.shape[-1])))
+	affineWeight = @float(db.nRows * db.nCols, db.nLabels)
+	affineWeight.Inject(Random.NormalSeq(0, ml.Xavier(affineWeight.shape[0])))
+	affineBias = @float(1, db.nLabels)
+	affineBias.Inject(Random.NormalSeq(0, ml.Xavier(affineBias.shape[-1])))
 } elsif (true) {
-	model = `(((x |.| weight1 + bias1) |*| ml.ReLU() |.| weight2 + bias2) |*| ml.Softmax())
+	model = `((((x |.| affineWeight1 + affineBias1) |*| ml.ReLU()) |.| affineWeight2 + affineBias2) |*| ml.Softmax())
+	//model = `{
+	//	t1 = (x |.| affineWeight1 + affineBias1) |*| ml.ReLU()
+	//	t2 = t1 |.| affineWeight2 + affineBias2
+	//	t3 = t2 |*| ml.Softmax()
+	//}
 	shapeImage = (1, db.nRows * db.nCols)
 	nHidden = 100
-	weight1 = @float(db.nRows * db.nCols, nHidden)
-	weight2 = @float(nHidden, db.nLabels)
-	bias1 = @float(1, nHidden)
-	bias2 = @float(1, db.nLabels)
-	weight1.Inject(Random.NormalSeq(0, ml.Xavier(weight1.shape[0])))
-	weight2.Inject(Random.NormalSeq(0, ml.Xavier(weight2.shape[0])))
-	bias1.Inject(Random.NormalSeq(0, ml.Xavier(bias1.shape[-1])))
-	bias2.Inject(Random.NormalSeq(0, ml.Xavier(bias2.shape[-1])))
+	affineWeight1 = @float(db.nRows * db.nCols, nHidden)
+	affineWeight2 = @float(nHidden, db.nLabels)
+	affineBias1 = @float(1, nHidden)
+	affineBias2 = @float(1, db.nLabels)
+	affineWeight1.Inject(Random.NormalSeq(0, ml.Xavier(affineWeight1.shape[0])))
+	affineWeight2.Inject(Random.NormalSeq(0, ml.Xavier(affineWeight2.shape[0])))
+	affineBias1.Inject(Random.NormalSeq(0, ml.Xavier(affineBias1.shape[-1])))
+	affineBias2.Inject(Random.NormalSeq(0, ml.Xavier(affineBias2.shape[-1])))
 } else {
-	model = `((((x |*| conv + bias1) |*| ml.ReLU() |*| maxPool |*| flatten |.| weight2 + bias2) |*| ml.ReLU() |.| weight3 + bias3) |*| ml.Softmax())
+	model = `{
+		t1 = (x |*| conv + convBias1) |*| ml.ReLU() |*| maxPool |*| flatten
+		t2 = (t1 |.| affineWeight1 + affineBias1) |*| ml.ReLU()
+		t3 = (t2 |.| affineWeight2 + affineBias2)
+		t4 = t3 |*| ml.Softmax()
+	}
 	shapeImage = (1, 1, db.nRows, db.nCols)
 	nFilters = 30
 	nHidden = 100
-	weight1 = @float(nFilters, 1, 5, 5)
-	conv = ml.Conv2d(weight1, stride = 1, padding = 0)
+	convFilter = @float(nFilters, 1, 5, 5)
+	conv = ml.Conv2d(convFilter, stride = 1, padding = 0)
 	[nRowsConv, nColsConv] = conv.CalcSizeOut(db.nRows, db.nCols)
 	maxPool = ml.MaxPool2d(2, 2, stride = 2)
 	[nRowsPool, nColsPool] = maxPool.CalcSizeOut(nRowsConv, nColsConv)
 	flatten = ml.Reshape(1, nFilters * nRowsPool * nColsPool)
-	bias1 = @float(1, nFilters, nRowsConv, nColsConv)
-	weight2 = @float(nFilters * nRowsPool * nColsPool, nHidden)
-	bias2 = @float(1, nHidden)
-	weight3 = @float(nHidden, db.nLabels)
-	bias3 = @float(1, db.nLabels)
-	weight1.Inject(Random.NormalSeq(0, ml.Xavier(weight1.shape[0])))
-	weight2.Inject(Random.NormalSeq(0, ml.Xavier(weight2.shape[0])))
-	weight3.Inject(Random.NormalSeq(0, ml.Xavier(weight3.shape[0])))
-	bias1.Inject(Random.NormalSeq(0, ml.Xavier(bias1.shape[-1])))
-	bias2.Inject(Random.NormalSeq(0, ml.Xavier(bias2.shape[-1])))
-	bias3.Inject(Random.NormalSeq(0, ml.Xavier(bias3.shape[-1])))
+	convBias1 = @float(1, nFilters, nRowsConv, nColsConv)
+	affineWeight1 = @float(nFilters * nRowsPool * nColsPool, nHidden)
+	affineBias1 = @float(1, nHidden)
+	affineWeight2 = @float(nHidden, db.nLabels)
+	affineBias2 = @float(1, db.nLabels)
+	convFilter.Inject(Random.NormalSeq(0, ml.Xavier(convFilter.shape[0])))
+	affineWeight1.Inject(Random.NormalSeq(0, ml.Xavier(affineWeight1.shape[0])))
+	affineWeight2.Inject(Random.NormalSeq(0, ml.Xavier(affineWeight2.shape[0])))
+	convBias1.Inject(Random.NormalSeq(0, ml.Xavier(convBias1.shape[-1])))
+	affineBias1.Inject(Random.NormalSeq(0, ml.Xavier(affineBias1.shape[-1])))
+	affineBias2.Inject(Random.NormalSeq(0, ml.Xavier(affineBias2.shape[-1])))
 }
 scope {
 	arrayImage = db.train.imageSet.ToArray(`float, flatten = true, numMax = 1)	// (nSamples, db.nRows * db.nCols)
 	arrayLabel = db.train.labelSet.ToArray(`float, oneHot = true)				// (nSamples, db.nLabels)
 	optimizer = ml.Optimizer.GradientDescent(0.01)
 	//nSamples = arrayImage.shape[0]
-	nSamples = 10000
-	Printf('Training phase with %d samples\n', nSamples)
+	//nSamples = 10000
+	nSamples = 1000
+	Printf('Training with %d samples\n', nSamples)
 	ml.Trainer(model, optimizer, `x) {|trainer|
 		repeat (nTraining) {|iRepeat|
 			repeat (nSamples) {|i|
@@ -70,7 +81,7 @@ scope {
 	arrayLabel = db.test.labelSet.ToArray(`float, oneHot = true)				// (nSamples, db.nLabels)
 	nCorrects = 0
 	nSamples = arrayImage.shape[0]
-	Printf('Test phase with %d samples\n', nSamples)
+	Printf('Test with %d samples\n', nSamples)
 	repeat (nSamples) {|i|
 		x = arrayImage[i].Reshape(shapeImage*)
 		t = arrayLabel[i].Reshape(1, nil)
