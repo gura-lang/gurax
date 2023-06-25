@@ -5,12 +5,13 @@ db = ml.mnist.Database('../../sample/resource/mnist')
 nRows = db.train.imageSet.nRows
 nCols = db.train.imageSet.nCols
 nResults = 10
-if (false) {
+if (true) {
 	weight = @float(nRows * nCols, nResults)
 	weight.Inject(Random.NormalSeq(0, ml.Xavier(weight.shape[0])))
 	bias = @float(1, nResults)
 	bias.Inject(Random.NormalSeq(0, ml.Xavier(bias.shape[-1])))
 	model = `((x |.| weight + bias) |*| ml.Softmax())
+	//model = `((x |.| weight) |*| ml.Softmax())
 } elsif (true) {
 	nHidden = 100
 	weight1 = @float(nRows * nCols, nHidden)
@@ -25,16 +26,21 @@ if (false) {
 	model = `(((x |.| weight1 + bias1) |*| ml.ReLU() |.| weight2 + bias2) |*| ml.Softmax())
 } else {
 	nFilters = 30
+	nHidden = 100
 	filters = @float(nFilters, 1, 5, 5)
 	conv = ml.Conv2d(filters, stride = 1, padding = 0)
-	convSize = conv.CalcSizeOut(nRows, nCols)
+	[nRowsConv, nColsConv] = conv.CalcSizeOut(nRows, nCols)
 	maxPool = ml.MaxPool2d(2, 2, stride = 2)
-	maxPoolSize = maxPool.CalcSizeOut(convSize*)
+	[nRowsPool, nColsPool] = maxPool.CalcSizeOut(nRowsConv, nColsConv)
+	flatten = ml.Reshape(nFilters * nRowsPool * nColsPool)
 	bias1 = @float(nFilters)
-
-	model = `((((x |*| conv + bias1) |*| ml.ReLU() |*| maxPool \
-				|.| weight1 + bias2) |*| ml.ReLU() \
-				|.| weight2 + bias3) |*| ml.Softmax())
+	weight2 = @float(nFilters * nRowsPool * nColsPool, nHidden)
+	bias2 = @float(nHidden)
+	weight3 = @float(nHidden, nResults)
+	bias3 = @float(nResults)
+	model = `((((x |*| conv + bias1) |*| ml.ReLU() |*| maxPool |*| flatten \
+				|.| weight2 + bias2) |*| ml.ReLU() \
+				|.| weight3 + bias3) |*| ml.Softmax())
 }
 
 scope {
@@ -44,7 +50,7 @@ scope {
 	optimizer = ml.Optimizer.GradientDescent(0.01)
 	ml.Trainer(model, optimizer, `x) {|trainer|
 		repeat (nTraining) {|iRepeat|
-			repeat (100) {|i|
+			repeat (1000) {|i|
 				x = arrayImage[i].Reshape(1, nil)
 				correct = arrayLabel[i].Reshape(1, nil)
 				trainer.Train(correct, x)

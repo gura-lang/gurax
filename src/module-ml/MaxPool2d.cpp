@@ -26,6 +26,8 @@ bool MaxPool2d::CalcSizeOut(size_t nRowsIn, size_t nColsIn, size_t* pnRowsOut, s
 
 bool MaxPool2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn)
 {
+	// arrayFwdIn  .. (*, nRowsFwdIn, nColsFwdIn)
+	// arrayFwdOut .. (*, nRowsFwdOut, nColsFwdOut)
 	const Array::ElemTypeT& elemType = arrayFwdIn.GetElemType();
 	const DimSizes& dimSizesFwdIn = arrayFwdIn.GetDimSizes();
 	if (dimSizesFwdIn.size() < 2) {
@@ -86,6 +88,8 @@ bool MaxPool2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, c
 
 bool MaxPool2d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bool bwdPropagationFlag, const Array& arrayBwdIn)
 {
+	// arrayBwdIn  .. (*, nRowsFwdOut, nColsFwdOut)
+	// arrayBwdOut .. (*, nRowsFwdIn, nColsFwdIn)
 	if (!bwdPropagationFlag) return true;
 	const Array::ElemTypeT& elemType = _pArrayFwdInSaved->GetElemType();
 	const DimSizes& dimSizesFwdIn = _pArrayFwdInSaved->GetDimSizes();

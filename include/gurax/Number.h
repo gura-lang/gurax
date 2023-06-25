@@ -96,9 +96,54 @@ public:
 	NumList(std::initializer_list<T_Num> initList) : ListBase<T_Num>(initList) {}
 	NumList(const_iterator first, const_iterator last) : ListBase<T_Num>(first, last) {}
 public:
-	NumList& Sort() { std::sort(ListBase<T_Num>::begin(), ListBase<T_Num>::end()); return *this; }
+	static NumList Create(T_Num v1) {
+		NumList numList; numList.reserve(1);
+		numList.push_back(v1);
+		return numList;
+	}
+	static NumList Create(T_Num v1, T_Num v2) {
+		NumList numList; numList.reserve(2);
+		numList.push_back(v1); numList.push_back(v2);
+		return numList;
+	}
+	static NumList Create(T_Num v1, T_Num v2, T_Num v3) {
+		NumList numList; numList.reserve(3);
+		numList.push_back(v1); numList.push_back(v2); numList.push_back(v3);
+		return numList;
+	}
+	static NumList Create(T_Num v1, T_Num v2, T_Num v3, T_Num v4) {
+		NumList numList; numList.reserve(4);
+		numList.push_back(v1); numList.push_back(v2); numList.push_back(v3); numList.push_back(v4);
+		return numList;
+	}
+	static NumList Create(T_Num v1, T_Num v2, T_Num v3, T_Num v4, T_Num v5) {
+		NumList numList; numList.reserve(5);
+		numList.push_back(v1); numList.push_back(v2); numList.push_back(v3);
+		numList.push_back(v4); numList.push_back(v5);
+		return numList;
+	}
+	static NumList Create(T_Num v1, T_Num v2, T_Num v3, T_Num v4, T_Num v5, T_Num v6) {
+		NumList numList; numList.reserve(6);
+		numList.push_back(v1); numList.push_back(v2); numList.push_back(v3);
+		numList.push_back(v4); numList.push_back(v5); numList.push_back(v6);
+		return numList;
+	}
+	static NumList Create(T_Num v1, T_Num v2, T_Num v3, T_Num v4, T_Num v5, T_Num v6, T_Num v7) {
+		NumList numList; numList.reserve(7);
+		numList.push_back(v1); numList.push_back(v2); numList.push_back(v3); numList.push_back(v4);
+		numList.push_back(v5); numList.push_back(v6); numList.push_back(v7);
+		return numList;
+	}
+	static NumList Create(T_Num v1, T_Num v2, T_Num v3, T_Num v4, T_Num v5, T_Num v6, T_Num v7, T_Num v8) {
+		NumList numList; numList.reserve(8);
+		numList.push_back(v1); numList.push_back(v2); numList.push_back(v3); numList.push_back(v4);
+		numList.push_back(v5); numList.push_back(v6); numList.push_back(v7); numList.push_back(v8);
+		return numList;
+	}
+public:
+	NumList& Sort() { std::sort(NumList::begin(), NumList::end()); return *this; }
 	NumList& Sort(SortOrder sortOrder);
-	NumList& Unique() { ListBase<T_Num>::erase(std::unique(ListBase<T_Num>::begin(), ListBase<T_Num>::end()), ListBase<T_Num>::end()); return *this; }
+	NumList& Unique() { NumList::erase(std::unique(NumList::begin(), NumList::end()), NumList::end()); return *this; }
 	NumList& FillSeq(size_t n);
 };
 
