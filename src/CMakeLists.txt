@@ -29,7 +29,7 @@ add_subdirectory(module-hash)
 add_subdirectory(module-jpeg)
 add_subdirectory(module-markdown)
 #add_subdirectory(module-math)				# built-in module
-#add_subdirectory(module-ml)
+add_subdirectory(module-ml)
 add_subdirectory(module-ml_mnist)
 add_subdirectory(module-model_obj)
 add_subdirectory(module-model_stl)

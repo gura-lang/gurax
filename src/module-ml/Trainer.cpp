@@ -186,8 +186,8 @@ Node* Trainer::CreateNode(const Expr& expr)
 	} else if (expr.IsType<Expr_Identifier>()) {
 		const Expr_Identifier& exprEx = dynamic_cast<const Expr_Identifier&>(expr);
 		const Symbol* pSymbol = exprEx.GetSymbol();
-		Node *pNodeFound = _pNodeMap->FindNode(pSymbol);
-		if (pNodeFound) return pNodeFound;
+		Node* pNodeFound = _pNodeMap->FindNode(pSymbol);
+		if (pNodeFound) return pNodeFound->Reference();
 		RefPtr<Expr> pExpr(expr.Reference());
 		if (!pExpr->PrepareAndCompose(_composer)) return nullptr;
 		RefPtr<Node> pNode;

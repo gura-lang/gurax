@@ -1,7 +1,7 @@
 #!/usr/bin/env gurax
 import(ml.mnist)
 
-nTraining = 10
+nTraining = 1
 db = ml.mnist.Database('../../sample/resource/mnist')
 if (false) {
 	model = `((x |.| affineWeight + affineBias) |*| ml.Softmax())
@@ -11,12 +11,12 @@ if (false) {
 	affineBias = @float(1, db.nLabels)
 	affineBias.Inject(Random.NormalSeq(0, ml.Xavier(affineBias.shape[-1])))
 } elsif (true) {
-	model = `((((x |.| affineWeight1 + affineBias1) |*| ml.ReLU()) |.| affineWeight2 + affineBias2) |*| ml.Softmax())
-	//model = `{
-	//	t1 = (x |.| affineWeight1 + affineBias1) |*| ml.ReLU()
-	//	t2 = t1 |.| affineWeight2 + affineBias2
-	//	t3 = t2 |*| ml.Softmax()
-	//}
+	//model = `((((x |.| affineWeight1 + affineBias1) |*| ml.ReLU()) |.| affineWeight2 + affineBias2) |*| ml.Softmax())
+	model = `{
+		t1 = (x |.| affineWeight1 + affineBias1) |*| ml.ReLU()
+		t2 = t1 |.| affineWeight2 + affineBias2
+		t3 = t2 |*| ml.Softmax()
+	}
 	shapeImage = (1, db.nRows * db.nCols)
 	nHidden = 100
 	affineWeight1 = @float(db.nRows * db.nCols, nHidden)

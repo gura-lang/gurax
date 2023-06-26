@@ -96,6 +96,7 @@ bool Main(int argc, char* argv[])
 		}
 		RunREPL();
 	}
+	return true;
 }
 
 //------------------------------------------------------------------------------
@@ -115,8 +116,7 @@ void RunREPL()
 	for (;;) {
 		String strLine;
 		String prompt;
-		prompt.Format("%d:%s", pParser->GetLineNo(),
-					  pParser->IsContinued()? Basement::Inst.GetPS2() : Basement::Inst.GetPS1());
+		prompt.Format("%d:%s", pParser->GetLineNo(), pParser->IsContinued()? Basement::Inst.GetPS2() : Basement::Inst.GetPS1());
 		if (!ReadLine(prompt.c_str(), strLine)) break;
 		bool blankLineFlag = true;
 		for (char ch : strLine) {
