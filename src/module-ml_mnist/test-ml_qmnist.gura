@@ -1,0 +1,20 @@
+#!/usr/bin/env gurax
+//==============================================================================
+// test-ml_qmnist.gura
+//==============================================================================
+import(util.tester) {*}
+import(ml.qmnist)
+
+db = ml.qmnist.Database('../../sample/resource/qmnist')
+
+TestCase('Basic test') {
+	Printf('nRows=%d, nCols=%d, nClasses=%d\n', db.nRows, db.nCols, db.nClasses)
+	Printf('%s\n', db.train.imageSet)
+	Printf('%s\n', db.train.labelSet)
+	Printf('%s\n', db.test.imageSet)
+	Printf('%s\n', db.test.labelSet)
+}
+
+TestCase('ml.mnist.DBPair#Print()') {
+	//db.train.Print()
+}

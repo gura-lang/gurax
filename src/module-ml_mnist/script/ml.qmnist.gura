@@ -1,0 +1,24 @@
+#!/usr/bin/env gura
+import(gzip)
+import(ml.mnist_common) {*}
+
+Database = class {
+	train as DBPair
+	test as DBPair
+	nRows as Number
+	nCols as Number
+	nClasses as Number
+	__init__(dirName as String) = {
+		this.train = DBPair(
+			ImageSet(gzip.Reader(path.Join(dirName, 'qmnist-train-images-idx3-ubyte.gz')))
+			LabelSet(gzip.Reader(path.Join(dirName, 'qmnist-train-labels-idx2-int.gz'))))
+		this.test = DBPair(
+			ImageSet(gzip.Reader(path.Join(dirName, 'qmnist-test-images-idx3-ubyte.gz')))
+			LabelSet(gzip.Reader(path.Join(dirName, 'qmnist-test-labels-idx2-int.gz'))))
+		this.nRows = this.train.imageSet.nRows
+		this.nCols = this.train.imageSet.nCols
+		this.nClasses = Max(this.train.labelSet.nClasses, this.test.labelSet.nClasses)
+	} %% R'''
+	Reads QMNIST database files in a directory specified by `dirName` and returns a `ml.qmnist.Database` instance.
+	'''
+}
