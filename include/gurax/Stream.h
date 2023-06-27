@@ -126,6 +126,12 @@ public:
 	static OpenFlags ModeToOpenFlags(const char* mode);
 	Stream* CreateBwdSeekable();
 	void Dump(const void* buff, size_t bytes, const DumpStyle& ds = DumpStyle::Empty);
+	void Dump(const Binary& binary, const DumpStyle& ds = DumpStyle::Empty) {
+		Dump(binary.data(), binary.size(), ds);
+	}
+	void Dump(const Memory& memory, const DumpStyle& ds = DumpStyle::Empty) {
+		Dump(memory.GetPointerC<void>(), memory.GetBytes(), ds);
+	}
 public:
 	size_t GetBytes() { return DoGetBytes(); }
 	Stat* CreateStat() { return DoCreateStat(); }
@@ -164,12 +170,60 @@ protected:
 	virtual int DoGetChar();
 	virtual bool DoPutChar(char ch);
 public:
+	template<typename T_Num> bool SerializeNumber(T_Num num) { return Write(&num, sizeof(num)); }
+	template<typename T_Num> bool DeserializeNumber(T_Num& num) { return Read(&num, sizeof(num)) == sizeof(num); }
+	template<typename T_Num> bool SerializePackedNumber(T_Num num);
+	template<typename T_Num> bool DeserializePackedNumber(T_Num& num);
+	bool SerializeString(const char* str);
+	bool DeserializeString(String& str);
+	bool SerializeBinary(const Binary& binary);
+	bool DeserializeBinary(Binary& binary);
+	bool SerializeBinary(const Memory& memory);
+	bool DeserializeBinary(Memory& memory);
+	bool SerializeSymbol(const Symbol* pSymbol);
+	bool DeserializeSymbol(const Symbol*& pSymbol);
+	bool SerializeSymbolSet(const SymbolSet& symbolSet);
+	bool DeserializeSymbolSet(SymbolSet& symbolSet);
+	bool SerializeSymbolList(const SymbolList& symbolList);
+	bool DeserializeSymbolList(SymbolList& symbolList);
+public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Stream& stream) const { return this == &stream; }
 	bool IsEqualTo(const Stream& stream) const { return IsIdentical(stream); }
 	bool IsLessThan(const Stream& stream) const { return this < &stream; }
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
+
+template<typename T_Num> bool Stream::SerializePackedNumber(T_Num num)
+{
+	UInt8 buff[sizeof(T_Num)];
+	size_t bytesBuff = 0;
+	if (num == 0) {
+		buff[bytesBuff++] = 0x00;
+	} else {
+		while (num > 0) {
+			UInt8 data = static_cast<UInt8>(num & 0x7f);
+			num >>= 7;
+			buff[bytesBuff++] = (num == 0)? data : (data | 0x80);
+		}
+	}
+	return Write(buff, bytesBuff);
+}
+
+template<typename T_Num> bool Stream::DeserializePackedNumber(T_Num& num)
+{
+	const size_t bytesBuffMax = (sizeof(T_Num) * 8 + 7) / 7;
+	num = 0;
+	UInt8 data = 0x00;
+	size_t nShift = 0;
+	for (size_t bytesBuff = 0; bytesBuff < bytesBuffMax; bytesBuff++, nShift += 7) {
+		if (Read(&data, sizeof(data)) != sizeof(data)) return false;
+		num += static_cast<T_Num>(data & 0x7f) << nShift;
+		if (!(data & 0x80)) return true;
+	}
+	Error::Issue(ErrorType::FormatError, "invalid serialization format for a packed number");
+	return false;
+}
 
 //------------------------------------------------------------------------------
 // Iterator_ReadLines

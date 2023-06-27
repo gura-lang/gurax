@@ -371,6 +371,180 @@ bool Stream::DoPutChar(char ch)
 	return DoWrite(&ch, sizeof(ch));
 }
 
+
+bool Stream::SerializeString(const char* str)
+{
+	UInt64 len = static_cast<UInt64>(::strlen(str));
+	if (!SerializePackedNumber<UInt64>(len)) return false;
+	return Write(str, len);
+}
+
+bool Stream::DeserializeString(String& str)
+{
+	UInt64 len = 0;
+	if (!DeserializePackedNumber<UInt64>(len)) return false;
+	if (len == 0) {
+		str.clear();
+		return true;
+	}
+	str = String(len + 1, '\0');
+	if (Read(&str[0], len) != len) return false;
+	str.resize(len);
+	return true;
+}
+
+#if 0
+bool Stream::SerializeBinary(const Binary &binary)
+{
+	UInt32 len = static_cast<UInt32>(binary.size());
+	if (!SerializePackedUInt32(len)) return false;
+	return Write(binary.data(), len) == len;
+}
+
+bool Stream::DeserializeBinary(Binary &binary)
+{
+	UInt32 len = 0;
+	if (!DeserializePackedUInt32(len)) return false;
+	if (len == 0) {
+		binary.clear();
+		return true;
+	}
+	binary = Binary(len);
+	if (Read(&binary[0], len) != len) return false;
+	return true;
+}
+
+bool Stream::SerializeSymbol(const Symbol *pSymbol)
+{
+	return SerializeString(pSymbol->GetName());
+}
+
+bool Stream::DeserializeSymbol(const Symbol **ppSymbol)
+{
+	String str;
+	if (!DeserializeString(str)) return false;
+	*ppSymbol = Symbol::Add(str.c_str());
+	return true;
+}
+
+bool Stream::SerializeSymbolSet(const SymbolSet &symbolSet)
+{
+	UInt32 len = static_cast<UInt32>(symbolSet.size());
+	if (!SerializePackedUInt32(len)) return false;
+	foreach_const (SymbolSet, ppSymbol, symbolSet) {
+		if (!SerializeSymbol(*ppSymbol)) return false;
+	}
+	return true;
+}
+
+bool Stream::DeserializeSymbolSet(SymbolSet &symbolSet)
+{
+	UInt32 len = 0;
+	if (!DeserializePackedUInt32(len)) return false;
+	symbolSet.clear();
+	if (len == 0) return true;
+	const Symbol *pSymbol = nullptr;
+	while (len-- > 0) {
+		if (!DeserializeSymbol(&pSymbol)) return false;
+		symbolSet.insert(pSymbol);
+	}
+	return true;
+}
+
+bool Stream::SerializeSymbolList(const SymbolList &symbolList)
+{
+	UInt32 len = static_cast<UInt32>(symbolList.size());
+	if (!SerializePackedUInt32(len)) return false;
+	foreach_const (SymbolList, ppSymbol, symbolList) {
+		if (!SerializeSymbol(*ppSymbol)) return false;
+	}
+	return true;
+}
+
+bool Stream::DeserializeSymbolList(SymbolList &symbolList)
+{
+	UInt32 len = 0;
+	if (!DeserializePackedUInt32(len)) return false;
+	symbolList.clear();
+	if (len == 0) return true;
+	symbolList.reserve(len);
+	const Symbol *pSymbol = nullptr;
+	while (len-- > 0) {
+		if (!DeserializeSymbol(&pSymbol)) return false;
+		symbolList.push_back(pSymbol);
+	}
+	return true;
+}
+
+bool Stream::SerializePackedUInt32(UInt32 entity)
+{
+	UChar buff[16];
+	size_t bytesBuff = 0;
+	if (entity == 0) {
+		buff[bytesBuff++] = 0x00;
+	} else {
+		while (entity > 0) {
+			UChar data = static_cast<UChar>(entity & 0x7f);
+			entity >>= 7;
+			if (entity != 0) data |= 0x80;
+			buff[bytesBuff++] = data;
+		}
+	}
+	return Write(buff, bytesBuff) == bytesBuff;
+}
+
+bool Stream::DeserializePackedUInt32(UInt32& entity)
+{
+	const size_t bytesBuffMax = 5;	// 32 / 7 = 4.6
+	entity = 0;
+	UChar data = 0x00;
+	for (size_t bytesBuff = 0; bytesBuff < bytesBuffMax; bytesBuff++) {
+		if (Read(&data, sizeof(data)) != sizeof(data)) return false;
+		entity = (entity << 7) + (data & 0x7f);
+		if ((data & 0x80) == 0x00) break;
+	}
+	if (data & 0x80) {
+		sig.SetError(ERR_FormatError, "invalid serialization format for packed 32bit number");
+		return false;
+	}
+	return true;
+}
+
+bool Stream::SerializePackedUInt64(UInt64 entity)
+{
+	UChar buff[16];
+	size_t bytesBuff = 0;
+	if (entity == 0) {
+		buff[bytesBuff++] = 0x00;
+	} else {
+		while (entity > 0) {
+			UChar data = static_cast<UChar>(entity & 0x7f);
+			entity >>= 7;
+			if (entity != 0) data |= 0x80;
+			buff[bytesBuff++] = data;
+		}
+	}
+	return Write(buff, bytesBuff) == bytesBuff;
+}
+
+bool Stream::DeserializePackedUInt64(UInt64& entity)
+{
+	const size_t bytesBuffMax = 10;	// 64 / 7 = 9.2
+	entity = 0;
+	UChar data = 0x00;
+	for (size_t bytesBuff = 0; bytesBuff < bytesBuffMax; bytesBuff++) {
+		if (Read(&data, sizeof(data)) != sizeof(data)) return false;
+		entity = (entity << 7) + (data & 0x7f);
+		if ((data & 0x80) == 0x00) break;
+	}
+	if (data & 0x80) {
+		sig.SetError(ERR_FormatError, "invalid serialization format for packed 64bit number");
+		return false;
+	}
+	return true;
+}
+#endif
+
 String Stream::ToString(const StringStyle& ss) const
 {
 	String str;
