@@ -174,6 +174,10 @@ public:
 	template<typename T_Num> bool DeserializeNumber(T_Num& num) { return Read(&num, sizeof(num)) == sizeof(num); }
 	template<typename T_Num> bool SerializePackedNumber(T_Num num);
 	template<typename T_Num> bool DeserializePackedNumber(T_Num& num);
+	template<typename T_Num> bool SerializeNumList(const NumList<T_Num>& numList);
+	template<typename T_Num> bool DeserializeNumList(NumList<T_Num>& numList);
+	template<typename T_Num> bool SerializePackedNumList(const NumList<T_Num>& numList);
+	template<typename T_Num> bool DeserializePackedNumList(NumList<T_Num>& numList);
 	bool SerializeString(const char* str);
 	bool DeserializeString(String& str);
 	bool SerializeBinary(const Binary& binary);
@@ -223,6 +227,50 @@ template<typename T_Num> bool Stream::DeserializePackedNumber(T_Num& num)
 	}
 	Error::Issue(ErrorType::FormatError, "invalid serialization format for a packed number");
 	return false;
+}
+
+template<typename T_Num> bool Stream::SerializeNumList(const NumList<T_Num>& numList)
+{
+	if (!SerializePackedNumber(static_cast<UInt64>(numList.size()))) return false;
+	for (T_Num num : numList) {
+		if (!SerializeNumber<T_Num>(num)) return false;
+	}
+	return true;
+}
+
+template<typename T_Num> bool Stream::DeserializeNumList(NumList<T_Num>& numList)
+{
+	UInt64 n = 0;
+	if (!DeserializePackedNumber(static_cast<UInt64>(n))) return false;
+	if (n == 0) return true;
+	numList.reserve(n);
+	for (size_t i = 0; i < n; i++) {
+		T_Num num;
+		if (!DeserializeNumber<T_Num>(num)) return false;
+	}
+	return true;
+}
+
+template<typename T_Num> bool Stream::SerializePackedNumList(const NumList<T_Num>& numList)
+{
+	if (!SerializePackedNumber(static_cast<UInt64>(numList.size()))) return false;
+	for (T_Num num : numList) {
+		if (!SerializePackedNumber<T_Num>(num)) return false;
+	}
+	return true;
+}
+
+template<typename T_Num> bool Stream::DeserializePackedNumList(NumList<T_Num>& numList)
+{
+	UInt64 n = 0;
+	if (!DeserializePackedNumber(static_cast<UInt64>(n))) return false;
+	if (n == 0) return true;
+	numList.reserve(n);
+	for (size_t i = 0; i < n; i++) {
+		T_Num num;
+		if (!DeserializePackedNumber<T_Num>(num)) return false;
+	}
+	return true;
 }
 
 //------------------------------------------------------------------------------
