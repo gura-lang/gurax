@@ -393,27 +393,47 @@ bool Stream::DeserializeString(String& str)
 	return true;
 }
 
-#if 0
-bool Stream::SerializeBinary(const Binary &binary)
+bool Stream::SerializeBinary(const Binary& binary)
 {
-	UInt32 len = static_cast<UInt32>(binary.size());
-	if (!SerializePackedUInt32(len)) return false;
-	return Write(binary.data(), len) == len;
+	UInt64 len = static_cast<UInt64>(binary.size());
+	if (!SerializePackedNumber<UInt64>(len)) return false;
+	return Write(binary.data(), len);
 }
 
-bool Stream::DeserializeBinary(Binary &binary)
+bool Stream::DeserializeBinary(Binary& binary)
 {
-	UInt32 len = 0;
-	if (!DeserializePackedUInt32(len)) return false;
+	UInt64 len = 0;
+	if (!DeserializePackedNumber<UInt64>(len)) return false;
 	if (len == 0) {
 		binary.clear();
 		return true;
 	}
-	binary = Binary(len);
+	binary = Binary(len, 0x00);
 	if (Read(&binary[0], len) != len) return false;
 	return true;
 }
 
+bool Stream::SerializeMemory(const Memory& memory)
+{
+	UInt64 len = static_cast<UInt64>(memory.GetBytes());
+	if (!SerializePackedNumber<UInt64>(len)) return false;
+	return Write(memory.GetPointerC<void>(), len);
+}
+
+bool Stream::DeserializeMemory(RefPtr<Memory>& pMemory)
+{
+	UInt64 len = 0;
+	if (!DeserializePackedNumber<UInt64>(len)) return false;
+	if (len == 0) {
+		pMemory = new MemoryHeap(1);
+		return true;
+	}
+	pMemory = new MemoryHeap(len);
+	if (Read(pMemory->GetPointerC<void>(), len) != len) return false;
+	return true;
+}
+
+#if 0
 bool Stream::SerializeSymbol(const Symbol *pSymbol)
 {
 	return SerializeString(pSymbol->GetName());

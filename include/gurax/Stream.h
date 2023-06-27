@@ -178,8 +178,8 @@ public:
 	bool DeserializeString(String& str);
 	bool SerializeBinary(const Binary& binary);
 	bool DeserializeBinary(Binary& binary);
-	bool SerializeBinary(const Memory& memory);
-	bool DeserializeBinary(Memory& memory);
+	bool SerializeMemory(const Memory& memory);
+	bool DeserializeMemory(RefPtr<Memory>& pMemory);
 	bool SerializeSymbol(const Symbol* pSymbol);
 	bool DeserializeSymbol(const Symbol*& pSymbol);
 	bool SerializeSymbolSet(const SymbolSet& symbolSet);

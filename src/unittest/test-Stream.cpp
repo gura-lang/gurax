@@ -72,7 +72,7 @@ Gurax_TesterEntry(Stream)
 		using T_Num = Float;
 		::printf("Serialize/Deserialize Float\n");
 		static const T_Num numTbl[] = {
-			0, 1, -1, 3.141, -3.141
+			0.f, 1.f, -1.f, 3.141f, -3.141f
 		};
 		for (size_t i = 0; i < Gurax_ArraySizeOf(numTbl); i++) {
 			RefPtr<Stream_Binary> pStream(new Stream_Binary(Stream::Flag::Readable | Stream::Flag::Writable));
