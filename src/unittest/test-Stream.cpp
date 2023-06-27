@@ -5,6 +5,18 @@
 
 namespace Gurax {
 
+template<typename T_Num> void PrintNumList(const char* format, NumList<T_Num>& numList)
+{
+	auto pNum = numList.begin();
+	if (pNum == numList.end()) return;
+	::printf(format, *pNum);
+	for ( ; pNum != numList.end(); pNum++) {
+		::printf(", ");
+		::printf(format, *pNum);
+	}
+	::printf("\n");
+}
+
 Gurax_TesterEntry(Stream)
 {
 	const char *str = "Gura";
@@ -23,12 +35,12 @@ Gurax_TesterEntry(Stream)
 		for (size_t i = 0; i < Gurax_ArraySizeOf(numTbl); i++) {
 			RefPtr<Stream_Binary> pStream(new Stream_Binary(Stream::Flag::Readable | Stream::Flag::Writable));
 			pStream->SerializeNumber<T_Num>(numTbl[i]);
-			::printf("%x: ", numTbl[i]);
+			::printf("0x%x: ", numTbl[i]);
 			Stream::COut->Dump(pStream->GetBuff());
 			pStream->Seek(0, Stream::SeekMode::Set);
 			T_Num numDec;
 			pStream->DeserializeNumber<T_Num>(numDec);
-			::printf("  -> %x\n", numDec);
+			::printf("  -> 0x%x\n", numDec);
 		}
 	} while (0);
 	do {
@@ -41,12 +53,12 @@ Gurax_TesterEntry(Stream)
 		for (size_t i = 0; i < Gurax_ArraySizeOf(numTbl); i++) {
 			RefPtr<Stream_Binary> pStream(new Stream_Binary(Stream::Flag::Readable | Stream::Flag::Writable));
 			pStream->SerializeNumber<T_Num>(numTbl[i]);
-			::printf("%x: ", numTbl[i]);
+			::printf("0x%x: ", numTbl[i]);
 			Stream::COut->Dump(pStream->GetBuff());
 			pStream->Seek(0, Stream::SeekMode::Set);
 			T_Num numDec;
 			pStream->DeserializeNumber<T_Num>(numDec);
-			::printf("  -> %x\n", numDec);
+			::printf("  -> 0x%x\n", numDec);
 		}
 	} while (0);
 	do {
@@ -55,17 +67,17 @@ Gurax_TesterEntry(Stream)
 		static const T_Num numTbl[] = {
 			0x00, 0x7f, 0x80, 0xff,
 			0x100, 0x1000, 0x7fff, 0x8000, 0xffff,
-			0x000100000, 0x10000000, 0x7fffffff, 0x80000000, 0xffffffff,
+			0x00100000, 0x10000000, 0x7fffffff, 0x80000000, 0xffffffff,
 		};
 		for (size_t i = 0; i < Gurax_ArraySizeOf(numTbl); i++) {
 			RefPtr<Stream_Binary> pStream(new Stream_Binary(Stream::Flag::Readable | Stream::Flag::Writable));
 			pStream->SerializeNumber<T_Num>(numTbl[i]);
-			::printf("%x: ", numTbl[i]);
+			::printf("0x%x: ", numTbl[i]);
 			Stream::COut->Dump(pStream->GetBuff());
 			pStream->Seek(0, Stream::SeekMode::Set);
 			T_Num numDec;
 			pStream->DeserializeNumber<T_Num>(numDec);
-			::printf("  -> %x\n", numDec);
+			::printf("  -> 0x%x\n", numDec);
 		}
 	} while (0);
 	do {
@@ -111,12 +123,12 @@ Gurax_TesterEntry(Stream)
 		for (size_t i = 0; i < Gurax_ArraySizeOf(numTbl); i++) {
 			RefPtr<Stream_Binary> pStream(new Stream_Binary(Stream::Flag::Readable | Stream::Flag::Writable));
 			pStream->SerializePackedNumber<T_Num>(numTbl[i]);
-			::printf("%x: ", numTbl[i]);
+			::printf("0x%x: ", numTbl[i]);
 			Stream::COut->Dump(pStream->GetBuff());
 			pStream->Seek(0, Stream::SeekMode::Set);
 			T_Num numDec;
 			pStream->DeserializePackedNumber<T_Num>(numDec);
-			::printf("  -> %x\n", numDec);
+			::printf("  -> 0x%x\n", numDec);
 		}
 	} while (0);
 	do {
@@ -136,6 +148,76 @@ Gurax_TesterEntry(Stream)
 			pStream->DeserializePackedNumber<T_Num>(numDec);
 			::printf("  -> %zx\n", numDec);
 		}
+	} while (0);
+	do {
+		using T_Num = UInt32;
+		::printf("Serialize/Deserialize UInt32 List\n");
+		NumList<T_Num> numList {
+			0x00, 0x7f, 0x80, 0xff,
+			0x100, 0x1000, 0x7fff, 0x8000, 0xffff,
+			0x00100000, 0x10000000, 0x7fffffff, 0x80000000, 0xffffffff,
+		};
+		RefPtr<Stream_Binary> pStream(new Stream_Binary(Stream::Flag::Readable | Stream::Flag::Writable));
+		pStream->SerializeNumList<T_Num>(numList);
+		PrintNumList<T_Num>("0x%x", numList);
+		Stream::COut->Dump(pStream->GetBuff());
+		pStream->Seek(0, Stream::SeekMode::Set);
+		NumList<T_Num> numListDec;
+		pStream->DeserializeNumList<T_Num>(numListDec);
+		::printf("  -> ");
+		PrintNumList<T_Num>("0x%x", numListDec);
+	} while (0);
+	do {
+		using T_Num = UInt64;
+		::printf("Serialize/Deserialize UInt64 List\n");
+		NumList<T_Num> numList {
+			0x00, 0x7f, 0x80, 0x3fff, 0x4000, 0x1fffff, 0x200000, 0xfffffff, 0x10000000, 0xffffffff,
+			0x7ffffffffLL, 0x800000000LL,
+		};
+		RefPtr<Stream_Binary> pStream(new Stream_Binary(Stream::Flag::Readable | Stream::Flag::Writable));
+		pStream->SerializeNumList<T_Num>(numList);
+		PrintNumList<T_Num>("0x%llx", numList);
+		Stream::COut->Dump(pStream->GetBuff());
+		pStream->Seek(0, Stream::SeekMode::Set);
+		NumList<T_Num> numListDec;
+		pStream->DeserializeNumList<T_Num>(numListDec);
+		::printf("  -> ");
+		PrintNumList<T_Num>("0x%llx", numListDec);
+	} while (0);
+	do {
+		using T_Num = UInt32;
+		::printf("Serialize/Deserialize Packed UInt32 List\n");
+		NumList<T_Num> numList {
+			0x00, 0x7f, 0x80, 0xff,
+			0x100, 0x1000, 0x7fff, 0x8000, 0xffff,
+			0x00100000, 0x10000000, 0x7fffffff, 0x80000000, 0xffffffff,
+		};
+		RefPtr<Stream_Binary> pStream(new Stream_Binary(Stream::Flag::Readable | Stream::Flag::Writable));
+		pStream->SerializePackedNumList<T_Num>(numList);
+		PrintNumList<T_Num>("0x%x", numList);
+		Stream::COut->Dump(pStream->GetBuff());
+		pStream->Seek(0, Stream::SeekMode::Set);
+		NumList<T_Num> numListDec;
+		pStream->DeserializePackedNumList<T_Num>(numListDec);
+		::printf("  -> ");
+		PrintNumList<T_Num>("0x%x", numListDec);
+	} while (0);
+	do {
+		using T_Num = UInt64;
+		::printf("Serialize/Deserialize Packed UInt64 List\n");
+		NumList<T_Num> numList {
+			0x00, 0x7f, 0x80, 0x3fff, 0x4000, 0x1fffff, 0x200000, 0xfffffff, 0x10000000, 0xffffffff,
+			0x7ffffffffLL, 0x800000000LL,
+		};
+		RefPtr<Stream_Binary> pStream(new Stream_Binary(Stream::Flag::Readable | Stream::Flag::Writable));
+		pStream->SerializePackedNumList<T_Num>(numList);
+		PrintNumList<T_Num>("0x%llx", numList);
+		Stream::COut->Dump(pStream->GetBuff());
+		pStream->Seek(0, Stream::SeekMode::Set);
+		NumList<T_Num> numListDec;
+		pStream->DeserializePackedNumList<T_Num>(numListDec);
+		::printf("  -> ");
+		PrintNumList<T_Num>("0x%llx", numListDec);
 	} while (0);
 }
 

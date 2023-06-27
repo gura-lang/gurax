@@ -247,6 +247,7 @@ template<typename T_Num> bool Stream::DeserializeNumList(NumList<T_Num>& numList
 	for (size_t i = 0; i < n; i++) {
 		T_Num num;
 		if (!DeserializeNumber<T_Num>(num)) return false;
+		numList.push_back(num);
 	}
 	return true;
 }
@@ -269,6 +270,7 @@ template<typename T_Num> bool Stream::DeserializePackedNumList(NumList<T_Num>& n
 	for (size_t i = 0; i < n; i++) {
 		T_Num num;
 		if (!DeserializePackedNumber<T_Num>(num)) return false;
+		numList.push_back(num);
 	}
 	return true;
 }
