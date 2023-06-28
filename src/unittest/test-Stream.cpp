@@ -289,6 +289,24 @@ Gurax_TesterEntry(Stream)
 		::printf("  -> ");
 		PrintNumList<T_Num>("0x%llx", numListDec);
 	} while (0);
+#if 1
+	do {
+		::printf("Serialize/Deserialize Array\n");
+		RefPtr<Array> pArray(Array::Create(Array::ElemType::Float, DimSizes::Create(3, 4, 5, 6)));
+		Float* pElem = pArray->GetPointerC<Float>();
+		::printf("%zu\n", pArray->GetDimSizes().CalcLength());
+		//for (size_t i = 0; pArray->GetDimSizes().CalcLength(); i++) *pElem++ = i;
+		RefPtr<Stream_Binary> pStream(new Stream_Binary(Stream::Flag::Readable | Stream::Flag::Writable));
+		//pArray->Serialize(*pStream);
+#if 0	
+		::printf("%s: ", pArray->ToString().c_str());
+		Stream::COut->Dump(pStream->GetBuff());
+		pStream->Seek(0, Stream::SeekMode::Set);
+		RefPtr<Array> pArrayDec(Array::Deserialize(*pStream));
+		::printf("  -> %s\n", pArrayDec->ToString().c_str());
+#endif
+	} while (0);
+#endif
 }
 
 }
