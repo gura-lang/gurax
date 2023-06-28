@@ -304,6 +304,13 @@ Iterator* Value::DoGenIterator() const
 	return nullptr;
 }
 
+bool Value::Serialize(Stream& stream) const
+{
+	Error::Issue(ErrorType::ValueError,
+				"value type %s can not be serialized", GetVTypeCustom().MakeFullName().c_str());
+	return false;
+}
+
 bool Value::Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	Error::Issue(ErrorType::ValueError,

@@ -12,6 +12,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_String : public VType {
 public:
+	static const UInt32 SerializeId = 0x00000200;
+public:
 	template<typename T_CharCmp>
 	class Iterator_Split : public Iterator {
 	private:

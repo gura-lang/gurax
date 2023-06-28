@@ -49,6 +49,13 @@ void VType::PresentHelp(Processor& processor, const Symbol* pLangCode) const
 	}
 }
 
+Value* VType::Deserialize(Stream& stream) const
+{
+	Error::Issue(ErrorType::ValueError,
+				"value type %s can not be serialized", MakeFullName().c_str());
+	return nullptr;
+}
+
 String VType::ToString(const StringStyle& ss) const
 {
 	String str;

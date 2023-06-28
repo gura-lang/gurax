@@ -13,6 +13,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 Array::Funcs Array::funcs;
 const Array::ElemTypeT* Array::_pElemTypeRtnForArithmTbl[ElemTypeIdMax][ElemTypeIdMax];
+Array::MapIdToElemType Array::_mapIdToElemType;
 Array::MapSymbolToElemType Array::_mapSymbolToElemType;
 Array::MapSymbolToElemType Array::_mapAtSymbolToElemType;
 
@@ -79,49 +80,6 @@ bool Array::Reshape(RefPtr<Array>& pArrayRtn, const ValueList& values) const
 	}
 	return false;
 }
-
-#if 0
-Array* Array::Reshape(const ValueList& values) const
-{
-	DimSizes dimSizes;
-	size_t len = GetDimSizes().CalcLength();
-	dimSizes.reserve(values.size());
-	int iUndetermined = -1;
-	size_t dimSizeProd = 1;
-	size_t i = 0;
-	for (auto pValue : values) {
-		if (pValue->IsType(VTYPE_Number)) {
-			size_t dimSize = Value_Number::GetNumberPos<size_t>(*pValue);
-			if (Error::IsIssued()) return nullptr;
-			dimSizes.push_back(dimSize);
-			dimSizeProd *= dimSize;
-		} else if (pValue->IsInvalid()) {
-			if (iUndetermined >= 0) {
-				Error::Issue(ErrorType::ValueError, "more than one undetermined dimension");
-				return nullptr;
-			}
-			dimSizes.push_back(0);
-			iUndetermined = i;
-		} else {
-			Error::Issue(ErrorType::TypeError, "only Number value is acceptable");
-			return nullptr;
-		}
-		i++;
-	}
-	if (len < dimSizeProd) {
-		Error::Issue(ErrorType::RangeError, "specified dimension exceeds the memory amount");
-		return nullptr;
-	} else if (iUndetermined < 0 && len != dimSizeProd) {
-		Error::Issue(ErrorType::ValueError, "specified dimension is less than the memory amount");
-		return nullptr;
-	} else if (len % dimSizeProd != 0) {
-		Error::Issue(ErrorType::ValueError, "invalid dimension");
-		return nullptr;
-	}
-	if (iUndetermined >= 0) dimSizes[iUndetermined] = len / dimSizeProd;
-	return new Array(GetElemType(), GetMemory().Reference(), dimSizes, _byteOffset);
-}
-#endif
 
 template<typename T_Elem> Value* FindMax_T(const Array& array, size_t axis, const ValueList& valuesDim)
 {
@@ -1079,7 +1037,8 @@ void Cross_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t n)
 
 void Array::Bootup()
 {
-	auto AssocSymbol = [](const Symbol* pSymbol, const Symbol* pAtSymbol, const ElemTypeT& elemType) {
+	auto RegisterToMap = [](const Symbol* pSymbol, const Symbol* pAtSymbol, const ElemTypeT& elemType) {
+		_mapIdToElemType[elemType.id] = &elemType;
 		_mapSymbolToElemType[pSymbol] = &elemType;
 		_mapAtSymbolToElemType[pAtSymbol] = &elemType;
 	};
@@ -1253,28 +1212,28 @@ void Array::Bootup()
 	InitElemTypeRtnForArithm(Complex,	Float,		Complex);
 	InitElemTypeRtnForArithm(Complex,	Double,		Complex);
 	InitElemTypeRtnForArithm(Complex,	Complex,	Complex);
-	AssocSymbol(Symbol::Empty,			Symbol::Empty,				ElemType::None);
-	AssocSymbol(Gurax_Symbol(bool_),	Gurax_Symbol(at_bool),		ElemType::Bool);
-	AssocSymbol(Gurax_Symbol(int8),		Gurax_Symbol(at_int8),		ElemType::Int8);
-	AssocSymbol(Gurax_Symbol(uint8),	Gurax_Symbol(at_uint8),		ElemType::UInt8);
-	AssocSymbol(Gurax_Symbol(int16),	Gurax_Symbol(at_int16),		ElemType::Int16);
-	AssocSymbol(Gurax_Symbol(uint16),	Gurax_Symbol(at_uint16),	ElemType::UInt16);
-	AssocSymbol(Gurax_Symbol(int32),	Gurax_Symbol(at_int32),		ElemType::Int32);
-	AssocSymbol(Gurax_Symbol(uint32),	Gurax_Symbol(at_uint32),	ElemType::UInt32);
-	AssocSymbol(Gurax_Symbol(int64),	Gurax_Symbol(at_int64),		ElemType::Int64);
-	AssocSymbol(Gurax_Symbol(uint64),	Gurax_Symbol(at_uint64),	ElemType::UInt64);
-	AssocSymbol(Gurax_Symbol(half),		Gurax_Symbol(at_half),		ElemType::Half);
-	AssocSymbol(Gurax_Symbol(float_),	Gurax_Symbol(at_float),		ElemType::Float);
-	AssocSymbol(Gurax_Symbol(double_),	Gurax_Symbol(at_double),	ElemType::Double);
-	AssocSymbol(Gurax_Symbol(complex),	Gurax_Symbol(at_complex),	ElemType::Complex);
-	AssocSymbol(Gurax_Symbol(char_),	Gurax_Symbol(at_char),		ElemType::Int8);
-	AssocSymbol(Gurax_Symbol(uchar),	Gurax_Symbol(at_uchar),		ElemType::UInt8);
-	AssocSymbol(Gurax_Symbol(short_),	Gurax_Symbol(at_short),		ElemType::Int16);
-	AssocSymbol(Gurax_Symbol(ushort),	Gurax_Symbol(at_ushort),	ElemType::UInt16);
-	AssocSymbol(Gurax_Symbol(int_),		Gurax_Symbol(at_int),		(sizeof(int) == sizeof(Int32))? ElemType::Int32 : ElemType::Int64);
-	AssocSymbol(Gurax_Symbol(uint),		Gurax_Symbol(at_uint),		(sizeof(int) == sizeof(Int32))? ElemType::UInt32 : ElemType::UInt64);
-	AssocSymbol(Gurax_Symbol(long_),	Gurax_Symbol(at_long),		(sizeof(long) == sizeof(Int32))? ElemType::Int32 : ElemType::Int64);
-	AssocSymbol(Gurax_Symbol(ulong),	Gurax_Symbol(at_ulong),		(sizeof(long) == sizeof(Int32))? ElemType::UInt32 : ElemType::UInt64);
+	RegisterToMap(Symbol::Empty,		Symbol::Empty,				ElemType::None);
+	RegisterToMap(Gurax_Symbol(bool_),	Gurax_Symbol(at_bool),		ElemType::Bool);
+	RegisterToMap(Gurax_Symbol(int8),	Gurax_Symbol(at_int8),		ElemType::Int8);
+	RegisterToMap(Gurax_Symbol(uint8),	Gurax_Symbol(at_uint8),		ElemType::UInt8);
+	RegisterToMap(Gurax_Symbol(int16),	Gurax_Symbol(at_int16),		ElemType::Int16);
+	RegisterToMap(Gurax_Symbol(uint16),	Gurax_Symbol(at_uint16),	ElemType::UInt16);
+	RegisterToMap(Gurax_Symbol(int32),	Gurax_Symbol(at_int32),		ElemType::Int32);
+	RegisterToMap(Gurax_Symbol(uint32),	Gurax_Symbol(at_uint32),	ElemType::UInt32);
+	RegisterToMap(Gurax_Symbol(int64),	Gurax_Symbol(at_int64),		ElemType::Int64);
+	RegisterToMap(Gurax_Symbol(uint64),	Gurax_Symbol(at_uint64),	ElemType::UInt64);
+	RegisterToMap(Gurax_Symbol(half),	Gurax_Symbol(at_half),		ElemType::Half);
+	RegisterToMap(Gurax_Symbol(float_),	Gurax_Symbol(at_float),		ElemType::Float);
+	RegisterToMap(Gurax_Symbol(double_),Gurax_Symbol(at_double),	ElemType::Double);
+	RegisterToMap(Gurax_Symbol(complex),Gurax_Symbol(at_complex),	ElemType::Complex);
+	RegisterToMap(Gurax_Symbol(char_),	Gurax_Symbol(at_char),		ElemType::Int8);
+	RegisterToMap(Gurax_Symbol(uchar),	Gurax_Symbol(at_uchar),		ElemType::UInt8);
+	RegisterToMap(Gurax_Symbol(short_),	Gurax_Symbol(at_short),		ElemType::Int16);
+	RegisterToMap(Gurax_Symbol(ushort),	Gurax_Symbol(at_ushort),	ElemType::UInt16);
+	RegisterToMap(Gurax_Symbol(int_),	Gurax_Symbol(at_int),		(sizeof(int) == sizeof(Int32))? ElemType::Int32 : ElemType::Int64);
+	RegisterToMap(Gurax_Symbol(uint),	Gurax_Symbol(at_uint),		(sizeof(int) == sizeof(Int32))? ElemType::UInt32 : ElemType::UInt64);
+	RegisterToMap(Gurax_Symbol(long_),	Gurax_Symbol(at_long),		(sizeof(long) == sizeof(Int32))? ElemType::Int32 : ElemType::Int64);
+	RegisterToMap(Gurax_Symbol(ulong),	Gurax_Symbol(at_ulong),		(sizeof(long) == sizeof(Int32))? ElemType::UInt32 : ElemType::UInt64);
 	ElemType::Bool.bytes				= sizeof(bool);
 	ElemType::Int8.bytes				= sizeof(Int8);
 	ElemType::UInt8.bytes				= sizeof(UInt8);
@@ -2267,6 +2226,39 @@ Array* Array::CreateCasted(const ElemTypeT& elemType) const
 	RefPtr<Array> pArray(Create(elemType, _dimSizes));
 	pArray->InjectElems(GetPointerC<void>(), GetElemType(), 0, _dimSizes.CalcLength());
 	return pArray.release();
+}
+
+bool Array::Serialize(Stream& stream) const
+{
+	if (!stream.SerializePackedNumber<size_t>(_elemType.id)) return false;
+	if (!stream.SerializeMemory(*_pMemory)) return false;
+	if (!stream.SerializePackedNumList<size_t>(_dimSizes)) return false;
+	if (!stream.SerializePackedNumber<size_t>(_byteOffset)) return false;
+	return true;
+}
+
+Array* Array::Deserialize(Stream& stream)
+{
+	size_t elemTypeId;
+	RefPtr<Memory> pMemory;
+	DimSizes dimSizes;
+	size_t byteOffset;
+	if (!stream.DeserializePackedNumber<size_t>(elemTypeId)) return nullptr;
+	if (!stream.DeserializeMemory(pMemory)) return nullptr;
+	if (!stream.DeserializePackedNumList<size_t>(dimSizes)) return nullptr;
+	if (!stream.DeserializePackedNumber<size_t>(byteOffset)) return nullptr;
+	const ElemTypeT& elemType = IdToElemType(elemTypeId);
+	if (!elemType.IsNone()) {
+		Error::Issue(ErrorType::FormatError, "Invalid element type ID %zu for Array", elemTypeId);
+		return nullptr;
+	}
+	return new Array(elemType, pMemory.release(), dimSizes, byteOffset);
+}
+
+const Array::ElemTypeT& Array::IdToElemType(size_t elemTypeId)
+{
+	auto iter = _mapIdToElemType.find(elemTypeId);
+	return (iter == _mapIdToElemType.end())? ElemType::None : *iter->second;
 }
 
 const Array::ElemTypeT& Array::SymbolToElemType(const Symbol* pSymbol)

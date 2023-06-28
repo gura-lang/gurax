@@ -12,6 +12,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Number : public VType {
 public:
+	static const UInt32 SerializeId = 0x00000100;
+public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
 	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;

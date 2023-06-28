@@ -111,6 +111,8 @@ public:
 	void GatherMemberSymbolIf(SymbolList& symbolList, const Frame::GatherCriteria& gatherCriteria, bool escalateFlag) const;
 	void PresentHelp(Processor& processor, const Symbol* pLangCode) const;
 public:
+	virtual Value* Deserialize(Stream& stream) const;
+public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 public:
 	bool IsMutable() const { return (_flags & Flag::Mutable) != 0; }

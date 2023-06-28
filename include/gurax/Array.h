@@ -16,6 +16,7 @@ class Value;
 class ValueList;
 class ValueOwner;
 class Value_List;
+class Stream;
 
 //------------------------------------------------------------------------------
 // DimSizes
@@ -182,6 +183,7 @@ public:
 		std::function<void (void* pvRtn, size_t m, size_t n, const void* pvL, const void* pvR, size_t l)> Dot_ArrayArray[ElemTypeIdMax][ElemTypeIdMax];
 		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t n)>		Cross_ArrayArray[ElemTypeIdMax][ElemTypeIdMax];
 	};
+	using MapIdToElemType = std::unordered_map<size_t, const ElemTypeT*>;
 	using MapSymbolToElemType = std::unordered_map<const Symbol*, const ElemTypeT*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>;
 protected:
 	const ElemTypeT& _elemType;
@@ -192,11 +194,12 @@ public:
 	static Funcs funcs;
 protected:
 	static const ElemTypeT* _pElemTypeRtnForArithmTbl[ElemTypeIdMax][ElemTypeIdMax];
+	static MapIdToElemType _mapIdToElemType;
 	static MapSymbolToElemType _mapSymbolToElemType;
 	static MapSymbolToElemType _mapAtSymbolToElemType;
 public:
 	// Constructor
-	Array(const ElemTypeT& elemType, Memory* pMemory, DimSizes dimSizes, size_t offset);
+	Array(const ElemTypeT& elemType, Memory* pMemory, DimSizes dimSizes, size_t byteOffset);
 	// Copy constructor/operator
 	Array(const Array& src);
 	Array& operator=(const Array& src) = delete;
@@ -329,6 +332,10 @@ public:
 	void* FwdPointer(void* pv, int n) const { return GetElemType().FwdPointer(pv, n); }
 	const void* FwdPointer(const void* pv, int n) const { return GetElemType().FwdPointer(pv, n); }
 public:
+	bool Serialize(Stream& stream) const;
+	static Array* Deserialize(Stream& stream);
+public:
+	static const ElemTypeT& IdToElemType(size_t elemTypeId); 
 	static const ElemTypeT& SymbolToElemType(const Symbol* pSymbol);
 	static const ElemTypeT& AtSymbolToElemType(const Symbol* pSymbol);
 public:

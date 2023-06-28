@@ -13,6 +13,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Array : public VType {
 public:
+	static const UInt32 SerializeId = 0x00000400;
+public:
 	class GURAX_DLLDECLARE Iterator_Each : public Iterator {
 	private:
 		RefPtr<Array> _pArray;
