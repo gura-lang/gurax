@@ -8,11 +8,27 @@ namespace Gurax {
 template<typename T_Num> void PrintNumList(const char* format, NumList<T_Num>& numList)
 {
 	auto pNum = numList.begin();
-	if (pNum == numList.end()) return;
-	::printf(format, *pNum);
-	for ( ; pNum != numList.end(); pNum++) {
-		::printf(", ");
+	if (pNum != numList.end()) {
 		::printf(format, *pNum);
+		pNum++;
+		for ( ; pNum != numList.end(); pNum++) {
+			::printf(", ");
+			::printf(format, *pNum);
+		}
+	}
+	::printf("\n");
+}
+
+void PrintBinary(const void* buff, size_t len)
+{
+	const UInt8* pBuff = reinterpret_cast<const UInt8*>(buff);
+	if (len > 0) {
+		::printf("0x%02x", *pBuff);
+		pBuff++;
+		len--;
+		for ( ; len > 0; pBuff++, len--) {
+			::printf(", 0x%02x", *pBuff);
+		}
 	}
 	::printf("\n");
 }
@@ -147,6 +163,60 @@ Gurax_TesterEntry(Stream)
 			T_Num numDec;
 			pStream->DeserializePackedNumber<T_Num>(numDec);
 			::printf("  -> %zx\n", numDec);
+		}
+	} while (0);
+	do {
+		::printf("Serialize/Deserialize String\n");
+		static const char* strTbl[] = {
+			"", "A", "AB", "ABC", "A quick brown fox jumps over the lazy dog",
+		};
+		for (size_t i = 0; i < Gurax_ArraySizeOf(strTbl); i++) {
+			RefPtr<Stream_Binary> pStream(new Stream_Binary(Stream::Flag::Readable | Stream::Flag::Writable));
+			pStream->SerializeString(strTbl[i]);
+			::printf("\"%s\": ", strTbl[i]);
+			Stream::COut->Dump(pStream->GetBuff());
+			pStream->Seek(0, Stream::SeekMode::Set);
+			String strDec;
+			pStream->DeserializeString(strDec);
+			::printf("  -> \"%s\"\n", strDec.c_str());
+		}
+	} while (0);
+	do {
+		::printf("Serialize/Deserialize Binary\n");
+		static const char* strTbl[] = {
+			"", "A", "AB", "ABC", "A quick brown fox jumps over the lazy dog",
+		};
+		for (size_t i = 0; i < Gurax_ArraySizeOf(strTbl); i++) {
+			RefPtr<Stream_Binary> pStream(new Stream_Binary(Stream::Flag::Readable | Stream::Flag::Writable));
+			size_t len = ::strlen(strTbl[i]);
+			pStream->SerializeBinary(Binary(strTbl[i], len));
+			PrintBinary(strTbl[i], len);
+			Stream::COut->Dump(pStream->GetBuff());
+			pStream->Seek(0, Stream::SeekMode::Set);
+			Binary binaryDec;
+			pStream->DeserializeBinary(binaryDec);
+			::printf("  -> ");
+			PrintBinary(binaryDec.data(), binaryDec.size());
+		}
+	} while (0);
+	do {
+		::printf("Serialize/Deserialize Memory\n");
+		static const char* strTbl[] = {
+			"", "A", "AB", "ABC", "A quick brown fox jumps over the lazy dog",
+		};
+		for (size_t i = 0; i < Gurax_ArraySizeOf(strTbl); i++) {
+			RefPtr<Stream_Binary> pStream(new Stream_Binary(Stream::Flag::Readable | Stream::Flag::Writable));
+			size_t len = ::strlen(strTbl[i]);
+			RefPtr<Memory> pMemory(new MemoryHeap(len));
+			::memcpy(pMemory->GetPointerC<void>(), strTbl[i], len);
+			pStream->SerializeMemory(*pMemory);
+			PrintBinary(pMemory->GetPointerC<void>(), len);
+			Stream::COut->Dump(pStream->GetBuff());
+			pStream->Seek(0, Stream::SeekMode::Set);
+			RefPtr<Memory> pMemoryDec;
+			pStream->DeserializeMemory(pMemoryDec);
+			::printf("  -> ");
+			PrintBinary(pMemory->GetPointerC<void>(), pMemory->GetBytes());
 		}
 	} while (0);
 	do {

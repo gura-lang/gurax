@@ -1,3 +1,188 @@
 [Stream]
 Hello Gura World 123456
 Hello Gura World 123456
+Serialize/Deserialize UInt8
+0x0: 00                                               .
+  -> 0x0
+0x7f: 7f                                               .
+  -> 0x7f
+0x80: 80                                               .
+  -> 0x80
+0xff: ff                                               .
+  -> 0xff
+Serialize/Deserialize UInt16
+0x0: 00 00                                            ..
+  -> 0x0
+0x7f: 7f 00                                            ..
+  -> 0x7f
+0x80: 80 00                                            ..
+  -> 0x80
+0xff: ff 00                                            ..
+  -> 0xff
+0x100: 00 01                                            ..
+  -> 0x100
+0x1000: 00 10                                            ..
+  -> 0x1000
+0x7fff: ff 7f                                            ..
+  -> 0x7fff
+0x8000: 00 80                                            ..
+  -> 0x8000
+0xffff: ff ff                                            ..
+  -> 0xffff
+Serialize/Deserialize UInt32
+0x0: 00 00 00 00                                      ....
+  -> 0x0
+0x7f: 7f 00 00 00                                      ....
+  -> 0x7f
+0x80: 80 00 00 00                                      ....
+  -> 0x80
+0xff: ff 00 00 00                                      ....
+  -> 0xff
+0x100: 00 01 00 00                                      ....
+  -> 0x100
+0x1000: 00 10 00 00                                      ....
+  -> 0x1000
+0x7fff: ff 7f 00 00                                      ....
+  -> 0x7fff
+0x8000: 00 80 00 00                                      ....
+  -> 0x8000
+0xffff: ff ff 00 00                                      ....
+  -> 0xffff
+0x100000: 00 00 10 00                                      ....
+  -> 0x100000
+0x10000000: 00 00 00 10                                      ....
+  -> 0x10000000
+0x7fffffff: ff ff ff 7f                                      ....
+  -> 0x7fffffff
+0x80000000: 00 00 00 80                                      ....
+  -> 0x80000000
+0xffffffff: ff ff ff ff                                      ....
+  -> 0xffffffff
+Serialize/Deserialize Float
+0.000: 00 00 00 00                                      ....
+  -> 0.000
+1.000: 00 00 80 3f                                      ...?
+  -> 1.000
+-1.000: 00 00 80 bf                                      ....
+  -> -1.000
+3.141: 25 06 49 40                                      %.I@
+  -> 3.141
+-3.141: 25 06 49 c0                                      %.I.
+  -> -3.141
+Serialize/Deserialize Double
+0.000: 00 00 00 00 00 00 00 00                          ........
+  -> 0.000
+1.000: 00 00 00 00 00 00 f0 3f                          .......?
+  -> 1.000
+-1.000: 00 00 00 00 00 00 f0 bf                          ........
+  -> -1.000
+3.141: 54 e3 a5 9b c4 20 09 40                          T.... .@
+  -> 3.141
+-3.141: 54 e3 a5 9b c4 20 09 c0                          T.... ..
+  -> -3.141
+Serialize/Deserialize packed UInt32
+0x0: 00                                               .
+  -> 0x0
+0x7f: 7f                                               .
+  -> 0x7f
+0x80: 80 01                                            ..
+  -> 0x80
+0x3fff: ff 7f                                            ..
+  -> 0x3fff
+0x4000: 80 80 01                                         ...
+  -> 0x4000
+0x1fffff: ff ff 7f                                         ...
+  -> 0x1fffff
+0x200000: 80 80 80 01                                      ....
+  -> 0x200000
+0xfffffff: ff ff ff 7f                                      ....
+  -> 0xfffffff
+0x10000000: 80 80 80 80 01                                   .....
+  -> 0x10000000
+0xffffffff: ff ff ff ff 0f                                   .....
+  -> 0xffffffff
+Serialize/Deserialize packed UInt64
+0: 00                                               .
+  -> 0
+7f: 7f                                               .
+  -> 7f
+80: 80 01                                            ..
+  -> 80
+3fff: ff 7f                                            ..
+  -> 3fff
+4000: 80 80 01                                         ...
+  -> 4000
+1fffff: ff ff 7f                                         ...
+  -> 1fffff
+200000: 80 80 80 01                                      ....
+  -> 200000
+fffffff: ff ff ff 7f                                      ....
+  -> fffffff
+10000000: 80 80 80 80 01                                   .....
+  -> 10000000
+ffffffff: ff ff ff ff 0f                                   .....
+  -> ffffffff
+7ffffffff: ff ff ff ff 7f                                   .....
+  -> 7ffffffff
+800000000: 80 80 80 80 80 01                                ......
+  -> 800000000
+Serialize/Deserialize String
+"": 00                                               .
+  -> ""
+"A": 01 41                                            .A
+  -> "A"
+"AB": 02 41 42                                         .AB
+  -> "AB"
+"ABC": 03 41 42 43                                      .ABC
+  -> "ABC"
+"A quick brown fox jumps over the lazy dog": 29 41 20 71 75 69 63 6b 20 62 72 6f 77 6e 20 66  )A quick brown f
+6f 78 20 6a 75 6d 70 73 20 6f 76 65 72 20 74 68  ox jumps over th
+65 20 6c 61 7a 79 20 64 6f 67                    e lazy dog
+  -> "A quick brown fox jumps over the lazy dog"
+Serialize/Deserialize Binary
+
+00                                               .
+  -> 
+0x41
+01 41                                            .A
+  -> 0x41
+0x41, 0x42
+02 41 42                                         .AB
+  -> 0x41, 0x42
+0x41, 0x42, 0x43
+03 41 42 43                                      .ABC
+  -> 0x41, 0x42, 0x43
+0x41, 0x20, 0x71, 0x75, 0x69, 0x63, 0x6b, 0x20, 0x62, 0x72, 0x6f, 0x77, 0x6e, 0x20, 0x66, 0x6f, 0x78, 0x20, 0x6a, 0x75, 0x6d, 0x70, 0x73, 0x20, 0x6f, 0x76, 0x65, 0x72, 0x20, 0x74, 0x68, 0x65, 0x20, 0x6c, 0x61, 0x7a, 0x79, 0x20, 0x64, 0x6f, 0x67
+29 41 20 71 75 69 63 6b 20 62 72 6f 77 6e 20 66  )A quick brown f
+6f 78 20 6a 75 6d 70 73 20 6f 76 65 72 20 74 68  ox jumps over th
+65 20 6c 61 7a 79 20 64 6f 67                    e lazy dog
+  -> 0x41, 0x20, 0x71, 0x75, 0x69, 0x63, 0x6b, 0x20, 0x62, 0x72, 0x6f, 0x77, 0x6e, 0x20, 0x66, 0x6f, 0x78, 0x20, 0x6a, 0x75, 0x6d, 0x70, 0x73, 0x20, 0x6f, 0x76, 0x65, 0x72, 0x20, 0x74, 0x68, 0x65, 0x20, 0x6c, 0x61, 0x7a, 0x79, 0x20, 0x64, 0x6f, 0x67
+Serialize/Deserialize UInt32 List
+0x0, 0x7f, 0x80, 0xff, 0x100, 0x1000, 0x7fff, 0x8000, 0xffff, 0x100000, 0x10000000, 0x7fffffff, 0x80000000, 0xffffffff
+0e 00 00 00 00 7f 00 00 00 80 00 00 00 ff 00 00  ................
+00 00 01 00 00 00 10 00 00 ff 7f 00 00 00 80 00  ................
+00 ff ff 00 00 00 00 10 00 00 00 00 10 ff ff ff  ................
+7f 00 00 00 80 ff ff ff ff                       .........
+  -> 0x0, 0x7f, 0x80, 0xff, 0x100, 0x1000, 0x7fff, 0x8000, 0xffff, 0x100000, 0x10000000, 0x7fffffff, 0x80000000, 0xffffffff
+Serialize/Deserialize UInt64 List
+0x0, 0x7f, 0x80, 0x3fff, 0x4000, 0x1fffff, 0x200000, 0xfffffff, 0x10000000, 0xffffffff, 0x7ffffffff, 0x800000000
+0c 00 00 00 00 00 00 00 00 7f 00 00 00 00 00 00  ................
+00 80 00 00 00 00 00 00 00 ff 3f 00 00 00 00 00  ..........?.....
+00 00 40 00 00 00 00 00 00 ff ff 1f 00 00 00 00  ..@.............
+00 00 00 20 00 00 00 00 00 ff ff ff 0f 00 00 00  ... ............
+00 00 00 00 10 00 00 00 00 ff ff ff ff 00 00 00  ................
+00 ff ff ff ff 07 00 00 00 00 00 00 00 08 00 00  ................
+00                                               .
+  -> 0x0, 0x7f, 0x80, 0x3fff, 0x4000, 0x1fffff, 0x200000, 0xfffffff, 0x10000000, 0xffffffff, 0x7ffffffff, 0x800000000
+Serialize/Deserialize Packed UInt32 List
+0x0, 0x7f, 0x80, 0xff, 0x100, 0x1000, 0x7fff, 0x8000, 0xffff, 0x100000, 0x10000000, 0x7fffffff, 0x80000000, 0xffffffff
+0e 00 7f 80 01 ff 01 80 02 80 20 ff ff 01 80 80  .......... .....
+02 ff ff 03 80 80 40 80 80 80 80 01 ff ff ff ff  ......@.........
+07 80 80 80 80 08 ff ff ff ff 0f                 ...........
+  -> 0x0, 0x7f, 0x80, 0xff, 0x100, 0x1000, 0x7fff, 0x8000, 0xffff, 0x100000, 0x10000000, 0x7fffffff, 0x80000000, 0xffffffff
+Serialize/Deserialize Packed UInt64 List
+0x0, 0x7f, 0x80, 0x3fff, 0x4000, 0x1fffff, 0x200000, 0xfffffff, 0x10000000, 0xffffffff, 0x7ffffffff, 0x800000000
+0c 00 7f 80 01 ff 7f 80 80 01 ff ff 7f 80 80 80  ................
+01 ff ff ff 7f 80 80 80 80 01 ff ff ff ff 0f ff  ................
+ff ff ff 7f 80 80 80 80 80 01                    ..........
+  -> 0x0, 0x7f, 0x80, 0x3fff, 0x4000, 0x1fffff, 0x200000, 0xfffffff, 0x10000000, 0xffffffff, 0x7ffffffff, 0x800000000

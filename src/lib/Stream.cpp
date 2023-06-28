@@ -405,7 +405,7 @@ bool Stream::DeserializeBinary(Binary& binary)
 	UInt64 len = 0;
 	if (!DeserializePackedNumber<UInt64>(len)) return false;
 	if (len == 0) {
-		binary.clear();
+		binary = Binary();
 		return true;
 	}
 	binary = Binary(len, 0x00);
@@ -433,20 +433,20 @@ bool Stream::DeserializeMemory(RefPtr<Memory>& pMemory)
 	return true;
 }
 
-#if 0
-bool Stream::SerializeSymbol(const Symbol *pSymbol)
+bool Stream::SerializeSymbol(const Symbol* pSymbol)
 {
 	return SerializeString(pSymbol->GetName());
 }
 
-bool Stream::DeserializeSymbol(const Symbol **ppSymbol)
+bool Stream::DeserializeSymbol(const Symbol*& pSymbol)
 {
 	String str;
 	if (!DeserializeString(str)) return false;
-	*ppSymbol = Symbol::Add(str.c_str());
+	pSymbol = Symbol::Add(str.c_str());
 	return true;
 }
 
+#if 0
 bool Stream::SerializeSymbolSet(const SymbolSet &symbolSet)
 {
 	UInt32 len = static_cast<UInt32>(symbolSet.size());
@@ -492,74 +492,6 @@ bool Stream::DeserializeSymbolList(SymbolList &symbolList)
 	while (len-- > 0) {
 		if (!DeserializeSymbol(&pSymbol)) return false;
 		symbolList.push_back(pSymbol);
-	}
-	return true;
-}
-
-bool Stream::SerializePackedUInt32(UInt32 entity)
-{
-	UChar buff[16];
-	size_t bytesBuff = 0;
-	if (entity == 0) {
-		buff[bytesBuff++] = 0x00;
-	} else {
-		while (entity > 0) {
-			UChar data = static_cast<UChar>(entity & 0x7f);
-			entity >>= 7;
-			if (entity != 0) data |= 0x80;
-			buff[bytesBuff++] = data;
-		}
-	}
-	return Write(buff, bytesBuff) == bytesBuff;
-}
-
-bool Stream::DeserializePackedUInt32(UInt32& entity)
-{
-	const size_t bytesBuffMax = 5;	// 32 / 7 = 4.6
-	entity = 0;
-	UChar data = 0x00;
-	for (size_t bytesBuff = 0; bytesBuff < bytesBuffMax; bytesBuff++) {
-		if (Read(&data, sizeof(data)) != sizeof(data)) return false;
-		entity = (entity << 7) + (data & 0x7f);
-		if ((data & 0x80) == 0x00) break;
-	}
-	if (data & 0x80) {
-		sig.SetError(ERR_FormatError, "invalid serialization format for packed 32bit number");
-		return false;
-	}
-	return true;
-}
-
-bool Stream::SerializePackedUInt64(UInt64 entity)
-{
-	UChar buff[16];
-	size_t bytesBuff = 0;
-	if (entity == 0) {
-		buff[bytesBuff++] = 0x00;
-	} else {
-		while (entity > 0) {
-			UChar data = static_cast<UChar>(entity & 0x7f);
-			entity >>= 7;
-			if (entity != 0) data |= 0x80;
-			buff[bytesBuff++] = data;
-		}
-	}
-	return Write(buff, bytesBuff) == bytesBuff;
-}
-
-bool Stream::DeserializePackedUInt64(UInt64& entity)
-{
-	const size_t bytesBuffMax = 10;	// 64 / 7 = 9.2
-	entity = 0;
-	UChar data = 0x00;
-	for (size_t bytesBuff = 0; bytesBuff < bytesBuffMax; bytesBuff++) {
-		if (Read(&data, sizeof(data)) != sizeof(data)) return false;
-		entity = (entity << 7) + (data & 0x7f);
-		if ((data & 0x80) == 0x00) break;
-	}
-	if (data & 0x80) {
-		sig.SetError(ERR_FormatError, "invalid serialization format for packed 64bit number");
-		return false;
 	}
 	return true;
 }
