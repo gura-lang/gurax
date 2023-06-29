@@ -149,12 +149,13 @@ String Value_Symbol::ToString(const StringStyle& ss) const
 
 bool Value_Symbol::DoSerialize(Stream& stream) const
 {
-	return false;
+	return stream.SerializeSymbol(_pSymbol);
 }
 
 Value* VType_Symbol::DoDeserialize(Stream& stream) const
 {
-	return nullptr;
+	const Symbol* pSymbol;
+	return stream.DeserializeSymbol(pSymbol)? new Value_Symbol(pSymbol) : Value::nil();
 }
 
 }

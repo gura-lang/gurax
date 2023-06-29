@@ -1677,12 +1677,13 @@ Iterator* Value_String::DoGenIterator() const
 
 bool Value_String::DoSerialize(Stream& stream) const
 {
-	return false;
+	return stream.SerializeString(GetString());
 }
 
 Value* VType_String::DoDeserialize(Stream& stream) const
 {
-	return nullptr;
+	String str;
+	return stream.DeserializeString(str)? new Value_String(str) : Value::nil();
 }
 
 }

@@ -95,12 +95,12 @@ String Value_Nil::ToString(const StringStyle& ss) const
 
 bool Value_Nil::DoSerialize(Stream& stream) const
 {
-	return false;
+	return true;
 }
 
 Value* VType_Nil::DoDeserialize(Stream& stream) const
 {
-	return nullptr;
+	return Value::nil();
 }
 
 }

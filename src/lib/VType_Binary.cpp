@@ -372,12 +372,13 @@ String Value_Binary::ToString(const StringStyle& ss) const
 
 bool Value_Binary::DoSerialize(Stream& stream) const
 {
-	return false;
+	return stream.SerializeBinary(GetBinary());
 }
 
 Value* VType_Binary::DoDeserialize(Stream& stream) const
 {
-	return nullptr;
+	Binary binary;
+	return stream.DeserializeBinary(binary)? new Value_Binary(binary) : Value::nil();
 }
 
 }

@@ -1083,12 +1083,13 @@ bool Value_Number::Format_c(Formatter& formatter, FormatterFlags& formatterFlags
 
 bool Value_Number::DoSerialize(Stream& stream) const
 {
-	return false;
+	return stream.SerializeNumber<Double>(GetNumberRaw());
 }
 
 Value* VType_Number::DoDeserialize(Stream& stream) const
 {
-	return nullptr;
+	Double num;
+	return stream.DeserializeNumber<Double>(num)? new Value_Number(num) : Value::nil();
 }
 
 }
