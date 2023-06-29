@@ -291,16 +291,22 @@ String ValueList::ToString(const StringStyle& ss) const
 	return str;
 }
 
+bool ValueList::Serialize(Stream& stream) const
+{
+	for (const Value* pValue : *this) {
+		if (!pValue->Serialize(stream)) return false;
+	}
+	return true;
+}
+
 void ValueList::IssueError_IndexOutOfRange(Int pos) const
 {
-	Error::Issue(ErrorType::IndexError, "specified position %d exceeds the list's size of %zu",
-				 pos, size());
+	Error::Issue(ErrorType::IndexError, "specified position %d exceeds the list's size of %zu", pos, size());
 }
 
 void ValueList::IssueError_IndexOutOfRange(const char* pos) const
 {
-	Error::Issue(ErrorType::IndexError, "specified position %s is out of range of the list size %zu",
-				 pos, size());
+	Error::Issue(ErrorType::IndexError, "specified position %s is out of range of the list size %zu", pos, size());
 }
 
 }

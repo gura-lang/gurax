@@ -281,7 +281,9 @@ public:
 	virtual bool DoAssignCustomMethod(RefPtr<Function> pFunction);
 	virtual Iterator* DoGenIterator() const;
 public:
-	virtual bool Serialize(Stream& stream) const;
+	bool Serialize(Stream& stream) const;
+	static Value* Deserialize(Stream& stream);
+	virtual bool DoSerialize(Stream& stream) const;
 public:
 	// Virtual functions for Formatter
 	virtual bool Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const;

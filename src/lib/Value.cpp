@@ -306,6 +306,24 @@ Iterator* Value::DoGenIterator() const
 
 bool Value::Serialize(Stream& stream) const
 {
+	if (!stream.SerializePackedNumber<VType::SerialId>(GetVTypeCustom().GetSerialId())) return false;
+	return DoSerialize(stream);
+}
+
+Value* Value::Deserialize(Stream& stream)
+{
+	VType::SerialId serialId;
+	if (!stream.DeserializePackedNumber<VType::SerialId>(serialId)) return nullptr;
+	VType* pVType = VType::SerialIdToVType(serialId);
+	if (!pVType) {
+		Error::Issue(ErrorType::FormatError, "unsupported serial ID for VType: 0x%08x", serialId);
+		return nullptr;
+	}
+	return pVType->DoDeserialize(stream);
+}
+
+bool Value::DoSerialize(Stream& stream) const
+{
 	Error::Issue(ErrorType::ValueError,
 				"value type %s can not be serialized", GetVTypeCustom().MakeFullName().c_str());
 	return false;

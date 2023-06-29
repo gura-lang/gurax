@@ -1138,3 +1138,38 @@ TestCase('Array#ArgMin()') {
 	Tester(`arr.ArgMin(2, 1, 3))
 	Tester(`arr.ArgMin(2, 2, 3))
 }
+
+TestCase('Serialization') {
+	[
+		@int8([[1, 2, 3], [4, 5, 6]])
+		@uint8([[1, 2, 3], [4, 5, 6]])
+		@int16([[1, 2, 3], [4, 5, 6]])
+		@uint16([[1, 2, 3], [4, 5, 6]])
+		@int32([[1, 2, 3], [4, 5, 6]])
+		@uint32([[1, 2, 3], [4, 5, 6]])
+		@int64([[1, 2, 3], [4, 5, 6]])
+		@uint64([[1, 2, 3], [4, 5, 6]])
+		@half([[1, 2, 3], [4, 5, 6]])
+		@float([[1, 2, 3], [4, 5, 6]])
+		@double([[1, 2, 3], [4, 5, 6]])
+		@complex([[1, 2, 3], [4, 5, 6]])
+		Array.Scalar(`int8, 87)
+		Array.Scalar(`uint8, 87)
+		Array.Scalar(`int16, 87)
+		Array.Scalar(`uint16, 87)
+		Array.Scalar(`int32, 87)
+		Array.Scalar(`uint32, 87)
+		Array.Scalar(`int64, 87)
+		Array.Scalar(`uint64, 87)
+		Array.Scalar(`half, 87)
+		Array.Scalar(`float, 87)
+		Array.Scalar(`double, 87)
+		Array.Scalar(`complex, 87)
+	].Each {|array|
+		buff = Binary()
+		buff.Writer().Serialize(array)
+		buff.Dump()
+		arrayDec = buff.Reader().Deserialize()
+		Printf('@%s %s\n', arrayDec.elemType, arrayDec)
+	}
+}

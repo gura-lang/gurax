@@ -9,18 +9,21 @@ namespace Gurax {
 // VType
 //------------------------------------------------------------------------------
 VType::UniqId VType::_uniqIdNext = 1;
+VType::SerialIdMap VType::_serialIdMap;
 VType VType::Invalid;
 
-VType::VType() :
-	_uniqId(UniqId_Invalid), _pHelpHolder(new HelpHolder()), _pVTypeInh(nullptr),
+VType::VType(SerialId serialId) :
+	_uniqId(UniqId_Invalid), _serialId(serialId), _pHelpHolder(new HelpHolder()), _pVTypeInh(nullptr),
 	_pSymbol(Symbol::Add("")), _flags(0), _pFrame(new Frame_Scope(nullptr, new Frame_OfMember(nullptr)))
 {
+	if (_serialId != SerialId_Invalid) _serialIdMap[_serialId] = this;
 }
 
-VType::VType(const Symbol* pSymbol) :
-	_uniqId(_uniqIdNext++), _pHelpHolder(new HelpHolder()), _pVTypeInh(nullptr),
+VType::VType(const Symbol* pSymbol, SerialId serialId) :
+	_uniqId(_uniqIdNext++), _serialId(serialId), _pHelpHolder(new HelpHolder()), _pVTypeInh(nullptr),
 	_pSymbol(pSymbol), _flags(0), _pFrame(new Frame_Scope(nullptr, new Frame_OfMember(nullptr)))
 {
+	if (_serialId != SerialId_Invalid) _serialIdMap[_serialId] = this;
 }
 
 void VType::Assign(Function* pFunction)
@@ -49,7 +52,13 @@ void VType::PresentHelp(Processor& processor, const Symbol* pLangCode) const
 	}
 }
 
-Value* VType::Deserialize(Stream& stream) const
+VType* VType::SerialIdToVType(SerialId serialId)
+{
+	auto iter = _serialIdMap.find(serialId);
+	return (iter == _serialIdMap.end())? nullptr : iter->second;
+}
+
+Value* VType::DoDeserialize(Stream& stream) const
 {
 	Error::Issue(ErrorType::ValueError,
 				"value type %s can not be serialized", MakeFullName().c_str());

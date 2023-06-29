@@ -25,6 +25,7 @@ class OpEntry;
 class GURAX_DLLDECLARE VType {
 public:
 	using UniqId = UInt32;
+	using SerialId = UInt32;
 	using Flags = UInt32;
 	struct Flag {
 		static const Flags None			= 0;
@@ -33,8 +34,10 @@ public:
 		static const Flags Callable		= (1 << 1);
 	};
 	using OpEntryList = ListBase<OpEntry*>;
+	using SerialIdMap = std::unordered_map<SerialId, VType*>;
 protected:
 	UniqId _uniqId;
+	SerialId _serialId;
 	RefPtr<HelpHolder> _pHelpHolder;
 	VType* _pVTypeInh;
 	const Symbol* _pSymbol;
@@ -44,14 +47,16 @@ protected:
 	OpEntryList _opEntryList;
 private:
 	static UniqId _uniqIdNext;
+	static SerialIdMap _serialIdMap;
 	static const UniqId UniqId_Invalid = 0;
+	static const SerialId SerialId_Invalid = 0;
 public:
 	static VType Invalid;
 public:
 	// Constructor
-	VType();
-	explicit VType(const Symbol* pSymbol);
-	explicit VType(const char* name) : VType(Symbol::Add(name)) {}
+	VType(SerialId serialId = SerialId_Invalid);
+	explicit VType(const Symbol* pSymbol, SerialId serialId = SerialId_Invalid);
+	explicit VType(const char* name, SerialId serialId = SerialId_Invalid) : VType(Symbol::Add(name), serialId) {}
 	// Copy constructor/operator
 	VType(VType& src) = delete;
 	VType& operator=(VType& src) = delete;
@@ -64,6 +69,8 @@ public:
 	bool IsValid() const { return _uniqId != UniqId_Invalid; }
 	bool IsInvalid() const { return _uniqId == UniqId_Invalid; }
 	UniqId GetUniqId() const { return _uniqId; }
+	SerialId GetSerialId() const { return _serialId; }
+	bool IsSerializable() const { return _serialId != SerialId_Invalid; }
 	void Declare(VType& vtypeInh, Flags flags, Constructor* pConstructor = nullptr);
 	HelpHolder& GetHelpHolder() { return *_pHelpHolder; }
 	const HelpHolder& GetHelpHolder() const { return *_pHelpHolder; }
@@ -111,7 +118,8 @@ public:
 	void GatherMemberSymbolIf(SymbolList& symbolList, const Frame::GatherCriteria& gatherCriteria, bool escalateFlag) const;
 	void PresentHelp(Processor& processor, const Symbol* pLangCode) const;
 public:
-	virtual Value* Deserialize(Stream& stream) const;
+	static VType* SerialIdToVType(SerialId serialId);
+	virtual Value* DoDeserialize(Stream& stream) const;
 public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 public:

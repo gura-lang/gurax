@@ -13,7 +13,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Array : public VType {
 public:
-	static const UInt32 SerializeId = 0x00000400;
+	static const SerialId serialId = 0x00000400;
 public:
 	class GURAX_DLLDECLARE Iterator_Each : public Iterator {
 	private:
@@ -33,8 +33,11 @@ public:
 		virtual String ToString(const StringStyle& ss) const override;
 	};
 public:
-	using VType::VType;
+	VType_Array() : VType(serialId) {}
+	explicit VType_Array(const Symbol* pSymbol) : VType(serialId) {}
+	explicit VType_Array(const char* name) : VType(name, serialId) {}
 	virtual void DoPrepare(Frame& frameOuter) override;
+	virtual Value* DoDeserialize(Stream& stream) const override;
 };
 
 extern GURAX_DLLDECLARE VType_Array VTYPE_Array;
@@ -99,6 +102,7 @@ public:
 	virtual Value* DoIndexGet(const Index& index) const override;
 	virtual void DoIndexSet(const Index& index, RefPtr<Value> pValue) override;
 	virtual bool DoEmptyIndexGet(Value** ppValue) const override;
+	virtual bool DoSerialize(Stream& stream) const override;
 };
 
 }

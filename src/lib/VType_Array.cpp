@@ -1261,6 +1261,13 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpBinary(Cross,	Array, Array);
 }
 
+Value* VType_Array::DoDeserialize(Stream& stream) const
+{
+	RefPtr<Array> pArray(Array::Deserialize(stream));
+	if (!pArray) return nullptr;
+	return new Value_Array(pArray.release());
+}
+
 //------------------------------------------------------------------------------
 // VType_Array::Iterator_Each
 //------------------------------------------------------------------------------
@@ -1385,6 +1392,11 @@ bool Value_Array::DoEmptyIndexGet(Value** ppValue) const
 {
 	*ppValue = GetArray().ToList();
 	return true;
+}
+
+bool Value_Array::DoSerialize(Stream& stream) const
+{
+	return GetArray().Serialize(stream);
 }
 
 }

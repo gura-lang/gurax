@@ -92,7 +92,7 @@ Gurax_ImplementClassMethod(Stream, Pipe)
 	// Function body
 	if (streamSrc.IsInfinite()) {
 		Error::Issue(ErrorType::StreamError,
-					 "can't read data from inifinite stream without specifying the length");
+					"can't read data from inifinite stream without specifying the length");
 		return Value::nil();
 	}
 	if (cookedFlag) {
@@ -152,6 +152,24 @@ Gurax_ImplementMethod(Stream, Delcr)
 	return valueThis.Reference();
 }
 
+// Stream#Deserialize()
+Gurax_DeclareMethod(Stream, Deserialize)
+{
+	Declare(VTYPE_Stream, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
+}
+
+Gurax_ImplementMethod(Stream, Deserialize)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Stream& stream = valueThis.GetStream();
+	// Function body
+	RefPtr<Value> pValue(Value::Deserialize(stream));
+	return pValue? pValue.release() : Value::nil();
+}
+
 // Stream#Flush():reduce
 Gurax_DeclareMethod(Stream, Flush)
 {
@@ -194,7 +212,7 @@ Gurax_ImplementMethod(Stream, PipeFrom)
 	// Function body
 	if (stream.IsInfinite()) {
 		Error::Issue(ErrorType::StreamError,
-					 "can't read data from inifinite stream without specifying the length");
+					"can't read data from inifinite stream without specifying the length");
 		return Value::nil();
 	}
 	if (cookedFlag) {
@@ -228,7 +246,7 @@ Gurax_ImplementMethod(Stream, PipeTo)
 	// Function body
 	if (stream.IsInfinite()) {
 		Error::Issue(ErrorType::StreamError,
-					 "can't read data from inifinite stream without specifying the length");
+					"can't read data from inifinite stream without specifying the length");
 		return Value::nil();
 	}
 	if (cookedFlag) {
@@ -341,7 +359,7 @@ Gurax_ImplementMethod(Stream, Read)
 		_pValue.reset(new Value_Binary(buff));
 	} else if (stream.IsInfinite()) {
 		Error::Issue(ErrorType::StreamError,
-					 "can't read data from inifinite stream without specifying the length");
+					"can't read data from inifinite stream without specifying the length");
 		return Value::nil();
 	} else {
 		RefPtr<BinaryReferable> pBuff(new BinaryReferable());
@@ -453,6 +471,28 @@ Gurax_ImplementMethod(Stream, Seek)
 		Stream::SeekMode::Cur : Stream::SeekMode::Set;
 	// Function body
 	if (!stream.Seek(offset, whence)) return Value::nil();
+	return valueThis.Reference();
+}
+
+// Stream#Serialize(values+ as Any):reduce
+Gurax_DeclareMethod(Stream, Serialize)
+{
+	Declare(VTYPE_Stream, Flag::Reduce);
+	DeclareArg("values", VTYPE_Any, ArgOccur::OnceOrMore, ArgFlag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
+}
+
+Gurax_ImplementMethod(Stream, Serialize)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Stream& stream = valueThis.GetStream();
+	// Arguments
+	ArgPicker args(argument);
+	const ValueList& values = args.PickList();
+	// Function body
+	if (!values.Serialize(stream)) return Value::nil();
 	return valueThis.Reference();
 }
 
@@ -658,6 +698,7 @@ void VType_Stream::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Stream, Addcr));
 	Assign(Gurax_CreateMethod(Stream, Delcr));
+	Assign(Gurax_CreateMethod(Stream, Deserialize));
 	Assign(Gurax_CreateMethod(Stream, Flush));
 	Assign(Gurax_CreateMethod(Stream, PipeFrom));
 	Assign(Gurax_CreateMethod(Stream, PipeTo));
@@ -669,6 +710,7 @@ void VType_Stream::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Stream, ReadLines));
 	Assign(Gurax_CreateMethod(Stream, ReadText));
 	Assign(Gurax_CreateMethod(Stream, Seek));
+	Assign(Gurax_CreateMethod(Stream, Serialize));
 	Assign(Gurax_CreateMethod(Stream, SkipLine));
 	Assign(Gurax_CreateMethod(Stream, SkipLines));
 	Assign(Gurax_CreateMethod(Stream, Write));
