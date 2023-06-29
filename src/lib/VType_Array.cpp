@@ -1342,8 +1342,9 @@ Value* Value_Array::DoIndexGet(const Index& index) const
 	if (nSkip == 0) return array.IndexGetValue(idxOffset);
 	const Array::ElemTypeT& elemType = array.GetElemType();
 	size_t byteOffset = array.GetByteOffset() + idxOffset * elemType.bytes;
-	return new Value_Array(new Array(elemType, array.GetMemory().Reference(),
-		DimSizes(dimSizes.begin() + dimSizes.size() - nSkip, dimSizes.end()), byteOffset));
+	return new Value_Array(new Array(elemType,
+					DimSizes(dimSizes.begin() + dimSizes.size() - nSkip, dimSizes.end()),
+					byteOffset, array.GetMemory().Reference()));
 }
 
 void Value_Array::DoIndexSet(const Index& index, RefPtr<Value> pValue)

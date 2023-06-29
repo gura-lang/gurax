@@ -2506,7 +2506,7 @@ Gurax_ImplementFunctionEx(SDL_LockTexture_gurax, processor_gurax, argument_gurax
 		bytes = pitch * h;
 	}
 	RefPtr<Memory> pMemory(new MemorySloth(bytes, pixels));
-	RefPtr<Array> pArray(new Array(Array::ElemType::UInt8, pMemory.release(), DimSizes(bytes), 0));
+	RefPtr<Array> pArray(new Array(Array::ElemType::UInt8, DimSizes(bytes), 0, pMemory.release()));
 	return Value_Tuple::Create(new Value_Array(pArray.release()), new Value_Number(pitch));
 }
 
@@ -5396,7 +5396,7 @@ Gurax_ImplementFunctionEx(SDL_GetKeyboardState_gurax, processor_gurax, argument_
 	int numkeys;
 	const Uint8* rtn = SDL_GetKeyboardState(&numkeys);
 	RefPtr<Memory> pMemory(new MemorySloth(numkeys, const_cast<Uint8*>(rtn)));
-	RefPtr<Array> pArray(new Array(Array::ElemType::UInt8, pMemory.release(), DimSizes(numkeys), 0));
+	RefPtr<Array> pArray(new Array(Array::ElemType::UInt8, DimSizes(numkeys), 0, pMemory.release()));
 	return new Value_Array(pArray.release());
 }
 

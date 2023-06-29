@@ -17,31 +17,31 @@ Array::MapIdToElemType Array::_mapIdToElemType;
 Array::MapSymbolToElemType Array::_mapSymbolToElemType;
 Array::MapSymbolToElemType Array::_mapAtSymbolToElemType;
 
-Array::Array(const ElemTypeT& elemType, Memory* pMemory, DimSizes dimSizes, size_t byteOffset) :
-		_elemType(elemType), _pMemory(pMemory), _dimSizes(std::move(dimSizes)), _byteOffset(byteOffset)
+Array::Array(const ElemTypeT& elemType, DimSizes dimSizes, size_t byteOffset, Memory* pMemory) :
+		_elemType(elemType), _dimSizes(std::move(dimSizes)), _byteOffset(byteOffset), _pMemory(pMemory)
 {
 }
 
 Array::Array(const Array& src) :
-		_elemType(src._elemType), _pMemory(src._pMemory->Clone()), _dimSizes(src._dimSizes), _byteOffset(src._byteOffset)
+		_elemType(src._elemType), _dimSizes(src._dimSizes), _byteOffset(src._byteOffset), _pMemory(src._pMemory->Clone())
 {
 }
 
 Array::Array(Array&& src) :
-		_elemType(src._elemType), _pMemory(src._pMemory->Reference()), _dimSizes(std::move(src._dimSizes)), _byteOffset(src._byteOffset)
+		_elemType(src._elemType), _dimSizes(std::move(src._dimSizes)), _byteOffset(src._byteOffset), _pMemory(src._pMemory->Reference())
 {
 }
 
-Array* Array::Create(const ElemTypeT& elemType, Memory* pMemory, DimSizes dimSizes)
+Array* Array::Create(const ElemTypeT& elemType, DimSizes dimSizes, Memory* pMemory)
 {
-	return new Array(elemType, pMemory, std::move(dimSizes), 0);
+	return new Array(elemType, std::move(dimSizes), 0, pMemory);
 }
 
 Array* Array::Create(const ElemTypeT& elemType, DimSizes dimSizes)
 {
 	RefPtr<Memory> pMemory(new MemoryHeap(elemType.bytes * dimSizes.CalcLength()));
 	pMemory->Fill(0);
-	return new Array(elemType, pMemory.release(), std::move(dimSizes), 0);
+	return new Array(elemType, std::move(dimSizes), 0, pMemory.release());
 }
 
 Array* Array::CreateScalar(const ElemTypeT& elemType, Double num)
@@ -68,7 +68,7 @@ Array* Array::CreateIdentity(const ElemTypeT& elemType, size_t n, Double mag)
 
 void Array::Reshape(RefPtr<Array>& pArrayRtn, const DimSizes& dimSizes) const
 {
-	pArrayRtn.reset(new Array(GetElemType(), GetMemory().Reference(), dimSizes, _byteOffset));
+	pArrayRtn.reset(new Array(GetElemType(), dimSizes, _byteOffset, GetMemory().Reference()));
 }
 
 bool Array::Reshape(RefPtr<Array>& pArrayRtn, const ValueList& values) const
@@ -2231,9 +2231,9 @@ Array* Array::CreateCasted(const ElemTypeT& elemType) const
 bool Array::Serialize(Stream& stream) const
 {
 	if (!stream.SerializePackedNumber<size_t>(_elemType.id)) return false;
-	if (!stream.SerializeMemory(*_pMemory)) return false;
 	if (!stream.SerializePackedNumList<size_t>(_dimSizes)) return false;
 	if (!stream.SerializePackedNumber<size_t>(_byteOffset)) return false;
+	if (!stream.SerializeMemory(*_pMemory)) return false;
 	return true;
 }
 
@@ -2244,15 +2244,15 @@ Array* Array::Deserialize(Stream& stream)
 	DimSizes dimSizes;
 	size_t byteOffset;
 	if (!stream.DeserializePackedNumber<size_t>(elemTypeId)) return nullptr;
-	if (!stream.DeserializeMemory(pMemory)) return nullptr;
 	if (!stream.DeserializePackedNumList<size_t>(dimSizes)) return nullptr;
 	if (!stream.DeserializePackedNumber<size_t>(byteOffset)) return nullptr;
+	if (!stream.DeserializeMemory(pMemory)) return nullptr;
 	const ElemTypeT& elemType = IdToElemType(elemTypeId);
-	if (!elemType.IsNone()) {
+	if (elemType.IsNone()) {
 		Error::Issue(ErrorType::FormatError, "Invalid element type ID %zu for Array", elemTypeId);
 		return nullptr;
 	}
-	return new Array(elemType, pMemory.release(), dimSizes, byteOffset);
+	return new Array(elemType, dimSizes, byteOffset, pMemory.release());
 }
 
 const Array::ElemTypeT& Array::IdToElemType(size_t elemTypeId)

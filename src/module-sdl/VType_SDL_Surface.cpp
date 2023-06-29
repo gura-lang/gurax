@@ -102,7 +102,7 @@ Gurax_ImplementPropertyGetter(SDL_Surface, pixels)
 	SDL_Surface& surface = valueThis.GetEntity();
 	size_t bytes = surface.h * surface.pitch;
 	RefPtr<Memory> pMemory(new MemorySloth(surface.pixels));
-	RefPtr<Array> pArray(new Array(Array::ElemType::UInt8, pMemory.release(), DimSizes(bytes), 0));
+	RefPtr<Array> pArray(new Array(Array::ElemType::UInt8, DimSizes(bytes), 0, pMemory.release()));
 	return new Value_Array(pArray.release());
 }
 

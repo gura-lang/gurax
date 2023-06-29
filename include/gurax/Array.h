@@ -187,9 +187,9 @@ public:
 	using MapSymbolToElemType = std::unordered_map<const Symbol*, const ElemTypeT*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>;
 protected:
 	const ElemTypeT& _elemType;
-	RefPtr<Memory> _pMemory;
 	DimSizes _dimSizes;
 	size_t _byteOffset;
+	RefPtr<Memory> _pMemory;
 public:
 	static Funcs funcs;
 protected:
@@ -199,7 +199,7 @@ protected:
 	static MapSymbolToElemType _mapAtSymbolToElemType;
 public:
 	// Constructor
-	Array(const ElemTypeT& elemType, Memory* pMemory, DimSizes dimSizes, size_t byteOffset);
+	Array(const ElemTypeT& elemType, DimSizes dimSizes, size_t byteOffset, Memory* pMemory);
 	// Copy constructor/operator
 	Array(const Array& src);
 	Array& operator=(const Array& src) = delete;
@@ -212,7 +212,7 @@ public:
 	static void Bootup();
 public:
 	Array* Clone() const { return new Array(*this); }
-	static Array* Create(const ElemTypeT& elemType, Memory* pMemory, DimSizes dimSizes);
+	static Array* Create(const ElemTypeT& elemType, DimSizes dimSizes, Memory* pMemory);
 	static Array* Create(const ElemTypeT& elemType, DimSizes dimSizes);
 	static Array* CreateScalar(const ElemTypeT& elemType, Double num);
 	static Array* CreateScalar(const ElemTypeT& elemType, const Complex& num);
