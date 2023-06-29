@@ -13,6 +13,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Palette : public VType {
 public:
+	static const SerialId serialId = 0x00000009;
+public:
 	class GURAX_DLLDECLARE Iterator_Each : public Iterator {
 	private:
 		RefPtr<Palette> _pPalette;
@@ -29,7 +31,9 @@ public:
 		virtual String ToString(const StringStyle& ss) const override;
 	};
 public:
-	using VType::VType;
+	VType_Palette() : VType(serialId) {}
+	explicit VType_Palette(const Symbol* pSymbol) : VType(serialId) {}
+	explicit VType_Palette(const char* name) : VType(name, serialId) {}
 	virtual void DoPrepare(Frame& frameOuter) override;
 	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
 };

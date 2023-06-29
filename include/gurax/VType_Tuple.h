@@ -13,7 +13,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Tuple : public VType {
 public:
-	using VType::VType;
+	static const SerialId serialId = 0x0000000d;
+public:
+	VType_Tuple() : VType(serialId) {}
+	explicit VType_Tuple(const Symbol* pSymbol) : VType(serialId) {}
+	explicit VType_Tuple(const char* name) : VType(name, serialId) {}
 	virtual void DoPrepare(Frame& frameOuter) override;
 	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
 };

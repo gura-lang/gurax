@@ -12,7 +12,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_String : public VType {
 public:
-	static const UInt32 SerializeId = 0x00000200;
+	static const SerialId serialId = 0x0000000b;
 public:
 	template<typename T_CharCmp>
 	class Iterator_Split : public Iterator {
@@ -121,7 +121,9 @@ public:
 		virtual String ToString(const StringStyle& ss) const override;
 	};
 public:
-	using VType::VType;
+	VType_String() : VType(serialId) {}
+	explicit VType_String(const Symbol* pSymbol) : VType(serialId) {}
+	explicit VType_String(const char* name) : VType(name, serialId) {}
 	virtual void DoPrepare(Frame& frameOuter) override;
 	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
 };

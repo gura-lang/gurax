@@ -13,7 +13,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Complex : public VType {
 public:
-	using VType::VType;
+	static const SerialId serialId = 0x00000004;
+public:
+	VType_Complex() : VType(serialId) {}
+	explicit VType_Complex(const Symbol* pSymbol) : VType(serialId) {}
+	explicit VType_Complex(const char* name) : VType(name, serialId) {}
 	virtual void DoPrepare(Frame& frameOuter) override;
 	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
 };

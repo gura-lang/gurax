@@ -14,9 +14,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_List : public VType {
 public:
-	static const UInt32 SerializeId = 0x00000300;
+	static const SerialId serialId = 0x00000007;
 public:
-	using VType::VType;
+	VType_List() : VType(serialId) {}
+	explicit VType_List(const Symbol* pSymbol) : VType(serialId) {}
+	explicit VType_List(const char* name) : VType(name, serialId) {}
 	virtual bool IsList() const override { return true; }
 	virtual bool IsListOrIterator() const override { return true; }
 	virtual void DoPrepare(Frame& frameOuter) override;

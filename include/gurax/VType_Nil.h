@@ -12,9 +12,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Nil : public VType {
 public:
-	static const UInt32 SerializeId = 0x00000000;
+	static const SerialId serialId = 0x00000000;
 public:
-	using VType::VType;
+	VType_Nil() : VType(serialId) {}
+	explicit VType_Nil(const Symbol* pSymbol) : VType(serialId) {}
+	explicit VType_Nil(const char* name) : VType(name, serialId) {}
 	virtual bool IsNil() const override { return true; }
 	virtual void DoPrepare(Frame& frameOuter) override;
 };

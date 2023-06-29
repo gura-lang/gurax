@@ -13,7 +13,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Color : public VType {
 public:
-	using VType::VType;
+	static const SerialId serialId = 0x00000003;
+public:
+	VType_Color() : VType(serialId) {}
+	explicit VType_Color(const Symbol* pSymbol) : VType(serialId) {}
+	explicit VType_Color(const char* name) : VType(name, serialId) {}
 	virtual void DoPrepare(Frame& frameOuter) override;
 	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
 };

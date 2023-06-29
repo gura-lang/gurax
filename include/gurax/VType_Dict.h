@@ -13,7 +13,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Dict : public VType {
 public:
-	using VType::VType;
+	static const SerialId serialId = 0x00000006;
+public:
+	VType_Dict() : VType(serialId) {}
+	explicit VType_Dict(const Symbol* pSymbol) : VType(serialId) {}
+	explicit VType_Dict(const char* name) : VType(name, serialId) {}
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 

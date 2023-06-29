@@ -13,7 +13,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_DateTime : public VType {
 public:
-	using VType::VType;
+	static const SerialId serialId = 0x00000005;
+public:
+	VType_DateTime() : VType(serialId) {}
+	explicit VType_DateTime(const Symbol* pSymbol) : VType(serialId) {}
+	explicit VType_DateTime(const char* name) : VType(name, serialId) {}
 	virtual void DoPrepare(Frame& frameOuter) override;
 	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
 };
