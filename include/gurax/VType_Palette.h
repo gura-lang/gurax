@@ -36,6 +36,7 @@ public:
 	explicit VType_Palette(const char* name) : VType(name, serialId) {}
 	virtual void DoPrepare(Frame& frameOuter) override;
 	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
+	virtual Value* DoDeserialize(Stream& stream) const override;
 };
 
 extern GURAX_DLLDECLARE VType_Palette VTYPE_Palette;
@@ -97,6 +98,7 @@ public:
 	virtual bool DoEmptyIndexSet(RefPtr<Value> pValue) override;
 	virtual bool DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const override;
 	virtual bool DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue) override;
+	virtual bool DoSerialize(Stream& stream) const override;
 };
 
 }

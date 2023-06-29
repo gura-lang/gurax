@@ -93,4 +93,14 @@ String Value_Nil::ToString(const StringStyle& ss) const
 	return (ss.IsBracket() || ss.IsNilVisible())? "<Nil>" : String::Empty;
 }
 
+bool Value_Nil::DoSerialize(Stream& stream) const
+{
+	return false;
+}
+
+Value* VType_Nil::DoDeserialize(Stream& stream) const
+{
+	return nullptr;
+}
+
 }

@@ -342,4 +342,14 @@ bool Value_Palette::DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pVal
 	return true;
 }
 
+bool Value_Palette::DoSerialize(Stream& stream) const
+{
+	return false;
+}
+
+Value* VType_Palette::DoDeserialize(Stream& stream) const
+{
+	return nullptr;
+}
+
 }

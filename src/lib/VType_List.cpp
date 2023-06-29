@@ -1677,4 +1677,14 @@ Iterator* Value_List::DoGenIterator() const
 	return GetValueTypedOwner().GenerateIterator();
 }
 
+bool Value_List::DoSerialize(Stream& stream) const
+{
+	return false;
+}
+
+Value* VType_List::DoDeserialize(Stream& stream) const
+{
+	return nullptr;
+}
+
 }

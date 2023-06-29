@@ -18,6 +18,7 @@ public:
 	explicit VType_Binary(const Symbol* pSymbol) : VType(serialId) {}
 	explicit VType_Binary(const char* name) : VType(name, serialId) {}
 	virtual void DoPrepare(Frame& frameOuter) override;
+	virtual Value* DoDeserialize(Stream& stream) const override;
 };
 
 extern GURAX_DLLDECLARE VType_Binary VTYPE_Binary;
@@ -95,6 +96,7 @@ public:
 	virtual bool DoEmptyIndexSet(RefPtr<Value> pValue) override;
 	virtual bool DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const override;
 	virtual bool DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue) override;
+	virtual bool DoSerialize(Stream& stream) const override;
 };
 
 }

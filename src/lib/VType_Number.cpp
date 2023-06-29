@@ -1081,4 +1081,14 @@ bool Value_Number::Format_c(Formatter& formatter, FormatterFlags& formatterFlags
 	return formatter.PutChar(GetNumber<Char>());
 }
 
+bool Value_Number::DoSerialize(Stream& stream) const
+{
+	return false;
+}
+
+Value* VType_Number::DoDeserialize(Stream& stream) const
+{
+	return nullptr;
+}
+
 }

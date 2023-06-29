@@ -370,4 +370,14 @@ String Value_Binary::ToString(const StringStyle& ss) const
 	return buff.ToString(ss);
 }
 
+bool Value_Binary::DoSerialize(Stream& stream) const
+{
+	return false;
+}
+
+Value* VType_Binary::DoDeserialize(Stream& stream) const
+{
+	return nullptr;
+}
+
 }

@@ -19,6 +19,7 @@ public:
 	explicit VType_Dict(const Symbol* pSymbol) : VType(serialId) {}
 	explicit VType_Dict(const char* name) : VType(name, serialId) {}
 	virtual void DoPrepare(Frame& frameOuter) override;
+	virtual Value* DoDeserialize(Stream& stream) const override;
 };
 
 extern GURAX_DLLDECLARE VType_Dict VTYPE_Dict;
@@ -82,6 +83,7 @@ public:
 	virtual bool DoEmptyIndexSet(RefPtr<Value> pValue) override;
 	virtual bool DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const override;
 	virtual bool DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue) override;
+	virtual bool DoSerialize(Stream& stream) const override;
 };
 
 }

@@ -19,6 +19,7 @@ public:
 	explicit VType_Symbol(const char* name) : VType(name, serialId) {}
 	virtual void DoPrepare(Frame& frameOuter) override;
 	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
+	virtual Value* DoDeserialize(Stream& stream) const override;
 };
 
 extern GURAX_DLLDECLARE VType_Symbol VTYPE_Symbol;
@@ -64,6 +65,7 @@ public:
 	virtual bool IsLessThan(const Value& value) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 	virtual bool IsAsDictKey() const override { return true; }
+	virtual bool DoSerialize(Stream& stream) const override;
 };
 
 }

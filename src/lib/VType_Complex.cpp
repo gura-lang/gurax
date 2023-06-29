@@ -547,4 +547,14 @@ ComplexList Value_Complex::GetComplexList(const ValueList& values)
 	return nums;
 }
 
+bool Value_Complex::DoSerialize(Stream& stream) const
+{
+	return false;
+}
+
+Value* VType_Complex::DoDeserialize(Stream& stream) const
+{
+	return nullptr;
+}
+
 }

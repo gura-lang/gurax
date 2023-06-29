@@ -19,6 +19,7 @@ public:
 	explicit VType_Nil(const char* name) : VType(name, serialId) {}
 	virtual bool IsNil() const override { return true; }
 	virtual void DoPrepare(Frame& frameOuter) override;
+	virtual Value* DoDeserialize(Stream& stream) const override;
 };
 
 extern GURAX_DLLDECLARE VType_Nil VTYPE_Nil;
@@ -60,6 +61,7 @@ public:
 	virtual bool IsValid() const override { return false; }
 	virtual bool IsNil() const override { return true; }
 	virtual bool GetBool() const override { return false; }
+	virtual bool DoSerialize(Stream& stream) const override;
 };
 
 }

@@ -630,4 +630,14 @@ String Value_Rational::ToString(const StringStyle& ss) const
 	return strEntity;
 }
 
+bool Value_Rational::DoSerialize(Stream& stream) const
+{
+	return false;
+}
+
+Value* VType_Rational::DoDeserialize(Stream& stream) const
+{
+	return nullptr;
+}
+
 }

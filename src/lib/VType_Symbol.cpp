@@ -147,4 +147,14 @@ String Value_Symbol::ToString(const StringStyle& ss) const
 	return strEntity;
 }
 
+bool Value_Symbol::DoSerialize(Stream& stream) const
+{
+	return false;
+}
+
+Value* VType_Symbol::DoDeserialize(Stream& stream) const
+{
+	return nullptr;
+}
+
 }

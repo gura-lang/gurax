@@ -1583,8 +1583,8 @@ Value* VType_String::Iterator_Foldw::DoNextValue()
 		UInt32 codeUTF32 = String::NextUTF32(&pNext);
 		Codec::WidthProp widthProp = Codec::GetWidthProp(codeUTF32);
 		width += (widthProp == Codec::WidthProp::A ||
-				  widthProp == Codec::WidthProp::W ||
-				  widthProp == Codec::WidthProp::F)? 2 : 1;
+				widthProp == Codec::WidthProp::W ||
+				widthProp == Codec::WidthProp::F)? 2 : 1;
 		if (width > _widthPerFold) {
 			String str(pHead, _pCurrent);
 			if (_chPadding) str += _chPadding;
@@ -1673,6 +1673,16 @@ Iterator* Value_String::DoGenIterator() const
 	// Function body
 	const StringReferable& str = GetStringReferable();
 	return new VType_String::Iterator_Each(str.Reference(), type);
+}
+
+bool Value_String::DoSerialize(Stream& stream) const
+{
+	return false;
+}
+
+Value* VType_String::DoDeserialize(Stream& stream) const
+{
+	return nullptr;
 }
 
 }

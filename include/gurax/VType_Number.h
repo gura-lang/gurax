@@ -19,6 +19,7 @@ public:
 	explicit VType_Number(const char* name) : VType(name, serialId) {}
 	virtual void DoPrepare(Frame& frameOuter) override;
 	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
+	virtual Value* DoDeserialize(Stream& stream) const override;
 };
 
 extern GURAX_DLLDECLARE VType_Number VTYPE_Number;
@@ -109,6 +110,7 @@ public:
 	virtual bool Format_f(Formatter& formatter, FormatterFlags& formatterFlags) const override;
 	virtual bool Format_g(Formatter& formatter, FormatterFlags& formatterFlags) const override;
 	virtual bool Format_c(Formatter& formatter, FormatterFlags& formatterFlags) const override;
+	virtual bool DoSerialize(Stream& stream) const override;
 };
 
 }

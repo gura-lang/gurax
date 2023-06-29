@@ -643,4 +643,14 @@ String Value_DateTime::ToString(const StringStyle& ss) const
 	return strEntity;
 }
 
+bool Value_DateTime::DoSerialize(Stream& stream) const
+{
+	return false;
+}
+
+Value* VType_DateTime::DoDeserialize(Stream& stream) const
+{
+	return nullptr;
+}
+
 }

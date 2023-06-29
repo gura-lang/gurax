@@ -295,4 +295,14 @@ Iterator* Value_Tuple::DoGenIterator() const
 	return new Iterator_Each(GetValueOwner().Reference());
 }
 
+bool Value_Tuple::DoSerialize(Stream& stream) const
+{
+	return false;
+}
+
+Value* VType_Tuple::DoDeserialize(Stream& stream) const
+{
+	return nullptr;
+}
+
 }

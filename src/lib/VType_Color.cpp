@@ -339,4 +339,14 @@ String Value_Color::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, GetColor().ToString(ss));
 }
 
+bool Value_Color::DoSerialize(Stream& stream) const
+{
+	return false;
+}
+
+Value* VType_Color::DoDeserialize(Stream& stream) const
+{
+	return nullptr;
+}
+
 }

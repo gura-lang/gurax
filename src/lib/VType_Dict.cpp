@@ -442,4 +442,14 @@ bool Value_Dict::DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue)
 	return true;
 }
 
+bool Value_Dict::DoSerialize(Stream& stream) const
+{
+	return false;
+}
+
+Value* VType_Dict::DoDeserialize(Stream& stream) const
+{
+	return nullptr;
+}
+
 }
