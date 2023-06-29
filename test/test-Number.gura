@@ -99,3 +99,15 @@ TestCase('Number#sign') {
 	Tester(`(9).sign)
 	Tester(`(-9).sign)
 }
+
+TestCase('Serialization') {
+	[
+		0, 1, -1, 12345, -12345, 3.14
+	].Each {|num|
+		buff = Binary()
+		buff.Writer().Serialize(num)
+		buff.Dump()
+		numDec = buff.Reader().Deserialize()
+		Printf('%.2f\n', numDec)
+	}
+}
