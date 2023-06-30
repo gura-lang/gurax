@@ -14,9 +14,11 @@ class GURAX_DLLDECLARE Rational {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Rational");
+public:
+	using ElemType = Int64;
 protected:
-	Int64 _numer;
-	Int64 _denom;
+	ElemType _numer;
+	ElemType _denom;
 public:
 	static String formatterFormat;
 	static String formatterFormat_Int;
@@ -25,8 +27,8 @@ public:
 public:
 	// Constructor
 	Rational() : _numer(0), _denom(1) {}
-	Rational(Int64 numer) : _numer(numer), _denom(1) {}
-	Rational(Int64 numer, Int64 denom) : _numer(numer), _denom(denom) {}
+	Rational(ElemType numer) : _numer(numer), _denom(1) {}
+	Rational(ElemType numer, ElemType denom) : _numer(numer), _denom(denom) {}
 	// Copy constructor/operator
 	Rational(const Rational& src) : _numer(src._numer), _denom(src._denom) {}
 	Rational& operator=(const Rational& src) {
@@ -42,10 +44,10 @@ public:
 public:
 	~Rational() = default;
 public:
-	void SetNumer(Int64 numer) { _numer = numer; }
-	void SetDenom(Int64 denom) { _denom = denom; }
-	Int64 GetNumer() const { return _numer; }
-	Int64 GetDenom() const { return _denom; }
+	void SetNumer(ElemType numer) { _numer = numer; }
+	void SetDenom(ElemType denom) { _denom = denom; }
+	ElemType GetNumer() const { return _numer; }
+	ElemType GetDenom() const { return _denom; }
 	Double ToDouble() const { return static_cast<Double>(_numer) / _denom; }
 	int GetSign() const { return (_numer == 0)? 0 : (_numer > 0)? +1 : -1; }
 	bool IsInteger() const { return _denom == 1; }
@@ -57,10 +59,10 @@ public:
 public:
 	Rational Canonicalize() const;
 	Rational CanonicalizeQuick() const;
-	static void Canonicalize(Int64* pNumer, Int64* pDenom);
-	static void CanonicalizeQuick(Int64* pNumer, Int64* pDenom);
-	static Rational MakeCanonicalized(Int64 numer, Int64 denom);
-	static Rational MakeCanonicalizedQuick(Int64 numer, Int64 denom);
+	static void Canonicalize(ElemType* pNumer, ElemType* pDenom);
+	static void CanonicalizeQuick(ElemType* pNumer, ElemType* pDenom);
+	static Rational MakeCanonicalized(ElemType numer, ElemType denom);
+	static Rational MakeCanonicalizedQuick(ElemType numer, ElemType denom);
 	static Rational MakeFromDouble(Double num);
 public:
 	Rational operator+() const;

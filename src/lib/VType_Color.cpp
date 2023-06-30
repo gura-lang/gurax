@@ -341,12 +341,14 @@ String Value_Color::ToString(const StringStyle& ss) const
 
 bool Value_Color::DoSerialize(Stream& stream) const
 {
-	return false;
+	return stream.SerializeNumber<Color::PackedType>(GetColor().GetPacked());
 }
 
 Value* VType_Color::DoDeserialize(Stream& stream) const
 {
-	return nullptr;
+	Color::PackedType packed;
+	if (!stream.DeserializeNumber<Color::PackedType>(packed)) return nullptr;
+	return new Value_Color(Color(packed));
 }
 
 }

@@ -8,6 +8,36 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // DateTime
 //------------------------------------------------------------------------------
+bool DateTime::Serialize(Stream& stream) const
+{
+	if (!stream.SerializeNumber<Int16>(_year)) return false;
+	if (!stream.SerializeNumber<Int8>(_month)) return false;
+	if (!stream.SerializeNumber<Int8>(_day)) return false;
+	if (!stream.SerializeNumber<Int32>(_secPacked)) return false;
+	if (!stream.SerializeNumber<Int32>(_usecPacked)) return false;
+	if (!stream.SerializeNumber<bool>(_tz.validFlag)) return false;
+	if (!stream.SerializeNumber<Int32>(_tz.secsOffset)) return false;
+	return true;
+}
+
+DateTime* DateTime::Deserialize(Stream& stream)
+{
+	UInt16 year;
+	UInt8 month;
+	UInt8 day;
+	UInt32 secPacked;
+	UInt32 usecPacked;
+	DateTime::TimeZone tz;
+	if (!stream.DeserializeNumber<UInt16>(year)) return false;
+	if (!stream.DeserializeNumber<UInt8>(month)) return false;
+	if (!stream.DeserializeNumber<UInt8>(day)) return false;
+	if (!stream.DeserializeNumber<UInt32>(secPacked)) return false;
+	if (!stream.DeserializeNumber<UInt32>(usecPacked)) return false;
+	if (!stream.DeserializeNumber<bool>(tz.validFlag)) return false;
+	if (!stream.DeserializeNumber<Int32>(tz.secsOffset)) return false;
+	return new DateTime(year, month, day, secPacked, usecPacked, tz);
+}
+
 void DateTime::AddDelta(Int32 days, Int32 secs, Int32 usecs)
 {
 	Int32 dayOfYear = GetDayOfYear(_year, _month, _day);

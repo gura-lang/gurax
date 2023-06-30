@@ -18,16 +18,18 @@ public:
 	Gurax_DeclareReferable(DateTime);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("DateTime");
+public:
+	struct TimeZone {
+		bool validFlag;
+		Int32 secsOffset;
+	};
 private:
 	Int16 _year;
 	Int8 _month;
 	Int8 _day;
 	Int32 _secPacked;
 	Int32 _usecPacked;
-	struct {
-		bool validFlag;
-		Int32 secsOffset;
-	} _tz;
+	TimeZone _tz;
 public:
 	// Constructor
 	DateTime() : _year(1970), _month(1), _day(1), _secPacked(0), _usecPacked(0) {
@@ -41,6 +43,8 @@ public:
 		_year(year), _month(month), _day(day), _secPacked(secPacked), _usecPacked(usecPacked) {
 		_tz.validFlag = true, _tz.secsOffset = secsOffset;
 	}
+	DateTime(Int16 year, Int8 month, Int8 day, Int32 secPacked, Int32 usecPacked, const TimeZone& tz) :
+		_year(year), _month(month), _day(day), _secPacked(secPacked), _usecPacked(usecPacked), _tz(tz) {}
 	// Copy constructor/operator
 	DateTime(const DateTime& dt) :
 		_year(dt._year), _month(dt._month), _day(dt._day), _secPacked(dt._secPacked), _usecPacked(dt._usecPacked), _tz(dt._tz) {
@@ -62,6 +66,9 @@ protected:
 	virtual ~DateTime() = default;
 public:
 	DateTime* Clone() const { return new DateTime(*this); }
+public:
+	bool Serialize(Stream& stream) const;
+	static DateTime* Deserialize(Stream& stream);
 public:
 	Int16 GetYear() const { return _year; }
 	Int8 GetMonth() const { return _month; }

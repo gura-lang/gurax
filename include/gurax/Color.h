@@ -38,6 +38,7 @@ public:
 		}
 	};
 public:
+	using PackedType = UInt32;
 	struct Elem {
 		UInt8 b, g, r, a;
 		constexpr Elem() : b(0), g(0), r(0), a(0) {}
@@ -46,11 +47,11 @@ public:
 	};
 	struct NamedEntry {
 		const char* name;
-		UInt32 packed;
+		PackedType packed;
 	};
 private:
 	union {
-		UInt32 _packed;
+		PackedType _packed;
 		Elem _elem;
 	};
 public:
@@ -77,10 +78,10 @@ public:
 	// Constructor
 	constexpr Color() : _packed(0) {}
 	explicit constexpr Color(Elem elem) : _elem(elem) {}
-	explicit constexpr Color(UInt32 packed) : _packed(packed) {}
+	explicit constexpr Color(PackedType packed) : _packed(packed) {}
 	constexpr Color(UInt8 r, UInt8 g, UInt8 b) : _elem(r, g, b, 0xff) {}
 	constexpr Color(UInt8 r, UInt8 g, UInt8 b, UInt8 a) : _elem(r, g, b, a) {}
-	Color(UInt32 packed, UInt8 a) : _packed(packed) { SetA(a); }
+	Color(PackedType packed, UInt8 a) : _packed(packed) { SetA(a); }
 	// Copy constructor/operator
 	Color(const Color& src) : _packed(src._packed) {}
 	Color& operator=(const Color& src) { _packed = src._packed; return *this; }
@@ -94,8 +95,8 @@ public:
 public:
 	static bool FromString(Color& color, const char* str, UInt8 alpha);
 public:
-	constexpr UInt32 GetPacked() const { return _packed; }
-	void SetPacked(UInt32 packed) { _packed = packed; }
+	constexpr PackedType GetPacked() const { return _packed; }
+	void SetPacked(PackedType packed) { _packed = packed; }
 	UInt8 GetR() const { return _elem.r; }
 	UInt8 GetG() const { return _elem.g; }
 	UInt8 GetB() const { return _elem.b; }
@@ -118,19 +119,19 @@ public:
 	}
 	static UInt8 CalcGray(UInt8 r, UInt8 g, UInt8 b) {
 		return static_cast<UInt8>(
-			(static_cast<UInt32>(r) * 299 + static_cast<UInt32>(g) * 587 +
-			 static_cast<UInt32>(b) * 114) / 1000);
+			(static_cast<PackedType>(r) * 299 + static_cast<PackedType>(g) * 587 +
+			 static_cast<PackedType>(b) * 114) / 1000);
 	}
 public:
 	static const Color* Lookup(const char* name);
 	static const Color* Lookup(const Symbol* pSymbol);
 public:
-	static constexpr UInt32 PackRGB(UInt8 r, UInt8 g, UInt8 b) { return Color(r, g, b).GetPacked(); }
-	static constexpr UInt32 PackRGBA(UInt8 r, UInt8 g, UInt8 b, UInt8 a) { return Color(r, g, b, a).GetPacked(); }
+	static constexpr PackedType PackRGB(UInt8 r, UInt8 g, UInt8 b) { return Color(r, g, b).GetPacked(); }
+	static constexpr PackedType PackRGBA(UInt8 r, UInt8 g, UInt8 b, UInt8 a) { return Color(r, g, b, a).GetPacked(); }
 public:
 	int CalcDistSqu(UInt8 r, UInt8 g, UInt8 b) const { return CalcDistSqu(GetR(), GetG(), GetB(), r, g, b); }
 	int CalcDistSqu(const Color& color) const { return CalcDistSqu(color.GetR(), color.GetG(), color.GetB()); }
-	int CalcDistSqu(UInt32 packed) const { return CalcDistSqu(Color(packed)); }
+	int CalcDistSqu(PackedType packed) const { return CalcDistSqu(Color(packed)); }
 	static int CalcDistSqu(UInt8 r1, UInt8 g1, UInt8 b1, UInt8 r2, UInt8 g2, UInt8 b2) {
 		int distR = static_cast<int>(r1) - static_cast<int>(r2);
 		int distG = static_cast<int>(g1) - static_cast<int>(g2);
@@ -138,7 +139,7 @@ public:
 		return distR * distR + distG * distG + distB * distB;
 	}
 	static int CalcDistSqu(const Color& color1, const Color& color2) { return color1.CalcDistSqu(color2); }
-	static int CalcDistSqu(UInt32 packed1, UInt32 packed2) { return Color(packed1).CalcDistSqu(packed2); }
+	static int CalcDistSqu(PackedType packed1, PackedType packed2) { return Color(packed1).CalcDistSqu(packed2); }
 public:
 	String MakeHTML() const { return MakeHTML(GetR(), GetG(), GetB()); }
 	static String MakeHTML(UInt8 r, UInt8 g, UInt8 b) { return String().Format("#%02x%02x%02x", r, g, b); }

@@ -10,11 +10,13 @@
 #include "Pointer.h"
 #include "StringPicker.h"
 #include "StringStyle.h"
+#include "Memory.h"
 
 namespace Gurax {
 
 class Stat;
 class Value_Stat;
+class Rational;
 
 //------------------------------------------------------------------------------
 // Stream
@@ -179,6 +181,10 @@ public:
 	template<typename T_Num> bool DeserializeNumList(NumList<T_Num>& numList);
 	template<typename T_Num> bool SerializePackedNumList(const NumList<T_Num>& numList);
 	template<typename T_Num> bool DeserializePackedNumList(NumList<T_Num>& numList);
+	bool SerializeComplex(const Complex& num);
+	bool DeserializeComplex(Complex& num);
+	bool SerializeRational(const Rational& num);
+	bool DeserializeRational(Rational& num);
 	bool SerializeString(const char* str);
 	bool DeserializeString(String& str);
 	bool SerializeBinary(const Binary& binary);

@@ -14,29 +14,29 @@ String Rational::formatterFormat_Int("%lldr");
 
 Rational Rational::Canonicalize() const
 {
-	Int64 numer = _numer, denom = _denom;
+	ElemType numer = _numer, denom = _denom;
 	Canonicalize(&numer, &denom);
 	return Rational(numer, denom);
 }
 
 Rational Rational::CanonicalizeQuick() const
 {
-	Int64 numer = _numer, denom = _denom;
+	ElemType numer = _numer, denom = _denom;
 	CanonicalizeQuick(&numer, &denom);
 	return Rational(numer, denom);
 }
 
-void Rational::Canonicalize(Int64* pNumer, Int64* pDenom)
+void Rational::Canonicalize(ElemType* pNumer, ElemType* pDenom)
 {
-	Int64& numer = *pNumer;
-	Int64& denom = *pDenom;
+	ElemType& numer = *pNumer;
+	ElemType& denom = *pDenom;
 	if (numer == 0) {
 		denom = 1;
 	} else if (denom == 0) {
 		numer = 0;
 		denom = 1;
 	} else {
-		Int64 gcd = Math::CalcGCD(numer, denom);
+		ElemType gcd = Math::CalcGCD(numer, denom);
 		numer /= gcd;
 		denom /= gcd;
 		if (denom < 0) {
@@ -46,10 +46,10 @@ void Rational::Canonicalize(Int64* pNumer, Int64* pDenom)
 	}
 }
 
-void Rational::CanonicalizeQuick(Int64* pNumer, Int64* pDenom)
+void Rational::CanonicalizeQuick(ElemType* pNumer, ElemType* pDenom)
 {
-	Int64& numer = *pNumer;
-	Int64& denom = *pDenom;
+	ElemType& numer = *pNumer;
+	ElemType& denom = *pDenom;
 	if (denom == 0) {
 		numer = 0;
 		denom = 1;
@@ -59,13 +59,13 @@ void Rational::CanonicalizeQuick(Int64* pNumer, Int64* pDenom)
 	}
 }
 
-Rational Rational::MakeCanonicalized(Int64 numer, Int64 denom)
+Rational Rational::MakeCanonicalized(ElemType numer, ElemType denom)
 {
 	Canonicalize(&numer, &denom);
 	return Rational(numer, denom);
 }
 
-Rational Rational::MakeCanonicalizedQuick(Int64 numer, Int64 denom)
+Rational Rational::MakeCanonicalizedQuick(ElemType numer, ElemType denom)
 {
 	CanonicalizeQuick(&numer, &denom);
 	return Rational(numer, denom);
@@ -73,7 +73,7 @@ Rational Rational::MakeCanonicalizedQuick(Int64 numer, Int64 denom)
 
 Rational Rational::MakeFromDouble(Double num)
 {
-	return Rational(static_cast<Int64>(num));
+	return Rational(static_cast<ElemType>(num));
 }
 
 void Rational::IssueError_DenomZero()
@@ -100,8 +100,8 @@ Rational Rational::operator-() const
 
 Rational& Rational::operator+=(const Rational& rat)
 {
-	Int64 numerL = GetNumer(), denomL = GetDenom();
-	Int64 numerR = rat.GetNumer(), denomR = rat.GetDenom();
+	ElemType numerL = GetNumer(), denomL = GetDenom();
+	ElemType numerR = rat.GetNumer(), denomR = rat.GetDenom();
 	if (denomL == 0 || denomR == 0) {
 		_numer = 0, _denom = 1;
 	} else if (denomL == denomR) {
@@ -117,8 +117,8 @@ Rational& Rational::operator+=(const Rational& rat)
 
 Rational& Rational::operator-=(const Rational& rat)
 {
-	Int64 numerL = GetNumer(), denomL = GetDenom();
-	Int64 numerR = rat.GetNumer(), denomR = rat.GetDenom();
+	ElemType numerL = GetNumer(), denomL = GetDenom();
+	ElemType numerR = rat.GetNumer(), denomR = rat.GetDenom();
 	if (denomL == 0 || denomR == 0) {
 		_numer = 0, _denom = 1;
 	} else if (denomL == denomR) {
@@ -134,8 +134,8 @@ Rational& Rational::operator-=(const Rational& rat)
 
 Rational& Rational::operator*=(const Rational& rat)
 {
-	Int64 numerL = GetNumer(), denomL = GetDenom();
-	Int64 numerR = rat.GetNumer(), denomR = rat.GetDenom();
+	ElemType numerL = GetNumer(), denomL = GetDenom();
+	ElemType numerR = rat.GetNumer(), denomR = rat.GetDenom();
 	if (denomL == 0 || denomR == 0) {
 		_numer = 0, _denom = 1;
 	} else {
@@ -148,8 +148,8 @@ Rational& Rational::operator*=(const Rational& rat)
 
 Rational& Rational::operator/=(const Rational& rat)
 {
-	Int64 numerL = GetNumer(), denomL = GetDenom();
-	Int64 numerR = rat.GetNumer(), denomR = rat.GetDenom();
+	ElemType numerL = GetNumer(), denomL = GetDenom();
+	ElemType numerR = rat.GetNumer(), denomR = rat.GetDenom();
 	if (denomL == 0 || numerR == 0) {
 		_numer = 0, _denom = 1;
 	} else {
@@ -162,10 +162,10 @@ Rational& Rational::operator/=(const Rational& rat)
 
 Rational& Rational::operator/=(Double num)
 {
-	Int64 numCasted = static_cast<Int64>(num);
+	ElemType numCasted = static_cast<ElemType>(num);
 	if (num != numCasted) return operator/=(MakeFromDouble(num));
-	Int64 numerL = GetNumer(), denomL = GetDenom();
-	Int64 numerR = numCasted;
+	ElemType numerL = GetNumer(), denomL = GetDenom();
+	ElemType numerR = numCasted;
 	if (denomL == 0 || numerR == 0) {
 		_numer = 0, _denom = 1;
 	} else {
@@ -178,12 +178,12 @@ Rational& Rational::operator/=(Double num)
 
 Rational operator/(Double numL, const Rational& ratR)
 {
-	Int64 numCastedL = static_cast<Int64>(numL);
+	Rational::ElemType numCastedL = static_cast<Rational::ElemType>(numL);
 	if (numL != numCastedL) return operator/(Rational::MakeFromDouble(numL), ratR);
 	// assumes that numL is an integer number
-	Int64 numerL = numCastedL;
-	Int64 numerR = ratR.GetNumer(), denomR = ratR.GetDenom();
-	Int64 numer = 0, denom = 1;
+	Rational::ElemType numerL = numCastedL;
+	Rational::ElemType numerR = ratR.GetNumer(), denomR = ratR.GetDenom();
+	Rational::ElemType numer = 0, denom = 1;
 	if (numerR != 0) {
 		numer = numerL * denomR;
 		denom = numerR;

@@ -371,6 +371,37 @@ bool Stream::DoPutChar(char ch)
 	return DoWrite(&ch, sizeof(ch));
 }
 
+bool Stream::SerializeComplex(const Complex& num)
+{
+	if (!SerializeNumber<Double>(num.real())) return false;
+	if (!SerializeNumber<Double>(num.imag())) return false;
+	return true;
+}
+
+bool Stream::DeserializeComplex(Complex& num)
+{
+	Double real, imag;
+	if (!DeserializeNumber<Double>(real)) return false;
+	if (!DeserializeNumber<Double>(imag)) return false;
+	num = Complex(real, imag);
+	return true;
+}
+
+bool Stream::SerializeRational(const Rational& num)
+{
+	if (!SerializeNumber<Rational::ElemType>(num.GetNumer())) return false;
+	if (!SerializeNumber<Rational::ElemType>(num.GetDenom())) return false;
+	return true;
+}
+
+bool Stream::DeserializeRational(Rational& num)
+{
+	Rational::ElemType numer, denom;
+	if (!DeserializeNumber<Rational::ElemType>(numer)) return false;
+	if (!DeserializeNumber<Rational::ElemType>(denom)) return false;
+	num = Rational(numer, denom);
+	return true;
+}
 
 bool Stream::SerializeString(const char* str)
 {
