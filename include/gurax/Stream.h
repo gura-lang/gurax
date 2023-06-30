@@ -171,9 +171,10 @@ protected:
 	virtual bool DoPutChar(char ch);
 public:
 	template<typename T_Num> bool SerializeNumber(T_Num num) { return Write(&num, sizeof(num)); }
-	template<typename T_Num> bool DeserializeNumber(T_Num& num) { return Read(&num, sizeof(num)) == sizeof(num); }
+	template<typename T_Num> bool DeserializeNumber(T_Num& num);
 	template<typename T_Num> bool SerializePackedNumber(T_Num num);
 	template<typename T_Num> bool DeserializePackedNumber(T_Num& num);
+	template<typename T_Num> bool DeserializePackedNumber(T_Num& num, bool* pEndOfFileFlag);
 	template<typename T_Num> bool SerializeNumList(const NumList<T_Num>& numList);
 	template<typename T_Num> bool DeserializeNumList(NumList<T_Num>& numList);
 	template<typename T_Num> bool SerializePackedNumList(const NumList<T_Num>& numList);
@@ -198,6 +199,14 @@ public:
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
+template<typename T_Num> bool Stream::DeserializeNumber(T_Num& num)
+{
+	const char* errMsg = "invalid format of serialized number";
+	if (Read(&num, sizeof(num)) == sizeof(num)) return true;
+	Error::Issue(ErrorType::FormatError, errMsg);
+	return false;
+}
+
 template<typename T_Num> bool Stream::SerializePackedNumber(T_Num num)
 {
 	UInt8 buff[sizeof(T_Num)];
@@ -216,16 +225,44 @@ template<typename T_Num> bool Stream::SerializePackedNumber(T_Num num)
 
 template<typename T_Num> bool Stream::DeserializePackedNumber(T_Num& num)
 {
+	const char* errMsg = "invalid format of serialized packed number";
 	const size_t bytesBuffMax = (sizeof(T_Num) * 8 + 7) / 7;
 	num = 0;
 	UInt8 data = 0x00;
 	size_t nShift = 0;
 	for (size_t bytesBuff = 0; bytesBuff < bytesBuffMax; bytesBuff++, nShift += 7) {
-		if (Read(&data, sizeof(data)) != sizeof(data)) return false;
+		if (Read(&data, sizeof(data)) != sizeof(data)) {
+			Error::Issue(ErrorType::FormatError, errMsg);
+			return false;
+		}
 		num += static_cast<T_Num>(data & 0x7f) << nShift;
 		if (!(data & 0x80)) return true;
 	}
-	Error::Issue(ErrorType::FormatError, "invalid serialization format for a packed number");
+	Error::Issue(ErrorType::FormatError, errMsg);
+	return false;
+}
+
+template<typename T_Num> bool Stream::DeserializePackedNumber(T_Num& num, bool* pEndOfFileFlag)
+{
+	const char* errMsg = "invalid format of serialized packed number";
+	const size_t bytesBuffMax = (sizeof(T_Num) * 8 + 7) / 7;
+	num = 0;
+	UInt8 data = 0x00;
+	size_t nShift = 0;
+	*pEndOfFileFlag = false;
+	for (size_t bytesBuff = 0; bytesBuff < bytesBuffMax; bytesBuff++, nShift += 7) {
+		if (Read(&data, sizeof(data)) != sizeof(data)) {
+			if (bytesBuff == 0) {
+				*pEndOfFileFlag = true;
+			} else {
+				Error::Issue(ErrorType::FormatError, errMsg);
+			}
+			return false;
+		}
+		num += static_cast<T_Num>(data & 0x7f) << nShift;
+		if (!(data & 0x80)) return true;
+	}
+	Error::Issue(ErrorType::FormatError, errMsg);
 	return false;
 }
 
@@ -293,6 +330,24 @@ public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override {
 		return (GetStream().IsInfinite()? Flag::Infinite : Flag::Finite) | Flag::LenUndetermined;
+	}
+	virtual size_t GetLength() const override { return -1; }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// Iterator_Deserialize
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_Deserialize : public Iterator {
+private:
+	RefPtr<Stream> _pStream;
+public:
+	Iterator_Deserialize(Stream* pStream) : _pStream(pStream) {}
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override {
+		return Flag::Infinite | Flag::LenUndetermined;
 	}
 	virtual size_t GetLength() const override { return -1; }
 	virtual Value* DoNextValue() override;

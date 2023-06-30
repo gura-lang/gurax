@@ -155,7 +155,7 @@ Gurax_ImplementMethod(Stream, Delcr)
 // Stream#Deserialize()
 Gurax_DeclareMethod(Stream, Deserialize)
 {
-	Declare(VTYPE_Stream, Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 )""");
 }
@@ -168,6 +168,25 @@ Gurax_ImplementMethod(Stream, Deserialize)
 	// Function body
 	RefPtr<Value> pValue(Value::Deserialize(stream));
 	return pValue? pValue.release() : Value::nil();
+}
+
+// Stream#DeserializeSeq() {block?}
+Gurax_DeclareMethod(Stream, DeserializeSeq)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
+}
+
+Gurax_ImplementMethod(Stream, DeserializeSeq)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Stream& stream = valueThis.GetStream();
+	// Function body
+	RefPtr<Iterator> pIterator(new Iterator_Deserialize(stream.Reference()));
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // Stream#Flush():reduce
@@ -699,6 +718,7 @@ void VType_Stream::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Stream, Addcr));
 	Assign(Gurax_CreateMethod(Stream, Delcr));
 	Assign(Gurax_CreateMethod(Stream, Deserialize));
+	Assign(Gurax_CreateMethod(Stream, DeserializeSeq));
 	Assign(Gurax_CreateMethod(Stream, Flush));
 	Assign(Gurax_CreateMethod(Stream, PipeFrom));
 	Assign(Gurax_CreateMethod(Stream, PipeTo));

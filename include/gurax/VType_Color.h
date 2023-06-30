@@ -13,7 +13,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Color : public VType {
 public:
-	static const SerialId serialId = 0x00000003;
+	static const SerialId serialId = 0x00000012;
 public:
 	VType_Color() : VType(serialId) {}
 	explicit VType_Color(const Symbol* pSymbol) : VType(serialId) {}

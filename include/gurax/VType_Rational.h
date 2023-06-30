@@ -13,7 +13,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Rational : public VType {
 public:
-	static const SerialId serialId = 0x0000000a;
+	static const SerialId serialId = 0x00000019;
 public:
 	VType_Rational() : VType(serialId) {}
 	explicit VType_Rational(const Symbol* pSymbol) : VType(serialId) {}

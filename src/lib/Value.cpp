@@ -313,10 +313,11 @@ bool Value::Serialize(Stream& stream) const
 Value* Value::Deserialize(Stream& stream)
 {
 	VType::SerialId serialId;
-	if (!stream.DeserializePackedNumber<VType::SerialId>(serialId)) return nullptr;
+	bool endOfFileFlag;
+	if (!stream.DeserializePackedNumber<VType::SerialId>(serialId, &endOfFileFlag)) return nullptr;
 	VType* pVType = VType::SerialIdToVType(serialId);
 	if (!pVType) {
-		Error::Issue(ErrorType::FormatError, "unsupported serial ID for VType: 0x%08x", serialId);
+		Error::Issue(ErrorType::FormatError, "unsupported serial ID: 0x%08x", serialId);
 		return nullptr;
 	}
 	return pVType->DoDeserialize(stream);

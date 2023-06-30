@@ -13,7 +13,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_DateTime : public VType {
 public:
-	static const SerialId serialId = 0x00000005;
+	static const SerialId serialId = 0x00000014;
 public:
 	VType_DateTime() : VType(serialId) {}
 	explicit VType_DateTime(const Symbol* pSymbol) : VType(serialId) {}

@@ -80,3 +80,4 @@ target_link_libraries(ml.gurd PRIVATE guraxcore
 # Install
 #-------------------------------------------------------------------------------
 install(TARGETS ml.gurd RUNTIME DESTINATION module/site)
+install(PROGRAMS script/ml.gura DESTINATION module/site)

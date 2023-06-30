@@ -381,6 +381,7 @@ bool Stream::SerializeString(const char* str)
 
 bool Stream::DeserializeString(String& str)
 {
+	const char* errMsg = "invalid format of serialized string";
 	UInt64 len = 0;
 	if (!DeserializePackedNumber<UInt64>(len)) return false;
 	if (len == 0) {
@@ -388,13 +389,17 @@ bool Stream::DeserializeString(String& str)
 		return true;
 	}
 	str = String(len + 1, '\0');
-	if (Read(&str[0], len) != len) return false;
+	if (Read(&str[0], len) != len) {
+		Error::Issue(ErrorType::FormatError, errMsg);
+		return false;
+	}
 	str.resize(len);
 	return true;
 }
 
 bool Stream::SerializeBinary(const Binary& binary)
 {
+	if (!SerializeNumber<bool>(binary.IsWritable())) return false;
 	UInt64 len = static_cast<UInt64>(binary.size());
 	if (!SerializePackedNumber<UInt64>(len)) return false;
 	return Write(binary.data(), len);
@@ -402,6 +407,9 @@ bool Stream::SerializeBinary(const Binary& binary)
 
 bool Stream::DeserializeBinary(Binary& binary)
 {
+	const char* errMsg = "invalid format of serialized string";
+	bool writableFlag;
+	if (!DeserializeNumber<bool>(writableFlag)) return false;
 	UInt64 len = 0;
 	if (!DeserializePackedNumber<UInt64>(len)) return false;
 	if (len == 0) {
@@ -409,7 +417,11 @@ bool Stream::DeserializeBinary(Binary& binary)
 		return true;
 	}
 	binary = Binary(len, 0x00);
-	if (Read(&binary[0], len) != len) return false;
+	binary.SetWritableFlag(writableFlag);
+	if (Read(&binary[0], len) != len) {
+		Error::Issue(ErrorType::FormatError, errMsg);
+		return false;
+	}
 	return true;
 }
 
@@ -422,6 +434,7 @@ bool Stream::SerializeMemory(const Memory& memory)
 
 bool Stream::DeserializeMemory(RefPtr<Memory>& pMemory)
 {
+	const char* errMsg = "invalid format of serialized memory";
 	UInt64 len = 0;
 	if (!DeserializePackedNumber<UInt64>(len)) return false;
 	if (len == 0) {
@@ -429,7 +442,10 @@ bool Stream::DeserializeMemory(RefPtr<Memory>& pMemory)
 		return true;
 	}
 	pMemory = new MemoryHeap(len);
-	if (Read(pMemory->GetPointerC<void>(), len) != len) return false;
+	if (Read(pMemory->GetPointerC<void>(), len) != len) {
+		Error::Issue(ErrorType::FormatError, errMsg);
+		return false;
+	}
 	return true;
 }
 
@@ -547,6 +563,19 @@ String Iterator_ReadLines::ToString(const StringStyle& ss) const
 	String str = "ReadlLines";
 	if (_nLines != static_cast<size_t>(-1)) str.Format(":nLines=%zu", _nLines);
 	return str;
+}
+
+//------------------------------------------------------------------------------
+// Iterator_Deserialize
+//------------------------------------------------------------------------------
+Value* Iterator_Deserialize::DoNextValue()
+{
+	return Value::Deserialize(*_pStream);
+}
+
+String Iterator_Deserialize::ToString(const StringStyle& ss) const
+{
+	return String().Format("Deserialize");
 }
 
 }

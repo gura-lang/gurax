@@ -13,7 +13,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Array : public VType {
 public:
-	static const SerialId serialId = 0x00000001;
+	static const SerialId serialId = 0x00000010;
 public:
 	class GURAX_DLLDECLARE Iterator_Each : public Iterator {
 	private:

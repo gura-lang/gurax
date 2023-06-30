@@ -12,7 +12,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Binary : public VType {
 public:
-	static const SerialId serialId = 0x00000002;
+	static const SerialId serialId = 0x00000011;
 public:
 	VType_Binary() : VType(serialId) {}
 	explicit VType_Binary(const Symbol* pSymbol) : VType(serialId) {}
