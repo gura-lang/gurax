@@ -209,12 +209,13 @@ Gurax_TesterEntry(Stream)
 			size_t len = ::strlen(strTbl[i]);
 			RefPtr<Memory> pMemory(new MemoryHeap(len));
 			::memcpy(pMemory->GetPointerC<void>(), strTbl[i], len);
-			pStream->SerializeMemory(*pMemory);
+			//pStream->SerializeMemory(*pMemory);
+			pMemory->Serialize(*pStream);
 			PrintBinary(pMemory->GetPointerC<void>(), len);
 			Stream::COut->Dump(pStream->GetBuff());
 			pStream->Seek(0, Stream::SeekMode::Set);
-			RefPtr<Memory> pMemoryDec;
-			pStream->DeserializeMemory(pMemoryDec);
+			RefPtr<Memory> pMemoryDec(Memory::Deserialize(*pStream));
+			//pStream->DeserializeMemory(pMemoryDec);
 			::printf("  -> ");
 			PrintBinary(pMemory->GetPointerC<void>(), pMemory->GetBytes());
 		}

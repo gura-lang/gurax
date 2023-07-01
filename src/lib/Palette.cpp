@@ -792,6 +792,22 @@ String Palette::ToString(const StringStyle& ss) const
 	return String().Format("Palette:%dentries", _n);
 }
 
+bool Palette::Serialize(Stream& stream) const
+{
+	if (!stream.SerializePackedNumber<size_t>(_n)) return false;
+	if (!_pMemory->Serialize(stream)) return false;
+	return true;
+}
+
+Palette* Palette::Deserialize(Stream& stream)
+{
+	size_t n;
+	if (!stream.DeserializePackedNumber<size_t>(n)) return nullptr;
+	RefPtr<Memory> pMemory(Memory::Deserialize(stream));
+	if (!pMemory) return nullptr;
+	return new Palette(pMemory.release(), n);
+}
+
 //------------------------------------------------------------------------------
 // PaletteList
 //------------------------------------------------------------------------------

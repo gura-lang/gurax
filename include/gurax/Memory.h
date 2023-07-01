@@ -5,7 +5,10 @@
 #define GURAX_MEMORY_H
 #include "Common.h"
 #include "ListBase.h"
+
 namespace Gurax {
+
+class Stream;
 
 //------------------------------------------------------------------------------
 // Memory
@@ -41,6 +44,9 @@ public:
 	void Fill(UInt8 data) { ::memset(_buff, data, _bytes); }
 	String MakeId() const;
 	virtual Memory* Clone() const = 0;
+public:
+	bool Serialize(Stream& stream) const;
+	static Memory* Deserialize(Stream& stream);
 };
 
 //------------------------------------------------------------------------------

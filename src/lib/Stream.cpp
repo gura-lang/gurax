@@ -456,6 +456,7 @@ bool Stream::DeserializeBinary(Binary& binary)
 	return true;
 }
 
+#if 0
 bool Stream::SerializeMemory(const Memory& memory)
 {
 	UInt64 len = static_cast<UInt64>(memory.GetBytes());
@@ -479,6 +480,7 @@ bool Stream::DeserializeMemory(RefPtr<Memory>& pMemory)
 	}
 	return true;
 }
+#endif
 
 bool Stream::SerializeSymbol(const Symbol* pSymbol)
 {

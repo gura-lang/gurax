@@ -21,6 +21,27 @@ String Memory::MakeId() const
 	return String().Format("%p", _buff);
 }
 
+bool Memory::Serialize(Stream& stream) const
+{
+	size_t bytes = GetBytes();
+	if (!stream.SerializePackedNumber<UInt64>(bytes)) return false;
+	return stream.Write(GetPointerC<void>(), bytes);
+}
+
+Memory* Memory::Deserialize(Stream& stream)
+{
+	const char* errMsg = "invalid format of serialized memory";
+	size_t bytes = 0;
+	if (!stream.DeserializePackedNumber<size_t>(bytes)) return false;
+	if (bytes == 0) return new MemoryHeap(1);
+	RefPtr<Memory> pMemory(new MemoryHeap(bytes));
+	if (stream.Read(pMemory->GetPointerC<void>(), bytes) != bytes) {
+		Error::Issue(ErrorType::FormatError, errMsg);
+		return nullptr;
+	}
+	return pMemory.release();
+}
+
 //------------------------------------------------------------------------------
 // MemoryOwner
 //------------------------------------------------------------------------------

@@ -80,6 +80,9 @@ public:
 	bool IsEqualTo(const Palette& palette) const { return IsIdentical(palette); }
 	bool IsLessThan(const Palette& palette) const { return this < &palette; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
+public:
+	bool Serialize(Stream& stream) const;
+	static Palette* Deserialize(Stream& stream);
 };
 
 //------------------------------------------------------------------------------

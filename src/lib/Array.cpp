@@ -2233,20 +2233,21 @@ bool Array::Serialize(Stream& stream) const
 	if (!stream.SerializePackedNumber<size_t>(_elemType.id)) return false;
 	if (!stream.SerializePackedNumList<size_t>(_dimSizes)) return false;
 	if (!stream.SerializePackedNumber<size_t>(_byteOffset)) return false;
-	if (!stream.SerializeMemory(*_pMemory)) return false;
+	if (!_pMemory->Serialize(stream)) return false;
 	return true;
 }
 
 Array* Array::Deserialize(Stream& stream)
 {
 	size_t elemTypeId;
-	RefPtr<Memory> pMemory;
 	DimSizes dimSizes;
 	size_t byteOffset;
 	if (!stream.DeserializePackedNumber<size_t>(elemTypeId)) return nullptr;
 	if (!stream.DeserializePackedNumList<size_t>(dimSizes)) return nullptr;
 	if (!stream.DeserializePackedNumber<size_t>(byteOffset)) return nullptr;
-	if (!stream.DeserializeMemory(pMemory)) return nullptr;
+	//if (!stream.DeserializeMemory(pMemory)) return nullptr;
+	RefPtr<Memory> pMemory(Memory::Deserialize(stream));
+	if (!pMemory) return nullptr;
 	const ElemTypeT& elemType = IdToElemType(elemTypeId);
 	if (elemType.IsNone()) {
 		Error::Issue(ErrorType::FormatError, "Invalid element type ID %zu for Array", elemTypeId);
