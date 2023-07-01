@@ -1679,12 +1679,13 @@ Iterator* Value_List::DoGenIterator() const
 
 bool Value_List::DoSerialize(Stream& stream) const
 {
-	return false;
+	return GetValueOwner().Serialize(stream);
 }
 
 Value* VType_List::DoDeserialize(Stream& stream) const
 {
-	return nullptr;
+	RefPtr<ValueOwner> pValueOwner(ValueOwner::Deserialize(stream));
+	return pValueOwner? new Value_List(pValueOwner.release()) : nullptr;
 }
 
 }

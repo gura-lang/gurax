@@ -124,6 +124,33 @@ String ValueDict::ToString(const StringStyle& ss) const
 	return str;
 }
 
+bool ValueDict::Serialize(Stream& stream) const
+{
+	if (!stream.SerializePackedNumber(_map.size())) return false;
+	for (auto iter : _map) {
+		if (!iter.first->Serialize(stream)) return false;
+		if (!iter.second->Serialize(stream)) return false;
+	}
+	return true;
+}
+
+ValueDict* ValueDict::Deserialize(Stream& stream)
+{
+	size_t len;	
+	RefPtr<ValueDict> pValueDict(new ValueDict());
+	if (!stream.DeserializePackedNumber(len)) return nullptr;
+	auto map = pValueDict->GetMap();
+	map.reserve(len);
+	for (size_t i = 0; i < len; i++) {
+		RefPtr<Value> pValueKey(Value::Deserialize(stream));
+		if (!pValueKey) return nullptr;
+		RefPtr<Value> pValue(Value::Deserialize(stream));
+		if (!pValue) return nullptr;
+		map.insert(Map::value_type(pValueKey.release(), pValue.release()));
+	}
+	return pValueDict.release();
+}
+
 void ValueDict::IssueError_KeyNotFound(const Value& valueKey)
 {
 	Error::Issue(ErrorType::KeyError, "the dictionary doesn't have a key '%s'", valueKey.ToString().c_str());

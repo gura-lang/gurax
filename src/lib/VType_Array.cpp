@@ -1395,8 +1395,7 @@ bool Value_Array::DoSerialize(Stream& stream) const
 Value* VType_Array::DoDeserialize(Stream& stream) const
 {
 	RefPtr<Array> pArray(Array::Deserialize(stream));
-	if (!pArray) return nullptr;
-	return new Value_Array(pArray.release());
+	return pArray? new Value_Array(pArray.release()) : nullptr;
 }
 
 }

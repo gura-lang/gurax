@@ -12,18 +12,18 @@ void Palette::Bootup()
 {
 }
 
-Palette::Palette(size_t n) : _packedTbl(new UInt32[n]), _n(n)
+Palette::Palette(size_t n) : _packedTbl(new Color::PackedType[n]), _n(n)
 {
 }
 
-Palette::Palette(const UInt32* packedTbl, size_t n) : _packedTbl(new UInt32[n]), _n(n)
+Palette::Palette(const Color::PackedType* packedTbl, size_t n) : _packedTbl(new Color::PackedType[n]), _n(n)
 {
-	::memcpy(_packedTbl.get(), packedTbl, sizeof(UInt32) * n);
+	::memcpy(_packedTbl.get(), packedTbl, sizeof(Color::PackedType) * n);
 }
 
 Palette* Palette::Mono()
 {
-	static const UInt32 packedTbl[] = {
+	static const Color::PackedType packedTbl[] = {
 		PackRGBA(0x00, 0x00, 0x00, 0xff),	// 0: black
 		PackRGBA(0xff, 0xff, 0xff, 0xff),	// 1: white
 	};
@@ -32,7 +32,7 @@ Palette* Palette::Mono()
 
 Palette* Palette::Basic()
 {
-	static const UInt32 packedTbl[] = {
+	static const Color::PackedType packedTbl[] = {
 		PackRGBA(0x00, 0x00, 0x00, 0xff),	// 0: black
 		PackRGBA(0x80, 0x00, 0x00, 0xff),	// 1: maroon
 		PackRGBA(0x00, 0x80, 0x00, 0xff),	// 2: green
@@ -55,7 +55,7 @@ Palette* Palette::Basic()
 
 Palette* Palette::WebSafe()
 {
-	static const UInt32 packedTbl[] = {
+	static const Color::PackedType packedTbl[] = {
 		PackRGBA(0x00, 0x00, 0x00, 0xff),	// 0
 		PackRGBA(0x33, 0x00, 0x00, 0xff),	// 1
 		PackRGBA(0x66, 0x00, 0x00, 0xff),	// 2
@@ -318,7 +318,7 @@ Palette* Palette::WebSafe()
 
 Palette* Palette::Win256()
 {
-	static const UInt32 packedTbl[] = {
+	static const Color::PackedType packedTbl[] = {
 		PackRGBA(0x00, 0x00, 0x00, 0xff),	// 0
 		PackRGBA(0x80, 0x00, 0x00, 0xff),	// 1
 		PackRGBA(0x00, 0x80, 0x00, 0xff),	// 2
@@ -596,8 +596,8 @@ Palette* Palette::CreateFromSymbol(const Symbol* pSymbol)
 
 void Palette::Fill(const Color& color)
 {
-	UInt32 packed = color.GetPacked();
-	UInt32* p = _packedTbl.get();
+	Color::PackedType packed = color.GetPacked();
+	Color::PackedType* p = _packedTbl.get();
 	for (size_t i = 0; i < _n; i++, p++) *p = packed;
 }
 
@@ -609,7 +609,7 @@ size_t Palette::LookupNearest(UInt8 r, UInt8 g, UInt8 b) const
 			Image::PixelRGB::GetR(p), Image::PixelRGB::GetG(p), Image::PixelRGB::GetB(p));
 	if (distMin > 0) {
 		for (size_t idx = 1; idx < _n; idx++) {
-			p += sizeof(UInt32);
+			p += sizeof(Color::PackedType);
 			int dist = Color::CalcDistSqu(r, g, b,
 					Image::PixelRGB::GetR(p), Image::PixelRGB::GetG(p), Image::PixelRGB::GetB(p));
 			if (distMin > dist) {
@@ -683,8 +683,8 @@ bool Palette::UpdateByPalette(const Palette& palette, ShrinkMode shrinkMode)
 void Palette::ResizeBuff(size_t nEntries, size_t nEntriesToCopy)
 {
 	_n = nEntries;
-	std::unique_ptr<UInt32[]> packedTbl(new UInt32[nEntries]);
-	::memcpy(packedTbl.get(), _packedTbl.get(), sizeof(UInt32) * nEntriesToCopy);
+	std::unique_ptr<Color::PackedType[]> packedTbl(new Color::PackedType[nEntries]);
+	::memcpy(packedTbl.get(), _packedTbl.get(), sizeof(Color::PackedType) * nEntriesToCopy);
 	_packedTbl.reset(packedTbl.release());
 	for (size_t idx = nEntriesToCopy; idx < nEntries; idx++) {
 		_packedTbl[idx] = Color::black.GetPacked();

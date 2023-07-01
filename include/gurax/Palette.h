@@ -22,14 +22,14 @@ public:
 	enum class ShrinkMode { None, Align, Minimum };
 	using ColorSet = std::unordered_set<Color, Color::Hash, Color::EqualTo>;
 protected:
-	std::unique_ptr<UInt32[]> _packedTbl;
+	std::unique_ptr<Color::PackedType[]> _packedTbl;
 	size_t _n;
 public:
 	static void Bootup();
 public:
 	// Constructor
 	Palette(size_t n);
-	Palette(const UInt32* packedTbl, size_t n);
+	Palette(const Color::PackedType* packedTbl, size_t n);
 	// Copy constructor/operator
 	Palette(const Palette& src) = delete;
 	Palette& operator=(const Palette& src) = delete;
@@ -48,11 +48,11 @@ public:
 	Palette* Clone() const { return new Palette(_packedTbl.get(), _n); }
 	size_t GetSize() const { return _n; }
 	void Fill(const Color& color);
-	void SetPacked(size_t idx, UInt32 packed) { _packedTbl[idx] = packed; }
+	void SetPacked(size_t idx, Color::PackedType packed) { _packedTbl[idx] = packed; }
 	void SetColor(size_t idx, const Color& color) { _packedTbl[idx] = color.GetPacked(); }
 	void SetRGB(size_t idx, UInt8 r, UInt8 g, UInt8 b) { SetColor(idx, Color(r, g, b)); }
 	void SetRGBA(size_t idx, UInt8 r, UInt8 g, UInt8 b, UInt8 a) { SetColor(idx, Color(r, g, b, a)); }
-	UInt32 GetPacked(size_t idx) const { return _packedTbl[idx]; }
+	Color::PackedType GetPacked(size_t idx) const { return _packedTbl[idx]; }
 	Color GetColor(size_t idx) const { return Color(_packedTbl[idx]); }
 	Color GetColor(size_t idx, UInt8 a) const { return Color(_packedTbl[idx], a); }
 public:
@@ -69,8 +69,8 @@ public:
 	bool IndexSet(const Value& valueIndex, RefPtr<Value> pValue);
 	bool IndexGet(const Value& valueIndex, Value** ppValue) const;
 public:
-	static constexpr UInt32 PackRGB(UInt8 r, UInt8 g, UInt8 b) { return Color::PackRGB(r, g, b); }
-	static constexpr UInt32 PackRGBA(UInt8 r, UInt8 g, UInt8 b, UInt8 a) { return Color::PackRGBA(r, g, b, a); }
+	static constexpr Color::PackedType PackRGB(UInt8 r, UInt8 g, UInt8 b) { return Color::PackRGB(r, g, b); }
+	static constexpr Color::PackedType PackRGBA(UInt8 r, UInt8 g, UInt8 b, UInt8 a) { return Color::PackRGBA(r, g, b, a); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Palette& palette) const { return this == &palette; }

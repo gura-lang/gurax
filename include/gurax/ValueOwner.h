@@ -61,6 +61,7 @@ public:
 	void Insert(Int pos, const ValueList& values);
 	Value* Shift();
 public:
+	static ValueOwner* Deserialize(Stream& stream);
 	template<typename T_Map> static ValueOwner* CollectKeys(const T_Map& map);
 };
 

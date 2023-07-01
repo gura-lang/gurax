@@ -645,12 +645,13 @@ String Value_DateTime::ToString(const StringStyle& ss) const
 
 bool Value_DateTime::DoSerialize(Stream& stream) const
 {
-	return false;
+	return GetDateTime().Serialize(stream);
 }
 
 Value* VType_DateTime::DoDeserialize(Stream& stream) const
 {
-	return nullptr;
+	RefPtr<DateTime> pDateTime(DateTime::Deserialize(stream));
+	return pDateTime? new Value_DateTime(pDateTime.release()) : nullptr;
 }
 
 }

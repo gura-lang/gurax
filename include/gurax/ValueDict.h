@@ -63,6 +63,9 @@ public:
 	bool IsLessThan(const ValueDict& valueDict) const { return this < &valueDict; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 public:
+	bool Serialize(Stream& stream) const;
+	static ValueDict* Deserialize(Stream& stream);
+public:
 	static void IssueError_KeyNotFound(const Value& valueKey);
 };
 

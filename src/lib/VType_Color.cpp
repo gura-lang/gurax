@@ -347,8 +347,7 @@ bool Value_Color::DoSerialize(Stream& stream) const
 Value* VType_Color::DoDeserialize(Stream& stream) const
 {
 	Color::PackedType packed;
-	if (!stream.DeserializeNumber<Color::PackedType>(packed)) return nullptr;
-	return new Value_Color(Color(packed));
+	return stream.DeserializeNumber<Color::PackedType>(packed)? new Value_Color(Color(packed)) : nullptr;
 }
 
 }

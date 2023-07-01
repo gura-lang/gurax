@@ -73,7 +73,7 @@ public:
 	bool IsLessThan(const ValueList& valueList) const;
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 public:
-	bool Serialize(Stream& stream) const;
+	bool Serialize(Stream& stream, bool serializeSizeFlag = true) const;
 public:
 	void IssueError_IndexOutOfRange(Int pos) const;
 	void IssueError_IndexOutOfRange(const char* pos) const;

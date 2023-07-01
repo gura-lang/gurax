@@ -291,8 +291,9 @@ String ValueList::ToString(const StringStyle& ss) const
 	return str;
 }
 
-bool ValueList::Serialize(Stream& stream) const
+bool ValueList::Serialize(Stream& stream, bool serializeSizeFlag) const
 {
+	if (serializeSizeFlag && !stream.SerializePackedNumber<size_t>(size())) return false;
 	for (const Value* pValue : *this) {
 		if (!pValue->Serialize(stream)) return false;
 	}

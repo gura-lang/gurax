@@ -183,6 +183,20 @@ Value* ValueOwner::Shift()
 	return pValue.release();
 }
 
+ValueOwner* ValueOwner::Deserialize(Stream& stream)
+{
+	size_t len;
+	if (!stream.DeserializePackedNumber<size_t>(len)) return nullptr;
+	RefPtr<ValueOwner> pValues(new ValueOwner());
+	pValues->reserve(len);
+	for (size_t i = 0; i < len; i++) {
+		RefPtr<Value> pValue(Value::Deserialize(stream));
+		if (!pValue) return nullptr;
+		pValues->Add(pValue.release());
+	}
+	return pValues.release();
+}
+
 //------------------------------------------------------------------------------
 // ValueStack
 //------------------------------------------------------------------------------

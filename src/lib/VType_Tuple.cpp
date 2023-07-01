@@ -297,12 +297,13 @@ Iterator* Value_Tuple::DoGenIterator() const
 
 bool Value_Tuple::DoSerialize(Stream& stream) const
 {
-	return false;
+	return GetValueOwner().Serialize(stream);
 }
 
 Value* VType_Tuple::DoDeserialize(Stream& stream) const
 {
-	return nullptr;
+	RefPtr<ValueOwner> pValueOwner(ValueOwner::Deserialize(stream));
+	return pValueOwner? new Value_Tuple(pValueOwner.release()) : nullptr;
 }
 
 }

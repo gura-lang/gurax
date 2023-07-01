@@ -444,12 +444,13 @@ bool Value_Dict::DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue)
 
 bool Value_Dict::DoSerialize(Stream& stream) const
 {
-	return false;
+	return GetValueDict().Serialize(stream);
 }
 
 Value* VType_Dict::DoDeserialize(Stream& stream) const
 {
-	return nullptr;
+	RefPtr<ValueDict> pValueDict(ValueDict::Deserialize(stream));
+	return pValueDict? new Value_Dict(pValueDict.release()) : nullptr;
 }
 
 }

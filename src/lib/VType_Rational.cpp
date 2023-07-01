@@ -632,12 +632,13 @@ String Value_Rational::ToString(const StringStyle& ss) const
 
 bool Value_Rational::DoSerialize(Stream& stream) const
 {
-	return false;
+	return stream.SerializeRational(GetRational());
 }
 
 Value* VType_Rational::DoDeserialize(Stream& stream) const
 {
-	return nullptr;
+	Rational num;
+	return stream.DeserializeRational(num)? new Value_Rational(num) : nullptr;
 }
 
 }

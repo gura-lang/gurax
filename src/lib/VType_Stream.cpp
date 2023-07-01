@@ -511,7 +511,7 @@ Gurax_ImplementMethod(Stream, Serialize)
 	ArgPicker args(argument);
 	const ValueList& values = args.PickList();
 	// Function body
-	if (!values.Serialize(stream)) return Value::nil();
+	if (!values.Serialize(stream, false)) return Value::nil();
 	return valueThis.Reference();
 }
 

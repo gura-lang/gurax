@@ -555,8 +555,7 @@ bool Value_Complex::DoSerialize(Stream& stream) const
 Value* VType_Complex::DoDeserialize(Stream& stream) const
 {
 	Complex num;
-	if (!stream.DeserializeComplex(num)) return nullptr;
-	return new Value_Complex(num);
+	return stream.DeserializeComplex(num)? new Value_Complex(num) : nullptr;
 }
 
 }
