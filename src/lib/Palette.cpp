@@ -12,13 +12,17 @@ void Palette::Bootup()
 {
 }
 
-Palette::Palette(size_t n) : _packedTbl(new Color::PackedType[n]), _n(n)
+Palette::Palette(size_t n) : _pMemory(new MemoryHeap(sizeof(Color::PackedType) * n)), _n(n)
 {
 }
 
-Palette::Palette(const Color::PackedType* packedTbl, size_t n) : _packedTbl(new Color::PackedType[n]), _n(n)
+Palette::Palette(Memory* pMemory, size_t n) : _pMemory(pMemory), _n(n)
 {
-	::memcpy(_packedTbl.get(), packedTbl, sizeof(Color::PackedType) * n);
+}
+
+Palette::Palette(const Color::PackedType* packedTbl, size_t n) : _pMemory(new MemoryHeap(sizeof(Color::PackedType) * n)), _n(n)
+{
+	::memcpy(_pMemory->GetPointerC<void>(), packedTbl, sizeof(Color::PackedType) * n);
 }
 
 Palette* Palette::Mono()
@@ -597,16 +601,15 @@ Palette* Palette::CreateFromSymbol(const Symbol* pSymbol)
 void Palette::Fill(const Color& color)
 {
 	Color::PackedType packed = color.GetPacked();
-	Color::PackedType* p = _packedTbl.get();
+	Color::PackedType* p = _pMemory->GetPointerC<Color::PackedType>();
 	for (size_t i = 0; i < _n; i++, p++) *p = packed;
 }
 
 size_t Palette::LookupNearest(UInt8 r, UInt8 g, UInt8 b) const
 {
 	size_t idxMin = 0;
-	const UInt8* p = reinterpret_cast<const UInt8*>(_packedTbl.get());
-	int distMin = Color::CalcDistSqu(r, g, b,
-			Image::PixelRGB::GetR(p), Image::PixelRGB::GetG(p), Image::PixelRGB::GetB(p));
+	const UInt8* p = _pMemory->GetPointerC<UInt8>();
+	int distMin = Color::CalcDistSqu(r, g, b, Image::PixelRGB::GetR(p), Image::PixelRGB::GetG(p), Image::PixelRGB::GetB(p));
 	if (distMin > 0) {
 		for (size_t idx = 1; idx < _n; idx++) {
 			p += sizeof(Color::PackedType);
@@ -683,12 +686,11 @@ bool Palette::UpdateByPalette(const Palette& palette, ShrinkMode shrinkMode)
 void Palette::ResizeBuff(size_t nEntries, size_t nEntriesToCopy)
 {
 	_n = nEntries;
-	std::unique_ptr<Color::PackedType[]> packedTbl(new Color::PackedType[nEntries]);
-	::memcpy(packedTbl.get(), _packedTbl.get(), sizeof(Color::PackedType) * nEntriesToCopy);
-	_packedTbl.reset(packedTbl.release());
-	for (size_t idx = nEntriesToCopy; idx < nEntries; idx++) {
-		_packedTbl[idx] = Color::black.GetPacked();
-	}
+	RefPtr<Memory> pMemory(new MemoryHeap(sizeof(Color::PackedType) * nEntries));
+	::memcpy(pMemory->GetPointerC<void>(), _pMemory->GetPointerC<void>(), sizeof(Color::PackedType) * nEntriesToCopy);
+	_pMemory.reset(pMemory.release());
+	Color::PackedType* p = _pMemory->GetPointerC<Color::PackedType>();
+	for (size_t idx = nEntriesToCopy; idx < nEntries; idx++, p++) *p = Color::black.GetPacked();
 }
 
 void Palette::Shrink(size_t nEntries, bool alignFlag)

@@ -22,13 +22,14 @@ public:
 	enum class ShrinkMode { None, Align, Minimum };
 	using ColorSet = std::unordered_set<Color, Color::Hash, Color::EqualTo>;
 protected:
-	std::unique_ptr<Color::PackedType[]> _packedTbl;
+	RefPtr<Memory> _pMemory;
 	size_t _n;
 public:
 	static void Bootup();
 public:
 	// Constructor
 	Palette(size_t n);
+	Palette(Memory* pMemory, size_t n);
 	Palette(const Color::PackedType* packedTbl, size_t n);
 	// Copy constructor/operator
 	Palette(const Palette& src) = delete;
@@ -45,16 +46,18 @@ public:
 	static Palette* Win256();
 	static Palette* CreateFromSymbol(const Symbol* pSymbol);
 public:
-	Palette* Clone() const { return new Palette(_packedTbl.get(), _n); }
+	Palette* Clone() const { return new Palette(_pMemory->Clone(), _n); }
 	size_t GetSize() const { return _n; }
 	void Fill(const Color& color);
-	void SetPacked(size_t idx, Color::PackedType packed) { _packedTbl[idx] = packed; }
-	void SetColor(size_t idx, const Color& color) { _packedTbl[idx] = color.GetPacked(); }
+	Color::PackedType* GetPointer(size_t idx) { return _pMemory->GetPointerC<Color::PackedType>() + idx; }
+	const Color::PackedType* GetPointer(size_t idx) const { return _pMemory->GetPointerC<Color::PackedType>() + idx; }
+	void SetPacked(size_t idx, Color::PackedType packed) { *GetPointer(idx) = packed; }
+	void SetColor(size_t idx, const Color& color) { *GetPointer(idx) = color.GetPacked(); }
 	void SetRGB(size_t idx, UInt8 r, UInt8 g, UInt8 b) { SetColor(idx, Color(r, g, b)); }
 	void SetRGBA(size_t idx, UInt8 r, UInt8 g, UInt8 b, UInt8 a) { SetColor(idx, Color(r, g, b, a)); }
-	Color::PackedType GetPacked(size_t idx) const { return _packedTbl[idx]; }
-	Color GetColor(size_t idx) const { return Color(_packedTbl[idx]); }
-	Color GetColor(size_t idx, UInt8 a) const { return Color(_packedTbl[idx], a); }
+	Color::PackedType GetPacked(size_t idx) const { return *GetPointer(idx); }
+	Color GetColor(size_t idx) const { return Color(*GetPointer(idx)); }
+	Color GetColor(size_t idx, UInt8 a) const { return Color(*GetPointer(idx), a); }
 public:
 	size_t LookupNearest(UInt8 r, UInt8 g, UInt8 b) const;
 	size_t LookupNearest(const Color& color) const {
