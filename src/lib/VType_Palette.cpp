@@ -344,12 +344,13 @@ bool Value_Palette::DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pVal
 
 bool Value_Palette::DoSerialize(Stream& stream) const
 {
-	return false;
+	return GetPalette().Serialize(stream);
 }
 
 Value* VType_Palette::DoDeserialize(Stream& stream) const
 {
-	return nullptr;
+	RefPtr<Palette> pPalette(Palette::Deserialize(stream));
+	return pPalette? new Value_Palette(pPalette.release()) : nullptr;
 }
 
 }
