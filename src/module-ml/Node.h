@@ -9,6 +9,7 @@
 Gurax_BeginModuleScope(ml)
 
 class Trainer; 
+
 //------------------------------------------------------------------------------
 // Node
 //------------------------------------------------------------------------------
@@ -140,13 +141,13 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Node_Head
+// Node_Expr
 //------------------------------------------------------------------------------
-class Node_Head : public Node_SingleOut {
+class Node_Expr : public Node_SingleOut {
 protected:
 	RefPtr<Expr> _pExpr;
 public:
-	Node_Head(Expr* pExpr) : _pExpr(pExpr) {}
+	Node_Expr(Expr* pExpr) : _pExpr(pExpr) {}
 	const Expr& GetExpr() const { return *_pExpr; }
 	virtual bool EvalForward(Processor& processor) override;
 	virtual bool GatherMemberSymbol(SymbolList& symbols) const override;
@@ -157,11 +158,11 @@ public:
 //------------------------------------------------------------------------------
 // Node_Variable
 //------------------------------------------------------------------------------
-class Node_Variable : public Node_Head {
+class Node_Variable : public Node_Expr {
 protected:
 	RefPtr<Optimizer::Instance> _pOptimizerInst;
 public:
-	Node_Variable(Expr* pExpr, const Optimizer& optimizer) : Node_Head(pExpr), _pOptimizerInst(optimizer.CreateInstance()) {}
+	Node_Variable(Expr* pExpr, const Optimizer& optimizer) : Node_Expr(pExpr), _pOptimizerInst(optimizer.CreateInstance()) {}
 	virtual bool IsVulnerable() const override { return true; }
 	virtual String GetTypeName() const override { return "Variable"; }
 	virtual void Reset() override;
@@ -172,9 +173,9 @@ public:
 //------------------------------------------------------------------------------
 // Node_Const
 //------------------------------------------------------------------------------
-class Node_Const : public Node_Head {
+class Node_Const : public Node_Expr {
 public:
-	Node_Const(Expr* pExpr) : Node_Head(pExpr) {}
+	Node_Const(Expr* pExpr) : Node_Expr(pExpr) {}
 	virtual bool IsVulnerable() const { return false; }
 	virtual String GetTypeName() const override { return "Const"; }
 	virtual bool EvalBackward(Processor& processor) override { return true; }

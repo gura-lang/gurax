@@ -139,39 +139,38 @@ Value* Node_Branch::DoGetProperty(const Symbol* pSymbol, const Attribute& attr) 
 }
 
 //-----------------------------------------------------------------------------
-// Node_Head
+// Node_Expr
 //-----------------------------------------------------------------------------
-bool Node_Head::EvalForward(Processor& processor)
+bool Node_Expr::EvalForward(Processor& processor)
 {
 	//::printf("%s\n", GetExpr().ToString(StringStyle::Empty).c_str());
-	if (_pArrayFwd.IsNull()) {
-		RefPtr<Value> pValue(GetExpr().Eval(processor));
-		if (Error::IsIssued()) return false;
-		if (pValue->IsType(VTYPE_Number)) {
-			_pArrayFwd.reset(Array::CreateScalar(Array::ElemType::Double, Value_Number::GetNumber<Double>(*pValue)));
-		} else if (pValue->IsType(VTYPE_Complex)) {
-			_pArrayFwd.reset(Array::CreateScalar(Array::ElemType::Complex, Value_Complex::GetComplex(*pValue)));
-		} else if (pValue->IsType(VTYPE_Array)) {
-			_pArrayFwd.reset(Value_Array::GetArray(*pValue).Reference());
-		} else {
-			Error::Issue(ErrorType::ValueError, "variable must be an array");
-			return false;
-		}
+	if (!_pArrayFwd.IsNull()) return true;
+	RefPtr<Value> pValue(GetExpr().Eval(processor));
+	if (Error::IsIssued()) return false;
+	if (pValue->IsType(VTYPE_Number)) {
+		_pArrayFwd.reset(Array::CreateScalar(Array::ElemType::Double, Value_Number::GetNumber<Double>(*pValue)));
+	} else if (pValue->IsType(VTYPE_Complex)) {
+		_pArrayFwd.reset(Array::CreateScalar(Array::ElemType::Complex, Value_Complex::GetComplex(*pValue)));
+	} else if (pValue->IsType(VTYPE_Array)) {
+		_pArrayFwd.reset(Value_Array::GetArray(*pValue).Reference());
+	} else {
+		Error::Issue(ErrorType::ValueError, "variable must be an array");
+		return false;
 	}
 	return true;
 }
 
-bool Node_Head::GatherMemberSymbol(SymbolList& symbols) const
+bool Node_Expr::GatherMemberSymbol(SymbolList& symbols) const
 {
 	return Node_SingleOut::GatherMemberSymbol(symbols);
 }
 
-Value* Node_Head::DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const
+Value* Node_Expr::DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const
 {
 	return Node_SingleOut::DoGetProperty(pSymbol, attr);
 }
 
-void Node_Head::Print(Stream& stream, int indentLevel) const
+void Node_Expr::Print(Stream& stream, int indentLevel) const
 {
 	Node_SingleOut::Print(stream, indentLevel);
 }
