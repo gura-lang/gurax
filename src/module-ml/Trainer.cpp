@@ -197,23 +197,21 @@ Node* Trainer::CreateNode(const Expr& expr)
 			_nodesInput[idx] = pNodeInput.get();
 			pNode.reset(pNodeInput.release());
 		} else {
-			pNode.reset(new Node_Head(pExpr.release(), Node::Trait::Variable, GetOptimizer()));
+			pNode.reset(new Node_Variable(pExpr.release(), GetOptimizer()));
 		}
 		_nodeOwner.push_back(pNode.Reference());
 		_pNodeMap->AddNode(pSymbol, pNode.Reference());
 		return pNode.release();
 	} else if (expr.IsType<Expr_Value>()) {
-		Node::Trait trait = Node::Trait::Constant;
 		RefPtr<Expr> pExpr(expr.Reference());
 		if (!pExpr->PrepareAndCompose(_composer)) return nullptr;
-		RefPtr<Node> pNode(new Node_Head(pExpr.release(), trait, GetOptimizer()));
+		RefPtr<Node> pNode(new Node_Const(pExpr.release()));
 		_nodeOwner.push_back(pNode.Reference());
 		return pNode.release();
 	} else {
-		Node::Trait trait = Node::Trait::Variable;
 		RefPtr<Expr> pExpr(expr.Reference());
 		if (!pExpr->PrepareAndCompose(_composer)) return nullptr;
-		RefPtr<Node> pNode(new Node_Head(pExpr.release(), trait, GetOptimizer()));
+		RefPtr<Node> pNode(new Node_Variable(pExpr.release(), GetOptimizer()));
 		_nodeOwner.push_back(pNode.Reference());
 		return pNode.release();
 	}

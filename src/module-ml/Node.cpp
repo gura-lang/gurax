@@ -141,25 +141,10 @@ Value* Node_Branch::DoGetProperty(const Symbol* pSymbol, const Attribute& attr) 
 //-----------------------------------------------------------------------------
 // Node_Head
 //-----------------------------------------------------------------------------
-const char* Node_Head::GetTraitName() const
-{
-	return IsVariable()? "variable" : IsConstant()? "constant" : IsInput()? "input" : "unknown";
-}
-
-bool Node_Head::IsVulnerable() const
-{
-	return IsVariable();
-}
-
-void Node_Head::Reset()
-{
-	_pOptimizerInst->Reset();
-}
-
 bool Node_Head::EvalForward(Processor& processor)
 {
 	//::printf("%s\n", GetExpr().ToString(StringStyle::Empty).c_str());
-	if (_pArrayFwd.IsNull() || IsInput()) {
+	if (_pArrayFwd.IsNull()) {
 		RefPtr<Value> pValue(GetExpr().Eval(processor));
 		if (Error::IsIssued()) return false;
 		if (pValue->IsType(VTYPE_Number)) {
@@ -176,14 +161,6 @@ bool Node_Head::EvalForward(Processor& processor)
 	return true;
 }
 
-bool Node_Head::EvalBackward(Processor& processor)
-{
-	if (_pOptimizerInst) {
-		if (!_pOptimizerInst->Update(processor, _pArrayFwd, _pConnectorDst->GetArrayGrad())) return false;
-	}
-	return true;
-}
-
 bool Node_Head::GatherMemberSymbol(SymbolList& symbols) const
 {
 	return Node_SingleOut::GatherMemberSymbol(symbols);
@@ -194,14 +171,35 @@ Value* Node_Head::DoGetProperty(const Symbol* pSymbol, const Attribute& attr) co
 	return Node_SingleOut::DoGetProperty(pSymbol, attr);
 }
 
-String Node_Head::ToString(const StringStyle& ss) const
-{
-	return String().Format("%s(%s):%s", GetTypeName().c_str(), GetTraitName(), GetExpr().ToString().c_str());
-}
-
 void Node_Head::Print(Stream& stream, int indentLevel) const
 {
 	Node_SingleOut::Print(stream, indentLevel);
+}
+
+//-----------------------------------------------------------------------------
+// Node_Variable
+//-----------------------------------------------------------------------------
+void Node_Variable::Reset()
+{
+	_pOptimizerInst->Reset();
+}
+
+bool Node_Variable::EvalBackward(Processor& processor)
+{
+	return _pOptimizerInst->Update(processor, _pArrayFwd, _pConnectorDst->GetArrayGrad());
+}
+
+String Node_Variable::ToString(const StringStyle& ss) const
+{
+	return String().Format("%s(%s):%s", GetTypeName().c_str(), GetExpr().ToString().c_str());
+}
+
+//-----------------------------------------------------------------------------
+// Node_Const
+//-----------------------------------------------------------------------------
+String Node_Const::ToString(const StringStyle& ss) const
+{
+	return String().Format("%s(%s):%s", GetTypeName().c_str(), GetExpr().ToString().c_str());
 }
 
 //-----------------------------------------------------------------------------

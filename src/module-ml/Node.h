@@ -19,7 +19,6 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Node");
 public:
-	enum class Trait { Variable, Constant, Input, };
 	class Connector {
 	private:
 		Node* _pNodeSrc;
@@ -71,7 +70,6 @@ public:
 	const Array& GetArrayFwd() const { return *_pArrayFwd; }
 	RefPtr<Array>& GetArrayFwdRefPtr() { return _pArrayFwd; }
 	virtual String GetTypeName() const = 0;
-	virtual bool IsHead() const { return false; }
 	virtual bool IsBottom() const { return false; }
 	virtual bool IsUnary() const { return false; }
 	virtual bool IsBinary() const { return false; }
@@ -146,27 +144,40 @@ public:
 class Node_Head : public Node_SingleOut {
 protected:
 	RefPtr<Expr> _pExpr;
-	RefPtr<Array> _pArrayGradAdj;
-	Trait _trait;
+public:
+	Node_Head(Expr* pExpr) : _pExpr(pExpr) {}
+	const Expr& GetExpr() const { return *_pExpr; }
+	virtual bool EvalForward(Processor& processor) override;
+	virtual bool GatherMemberSymbol(SymbolList& symbols) const override;
+	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const override;
+	virtual void Print(Stream& stream, int indentLevel) const override;
+};
+
+//------------------------------------------------------------------------------
+// Node_Variable
+//------------------------------------------------------------------------------
+class Node_Variable : public Node_Head {
+protected:
 	RefPtr<Optimizer::Instance> _pOptimizerInst;
 public:
-	Node_Head(Expr* pExpr, Trait trait, const Optimizer& optimizer) :
-		_pExpr(pExpr), _trait(trait), _pOptimizerInst(optimizer.CreateInstance()) {}
-	const Expr& GetExpr() const { return *_pExpr; }
-	bool IsVariable() const { return _trait == Trait::Variable; }
-	bool IsConstant() const { return _trait == Trait::Constant; }
-	bool IsInput() const { return _trait == Trait::Input; }
-	const char* GetTraitName() const;
-	virtual String GetTypeName() const override { return "Head"; }
-	virtual bool IsHead() const { return true; }
-	virtual void Reset();
-	virtual bool IsVulnerable() const;
-	virtual bool EvalForward(Processor& processor) override;
+	Node_Variable(Expr* pExpr, const Optimizer& optimizer) : Node_Head(pExpr), _pOptimizerInst(optimizer.CreateInstance()) {}
+	virtual bool IsVulnerable() const override { return true; }
+	virtual String GetTypeName() const override { return "Variable"; }
+	virtual void Reset() override;
 	virtual bool EvalBackward(Processor& processor) override;
-	virtual bool GatherMemberSymbol(SymbolList& symbols) const;
-	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const;
 	virtual String ToString(const StringStyle& ss) const;
-	virtual void Print(Stream& stream, int indentLevel) const;
+};
+
+//------------------------------------------------------------------------------
+// Node_Const
+//------------------------------------------------------------------------------
+class Node_Const : public Node_Head {
+public:
+	Node_Const(Expr* pExpr) : Node_Head(pExpr) {}
+	virtual bool IsVulnerable() const { return false; }
+	virtual String GetTypeName() const override { return "Const"; }
+	virtual bool EvalBackward(Processor& processor) override { return true; }
+	virtual String ToString(const StringStyle& ss) const;
 };
 
 //------------------------------------------------------------------------------
@@ -180,7 +191,6 @@ public:
 	void SetArray(Array* pArray) { _pArray.reset(pArray); }
 	const Array& GetArray() const { return *_pArray; }
 	virtual String GetTypeName() const override { return "Input"; }
-	virtual bool IsHead() const { return true; }
 	virtual void Reset();
 	virtual bool IsVulnerable() const;
 	virtual bool EvalForward(Processor& processor) override;

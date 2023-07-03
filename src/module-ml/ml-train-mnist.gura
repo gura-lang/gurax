@@ -5,7 +5,7 @@ import(ml.qmnist)
 nTraining = 10
 db = ml.mnist.Database('../../sample/resource/mnist')
 //db = ml.qmnist.Database('../../sample/resource/qmnist')
-if (false) {
+if (true) {
 	model = `((image |.| affineWeight + affineBias) |*| ml.Softmax())
 	shapeImage = (1, db.nRows * db.nCols)
 	affineWeight = @float(shapeImage[-1], db.nClasses)
