@@ -70,6 +70,7 @@ public:
 	const Array& GetArrayFwd() const { return *_pArrayFwd; }
 	RefPtr<Array>& GetArrayFwdRefPtr() { return _pArrayFwd; }
 	virtual String GetTypeName() const = 0;
+	virtual bool IsInput() const { return false; }
 	virtual bool IsBottom() const { return false; }
 	virtual bool IsUnary() const { return false; }
 	virtual bool IsBinary() const { return false; }
@@ -191,6 +192,7 @@ public:
 	void SetArray(Array* pArray) { _pArray.reset(pArray); }
 	const Array& GetArray() const { return *_pArray; }
 	virtual String GetTypeName() const override { return "Input"; }
+	virtual bool IsInput() const { return true; }
 	virtual void Reset();
 	virtual bool IsVulnerable() const;
 	virtual bool EvalForward(Processor& processor) override;
