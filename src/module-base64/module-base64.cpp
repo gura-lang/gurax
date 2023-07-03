@@ -8,7 +8,7 @@ Gurax_BeginModule(base64)
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
-// base64.Decode(src:Stream:r, dst?:Stream:w):[base16,base32.base32hex,base64] {block?}
+// base64.Decode(src:r as Stream, dst?:w as Stream):[base16,base32.base32hex,base64] {block?}
 Gurax_DeclareFunction(Decode)
 {
 	Declare(VTYPE_Binary, Flag::None);
@@ -64,7 +64,7 @@ Gurax_ImplementFunction(Decode)
 	}
 }
 
-// base64.Encode(src:Stream:r, dst?:Stream:w, lineLen?:Number):[base16,base32,base32hex,base64,singleLine] {block?}
+// base64.Encode(src:r as Stream, dst?:w as Stream, lineLen? as Number):[base16,base32,base32hex,base64,singleLine] {block?}
 Gurax_DeclareFunction(Encode)
 {
 	Declare(VTYPE_Binary, Flag::None);
@@ -133,7 +133,7 @@ Gurax_ImplementFunction(Encode)
 	}
 }
 
-// base64.Reader(src:Stream:r):[base16,base32,base32hex,base64] {block?}
+// base64.Reader(src:r as Stream):[base16,base32,base32hex,base64] {block?}
 Gurax_DeclareFunction(Reader)
 {
 	Declare(VTYPE_Stream, Flag::None);
@@ -171,7 +171,7 @@ Gurax_ImplementFunction(Reader)
 	return argument.ReturnValue(processor, new Value_Stream(pStream.release()));
 }
 
-// base64.Writer(dst:Stream:w, lineLen?:Number):[base16,base32,base32hex,base64,singleLine] {block?}
+// base64.Writer(dst:w as Stream, lineLen? as Number):[base16,base32,base32hex,base64,singleLine] {block?}
 Gurax_DeclareFunction(Writer)
 {
 	Declare(VTYPE_Stream, Flag::None);

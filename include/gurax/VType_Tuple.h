@@ -13,7 +13,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Tuple : public VType {
 public:
-	static const SerialId serialId = 0x0000001c;
+	static const SerialId serialId = 0x0000001d;
 public:
 	VType_Tuple() : VType(serialId) {}
 	explicit VType_Tuple(const Symbol* pSymbol) : VType(serialId) {}

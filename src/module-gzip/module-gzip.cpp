@@ -8,7 +8,7 @@ Gurax_BeginModule(gzip)
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
-// gzip.Reader(stream:Stream:r) {block?}
+// gzip.Reader(stream:r as Stream) {block?}
 Gurax_DeclareFunction(Reader)
 {
 	Declare(VTYPE_Stream, Flag::None);
@@ -31,7 +31,7 @@ Gurax_ImplementFunction(Reader)
 	return argument.ReturnValue(processor, pValue.release());
 }
 
-// gzip.Writer(stream:Stream:w, level?:Number) {block?}
+// gzip.Writer(stream:w as Stream, level? as Number) {block?}
 Gurax_DeclareFunction(Writer)
 {
 	Declare(VTYPE_Stream, Flag::None);

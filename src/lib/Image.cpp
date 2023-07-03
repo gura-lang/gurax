@@ -769,6 +769,53 @@ String Image::ToString(const StringStyle& ss) const
 			FormatToSymbol(GetFormat())->GetName(), GetWidth(), GetHeight());
 }
 
+bool Image::Serialize(Stream& stream) const
+{
+	if (!stream.SerializeNumber<UInt8>(IsFormat(Format::RGB)? 1 : IsFormat(Format::RGBA)? 2 : 0)) return false;
+	if (!stream.SerializePackedNumber<size_t>(_metrics.width)) return false;
+	if (!stream.SerializePackedNumber<size_t>(_metrics.height)) return false;
+	if (!stream.SerializeNumber<UInt8>(_metrics.alphaDefault)) return false;
+	if (_pPalette) {
+		if (!stream.SerializeNumber<bool>(true)) return false;
+		if (!_pPalette->Serialize(stream)) return false;
+	} else {
+		if (!stream.SerializeNumber<bool>(false)) return false;
+	}
+	if (_pMemory) {
+		if (!stream.SerializeNumber<bool>(true)) return false;
+		if (!_pMemory->Serialize(stream)) return false;
+	} else {
+		if (!stream.SerializeNumber<bool>(false)) return false;
+	}
+	return true;
+}
+
+Image* Image::Deserialize(Stream& stream)
+{
+	UInt8 iFormat;
+	size_t width, height;
+	UInt8 alphaDefault;
+	bool validFlag;
+	RefPtr<Palette> pPalette;
+	RefPtr<Memory> pMemory;
+	if (!stream.DeserializeNumber<UInt8>(iFormat)) return false;
+	if (!stream.DeserializePackedNumber<size_t>(width)) return false;
+	if (!stream.DeserializePackedNumber<size_t>(height)) return false;
+	if (!stream.DeserializeNumber<UInt8>(alphaDefault)) return false;
+	if (!stream.DeserializeNumber<bool>(validFlag)) return false;
+	if (validFlag) {
+		pPalette.reset(Palette::Deserialize(stream));
+		if (!pPalette) return false;
+	}
+	if (!stream.DeserializeNumber<bool>(validFlag)) return false;
+	if (validFlag) {
+		pMemory.reset(Memory::Deserialize(stream));
+		if (!pMemory) return false;
+	}
+	const Format& format = (iFormat == 1)? Format::RGB : (iFormat == 2)? Format::RGBA : Format::None;
+	return new Image(format, width, height, alphaDefault, pPalette.release(), pMemory.release(), Value::nil());
+}
+
 //------------------------------------------------------------------------------
 // ImageList
 //------------------------------------------------------------------------------

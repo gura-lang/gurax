@@ -13,6 +13,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Image : public VType {
 public:
+	static const SerialId serialId = 0x00000017;
+public:
 	class GURAX_DLLDECLARE Iterator_ScanColor : public Iterator {
 	private:
 		RefPtr<Image> _pImage;
@@ -52,9 +54,12 @@ public:
 		virtual String ToString(const StringStyle& ss) const override;
 	};
 public:
-	using VType::VType;
+	VType_Image() : VType(serialId) {}
+	explicit VType_Image(const Symbol* pSymbol) : VType(serialId) {}
+	explicit VType_Image(const char* name) : VType(name, serialId) {}
 	virtual void DoPrepare(Frame& frameOuter) override;
 	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
+	virtual Value* DoDeserialize(Stream& stream) const override;
 };
 
 extern GURAX_DLLDECLARE VType_Image VTYPE_Image;
@@ -111,6 +116,7 @@ public:
 			GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
+	virtual bool DoSerialize(Stream& stream) const override;
 };
 
 }

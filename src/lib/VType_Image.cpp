@@ -1044,4 +1044,15 @@ String Value_Image::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, GetImage().ToString(ss));
 }
 
+bool Value_Image::DoSerialize(Stream& stream) const
+{
+	return GetImage().Serialize(stream);
+}
+
+Value* VType_Image::DoDeserialize(Stream& stream) const
+{
+	RefPtr<Image> pImage(Image::Deserialize(stream));
+	return pImage? new Value_Image(pImage.release()) : nullptr;
+}
+
 }

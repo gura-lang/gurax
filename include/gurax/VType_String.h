@@ -12,7 +12,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_String : public VType {
 public:
-	static const SerialId serialId = 0x0000001a;
+	static const SerialId serialId = 0x0000001b;
 public:
 	template<typename T_CharCmp>
 	class Iterator_Split : public Iterator {

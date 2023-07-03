@@ -66,17 +66,15 @@ public:
 		const Format* pFormat;
 		size_t width;
 		size_t height;
-		size_t bytesPerPixel;
-		size_t bytesPerLine;
 		UInt8 alphaDefault;
+		size_t bytesPerPixel;	// calculated
+		size_t bytesPerLine;	// calcualted
 		Metrics(const Metrics& src) :
-			pFormat(src.pFormat), width(src.width), height(src.height),
-			bytesPerPixel(src.bytesPerPixel), bytesPerLine(src.bytesPerLine),
-			alphaDefault(src.alphaDefault) {}
+			pFormat(src.pFormat), width(src.width), height(src.height), alphaDefault(src.alphaDefault),
+			bytesPerPixel(src.bytesPerPixel), bytesPerLine(src.bytesPerLine) {}
 		Metrics(const Format& format, size_t width, size_t height, UInt8 alphaDefault) :
-			pFormat(&format), width(width), height(height),
-			bytesPerPixel(format.bytesPerPixel), bytesPerLine(format.WidthToBytes(width)),
-			alphaDefault(alphaDefault) {}
+			pFormat(&format), width(width), height(height), alphaDefault(alphaDefault),
+			bytesPerPixel(format.bytesPerPixel), bytesPerLine(format.WidthToBytes(width)) {}
 		void Update() { bytesPerLine = pFormat->WidthToBytes(width); }
 		bool IsFormat(const Format& format) const { return this->pFormat->IsIdentical(format); }
 		bool AdjustCoord(Rect* pRect, int x, int y, int width, int height) const;
@@ -429,19 +427,20 @@ public:
 		}
 	};
 protected:
-	RefPtr<Memory> _pMemory;	// may be nullptr
-	RefPtr<Palette> _pPalette;	// may be nullptr
 	Metrics _metrics;
+	RefPtr<Palette> _pPalette;	// may be nullptr
+	RefPtr<Memory> _pMemory;	// may be nullptr
 	RefPtr<Value> _pValueExtra;
 public:
 	static void Bootup();
 public:
 	// Constructor
-	Image(const Format& format, Memory* pMemory, size_t width, size_t height, UInt8 alphaDefault) :
-		_pMemory(pMemory), _metrics(format, width, height, alphaDefault),
-		_pValueExtra(Value::nil()) {}
-	Image(const Format& format, UInt8 alphaDefault = 0xff) : _metrics(format, 0, 0, alphaDefault),
-		_pValueExtra(Value::nil()) {}
+	Image(const Format& format, size_t width, size_t height, UInt8 alphaDefault,
+							Palette* pPalette, Memory* pMemory, Value* pValueExtra) :
+		_metrics(format, width, height, alphaDefault),
+		_pPalette(pPalette), _pMemory(pMemory), _pValueExtra(pValueExtra) {}
+	Image(const Format& format, UInt8 alphaDefault = 0xff) :
+		_metrics(format, 0, 0, alphaDefault), _pValueExtra(Value::nil()) {}
 	// Copy constructor/operator
 	Image(const Image& src) = delete;
 	Image& operator=(const Image& src) = delete;
@@ -558,6 +557,9 @@ public:
 	bool IsEqualTo(const Image& image) const { return IsIdentical(image); }
 	bool IsLessThan(const Image& image) const { return this < &image; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
+public:
+	bool Serialize(Stream& stream) const;
+	static Image* Deserialize(Stream& stream);
 };
 
 template<>
