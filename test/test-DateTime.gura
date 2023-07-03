@@ -286,3 +286,24 @@ TestCase('String parser') {
 	Tester(`DateTime('Sun Dec 31 24:59:59 9999'))
 	Tester(`DateTime('Sun Dec 31 003:59:59 2010'))
 }
+
+TestSerialization(dateTime as DateTime) = {
+	buff = Binary()
+	buff.Writer().Serialize(dateTime)
+	Printf('%s -> %s\n', dateTime, buff.Reader().Deserialize())
+}
+
+TestCase('Serialization') {
+	TestSerialization(DateTime.Create())
+	TestSerialization(DateTime.Create(2019))
+	TestSerialization(DateTime.Create(2019, 5))
+	TestSerialization(DateTime.Create(2019, 5, 21))
+	TestSerialization(DateTime.Create(2019, 5, 21, 8))
+	TestSerialization(DateTime.Create(2019, 5, 21, 8, 23))
+	TestSerialization(DateTime.Create(2019, 5, 21, 8, 23, 42))
+	TestSerialization(DateTime.Create(2019, 5, 21, 8, 23, 42, 234))
+	TestSerialization(DateTime.Create(2019, 5, 21, 8, 23, 42, 234, 765))
+	TestSerialization(DateTime.Create(2019, 5, nil, 8, nil, 42))
+	TestSerialization(DateTime.Create(2019, nil, nil, nil, nil, 42))
+	TestSerialization(DateTime.Create(2019, 5, 21, 8, 23, 42, minsOff = 60 * 9))
+}
