@@ -10,10 +10,10 @@ buffSrc = B''
 buffSrc.p.Put(`uint8, (0..255).Cycle(4096))
 TestCase('Basic test') {
 	buffCompressed = B''
-	gzip.Writer(buffCompressed).Write(buffSrc)
+	buffCompressed.Writer().Writer@gzip().Write(buffSrc)
 	Printf('Compressed: %s\n', hash.MD5(buffCompressed).digestHex)
 	buffCompressed.Dump()
-	buffUncompressed = gzip.Reader(buffCompressed).Read()
+	buffUncompressed = buffCompressed.Reader().Reader@gzip().Read()
 	Println('Uncompressed')
 	buffUncompressed.Dump()
 }
