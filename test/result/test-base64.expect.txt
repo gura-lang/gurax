@@ -119,7 +119,7 @@ Source:  (1028bytes)
 Encoded: (1372bytes) .. OK
 Source:  (1029bytes)
 Encoded: (1372bytes) .. OK
-======== base64.Writer() and base64.Reader() ========
+======== Stream#Writer@base64() and Stream#Reader@base64() ========
 ----------------------------------------------------------
 [Base16]
 Source:  b''

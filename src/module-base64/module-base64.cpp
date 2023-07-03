@@ -133,92 +133,230 @@ Gurax_ImplementFunction(Encode)
 	}
 }
 
-// base64.Reader(src:r as Stream):[base16,base32,base32hex,base64] {block?}
-Gurax_DeclareFunction(Reader)
+//------------------------------------------------------------------------------
+// Implementation of function
+//------------------------------------------------------------------------------
+// Stream#Reader@base64() {block?}
+Gurax_DeclareMethodAlias(Stream, Reader_at_base64, "Reader@base64")
 {
 	Declare(VTYPE_Stream, Flag::None);
-	DeclareArg("src", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
-	DeclareAttrOpt(Gurax_Symbol(base16));
-	DeclareAttrOpt(Gurax_Symbol(base32));
-	DeclareAttrOpt(Gurax_Symbol(base32hex));
-	DeclareAttrOpt(Gurax_Symbol(base64));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a readable `Stream` instance that decodes a sequence of base-n format
 from the stream `src`.
-
-In default, base64 format is applied. The following attributes can specify the format:
-
-- `:base16` .. Base16 format
-- `:base32` .. Base32 format
-- `:base32hex` .. Base32hex format
-- `:base64` .. Base64 format. Default.
 )""");
 }
 
-Gurax_ImplementFunction(Reader)
+Gurax_ImplementMethod(Stream, Reader_at_base64)
 {
-	// Arguments
-	ArgPicker args(argument);
-	Stream& streamSrc = args.PickStream();
-	const Info& info =
-		argument.IsSet(Gurax_Symbol(base16))? Info::Base16 : 
-		argument.IsSet(Gurax_Symbol(base32))? Info::Base32 : 
-		argument.IsSet(Gurax_Symbol(base32hex))? Info::Base32hex : 
-		Info::Base64; 
+	const Info& info = Info::Base64;
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Stream& stream = valueThis.GetStream();
 	// Function body
-	RefPtr<Stream> pStream(new Stream_Reader(streamSrc.Reference(), info));
+	RefPtr<Stream> pStream(new Stream_Reader(stream.Reference(), info));
 	return argument.ReturnValue(processor, new Value_Stream(pStream.release()));
 }
 
-// base64.Writer(dst:w as Stream, lineLen? as Number):[base16,base32,base32hex,base64,singleLine] {block?}
-Gurax_DeclareFunction(Writer)
+// Stream#Writer@base64(lineLen? as Number):[singleLine] {block?}
+Gurax_DeclareMethodAlias(Stream, Writer_at_base64, "Writer@base64")
 {
 	Declare(VTYPE_Stream, Flag::None);
-	DeclareArg("dst", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
 	DeclareArg("lineLen", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareAttrOpt(Gurax_Symbol(base16));
-	DeclareAttrOpt(Gurax_Symbol(base32));
-	DeclareAttrOpt(Gurax_Symbol(base32hex));
-	DeclareAttrOpt(Gurax_Symbol(base64));
 	DeclareAttrOpt(Gurax_Symbol(singleLine));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a writable `Stream` instance that encodes written data into base-n format.
 The result is emitted to the stream `dst`.
 
-In default, base64 format is applied. The following attributes can specify the format:
-
-- `:base16` .. Base16 format
-- `:base32` .. Base32 format
-- `:base32hex` .. Base32hex format
-- `:base64` .. Base64 format. Default.
-
 In default, output characters are folded by the length specified by `lineLen`.
-If the argument is omitted, pre-defined length for each format is applied:
-64 characters for base32 and base32hex and 76 for base16 and base64.
+If the argument is omitted, pre-defined length 76 is applied.
 
 Specifying the attribute `:singleLine` puts the result in a single line without folding.
 )""");
 }
 
-Gurax_ImplementFunction(Writer)
+Gurax_ImplementMethod(Stream, Writer_at_base64)
 {
+	const Info& info = Info::Base64;
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Stream& stream = valueThis.GetStream();
 	// Arguments
 	ArgPicker args(argument);
-	Stream& streamDst = args.PickStream();
-	const Info& info =
-		argument.IsSet(Gurax_Symbol(base16))? Info::Base16 : 
-		argument.IsSet(Gurax_Symbol(base32))? Info::Base32 : 
-		argument.IsSet(Gurax_Symbol(base32hex))? Info::Base32hex : 
-		Info::Base64; 
-	size_t nCharsPerLine = args.IsValid()?
-		args.PickNumberNonNeg<size_t>() : info.nCharsPerLineDefault;
+	size_t nCharsPerLine = args.IsValid()? args.PickNumberNonNeg<size_t>() : info.nCharsPerLineDefault;
 	if (Error::IsIssued()) return Value::nil();
 	bool singleLineFlag = argument.IsSet(Gurax_Symbol(singleLine));
 	// Function body
-	RefPtr<Stream> pStream(new Stream_Writer(streamDst.Reference(),
-							singleLineFlag? 0 : nCharsPerLine, info));
+	RefPtr<Stream> pStream(new Stream_Writer(stream.Reference(), singleLineFlag? 0 : nCharsPerLine, info));
+	return argument.ReturnValue(processor, new Value_Stream(pStream.release()));
+}
+
+// Stream#Reader@base32() {block?}
+Gurax_DeclareMethodAlias(Stream, Reader_at_base32, "Reader@base32")
+{
+	Declare(VTYPE_Stream, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Creates a readable `Stream` instance that decodes a sequence of base-n format
+from the stream `src`.
+)""");
+}
+
+Gurax_ImplementMethod(Stream, Reader_at_base32)
+{
+	const Info& info = Info::Base32;
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Stream& stream = valueThis.GetStream();
+	// Function body
+	RefPtr<Stream> pStream(new Stream_Reader(stream.Reference(), info));
+	return argument.ReturnValue(processor, new Value_Stream(pStream.release()));
+}
+
+// Stream#Writer@base32(lineLen? as Number):[singleLine] {block?}
+Gurax_DeclareMethodAlias(Stream, Writer_at_base32, "Writer@base32")
+{
+	Declare(VTYPE_Stream, Flag::None);
+	DeclareArg("lineLen", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(singleLine));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Creates a writable `Stream` instance that encodes written data into base-n format.
+The result is emitted to the stream `dst`.
+
+In default, output characters are folded by the length specified by `lineLen`.
+If the argument is omitted, pre-defined length 64 is applied.
+
+Specifying the attribute `:singleLine` puts the result in a single line without folding.
+)""");
+}
+
+Gurax_ImplementMethod(Stream, Writer_at_base32)
+{
+	const Info& info = Info::Base32;
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Stream& stream = valueThis.GetStream();
+	// Arguments
+	ArgPicker args(argument);
+	size_t nCharsPerLine = args.IsValid()? args.PickNumberNonNeg<size_t>() : info.nCharsPerLineDefault;
+	if (Error::IsIssued()) return Value::nil();
+	bool singleLineFlag = argument.IsSet(Gurax_Symbol(singleLine));
+	// Function body
+	RefPtr<Stream> pStream(new Stream_Writer(stream.Reference(), singleLineFlag? 0 : nCharsPerLine, info));
+	return argument.ReturnValue(processor, new Value_Stream(pStream.release()));
+}
+
+// Stream#Reader@base32hex() {block?}
+Gurax_DeclareMethodAlias(Stream, Reader_at_base32hex, "Reader@base32hex")
+{
+	Declare(VTYPE_Stream, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Creates a readable `Stream` instance that decodes a sequence of base-n format
+from the stream `src`.
+)""");
+}
+
+Gurax_ImplementMethod(Stream, Reader_at_base32hex)
+{
+	const Info& info = Info::Base32hex;
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Stream& stream = valueThis.GetStream();
+	// Function body
+	RefPtr<Stream> pStream(new Stream_Reader(stream.Reference(), info));
+	return argument.ReturnValue(processor, new Value_Stream(pStream.release()));
+}
+
+// Stream#Writer@base32hex(lineLen? as Number):[singleLine] {block?}
+Gurax_DeclareMethodAlias(Stream, Writer_at_base32hex, "Writer@base32hex")
+{
+	Declare(VTYPE_Stream, Flag::None);
+	DeclareArg("lineLen", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(singleLine));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Creates a writable `Stream` instance that encodes written data into base-n format.
+The result is emitted to the stream `dst`.
+
+In default, output characters are folded by the length specified by `lineLen`.
+If the argument is omitted, pre-defined length 64 is applied.
+
+Specifying the attribute `:singleLine` puts the result in a single line without folding.
+)""");
+}
+
+Gurax_ImplementMethod(Stream, Writer_at_base32hex)
+{
+	const Info& info = Info::Base32hex;
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Stream& stream = valueThis.GetStream();
+	// Arguments
+	ArgPicker args(argument);
+	size_t nCharsPerLine = args.IsValid()? args.PickNumberNonNeg<size_t>() : info.nCharsPerLineDefault;
+	if (Error::IsIssued()) return Value::nil();
+	bool singleLineFlag = argument.IsSet(Gurax_Symbol(singleLine));
+	// Function body
+	RefPtr<Stream> pStream(new Stream_Writer(stream.Reference(), singleLineFlag? 0 : nCharsPerLine, info));
+	return argument.ReturnValue(processor, new Value_Stream(pStream.release()));
+}
+
+// Stream#Reader@base16() {block?}
+Gurax_DeclareMethodAlias(Stream, Reader_at_base16, "Reader@base16")
+{
+	Declare(VTYPE_Stream, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Creates a readable `Stream` instance that decodes a sequence of base-n format
+from the stream `src`.
+)""");
+}
+
+Gurax_ImplementMethod(Stream, Reader_at_base16)
+{
+	const Info& info = Info::Base16;
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Stream& stream = valueThis.GetStream();
+	// Function body
+	RefPtr<Stream> pStream(new Stream_Reader(stream.Reference(), info));
+	return argument.ReturnValue(processor, new Value_Stream(pStream.release()));
+}
+
+// Stream#Writer@base16(lineLen? as Number):[singleLine] {block?}
+Gurax_DeclareMethodAlias(Stream, Writer_at_base16, "Writer@base16")
+{
+	Declare(VTYPE_Stream, Flag::None);
+	DeclareArg("lineLen", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(singleLine));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Creates a writable `Stream` instance that encodes written data into base-n format.
+The result is emitted to the stream `dst`.
+
+In default, output characters are folded by the length specified by `lineLen`.
+If the argument is omitted, pre-defined length 76 is applied.
+
+Specifying the attribute `:singleLine` puts the result in a single line without folding.
+)""");
+}
+
+Gurax_ImplementMethod(Stream, Writer_at_base16)
+{
+	const Info& info = Info::Base16;
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Stream& stream = valueThis.GetStream();
+	// Arguments
+	ArgPicker args(argument);
+	size_t nCharsPerLine = args.IsValid()? args.PickNumberNonNeg<size_t>() : info.nCharsPerLineDefault;
+	if (Error::IsIssued()) return Value::nil();
+	bool singleLineFlag = argument.IsSet(Gurax_Symbol(singleLine));
+	// Function body
+	RefPtr<Stream> pStream(new Stream_Writer(stream.Reference(), singleLineFlag? 0 : nCharsPerLine, info));
 	return argument.ReturnValue(processor, new Value_Stream(pStream.release()));
 }
 
@@ -270,8 +408,15 @@ Gurax_ModulePrepare()
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Decode));
 	Assign(Gurax_CreateFunction(Encode));
-	Assign(Gurax_CreateFunction(Reader));
-	Assign(Gurax_CreateFunction(Writer));
+	// Assignment of method
+	VTYPE_Stream.Assign(Gurax_CreateMethod(Stream, Reader_at_base64));
+	VTYPE_Stream.Assign(Gurax_CreateMethod(Stream, Writer_at_base64));
+	VTYPE_Stream.Assign(Gurax_CreateMethod(Stream, Reader_at_base32));
+	VTYPE_Stream.Assign(Gurax_CreateMethod(Stream, Writer_at_base32));
+	VTYPE_Stream.Assign(Gurax_CreateMethod(Stream, Reader_at_base32hex));
+	VTYPE_Stream.Assign(Gurax_CreateMethod(Stream, Writer_at_base32hex));
+	VTYPE_Stream.Assign(Gurax_CreateMethod(Stream, Reader_at_base16));
+	VTYPE_Stream.Assign(Gurax_CreateMethod(Stream, Writer_at_base16));
 	// Assignment of suffix manager
 	Gurax_AssignSuffixMgr(Binary, base16);
 	Gurax_AssignSuffixMgr(Binary, base32);

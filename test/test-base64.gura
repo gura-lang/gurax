@@ -63,7 +63,7 @@ TestCase('base64.Encode() and base64.Decode()') {
 	}
 }
 
-TestCase('base64.Writer() and base64.Reader()') {
+TestCase('Stream#Writer@base64() and Stream#Reader@base64()') {
 	buffSrcTbl = [
 		b''
 		b'f'
@@ -84,32 +84,32 @@ TestCase('base64.Writer() and base64.Reader()') {
 	Println('[Base16]')
 	buffSrcTbl.Each {|buffSrc|
 		buffEnc = Binary(), buffDec = Binary()
-		(base64.Writer(buffEnc):base16:singleLine).Write(buffSrc)
-		buffDec = (base64.Reader(buffEnc):base16).Read()
+		buffEnc.Writer().Writer@base16():singleLine.Write(buffSrc)
+		buffDec = buffEnc.Reader().Reader@base16().Read()
 		PrintBuff(buffSrc, buffEnc, buffDec)
 	}
 	PrintSep()
 	Println('[Base32]')
 	buffSrcTbl.Each {|buffSrc|
 		buffEnc = Binary(), buffDec = Binary()
-		(base64.Writer(buffEnc):base32:singleLine).Write(buffSrc)
-		buffDec = (base64.Reader(buffEnc):base32).Read()
+		buffEnc.Writer().Writer@base32():singleLine.Write(buffSrc)
+		buffDec = buffEnc.Reader().Reader@base32().Read()
 		PrintBuff(buffSrc, buffEnc, buffDec)
 	}
 	PrintSep()
 	Println('[Base32hex]')
 	buffSrcTbl.Each {|buffSrc|
 		buffEnc = Binary(), buffDec = Binary()
-		(base64.Writer(buffEnc):base32hex:singleLine).Write(buffSrc)
-		buffDec = (base64.Reader(buffEnc):base32hex).Read()
+		buffEnc.Writer().Writer@base32hex():singleLine.Write(buffSrc)
+		buffDec = buffEnc.Reader().Reader@base32hex().Read()
 		PrintBuff(buffSrc, buffEnc, buffDec)
 	}
 	PrintSep()
 	Println('[Base64]')
 	buffSrcTbl.Each {|buffSrc|
 		buffEnc = Binary(), buffDec = Binary()
-		(base64.Writer(buffEnc):base64:singleLine).Write(buffSrc)
-		buffDec = (base64.Reader(buffEnc):base64).Read()
+		buffEnc.Writer().Writer@base64():singleLine.Write(buffSrc)
+		buffDec = buffEnc.Reader().Reader@base64().Read()
 		PrintBuff(buffSrc, buffEnc, buffDec)
 	}
 }
