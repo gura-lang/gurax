@@ -191,6 +191,7 @@ private:
 	SetType _set;
 public:
 	SetType& GetSet() { return _set; }
+	bool IsEmpty() const { return _set.empty(); }
 	const SetType& GetSet() const { return _set; }
 	void Set(const Symbol* pSymbol) { _set.insert(pSymbol); }
 	bool IsSet(const Symbol* pSymbol) const { return _set.find(pSymbol) != _set.end(); }

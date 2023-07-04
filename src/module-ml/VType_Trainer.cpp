@@ -59,10 +59,11 @@ Gurax_ImplementConstructor(Trainer)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// Trainer#EachNode() {block?}
+// Trainer#EachNode(type* as Symbol) {block?}
 Gurax_DeclareMethod(Trainer, EachNode)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
+	DeclareArg("type", VTYPE_Symbol, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
@@ -73,8 +74,13 @@ Gurax_ImplementMethod(Trainer, EachNode)
 {
 	// Target
 	Trainer& trainer = GetValueThis(argument).GetTrainer();
+	// Arguments
+	ArgPicker args(argument);
+	const ValueList& values = args.PickList();
 	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_Node(trainer.GetNodeOwner().Reference()));
+	SymbolSet symbolsType;
+	for (const Value* pValue : values) symbolsType.Set(Value_Symbol::GetSymbol(*pValue));\
+	RefPtr<Iterator> pIterator(new Iterator_Node(trainer.GetNodeOwner().Reference(), std::move(symbolsType)));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 

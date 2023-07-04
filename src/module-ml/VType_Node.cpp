@@ -78,10 +78,13 @@ Value* Value_Node::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, b
 Value* Iterator_Node::DoNextValue()
 {
 	const NodeOwner& nodeOwner = GetNodeOwner();
-	if (_idx >= nodeOwner.size()) return nullptr;
-	RefPtr<Value> pValue(new Value_Node(nodeOwner[_idx]->Reference()));
-	_idx++;
-	return pValue.release();
+	for ( ; _idx < nodeOwner.size(); _idx++) {
+		const Node* pNode = nodeOwner[_idx];
+		if (_symbolsType.IsEmpty() || _symbolsType.IsSet(pNode->GetTypeSymbol())) {
+			return new Value_Node(pNode->Reference());
+		}
+	}
+	return nullptr;
 }
 
 String Iterator_Node::ToString(const StringStyle& ss) const

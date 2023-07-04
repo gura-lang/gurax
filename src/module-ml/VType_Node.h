@@ -89,8 +89,9 @@ public:
 private:
 	RefPtr<NodeOwner> _pNodeOwner;
 	size_t _idx;
+	SymbolSet _symbolsType;
 public:
-	Iterator_Node(NodeOwner* pNodeOwner) : _pNodeOwner(pNodeOwner), _idx(0) {}
+	Iterator_Node(NodeOwner* pNodeOwner, SymbolSet symbolsType) : _pNodeOwner(pNodeOwner), _idx(0), _symbolsType(symbolsType) {}
 public:
 	NodeOwner& GetNodeOwner() { return *_pNodeOwner; }
 	const NodeOwner& GetNodeOwner() const { return *_pNodeOwner; }
