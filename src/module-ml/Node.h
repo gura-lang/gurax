@@ -195,9 +195,11 @@ public:
 //------------------------------------------------------------------------------
 class Node_Input : public Node_SingleOut {
 protected:
+	const Symbol* _pSymbol;
 	RefPtr<Array> _pArray;	// maybe nullptr
 public:
-	Node_Input() {}
+	Node_Input(const Symbol* pSymbol) : _pSymbol(pSymbol) {}
+	const Symbol* GetSymbol() const { return _pSymbol; }
 	void SetArray(Array* pArray) { _pArray.reset(pArray); }
 	const Array& GetArray() const { return *_pArray; }
 	virtual const Symbol* GetTypeSymbol() const override { return Gurax_Symbol(input); }

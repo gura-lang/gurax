@@ -193,7 +193,7 @@ Node* Trainer::CreateNode(const Expr& expr)
 		RefPtr<Node> pNode;
 		int idx = _symbolsInput.WhereExist(pSymbol);
 		if (idx >= 0) {
-			RefPtr<Node_Input> pNodeInput(new Node_Input());
+			RefPtr<Node_Input> pNodeInput(new Node_Input(pSymbol));
 			_nodesInput[idx] = pNodeInput.get();
 			pNode.reset(pNodeInput.release());
 		} else {

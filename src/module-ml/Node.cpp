@@ -231,11 +231,18 @@ bool Node_Input::EvalBackward(Processor& processor)
 
 bool Node_Input::GatherMemberSymbol(SymbolList& symbols) const
 {
+	symbols.push_back(Gurax_Symbol(symbol));
+	symbols.push_back(Gurax_Symbol(name));
 	return Node_SingleOut::GatherMemberSymbol(symbols);
 }
 
 Value* Node_Input::DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const
 {
+	if (pSymbol->IsIdentical(Gurax_Symbol(symbol))) {
+		return new Value_Symbol(GetSymbol());
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(name))) {
+		return new Value_String(GetSymbol()->GetName());
+	}
 	return Node_SingleOut::DoGetProperty(pSymbol, attr);
 }
 

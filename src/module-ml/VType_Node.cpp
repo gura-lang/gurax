@@ -78,8 +78,8 @@ Value* Value_Node::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, b
 Value* Iterator_Node::DoNextValue()
 {
 	const NodeOwner& nodeOwner = GetNodeOwner();
-	for ( ; _idx < nodeOwner.size(); _idx++) {
-		const Node* pNode = nodeOwner[_idx];
+	while (_idx < nodeOwner.size()) {
+		const Node* pNode = nodeOwner[_idx++];
 		if (_symbolsType.IsEmpty() || _symbolsType.IsSet(pNode->GetTypeSymbol())) {
 			return new Value_Node(pNode->Reference());
 		}

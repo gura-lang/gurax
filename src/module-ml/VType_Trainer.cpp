@@ -79,7 +79,7 @@ Gurax_ImplementMethod(Trainer, EachNode)
 	const ValueList& values = args.PickList();
 	// Function body
 	SymbolSet symbolsType;
-	for (const Value* pValue : values) symbolsType.Set(Value_Symbol::GetSymbol(*pValue));\
+	for (const Value* pValue : values) symbolsType.Set(Value_Symbol::GetSymbol(*pValue));
 	RefPtr<Iterator> pIterator(new Iterator_Node(trainer.GetNodeOwner().Reference(), std::move(symbolsType)));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
