@@ -5,6 +5,7 @@
 #define GURAX_MODULE_ML_NODE_H
 #include <gurax.h>
 #include "Optimizers.h"
+#include "Symbols.h"
 
 Gurax_BeginModuleScope(ml)
 
@@ -70,7 +71,8 @@ public:
 	Array& GetArrayFwd() { return *_pArrayFwd; }
 	const Array& GetArrayFwd() const { return *_pArrayFwd; }
 	RefPtr<Array>& GetArrayFwdRefPtr() { return _pArrayFwd; }
-	virtual String GetTypeName() const = 0;
+	const char* GetTypeName() const { return GetTypeSymbol()->GetName(); }
+	virtual const Symbol* GetTypeSymbol() const = 0;
 	virtual bool IsInput() const { return false; }
 	virtual bool IsBottom() const { return false; }
 	virtual bool IsUnary() const { return false; }
@@ -132,7 +134,7 @@ protected:
 	ConnectorList _connectorsDst;
 public:
 	Node_Branch() {}
-	virtual String GetTypeName() const override;
+	virtual const Symbol* GetTypeSymbol() const override { return Gurax_Symbol(branch); }
 	virtual bool EvalForward(Processor& processor) override;
 	virtual bool EvalBackward(Processor& processor) override;
 	virtual void Connect(Connector& connectorDst) override;
@@ -164,7 +166,7 @@ protected:
 public:
 	Node_Variable(Expr* pExpr, const Optimizer& optimizer) : Node_Expr(pExpr), _pOptimizerInst(optimizer.CreateInstance()) {}
 	virtual bool IsVulnerable() const override { return true; }
-	virtual String GetTypeName() const override { return "Variable"; }
+	virtual const Symbol* GetTypeSymbol() const override { return Gurax_Symbol(variable); }
 	virtual void Reset() override;
 	virtual bool EvalBackward(Processor& processor) override;
 	virtual String ToString(const StringStyle& ss) const;
@@ -177,7 +179,7 @@ class Node_Const : public Node_Expr {
 public:
 	Node_Const(Expr* pExpr) : Node_Expr(pExpr) {}
 	virtual bool IsVulnerable() const { return false; }
-	virtual String GetTypeName() const override { return "Const"; }
+	virtual const Symbol* GetTypeSymbol() const override { return Gurax_Symbol(const_); }
 	virtual bool EvalBackward(Processor& processor) override { return true; }
 	virtual String ToString(const StringStyle& ss) const;
 };
@@ -192,7 +194,7 @@ public:
 	Node_Input() {}
 	void SetArray(Array* pArray) { _pArray.reset(pArray); }
 	const Array& GetArray() const { return *_pArray; }
-	virtual String GetTypeName() const override { return "Input"; }
+	virtual const Symbol* GetTypeSymbol() const override { return Gurax_Symbol(input); }
 	virtual bool IsInput() const { return true; }
 	virtual void Reset();
 	virtual bool IsVulnerable() const;
@@ -222,7 +224,7 @@ public:
 	const Connector& GetConnectorSrc() const { return _connectorSrc; }
 	Array& GetArrayCorrect() { return *_pArrayCorrect; }
 	const Array& GetArrayCorrect() const { return *_pArrayCorrect; }
-	virtual String GetTypeName() const override { return "Bottom"; }
+	virtual const Symbol* GetTypeSymbol() const override { return Gurax_Symbol(bottom); }
 	virtual bool IsBottom() const { return true; }
 	virtual bool IsVulnerable() const;
 	virtual bool EvalForward(Processor& processor) override;
@@ -258,7 +260,7 @@ public:
 class Node_Neg : public Node_Unary {
 public:
 	Node_Neg() {}
-	virtual String GetTypeName() const override { return "Neg"; }
+	virtual const Symbol* GetTypeSymbol() const override { return Gurax_Symbol(neg); }
 	virtual bool EvalForward(Processor& processor) override;
 	virtual bool EvalBackward(Processor& processor) override;
 };
@@ -290,7 +292,7 @@ public:
 class Node_Add : public Node_Binary {
 public:
 	Node_Add() {}
-	virtual String GetTypeName() const override { return "Add"; }
+	virtual const Symbol* GetTypeSymbol() const override { return Gurax_Symbol(add); }
 	virtual bool EvalForward(Processor& processor) override;
 	virtual bool EvalBackward(Processor& processor) override;
 };
@@ -301,7 +303,7 @@ public:
 class Node_Sub : public Node_Binary {
 public:
 	Node_Sub() {}
-	virtual String GetTypeName() const override { return "Sub"; }
+	virtual const Symbol* GetTypeSymbol() const override { return Gurax_Symbol(sub); }
 	virtual bool EvalForward(Processor& processor) override;
 	virtual bool EvalBackward(Processor& processor) override;
 };
@@ -312,7 +314,7 @@ public:
 class Node_Mul : public Node_Binary {
 public:
 	Node_Mul() {}
-	virtual String GetTypeName() const override { return "Mul"; }
+	virtual const Symbol* GetTypeSymbol() const override { return Gurax_Symbol(mul); }
 	virtual bool EvalForward(Processor& processor) override;
 	virtual bool EvalBackward(Processor& processor) override;
 };
@@ -323,7 +325,7 @@ public:
 class Node_Div : public Node_Binary {
 public:
 	Node_Div() {}
-	virtual String GetTypeName() const override { return "Div"; }
+	virtual const Symbol* GetTypeSymbol() const override { return Gurax_Symbol(div); }
 	virtual bool EvalForward(Processor& processor) override;
 	virtual bool EvalBackward(Processor& processor) override;
 };
@@ -336,7 +338,7 @@ private:
 	RefPtr<Array> _pArrayWork;
 public:
 	Node_Pow() {}
-	virtual String GetTypeName() const override { return "Pow"; }
+	virtual const Symbol* GetTypeSymbol() const override { return Gurax_Symbol(pow); }
 	virtual bool EvalForward(Processor& processor) override;
 	virtual bool EvalBackward(Processor& processor) override;
 };
@@ -350,7 +352,7 @@ private:
 	RefPtr<Array> _pArrayFwdRightTrans;
 public:
 	Node_Dot() {}
-	virtual String GetTypeName() const override { return "Dot"; }
+	virtual const Symbol* GetTypeSymbol() const override { return Gurax_Symbol(dot); }
 	virtual bool EvalForward(Processor& processor) override;
 	virtual bool EvalBackward(Processor& processor) override;
 };
@@ -365,10 +367,8 @@ private:
 	RefPtr<Gear> _pGear;
 public:
 	Node_Gear(Optimizer* pOptimizer, Expr* pExprRight) : _pOptimizer(pOptimizer), _pExprRight(pExprRight) {}
+	virtual const Symbol* GetTypeSymbol() const override { return Gurax_Symbol(gear); }
 	const Optimizer& GetOptimizer() const { return *_pOptimizer; }
-	virtual String GetTypeName() const override {
-		return String().Format("Gear:%s", _pGear? _pGear->GetName() : "nil");
-	}
 	virtual bool IsVulnerable() const override;
 	virtual bool EvalForward(Processor& processor) override;
 	virtual bool EvalBackward(Processor& processor) override;

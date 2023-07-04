@@ -23,6 +23,8 @@ Value* Node::DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const
 {
 	if (pSymbol->IsIdentical(Gurax_Symbol(output))) {
 		return GetArrayFwd().ToValue();
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(type))) {
+		return new Value_Symbol(GetTypeSymbol());
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(typeName))) {
 		return new Value_String(GetTypeName());
 	}
@@ -167,6 +169,9 @@ bool Node_Expr::GatherMemberSymbol(SymbolList& symbols) const
 
 Value* Node_Expr::DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const
 {
+	if (pSymbol->IsIdentical(Gurax_Symbol(expr))) {
+		return new Value_Expr(_pExpr->Reference());
+	}
 	return Node_SingleOut::DoGetProperty(pSymbol, attr);
 }
 
@@ -190,7 +195,7 @@ bool Node_Variable::EvalBackward(Processor& processor)
 
 String Node_Variable::ToString(const StringStyle& ss) const
 {
-	return String().Format("%s(%s):%s", GetTypeName().c_str(), GetExpr().ToString().c_str());
+	return String().Format("%s(%s):%s", GetTypeName(), GetExpr().ToString().c_str());
 }
 
 //-----------------------------------------------------------------------------
@@ -198,7 +203,7 @@ String Node_Variable::ToString(const StringStyle& ss) const
 //-----------------------------------------------------------------------------
 String Node_Const::ToString(const StringStyle& ss) const
 {
-	return String().Format("%s(%s):%s", GetTypeName().c_str(), GetExpr().ToString().c_str());
+	return String().Format("%s(%s):%s", GetTypeName(), GetExpr().ToString().c_str());
 }
 
 //-----------------------------------------------------------------------------
@@ -236,7 +241,7 @@ Value* Node_Input::DoGetProperty(const Symbol* pSymbol, const Attribute& attr) c
 
 String Node_Input::ToString(const StringStyle& ss) const
 {
-	return String().Format("%s:%s", GetTypeName().c_str(), GetArray().GetDimSizes().ToString(ss, ss.GetComma()).c_str());
+	return String().Format("%s:%s", GetTypeName(), GetArray().GetDimSizes().ToString(ss, ss.GetComma()).c_str());
 }
 
 void Node_Input::Print(Stream& stream, int indentLevel) const

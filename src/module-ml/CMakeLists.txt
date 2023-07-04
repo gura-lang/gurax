@@ -37,6 +37,7 @@ target_compile_definitions(ml.gurd PRIVATE GURAX_MODULE_SEPARATED
 target_sources(ml.gurd PRIVATE
 	module-ml.cpp
 	Util.cpp
+	Symbols.cpp
 	Trainer.cpp
 	Node.cpp
 	NodeMap.cpp
