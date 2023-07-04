@@ -195,7 +195,7 @@ public:
 //------------------------------------------------------------------------------
 class Node_Input : public Node_SingleOut {
 protected:
-	RefPtr<Array> _pArray;
+	RefPtr<Array> _pArray;	// maybe nullptr
 public:
 	Node_Input() {}
 	void SetArray(Array* pArray) { _pArray.reset(pArray); }

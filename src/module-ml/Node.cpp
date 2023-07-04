@@ -195,7 +195,7 @@ bool Node_Variable::EvalBackward(Processor& processor)
 
 String Node_Variable::ToString(const StringStyle& ss) const
 {
-	return String().Format("%s(%s):%s", GetTypeName(), GetExpr().ToString().c_str());
+	return String().Format("%s:%s", GetTypeName(), GetExpr().ToString().c_str());
 }
 
 //-----------------------------------------------------------------------------
@@ -203,7 +203,7 @@ String Node_Variable::ToString(const StringStyle& ss) const
 //-----------------------------------------------------------------------------
 String Node_Const::ToString(const StringStyle& ss) const
 {
-	return String().Format("%s(%s):%s", GetTypeName(), GetExpr().ToString().c_str());
+	return String().Format("%s:%s", GetTypeName(), GetExpr().ToString().c_str());
 }
 
 //-----------------------------------------------------------------------------
@@ -241,7 +241,7 @@ Value* Node_Input::DoGetProperty(const Symbol* pSymbol, const Attribute& attr) c
 
 String Node_Input::ToString(const StringStyle& ss) const
 {
-	return String().Format("%s:%s", GetTypeName(), GetArray().GetDimSizes().ToString(ss, ss.GetComma()).c_str());
+	return String().Format("%s:%s", GetTypeName(), _pArray? _pArray->GetDimSizes().ToString(ss, ss.GetComma()).c_str() : "null");
 }
 
 void Node_Input::Print(Stream& stream, int indentLevel) const
