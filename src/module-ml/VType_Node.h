@@ -79,6 +79,29 @@ public:
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag);
 };
 
+//------------------------------------------------------------------------------
+// Iterator_Node
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_Node : public Iterator {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Iterator_Node");
+private:
+	RefPtr<NodeOwner> _pNodeOwner;
+	size_t _idx;
+public:
+	Iterator_Node(NodeOwner* pNodeOwner) : _pNodeOwner(pNodeOwner), _idx(0) {}
+public:
+	NodeOwner& GetNodeOwner() { return *_pNodeOwner; }
+	const NodeOwner& GetNodeOwner() const { return *_pNodeOwner; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+	virtual size_t GetLength() const override { return GetNodeOwner().size(); }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
 Gurax_EndModuleScope(ml)
 
 #endif

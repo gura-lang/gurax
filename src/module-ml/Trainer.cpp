@@ -47,7 +47,7 @@ template<> Double CalcCrossEntropyError_T<Half>(const Array& arrayFwdOut, const 
 
 Trainer::Trainer(Expr* pExprModel, SymbolList symbolsInput, Optimizer* pOptimizer) :
 		_pExprModel(pExprModel), _symbolsInput(symbolsInput), _pOptimizer(pOptimizer),
-		_pNodeBottom(new Node_Bottom()), _pNodeMap(new NodeMap())
+		_pNodeBottom(new Node_Bottom()), _pNodeOwner(new NodeOwner()), _pNodeMap(new NodeMap())
 {
 }
 
@@ -128,7 +128,7 @@ void Trainer::Print(Stream& stream) const
 	GetNodeBottom().Print(stream, 0);
 	stream.Println();
 	size_t i = 0;
-	for (const Node* pNode : _nodeOwner) {
+	for (const Node* pNode : GetNodeOwner()) {
 		stream.Printf("#%d %s\n", i, pNode->ToString().c_str());
 		i++;
 	}
@@ -148,10 +148,10 @@ Node* Trainer::CreateNode(const Expr& expr)
 		for ( ; pExprEach->GetExprNext(); pExprEach = pExprEach->GetExprNext()) {
 			RefPtr<Node> pNode(CreateNode(*pExprEach));
 			if (!pNode) return nullptr;
-			_nodeOwner.push_back(pNode.release());
+			_pNodeOwner->push_back(pNode.release());
 		}
 		RefPtr<Node> pNode(CreateNode(*pExprEach));
-		_nodeOwner.push_back(pNode.Reference());
+		_pNodeOwner->push_back(pNode.Reference());
 		return pNode.release();
 	} else if (expr.IsType<Expr_Assign>()) {
 		const Expr_Assign& exprEx = dynamic_cast<const Expr_Assign&>(expr);
@@ -175,13 +175,13 @@ Node* Trainer::CreateNode(const Expr& expr)
 	} else if (expr.IsType<Expr_UnaryOp>()) {
 		const Expr_UnaryOp& exprEx = dynamic_cast<const Expr_UnaryOp&>(expr);
 		RefPtr<Node> pNode(CreateNodeUnary(exprEx));
-		_nodeOwner.push_back(pNode.Reference());
+		_pNodeOwner->push_back(pNode.Reference());
 		return pNode.release();
 	} else if (expr.IsType<Expr_BinaryOp>()) {
 		const Expr_BinaryOp& exprEx = dynamic_cast<const Expr_BinaryOp&>(expr);
 		RefPtr<Node> pNode(exprEx.GetOperator()->IsType(OpType::Gear)?
 			CreateNodeGear(exprEx) : CreateNodeBinary(exprEx));
-		_nodeOwner.push_back(pNode.Reference());
+		_pNodeOwner->push_back(pNode.Reference());
 		return pNode.release();
 	} else if (expr.IsType<Expr_Identifier>()) {
 		const Expr_Identifier& exprEx = dynamic_cast<const Expr_Identifier&>(expr);
@@ -199,20 +199,20 @@ Node* Trainer::CreateNode(const Expr& expr)
 		} else {
 			pNode.reset(new Node_Variable(pExpr.release(), GetOptimizer()));
 		}
-		_nodeOwner.push_back(pNode.Reference());
+		_pNodeOwner->push_back(pNode.Reference());
 		_pNodeMap->AddNode(pSymbol, pNode.Reference());
 		return pNode.release();
 	} else if (expr.IsType<Expr_Value>()) {
 		RefPtr<Expr> pExpr(expr.Reference());
 		if (!pExpr->PrepareAndCompose(_composer)) return nullptr;
 		RefPtr<Node> pNode(new Node_Const(pExpr.release()));
-		_nodeOwner.push_back(pNode.Reference());
+		_pNodeOwner->push_back(pNode.Reference());
 		return pNode.release();
 	} else {
 		RefPtr<Expr> pExpr(expr.Reference());
 		if (!pExpr->PrepareAndCompose(_composer)) return nullptr;
 		RefPtr<Node> pNode(new Node_Variable(pExpr.release(), GetOptimizer()));
-		_nodeOwner.push_back(pNode.Reference());
+		_pNodeOwner->push_back(pNode.Reference());
 		return pNode.release();
 	}
 
@@ -234,7 +234,7 @@ Node* Trainer::CreateNodeUnary(const Expr_UnaryOp& exprEx)
 	RefPtr<Node> pNodeChild(CreateNode(exprEx.GetExprChild()));
 	if (!pNodeChild) return nullptr;
 	pNodeChild->Connect(pNode->GetConnectorSrc());
-	//_nodeOwner.push_back(pNodeChild.release());
+	//_pNodeOwner->push_back(pNodeChild.release());
 	return pNode.release();
 }
 
@@ -275,7 +275,7 @@ Node* Trainer::CreateNodeGear(const Expr_BinaryOp& exprEx)
 	RefPtr<Node> pNodeChild(CreateNode(exprEx.GetExprLeft()));
 	if (!pNodeChild) return nullptr;
 	pNodeChild->Connect(pNode->GetConnectorSrc());
-	//_nodeOwner.push_back(pNodeChild.release());
+	//_pNodeOwner->push_back(pNodeChild.release());
 	return pNode.release();
 }
 

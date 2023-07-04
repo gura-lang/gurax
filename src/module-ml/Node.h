@@ -106,9 +106,15 @@ public:
 //------------------------------------------------------------------------------
 // NodeOwner
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE NodeOwner : public NodeList {
+class GURAX_DLLDECLARE NodeOwner : public NodeList, public Referable {
 public:
+	// Referable declaration
+	Gurax_DeclareReferable(NodeOwner);
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("NodeOwner");
+protected:
 	~NodeOwner() { Clear(); }
+public:
 	void Clear();
 };
 

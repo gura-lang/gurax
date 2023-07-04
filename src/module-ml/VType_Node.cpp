@@ -72,4 +72,21 @@ Value* Value_Node::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, b
 	return Value::DoGetProperty(pSymbol, attr, notFoundErrorFlag);
 }
 
+//------------------------------------------------------------------------------
+// Iterator_Node
+//------------------------------------------------------------------------------
+Value* Iterator_Node::DoNextValue()
+{
+	const NodeOwner& nodeOwner = GetNodeOwner();
+	if (_idx >= nodeOwner.size()) return nullptr;
+	RefPtr<Value> pValue(new Value_Node(nodeOwner[_idx]->Reference()));
+	_idx++;
+	return pValue.release();
+}
+
+String Iterator_Node::ToString(const StringStyle& ss) const
+{
+	return String().Format("Node:n=%zu", GetNodeOwner().size());
+}
+
 Gurax_EndModuleScope(ml)

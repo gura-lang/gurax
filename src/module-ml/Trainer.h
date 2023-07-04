@@ -25,7 +25,7 @@ public:
 	SymbolList _symbolsInput;
 	RefPtr<Optimizer> _pOptimizer;
 	RefPtr<Node_Bottom> _pNodeBottom;
-	NodeOwner _nodeOwner;
+	RefPtr<NodeOwner> _pNodeOwner;
 	RefPtr<NodeMap> _pNodeMap;
 	NodeList_Input _nodesInput;
 public:
@@ -50,8 +50,8 @@ public:
 	Double CalcCrossEntropyError(const Array& arrayCorrect, Double epsilon) const;
 	Node_Bottom& GetNodeBottom() { return *_pNodeBottom; }
 	const Node_Bottom& GetNodeBottom() const { return *_pNodeBottom; }
-	NodeOwner& GetNodeOwner() { return _nodeOwner; }
-	const NodeOwner& GetNodeOwner() const { return _nodeOwner; }
+	NodeOwner& GetNodeOwner() { return *_pNodeOwner; }
+	const NodeOwner& GetNodeOwner() const { return *_pNodeOwner; }
 	const Expr& GetExprModel() const { return *_pExprModel; }
 	const Optimizer& GetOptimizer() const { return *_pOptimizer; }
 	const NodeMap& GetNodeMap() const { return *_pNodeMap; }
