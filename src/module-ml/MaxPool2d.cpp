@@ -129,12 +129,21 @@ bool MaxPool2d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, 
 
 bool MaxPool2d::Serialize(Stream& stream) const
 {
+	if (!stream.SerializePackedNumber<size_t>(_nRowsKernel)) return false;
+	if (!stream.SerializePackedNumber<size_t>(_nColsKernel)) return false;
+	if (!stream.SerializePackedNumber<size_t>(_strideRow)) return false;
+	if (!stream.SerializePackedNumber<size_t>(_strideCol)) return false;
 	return false;
 }
 
 MaxPool2d* MaxPool2d::Deserialize(Stream& stream)
 {
-	return nullptr;
+	size_t nRowsKernel, nColsKernel, strideRow, strideCol;
+	if (!stream.DeserializePackedNumber<size_t>(nRowsKernel)) return nullptr;
+	if (!stream.DeserializePackedNumber<size_t>(nColsKernel)) return nullptr;
+	if (!stream.DeserializePackedNumber<size_t>(strideRow)) return nullptr;
+	if (!stream.DeserializePackedNumber<size_t>(strideCol)) return nullptr;
+	return new MaxPool2d(nRowsKernel, nColsKernel, strideRow, strideCol);
 }
 
 String MaxPool2d::ToString(const StringStyle& ss) const

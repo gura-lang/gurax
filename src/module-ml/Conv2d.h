@@ -18,9 +18,10 @@ public:
 	Gurax_MemoryPoolAllocator("ml.Conv2d");
 private:
 	RefPtr<Array> _pArrayFilter;
-	RefPtr<Array> _pArrayFilterGrad;
 	size_t _stride;
 	size_t _padding;
+private:
+	RefPtr<Array> _pArrayFilterGrad;
 	RefPtr<Array> _pArrayFwdInSaved;
 	RefPtr<Array> _pArrayFwdOutSaved;
 	RefPtr<Array> _pArrayFwd1, _pArrayFwd2, _pArrayFwd3, _pArrayFwd4, _pArrayFwd5;

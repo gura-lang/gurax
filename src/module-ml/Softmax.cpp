@@ -149,12 +149,15 @@ bool Softmax::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bo
 
 bool Softmax::Serialize(Stream& stream) const
 {
-	return false;
+	if (!stream.SerializeNumber<int>(_axis)) return false;
+	return true;
 }
 
 Softmax* Softmax::Deserialize(Stream& stream)
 {
-	return nullptr;
+	int axis;
+	if (!stream.DeserializeNumber<int>(axis)) return false;
+	return new Softmax(axis);
 }
 
 String Softmax::ToString(const StringStyle& ss) const

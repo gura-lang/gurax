@@ -95,12 +95,13 @@ bool Sigmoid::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bo
 
 bool Sigmoid::Serialize(Stream& stream) const
 {
-	return false;
+	// nothing to do
+	return true;
 }
 
 Sigmoid* Sigmoid::Deserialize(Stream& stream)
 {
-	return nullptr;
+	return new Sigmoid();
 }
 
 String Sigmoid::ToString(const StringStyle& ss) const

@@ -18,6 +18,7 @@ public:
 	Gurax_MemoryPoolAllocator("ml.Softmax");
 private:
 	int _axis;
+private:
 	RefPtr<Array> _pArrayFwdOutSaved;
 public:
 	// Constructor

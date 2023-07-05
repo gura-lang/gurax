@@ -56,12 +56,13 @@ bool ReLU::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bool 
 
 bool ReLU::Serialize(Stream& stream) const
 {
-	return false;
+	// nothing to do
+	return true;
 }
 
 ReLU* ReLU::Deserialize(Stream& stream)
 {
-	return nullptr;
+	return new ReLU();
 }
 
 String ReLU::ToString(const StringStyle& ss) const

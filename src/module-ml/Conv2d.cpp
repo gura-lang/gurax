@@ -104,12 +104,20 @@ String Conv2d::ToString(const StringStyle& ss) const
 
 bool Conv2d::Serialize(Stream& stream) const
 {
-	return false;
+	if (!_pArrayFilter->Serialize(stream)) return false;
+	if (!stream.SerializePackedNumber<size_t>(_stride)) return false;
+	if (!stream.SerializePackedNumber<size_t>(_padding)) return false;
+	return true;
 }
 
 Conv2d* Conv2d::Deserialize(Stream& stream)
 {
-	return nullptr;
+	size_t stride, padding;
+	RefPtr<Array> pArrayFilter(Array::Deserialize(stream));
+	if (!pArrayFilter) return nullptr;
+	if (!stream.DeserializePackedNumber<size_t>(stride)) return nullptr;
+	if (!stream.DeserializePackedNumber<size_t>(padding)) return nullptr;
+	return new Conv2d(pArrayFilter.release(), stride, padding);
 }
 
 //------------------------------------------------------------------------------

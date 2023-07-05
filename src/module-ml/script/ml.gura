@@ -2,3 +2,27 @@
 import(gzip)
 import(ml):binary {*}
 
+Trainer.WriteProduct(moduleName as String) = {
+	out = Open(moduleName + '.gura', 'w')
+	eR'''
+	#!/usr/bin/env gurax
+	import(ml)
+	import(gzip)
+
+	Eval(${(this.EachNode(`input):*name + ' as Array').Join(', ')}) = {
+		${if (this.model.type == `Block)}
+		${this.model.EachElem():*__str__() + '\n'}
+		${else}
+		${this.model}
+		${end}
+	}
+	'''.Render(out)
+	this.EachNode(`variable) {|node|
+		if (node.expr.type == `Identifier) {
+			out.Println()
+			out.Printf("%s = b'''\n", node.expr.symbol)
+			out.Writer@base64().Writer@gzip().Serialize(node.output)
+			out.Printf("'''base64.Reader().Reader@gzip().Deserialize()\n")
+		}
+	}
+}

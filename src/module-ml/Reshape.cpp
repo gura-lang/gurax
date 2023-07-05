@@ -23,12 +23,14 @@ bool Reshape::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bo
 
 bool Reshape::Serialize(Stream& stream) const
 {
-	return false;
+	if (!_pValuesDimSize->Serialize(stream)) return false;
+	return true;
 }
 
 Reshape* Reshape::Deserialize(Stream& stream)
 {
-	return nullptr;
+	RefPtr<ValueOwner> pValuesDimSize(ValueOwner::Deserialize(stream));
+	return pValuesDimSize? new Reshape(pValuesDimSize.release()) : nullptr;
 }
 
 String Reshape::ToString(const StringStyle& ss) const
