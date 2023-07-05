@@ -9,7 +9,7 @@ Trainer.WriteProduct(moduleName as String) = {
 	import(ml)
 	import(gzip)
 
-	Eval(${(this.EachNode(`input):*name + ' as Array').Join(', ')}) = {
+	Eval(${(this.EachInputSymbol() + ' as Array').Join(', ')}) = {
 		${if (this.model.type == `Block)}
 		${this.model.EachElem():*__str__() + '\n'}
 		${else}
@@ -22,6 +22,14 @@ Trainer.WriteProduct(moduleName as String) = {
 			out.Println()
 			out.Printf("%s = b'''\n", node.expr.symbol)
 			out.Writer@base64().Writer@gzip().Serialize(node.output)
+			out.Printf("'''base64.Reader().Reader@gzip().Deserialize()\n")
+		}
+	}
+	this.EachNode(`gear) {|node|
+		if (node.expr.type == `Identifier) {
+			out.Println()
+			out.Printf("%s = b'''\n", node.expr.symbol)
+			out.Writer@base64().Writer@gzip().Serialize(node.gear)
 			out.Printf("'''base64.Reader().Reader@gzip().Deserialize()\n")
 		}
 	}

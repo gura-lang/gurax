@@ -622,6 +622,7 @@ bool Node_Gear::EvalBackward(Processor& processor)
 bool Node_Gear::GatherMemberSymbol(SymbolList& symbols) const
 {
 	symbols.push_back(Gurax_Symbol(gear));
+	symbols.push_back(Gurax_Symbol(expr));
 	return Node_Unary::GatherMemberSymbol(symbols);
 }
 
@@ -629,6 +630,8 @@ Value* Node_Gear::DoGetProperty(const Symbol* pSymbol, const Attribute& attr) co
 {
 	if (pSymbol->IsIdentical(Gurax_Symbol(gear))) {
 		return _pGear? new Value_Gear(_pGear->Reference()) : Value::nil();
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(expr))) {
+		return new Value_Expr(_pExprRight->Reference());
 	}
 	return Node_Unary::DoGetProperty(pSymbol, attr);
 }

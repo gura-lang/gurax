@@ -92,6 +92,7 @@ bool Trainer::EvalForward(Processor& processor, const ValueList& valuesList)
 	for (auto pValue : valuesList) {
 		const Array& array = Value_Array::GetArray(*pValue);
 		(*ppNodeInput)->SetArray(array.Reference());
+		ppNodeInput++;
 	}
 	return GetNodeOwner().EvalForward(processor) && GetNodeBottom().EvalForward(processor);
 }

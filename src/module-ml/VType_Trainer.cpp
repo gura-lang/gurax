@@ -59,6 +59,25 @@ Gurax_ImplementConstructor(Trainer)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// Trainer#EachInputSymbol() {block?}
+Gurax_DeclareMethod(Trainer, EachInputSymbol)
+{
+	Declare(VTYPE_Iterator, Flag::Map);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementMethod(Trainer, EachInputSymbol)
+{
+	// Target
+	Trainer& trainer = GetValueThis(argument).GetTrainer();
+	// Function body
+	RefPtr<Iterator> pIterator(new Iterator_Symbol(trainer.GetSymbolsInput()));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
 // Trainer#EachNode(type* as Symbol) {block?}
 Gurax_DeclareMethod(Trainer, EachNode)
 {
@@ -346,6 +365,7 @@ void VType_Trainer::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Trainer));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(Trainer, EachInputSymbol));
 	Assign(Gurax_CreateMethod(Trainer, EachNode));
 	Assign(Gurax_CreateMethod(Trainer, Eval));
 	Assign(Gurax_CreateMethod(Trainer, EvalBackward));

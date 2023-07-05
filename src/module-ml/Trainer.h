@@ -56,6 +56,7 @@ public:
 	const Optimizer& GetOptimizer() const { return *_pOptimizer; }
 	const NodeMap& GetNodeMap() const { return *_pNodeMap; }
 	Node* FindNode(const Symbol* pSymbol) const { return _pNodeMap->FindNode(pSymbol); }
+	const SymbolList& GetSymbolsInput() { return  _symbolsInput; }
 	void Print(Stream& stream) const;
 private:
 	Node* CreateNode(const Expr& expr);
