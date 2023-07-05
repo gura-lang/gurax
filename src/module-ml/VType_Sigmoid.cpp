@@ -115,4 +115,15 @@ String Value_Sigmoid::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, GetSigmoid().ToString(ss));
 }
 
+bool Value_Sigmoid::DoSerialize(Stream& stream) const
+{
+	return GetSigmoid().Serialize(stream);
+}
+
+Value* VType_Sigmoid::DoDeserialize(Stream& stream) const
+{
+	RefPtr<Sigmoid> pSigmoid(Sigmoid::Deserialize(stream));
+	return pSigmoid? new Value_Sigmoid(pSigmoid.release()) : nullptr;
+}
+
 Gurax_EndModuleScope(ml)

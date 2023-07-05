@@ -15,8 +15,11 @@ class GURAX_DLLDECLARE VType_Sigmoid : public VType {
 public:
 	static const SerialId serialId = 0x00000100;
 public:
-	using VType::VType;
+	VType_Sigmoid() : VType(serialId) {}
+	explicit VType_Sigmoid(const Symbol* pSymbol) : VType(serialId) {}
+	explicit VType_Sigmoid(const char* name) : VType(name, serialId) {}
 	virtual void DoPrepare(Frame& frameOuter) override;
+	virtual Value* DoDeserialize(Stream& stream) const override;
 };
 
 extern GURAX_DLLDECLARE VType_Sigmoid VTYPE_Sigmoid;
@@ -73,6 +76,7 @@ public:
 			GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
+	virtual bool DoSerialize(Stream& stream) const override;
 };
 
 Gurax_EndModuleScope(ml)

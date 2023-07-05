@@ -134,7 +134,7 @@ void VType_Conv2d::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Conv2d, filterGrad));
 }
 
-//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------c
 // Value_Conv2d
 //------------------------------------------------------------------------------
 VType& Value_Conv2d::vtype = VTYPE_Conv2d;
@@ -142,6 +142,17 @@ VType& Value_Conv2d::vtype = VTYPE_Conv2d;
 String Value_Conv2d::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetConv2d().ToString(ss));
+}
+
+bool Value_Conv2d::DoSerialize(Stream& stream) const
+{
+	return GetConv2d().Serialize(stream);
+}
+
+Value* VType_Conv2d::DoDeserialize(Stream& stream) const
+{
+	RefPtr<Conv2d> pConv2d(Conv2d::Deserialize(stream));
+	return pConv2d? new Value_Conv2d(pConv2d.release()) : nullptr;
 }
 
 Gurax_EndModuleScope(ml)

@@ -54,6 +54,16 @@ bool ReLU::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bool 
 	return true;
 }
 
+bool ReLU::Serialize(Stream& stream) const
+{
+	return false;
+}
+
+ReLU* ReLU::Deserialize(Stream& stream)
+{
+	return nullptr;
+}
+
 String ReLU::ToString(const StringStyle& ss) const
 {
 	return String().Format("ml.ReLU");

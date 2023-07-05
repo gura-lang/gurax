@@ -21,6 +21,16 @@ bool Reshape::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bo
 	return true;
 }
 
+bool Reshape::Serialize(Stream& stream) const
+{
+	return false;
+}
+
+Reshape* Reshape::Deserialize(Stream& stream)
+{
+	return nullptr;
+}
+
 String Reshape::ToString(const StringStyle& ss) const
 {
 	return String().Format("ml.Reshape:%s", _pValuesDimSize->ToString(StringStyle::Cram).c_str());

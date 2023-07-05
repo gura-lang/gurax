@@ -147,6 +147,16 @@ bool Softmax::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bo
 	return true;
 }
 
+bool Softmax::Serialize(Stream& stream) const
+{
+	return false;
+}
+
+Softmax* Softmax::Deserialize(Stream& stream)
+{
+	return nullptr;
+}
+
 String Softmax::ToString(const StringStyle& ss) const
 {
 	return String().Format("ml.Softmax");

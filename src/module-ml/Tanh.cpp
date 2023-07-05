@@ -93,6 +93,16 @@ bool Tanh::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bool 
 	return true;
 }
 
+bool Tanh::Serialize(Stream& stream) const
+{
+	return false;
+}
+
+Tanh* Tanh::Deserialize(Stream& stream)
+{
+	return nullptr;
+}
+
 String Tanh::ToString(const StringStyle& ss) const
 {
 	return String().Format("ml.Tanh");

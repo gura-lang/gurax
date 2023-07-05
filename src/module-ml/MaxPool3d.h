@@ -43,6 +43,9 @@ public:
 	virtual bool EvalForward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array) override;
 	virtual bool EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bool bwdPropagationFlag, const Array& array) override;
 public:
+	bool Serialize(Stream& stream) const;
+	static MaxPool3d* Deserialize(Stream& stream);
+public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const MaxPool3d& other) const { return this == &other; }
 	bool IsEqualTo(const MaxPool3d& other) const { return IsIdentical(other); }

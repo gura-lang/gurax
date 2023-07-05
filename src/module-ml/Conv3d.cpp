@@ -93,6 +93,16 @@ String Conv3d::ToString(const StringStyle& ss) const
 	return String().Format("ml.Conv3d");
 }
 
+bool Conv3d::Serialize(Stream& stream) const
+{
+	return false;
+}
+
+Conv3d* Conv3d::Deserialize(Stream& stream)
+{
+	return nullptr;
+}
+
 //------------------------------------------------------------------------------
 // Conv3dList
 //------------------------------------------------------------------------------

@@ -115,4 +115,15 @@ String Value_Conv1d::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, GetConv1d().ToString(ss));
 }
 
+bool Value_Conv1d::DoSerialize(Stream& stream) const
+{
+	return GetConv1d().Serialize(stream);
+}
+
+Value* VType_Conv1d::DoDeserialize(Stream& stream) const
+{
+	RefPtr<Conv1d> pConv1d(Conv1d::Deserialize(stream));
+	return pConv1d? new Value_Conv1d(pConv1d.release()) : nullptr;
+}
+
 Gurax_EndModuleScope(ml)

@@ -102,6 +102,16 @@ String Conv2d::ToString(const StringStyle& ss) const
 	return String().Format("ml.Conv2d");
 }
 
+bool Conv2d::Serialize(Stream& stream) const
+{
+	return false;
+}
+
+Conv2d* Conv2d::Deserialize(Stream& stream)
+{
+	return nullptr;
+}
+
 //------------------------------------------------------------------------------
 // Conv2dList
 //------------------------------------------------------------------------------

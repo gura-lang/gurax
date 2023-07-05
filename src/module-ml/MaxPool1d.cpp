@@ -132,6 +132,16 @@ String MaxPool1d::ToString(const StringStyle& ss) const
 	return String().Format("ml.MaxPool1d");
 }
 
+bool MaxPool1d::Serialize(Stream& stream) const
+{
+	return false;
+}
+
+MaxPool1d* MaxPool1d::Deserialize(Stream& stream)
+{
+	return nullptr;
+}
+
 //------------------------------------------------------------------------------
 // MaxPool1dList
 //------------------------------------------------------------------------------

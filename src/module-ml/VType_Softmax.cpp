@@ -119,4 +119,15 @@ String Value_Softmax::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, GetSoftmax().ToString(ss));
 }
 
+bool Value_Softmax::DoSerialize(Stream& stream) const
+{
+	return GetSoftmax().Serialize(stream);
+}
+
+Value* VType_Softmax::DoDeserialize(Stream& stream) const
+{
+	RefPtr<Softmax> pSoftmax(Softmax::Deserialize(stream));
+	return pSoftmax? new Value_Softmax(pSoftmax.release()) : nullptr;
+}
+
 Gurax_EndModuleScope(ml)

@@ -122,4 +122,15 @@ String Value_Reshape::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, GetReshape().ToString(ss));
 }
 
+bool Value_Reshape::DoSerialize(Stream& stream) const
+{
+	return GetReshape().Serialize(stream);
+}
+
+Value* VType_Reshape::DoDeserialize(Stream& stream) const
+{
+	RefPtr<Reshape> pReshape(Reshape::Deserialize(stream));
+	return pReshape? new Value_Reshape(pReshape.release()) : nullptr;
+}
+
 Gurax_EndModuleScope(ml)

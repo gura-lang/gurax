@@ -37,6 +37,9 @@ public:
 	virtual bool EvalForward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array) override;
 	virtual bool EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bool bwdPropagationFlag, const Array& array) override;
 public:
+	bool Serialize(Stream& stream) const;
+	static Softmax* Deserialize(Stream& stream);
+public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Softmax& other) const { return this == &other; }
 	bool IsEqualTo(const Softmax& other) const { return IsIdentical(other); }

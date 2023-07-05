@@ -127,6 +127,16 @@ bool MaxPool2d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, 
 	return true;
 }
 
+bool MaxPool2d::Serialize(Stream& stream) const
+{
+	return false;
+}
+
+MaxPool2d* MaxPool2d::Deserialize(Stream& stream)
+{
+	return nullptr;
+}
+
 String MaxPool2d::ToString(const StringStyle& ss) const
 {
 	return String().Format("ml.MaxPool2d");

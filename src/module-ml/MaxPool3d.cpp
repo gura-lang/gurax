@@ -127,6 +127,16 @@ bool MaxPool3d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, 
 	return true;
 }
 
+bool MaxPool3d::Serialize(Stream& stream) const
+{
+	return false;
+}
+
+MaxPool3d* MaxPool3d::Deserialize(Stream& stream)
+{
+	return nullptr;
+}
+
 String MaxPool3d::ToString(const StringStyle& ss) const
 {
 	return String().Format("ml.MaxPool3d");

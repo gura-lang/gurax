@@ -115,4 +115,15 @@ String Value_ReLU::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, GetReLU().ToString(ss));
 }
 
+bool Value_ReLU::DoSerialize(Stream& stream) const
+{
+	return GetReLU().Serialize(stream);
+}
+
+Value* VType_ReLU::DoDeserialize(Stream& stream) const
+{
+	RefPtr<ReLU> pReLU(ReLU::Deserialize(stream));
+	return pReLU? new Value_ReLU(pReLU.release()) : nullptr;
+}
+
 Gurax_EndModuleScope(ml)

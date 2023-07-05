@@ -126,4 +126,15 @@ String Value_MaxPool3d::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, GetMaxPool3d().ToString(ss));
 }
 
+bool Value_MaxPool3d::DoSerialize(Stream& stream) const
+{
+	return GetMaxPool3d().Serialize(stream);
+}
+
+Value* VType_MaxPool3d::DoDeserialize(Stream& stream) const
+{
+	RefPtr<MaxPool3d> pMaxPool3d(MaxPool3d::Deserialize(stream));
+	return pMaxPool3d? new Value_MaxPool3d(pMaxPool3d.release()) : nullptr;
+}
+
 Gurax_EndModuleScope(ml)

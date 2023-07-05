@@ -115,4 +115,15 @@ String Value_Tanh::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, GetTanh().ToString(ss));
 }
 
+bool Value_Tanh::DoSerialize(Stream& stream) const
+{
+	return GetTanh().Serialize(stream);
+}
+
+Value* VType_Tanh::DoDeserialize(Stream& stream) const
+{
+	RefPtr<Tanh> pTanh(Tanh::Deserialize(stream));
+	return pTanh? new Value_Tanh(pTanh.release()) : nullptr;
+}
+
 Gurax_EndModuleScope(ml)

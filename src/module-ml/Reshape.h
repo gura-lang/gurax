@@ -37,6 +37,9 @@ public:
 	virtual bool EvalForward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array) override;
 	virtual bool EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bool bwdPropagationFlag, const Array& array) override;
 public:
+	bool Serialize(Stream& stream) const;
+	static Reshape* Deserialize(Stream& stream);
+public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Reshape& other) const { return this == &other; }
 	bool IsEqualTo(const Reshape& other) const { return IsIdentical(other); }

@@ -93,6 +93,16 @@ bool Sigmoid::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bo
 	return true;
 }
 
+bool Sigmoid::Serialize(Stream& stream) const
+{
+	return false;
+}
+
+Sigmoid* Sigmoid::Deserialize(Stream& stream)
+{
+	return nullptr;
+}
+
 String Sigmoid::ToString(const StringStyle& ss) const
 {
 	return String().Format("ml.Sigmoid");

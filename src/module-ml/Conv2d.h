@@ -47,6 +47,9 @@ public:
 	virtual bool EvalForward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array) override;
 	virtual bool EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bool bwdPropagationFlag, const Array& array) override;
 public:
+	bool Serialize(Stream& stream) const;
+	static Conv2d* Deserialize(Stream& stream);
+public:
 	const Array& GetArrayFilter() const { return *_pArrayFilter; }
 	const Array& GetArrayFilterGrad() const { return *_pArrayFilterGrad; }
 	bool IsValidArrayFilterGrad() const { return !_pArrayFilterGrad.IsNull(); }
