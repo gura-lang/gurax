@@ -372,16 +372,20 @@ class Node_Gear : public Node_Unary {
 private:
 	RefPtr<Optimizer> _pOptimizer;
 	RefPtr<Expr> _pExprRight;
-	RefPtr<Gear> _pGear;
+	RefPtr<Value_Gear> _pValueGear;
 public:
 	Node_Gear(Optimizer* pOptimizer, Expr* pExprRight) : _pOptimizer(pOptimizer), _pExprRight(pExprRight) {}
 	virtual const Symbol* GetTypeSymbol() const override { return Gurax_Symbol(gear); }
 	const Optimizer& GetOptimizer() const { return *_pOptimizer; }
+	bool HasGear() const { return !_pValueGear.IsNull(); }
+	Gear& GetGear() { return _pValueGear->GetGear(); }
+	const Gear& GetGear() const { return _pValueGear->GetGear(); }
 	virtual bool IsVulnerable() const override;
 	virtual bool EvalForward(Processor& processor) override;
 	virtual bool EvalBackward(Processor& processor) override;
 	virtual bool GatherMemberSymbol(SymbolList& symbols) const;
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const;
+	virtual String ToString(const StringStyle& ss) const;
 };
 
 Gurax_EndModuleScope(ml)

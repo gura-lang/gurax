@@ -27,6 +27,7 @@ Trainer.WriteProduct(moduleName as String) = {
 	}
 	this.EachNode(`gear) {|node|
 		if (node.expr.type == `Identifier) {
+			//Println(node.expr.symbol)
 			out.Println()
 			out.Printf("%s = b'''\n", node.expr.symbol)
 			out.Writer@base64().Writer@gzip().Serialize(node.gear)

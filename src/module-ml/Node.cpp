@@ -248,7 +248,8 @@ Value* Node_Input::DoGetProperty(const Symbol* pSymbol, const Attribute& attr) c
 
 String Node_Input::ToString(const StringStyle& ss) const
 {
-	return String().Format("%s:%s", GetTypeName(), _pArray? _pArray->GetDimSizes().ToString(ss, ss.GetComma()).c_str() : "null");
+	return String().Format("%s:%s", GetTypeName(),
+			_pArray? _pArray->GetDimSizes().ToString(ss, ss.GetComma()).c_str() : "null");
 }
 
 void Node_Input::Print(Stream& stream, int indentLevel) const
@@ -308,12 +309,8 @@ Value* Node_Bottom::DoGetProperty(const Symbol* pSymbol, const Attribute& attr) 
 
 String Node_Bottom::ToString(const StringStyle& ss) const
 {
-	String str;
-	char buff[128];
-	str += GetTypeName();
-	::sprintf(buff, " [fwd:%p,grad:%p]", &GetConnectorSrc().GetArrayFwd(), &GetConnectorSrc().GetArrayGrad());
-	str += buff;
-	return str;
+	return String().Format("%s [fwd:%p,grad:%p]", GetTypeName(),
+			&GetConnectorSrc().GetArrayFwd(), &GetConnectorSrc().GetArrayGrad());
 }
 
 void Node_Bottom::Print(Stream& stream, int indentLevel) const
@@ -352,12 +349,9 @@ Value* Node_Unary::DoGetProperty(const Symbol* pSymbol, const Attribute& attr) c
 
 String Node_Unary::ToString(const StringStyle& ss) const
 {
-	String str;
-	char buff[128];
-	str += GetTypeName();
-	::sprintf(buff, " [fwd:%p,grad:%p]", &GetConnectorSrc().GetArrayFwd(), &GetConnectorSrc().GetArrayGrad());
-	str += buff;
-	return str;
+	//return String().Format("%s [fwd:%p,grad:%p]", GetTypeName(),
+	//		&GetConnectorSrc().GetArrayFwd(), &GetConnectorSrc().GetArrayGrad());
+	return String().Format("%s", GetTypeName());
 }
 
 void Node_Unary::Print(Stream& stream, int indentLevel) const
@@ -424,14 +418,10 @@ Value* Node_Binary::DoGetProperty(const Symbol* pSymbol, const Attribute& attr) 
 
 String Node_Binary::ToString(const StringStyle& ss) const
 {
-	String str;
-	char buff[128];
-	str += GetTypeName();
-	::sprintf(buff, " [fwd:%p,grad:%p][fwd:%p,grad:%p]",
-			&GetConnectorSrcLeft().GetArrayFwd(), &GetConnectorSrcLeft().GetArrayGrad(),
-			&GetConnectorSrcRight().GetArrayFwd(), &GetConnectorSrcRight().GetArrayGrad());
-	str += buff;
-	return str;
+	//return String().Format("%s [fwd:%p,grad:%p][fwd:%p,grad:%p]", GetTypeName(),
+	//		&GetConnectorSrcLeft().GetArrayFwd(), &GetConnectorSrcLeft().GetArrayGrad(),
+	//		&GetConnectorSrcRight().GetArrayFwd(), &GetConnectorSrcRight().GetArrayGrad());
+	return String().Format("%s", GetTypeName());
 }
 
 void Node_Binary::Print(Stream& stream, int indentLevel) const
@@ -594,28 +584,28 @@ bool Node_Dot::EvalBackward(Processor& processor)
 //-----------------------------------------------------------------------------
 bool Node_Gear::IsVulnerable() const
 {
-	return GetConnectorSrc().GetNodeSrc().IsVulnerable() || _pGear->HasVulnerableParam();
+	return GetConnectorSrc().GetNodeSrc().IsVulnerable() || (_pValueGear && GetGear().HasVulnerableParam());
 }
 
 bool Node_Gear::EvalForward(Processor& processor)
 {
-	if (!_pGear) {
+	if (!_pValueGear) {
 		RefPtr<Value> pValue(_pExprRight->Eval(processor));
 		if (Error::IsIssued()) return false;
 		if (pValue->IsInstanceOf(VTYPE_Gear)) {
-			_pGear.reset(Value_Gear::GetGear(*pValue).Reference());
-			_pGear->SetOptimizer(GetOptimizer());
+			_pValueGear.reset(dynamic_cast<Value_Gear*>(pValue->Reference()));
+			_pValueGear->GetGear().SetOptimizer(GetOptimizer());
 		} else {
 			Error::Issue(ErrorType::ValueError, "variable must be a Gear instance");
 			return false;
 		}
 	}
-	return _pGear->EvalForward(processor, _pArrayFwd, GetConnectorSrc().GetArrayFwd());
+	return GetGear().EvalForward(processor, _pArrayFwd, GetConnectorSrc().GetArrayFwd());
 }
 
 bool Node_Gear::EvalBackward(Processor& processor)
 {
-	return _pGear->EvalBackward(processor, GetConnectorSrc().GetArrayGradRefPtr(),
+	return GetGear().EvalBackward(processor, GetConnectorSrc().GetArrayGradRefPtr(),
 				GetConnectorSrc().GetNodeSrc().IsVulnerable(), _pConnectorDst->GetArrayGrad());
 }
 
@@ -629,11 +619,18 @@ bool Node_Gear::GatherMemberSymbol(SymbolList& symbols) const
 Value* Node_Gear::DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const
 {
 	if (pSymbol->IsIdentical(Gurax_Symbol(gear))) {
-		return _pGear? new Value_Gear(_pGear->Reference()) : Value::nil();
+		return _pValueGear? _pValueGear->Reference() : Value::nil();
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(expr))) {
 		return new Value_Expr(_pExprRight->Reference());
 	}
 	return Node_Unary::DoGetProperty(pSymbol, attr);
+}
+
+String Node_Gear::ToString(const StringStyle& ss) const
+{
+	//return String().Format("%s:%s [fwd:%p,grad:%p]", GetTypeName(), _pExprRight->ToString().c_str(),
+	//		&GetConnectorSrc().GetArrayFwd(), &GetConnectorSrc().GetArrayGrad());
+	return String().Format("%s:%s", GetTypeName(), _pExprRight->ToString().c_str());
 }
 
 Gurax_EndModuleScope(ml)

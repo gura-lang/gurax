@@ -71,6 +71,10 @@ bool Trainer::CreateFromExpr()
 	}
 	_composer.Add_Terminate();
 	pNode->Connect(GetNodeBottom().GetConnectorSrc());
+
+	for (Node* pNode : GetNodeOwner()) {
+		::printf("%s\n", pNode->ToString().c_str());
+	}
 	return true;
 }
 
@@ -216,7 +220,6 @@ Node* Trainer::CreateNode(const Expr& expr)
 		_pNodeOwner->push_back(pNode.Reference());
 		return pNode.release();
 	}
-
 	return nullptr;
 }
 
