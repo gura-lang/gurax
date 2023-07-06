@@ -13,7 +13,7 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Sigmoid : public VType {
 public:
-	static const SerialId serialId = 0x00000100;
+	static const SerialId serialId = 0x00000108;
 public:
 	VType_Sigmoid() : VType(serialId) {}
 	explicit VType_Sigmoid(const Symbol* pSymbol) : VType(serialId) {}

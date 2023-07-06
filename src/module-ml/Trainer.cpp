@@ -71,10 +71,11 @@ bool Trainer::CreateFromExpr()
 	}
 	_composer.Add_Terminate();
 	pNode->Connect(GetNodeBottom().GetConnectorSrc());
-
-	for (Node* pNode : GetNodeOwner()) {
-		::printf("%s\n", pNode->ToString().c_str());
-	}
+	//size_t i = 0;
+	//for (Node* pNode : GetNodeOwner()) {
+	//	::printf("#%zu: %s\n", i + 1, pNode->ToString().c_str());
+	//	i++;
+	//}
 	return true;
 }
 
@@ -153,11 +154,8 @@ Node* Trainer::CreateNode(const Expr& expr)
 		for ( ; pExprEach->GetExprNext(); pExprEach = pExprEach->GetExprNext()) {
 			RefPtr<Node> pNode(CreateNode(*pExprEach));
 			if (!pNode) return nullptr;
-			_pNodeOwner->push_back(pNode.release());
 		}
-		RefPtr<Node> pNode(CreateNode(*pExprEach));
-		_pNodeOwner->push_back(pNode.Reference());
-		return pNode.release();
+		return CreateNode(*pExprEach);
 	} else if (expr.IsType<Expr_Assign>()) {
 		const Expr_Assign& exprEx = dynamic_cast<const Expr_Assign&>(expr);
 		if (exprEx.GetOperator() ) {
@@ -238,7 +236,6 @@ Node* Trainer::CreateNodeUnary(const Expr_UnaryOp& exprEx)
 	RefPtr<Node> pNodeChild(CreateNode(exprEx.GetExprChild()));
 	if (!pNodeChild) return nullptr;
 	pNodeChild->Connect(pNode->GetConnectorSrc());
-	//_pNodeOwner->push_back(pNodeChild.release());
 	return pNode.release();
 }
 
@@ -279,7 +276,6 @@ Node* Trainer::CreateNodeGear(const Expr_BinaryOp& exprEx)
 	RefPtr<Node> pNodeChild(CreateNode(exprEx.GetExprLeft()));
 	if (!pNodeChild) return nullptr;
 	pNodeChild->Connect(pNode->GetConnectorSrc());
-	//_pNodeOwner->push_back(pNodeChild.release());
 	return pNode.release();
 }
 

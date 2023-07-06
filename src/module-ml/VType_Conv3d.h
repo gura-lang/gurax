@@ -13,7 +13,7 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Conv3d : public VType {
 public:
-	static const SerialId serialId = 0x00000100;
+	static const SerialId serialId = 0x00000102;
 public:
 	VType_Conv3d() : VType(serialId) {}
 	explicit VType_Conv3d(const Symbol* pSymbol) : VType(serialId) {}

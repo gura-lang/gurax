@@ -13,7 +13,7 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Reshape : public VType {
 public:
-	static const SerialId serialId = 0x00000100;
+	static const SerialId serialId = 0x00000107;
 public:
 	VType_Reshape() : VType(serialId) {}
 	explicit VType_Reshape(const Symbol* pSymbol) : VType(serialId) {}
