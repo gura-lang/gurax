@@ -4,7 +4,7 @@ import(ml):binary {*}
 
 Trainer.WriteProduct(moduleName as String) = {
 	out = Open(moduleName + '.gura', 'w')
-	eR'''
+	tR'''
 	#!/usr/bin/env gurax
 	import(ml)
 	import(gzip)
@@ -35,4 +35,5 @@ Trainer.WriteProduct(moduleName as String) = {
 		}
 		tmplPost.Render(out)
 	}
+	out = nil
 }
