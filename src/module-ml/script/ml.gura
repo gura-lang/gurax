@@ -17,21 +17,15 @@ Trainer.WriteProduct(moduleName as String) = {
 		${end}
 	}
 	'''.Render(out)
-	this.EachNode(`variable) {|node|
-		if (node.expr.type == `Identifier) {
-			out.Println()
-			out.Printf("%s = b'''\n", node.expr.symbol)
+	this.EachNode(`variable, `gear) {|node|
+		(node.expr.type != `Identifier) && continue
+		out.Println()
+		out.Printf("%s = b'''\n", node.expr.symbol)
+		if (node.type == `variable) {
 			out.Writer@base64().Writer@gzip().Serialize(node.output)
-			out.Printf("'''base64.Reader().Reader@gzip().Deserialize()\n")
-		}
-	}
-	this.EachNode(`gear) {|node|
-		if (node.expr.type == `Identifier) {
-			//Println(node.expr.symbol)
-			out.Println()
-			out.Printf("%s = b'''\n", node.expr.symbol)
+		} else { // node.type == `gear
 			out.Writer@base64().Writer@gzip().Serialize(node.gear)
-			out.Printf("'''base64.Reader().Reader@gzip().Deserialize()\n")
 		}
+		out.Printf("'''base64.Reader().Reader@gzip().Deserialize()\n")
 	}
 }
