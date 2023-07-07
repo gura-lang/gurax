@@ -27,10 +27,11 @@ ${help.ComposeMethodHelp(ml.Dropout, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// ml.Dropout() {block?}
+// ml.Dropout(rate as Number) {block?}
 Gurax_DeclareConstructor(Dropout)
 {
 	Declare(VTYPE_Dropout, Flag::None);
+	DeclareArg("rate", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `ml.Dropout` instance.
@@ -39,8 +40,11 @@ Creates a `ml.Dropout` instance.
 
 Gurax_ImplementConstructor(Dropout)
 {
+	// Arguments
+	ArgPicker args(argument);
+	Double rate = args.PickNumber<Double>();
 	// Function body
-	RefPtr<Dropout> pDropout(new Dropout());
+	RefPtr<Dropout> pDropout(new Dropout(rate));
 	return argument.ReturnValue(processor, new Value_Dropout(pDropout.release()));
 }
 

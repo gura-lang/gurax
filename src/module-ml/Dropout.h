@@ -17,10 +17,12 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("ml.Dropout");
 private:
+	Double _rate;
+private:	
 	RefPtr<Array> _pArrayBoolSaved;
 public:
 	// Constructor
-	Dropout() : Gear(false) {}
+	Dropout(Double rate) : Gear(false), _rate(rate) {}
 	// Copy constructor/operator
 	Dropout(const Dropout& src) = delete;
 	Dropout& operator=(const Dropout& src) = delete;
