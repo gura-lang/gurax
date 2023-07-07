@@ -67,7 +67,7 @@ void Conv3d::Initialize()
 	Gurax_SetArrayFuncSingle(Conv3d_Backward_Array, Conv3d_Backward_Array_T);
 }
 
-bool Conv3d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn)
+bool Conv3d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, bool trainingFlag)
 {
 	if (!pArrayFwdOut) {
 		pArrayFwdOut.reset(Array::Create(arrayFwdIn.GetElemType(), arrayFwdIn.GetDimSizes()));
@@ -78,7 +78,7 @@ bool Conv3d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, cons
 	return true;
 }
 
-bool Conv3d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bool bwdPropagationFlag, const Array& arrayBwdIn)
+bool Conv3d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, const Array& arrayBwdIn, bool bwdPropagationFlag)
 {
 	if (!pArrayBwdOut) {
 		pArrayBwdOut.reset(Array::Create(arrayBwdIn.GetElemType(), arrayBwdIn.GetDimSizes()));

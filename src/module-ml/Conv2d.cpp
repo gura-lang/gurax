@@ -29,7 +29,7 @@ bool Conv2d::CalcSizeOut(size_t nRowsIn, size_t nColsIn, size_t* pnRowsOut, size
 	return true;
 }
 
-bool Conv2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn)
+bool Conv2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, bool trainingFlag)
 {
 	// arrayFwdIn                                  .. (nSamples, nChannels, nRowsFwdIn, nColsFwdIn)
 	// _pArrayFilter                               .. (nFilters, nChannels, nRowsFilter, nColsFilter)
@@ -62,7 +62,7 @@ bool Conv2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, cons
 	return true;
 }
 
-bool Conv2d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bool bwdPropagationFlag, const Array& arrayBwdIn)
+bool Conv2d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, const Array& arrayBwdIn, bool bwdPropagationFlag)
 {
 	// arrayBwdIn                                .. (nSamples, nFilters, nRowsBwdIn, nColsBwdIn)
 	// _pArrayFilter                             .. (nFilters, nChannels, nRowsFilter, nColsFilter)

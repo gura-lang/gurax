@@ -33,8 +33,8 @@ public:
 	static void Initialize();
 public:
 	virtual const char* GetName() const override { return "ml.Tanh"; }
-	virtual bool EvalForward(Processor& processor, RefPtr<Array>& pArrayRtn, const Array& array) override;
-	virtual bool EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bool bwdPropagationFlag, const Array& array) override;
+	virtual bool EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, bool trainingFlag) override;
+	virtual bool EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, const Array& arrayBwdIn, bool bwdPropagationFlag) override;
 public:
 	bool Serialize(Stream& stream) const;
 	static Tanh* Deserialize(Stream& stream);

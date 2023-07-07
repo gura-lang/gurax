@@ -8,13 +8,13 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 // Reshape
 //------------------------------------------------------------------------------
-bool Reshape::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn)
+bool Reshape::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, bool trainingFlag)
 {
 	_pArrayFwdInSaved.reset(arrayFwdIn.Reference());
 	return arrayFwdIn.Reshape(pArrayFwdOut, *_pValuesDimSize);
 }
 
-bool Reshape::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bool bwdPropagationFlag, const Array& arrayBwdIn)
+bool Reshape::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, const Array& arrayBwdIn, bool bwdPropagationFlag)
 {
 	if (!bwdPropagationFlag) return true;
 	arrayBwdIn.Reshape(pArrayBwdOut, _pArrayFwdInSaved->GetDimSizes());

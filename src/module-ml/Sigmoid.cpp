@@ -71,7 +71,7 @@ void Sigmoid::Initialize()
 	Gurax_SetArrayFuncSingle(Sigmoid_Backward_Array, Sigmoid_Backward_Array_T);
 }
 
-bool Sigmoid::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn)
+bool Sigmoid::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, bool trainingFlag)
 {
 	if (!pArrayFwdOut) {
 		pArrayFwdOut.reset(Array::Create(arrayFwdIn.GetElemType(), arrayFwdIn.GetDimSizes()));
@@ -82,7 +82,7 @@ bool Sigmoid::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, con
 	return true;
 }
 
-bool Sigmoid::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bool bwdPropagationFlag, const Array& arrayBwdIn)
+bool Sigmoid::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, const Array& arrayBwdIn, bool bwdPropagationFlag)
 {
 	if (!bwdPropagationFlag) return true;
 	if (!pArrayBwdOut) {

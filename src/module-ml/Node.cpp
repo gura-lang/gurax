@@ -600,13 +600,13 @@ bool Node_Gear::EvalForward(Processor& processor)
 			return false;
 		}
 	}
-	return GetGear().EvalForward(processor, _pArrayFwd, GetConnectorSrc().GetArrayFwd());
+	return GetGear().EvalForward(processor, _pArrayFwd, GetConnectorSrc().GetArrayFwd(), true);
 }
 
 bool Node_Gear::EvalBackward(Processor& processor)
 {
 	return GetGear().EvalBackward(processor, GetConnectorSrc().GetArrayGradRefPtr(),
-				GetConnectorSrc().GetNodeSrc().IsVulnerable(), _pConnectorDst->GetArrayGrad());
+			_pConnectorDst->GetArrayGrad(), GetConnectorSrc().GetNodeSrc().IsVulnerable());
 }
 
 bool Node_Gear::GatherMemberSymbol(SymbolList& symbols) const

@@ -35,7 +35,7 @@ void ReLU::Initialize()
 	Gurax_SetArrayFuncSingle(ReLU_Backward_Array, ReLU_Backward_Array_T);
 }
 
-bool ReLU::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn)
+bool ReLU::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, bool trainingFlag)
 {
 	if (!pArrayFwdOut) pArrayFwdOut.reset(Array::Create(arrayFwdIn.GetElemType(), arrayFwdIn.GetDimSizes()));
 	if (!pArrayFwdOut) return false;
@@ -45,7 +45,7 @@ bool ReLU::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const 
 	return true;
 }
 
-bool ReLU::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bool bwdPropagationFlag, const Array& arrayBwdIn)
+bool ReLU::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, const Array& arrayBwdIn, bool bwdPropagationFlag)
 {
 	if (!bwdPropagationFlag) return true;
 	if (!pArrayBwdOut) pArrayBwdOut.reset(Array::Create(arrayBwdIn.GetElemType(), arrayBwdIn.GetDimSizes()));

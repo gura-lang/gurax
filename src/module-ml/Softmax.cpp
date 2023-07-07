@@ -119,7 +119,7 @@ void Softmax::Initialize()
 	Gurax_SetArrayFuncSingle(Softmax_Backward_Array, Softmax_Backward_Array_T);
 }
 
-bool Softmax::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn)
+bool Softmax::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, bool trainingFlag)
 {
 	if (!pArrayFwdOut) {
 		pArrayFwdOut.reset(Array::Create(arrayFwdIn.GetElemType(), arrayFwdIn.GetDimSizes()));
@@ -136,7 +136,7 @@ bool Softmax::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, con
 	return true;
 }
 
-bool Softmax::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, bool bwdPropagationFlag, const Array& arrayBwdIn)
+bool Softmax::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, const Array& arrayBwdIn, bool bwdPropagationFlag)
 {
 	if (!bwdPropagationFlag) return true;
 	if (!pArrayBwdOut) {
