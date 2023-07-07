@@ -12,6 +12,7 @@
 #include "VType_Conv1d.h"
 #include "VType_Conv2d.h"
 #include "VType_Conv3d.h"
+#include "VType_Dropout.h"
 #include "VType_MaxPool1d.h"
 #include "VType_MaxPool2d.h"
 #include "VType_MaxPool3d.h"

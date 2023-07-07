@@ -45,6 +45,7 @@ target_sources(ml.gurd PRIVATE
 	Conv1d.cpp
 	Conv2d.cpp
 	Conv3d.cpp
+	Dropout.cpp
 	MaxPool1d.cpp
 	MaxPool2d.cpp
 	MaxPool3d.cpp
@@ -60,6 +61,7 @@ target_sources(ml.gurd PRIVATE
 	VType_Conv1d.cpp
 	VType_Conv2d.cpp
 	VType_Conv3d.cpp
+	VType_Dropout.cpp
 	VType_MaxPool1d.cpp
 	VType_MaxPool2d.cpp
 	VType_MaxPool3d.cpp
