@@ -1,0 +1,32 @@
+#!/usr/bin/env gurax
+import(product)
+import(ml.mnist)
+
+db = ml.mnist.Database('../../sample/resource/mnist')
+
+//shapeImage = (1, db.nRows * db.nCols)
+shapeImage = (1, 1, db.nRows, db.nCols)
+pattern = [' ', '.', ':', '#', '#']
+scope {
+	// evaluation
+	arrayImage = db.test.imageSet.ToArray(`float, flatten = true, numMax = 1)	// (nSamples, db.nRows * db.nCols)
+	arrayLabel = db.test.labelSet.ToArray(`float, oneHot = true)				// (nSamples, db.nClasses)
+	nCorrects = 0
+	nSamples = arrayImage.shape[0]
+	Printf('Test with %d samples\n', nSamples)
+	repeat (nSamples) {|i|
+		image = arrayImage[i].Reshape(shapeImage*)
+		t = arrayLabel[i].Reshape(1, nil)
+		y = product.Eval(image)
+		idxResult = y.ArgMax(-1, 0)
+		idxCorrect = t.ArgMax(-1, 0)
+		if (idxResult == idxCorrect) {
+			//Printf(' "%d" .. correct with likelihood %.1f%%\n', idxResult, y[0, idxResult] * 100)
+			nCorrects += 1
+		} else {
+			//arrayImage[i].ToList().Fold(db.test.imageSet.nCols) {|row| Printf('%s\n', pattern.Get(row * 4).Join())}
+			//Printf(' "%d" .. wrong. correct is "%d"\n', idxResult, idxCorrect)
+		}
+	}
+	sys.cerr.Printf('accuracy: %d/%d (%.1f%%)\n', nCorrects, nSamples, nCorrects / nSamples * 100)
+}

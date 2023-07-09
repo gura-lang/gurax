@@ -15,14 +15,15 @@ Conv2d::Conv2d(size_t nChannelsIn, size_t nRowsIn, size_t nColsIn,
 	_nFilters(nFilters), _nRowsFilter(nRowsFilter), _nColsFilter(nColsFilter), _stride(stride), _padding(padding),
 	_pArrayFilter(Array::Create(elemType, DimSizes(nFilters, nChannelsIn, nRowsFilter, nColsFilter)))
 {
+	_pArrayBias.reset(Array::Create(elemType, DimSizes(nFilters, CalcNRowsOut(), CalcNColsOut())));
 }
 
 Conv2d::Conv2d(size_t nChannelsIn, size_t nRowsIn, size_t nColsIn,
 			size_t nFilters, size_t nRowsFilter, size_t nColsFilter, size_t stride, size_t padding,
-			Array* pArrayFilter) : Gear(true),
+			Array* pArrayFilter, Array* pArrayBias) : Gear(true),
 	_nChannelsIn(nChannelsIn), _nRowsIn(nRowsIn), _nColsIn(nColsIn),
 	_nFilters(nFilters), _nRowsFilter(nRowsFilter), _nColsFilter(nColsFilter), _stride(stride), _padding(padding),
-	_pArrayFilter(pArrayFilter)
+	_pArrayFilter(pArrayFilter), _pArrayBias(pArrayBias)
 {
 }
 
@@ -34,13 +35,6 @@ bool Conv2d::ValidateArrayFilter(const Array& arrayFilter)
 {
 	return true;
 }
-
-//bool Conv2d::CalcSizeOut(size_t nRowsIn, size_t nColsIn, size_t* pnRowsOut, size_t* pnColsOut) const
-//{
-//	*pnRowsOut = (nRowsIn + 2 * _padding - _pArrayFilter->GetDimSizes().GetRowSize()) / _stride + 1;
-//	*pnColsOut = (nColsIn + 2 * _padding - _pArrayFilter->GetDimSizes().GetColSize()) / _stride + 1;
-//	return true;
-//}
 
 bool Conv2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, bool trainingFlag)
 {
@@ -66,10 +60,8 @@ bool Conv2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, cons
 	if (!_pArrayFwd2->Transpose2d(_pArrayFwd3)) return false;
 	if (!Array::Dot(_pArrayFwd4, *_pArrayFwd1, *_pArrayFwd3)) return false;
 	_pArrayFwd4->Reshape(_pArrayFwd5, DimSizes(nSamples, nRowsFwdOut, nColsFwdOut, nFilters));
-	//NumList<size_t> axes;
-	//axes.reserve(4);
-	//axes.push_back(0); axes.push_back(3); axes.push_back(1); axes.push_back(2);
-	_pArrayFwd5->TransposeMulti(pArrayFwdOut, NumList<size_t>::Create(0, 3, 1, 2));
+	_pArrayFwd5->TransposeMulti(_pArrayFwd6, NumList<size_t>::Create(0, 3, 1, 2));
+	Array::Add(pArrayFwdOut, *_pArrayFwd6, *_pArrayBias);
 	_pArrayFwdInSaved.reset(arrayFwdIn.Reference());
 	_pArrayFwdOutSaved.reset(pArrayFwdOut.Reference());
 	return true;
@@ -95,9 +87,7 @@ bool Conv2d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, con
 	const DimSizes& dimSizes = arrayBwdIn.GetDimSizes();
 	size_t nSamples = dimSizes[0];
 	size_t nRowsBwdIn = dimSizes[2], nColsBwdIn = dimSizes[3];
-	//NumList<size_t> axes;
-	//axes.reserve(4);
-	//axes.push_back(0); axes.push_back(2); axes.push_back(3); axes.push_back(1);
+	_pArrayBiasGrad.reset(arrayBwdIn.Reference());
 	arrayBwdIn.TransposeMulti(_pArrayBwd1, NumList<size_t>::Create(0, 2, 3, 1));
 	_pArrayBwd1->Reshape(_pArrayBwd2, DimSizes(nSamples * nRowsBwdIn * nColsBwdIn, nFilters));
 	_pArrayFwd1->Transpose2d(_pArrayBwd3);
@@ -107,7 +97,8 @@ bool Conv2d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, con
 	if (!Array::Dot(_pArrayBwd6, *_pArrayBwd2, *_pArrayFwd2)) return false;
 	if (bwdPropagationFlag && !ColToImg2d(pArrayBwdOut, _pArrayFwdInSaved->GetDimSizes(), *_pArrayBwd6,
 				nRowsFilter, nColsFilter, _stride, _stride, _padding, _padding)) return false;
-	return _pOptimizerInstance->Update(processor, _pArrayFilter, *_pArrayFilterGrad);
+	return _pOptimizerInstFilter->Update(processor, _pArrayFilter, *_pArrayFilterGrad) &&
+			 _pOptimizerInstBias->Update(processor, _pArrayBias, *_pArrayBiasGrad);
 }
 
 String Conv2d::ToString(const StringStyle& ss) const
@@ -126,6 +117,7 @@ bool Conv2d::Serialize(Stream& stream) const
 	if (!stream.SerializePackedNumber<size_t>(_stride)) return false;
 	if (!stream.SerializePackedNumber<size_t>(_padding)) return false;
 	if (!_pArrayFilter->Serialize(stream)) return false;
+	if (!_pArrayBias->Serialize(stream)) return false;
 	return true;
 }
 
@@ -141,8 +133,9 @@ Conv2d* Conv2d::Deserialize(Stream& stream)
 	if (!stream.DeserializePackedNumber<size_t>(stride)) return nullptr;
 	if (!stream.DeserializePackedNumber<size_t>(padding)) return nullptr;
 	RefPtr<Array> pArrayFilter(Array::Deserialize(stream));
+	RefPtr<Array> pArrayBias(Array::Deserialize(stream));
 	if (!pArrayFilter) return nullptr;
-	return new Conv2d(nChannelsIn, nRowsIn, nColsIn, nFilters, nRowsFilter, nColsFilter, stride, padding, pArrayFilter.release());
+	return new Conv2d(nChannelsIn, nRowsIn, nColsIn, nFilters, nRowsFilter, nColsFilter, stride, padding, pArrayFilter.release(), pArrayBias.release());
 }
 
 //------------------------------------------------------------------------------

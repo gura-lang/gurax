@@ -28,11 +28,14 @@ private:
 private:
 	RefPtr<Array> _pArrayFilter;
 	RefPtr<Array> _pArrayFilterGrad;
+	RefPtr<Array> _pArrayBias;
+	RefPtr<Array> _pArrayBiasGrad;
 	RefPtr<Array> _pArrayFwdInSaved;
 	RefPtr<Array> _pArrayFwdOutSaved;
-	RefPtr<Array> _pArrayFwd1, _pArrayFwd2, _pArrayFwd3, _pArrayFwd4, _pArrayFwd5;
+	RefPtr<Array> _pArrayFwd1, _pArrayFwd2, _pArrayFwd3, _pArrayFwd4, _pArrayFwd5, _pArrayFwd6;
 	RefPtr<Array> _pArrayBwd1, _pArrayBwd2, _pArrayBwd3, _pArrayBwd4, _pArrayBwd5, _pArrayBwd6;
-	RefPtr<Optimizer::Instance> _pOptimizerInstance;
+	RefPtr<Optimizer::Instance> _pOptimizerInstFilter;
+	RefPtr<Optimizer::Instance> _pOptimizerInstBias;
 public:
 	// Constructor
 	Conv2d(size_t nChannelsIn, size_t nRowsIn, size_t nColsIn,
@@ -40,7 +43,7 @@ public:
 			size_t stride, size_t padding, const Array::ElemTypeT& elemType);
 	Conv2d(size_t nChannelsIn, size_t nRowsIn, size_t nColsIn,
 			size_t nFilters, size_t nRowsFilter, size_t nColsFilter,
-			size_t stride, size_t padding, Array* pArrayFilter);
+			size_t stride, size_t padding, Array* pArrayFilter, Array* pArrayBias);
 	// Copy constructor/operator
 	Conv2d(const Conv2d& src) = delete;
 	Conv2d& operator=(const Conv2d& src) = delete;
@@ -53,7 +56,6 @@ public:
 	static void Initialize();
 	static bool ValidateArrayFilter(const Array& arrayFilter);
 public:
-	//bool CalcSizeOut(size_t nRowsIn, size_t nColsIn, size_t* pnRowsOut, size_t* pnColsOut) const;
 	size_t GetNChannelsIn() const { return _nChannelsIn; }
 	size_t GetNRowsIn() const { return _nRowsIn; }
 	size_t GetNColsIn() const { return _nColsIn; }
@@ -64,7 +66,10 @@ public:
 	size_t GetPadding() const { return _padding; }
 	size_t CalcNRowsOut() const { return (_nRowsIn + 2 * _padding - _nRowsFilter) / _stride + 1; }
 	size_t CalcNColsOut() const { return (_nColsIn + 2 * _padding - _nColsFilter) / _stride + 1; }
-	virtual void SetOptimizer(const Optimizer& optimizer) override { _pOptimizerInstance.reset(optimizer.CreateInstance()); }
+	virtual void SetOptimizer(const Optimizer& optimizer) override {
+		_pOptimizerInstFilter.reset(optimizer.CreateInstance());
+		_pOptimizerInstBias.reset(optimizer.CreateInstance());
+	}
 	virtual const char* GetName() const override { return "ml.Conv2d"; }
 	virtual bool EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, bool trainingFlag) override;
 	virtual bool EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, const Array& arrayBwdIn, bool bwdPropagationFlag) override;
@@ -74,7 +79,10 @@ public:
 public:
 	const Array& GetArrayFilter() const { return *_pArrayFilter; }
 	const Array& GetArrayFilterGrad() const { return *_pArrayFilterGrad; }
+	const Array& GetArrayBias() const { return *_pArrayBias; }
+	const Array& GetArrayBiasGrad() const { return *_pArrayBiasGrad; }
 	bool IsValidArrayFilterGrad() const { return !_pArrayFilterGrad.IsNull(); }
+	bool IsValidArrayBiasGrad() const { return !_pArrayBiasGrad.IsNull(); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Conv2d& other) const { return this == &other; }

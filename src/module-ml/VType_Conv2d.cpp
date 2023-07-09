@@ -256,6 +256,37 @@ Gurax_ImplementPropertyGetter(Conv2d, filterGrad)
 		new Value_Array(valueThis.GetConv2d().GetArrayFilterGrad().Reference()) : Value::nil();
 }
 
+// ml.Conv2d#bias
+Gurax_DeclareProperty_R(Conv2d, bias)
+{
+	Declare(VTYPE_Array, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementPropertyGetter(Conv2d, bias)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Array(valueThis.GetConv2d().GetArrayBias().Reference());
+}
+
+// ml.Conv2d#biasGrad
+Gurax_DeclareProperty_R(Conv2d, biasGrad)
+{
+	Declare(VTYPE_Array, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementPropertyGetter(Conv2d, biasGrad)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return valueThis.GetConv2d().IsValidArrayBiasGrad()?
+		new Value_Array(valueThis.GetConv2d().GetArrayBiasGrad().Reference()) : Value::nil();
+}
+
 //------------------------------------------------------------------------------
 // VType_Conv2d
 //------------------------------------------------------------------------------
@@ -282,6 +313,8 @@ void VType_Conv2d::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Conv2d, nColsOut));
 	Assign(Gurax_CreateProperty(Conv2d, filter));
 	Assign(Gurax_CreateProperty(Conv2d, filterGrad));
+	Assign(Gurax_CreateProperty(Conv2d, bias));
+	Assign(Gurax_CreateProperty(Conv2d, biasGrad));
 }
 
 //------------------------------------------------------------------------------c
