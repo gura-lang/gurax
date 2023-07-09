@@ -105,37 +105,6 @@ Gurax_ImplementMethod(Conv2d, CalcSizeOut)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// ml.Conv2d#filter
-Gurax_DeclareProperty_R(Conv2d, filter)
-{
-	Declare(VTYPE_Array, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"""(
-Skeleton.
-)""");
-}
-
-Gurax_ImplementPropertyGetter(Conv2d, filter)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Array(valueThis.GetConv2d().GetArrayFilter().Reference());
-}
-
-// ml.Conv2d#filterGrad
-Gurax_DeclareProperty_R(Conv2d, filterGrad)
-{
-	Declare(VTYPE_Array, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"""(
-Skeleton.
-)""");
-}
-
-Gurax_ImplementPropertyGetter(Conv2d, filterGrad)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	return valueThis.GetConv2d().IsValidArrayFilterGrad()?
-		new Value_Array(valueThis.GetConv2d().GetArrayFilterGrad().Reference()) : Value::nil();
-}
-
 // ml.Conv2d#nChannelsIn
 Gurax_DeclareProperty_R(Conv2d, nChannelsIn)
 {
@@ -220,7 +189,7 @@ Gurax_ImplementPropertyGetter(Conv2d, stride)
 	return new Value_Number(valueThis.GetConv2d().GetStride());
 }
 
-// ml.Conv2d#
+// ml.Conv2d#padding
 Gurax_DeclareProperty_R(Conv2d, padding)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -230,6 +199,61 @@ Gurax_ImplementPropertyGetter(Conv2d, padding)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Number(valueThis.GetConv2d().GetPadding());
+}
+
+// ml.Conv2d#nRowsOut
+Gurax_DeclareProperty_R(Conv2d, nRowsOut)
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementPropertyGetter(Conv2d, nRowsOut)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetConv2d().CalcNRowsOut());
+}
+
+// ml.Conv2d#nColsOut
+Gurax_DeclareProperty_R(Conv2d, nColsOut)
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementPropertyGetter(Conv2d, nColsOut)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetConv2d().CalcNColsOut());
+}
+
+// ml.Conv2d#filter
+Gurax_DeclareProperty_R(Conv2d, filter)
+{
+	Declare(VTYPE_Array, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementPropertyGetter(Conv2d, filter)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Array(valueThis.GetConv2d().GetArrayFilter().Reference());
+}
+
+// ml.Conv2d#filterGrad
+Gurax_DeclareProperty_R(Conv2d, filterGrad)
+{
+	Declare(VTYPE_Array, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementPropertyGetter(Conv2d, filterGrad)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return valueThis.GetConv2d().IsValidArrayFilterGrad()?
+		new Value_Array(valueThis.GetConv2d().GetArrayFilterGrad().Reference()) : Value::nil();
 }
 
 //------------------------------------------------------------------------------
@@ -246,6 +270,16 @@ void VType_Conv2d::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	//Assign(Gurax_CreateMethod(Conv2d, CalcSizeOut));
 	// Assignment of property
+	Assign(Gurax_CreateProperty(Conv2d, nChannelsIn));
+	Assign(Gurax_CreateProperty(Conv2d, nRowsIn));
+	Assign(Gurax_CreateProperty(Conv2d, nColsIn));
+	Assign(Gurax_CreateProperty(Conv2d, nFilters));
+	Assign(Gurax_CreateProperty(Conv2d, nRowsFilter));
+	Assign(Gurax_CreateProperty(Conv2d, nColsFilter));
+	Assign(Gurax_CreateProperty(Conv2d, stride));
+	Assign(Gurax_CreateProperty(Conv2d, padding));
+	Assign(Gurax_CreateProperty(Conv2d, nRowsOut));
+	Assign(Gurax_CreateProperty(Conv2d, nColsOut));
 	Assign(Gurax_CreateProperty(Conv2d, filter));
 	Assign(Gurax_CreateProperty(Conv2d, filterGrad));
 }
