@@ -594,6 +594,36 @@ Gurax_ImplementPropertyGetter(Array, len)
 	return new Value_Number(valueThis.GetArray().GetDimSizes().CalcLength());
 }
 
+// Array#nRows:nil
+Gurax_DeclareProperty_R(Array, nRows)
+{
+	Declare(VTYPE_Number, Flag::Nil);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
+}
+
+Gurax_ImplementPropertyGetter(Array, nRows)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const DimSizes& dimSizes = valueThis.GetArray().GetDimSizes();
+	return (dimSizes.size() < 2)? Value::nil() : new Value_Number(dimSizes.GetRowSize());
+}
+
+// Array#nCols:nil
+Gurax_DeclareProperty_R(Array, nCols)
+{
+	Declare(VTYPE_Number, Flag::Nil);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
+}
+
+Gurax_ImplementPropertyGetter(Array, nCols)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const DimSizes& dimSizes = valueThis.GetArray().GetDimSizes();
+	return dimSizes.empty()? Value::nil() : new Value_Number(dimSizes.GetColSize());
+}
+
 // Array#p
 Gurax_DeclareProperty_R(Array, p)
 {
@@ -1199,6 +1229,8 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Array, bytesPerElem));
 	Assign(Gurax_CreateProperty(Array, elemType));
 	Assign(Gurax_CreateProperty(Array, len));
+	Assign(Gurax_CreateProperty(Array, nRows));
+	Assign(Gurax_CreateProperty(Array, nCols));
 	Assign(Gurax_CreateProperty(Array, p));
 	Assign(Gurax_CreateProperty(Array, shape));
 	// Assignment of operator

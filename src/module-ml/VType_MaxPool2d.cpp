@@ -27,10 +27,12 @@ ${help.ComposeMethodHelp(ml.MaxPool2d, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// ml.MaxPool2d(nColsKernel as Number, nRowsKernel as Number, stride? as Number) {block?}
+// ml.MaxPool2d(nRowsIn as Number, nColsIn as Number, nRowsKernel as Number, nColsKernel as Number, stride? as Number) {block?}
 Gurax_DeclareConstructor(MaxPool2d)
 {
 	Declare(VTYPE_MaxPool2d, Flag::None);
+	DeclareArg("nRowsIn", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("nColsIn", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("nRowsKernel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("nColsKernel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -44,59 +46,106 @@ Gurax_ImplementConstructor(MaxPool2d)
 {
 	// Arguments
 	ArgPicker args(argument);
+	size_t nRowsIn = args.PickNumberPos<size_t>();
+	size_t nColsIn = args.PickNumberPos<size_t>();
 	size_t nRowsKernel = args.PickNumberPos<size_t>();
 	size_t nColsKernel = args.PickNumberPos<size_t>();
 	size_t stride = args.IsValid()? args.PickNumberPos<size_t>() : 1;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	RefPtr<MaxPool2d> pMaxPool2d(new MaxPool2d(nRowsKernel, nColsKernel, stride, stride));
+	RefPtr<MaxPool2d> pMaxPool2d(new MaxPool2d(nRowsIn, nColsIn, nRowsKernel, nColsKernel, stride));
 	return argument.ReturnValue(processor, new Value_MaxPool2d(pMaxPool2d.release()));
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// MaxPool2d#CalcSizeOut(nRowsIn as Number, nColsIn as Number) as Tuple
-Gurax_DeclareMethod(MaxPool2d, CalcSizeOut)
-{
-	Declare(VTYPE_Tuple, Flag::None);
-	DeclareArg("nRowsIn", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("nColsIn", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"""(
-Skeleton.
-)""");
-}
-
-Gurax_ImplementMethod(MaxPool2d, CalcSizeOut)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	size_t nRowsIn = args.PickNumberPos<size_t>();
-	size_t nColsIn = args.PickNumberPos<size_t>();
-	// Function body
-	size_t nRowsOut, nColsOut;
-	valueThis.GetMaxPool2d().CalcSizeOut(nRowsIn, nColsIn, &nRowsOut, &nColsOut);
-	return Value_Tuple::Create(new Value_Number(nRowsOut), new Value_Number(nColsOut));
-}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// ml.MaxPool2d#propSkeleton
-Gurax_DeclareProperty_R(MaxPool2d, propSkeleton)
+// ml.MaxPool2d#nRowsIn
+Gurax_DeclareProperty_R(MaxPool2d, nRowsIn)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"""(
-Skeleton.
-)""");
 }
 
-Gurax_ImplementPropertyGetter(MaxPool2d, propSkeleton)
+Gurax_ImplementPropertyGetter(MaxPool2d, nRowsIn)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetMaxPool2d().GetNRowsIn());
+}
+
+// ml.MaxPool2d#nColsIn
+Gurax_DeclareProperty_R(MaxPool2d, nColsIn)
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementPropertyGetter(MaxPool2d, nColsIn)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetMaxPool2d().GetNColsIn());
+}
+
+// ml.MaxPool2d#nRowsKernel
+Gurax_DeclareProperty_R(MaxPool2d, nRowsKernel)
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementPropertyGetter(MaxPool2d, nRowsKernel)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetMaxPool2d().GetNRowsKernel());
+}
+
+// ml.MaxPool2d#nColsKernel
+Gurax_DeclareProperty_R(MaxPool2d, nColsKernel)
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementPropertyGetter(MaxPool2d, nColsKernel)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetMaxPool2d().GetNColsKernel());
+}
+
+// ml.MaxPool2d#stride
+Gurax_DeclareProperty_R(MaxPool2d, stride)
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementPropertyGetter(MaxPool2d, stride)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetMaxPool2d().GetStride());
+}
+
+// ml.MaxPool2d#nRowsOut
+Gurax_DeclareProperty_R(MaxPool2d, nRowsOut)
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementPropertyGetter(MaxPool2d, nRowsOut)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetMaxPool2d().CalcNRowsOut());
+}
+
+// ml.MaxPool2d#nColsOut
+Gurax_DeclareProperty_R(MaxPool2d, nColsOut)
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementPropertyGetter(MaxPool2d, nColsOut)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetMaxPool2d().CalcNColsOut());
 }
 
 //------------------------------------------------------------------------------
@@ -111,9 +160,15 @@ void VType_MaxPool2d::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Gear, Flag::Immutable, Gurax_CreateConstructor(MaxPool2d));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(MaxPool2d, CalcSizeOut));
+	//Assign(Gurax_CreateMethod(MaxPool2d, CalcSizeOut));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(MaxPool2d, propSkeleton));
+	Assign(Gurax_CreateProperty(MaxPool2d, nRowsIn));
+	Assign(Gurax_CreateProperty(MaxPool2d, nColsIn));
+	Assign(Gurax_CreateProperty(MaxPool2d, nRowsKernel));
+	Assign(Gurax_CreateProperty(MaxPool2d, nColsKernel));
+	Assign(Gurax_CreateProperty(MaxPool2d, stride));
+	Assign(Gurax_CreateProperty(MaxPool2d, nRowsOut));
+	Assign(Gurax_CreateProperty(MaxPool2d, nColsOut));
 }
 
 //------------------------------------------------------------------------------
