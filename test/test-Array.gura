@@ -139,6 +139,17 @@ TestCase('Array#bytes/bytesPerElem/elemType/len') {
 	}
 }
 
+TestCase('Array#nRows, Array#nCols') {
+	Tester(`@float(3, 4, 5).nRows)
+	Tester(`@float(3, 4, 5).nCols)
+	Tester(`@float(4, 5).nRows)
+	Tester(`@float(4, 5).nCols)
+	Tester(`@float(5).nRows)
+	Tester(`@float(5).nCols)
+	Tester(`Array.Scalar(`float, 5).nRows)
+	Tester(`Array.Scalar(`float, 5).nCols)
+}
+
 TestCase('Array#p') {
 	scope {
 		Println('[int8]')

@@ -4,6 +4,8 @@ Array
   #bytesPerElem     Number       R
   #elemType         Symbol       R
   #len              Number       R
+  #nCols            Number       R,nil
+  #nRows            Number       R,nil
   #p                Pointer      R
   #shape            Pointer      R,nil
 ======== Array constructor (1) ========
@@ -125,6 +127,15 @@ int      .. elemType=int32    bytesPerElem=4 len=10000 bytes=40000
 uint     .. elemType=uint32   bytesPerElem=4 len=10000 bytes=40000
 long     .. elemType=int32    bytesPerElem=4 len=10000 bytes=40000
 ulong    .. elemType=uint32   bytesPerElem=4 len=10000 bytes=40000
+======== Array#nRows, Array#nCols ========
+@float(3, 4, 5).nRows .. 4
+@float(3, 4, 5).nCols .. 5
+@float(4, 5).nRows .. 4
+@float(4, 5).nCols .. 5
+@float(5).nRows .. <Nil>
+@float(5).nCols .. 5
+Array.Scalar(`float, 5).nRows .. <Nil>
+Array.Scalar(`float, 5).nCols .. <Nil>
 ======== Array#p ========
 [int8]
 80 81 82 83 84 85 86 87 88 89 8a 8b 8c 8d 8e 8f  ................
