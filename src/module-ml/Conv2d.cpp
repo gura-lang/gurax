@@ -8,8 +8,21 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 // Conv2d
 //------------------------------------------------------------------------------
-Conv2d::Conv2d(Array* pArrayFilter, size_t stride, size_t padding) : Gear(true),
-	_pArrayFilter(pArrayFilter), _stride(stride), _padding(padding), _pOptimizerInstance(new Optimizer_None::InstanceEx())
+Conv2d::Conv2d(size_t nChannelsIn, size_t nRowsIn, size_t nColsIn,
+			size_t nFilters, size_t nRowsFilter, size_t nColsFilter, size_t stride, size_t padding,
+			const Array::ElemTypeT& elemType) : Gear(true),
+	_nChannelsIn(nChannelsIn), _nRowsIn(nRowsIn), _nColsIn(nColsIn),
+	_nFilters(nFilters), _nRowsFilter(nRowsFilter), _nColsFilter(nColsFilter), _stride(stride), _padding(padding),
+	_pArrayFilter(Array::Create(elemType, DimSizes(nFilters, nChannelsIn, nRowsFilter, nColsFilter)))
+{
+}
+
+Conv2d::Conv2d(size_t nChannelsIn, size_t nRowsIn, size_t nColsIn,
+			size_t nFilters, size_t nRowsFilter, size_t nColsFilter, size_t stride, size_t padding,
+			Array* pArrayFilter) : Gear(true),
+	_nChannelsIn(nChannelsIn), _nRowsIn(nRowsIn), _nColsIn(nColsIn),
+	_nFilters(nFilters), _nRowsFilter(nRowsFilter), _nColsFilter(nColsFilter), _stride(stride), _padding(padding),
+	_pArrayFilter(pArrayFilter)
 {
 }
 
@@ -22,12 +35,12 @@ bool Conv2d::ValidateArrayFilter(const Array& arrayFilter)
 	return true;
 }
 
-bool Conv2d::CalcSizeOut(size_t nRowsIn, size_t nColsIn, size_t* pnRowsOut, size_t* pnColsOut) const
-{
-	*pnRowsOut = (nRowsIn + 2 * _padding - _pArrayFilter->GetDimSizes().GetRowSize()) / _stride + 1;
-	*pnColsOut = (nColsIn + 2 * _padding - _pArrayFilter->GetDimSizes().GetColSize()) / _stride + 1;
-	return true;
-}
+//bool Conv2d::CalcSizeOut(size_t nRowsIn, size_t nColsIn, size_t* pnRowsOut, size_t* pnColsOut) const
+//{
+//	*pnRowsOut = (nRowsIn + 2 * _padding - _pArrayFilter->GetDimSizes().GetRowSize()) / _stride + 1;
+//	*pnColsOut = (nColsIn + 2 * _padding - _pArrayFilter->GetDimSizes().GetColSize()) / _stride + 1;
+//	return true;
+//}
 
 bool Conv2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, bool trainingFlag)
 {
@@ -104,20 +117,32 @@ String Conv2d::ToString(const StringStyle& ss) const
 
 bool Conv2d::Serialize(Stream& stream) const
 {
-	if (!_pArrayFilter->Serialize(stream)) return false;
+	if (!stream.SerializePackedNumber<size_t>(_nChannelsIn)) return false;
+	if (!stream.SerializePackedNumber<size_t>(_nRowsIn)) return false;
+	if (!stream.SerializePackedNumber<size_t>(_nColsIn)) return false;
+	if (!stream.SerializePackedNumber<size_t>(_nFilters)) return false;
+	if (!stream.SerializePackedNumber<size_t>(_nRowsFilter)) return false;
+	if (!stream.SerializePackedNumber<size_t>(_nColsFilter)) return false;
 	if (!stream.SerializePackedNumber<size_t>(_stride)) return false;
 	if (!stream.SerializePackedNumber<size_t>(_padding)) return false;
+	if (!_pArrayFilter->Serialize(stream)) return false;
 	return true;
 }
 
 Conv2d* Conv2d::Deserialize(Stream& stream)
 {
-	size_t stride, padding;
-	RefPtr<Array> pArrayFilter(Array::Deserialize(stream));
-	if (!pArrayFilter) return nullptr;
+	size_t nChannelsIn, nRowsIn, nColsIn, nFilters, nRowsFilter, nColsFilter, stride, padding;
+	if (!stream.DeserializePackedNumber<size_t>(nChannelsIn)) return nullptr;
+	if (!stream.DeserializePackedNumber<size_t>(nRowsIn)) return nullptr;
+	if (!stream.DeserializePackedNumber<size_t>(nColsIn)) return nullptr;
+	if (!stream.DeserializePackedNumber<size_t>(nFilters)) return nullptr;
+	if (!stream.DeserializePackedNumber<size_t>(nRowsFilter)) return nullptr;
+	if (!stream.DeserializePackedNumber<size_t>(nColsFilter)) return nullptr;
 	if (!stream.DeserializePackedNumber<size_t>(stride)) return nullptr;
 	if (!stream.DeserializePackedNumber<size_t>(padding)) return nullptr;
-	return new Conv2d(pArrayFilter.release(), stride, padding);
+	RefPtr<Array> pArrayFilter(Array::Deserialize(stream));
+	if (!pArrayFilter) return nullptr;
+	return new Conv2d(nChannelsIn, nRowsIn, nColsIn, nFilters, nRowsFilter, nColsFilter, stride, padding, pArrayFilter.release());
 }
 
 //------------------------------------------------------------------------------

@@ -17,10 +17,16 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("ml.Conv2d");
 private:
-	RefPtr<Array> _pArrayFilter;
+	size_t _nChannelsIn;
+	size_t _nRowsIn;
+	size_t _nColsIn;
+	size_t _nFilters;
+	size_t _nRowsFilter;
+	size_t _nColsFilter;
 	size_t _stride;
 	size_t _padding;
 private:
+	RefPtr<Array> _pArrayFilter;
 	RefPtr<Array> _pArrayFilterGrad;
 	RefPtr<Array> _pArrayFwdInSaved;
 	RefPtr<Array> _pArrayFwdOutSaved;
@@ -29,7 +35,12 @@ private:
 	RefPtr<Optimizer::Instance> _pOptimizerInstance;
 public:
 	// Constructor
-	Conv2d(Array* pArrayFilter, size_t stride, size_t padding);
+	Conv2d(size_t nChannelsIn, size_t nRowsIn, size_t nColsIn,
+			size_t nFilters, size_t nRowsFilter, size_t nColsFilter,
+			size_t stride, size_t padding, const Array::ElemTypeT& elemType);
+	Conv2d(size_t nChannelsIn, size_t nRowsIn, size_t nColsIn,
+			size_t nFilters, size_t nRowsFilter, size_t nColsFilter,
+			size_t stride, size_t padding, Array* pArrayFilter);
 	// Copy constructor/operator
 	Conv2d(const Conv2d& src) = delete;
 	Conv2d& operator=(const Conv2d& src) = delete;
@@ -42,7 +53,17 @@ public:
 	static void Initialize();
 	static bool ValidateArrayFilter(const Array& arrayFilter);
 public:
-	bool CalcSizeOut(size_t nRowsIn, size_t nColsIn, size_t* pnRowsOut, size_t* pnColsOut) const;
+	//bool CalcSizeOut(size_t nRowsIn, size_t nColsIn, size_t* pnRowsOut, size_t* pnColsOut) const;
+	size_t GetNChannelsIn() const { return _nChannelsIn; }
+	size_t GetNRowsIn() const { return _nRowsIn; }
+	size_t GetNColsIn() const { return _nColsIn; }
+	size_t GetNFilters() const { return _nFilters; }
+	size_t GetNRowsFilter() const { return _nRowsFilter; }
+	size_t GetNColsFilter() const { return _nColsFilter; }
+	size_t GetStride() const { return _stride; }
+	size_t GetPadding() const { return _padding; }
+	size_t CalcNRowsOut() const { return (_nRowsIn + 2 * _padding - _nRowsFilter) / _stride + 1; }
+	size_t CalcNColsOut() const { return (_nColsIn + 2 * _padding - _nColsFilter) / _stride + 1; }
 	virtual void SetOptimizer(const Optimizer& optimizer) override { _pOptimizerInstance.reset(optimizer.CreateInstance()); }
 	virtual const char* GetName() const override { return "ml.Conv2d"; }
 	virtual bool EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, bool trainingFlag) override;
