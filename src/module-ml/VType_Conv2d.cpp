@@ -75,32 +75,6 @@ Gurax_ImplementConstructor(Conv2d)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-#if 0
-// Conv2d#CalcSizeOut(nRowsIn as Number, nColsIn as Number) as Tuple
-Gurax_DeclareMethod(Conv2d, CalcSizeOut)
-{
-	Declare(VTYPE_Tuple, Flag::None);
-	DeclareArg("nRowsIn", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("nColsIn", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"""(
-Skeleton.
-)""");
-}
-
-Gurax_ImplementMethod(Conv2d, CalcSizeOut)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	size_t nRowsIn = args.PickNumberPos<size_t>();
-	size_t nColsIn = args.PickNumberPos<size_t>();
-	// Function body
-	size_t nRowsOut, nColsOut;
-	valueThis.GetConv2d().CalcSizeOut(nRowsIn, nColsIn, &nRowsOut, &nColsOut);
-	return Value_Tuple::Create(new Value_Number(nRowsOut), new Value_Number(nColsOut));
-}
-#endif
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -299,7 +273,6 @@ void VType_Conv2d::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Gear, Flag::Immutable, Gurax_CreateConstructor(Conv2d));
 	// Assignment of method
-	//Assign(Gurax_CreateMethod(Conv2d, CalcSizeOut));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Conv2d, nChannelsIn));
 	Assign(Gurax_CreateProperty(Conv2d, nRowsIn));

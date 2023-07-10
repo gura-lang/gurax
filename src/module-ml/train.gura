@@ -7,13 +7,18 @@ import(util.tester) {*}
 db = ml.mnist.Database('../../sample/resource/mnist')
 nTraining = 10
 
-if (false) {
-	model = `(((image + image2) / 2 |.| affineWeight + affineBias) |*| ml.Softmax())
+if (true) {
+	//model = `(((image + image2) / 2 |.| affineWeight + affineBias) |*| ml.Softmax())
+	//shapeImage = (1, db.nRows * db.nCols)
+	//affineWeight = @float(shapeImage[-1], db.nClasses)
+	//affineWeight.Inject(Random.NormalSeq(0, ml.Xavier(affineWeight.nRows)))
+	//affineBias = @float(1, affineWeight.nCols)
+	//affineBias.Inject(Random.NormalSeq(0, ml.Xavier(affineBias.nCols)))
 	shapeImage = (1, db.nRows * db.nCols)
-	affineWeight = @float(shapeImage[-1], db.nClasses)
-	affineWeight.Inject(Random.NormalSeq(0, ml.Xavier(affineWeight.nRows)))
-	affineBias = @float(1, affineWeight.nCols)
-	affineBias.Inject(Random.NormalSeq(0, ml.Xavier(affineBias.nCols)))
+	model = `(image |.| linear |*| ml.Softmax())
+	linear = ml.Linear(shapeImage[0], shapeImage[1], db.nClasses)
+	linear.dot.Inject(Random.NormalSeq(0, ml.Xavier(linear.dot.nRows)))
+	linear.bias.Inject(Random.NormalSeq(0, ml.Xavier(linear.bias.nCols)))
 } elsif (false) {
 	model = `{
 		t1 = (image |.| affineWeight1 + affineBias1) |*| ml.ReLU() |*| ml.Dropout(.5)

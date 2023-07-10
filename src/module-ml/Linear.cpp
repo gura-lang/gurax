@@ -8,7 +8,10 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 // Linear
 //------------------------------------------------------------------------------
-Linear::Linear(size_t nRowsIn, size_t nColsIn, size_t nColsOut) : Gear(true), _nRowsIn(nRowsIn), _nColsIn(nColsIn), _nColsOut(nColsOut)
+Linear::Linear(size_t nRowsIn, size_t nColsIn, size_t nColsOut, const Array::ElemTypeT& elemType) : Gear(true),
+	_nRowsIn(nRowsIn), _nColsIn(nColsIn), _nColsOut(nColsOut),
+	_pArrayDot(Array::Create(elemType, DimSizes(nColsIn, nColsOut))),
+	_pArrayBias(Array::Create(elemType, DimSizes(nRowsIn, nColsOut)))
 {
 }
 

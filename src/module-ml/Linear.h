@@ -33,7 +33,7 @@ private:
 	RefPtr<Optimizer::Instance> _pOptimizerInstBias;
 public:
 	// Constructor
-	Linear(size_t nRowsIn, size_t nColsIn, size_t nColsOut);
+	Linear(size_t nRowsIn, size_t nColsIn, size_t nColsOut, const Array::ElemTypeT& elemType);
 	Linear(size_t nRowsIn, size_t nColsIn, size_t nColsOut, Array* pArrayDot, Array* pArrayBias);
 	// Copy constructor/operator
 	Linear(const Linear& src) = delete;
@@ -59,13 +59,14 @@ public:
 public:
 	size_t GetNRowsIn() const { return _nRowsIn; }
 	size_t GetNColsIn() const { return _nColsIn; }
+	size_t GetNColsOut() const { return _nColsOut; }
 public:
-	//const Array& GetArrayFilter() const { return *_pArrayFilter; }
-	//const Array& GetArrayFilterGrad() const { return *_pArrayFilterGrad; }
-	//const Array& GetArrayBias() const { return *_pArrayBias; }
-	//const Array& GetArrayBiasGrad() const { return *_pArrayBiasGrad; }
-	//bool IsValidArrayFilterGrad() const { return !_pArrayFilterGrad.IsNull(); }
-	//bool IsValidArrayBiasGrad() const { return !_pArrayBiasGrad.IsNull(); }
+	const Array& GetArrayDot() const { return *_pArrayDot; }
+	const Array& GetArrayDotGrad() const { return *_pArrayDotGrad; }
+	const Array& GetArrayBias() const { return *_pArrayBias; }
+	const Array& GetArrayBiasGrad() const { return *_pArrayBiasGrad; }
+	bool IsValidArrayDotGrad() const { return !_pArrayDotGrad.IsNull(); }
+	bool IsValidArrayBiasGrad() const { return !_pArrayBiasGrad.IsNull(); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Linear& other) const { return this == &other; }
