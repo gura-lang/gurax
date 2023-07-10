@@ -21,10 +21,14 @@ private:
 	size_t _nColsIn;
 	size_t _nColsOut;
 private:
+	RefPtr<Array> _pArrayFwdIn;
 	RefPtr<Array> _pArrayDot;
+	RefPtr<Array> _pArrayDotGrad;
 	RefPtr<Array> _pArrayBias;
-	RefPtr<Array> _pArrayInTrans;
+	RefPtr<Array> _pArrayBiasGrad;
+	RefPtr<Array> _pArrayFwdInTrans;
 	RefPtr<Array> _pArrayDotTrans;
+	RefPtr<Array> _pArrayFwd1;
 	RefPtr<Optimizer::Instance> _pOptimizerInstDot;
 	RefPtr<Optimizer::Instance> _pOptimizerInstBias;
 public:

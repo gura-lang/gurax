@@ -23,12 +23,26 @@ void Linear::Initialize()
 
 bool Linear::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, bool trainingFlag)
 {
-	return true;
+	_pArrayFwdIn.reset(arrayFwdIn.Reference());
+	if (!Array::Dot(_pArrayFwd1, arrayFwdIn, *_pArrayDot)) return false;
+	return Array::Add(pArrayFwdOut, *_pArrayFwd1, *_pArrayBias);
 }
 
 bool Linear::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, const Array& arrayBwdIn, bool bwdPropagationFlag)
 {
-	return true;
+	_pArrayBiasGrad.reset(arrayBwdIn.Reference());
+	if (bwdPropagationFlag) {
+		// pArrayBwdOut = arrayBwdIn |.| transpose(_pArrayDot)
+		_pArrayDot->Transpose2d(_pArrayDotTrans);
+		if (!Array::Dot(pArrayBwdOut, arrayBwdIn, *_pArrayDotTrans)) return false;
+	}
+	do {
+		// _pArrayDotGrad = transpose(_pArrayFwdIn) |.| arrayBwdIn
+		_pArrayFwdIn->Transpose2d(_pArrayFwdInTrans);
+		if (!Array::Dot(_pArrayDotGrad, *_pArrayFwdInTrans, arrayBwdIn)) return false;
+	} while (0);
+	return _pOptimizerInstDot->Update(processor, _pArrayDot, *_pArrayDotGrad) &&
+			 _pOptimizerInstBias->Update(processor, _pArrayBias, *_pArrayBiasGrad);
 }
 
 String Linear::ToString(const StringStyle& ss) const
