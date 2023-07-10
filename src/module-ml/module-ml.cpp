@@ -146,6 +146,7 @@ Gurax_ModulePrepare()
 	Conv2d::Initialize();
 	Conv3d::Initialize();
 	Dropout::Initialize();
+	Linear::Initialize();
 	ReLU::Initialize();
 	Sigmoid::Initialize();
 	Softmax::Initialize();
@@ -160,6 +161,7 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_Conv2d);
 	Assign(VTYPE_Conv3d);
 	Assign(VTYPE_Dropout);
+	Assign(VTYPE_Linear);
 	Assign(VTYPE_MaxPool1d);
 	Assign(VTYPE_MaxPool2d);
 	Assign(VTYPE_MaxPool3d);

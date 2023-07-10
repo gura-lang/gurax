@@ -133,8 +133,9 @@ Conv2d* Conv2d::Deserialize(Stream& stream)
 	if (!stream.DeserializePackedNumber<size_t>(stride)) return nullptr;
 	if (!stream.DeserializePackedNumber<size_t>(padding)) return nullptr;
 	RefPtr<Array> pArrayFilter(Array::Deserialize(stream));
-	RefPtr<Array> pArrayBias(Array::Deserialize(stream));
 	if (!pArrayFilter) return nullptr;
+	RefPtr<Array> pArrayBias(Array::Deserialize(stream));
+	if (!pArrayBias) return nullptr;
 	return new Conv2d(nChannelsIn, nRowsIn, nColsIn, nFilters, nRowsFilter, nColsFilter, stride, padding, pArrayFilter.release(), pArrayBias.release());
 }
 
