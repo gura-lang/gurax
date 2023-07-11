@@ -27,12 +27,10 @@ ${help.ComposeMethodHelp(ml.Linear, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// ml.Linear(nRowsIn as Number, nColsIn as Number, nColsOut as Number, elemType? as Symbol) {block?}
+// ml.Linear(nColsOut as Number, elemType? as Symbol) {block?}
 Gurax_DeclareConstructor(Linear)
 {
 	Declare(VTYPE_Linear, Flag::None);
-	DeclareArg("nRowsIn", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("nColsIn", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("nColsOut", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
@@ -44,8 +42,6 @@ Gurax_ImplementConstructor(Linear)
 {
 	// Arguments
 	ArgPicker args(argument);
-	size_t nRowsIn = args.PickNumberPos<size_t>();
-	size_t nColsIn = args.PickNumberPos<size_t>();
 	size_t nColsOut = args.PickNumberPos<size_t>();
 	if (Error::IsIssued()) return Value::nil();
 	const Array::ElemTypeT& elemType = args.IsValid()? Array::SymbolToElemType(args.PickSymbol()) : Array::ElemType::Float;
@@ -54,7 +50,7 @@ Gurax_ImplementConstructor(Linear)
 		return Value::nil();
 	}
 	// Function body
-	RefPtr<Linear> pLinear(new Linear(nRowsIn, nColsIn, nColsOut, elemType));
+	RefPtr<Linear> pLinear(new Linear(nColsOut, elemType));
 	return argument.ReturnValue(processor, new Value_Linear(pLinear.release()));
 }
 
@@ -65,18 +61,7 @@ Gurax_ImplementConstructor(Linear)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// ml.Linear#nRowsIn
-Gurax_DeclareProperty_R(Linear, nRowsIn)
-{
-	Declare(VTYPE_Number, Flag::None);
-}
-
-Gurax_ImplementPropertyGetter(Linear, nRowsIn)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetLinear().GetNRowsIn());
-}
-
+#if 0
 // ml.Linear#nColsIn
 Gurax_DeclareProperty_R(Linear, nColsIn)
 {
@@ -85,21 +70,10 @@ Gurax_DeclareProperty_R(Linear, nColsIn)
 
 Gurax_ImplementPropertyGetter(Linear, nColsIn)
 {
-	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetLinear().GetNColsIn());
+	auto& linear = GetValueThis(valueTarget).GetLinear();
+	return new Value_Number(linear.GetNColsIn());
 }
-
-// ml.Linear#nRowsOut
-Gurax_DeclareProperty_R(Linear, nRowsOut)
-{
-	Declare(VTYPE_Number, Flag::None);
-}
-
-Gurax_ImplementPropertyGetter(Linear, nRowsOut)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetLinear().GetNRowsIn());
-}
+#endif
 
 // ml.Linear#nColsOut
 Gurax_DeclareProperty_R(Linear, nColsOut)
@@ -109,12 +83,12 @@ Gurax_DeclareProperty_R(Linear, nColsOut)
 
 Gurax_ImplementPropertyGetter(Linear, nColsOut)
 {
-	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetLinear().GetNColsOut());
+	auto& linear = GetValueThis(valueTarget).GetLinear();
+	return new Value_Number(linear.GetNColsOut());
 }
 
-// ml.Linear#dot
-Gurax_DeclareProperty_R(Linear, dot)
+// ml.Linear#weight
+Gurax_DeclareProperty_R(Linear, weight)
 {
 	Declare(VTYPE_Array, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -122,14 +96,14 @@ Skeleton.
 )""");
 }
 
-Gurax_ImplementPropertyGetter(Linear, dot)
+Gurax_ImplementPropertyGetter(Linear, weight)
 {
-	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Array(valueThis.GetLinear().GetArrayDot().Reference());
+	auto& linear = GetValueThis(valueTarget).GetLinear();
+	return linear.HasArrayWeight()? new Value_Array(linear.GetArrayWeight().Reference()) : Value::nil();
 }
 
-// ml.Linear#dotGrad
-Gurax_DeclareProperty_R(Linear, dotGrad)
+// ml.Linear#weightGrad
+Gurax_DeclareProperty_R(Linear, weightGrad)
 {
 	Declare(VTYPE_Array, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -137,11 +111,10 @@ Skeleton.
 )""");
 }
 
-Gurax_ImplementPropertyGetter(Linear, dotGrad)
+Gurax_ImplementPropertyGetter(Linear, weightGrad)
 {
-	auto& valueThis = GetValueThis(valueTarget);
-	return valueThis.GetLinear().IsValidArrayDotGrad()?
-		new Value_Array(valueThis.GetLinear().GetArrayDotGrad().Reference()) : Value::nil();
+	auto& linear = GetValueThis(valueTarget).GetLinear();
+	return linear.HasArrayWeightGrad()? new Value_Array(linear.GetArrayWeightGrad().Reference()) : Value::nil();
 }
 
 // ml.Linear#bias
@@ -155,8 +128,8 @@ Skeleton.
 
 Gurax_ImplementPropertyGetter(Linear, bias)
 {
-	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Array(valueThis.GetLinear().GetArrayBias().Reference());
+	auto& linear = GetValueThis(valueTarget).GetLinear();
+	return linear.HasArrayBias()? new Value_Array(linear.GetArrayBias().Reference()) : Value::nil();
 }
 
 // ml.Linear#biasGrad
@@ -170,9 +143,8 @@ Skeleton.
 
 Gurax_ImplementPropertyGetter(Linear, biasGrad)
 {
-	auto& valueThis = GetValueThis(valueTarget);
-	return valueThis.GetLinear().IsValidArrayBiasGrad()?
-		new Value_Array(valueThis.GetLinear().GetArrayBiasGrad().Reference()) : Value::nil();
+	auto& linear = GetValueThis(valueTarget).GetLinear();
+	return linear.HasArrayBiasGrad()? new Value_Array(linear.GetArrayBiasGrad().Reference()) : Value::nil();
 }
 
 //------------------------------------------------------------------------------
@@ -188,11 +160,10 @@ void VType_Linear::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Gear, Flag::Immutable, Gurax_CreateConstructor(Linear));
 	// Assignment of method
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Linear, nRowsIn));
-	Assign(Gurax_CreateProperty(Linear, nColsIn));
+	//Assign(Gurax_CreateProperty(Linear, nColsIn));
 	Assign(Gurax_CreateProperty(Linear, nColsOut));
-	Assign(Gurax_CreateProperty(Linear, dot));
-	Assign(Gurax_CreateProperty(Linear, dotGrad));
+	Assign(Gurax_CreateProperty(Linear, weight));
+	Assign(Gurax_CreateProperty(Linear, weightGrad));
 	Assign(Gurax_CreateProperty(Linear, bias));
 	Assign(Gurax_CreateProperty(Linear, biasGrad));
 }

@@ -17,24 +17,23 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("ml.Linear");
 private:
-	size_t _nRowsIn;
-	size_t _nColsIn;
 	size_t _nColsOut;
 private:
+	const Array::ElemTypeT& _elemType;
 	RefPtr<Array> _pArrayFwdIn;
-	RefPtr<Array> _pArrayDot;
-	RefPtr<Array> _pArrayDotGrad;
+	RefPtr<Array> _pArrayWeight;
+	RefPtr<Array> _pArrayWeightGrad;
 	RefPtr<Array> _pArrayBias;
 	RefPtr<Array> _pArrayBiasGrad;
 	RefPtr<Array> _pArrayFwdInTrans;
-	RefPtr<Array> _pArrayDotTrans;
+	RefPtr<Array> _pArrayWeightTrans;
 	RefPtr<Array> _pArrayFwd1;
-	RefPtr<Optimizer::Instance> _pOptimizerInstDot;
+	RefPtr<Optimizer::Instance> _pOptimizerInstWeight;
 	RefPtr<Optimizer::Instance> _pOptimizerInstBias;
 public:
 	// Constructor
-	Linear(size_t nRowsIn, size_t nColsIn, size_t nColsOut, const Array::ElemTypeT& elemType);
-	Linear(size_t nRowsIn, size_t nColsIn, size_t nColsOut, Array* pArrayDot, Array* pArrayBias);
+	Linear(size_t nColsOut, const Array::ElemTypeT& elemType);
+	Linear(Array* pArrayWeight, Array* pArrayBias);
 	// Copy constructor/operator
 	Linear(const Linear& src) = delete;
 	Linear& operator=(const Linear& src) = delete;
@@ -47,7 +46,7 @@ public:
 	static void Initialize();
 public:
 	virtual void SetOptimizer(const Optimizer& optimizer) override {
-		_pOptimizerInstDot.reset(optimizer.CreateInstance());
+		_pOptimizerInstWeight.reset(optimizer.CreateInstance());
 		_pOptimizerInstBias.reset(optimizer.CreateInstance());
 	}
 	virtual const char* GetName() const override { return "ml.Linear"; }
@@ -57,16 +56,16 @@ public:
 	bool Serialize(Stream& stream) const;
 	static Linear* Deserialize(Stream& stream);
 public:
-	size_t GetNRowsIn() const { return _nRowsIn; }
-	size_t GetNColsIn() const { return _nColsIn; }
 	size_t GetNColsOut() const { return _nColsOut; }
 public:
-	const Array& GetArrayDot() const { return *_pArrayDot; }
-	const Array& GetArrayDotGrad() const { return *_pArrayDotGrad; }
+	const Array& GetArrayWeight() const { return *_pArrayWeight; }
+	const Array& GetArrayWeightGrad() const { return *_pArrayWeightGrad; }
 	const Array& GetArrayBias() const { return *_pArrayBias; }
 	const Array& GetArrayBiasGrad() const { return *_pArrayBiasGrad; }
-	bool IsValidArrayDotGrad() const { return !_pArrayDotGrad.IsNull(); }
-	bool IsValidArrayBiasGrad() const { return !_pArrayBiasGrad.IsNull(); }
+	bool HasArrayWeight() const { return !_pArrayWeight.IsNull(); }
+	bool HasArrayWeightGrad() const { return !_pArrayWeightGrad.IsNull(); }
+	bool HasArrayBias() const { return !_pArrayBias.IsNull(); }
+	bool HasArrayBiasGrad() const { return !_pArrayBiasGrad.IsNull(); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Linear& other) const { return this == &other; }
