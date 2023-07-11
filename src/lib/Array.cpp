@@ -104,7 +104,10 @@ template<> void FillRandomNormal_T<Float>(Array& array, Double mean, Double stdd
 	using T_Elem = Float;
 	T_Elem* pElem = array.GetPointerC<T_Elem>();
 	size_t len = array.GetDimSizes().CalcLength();
-	for (size_t idx = 0; idx < len; pElem++, idx++) *pElem = random.GenNormal<T_Elem>(mean, stddev);
+	//::printf("FillRandomNorml %zu\n", len);;
+	for (size_t idx = 0; idx < len; pElem++, idx++) {
+		*pElem = random.GenNormal<T_Elem>(mean, stddev);
+	}
 }
 
 template<> void FillRandomNormal_T<Double>(Array& array, Double mean, Double stddev, Random& random)
@@ -112,7 +115,9 @@ template<> void FillRandomNormal_T<Double>(Array& array, Double mean, Double std
 	using T_Elem = Double;
 	T_Elem* pElem = array.GetPointerC<T_Elem>();
 	size_t len = array.GetDimSizes().CalcLength();
-	for (size_t idx = 0; idx < len; pElem++, idx++) *pElem = random.GenNormal<T_Elem>(mean, stddev);
+	for (size_t idx = 0; idx < len; pElem++, idx++) {
+		*pElem = random.GenNormal<T_Elem>(mean, stddev);
+	}
 }
 
 template<typename T_Elem> Value* FindMax_T(const Array& array, size_t axis, const ValueList& valuesDim)

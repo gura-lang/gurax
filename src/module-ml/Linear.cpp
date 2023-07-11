@@ -32,6 +32,7 @@ bool Linear::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, cons
 		Double stddev = ::sqrt(1 / nColsIn);
 		_pArrayWeight->FillRandomNormal(0, stddev, Random::Global());
 		_pArrayBias->FillRandomNormal(0, stddev, Random::Global());
+		::printf("%s\n", _pArrayWeight->ToString().c_str());
 	}
 	_pArrayFwdIn.reset(arrayFwdIn.Reference());
 	if (!Array::Dot(_pArrayFwd1, arrayFwdIn, *_pArrayWeight)) return false;
@@ -42,12 +43,12 @@ bool Linear::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, con
 {
 	_pArrayBiasGrad.reset(arrayBwdIn.Reference());
 	if (bwdPropagationFlag) {
-		// pArrayBwdOut = arrayBwdIn |.| transpose(_pArrayWeight)
+		// pArrayBwdOut = arrayBwdIn |.| T(_pArrayWeight)
 		_pArrayWeight->Transpose2d(_pArrayWeightTrans);
 		if (!Array::Dot(pArrayBwdOut, arrayBwdIn, *_pArrayWeightTrans)) return false;
 	}
 	do {
-		// _pArrayWeightGrad = transpose(_pArrayFwdIn) |.| arrayBwdIn
+		// _pArrayWeightGrad = T(_pArrayFwdIn) |.| arrayBwdIn
 		_pArrayFwdIn->Transpose2d(_pArrayFwdInTrans);
 		if (!Array::Dot(_pArrayWeightGrad, *_pArrayFwdInTrans, arrayBwdIn)) return false;
 	} while (0);
