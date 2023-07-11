@@ -81,6 +81,40 @@ bool Array::Reshape(RefPtr<Array>& pArrayRtn, const ValueList& values) const
 	return false;
 }
 
+template<typename T_Elem> void FillOne_T(Array& array)
+{
+	T_Elem* pElem = array.GetPointerC<T_Elem>();
+	size_t len = array.GetDimSizes().CalcLength();
+	for (size_t idx = 0; idx < len; pElem++, idx++) *pElem = 1;
+}
+
+template<typename T_Elem> void FillRandomNormal_T(Array& array, Random& random, Double mean, Double stddev)
+{
+}
+
+template<> void FillRandomNormal_T<Half>(Array& array, Random& random, Double mean, Double stddev)
+{
+	Half* pElem = array.GetPointerC<Half>();
+	size_t len = array.GetDimSizes().CalcLength();
+	for (size_t idx = 0; idx < len; pElem++, idx++) *pElem = Half(random.GenNormal<Float>(mean, stddev));
+}
+
+template<> void FillRandomNormal_T<Float>(Array& array, Random& random, Double mean, Double stddev)
+{
+	using T_Elem = Float;
+	T_Elem* pElem = array.GetPointerC<T_Elem>();
+	size_t len = array.GetDimSizes().CalcLength();
+	for (size_t idx = 0; idx < len; pElem++, idx++) *pElem = random.GenNormal<T_Elem>(mean, stddev);
+}
+
+template<> void FillRandomNormal_T<Double>(Array& array, Random& random, Double mean, Double stddev)
+{
+	using T_Elem = Double;
+	T_Elem* pElem = array.GetPointerC<T_Elem>();
+	size_t len = array.GetDimSizes().CalcLength();
+	for (size_t idx = 0; idx < len; pElem++, idx++) *pElem = random.GenNormal<T_Elem>(mean, stddev);
+}
+
 template<typename T_Elem> Value* FindMax_T(const Array& array, size_t axis, const ValueList& valuesDim)
 {
 	size_t strides = 0;
@@ -1261,6 +1295,8 @@ void Array::Bootup()
 	ElemType::Float.pSymbol				= Gurax_Symbol(float_);
 	ElemType::Double.pSymbol			= Gurax_Symbol(double_);
 	ElemType::Complex.pSymbol			= Gurax_Symbol(complex);
+	Gurax_SetArrayFuncSingle(funcs.FillOne,				FillOne_T);
+	Gurax_SetArrayFuncSingle(funcs.FillRandomNormal,	FillRandomNormal_T);
 	Gurax_SetArrayFuncSingle(funcs.FindMax,				FindMax_T);
 	Gurax_SetArrayFuncSingle(funcs.FindMin,				FindMin_T);
 	Gurax_SetArrayFuncSingle(funcs.ArgMax,				ArgMax_T);
@@ -1322,6 +1358,16 @@ void Array::Bootup()
 	Gurax_SetArrayFuncSingle(funcs.Cmp_NumberArray,		Cmp_NumberArray_T);
 	Gurax_SetArrayFuncArithm(funcs.Dot_ArrayArray,		Dot_ArrayArray_T);
 	Gurax_SetArrayFuncArithm(funcs.Cross_ArrayArray,	Cross_ArrayArray_T);
+}
+
+void Array::FillOne()
+{
+	return funcs.FillOne[_elemType.id](*this);
+}
+
+void Array::FillRandomNormal(Random& random, Double mean, Double stddev)
+{
+	return funcs.FillRandomNormal[_elemType.id](*this, random, mean, stddev);
 }
 
 Value* Array::FindMax(int axis, const ValueList& valuesDim) const

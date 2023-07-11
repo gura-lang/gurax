@@ -12,13 +12,11 @@ if (false) {
 	shapeImage = (1, db.nRows * db.nCols)
 	linearWeight = @float(shapeImage.last, db.nClasses).Inject(Random.NormalSeq(0, ml.Xavier(shapeImage.last)))
 	linearBias = @float(linearWeight.nCols).Inject(Random.NormalSeq(0, ml.Xavier(shapeImage.last)))
-} elsif (true) {
+} elsif (false) {
 	shapeImage = (1, db.nRows * db.nCols)
 	model = `(image |*| linear |*| ml.Softmax())
 	linear = ml.Linear(db.nClasses)
-	//linear.weight.Inject(Random.NormalSeq(0, ml.Xavier(shapeImage.last)))
-	//linear.bias.Inject(Random.NormalSeq(0, ml.Xavier(shapeImage.last)))
-} elsif (false) {
+} elsif (true) {
 	model = `{
 		t1 = (image |.| linearWeight1 + linearBias1) |*| ml.ReLU() |*| ml.Dropout(.5)
 		t2 = t1 |.| linearWeight2 + linearBias2
@@ -33,6 +31,15 @@ if (false) {
 	linearWeight2.Inject(Random.NormalSeq(0, ml.Xavier(linearWeight2.nRows)))
 	linearBias2 = @float(1, linearWeight2.nCols)
 	linearBias2.Inject(Random.NormalSeq(0, ml.Xavier(linearBias2.nCols)))
+} elsif (true) {
+	model = `{
+		t1 = image |*| linear1 |*| ml.ReLU()
+		t2 = t1 |*| linear2
+		t3 = t2 |*| ml.Softmax()
+	}
+	shapeImage = (1, db.nRows * db.nCols)
+	linear1 = ml.Linear(100)
+	linear2 = ml.Linear(db.nClasses)
 } else {
 	model = `{
 		t1 = image |*| conv1 |*| ml.ReLU() |*| pool1 |*| flatten1
