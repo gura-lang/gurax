@@ -88,18 +88,18 @@ template<typename T_Elem> void FillOne_T(Array& array)
 	for (size_t idx = 0; idx < len; pElem++, idx++) *pElem = 1;
 }
 
-template<typename T_Elem> void FillRandomNormal_T(Array& array, Random& random, Double mean, Double stddev)
+template<typename T_Elem> void FillRandomNormal_T(Array& array, Double mean, Double stddev, Random& random)
 {
 }
 
-template<> void FillRandomNormal_T<Half>(Array& array, Random& random, Double mean, Double stddev)
+template<> void FillRandomNormal_T<Half>(Array& array, Double mean, Double stddev, Random& random)
 {
 	Half* pElem = array.GetPointerC<Half>();
 	size_t len = array.GetDimSizes().CalcLength();
 	for (size_t idx = 0; idx < len; pElem++, idx++) *pElem = Half(random.GenNormal<Float>(mean, stddev));
 }
 
-template<> void FillRandomNormal_T<Float>(Array& array, Random& random, Double mean, Double stddev)
+template<> void FillRandomNormal_T<Float>(Array& array, Double mean, Double stddev, Random& random)
 {
 	using T_Elem = Float;
 	T_Elem* pElem = array.GetPointerC<T_Elem>();
@@ -107,7 +107,7 @@ template<> void FillRandomNormal_T<Float>(Array& array, Random& random, Double m
 	for (size_t idx = 0; idx < len; pElem++, idx++) *pElem = random.GenNormal<T_Elem>(mean, stddev);
 }
 
-template<> void FillRandomNormal_T<Double>(Array& array, Random& random, Double mean, Double stddev)
+template<> void FillRandomNormal_T<Double>(Array& array, Double mean, Double stddev, Random& random)
 {
 	using T_Elem = Double;
 	T_Elem* pElem = array.GetPointerC<T_Elem>();
@@ -1365,9 +1365,9 @@ void Array::FillOne()
 	return funcs.FillOne[_elemType.id](*this);
 }
 
-void Array::FillRandomNormal(Random& random, Double mean, Double stddev)
+void Array::FillRandomNormal(Double mean, Double stddev, Random& random)
 {
-	return funcs.FillRandomNormal[_elemType.id](*this, random, mean, stddev);
+	return funcs.FillRandomNormal[_elemType.id](*this, mean, stddev, random);
 }
 
 Value* Array::FindMax(int axis, const ValueList& valuesDim) const

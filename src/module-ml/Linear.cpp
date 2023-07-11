@@ -30,8 +30,8 @@ bool Linear::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, cons
 		_pArrayWeight.reset(Array::Create(_elemType, DimSizes(nColsIn, _nColsOut)));
 		_pArrayBias.reset(Array::Create(_elemType, DimSizes(_nColsOut)));
 		Double stddev = ::sqrt(1 / nColsIn);
-		_pArrayWeight->FillRandomNormal(Random::Global(), 0, stddev);
-		_pArrayBias->FillRandomNormal(Random::Global(), 0, stddev);
+		_pArrayWeight->FillRandomNormal(0, stddev, Random::Global());
+		_pArrayBias->FillRandomNormal(0, stddev, Random::Global());
 	}
 	_pArrayFwdIn.reset(arrayFwdIn.Reference());
 	if (!Array::Dot(_pArrayFwd1, arrayFwdIn, *_pArrayWeight)) return false;

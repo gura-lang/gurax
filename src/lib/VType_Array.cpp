@@ -379,6 +379,68 @@ Gurax_ImplementMethod(Array, FindMin)
 	return array.FindMin(axis, valuesDim);
 }
 
+// Array#FillOne():reduce
+Gurax_DeclareMethod(Array, FillOne)
+{
+	Declare(VTYPE_Array, Flag::Reduce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
+}
+
+Gurax_ImplementMethod(Array, FillOne)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Array& array = Value_Array::GetArray(valueThis);
+	// Function body
+	array.FillOne();
+	return valueThis.Reference();
+}
+
+// Array#FillRandomNormal(mean as Number, stddev as Number, random? as Random):reduce
+Gurax_DeclareMethod(Array, FillRandomNormal)
+{
+	Declare(VTYPE_Array, Flag::Reduce);
+	DeclareArg("mean", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("stddev", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("random", VTYPE_Random, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
+}
+
+Gurax_ImplementMethod(Array, FillRandomNormal)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Array& array = Value_Array::GetArray(valueThis);
+	// Arguments
+	ArgPicker args(argument);
+	Double mean = args.PickNumber<Double>();
+	Double stddev = args.PickNumber<Double>();
+	Random& random = args.IsValid()? args.Pick<Value_Random>().GetRandom() : Random::Global();
+	// Function body
+	array.FillRandomNormal(mean, stddev, random);
+	return valueThis.Reference();
+}
+
+// Array#FillZero():reduce
+Gurax_DeclareMethod(Array, FillZero)
+{
+	Declare(VTYPE_Array, Flag::Reduce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
+}
+
+Gurax_ImplementMethod(Array, FillZero)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Array& array = Value_Array::GetArray(valueThis);
+	// Function body
+	array.FillZero();
+	return valueThis.Reference();
+}
+
 // Array#Inject(values as Iterator, offset? as Number):reduce
 Gurax_DeclareMethod(Array, Inject)
 {
@@ -1216,6 +1278,9 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Array, ArgMin));
 	Assign(Gurax_CreateMethod(Array, Cast));
 	Assign(Gurax_CreateMethod(Array, Each));
+	Assign(Gurax_CreateMethod(Array, FillOne));
+	Assign(Gurax_CreateMethod(Array, FillRandomNormal));
+	Assign(Gurax_CreateMethod(Array, FillZero));
 	Assign(Gurax_CreateMethod(Array, FindMax));
 	Assign(Gurax_CreateMethod(Array, FindMin));
 	Assign(Gurax_CreateMethod(Array, Inject));
