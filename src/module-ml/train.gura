@@ -12,7 +12,7 @@ if (false) {
 	shapeImage = (1, db.nRows * db.nCols)
 	linearWeight = @float(shapeImage.last, db.nClasses).Inject(Random.NormalSeq(0, ml.Xavier(shapeImage.last)))
 	linearBias = @float(linearWeight.nCols).Inject(Random.NormalSeq(0, ml.Xavier(shapeImage.last)))
-} elsif (true) {
+} elsif (false) {
 	shapeImage = (1, db.nRows * db.nCols)
 	model = `(image |*| linear |*| ml.Softmax())
 	linear = ml.Linear(db.nClasses)
@@ -81,6 +81,6 @@ scope {
 			}
 			Printf('#%d error=%g\n', iRepeat + 1, trainer.CalcMeanSquaredError(correct))
 		}
-		trainer.WriteProduct('product')
+		trainer.SaveAsModule('recog_mnist', `shapeImage)
 	}
 }

@@ -1,11 +1,9 @@
 #!/usr/bin/env gurax
-import(product)
+import(recog_mnist)
 import(ml.mnist)
 
 db = ml.mnist.Database('../../sample/resource/mnist')
 
-//shapeImage = (1, db.nRows * db.nCols)
-shapeImage = (1, 1, db.nRows, db.nCols)
 pattern = [' ', '.', ':', '#', '#']
 scope {
 	// evaluation
@@ -15,9 +13,9 @@ scope {
 	nSamples = arrayImage.shape[0]
 	Printf('Test with %d samples\n', nSamples)
 	repeat (nSamples) {|i|
-		image = arrayImage[i].Reshape(shapeImage*)
+		image = arrayImage[i].Reshape(recog_mnist.shapeImage*)
 		t = arrayLabel[i].Reshape(1, nil)
-		y = product.Eval(image)
+		y = recog_mnist.Eval(image)
 		idxResult = y.ArgMax(-1, 0)
 		idxCorrect = t.ArgMax(-1, 0)
 		if (idxResult == idxCorrect) {

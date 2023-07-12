@@ -2,8 +2,9 @@
 import(gzip)
 import(ml):binary {*}
 
-Trainer.WriteProduct(moduleName as String) = {
-	out = Open(moduleName + '.gura', 'w')
+Trainer.SaveAsModule(moduleName as String, variables* as Expr):dynamicScope = {
+	fileName = moduleName + '.gura'
+	out = Open(fileName, 'w')
 	tR'''
 	#!/usr/bin/env gurax
 	import(ml)
@@ -17,23 +18,31 @@ Trainer.WriteProduct(moduleName as String) = {
 		${end}
 	}
 	'''.Render(out)
-	tmplPre = tR"""
-
-	//------------------------------------------------------------------------------
-	${node.expr.symbol} = b'''
-	"""
-	tmplPost = tR"""
-	'''base64.Reader().Reader@gzip().Deserialize()
-	"""
+	variables.Each {|variable|
+		tR"""
+		
+		${variable} = b'''
+		""".Render(out)
+		out.Writer@base64().Writer@gzip().Serialize(variable.Eval())
+		tR"""
+		'''base64.Reader().Reader@gzip().Deserialize()
+		""".Render(out)
+	}
 	this.EachNode(`variable, `gear) {|node|
 		(node.expr.type != `Identifier) && continue
-		tmplPre.Render(out)
+		tR"""
+		
+		${node.expr.symbol} = b'''
+		""".Render(out)
 		if (node.type == `variable) {
 			out.Writer@base64().Writer@gzip().Serialize(node.output)
 		} else { // node.type == `gear
 			out.Writer@base64().Writer@gzip().Serialize(node.gear)
 		}
-		tmplPost.Render(out)
+		tR"""
+		'''base64.Reader().Reader@gzip().Deserialize()
+		""".Render(out)
 	}
 	out = nil
+	sys.cerr.Printf('%s was created\n', fileName)
 }
