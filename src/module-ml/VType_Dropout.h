@@ -13,7 +13,7 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Dropout : public VType {
 public:
-	static const SerialId serialId = 0x00000106;
+	static const SerialId serialId = 0x00000103;
 public:
 	VType_Dropout() : VType(serialId) {}
 	explicit VType_Dropout(const Symbol* pSymbol) : VType(serialId) {}

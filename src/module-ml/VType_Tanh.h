@@ -13,7 +13,7 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Tanh : public VType {
 public:
-	static const SerialId serialId = 0x0000010a;
+	static const SerialId serialId = 0x0000010c;
 public:
 	VType_Tanh() : VType(serialId) {}
 	explicit VType_Tanh(const Symbol* pSymbol) : VType(serialId) {}

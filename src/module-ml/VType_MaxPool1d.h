@@ -13,7 +13,7 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_MaxPool1d : public VType {
 public:
-	static const SerialId serialId = 0x00000103;
+	static const SerialId serialId = 0x00000105;
 public:
 	VType_MaxPool1d() : VType(serialId) {}
 	explicit VType_MaxPool1d(const Symbol* pSymbol) : VType(serialId) {}

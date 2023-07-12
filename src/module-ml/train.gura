@@ -8,43 +8,19 @@ db = ml.mnist.Database('../../sample/resource/mnist')
 nTraining = 10
 
 if (false) {
-	model = `((image |.| linearWeight + linearBias) |*| ml.Softmax())
-	shapeImage = (1, db.nRows * db.nCols)
-	linearWeight = @float(shapeImage.last, db.nClasses).Inject(Random.NormalSeq(0, ml.Xavier(shapeImage.last)))
-	linearBias = @float(linearWeight.nCols).Inject(Random.NormalSeq(0, ml.Xavier(shapeImage.last)))
-} elsif (false) {
-	shapeImage = (1, db.nRows * db.nCols)
 	model = `(image |*| linear |*| ml.Softmax())
+	shapeImage = (1, db.nRows * db.nCols)
 	linear = ml.Linear(db.nClasses)
 } elsif (false) {
-	model = `{
-		t1 = (image |.| linearWeight1 + linearBias1) |*| ml.ReLU() |*| ml.Dropout(.5)
-		t2 = t1 |.| linearWeight2 + linearBias2
-		t3 = t2 |*| ml.Softmax()
-	}
-	shapeImage = (1, db.nRows * db.nCols)
-	linearWeight1 = @float(shapeImage.last, 100)
-	linearWeight1.Inject(Random.NormalSeq(0, ml.Xavier(linearWeight1.nRows)))
-	linearBias1 = @float(1, linearWeight1.nCols)
-	linearBias1.Inject(Random.NormalSeq(0, ml.Xavier(linearBias1.nCols)))
-	linearWeight2 = @float(linearWeight1.nCols, db.nClasses)
-	linearWeight2.Inject(Random.NormalSeq(0, ml.Xavier(linearWeight2.nRows)))
-	linearBias2 = @float(1, linearWeight2.nCols)
-	linearBias2.Inject(Random.NormalSeq(0, ml.Xavier(linearBias2.nCols)))
-} elsif (true) {
-	model = `{
-		t1 = image |*| linear1 |*| ml.ReLU()
-		t2 = t1 |*| linear2
-		t3 = t2 |*| ml.Softmax()
-	}
+	model = `(image |*| linear1 |*| ml.ReLU() |*| linear2 |*| ml.Softmax())
 	shapeImage = (1, db.nRows * db.nCols)
 	linear1 = ml.Linear(100)
 	linear2 = ml.Linear(db.nClasses)
 } else {
 	model = `{
 		t1 = image |*| conv1 |*| ml.ReLU() |*| pool1 |*| flatten1
-		t2 = (t1 |.| linearWeight1 + linearBias1) |*| ml.ReLU()
-		t3 = (t2 |.| linearWeight2 + linearBias2)
+		t2 = t1 |*| linear1 |*| ml.ReLU()
+		t3 = t2 |*| linear2
 		t4 = t3 |*| ml.Softmax()
 	}
 	shapeImage = (1, 1, db.nRows, db.nCols)
@@ -52,16 +28,10 @@ if (false) {
 			nFilters = 30, nRowsFilter = 5, nColsFilter = 5, stride = 1, padding = 0)
 	pool1 = ml.MaxPool2d(nRowsIn = conv1.nRowsOut, nColsIn = conv1.nColsOut, nRowsKernel = 2, nColsKernel = 2, stride = 2)
 	flatten1 = ml.Reshape(1, conv1.nFilters * pool1.nRowsOut * pool1.nColsOut)
-	linearWeight1 = @float(conv1.nFilters * pool1.nRowsOut * pool1.nColsOut, 100)
-	linearBias1 = @float(linearWeight1.nCols)
-	linearWeight2 = @float(linearWeight1.nCols, db.nClasses)
-	linearBias2 = @float(linearWeight2.nCols)
+	linear1 = ml.Linear(100)
+	linear2 = ml.Linear(db.nClasses)
 	conv1.filter.Inject(Random.NormalSeq(0, ml.Xavier(conv1.nFilters)))
 	conv1.bias.Inject(Random.NormalSeq(0, ml.Xavier(conv1.bias.nCols)))
-	linearWeight1.Inject(Random.NormalSeq(0, ml.Xavier(linearWeight1.nRows)))
-	linearBias1.Inject(Random.NormalSeq(0, ml.Xavier(linearBias1.nCols)))
-	linearWeight2.Inject(Random.NormalSeq(0, ml.Xavier(linearWeight2.nRows)))
-	linearBias2.Inject(Random.NormalSeq(0, ml.Xavier(linearBias2.nCols)))
 }
 
 scope {
