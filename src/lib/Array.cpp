@@ -104,7 +104,6 @@ template<> void FillRandomNormal_T<Float>(Array& array, Double mean, Double stdd
 	using T_Elem = Float;
 	T_Elem* pElem = array.GetPointerC<T_Elem>();
 	size_t len = array.GetDimSizes().CalcLength();
-	//::printf("FillRandomNorml %zu\n", len);;
 	for (size_t idx = 0; idx < len; pElem++, idx++) {
 		*pElem = random.GenNormal<T_Elem>(mean, stddev);
 	}
@@ -1417,7 +1416,6 @@ Value* Array::ArgMin(int axis, const ValueList& valuesDim) const
 
 void Array::InjectElems(ValueList& values, size_t offset, size_t len)
 {
-	//::printf("%p\n", &funcs.InjectFromValueList[_elemType.id]);
 	funcs.InjectFromValueList[_elemType.id](values, GetPointerC<void>(), offset, len);
 }
 
