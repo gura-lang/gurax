@@ -8,8 +8,8 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 // MaxPool2d
 //------------------------------------------------------------------------------
-MaxPool2d::MaxPool2d(size_t nRowsIn, size_t nColsIn, size_t nRowsKernel, size_t nColsKernel, size_t stride) : Gear(false),
-	_nRowsFwdIn(nRowsIn), _nColsFwdIn(nColsIn), _nRowsKernel(nRowsKernel), _nColsKernel(nColsKernel), _stride(stride)
+MaxPool2d::MaxPool2d(size_t nRowsKernel, size_t nColsKernel, size_t stride) : Gear(false),
+	_nRowsKernel(nRowsKernel), _nColsKernel(nColsKernel), _stride(stride)
 {
 }
 
@@ -34,16 +34,18 @@ bool MaxPool2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, c
 		Error::Issue(ErrorType::SizeError, "the array must have at least two dimensions");
 		return false;
 	}
-	if (_nRowsFwdIn != dimSizesFwdIn.GetRowSize() || _nColsFwdIn != dimSizesFwdIn.GetColSize()) {
-		Error::Issue(ErrorType::SizeError, "invalid size of Array");
-		return false;
-	}
+	//if (_nRowsFwdIn != dimSizesFwdIn.GetRowSize() || _nColsFwdIn != dimSizesFwdIn.GetColSize()) {
+	//	Error::Issue(ErrorType::SizeError, "invalid size of Array");
+	//	return false;
+	//}
 	//if (_nRowsFwdIn < _nRowsKernel || _nColsFwdIn < _nColsKernel) {
 	//	Error::Issue(ErrorType::SizeError, "the array is smaller than the kernel size");
 	//	return false;
 	//}
-	size_t nRowsFwdOut = (_nRowsFwdIn - _nRowsKernel) / _stride + 1;
-	size_t nColsFwdOut = (_nColsFwdIn - _nColsKernel) / _stride + 1;
+	size_t nRowsFwdIn = dimSizesFwdIn.GetRowSize();
+	size_t nColsFwdIn = dimSizesFwdIn.GetColSize();
+	size_t nRowsFwdOut = (nRowsFwdIn - _nRowsKernel) / _stride + 1;
+	size_t nColsFwdOut = (nColsFwdIn - _nColsKernel) / _stride + 1;
 	_pArrayFwdInSaved.reset(arrayFwdIn.Reference());
 	if (!pArrayFwdOut) {
 		DimSizes dimSizesFwdOut(dimSizesFwdIn.begin(), dimSizesFwdIn.begin() + dimSizesFwdIn.size() - 2);
@@ -55,12 +57,12 @@ bool MaxPool2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, c
 		_pArrayFwdOutSaved.reset(pArrayFwdOut.Reference());
 	}
 	size_t bytesPerCol = elemType.bytes;
-	size_t bytesPerRow = _nColsFwdIn * bytesPerCol;
+	size_t bytesPerRow = nColsFwdIn * bytesPerCol;
 	size_t bytesStrideCol = _stride * bytesPerCol;
 	size_t bytesStrideRow = _stride * bytesPerRow;
 	size_t scanPosStrideCol = _stride;
-	size_t scanPosStrideRow = _stride * _nColsFwdIn;
-	size_t bytesPerUnit = bytesPerRow * _nRowsFwdIn;
+	size_t scanPosStrideRow = _stride * nColsFwdIn;
+	size_t bytesPerUnit = bytesPerRow * nRowsFwdIn;
 	auto funcPut = Array::funcs.Put[elemType.id];
 	auto funcMaxPool = funcs.MaxPool[elemType.id];
 	auto pElemPool = pArrayFwdOut->GetPointerC<UInt8>();
@@ -79,7 +81,7 @@ bool MaxPool2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, c
 				UInt32 scanPosIn = scanPosInCol;
 				*pScanPosInSel = scanPosInCol;
 				funcPut(pElemPool, pElemKernel);
-				for (size_t iRowKernel = 0; iRowKernel < _nRowsKernel; scanPosIn += _nColsFwdIn, iRowKernel++, pElemKernel += bytesPerRow) {
+				for (size_t iRowKernel = 0; iRowKernel < _nRowsKernel; scanPosIn += nColsFwdIn, iRowKernel++, pElemKernel += bytesPerRow) {
 					funcMaxPool(pElemPool, pElemKernel, _nColsKernel, scanPosIn, pScanPosInSel);
 				}
 			}
@@ -100,6 +102,8 @@ bool MaxPool2d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, 
 		Error::Issue(ErrorType::SizeError, "the array must have at least two dimensions");
 		return false;
 	}
+	size_t nRowsFwdIn = dimSizesFwdIn.GetRowSize();
+	size_t nColsFwdIn = dimSizesFwdIn.GetColSize();
 	size_t nRowsBwdIn = dimSizesBwdIn.GetRowSize();
 	size_t nColsBwdIn = dimSizesBwdIn.GetColSize();
 	size_t nRowsColsBwdIn = nRowsBwdIn * nColsBwdIn;
@@ -109,10 +113,10 @@ bool MaxPool2d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, 
 		pArrayBwdOut.reset(_pArrayFwdInSaved->CreateLike());
 	}
 	size_t bytesPerCol = elemType.bytes;
-	size_t bytesPerRow = _nColsFwdIn * bytesPerCol;
+	size_t bytesPerRow = nColsFwdIn * bytesPerCol;
 	size_t bytesStrideCol = _stride * bytesPerCol;
 	size_t bytesStrideRow = _stride * bytesPerRow;
-	size_t bytesPerUnit = bytesPerRow * _nRowsFwdIn;
+	size_t bytesPerUnit = bytesPerRow * nRowsFwdIn;
 	auto funcPut = Array::funcs.Put[elemType.id];
 	auto funcPoolBackward = funcs.PoolBackward[elemType.id];
 	auto pElemBwdIn = arrayBwdIn.GetPointerC<UInt8>();
@@ -129,8 +133,6 @@ bool MaxPool2d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, 
 
 bool MaxPool2d::Serialize(Stream& stream) const
 {
-	if (!stream.SerializePackedNumber<size_t>(_nRowsFwdIn)) return false;
-	if (!stream.SerializePackedNumber<size_t>(_nColsFwdIn)) return false;
 	if (!stream.SerializePackedNumber<size_t>(_nRowsKernel)) return false;
 	if (!stream.SerializePackedNumber<size_t>(_nColsKernel)) return false;
 	if (!stream.SerializePackedNumber<size_t>(_stride)) return false;
@@ -139,13 +141,11 @@ bool MaxPool2d::Serialize(Stream& stream) const
 
 MaxPool2d* MaxPool2d::Deserialize(Stream& stream)
 {
-	size_t nRowsIn, nColsIn, nRowsKernel, nColsKernel, stride;
-	if (!stream.DeserializePackedNumber<size_t>(nRowsIn)) return nullptr;
-	if (!stream.DeserializePackedNumber<size_t>(nColsIn)) return nullptr;
+	size_t nRowsKernel, nColsKernel, stride;
 	if (!stream.DeserializePackedNumber<size_t>(nRowsKernel)) return nullptr;
 	if (!stream.DeserializePackedNumber<size_t>(nColsKernel)) return nullptr;
 	if (!stream.DeserializePackedNumber<size_t>(stride)) return nullptr;
-	return new MaxPool2d(nRowsIn, nColsIn, nRowsKernel, nColsKernel, stride);
+	return new MaxPool2d(nRowsKernel, nColsKernel, stride);
 }
 
 String MaxPool2d::ToString(const StringStyle& ss) const

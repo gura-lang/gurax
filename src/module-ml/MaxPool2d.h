@@ -17,8 +17,6 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("ml.MaxPool2d");
 private:
-	size_t _nRowsFwdIn;
-	size_t _nColsFwdIn;
 	size_t _nRowsKernel;
 	size_t _nColsKernel;
 	size_t _stride;
@@ -28,7 +26,7 @@ private:
 	RefPtr<Array> _pArrayScanPosInSel;
 public:
 	// Constructor
-	MaxPool2d(size_t nRowsIn, size_t nColsIn, size_t nRowsKernel, size_t nColsKernel, size_t stride);
+	MaxPool2d(size_t nRowsKernel, size_t nColsKernel, size_t stride);
 	// Copy constructor/operator
 	MaxPool2d(const MaxPool2d& src) = delete;
 	MaxPool2d& operator=(const MaxPool2d& src) = delete;
@@ -40,13 +38,9 @@ protected:
 public:
 	static void Initialize();
 public:
-	size_t GetNRowsIn() const { return _nRowsFwdIn; }
-	size_t GetNColsIn() const { return _nColsFwdIn; }
 	size_t GetNRowsKernel() const { return _nRowsKernel; }
 	size_t GetNColsKernel() const { return _nColsKernel; }
 	size_t GetStride() const { return _stride; }
-	size_t CalcNRowsOut() const { return (_nRowsFwdIn - _nRowsKernel) / _stride + 1; }
-	size_t CalcNColsOut() const { return (_nColsFwdIn - _nColsKernel) / _stride + 1; }
 	virtual const char* GetName() const override { return "ml.MaxPool2d"; }
 	virtual bool EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, bool trainingFlag) override;
 	virtual bool EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, const Array& arrayBwdIn, bool bwdPropagationFlag) override;

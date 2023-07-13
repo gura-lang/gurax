@@ -40,7 +40,7 @@ public:
 	// Constructor
 	Conv2d(size_t nChannelsIn, size_t nRowsIn, size_t nColsIn,
 			size_t nFilters, size_t nRowsFilter, size_t nColsFilter,
-			size_t stride, size_t padding, const Array::ElemTypeT& elemType);
+			size_t stride, size_t padding);
 	Conv2d(size_t nChannelsIn, size_t nRowsIn, size_t nColsIn,
 			size_t nFilters, size_t nRowsFilter, size_t nColsFilter,
 			size_t stride, size_t padding, Array* pArrayFilter, Array* pArrayBias);
@@ -64,8 +64,8 @@ public:
 	size_t GetNColsFilter() const { return _nColsFilter; }
 	size_t GetStride() const { return _stride; }
 	size_t GetPadding() const { return _padding; }
-	size_t CalcNRowsOut() const { return (_nRowsIn + 2 * _padding - _nRowsFilter) / _stride + 1; }
-	size_t CalcNColsOut() const { return (_nColsIn + 2 * _padding - _nColsFilter) / _stride + 1; }
+	size_t CalcNRowsOut(size_t nRowsIn) const { return (nRowsIn + 2 * _padding - _nRowsFilter) / _stride + 1; }
+	size_t CalcNColsOut(size_t nColsIn) const { return (nColsIn + 2 * _padding - _nColsFilter) / _stride + 1; }
 	virtual void SetOptimizer(const Optimizer& optimizer) override {
 		_pOptimizerInstFilter.reset(optimizer.CreateInstance());
 		_pOptimizerInstBias.reset(optimizer.CreateInstance());
@@ -81,8 +81,10 @@ public:
 	const Array& GetArrayFilterGrad() const { return *_pArrayFilterGrad; }
 	const Array& GetArrayBias() const { return *_pArrayBias; }
 	const Array& GetArrayBiasGrad() const { return *_pArrayBiasGrad; }
-	bool IsValidArrayFilterGrad() const { return !_pArrayFilterGrad.IsNull(); }
-	bool IsValidArrayBiasGrad() const { return !_pArrayBiasGrad.IsNull(); }
+	bool HasArrayFilter() const { return !_pArrayFilter.IsNull(); }
+	bool HasArrayBias() const { return !_pArrayBias.IsNull(); }
+	bool HasArrayFilterGrad() const { return !_pArrayFilterGrad.IsNull(); }
+	bool HasArrayBiasGrad() const { return !_pArrayBiasGrad.IsNull(); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Conv2d& other) const { return this == &other; }
