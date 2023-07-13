@@ -27,14 +27,10 @@ ${help.ComposeMethodHelp(ml.Conv2d, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// ml.Conv2d(nChannelsIn as Number, nRowsIn as Number, nColsIn as Number,
-//           nFilters as Number, nRowsFilter as Number, nColsFilter as Number, stride? as Number, padding? as Number) {block?}
+// ml.Conv2d(nFilters as Number, nRowsFilter as Number, nColsFilter as Number, stride? as Number, padding? as Number) {block?}
 Gurax_DeclareConstructor(Conv2d)
 {
 	Declare(VTYPE_Conv2d, Flag::None);
-	DeclareArg("nChannelsIn", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("nRowsIn", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("nColsIn", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("nFilters", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("nRowsFilter", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("nColsFilter", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -50,9 +46,6 @@ Gurax_ImplementConstructor(Conv2d)
 {
 	// Arguments
 	ArgPicker args(argument);
-	size_t nChannelsIn = args.PickNumberPos<size_t>();
-	size_t nRowsIn = args.PickNumberPos<size_t>();
-	size_t nColsIn = args.PickNumberPos<size_t>();
 	size_t nFilters = args.PickNumberPos<size_t>();
 	size_t nRowsFilter = args.PickNumberPos<size_t>();
 	size_t nColsFilter = args.PickNumberPos<size_t>();
@@ -60,8 +53,7 @@ Gurax_ImplementConstructor(Conv2d)
 	size_t padding = args.IsValid()? args.PickNumberNonNeg<size_t>() : 0;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	//if (!Conv2d::ValidateArrayFilter(arrayFilter)) return Value::nil();
-	RefPtr<Conv2d> pConv2d(new Conv2d(nChannelsIn, nRowsIn, nColsIn, nFilters, nRowsFilter, nColsFilter, stride, padding));
+	RefPtr<Conv2d> pConv2d(new Conv2d(nFilters, nRowsFilter, nColsFilter, stride, padding));
 	return argument.ReturnValue(processor, new Value_Conv2d(pConv2d.release()));
 }
 
@@ -131,32 +123,6 @@ Gurax_ImplementPropertyGetter(Conv2d, padding)
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Number(valueThis.GetConv2d().GetPadding());
 }
-
-#if 0
-// ml.Conv2d#nRowsOut
-Gurax_DeclareProperty_R(Conv2d, nRowsOut)
-{
-	Declare(VTYPE_Number, Flag::None);
-}
-
-Gurax_ImplementPropertyGetter(Conv2d, nRowsOut)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetConv2d().CalcNRowsOut());
-}
-
-// ml.Conv2d#nColsOut
-Gurax_DeclareProperty_R(Conv2d, nColsOut)
-{
-	Declare(VTYPE_Number, Flag::None);
-}
-
-Gurax_ImplementPropertyGetter(Conv2d, nColsOut)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetConv2d().CalcNColsOut());
-}
-#endif
 
 // ml.Conv2d#filter
 Gurax_DeclareProperty_R(Conv2d, filter)
@@ -240,8 +206,6 @@ void VType_Conv2d::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Conv2d, nColsFilter));
 	Assign(Gurax_CreateProperty(Conv2d, stride));
 	Assign(Gurax_CreateProperty(Conv2d, padding));
-	//Assign(Gurax_CreateProperty(Conv2d, nRowsOut));
-	//Assign(Gurax_CreateProperty(Conv2d, nColsOut));
 	Assign(Gurax_CreateProperty(Conv2d, filter));
 	Assign(Gurax_CreateProperty(Conv2d, filterGrad));
 	Assign(Gurax_CreateProperty(Conv2d, bias));

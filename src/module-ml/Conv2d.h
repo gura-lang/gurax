@@ -17,9 +17,6 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("ml.Conv2d");
 private:
-	size_t _nChannelsIn;
-	size_t _nRowsIn;
-	size_t _nColsIn;
 	size_t _nFilters;
 	size_t _nRowsFilter;
 	size_t _nColsFilter;
@@ -38,12 +35,8 @@ private:
 	RefPtr<Optimizer::Instance> _pOptimizerInstBias;
 public:
 	// Constructor
-	Conv2d(size_t nChannelsIn, size_t nRowsIn, size_t nColsIn,
-			size_t nFilters, size_t nRowsFilter, size_t nColsFilter,
-			size_t stride, size_t padding);
-	Conv2d(size_t nChannelsIn, size_t nRowsIn, size_t nColsIn,
-			size_t nFilters, size_t nRowsFilter, size_t nColsFilter,
-			size_t stride, size_t padding, Array* pArrayFilter, Array* pArrayBias);
+	Conv2d(size_t nFilters, size_t nRowsFilter, size_t nColsFilter, size_t stride, size_t padding);
+	Conv2d(size_t nFilters, size_t nRowsFilter, size_t nColsFilter, size_t stride, size_t padding, Array* pArrayFilter, Array* pArrayBias);
 	// Copy constructor/operator
 	Conv2d(const Conv2d& src) = delete;
 	Conv2d& operator=(const Conv2d& src) = delete;
@@ -56,9 +49,6 @@ public:
 	static void Initialize();
 	static bool ValidateArrayFilter(const Array& arrayFilter);
 public:
-	size_t GetNChannelsIn() const { return _nChannelsIn; }
-	size_t GetNRowsIn() const { return _nRowsIn; }
-	size_t GetNColsIn() const { return _nColsIn; }
 	size_t GetNFilters() const { return _nFilters; }
 	size_t GetNRowsFilter() const { return _nRowsFilter; }
 	size_t GetNColsFilter() const { return _nColsFilter; }

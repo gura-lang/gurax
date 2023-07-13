@@ -8,17 +8,12 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 // Conv2d
 //------------------------------------------------------------------------------
-Conv2d::Conv2d(size_t nChannelsIn, size_t nRowsIn, size_t nColsIn,
-			size_t nFilters, size_t nRowsFilter, size_t nColsFilter, size_t stride, size_t padding) : Gear(true),
-	_nChannelsIn(nChannelsIn), _nRowsIn(nRowsIn), _nColsIn(nColsIn),
+Conv2d::Conv2d(size_t nFilters, size_t nRowsFilter, size_t nColsFilter, size_t stride, size_t padding) : Gear(true),
 	_nFilters(nFilters), _nRowsFilter(nRowsFilter), _nColsFilter(nColsFilter), _stride(stride), _padding(padding)
 {
 }
 
-Conv2d::Conv2d(size_t nChannelsIn, size_t nRowsIn, size_t nColsIn,
-			size_t nFilters, size_t nRowsFilter, size_t nColsFilter, size_t stride, size_t padding,
-			Array* pArrayFilter, Array* pArrayBias) : Gear(true),
-	_nChannelsIn(nChannelsIn), _nRowsIn(nRowsIn), _nColsIn(nColsIn),
+Conv2d::Conv2d(size_t nFilters, size_t nRowsFilter, size_t nColsFilter, size_t stride, size_t padding, Array* pArrayFilter, Array* pArrayBias) : Gear(true),
 	_nFilters(nFilters), _nRowsFilter(nRowsFilter), _nColsFilter(nColsFilter), _stride(stride), _padding(padding),
 	_pArrayFilter(pArrayFilter), _pArrayBias(pArrayBias)
 {
@@ -108,9 +103,6 @@ String Conv2d::ToString(const StringStyle& ss) const
 
 bool Conv2d::Serialize(Stream& stream) const
 {
-	if (!stream.SerializePackedNumber<size_t>(_nChannelsIn)) return false;
-	if (!stream.SerializePackedNumber<size_t>(_nRowsIn)) return false;
-	if (!stream.SerializePackedNumber<size_t>(_nColsIn)) return false;
 	if (!stream.SerializePackedNumber<size_t>(_nFilters)) return false;
 	if (!stream.SerializePackedNumber<size_t>(_nRowsFilter)) return false;
 	if (!stream.SerializePackedNumber<size_t>(_nColsFilter)) return false;
@@ -123,10 +115,7 @@ bool Conv2d::Serialize(Stream& stream) const
 
 Conv2d* Conv2d::Deserialize(Stream& stream)
 {
-	size_t nChannelsIn, nRowsIn, nColsIn, nFilters, nRowsFilter, nColsFilter, stride, padding;
-	if (!stream.DeserializePackedNumber<size_t>(nChannelsIn)) return nullptr;
-	if (!stream.DeserializePackedNumber<size_t>(nRowsIn)) return nullptr;
-	if (!stream.DeserializePackedNumber<size_t>(nColsIn)) return nullptr;
+	size_t nFilters, nRowsFilter, nColsFilter, stride, padding;
 	if (!stream.DeserializePackedNumber<size_t>(nFilters)) return nullptr;
 	if (!stream.DeserializePackedNumber<size_t>(nRowsFilter)) return nullptr;
 	if (!stream.DeserializePackedNumber<size_t>(nColsFilter)) return nullptr;
@@ -136,7 +125,7 @@ Conv2d* Conv2d::Deserialize(Stream& stream)
 	if (!pArrayFilter) return nullptr;
 	RefPtr<Array> pArrayBias(Array::Deserialize(stream));
 	if (!pArrayBias) return nullptr;
-	return new Conv2d(nChannelsIn, nRowsIn, nColsIn, nFilters, nRowsFilter, nColsFilter, stride, padding, pArrayFilter.release(), pArrayBias.release());
+	return new Conv2d(nFilters, nRowsFilter, nColsFilter, stride, padding, pArrayFilter.release(), pArrayBias.release());
 }
 
 //------------------------------------------------------------------------------

@@ -24,14 +24,11 @@ if (false) {
 		t4 = t3 |*| ml.Softmax()
 	}
 	shapeImage = (1, 1, db.nRows, db.nCols)
-	conv1 = ml.Conv2d(nChannelsIn = 1, nRowsIn = db.nRows, nColsIn = db.nCols,
-			nFilters = 30, nRowsFilter = 5, nColsFilter = 5, stride = 1, padding = 0)
+	conv1 = ml.Conv2d(nFilters = 30, nRowsFilter = 5, nColsFilter = 5, stride = 1, padding = 0)
 	pool1 = ml.MaxPool2d(nRowsKernel = 2, nColsKernel = 2, stride = 2)
 	flatten1 = ml.Reshape(1, nil)
 	linear1 = ml.Linear(100)
 	linear2 = ml.Linear(db.nClasses)
-	//conv1.filter.Inject(Random.NormalSeq(0, ml.Xavier(conv1.nFilters)))
-	//conv1.bias.Inject(Random.NormalSeq(0, ml.Xavier(conv1.bias.nCols)))
 }
 
 scope {
