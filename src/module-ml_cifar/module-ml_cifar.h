@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_ML_CIFAR_H
 #define GURAX_MODULE_ML_CIFAR_H
 #include <gurax.h>
+#include "Symbols.h"
 #include "Util.h"
 #include "VType_Cifar.h"
 #include "VType_LabelSet.h"

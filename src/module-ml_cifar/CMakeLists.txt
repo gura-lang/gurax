@@ -36,6 +36,7 @@ target_compile_definitions(ml.cifar.gurd PRIVATE GURAX_MODULE_SEPARATED
 	$<$<PLATFORM_ID:Darwin>:>)
 target_sources(ml.cifar.gurd PRIVATE
 	module-ml_cifar.cpp
+	Symbols.cpp
 	Util.cpp
 	Cifar.cpp
 	LabelSet.cpp

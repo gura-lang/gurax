@@ -15,11 +15,6 @@ Cifar::Cifar(bool superClassFlag) : _superClassFlag(superClassFlag), _nSamples(0
 
 bool Cifar::Read(Stream& stream)
 {
-	_nSamples = 0;
-	using Pack = struct {
-		UInt8 labelSuper;
-		UInt8 label;
-	};
 	UInt8 buffImage[ImageSet::nChannels * ImageSet::nRowsImage * ImageSet::nColsImage];
 	for (;;) {
 		if (_superClassFlag) {

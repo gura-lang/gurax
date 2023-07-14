@@ -18,6 +18,11 @@ public:
 	Gurax_DeclareReferable(Cifar);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("ml.cifar.Cifar");
+public:
+	struct Pack {
+		UInt8 labelSuper;
+		UInt8 label;
+	};
 private:
 	bool _superClassFlag;
 	size_t _nSamples;

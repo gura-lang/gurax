@@ -1,5 +1,35 @@
 #!/usr/bin/env gurax
 import(ml.cifar):binary {*}
 
-Cifar10(stream as Stream) = Cifar(stream, false)
-Cifar100(stream as Stream) = Cifar(stream, true)
+Cifar10 = class(Cifar) {
+	__init__(fileName as String, type as Symbol) = {|false|
+		if (type == `train) {
+			fileNames = [
+				'data_batch_1.bin', 'data_batch_2.bin', 'data_batch_3.bin', 'data_batch_4.bin', 'data_batch_5.bin'
+			]
+		} elsif (type == `test) {
+			fileNames = ['test_batch.bin']
+		} else {
+			Error.Raise(Error.SymbolError, 'specify `train or `test')
+		}
+		tar.Reader(fileName).EachEntry {|stream|
+			(stream.identifier in fileNames) && this.Read(stream)
+		}
+	}
+}
+
+Cifar100 = class(Cifar) {
+	__init__(fileName as String, type as Symbol) = {|true|
+		if (type == `train) {
+			fileNames = ['train.bin']
+		} elsif (type == `test) {
+			fileNames = ['test.bin']
+		} else {
+			Error.Raise(Error.SymbolError, 'specify `train or `test')
+		}
+		tar.Reader(fileName).EachEntry {|stream|
+			//Println(stream.identifier)
+			(stream.identifier in fileNames) && this.Read(stream)
+		}
+	}
+}

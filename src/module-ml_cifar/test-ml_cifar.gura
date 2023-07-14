@@ -7,11 +7,7 @@ import(ml.cifar)
 import(tar)
 
 TestCase('Basic test') {
-	tar.Reader('cifar-10-binary.tar.gz').EachEntry {|stream|
-		if (stream.identifier == 'data_batch_1.bin') {
-			Printf('%d\n', stream.stat.size)
-			cifar = ml.cifar.Cifar10(stream)
-			Println(cifar)
-		}
-	}
+	//cifar = ml.cifar.Cifar10('cifar-10-binary.tar.gz', `test)
+	cifar = ml.cifar.Cifar100('cifar-100-binary.tar.gz', `train)
+	Println(cifar)
 }

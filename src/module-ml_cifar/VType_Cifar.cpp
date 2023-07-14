@@ -27,11 +27,10 @@ ${help.ComposeMethodHelp(ml.cifar.Cifar, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// ml.cifar.Cifar(stream as Stream, superClassFlag as Bool) {block?}
+// ml.cifar.Cifar(superClassFlag as Bool) {block?}
 Gurax_DeclareConstructor(Cifar)
 {
 	Declare(VTYPE_Cifar, Flag::None);
-	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("superClassFlag", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -43,41 +42,38 @@ Gurax_ImplementConstructor(Cifar)
 {
 	// Arguments
 	ArgPicker args(argument);
-	Stream& stream = args.PickStream();
-	bool superClassFlag = args.PickBool();
+	Bool superClassFlag = args.PickBool();
 	// Function body
 	RefPtr<Cifar> pCifar(new Cifar(superClassFlag));
-	if (!pCifar->Read(stream)) {
-		Error::Issue(ErrorType::FormatError, "invalid format of CIFAR-10/100 file");
-		return Value::nil();
-	}
 	return argument.ReturnValue(processor, new Value_Cifar(pCifar.release()));
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// ml.cifar.Cifar#MethodSkeleton(num1 as Number, num2 as Number)
-Gurax_DeclareMethod(Cifar, MethodSkeleton)
+// ml.cifar.Cifar#Read(stream as Stream):reduce
+Gurax_DeclareMethod(Cifar, Read)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
 )""");
 }
 
-Gurax_ImplementMethod(Cifar, MethodSkeleton)
+Gurax_ImplementMethod(Cifar, Read)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
+	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	Stream& stream = args.PickStream();
 	// Function body
-	return new Value_Number(num1 + num2);
+	if (!valueThis.GetCifar().Read(stream)) {
+		Error::Issue(ErrorType::FormatError, "invalid format of CIFAR-10/100 file");
+		return Value::nil();
+	}
+	return valueThis.Reference();
 }
 
 //-----------------------------------------------------------------------------
@@ -110,7 +106,7 @@ void VType_Cifar::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Cifar));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Cifar, MethodSkeleton));
+	Assign(Gurax_CreateMethod(Cifar, Read));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Cifar, nSamples));
 }
