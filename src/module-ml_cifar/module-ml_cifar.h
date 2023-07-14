@@ -6,8 +6,8 @@
 #include <gurax.h>
 #include "Util.h"
 #include "VType_Cifar.h"
-#include "VType_ImageSet.h"
 #include "VType_LabelSet.h"
+#include "VType_ImageSet.h"
 
 Gurax_BeginModuleHeader(ml_cifar)
 Gurax_EndModuleHeader(ml_cifar)

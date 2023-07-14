@@ -42,7 +42,7 @@ Gurax_ImplementConstructor(Cifar)
 	// Arguments
 	//ArgPicker args(argument);
 	// Function body
-	RefPtr<Cifar> pCifar(new Cifar());
+	RefPtr<Cifar> pCifar(new Cifar(false));
 	return argument.ReturnValue(processor, new Value_Cifar(pCifar.release()));
 }
 

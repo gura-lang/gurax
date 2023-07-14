@@ -17,8 +17,13 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("ml.cifar.ImageSet");
 public:
+	static const size_t nRowsImage = 32;
+	static const size_t nColsImage = 32;
+private:
+	Binary _buff;
+public:
 	// Constructor
-	ImageSet() {}
+	ImageSet();
 	// Copy constructor/operator
 	ImageSet(const ImageSet& src) = delete;
 	ImageSet& operator=(const ImageSet& src) = delete;
@@ -27,6 +32,8 @@ public:
 	ImageSet& operator=(ImageSet&& src) noexcept = delete;
 protected:
 	~ImageSet() = default;
+public:
+	void Add(UInt8* buffImage) { _buff += buffImage; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const ImageSet& other) const { return this == &other; }

@@ -4,6 +4,8 @@
 #ifndef GURAX_MODULE_ML_CIFAR_CIFAR_H
 #define GURAX_MODULE_ML_CIFAR_CIFAR_H
 #include <gurax.h>
+#include "LabelSet.h"
+#include "ImageSet.h"
 
 Gurax_BeginModuleScope(ml_cifar)
 
@@ -16,9 +18,14 @@ public:
 	Gurax_DeclareReferable(Cifar);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("ml.cifar.Cifar");
+private:
+	bool _superClassFlag;
+	size_t _nImages;
+	RefPtr<LabelSet> _pLabelSet;
+	RefPtr<ImageSet> _pImageSet;
 public:
 	// Constructor
-	Cifar() {}
+	Cifar(bool superClassFlag);
 	// Copy constructor/operator
 	Cifar(const Cifar& src) = delete;
 	Cifar& operator=(const Cifar& src) = delete;
@@ -27,6 +34,8 @@ public:
 	Cifar& operator=(Cifar&& src) noexcept = delete;
 protected:
 	~Cifar() = default;
+public:
+	bool Read(Stream& stream);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Cifar& other) const { return this == &other; }

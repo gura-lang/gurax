@@ -8,6 +8,10 @@ Gurax_BeginModuleScope(ml_cifar)
 //------------------------------------------------------------------------------
 // ImageSet
 //------------------------------------------------------------------------------
+ImageSet::ImageSet()
+{
+}
+
 String ImageSet::ToString(const StringStyle& ss) const
 {
 	return String().Format("ml.cifar.ImageSet");
