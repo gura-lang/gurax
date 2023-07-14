@@ -1,0 +1,10 @@
+#!/usr/bin/env gurax
+//==============================================================================
+// test-ml_cifar.gura
+//==============================================================================
+import(util.tester) {*}
+import(ml_cifar)
+
+TestCase('Basic test') {
+	Println(ml_cifar.Test('hello', 4))
+}
