@@ -8,7 +8,7 @@ Gurax_BeginModule(ml_cifar)
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
-// ml_cifar.Test()
+// ml.cifar.Test()
 Gurax_DeclareFunction(Test)
 {
 	Declare(VTYPE_Number, Flag::None);

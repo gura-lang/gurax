@@ -1,0 +1,5 @@
+#!/usr/bin/env gurax
+import(ml.cifar):binary {*}
+
+Cifar10(stream as Stream) = Cifar(stream, false)
+Cifar100(stream as Stream) = Cifar(stream, true)

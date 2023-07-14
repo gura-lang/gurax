@@ -20,7 +20,7 @@ public:
 	Gurax_MemoryPoolAllocator("ml.cifar.Cifar");
 private:
 	bool _superClassFlag;
-	size_t _nImages;
+	size_t _nSamples;
 	RefPtr<LabelSet> _pLabelSet;
 	RefPtr<ImageSet> _pImageSet;
 public:
@@ -36,6 +36,7 @@ protected:
 	~Cifar() = default;
 public:
 	bool Read(Stream& stream);
+	size_t GetNSamples() const { return _nSamples; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Cifar& other) const { return this == &other; }

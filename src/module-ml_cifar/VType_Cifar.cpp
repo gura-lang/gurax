@@ -27,10 +27,12 @@ ${help.ComposeMethodHelp(ml.cifar.Cifar, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// ml.cifar.Cifar() {block?}
+// ml.cifar.Cifar(stream as Stream, superClassFlag as Bool) {block?}
 Gurax_DeclareConstructor(Cifar)
 {
 	Declare(VTYPE_Cifar, Flag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("superClassFlag", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `ml.cifar.Cifar` instance.
@@ -40,9 +42,15 @@ Creates a `ml.cifar.Cifar` instance.
 Gurax_ImplementConstructor(Cifar)
 {
 	// Arguments
-	//ArgPicker args(argument);
+	ArgPicker args(argument);
+	Stream& stream = args.PickStream();
+	bool superClassFlag = args.PickBool();
 	// Function body
-	RefPtr<Cifar> pCifar(new Cifar(false));
+	RefPtr<Cifar> pCifar(new Cifar(superClassFlag));
+	if (!pCifar->Read(stream)) {
+		Error::Issue(ErrorType::FormatError, "invalid format of CIFAR-10/100 file");
+		return Value::nil();
+	}
 	return argument.ReturnValue(processor, new Value_Cifar(pCifar.release()));
 }
 
@@ -75,8 +83,8 @@ Gurax_ImplementMethod(Cifar, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// ml.cifar.Cifar#propSkeleton
-Gurax_DeclareProperty_R(Cifar, propSkeleton)
+// ml.cifar.Cifar#nSamples
+Gurax_DeclareProperty_R(Cifar, nSamples)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -84,10 +92,10 @@ Skeleton.
 )""");
 }
 
-Gurax_ImplementPropertyGetter(Cifar, propSkeleton)
+Gurax_ImplementPropertyGetter(Cifar, nSamples)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetCifar().GetNSamples());
 }
 
 //------------------------------------------------------------------------------
@@ -104,7 +112,7 @@ void VType_Cifar::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Cifar, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Cifar, propSkeleton));
+	Assign(Gurax_CreateProperty(Cifar, nSamples));
 }
 
 //------------------------------------------------------------------------------

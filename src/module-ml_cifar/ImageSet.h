@@ -17,6 +17,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("ml.cifar.ImageSet");
 public:
+	static const size_t nChannels = 3;
 	static const size_t nRowsImage = 32;
 	static const size_t nColsImage = 32;
 private:

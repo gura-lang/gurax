@@ -3,8 +3,15 @@
 // test-ml_cifar.gura
 //==============================================================================
 import(util.tester) {*}
-import(ml_cifar)
+import(ml.cifar)
+import(tar)
 
 TestCase('Basic test') {
-	Println(ml_cifar.Test('hello', 4))
+	tar.Reader('cifar-10-binary.tar.gz').EachEntry {|stream|
+		if (stream.identifier == 'data_batch_1.bin') {
+			Printf('%d\n', stream.stat.size)
+			cifar = ml.cifar.Cifar10(stream)
+			Println(cifar)
+		}
+	}
 }
