@@ -10,6 +10,8 @@ Trainer.SaveAsModule(moduleName as String, variables* as Expr):dynamicScope = {
 	import(ml)
 	import(gzip)
 
+	timeStamp = '${DateTime.Now().__str__()}'
+
 	Eval(${(this.EachInputSymbol() + ' as Array').Join(', ')}) = {
 		${if (this.model.type == `Block)}
 		${this.model.EachElem():*__str__() + '\n'}
@@ -35,7 +37,7 @@ Trainer.SaveAsModule(moduleName as String, variables* as Expr):dynamicScope = {
 		${node.expr.symbol} = b'''
 		""".Render(out)
 		if (node.type == `variable) {
-			out.Writer@base64().Writer@gzip().Serialize(node.output)
+				out.Writer@base64().Writer@gzip().Serialize(node.output)
 		} else { // node.type == `gear
 			out.Writer@base64().Writer@gzip().Serialize(node.gear)
 		}

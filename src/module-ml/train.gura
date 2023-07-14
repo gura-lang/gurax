@@ -5,7 +5,6 @@ import(gzip)
 import(util.tester) {*}
 
 db = ml.mnist.Database('../../sample/resource/mnist')
-nTraining = 10
 
 if (false) {
 	model = `(image |*| linear |*| ml.Softmax())
@@ -32,6 +31,7 @@ if (false) {
 }
 
 scope {
+	nTraining = 10
 	arrayImage = db.train.imageSet.ToArray(`float, flatten = true, numMax = 1)	// (nSamples, db.nRows * db.nCols)
 	arrayLabel = db.train.labelSet.ToArray(`float, oneHot = true)				// (nSamples, db.nClasses)
 	optimizer = ml.Optimizer.GradientDescent(0.01)
