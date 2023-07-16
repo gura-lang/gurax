@@ -18,24 +18,6 @@ TesterArray(expr as Expr):void = {
 	}
 }
 
-TestCase('Array.ReduceAdd()') {
-	Tester(`Array.ReduceAdd(@float([1, 2, 3]), @float([[2, 3, 1], [2, 1, 1], [3, 1, 2]])))
-}
-
-TestCase('Array.ReduceSub()') {
-	Tester(`Array.ReduceSub(@float([1, 2, 3]), @float([[2, 3, 1], [2, 1, 1], [3, 1, 2]])))
-}
-
-TestCase('Array.ReduceMul()') {
-	Tester(`Array.ReduceMul(@float([1, 2, 3]), @float([[2, 3, 1], [2, 1, 1], [3, 1, 2]])))
-}
-
-TestCase('Array.ReduceDiv()') {
-	Tester(`Array.ReduceDiv(@float([1, 2, 3]), @float([[2, 3, 1], [2, 1, 1], [3, 1, 2]])))
-}
-
-sys.Exit()
-
 TestCase('Property') {
 	Array.PrintPropSlots()
 }
@@ -1201,4 +1183,24 @@ TestCase('Serialization') {
 		arrayDec = buff.Reader().Deserialize()
 		Printf('@%s %s\n', arrayDec.elemType, arrayDec)
 	}
+}
+
+TestCase('Array.ReduceAdd()') {
+	Tester(`Array.ReduceAdd(@float([1, 2, 3]), @float([[2, 3, 1], [2, 1, 1], [3, 1, 2]])))
+	Tester(`Array.ReduceAdd(@float([[1, 2, 3], [3, 1, 1]]), @float([[[2, 3, 1], [2, 1, 1]], [[1, 2, 1], [1, 1, 3]]])))
+}
+
+TestCase('Array.ReduceSub()') {
+	Tester(`Array.ReduceSub(@float([1, 2, 3]), @float([[2, 3, 1], [2, 1, 1], [3, 1, 2]])))
+	Tester(`Array.ReduceSub(@float([[1, 2, 3], [3, 1, 1]]), @float([[[2, 3, 1], [2, 1, 1]], [[1, 2, 1], [1, 1, 3]]])))
+}
+
+TestCase('Array.ReduceMul()') {
+	Tester(`Array.ReduceMul(@float([1, 2, 3]), @float([[2, 3, 1], [2, 1, 1], [3, 1, 2]])))
+	Tester(`Array.ReduceMul(@float([[1, 2, 3], [3, 1, 1]]), @float([[[2, 3, 1], [2, 1, 1]], [[1, 2, 1], [1, 1, 3]]])))
+}
+
+TestCase('Array.ReduceDiv()') {
+	Tester(`Array.ReduceDiv(@float([24, 9, 8]), @float([[2, 3, 1], [2, 1, 1], [3, 1, 2]])))
+	Tester(`Array.ReduceDiv(@float([[24, 9, 8], [48, 18, 16]]), @float([[[2, 3, 1], [2, 1, 1]], [[1, 1, 2], [3, 2, 2]]])))
 }
