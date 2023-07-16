@@ -119,6 +119,23 @@ template<> void FillRandomNormal_T<Double>(Array& array, Double mean, Double std
 	}
 }
 
+template<typename T_Elem> bool HasZero_T(const Array& array)
+{
+	const T_Elem* pElem = array.GetPointerC<T_Elem>();
+	size_t len = array.GetDimSizes().CalcLength();
+	for (size_t idx = 0; idx < len; pElem++, idx++) if (*pElem == 0) return true;
+	return false;
+}
+
+template<> bool HasZero_T<Complex>(const Array& array)
+{
+	using T_Elem = Complex;
+	const T_Elem* pElem = array.GetPointerC<T_Elem>();
+	size_t len = array.GetDimSizes().CalcLength();
+	for (size_t idx = 0; idx < len; pElem++, idx++) if (pElem->IsZero()) return true;
+	return false;
+}
+
 template<typename T_Elem> Value* FindMax_T(const Array& array, size_t axis, const ValueList& valuesDim)
 {
 	size_t strides = 0;
@@ -1269,6 +1286,7 @@ void Array::Bootup()
 	ElemType::Complex.pSymbol			= Gurax_Symbol(complex);
 	Gurax_SetArrayFuncSingle(funcs.FillOne,				FillOne_T);
 	Gurax_SetArrayFuncSingle(funcs.FillRandomNormal,	FillRandomNormal_T);
+	Gurax_SetArrayFuncSingle(funcs.HasZero,				HasZero_T);
 	Gurax_SetArrayFuncSingle(funcs.FindMax,				FindMax_T);
 	Gurax_SetArrayFuncSingle(funcs.FindMin,				FindMin_T);
 	Gurax_SetArrayFuncSingle(funcs.ArgMax,				ArgMax_T);
@@ -1340,6 +1358,11 @@ void Array::FillOne()
 void Array::FillRandomNormal(Double mean, Double stddev, Random& random)
 {
 	return funcs.FillRandomNormal[_elemType.id](*this, mean, stddev, random);
+}
+
+bool Array::HasZero() const
+{
+	return funcs.HasZero[_elemType.id](*this);
 }
 
 Value* Array::FindMax(int axis, const ValueList& valuesDim) const
@@ -1896,6 +1919,10 @@ bool Array::Div(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arra
 
 bool Array::Div(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
 {
+	if (numR == 0.) {
+		Error::Issue(ErrorType::DividedByZero, "divided by zero");
+		return false;
+	}
 	return GenericBinaryOp(pArrayRtn, arrayL.GetElemType(), arrayL, numR, funcs.Div_ArrayNumber[arrayL.GetElemType().id], "/");
 }
 
@@ -1906,6 +1933,10 @@ bool Array::Div(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR)
 
 bool Array::Div(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR)
 {
+	if (numR.IsZero()) {
+		Error::Issue(ErrorType::DividedByZero, "divided by zero");
+		return false;
+	}
 	return GenericBinaryOp(pArrayRtn, ElemType::Complex, arrayL, numR, funcs.Div_ArrayComplex[arrayL.GetElemType().id], "/");
 }
 

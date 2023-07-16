@@ -121,6 +121,7 @@ public:
 	struct Funcs {
 		std::function<void (Array& array)>													FillOne[ElemTypeIdMax];
 		std::function<void (Array& array, Double mean, Double stddev, Random& random)>		FillRandomNormal[ElemTypeIdMax];
+		std::function<bool (const Array& array)>											HasZero[ElemTypeIdMax];
 		std::function<Value* (const Array& array, size_t axis, const ValueList& valuesDim)>	FindMax[ElemTypeIdMax];
 		std::function<Value* (const Array& array, size_t axis, const ValueList& valuesDim)>	FindMin[ElemTypeIdMax];
 		std::function<Value* (const Array& array, size_t axis, const ValueList& valuesDim)>	ArgMax[ElemTypeIdMax];
@@ -248,6 +249,7 @@ public:
 	bool IndexSetDouble(size_t idx, Double num) { return funcs.IndexSetDouble[_elemType.id](GetPointerC<void>(), idx, num); }
 	Value* IndexGetValue(size_t idx) const { return funcs.IndexGetValue[_elemType.id](GetPointerC<void>(), idx); }
 	Double IndexGetDouble(size_t idx) const { return funcs.IndexGetDouble[_elemType.id](GetPointerC<void>(), idx); }
+	bool HasZero() const;
 	Value* FindMax(int axis, const ValueList& valuesDim) const;
 	Value* FindMin(int axis, const ValueList& valuesDim) const;
 	Value* ArgMax(int axis, const ValueList& valuesDim) const;
