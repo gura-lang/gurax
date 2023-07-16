@@ -19,18 +19,18 @@ public:
 public:
 	struct Header {
 		Gurax_PackedUInt32_BE(magicNumber);
-		Gurax_PackedUInt32_BE(nImages);
+		Gurax_PackedUInt32_BE(nSamples);
 		Gurax_PackedUInt32_BE(nRows);
 		Gurax_PackedUInt32_BE(nCols);
 	};
 private:
-	size_t _nImages;
+	size_t _nSamples;
 	size_t _nRows;
 	size_t _nCols;
 	RefPtr<Memory> _pMemory;
 public:
 	// Constructor
-	ImageSet() : _nImages(0), _nRows(0), _nCols(0) {}
+	ImageSet() : _nSamples(0), _nRows(0), _nCols(0) {}
 	// Copy constructor/operator
 	ImageSet(const ImageSet& src) = delete;
 	ImageSet& operator=(const ImageSet& src) = delete;
@@ -40,11 +40,11 @@ public:
 protected:
 	~ImageSet() = default;
 public:
-	size_t CountImages() const { return _nImages; }
-	size_t CountRows() const { return _nRows; }
-	size_t CountCols() const { return _nCols; }
+	size_t GetNSamples() const { return _nSamples; }
+	size_t GetNRows() const { return _nRows; }
+	size_t GetNCols() const { return _nCols; }
 	bool Read(Stream& stream);
-	Array* ToArray(const Array::ElemTypeT& elemType, bool flattenFlag, Float numMax) const;
+	Array* Extract(const Array::ElemTypeT& elemType, size_t iSample, size_t nSamples, bool flattenFlag, Double numCeil) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const ImageSet& other) const { return this == &other; }

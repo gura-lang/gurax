@@ -79,7 +79,7 @@ Gurax_ImplementMethod(LabelSet, ToArray)
 		return Value::nil();
 	}
 	// Function body
-	RefPtr<Array> pArray(valueThis.GetLabelSet().ToArray(elemType, oneHotFlag));
+	RefPtr<Array> pArray(valueThis.GetLabelSet().Extract(elemType, 0, 0, oneHotFlag));
 	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
 }
 
@@ -98,7 +98,7 @@ Skeleton.
 Gurax_ImplementPropertyGetter(LabelSet, nSamples)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetLabelSet().CountSamples());
+	return new Value_Number(valueThis.GetLabelSet().GetNSamples());
 }
 
 // ml.mnist.LabelSet#nClasses

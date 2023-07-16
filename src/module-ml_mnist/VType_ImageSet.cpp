@@ -54,13 +54,13 @@ Gurax_ImplementConstructor(ImageSet)
 //   flatten = false ... (nSamples, nRows, nCols)
 //   flatten = true  ... (nSamples, nRows * nCols)
 //-----------------------------------------------------------------------------
-// ml.mnist.ImageSet#ToArray(elemType? as Symbol, flatten? as Bool, numMax? as Number):map {block?}
+// ml.mnist.ImageSet#ToArray(elemType? as Symbol, flatten? as Bool, numCeil? as Number):map {block?}
 Gurax_DeclareMethod(ImageSet, ToArray)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("flatten", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("numMax", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("numCeil", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
@@ -75,13 +75,13 @@ Gurax_ImplementMethod(ImageSet, ToArray)
 	ArgPicker args(argument);
 	const Array::ElemTypeT& elemType = args.IsValid()? Array::SymbolToElemType(args.PickSymbol()) : Array::ElemType::UInt8;
 	Bool flattenFlag = args.IsValid()? args.PickBool() : false;
-	Float numMax = args.IsValid()? args.PickNumber<Float>() : 0;
+	Float numCeil = args.IsValid()? args.PickNumber<Float>() : 0;
 	if (elemType.IsNone()) {
 		Error::Issue(ErrorType::ValueError, "invalid symbol for element type");
 		return Value::nil();
 	}
 	// Function body
-	RefPtr<Array> pArray(valueThis.GetImageSet().ToArray(elemType, flattenFlag, numMax));
+	RefPtr<Array> pArray(valueThis.GetImageSet().Extract(elemType, 0, 0, flattenFlag, numCeil));
 	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
 }
 
@@ -100,7 +100,7 @@ Skeleton.
 Gurax_ImplementPropertyGetter(ImageSet, nSamples)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetImageSet().CountImages());
+	return new Value_Number(valueThis.GetImageSet().GetNSamples());
 }
 
 // ml.mnist.ImageSet#nRows
@@ -115,7 +115,7 @@ Skeleton.
 Gurax_ImplementPropertyGetter(ImageSet, nRows)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetImageSet().CountRows());
+	return new Value_Number(valueThis.GetImageSet().GetNRows());
 }
 
 // ml.mnist.ImageSet#nCols
@@ -130,7 +130,7 @@ Skeleton.
 Gurax_ImplementPropertyGetter(ImageSet, nCols)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetImageSet().CountCols());
+	return new Value_Number(valueThis.GetImageSet().GetNCols());
 }
 
 //------------------------------------------------------------------------------

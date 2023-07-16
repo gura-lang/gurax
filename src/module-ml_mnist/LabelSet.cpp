@@ -124,7 +124,7 @@ Array* CreateArrayOfLabelsQMNIST(const Array::ElemTypeT& elemType, const Memory&
 	return pArray.release();
 }
 
-Array* LabelSet::ToArray(const Array::ElemTypeT& elemType, bool oneHotFlag) const
+Array* LabelSet::Extract(const Array::ElemTypeT& elemType, size_t iSample, size_t nSamples, bool oneHotFlag) const
 {
 	RefPtr<Array> pArray;
 	if (elemType.IsIdentical(Array::ElemType::UInt8)) {
@@ -152,7 +152,7 @@ Array* LabelSet::ToArray(const Array::ElemTypeT& elemType, bool oneHotFlag) cons
 
 String LabelSet::ToString(const StringStyle& ss) const
 {
-	return String().Format("ml.mnist.LabelSet:%zusamples", CountSamples());
+	return String().Format("ml.mnist.LabelSet:%zusamples", GetNSamples());
 }
 
 //------------------------------------------------------------------------------

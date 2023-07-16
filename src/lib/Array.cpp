@@ -1561,10 +1561,26 @@ bool Array::GenericUnaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRt
 bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Array& arrayL, const Array& arrayR,
 	const std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>& func, const char* opDisp)
 {
-	size_t nRtns = 1;
+	size_t nRepeat = 1;
 	size_t nFwdRtn = 0;
 	size_t nFwdL = 0, nFwdR = 0;
-	const DimSizes* pDimSizesRtn = DimSizes::DetermineResult(arrayL.GetDimSizes(), arrayR.GetDimSizes(), &nRtns, &nFwdRtn, &nFwdL, &nFwdR);
+	const DimSizes* pDimSizesRtn = nullptr;
+	const DimSizes& dimSizesL = arrayL.GetDimSizes();
+	const DimSizes& dimSizesR = arrayR.GetDimSizes();
+	if (dimSizesL.size() >= dimSizesR.size()) {
+		size_t nDimsHead = dimSizesL.size() - dimSizesR.size();
+		nRepeat = DimSizes::CalcLength(dimSizesL.begin(), dimSizesL.begin() + nDimsHead);
+		nFwdL = nFwdRtn = dimSizesR.CalcLength();
+		nFwdR = 0;
+		if (dimSizesR.DoesMatch(dimSizesL, nDimsHead)) pDimSizesRtn = &dimSizesL;
+	} else {
+		size_t nDimsHead = dimSizesR.size() - dimSizesL.size();
+		nRepeat = DimSizes::CalcLength(dimSizesR.begin(), dimSizesR.begin() + nDimsHead);
+		nFwdR = nFwdRtn = dimSizesL.CalcLength();
+		nFwdL = 0;
+		if (dimSizesL.DoesMatch(dimSizesR, nDimsHead)) pDimSizesRtn = &dimSizesR;
+	}
+	//const DimSizes* pDimSizesRtn = DimSizes::DetermineResult(arrayL.GetDimSizes(), arrayR.GetDimSizes(), &nRepeat, &nFwdRtn, &nFwdL, &nFwdR);
 	if (!pDimSizesRtn) {
 		Error::Issue(ErrorType::SizeError, "unmatched array size: %s %s %s",
 				arrayL.ToString(StringStyle::BriefCram).c_str(), opDisp, arrayR.ToString(StringStyle::BriefCram).c_str());
@@ -1575,7 +1591,7 @@ bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeR
 	void* pvRtn = pArrayRtn->GetPointerC<void>();
 	const void* pvL = arrayL.GetPointerC<void>();
 	const void* pvR = arrayR.GetPointerC<void>();
-	for (size_t iRtn = 0; iRtn < nRtns; iRtn++) {
+	for (size_t i = 0; i < nRepeat; i++) {
 		func(pvRtn, pvL, pvR, nFwdRtn);
 		pvRtn = pArrayRtn->FwdPointer(pvRtn, nFwdRtn);
 		pvL = arrayL.FwdPointer(pvL, nFwdL);
@@ -1656,6 +1672,48 @@ bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeR
 	return true;
 }
 
+bool Array::GenericBinaryOpShrink(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Array& arrayL, const Array& arrayR,
+	const std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>& func, const char* opDisp)
+{
+	size_t nRepeat = 1;
+	size_t nFwdRtn = 0;
+	size_t nFwdL = 0, nFwdR = 0;
+	const DimSizes* pDimSizesRtn = nullptr;
+	const DimSizes& dimSizesL = arrayL.GetDimSizes();
+	const DimSizes& dimSizesR = arrayR.GetDimSizes();
+	if (dimSizesL.size() >= dimSizesR.size()) {
+		size_t nDimsHead = dimSizesL.size() - dimSizesR.size();
+		nRepeat = DimSizes::CalcLength(dimSizesL.begin(), dimSizesL.begin() + nDimsHead);
+		nFwdL = nFwdRtn = dimSizesR.CalcLength();
+		nFwdR = 0;
+		if (dimSizesR.DoesMatch(dimSizesL, nDimsHead)) pDimSizesRtn = &dimSizesL;
+	} else {
+		size_t nDimsHead = dimSizesR.size() - dimSizesL.size();
+		nRepeat = DimSizes::CalcLength(dimSizesR.begin(), dimSizesR.begin() + nDimsHead);
+		nFwdR = nFwdRtn = dimSizesL.CalcLength();
+		nFwdL = 0;
+		if (dimSizesL.DoesMatch(dimSizesR, nDimsHead)) pDimSizesRtn = &dimSizesR;
+	}
+	//const DimSizes* pDimSizesRtn = DimSizes::DetermineResult(arrayL.GetDimSizes(), arrayR.GetDimSizes(), &nRepeat, &nFwdRtn, &nFwdL, &nFwdR);
+	if (!pDimSizesRtn) {
+		Error::Issue(ErrorType::SizeError, "unmatched array size: %s %s %s",
+				arrayL.ToString(StringStyle::BriefCram).c_str(), opDisp, arrayR.ToString(StringStyle::BriefCram).c_str());
+		return nullptr;
+	}
+	if (!pArrayRtn) pArrayRtn.reset(Create(elemTypeRtn, *pDimSizesRtn));
+	if (!pArrayRtn) return false;
+	void* pvRtn = pArrayRtn->GetPointerC<void>();
+	const void* pvL = arrayL.GetPointerC<void>();
+	const void* pvR = arrayR.GetPointerC<void>();
+	for (size_t i = 0; i < nRepeat; i++) {
+		func(pvRtn, pvL, pvR, nFwdRtn);
+		pvRtn = pArrayRtn->FwdPointer(pvRtn, nFwdRtn);
+		pvL = arrayL.FwdPointer(pvL, nFwdL);
+		pvR = arrayR.FwdPointer(pvR, nFwdR);
+	}
+	return true;
+}
+
 bool Array::Neg(RefPtr<Array>& pArrayRtn, const Array& array)
 {
 	return GenericUnaryOp(pArrayRtn, array.GetElemType(), array, funcs.Neg_Array[array.GetElemType().id]);
@@ -1698,6 +1756,11 @@ bool Array::Add(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
 bool Array::Add(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR)
 {
 	return GenericBinaryOp(pArrayRtn, ElemType::Complex, arrayL, numR, funcs.Add_ArrayComplex[arrayL.GetElemType().id], "+");
+}
+
+bool Array::AddShrink(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
+{
+	return GenericBinaryOpShrink(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Add_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "+");
 }
 
 bool Array::And(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
@@ -1780,6 +1843,11 @@ bool Array::Sub(RefPtr<Array>& pArrayRtn, const Complex& numL, const Array& arra
 	return GenericBinaryOp(pArrayRtn, ElemType::Complex, numL, arrayR, funcs.Sub_ComplexArray[arrayR.GetElemType().id], "-");
 }
 
+bool Array::SubShrink(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
+{
+	return GenericBinaryOpShrink(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Sub_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "-");
+}
+
 bool Array::Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
 	if (arrayL.IsArray() && arrayR.IsArray()) {
@@ -1817,6 +1885,11 @@ bool Array::Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
 bool Array::Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR)
 {
 	return GenericBinaryOp(pArrayRtn, ElemType::Complex, arrayL, numR, funcs.Mul_ArrayComplex[arrayL.GetElemType().id], "*");
+}
+
+bool Array::MulShrink(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
+{
+	return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Mul_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "*");
 }
 
 bool Array::Div(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
@@ -2405,24 +2478,26 @@ size_t DimSizes::CalcOffset(size_t axis, const ValueList& valuesDim, size_t* pSt
 	return offset;
 }
 
+#if 0
 const DimSizes* DimSizes::DetermineResult(const DimSizes& dimSizesL, const DimSizes& dimSizesR,
-					size_t* pnRtns, size_t* pnFwdRtn, size_t* pnFwdL, size_t* pnFwdR)
+								size_t* pnRepeat, size_t* pnFwdRtn, size_t* pnFwdL, size_t* pnFwdR)
 {
 	if (dimSizesL.size() >= dimSizesR.size()) {
 		size_t nDimsHead = dimSizesL.size() - dimSizesR.size();
-		*pnRtns = CalcLength(dimSizesL.begin(), dimSizesL.begin() + nDimsHead);
+		*pnRepeat = CalcLength(dimSizesL.begin(), dimSizesL.begin() + nDimsHead);
 		*pnFwdL = *pnFwdRtn = dimSizesR.CalcLength();
 		*pnFwdR = 0;
 		if (dimSizesR.DoesMatch(dimSizesL, nDimsHead)) return &dimSizesL;
 	} else {
 		size_t nDimsHead = dimSizesR.size() - dimSizesL.size();
-		*pnRtns = CalcLength(dimSizesR.begin(), dimSizesR.begin() + nDimsHead);
+		*pnRepeat = CalcLength(dimSizesR.begin(), dimSizesR.begin() + nDimsHead);
 		*pnFwdR = *pnFwdRtn = dimSizesL.CalcLength();
 		*pnFwdL = 0;
 		if (dimSizesL.DoesMatch(dimSizesR, nDimsHead)) return &dimSizesR;
 	}
 	return nullptr;
 }
+#endif
 
 bool DimSizes::IsEqual(const DimSizes& dimSizes) const
 {

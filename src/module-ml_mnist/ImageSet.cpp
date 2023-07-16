@@ -22,10 +22,10 @@ bool ImageSet::Read(Stream& stream)
 		Error::Issue(ErrorType::FormatError, "invalid magic number of MNIST image file: %08x", magicNumber);
 		return false;
 	}
-	_nImages = Gurax_UnpackUInt32(header.nImages);
+	_nSamples = Gurax_UnpackUInt32(header.nSamples);
 	_nRows = Gurax_UnpackUInt32(header.nRows);
 	_nCols = Gurax_UnpackUInt32(header.nCols);
-	size_t bytesImage = _nImages * _nRows * _nCols;
+	size_t bytesImage = _nSamples * _nRows * _nCols;
 	_pMemory.reset(new MemoryHeap(bytesImage));
 	bytesRead = stream.Read(_pMemory->GetPointerC<void>(), bytesImage);
 	if (bytesRead < bytesImage) {
@@ -36,14 +36,14 @@ bool ImageSet::Read(Stream& stream)
 }
 
 template<typename T_Elem>
-Array* CreateArrayOfImages(const Array::ElemTypeT& elemType, DimSizes& dimSizes, const UInt8* pElemSrc, Float numMax)
+Array* CreateArrayOfImages(const Array::ElemTypeT& elemType, DimSizes& dimSizes, const UInt8* pElemSrc, Double numCeil)
 {
 	RefPtr<Array> pArray(Array::Create(elemType, dimSizes));
 	size_t nElems = pArray->GetDimSizes().CalcLength();
 	T_Elem* pElemDst = pArray->GetPointerC<T_Elem>();
-	if (numMax > 0) {
+	if (numCeil > 0) {
 		for (size_t i = 0; i < nElems; i++, pElemSrc++, pElemDst++) {
-			*pElemDst = static_cast<T_Elem>(numMax * *pElemSrc / 255);
+			*pElemDst = static_cast<T_Elem>(numCeil * *pElemSrc / 255);
 		}
 	} else {
 		for (size_t i = 0; i < nElems; i++, pElemSrc++, pElemDst++) {
@@ -53,11 +53,11 @@ Array* CreateArrayOfImages(const Array::ElemTypeT& elemType, DimSizes& dimSizes,
 	return pArray.release();
 }
 
-Array* ImageSet::ToArray(const Array::ElemTypeT& elemType, bool flattenFlag, Float numMax) const
+Array* ImageSet::Extract(const Array::ElemTypeT& elemType, size_t iSample, size_t nSamples, bool flattenFlag, Double numCeil) const
 {
 	RefPtr<Array> pArray;
 	DimSizes dimSizes;
-	dimSizes.push_back(_nImages);
+	dimSizes.push_back(_nSamples);
 	if (flattenFlag) {
 		dimSizes.push_back(_nRows * _nCols);
 	} else {
@@ -65,13 +65,13 @@ Array* ImageSet::ToArray(const Array::ElemTypeT& elemType, bool flattenFlag, Flo
 		dimSizes.push_back(_nCols);
 	}
 	if (elemType.IsIdentical(Array::ElemType::UInt8)) {
-		pArray.reset(CreateArrayOfImages<UInt8>(elemType, dimSizes, _pMemory->GetPointerC<UInt8>(), numMax));
+		pArray.reset(CreateArrayOfImages<UInt8>(elemType, dimSizes, _pMemory->GetPointerC<UInt8>(), numCeil));
 	} else if (elemType.IsIdentical(Array::ElemType::Half)) {
-		pArray.reset(CreateArrayOfImages<Half>(elemType, dimSizes, _pMemory->GetPointerC<UInt8>(), numMax));
+		pArray.reset(CreateArrayOfImages<Half>(elemType, dimSizes, _pMemory->GetPointerC<UInt8>(), numCeil));
 	} else if (elemType.IsIdentical(Array::ElemType::Float)) {
-		pArray.reset(CreateArrayOfImages<Float>(elemType, dimSizes, _pMemory->GetPointerC<UInt8>(), numMax));
+		pArray.reset(CreateArrayOfImages<Float>(elemType, dimSizes, _pMemory->GetPointerC<UInt8>(), numCeil));
 	} else if (elemType.IsIdentical(Array::ElemType::Double)) {
-		pArray.reset(CreateArrayOfImages<Double>(elemType, dimSizes, _pMemory->GetPointerC<UInt8>(), numMax));
+		pArray.reset(CreateArrayOfImages<Double>(elemType, dimSizes, _pMemory->GetPointerC<UInt8>(), numCeil));
 	} else {
 		Error::Issue(ErrorType::ValueError, "can't create an array of %s", elemType.GetName());
 		return nullptr;
@@ -81,7 +81,7 @@ Array* ImageSet::ToArray(const Array::ElemTypeT& elemType, bool flattenFlag, Flo
 
 String ImageSet::ToString(const StringStyle& ss) const
 {
-	return String().Format("ml.mnist.ImageSet:%zusamples:%zurows:%zucols", CountImages(), CountRows(), CountCols());
+	return String().Format("ml.mnist.ImageSet:%zusamples:%zurows:%zucols", GetNSamples(), GetNRows(), GetNCols());
 }
 
 //------------------------------------------------------------------------------

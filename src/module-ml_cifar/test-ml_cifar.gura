@@ -7,7 +7,7 @@ import(ml.cifar)
 import(tar)
 
 TestCase('Basic test') {
-	//cifar = ml.cifar.Cifar10('cifar-10-binary.tar.gz', `test)
-	cifar = ml.cifar.Cifar100('cifar-100-binary.tar.gz', `train)
+	//cifar = ml.cifar.Cifar10('.', `test)
+	cifar = ml.cifar.Cifar100('.', `train)
 	Println(cifar)
 }

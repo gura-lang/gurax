@@ -34,10 +34,10 @@ public:
 protected:
 	~LabelSet() = default;
 public:
-	size_t CountSamples() const { return _nSamples; }
+	size_t GetNSamples() const { return _nSamples; }
 	size_t CountClasses() const { return _nClasses; }
 	bool Read(Stream& stream);
-	Array* ToArray(const Array::ElemTypeT& elemType, bool oneHotFlag) const;
+	Array* Extract(const Array::ElemTypeT& elemType, size_t iSample, size_t nSamples, bool oneHotFlag) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const LabelSet& other) const { return this == &other; }
