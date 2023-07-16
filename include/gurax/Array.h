@@ -40,8 +40,6 @@ public:
 	DimSizes(const ValueList& values);
 	DimSizes(const_iterator first, const_iterator last) : NumList(first, last) {}
 public:
-	//static const DimSizes* DetermineResult(const DimSizes& dimSizesL, const DimSizes& dimSizesR,
-	//							size_t* pnRepeat, size_t* pnFwdRtn, size_t* pnFwdL, size_t* pnFwdR);
 	static size_t CalcLength(const_iterator pDimSizeBegin, const_iterator pDimSizeEnd);
 	size_t CalcLength(const_iterator pDimSize) const { return CalcLength(pDimSize, end()); }
 	size_t CalcLength() const { return CalcLength(begin()); }
@@ -285,13 +283,13 @@ public:
 		const std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>& func, const char* opDisp);
 	static bool GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Complex& numL, const Array& arrayR,
 		const std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>& func, const char* opDisp);
-	static bool GenericBinaryOpShrink(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Array& arrayL, const Array& arrayR,
+	static bool GenericBinaryOpReduce(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Array& arrayL, const Array& arrayR,
 		const std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>& func, const char* opDisp);
 	static bool Neg(RefPtr<Array>& pArrayRtn, const Array& array);
 	static bool Add(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
 	static bool Add(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR);
 	static bool Add(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR);
-	static bool AddShrink(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
+	static bool AddReduce(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
 	static bool And(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
 	static bool And(RefPtr<Array>& pArrayRtn, const Array& arrayL, UInt64 numR);
 	static bool Sub(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
@@ -299,11 +297,11 @@ public:
 	static bool Sub(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR);
 	static bool Sub(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR);
 	static bool Sub(RefPtr<Array>& pArrayRtn, const Complex& numL, const Array& arrayR);
-	static bool SubShrink(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
+	static bool SubReduce(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
 	static bool Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
 	static bool Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR);
 	static bool Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR);
-	static bool MulShrink(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
+	static bool MulReduce(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
 	static bool Div(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
 	static bool Div(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR);
 	static bool Div(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR);

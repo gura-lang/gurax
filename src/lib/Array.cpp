@@ -1574,8 +1574,10 @@ bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeR
 		}
 		size_t nUnits = DimSizes::CalcLength(dimSizesL.begin(), dimSizesL.begin() + nDimsHead);
 		size_t nElemsUnit = dimSizesR.CalcLength();
-		if (!pArrayRtn) pArrayRtn.reset(Create(elemTypeRtn, dimSizesL));
-		if (!pArrayRtn) return false;
+		if (!pArrayRtn) {
+			pArrayRtn.reset(Create(elemTypeRtn, dimSizesL));
+			if (!pArrayRtn) return false;
+		}
 		void* pvRtn = pArrayRtn->GetPointerC<void>();
 		for (size_t iUnit = 0; iUnit < nUnits; iUnit++) {
 			func(pvRtn, pvL, pvR, nElemsUnit);
@@ -1591,8 +1593,10 @@ bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeR
 		}
 		size_t nUnits = DimSizes::CalcLength(dimSizesR.begin(), dimSizesR.begin() + nDimsHead);
 		size_t nElemsUnit = dimSizesL.CalcLength();
-		if (!pArrayRtn) pArrayRtn.reset(Create(elemTypeRtn, dimSizesR));
-		if (!pArrayRtn) return false;
+		if (!pArrayRtn) {
+			pArrayRtn.reset(Create(elemTypeRtn, dimSizesR));
+			if (!pArrayRtn) return false;
+		}
 		void* pvRtn = pArrayRtn->GetPointerC<void>();
 		for (size_t iUnit = 0; iUnit < nUnits; iUnit++) {
 			func(pvRtn, pvL, pvR, nElemsUnit);
@@ -1675,7 +1679,7 @@ bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeR
 	return true;
 }
 
-bool Array::GenericBinaryOpShrink(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Array& arrayL, const Array& arrayR,
+bool Array::GenericBinaryOpReduce(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Array& arrayL, const Array& arrayR,
 	const std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>& func, const char* opDisp)
 {
 	size_t nRepeat = 1;
@@ -1760,9 +1764,9 @@ bool Array::Add(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& nu
 	return GenericBinaryOp(pArrayRtn, ElemType::Complex, arrayL, numR, funcs.Add_ArrayComplex[arrayL.GetElemType().id], "+");
 }
 
-bool Array::AddShrink(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
+bool Array::AddReduce(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOpShrink(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Add_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "+");
+	return GenericBinaryOpReduce(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Add_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "+");
 }
 
 bool Array::And(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
@@ -1845,9 +1849,9 @@ bool Array::Sub(RefPtr<Array>& pArrayRtn, const Complex& numL, const Array& arra
 	return GenericBinaryOp(pArrayRtn, ElemType::Complex, numL, arrayR, funcs.Sub_ComplexArray[arrayR.GetElemType().id], "-");
 }
 
-bool Array::SubShrink(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
+bool Array::SubReduce(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOpShrink(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Sub_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "-");
+	return GenericBinaryOpReduce(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Sub_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "-");
 }
 
 bool Array::Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
@@ -1889,7 +1893,7 @@ bool Array::Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& nu
 	return GenericBinaryOp(pArrayRtn, ElemType::Complex, arrayL, numR, funcs.Mul_ArrayComplex[arrayL.GetElemType().id], "*");
 }
 
-bool Array::MulShrink(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
+bool Array::MulReduce(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
 	return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Mul_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "*");
 }
