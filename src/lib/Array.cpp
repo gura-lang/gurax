@@ -1871,6 +1871,10 @@ bool Array::Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& nu
 bool Array::Div(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
 	if (arrayL.IsArray() && arrayR.IsArray()) {
+		if (arrayR.HasZero()) {
+			Error::Issue(ErrorType::DividedByZero, "divided by zero");
+			return false;
+		}
 		return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Div_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "/");
 	} else if (arrayL.IsArray() && arrayR.IsScalarNumber()) {
 		return Div(pArrayRtn, arrayL, arrayR.GetScalarDouble());
@@ -1928,6 +1932,10 @@ bool Array::Div(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR)
 
 bool Array::Div(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR)
 {
+	if (arrayR.HasZero()) {
+		Error::Issue(ErrorType::DividedByZero, "divided by zero");
+		return false;
+	}
 	return GenericBinaryOp(pArrayRtn, arrayR.GetElemType(), numL, arrayR, funcs.Div_NumberArray[arrayR.GetElemType().id], "/");
 }
 
@@ -1942,6 +1950,10 @@ bool Array::Div(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& nu
 
 bool Array::Div(RefPtr<Array>& pArrayRtn, const Complex& numL, const Array& arrayR)
 {
+	if (arrayR.HasZero()) {
+		Error::Issue(ErrorType::DividedByZero, "divided by zero");
+		return false;
+	}
 	return GenericBinaryOp(pArrayRtn, ElemType::Complex, numL, arrayR, funcs.Div_ComplexArray[arrayR.GetElemType().id], "/");
 }
 
@@ -2326,7 +2338,11 @@ bool Array::ReduceMul(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array
 
 bool Array::ReduceDiv(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Div_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "*");
+	if (arrayR.HasZero()) {
+		Error::Issue(ErrorType::DividedByZero, "divided by zero");
+		return false;
+	}
+	return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Div_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "/");
 }
 
 Value_List* Array::ToList() const
