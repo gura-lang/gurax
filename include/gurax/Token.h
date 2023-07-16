@@ -109,9 +109,7 @@ public:
 	TokenType(int category, const char* typeName, const char* symbol, OpType opType);
 	bool IsIdentical(const TokenType &tokenType) const { return this == &tokenType; }
 	bool HasSourceSymbol() const { return !(symbol[0] == '[' && symbol[1] != '\0'); }
-	static const TokenType& OpTypeToTokenType(OpType opType) {
-		return *_opTypeToTokenTypeMap[static_cast<size_t>(opType)];
-	}
+	static const TokenType& OpTypeToTokenType(OpType opType) { return *_opTypeToTokenTypeMap[static_cast<size_t>(opType)]; }
 };
 
 //------------------------------------------------------------------------------
@@ -121,8 +119,6 @@ class GURAX_DLLDECLARE Token : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Token);
-public:
-	enum class Precedence { LT, EQ, GT, Error, };
 private:
 	const TokenType& _tokenType;
 	int _lineNoTop;
@@ -155,19 +151,19 @@ public:
 	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, String segment) :
 		Token(tokenType, lineNoTop, lineNoBtm, new StringReferable(std::move(segment))) {}
 	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm,
-		  StringReferable* pSegment, StringReferable* pSuffix) :
+		StringReferable* pSegment, StringReferable* pSuffix) :
 		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm),
 		_pSegment(pSegment), _pSuffix(pSuffix), _tupleFlag(false) {}
 	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, String segment, String suffix) :
 		Token(tokenType, lineNoTop, lineNoBtm, new StringReferable(std::move(segment)),
-			  new StringReferable(std::move(suffix))) {}
+		new StringReferable(std::move(suffix))) {}
 	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm,
-		  StringReferable* pSegment, StringReferable* pSuffix, StringReferable* pSource) :
+		StringReferable* pSegment, StringReferable* pSuffix, StringReferable* pSource) :
 		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm),
 		_pSegment(pSegment), _pSuffix(pSuffix), _pSource(pSource), _tupleFlag(false) {}
 	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, String segment, String suffix, String source) :
 		Token(tokenType, lineNoTop, lineNoBtm, new StringReferable(std::move(segment)),
-			  new StringReferable(std::move(suffix)), new StringReferable(std::move(source))) {}
+		new StringReferable(std::move(suffix)), new StringReferable(std::move(source))) {}
 	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm,  BinaryReferable* pBinary, String source) :
 		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm),
 		_pBinary(pBinary), _pSource(new StringReferable(std::move(source))), _tupleFlag(false) {}
@@ -232,6 +228,9 @@ public:
 	void SetTupleFlag(bool tupleFlag) { _tupleFlag = tupleFlag; }
 	bool GetTupleFlag() const { return _tupleFlag; }
 public:
+	static Precedence LookupPrec(const TokenType& tokenTypeLeft, const TokenType& tokenTypeRight) {
+		return _precMatrix[tokenTypeLeft.category][tokenTypeRight.category];
+	}
 	static Precedence LookupPrec(const Token& tokenLeft, const Token& tokenRight) {
 		return _precMatrix[tokenLeft.GetCategory()][tokenRight.GetCategory()];
 	}

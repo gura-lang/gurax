@@ -48,26 +48,26 @@ a.real .. 1
 ======== Operator ========
 -(3 + 2j) .. -3-2j
 +(3 + 2j) .. 3+2j
-(3 + 2j) + (5 + 4j) .. 8+6j
-(3 + 2j) + 5 .. 8+2j
+3 + 2j + (5 + 4j) .. 8+6j
+3 + 2j + 5 .. 8+2j
 3 + (5 + 4j) .. 8+4j
 (3 + 2j) / (5 + 4j) .. 0.560976-0.0487805j
 (3 + 2j) / 0 .. divided by zero
-(3 + 2j) == (5 + 4j) .. false
-(3 + 2j) == (3 + 2j) .. true
+3 + 2j == 5 + 4j .. false
+3 + 2j == 3 + 2j .. true
 (3 + 2j) * (5 + 4j) .. 7+22j
 (3 + 2j) * 5 .. 15+10j
 3 * (5 + 4j) .. 15+12j
-(3 + 2j) != (5 + 4j) .. true
-(3 + 2j) != (3 + 2j) .. false
-(3 + 2j) - (5 + 4j) .. -2-2j
-(3 + 2j) - 5 .. -2+2j
+3 + 2j != 5 + 4j .. true
+3 + 2j != 3 + 2j .. false
+3 + 2j - (5 + 4j) .. -2-2j
+3 + 2j - 5 .. -2+2j
 3 - (5 + 4j) .. -2-4j
 ======== Complex.format / formatReal / formatImag ========
 Complex.format = 'Complex(%g,%g)' .. Complex(%g,%g)
 1234 + 5679j .. Complex(1234,5679)
 Complex.formatReal = 'Complex(%g)' .. Complex(%g)
-(1234 + 5679j) - 5679j .. Complex(1234)
+1234 + 5679j - 5679j .. Complex(1234)
 Complex.formatImag = 'Complex(0,%g)' .. Complex(0,%g)
 5679j .. Complex(0,5679)
 Complex.format = '%d%+d' .. invalid format specifier

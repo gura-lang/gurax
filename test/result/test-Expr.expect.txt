@@ -978,7 +978,7 @@ x.__str__():dquoteString .. "Hello World"
 	)
 	-hoge
 	hoge*
-	(a + (b * c)) - d
+	a + b * c - d
 	a = 10000
 	a += 10000
 	(

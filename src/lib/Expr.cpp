@@ -864,8 +864,17 @@ String Expr_BinaryOp::ToString(const StringStyle& ss, int indentLevel) const
 	switch (GetOperator()->GetStyle()) {
 	case OpStyle::Binary: {
 		do {
-			bool needParenFlag =
-				GetExprLeft().IsType<Expr_BinaryOp>() || GetExprLeft().IsType<Expr_UnaryOp>();
+			bool needParenFlag = false;
+			if (GetExprLeft().IsType<Expr_UnaryOp>()) {
+				needParenFlag = true;
+			} else if (GetExprLeft().IsType<Expr_BinaryOp>()) {
+				if (GetOperator()->IsBitOrLogicOp()) {
+					needParenFlag = true;
+				} else {
+					Precedence prec = Operator::LookupPrec(*dynamic_cast<const Expr_BinaryOp&>(GetExprLeft()).GetOperator(), *GetOperator());
+					if (prec == Precedence::LT) needParenFlag = true;
+				}
+			}
 			if (needParenFlag) str += '(';
 			str += GetExprLeft().ToString(ss, indentLevel);
 			if (needParenFlag) str += ')';
@@ -874,8 +883,17 @@ String Expr_BinaryOp::ToString(const StringStyle& ss, int indentLevel) const
 		str += GetOperator()->GetSymbol()->GetName();
 		if (!ss.IsCram()) str += ' ';
 		do {
-			bool needParenFlag =
-				GetExprRight().IsType<Expr_BinaryOp>() || GetExprRight().IsType<Expr_UnaryOp>();
+			bool needParenFlag = false;
+			if (GetExprRight().IsType<Expr_UnaryOp>()) {
+				needParenFlag = true;
+			} else if (GetExprRight().IsType<Expr_BinaryOp>()) {
+				if (GetOperator()->IsBitOrLogicOp()) {
+					needParenFlag = true;
+				} else {
+					Precedence prec = Operator::LookupPrec(*GetOperator(), *dynamic_cast<const Expr_BinaryOp&>(GetExprRight()).GetOperator());
+					if (prec == Precedence::GT) needParenFlag = true;
+				}
+			}
 			if (needParenFlag) str += '(';
 			str += GetExprRight().ToString(ss, indentLevel);
 			if (needParenFlag) str += ')';

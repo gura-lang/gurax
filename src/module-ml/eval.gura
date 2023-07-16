@@ -7,7 +7,7 @@ db = ml.mnist.Database('../../sample/resource/mnist')
 pattern = [' ', '.', ':', '#', '#']
 scope {
 	// evaluation
-	arrayImage = db.test.imageSet.ToArray(`float, flatten = true, numMax = 1)	// (nSamples, db.nRows * db.nCols)
+	arrayImage = db.test.imageSet.ToArray(`float, flatten = true, numCeil = 1)	// (nSamples, db.nRows * db.nCols)
 	arrayLabel = db.test.labelSet.ToArray(`float, oneHot = true)				// (nSamples, db.nClasses)
 	nCorrects = 0
 	nSamples = arrayImage.shape[0]

@@ -53,7 +53,7 @@ bool Optimizer_GradientDescent::InstanceEx::Update(Processor& processor, RefPtr<
 	// _pArrayWork <- arrayGrad * _learningRate
 	if (!Array::Mul(_pArrayWork, arrayGrad, _learningRate)) return false;
 	// pArray <- pArray - _pArrayWork
-	if (!Array::Sub(pArray, *pArray, *_pArrayWork)) return false;
+	if (!Array::ReduceSub(pArray, *pArray, *_pArrayWork)) return false;
 	return true;
 }
 
@@ -74,7 +74,7 @@ bool Optimizer_Momentum::InstanceEx::Update(Processor& processor, RefPtr<Array>&
 	// _pArrayVel <- _pArrayVel - _pArrayWork
 	if (!Array::Sub(_pArrayVel, *_pArrayVel, *_pArrayWork)) return false;
 	// pArray <- pArray + _pArrayVel
-	if (!Array::Add(pArray, *pArray, *_pArrayVel)) return false;
+	if (!Array::ReduceAdd(pArray, *pArray, *_pArrayVel)) return false;
 	return true;
 }
 

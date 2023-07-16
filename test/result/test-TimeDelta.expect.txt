@@ -27,11 +27,11 @@ TimeDelta(mins = 34) .. <TimeDelta:0days,00:34:00.000>
 TimeDelta(secs = 56) .. <TimeDelta:0days,00:00:56.000>
 TimeDelta(msecs = 789) .. <TimeDelta:0days,00:00:00.789>
 TimeDelta(usecs = 654) .. <TimeDelta:0days,00:00:00.000654>
-TimeDelta(hours = (24 * 6) + 7) .. <TimeDelta:6days,07:00:00.000>
-TimeDelta(mins = (60 * 6) + 7) .. <TimeDelta:0days,06:07:00.000>
-TimeDelta(secs = (60 * 6) + 7) .. <TimeDelta:0days,00:06:07.000>
-TimeDelta(msecs = (1000 * 6) + 7) .. <TimeDelta:0days,00:00:06.007>
-TimeDelta(usecs = (1000 * 6) + 7) .. <TimeDelta:0days,00:00:00.006007>
+TimeDelta(hours = 24 * 6 + 7) .. <TimeDelta:6days,07:00:00.000>
+TimeDelta(mins = 60 * 6 + 7) .. <TimeDelta:0days,06:07:00.000>
+TimeDelta(secs = 60 * 6 + 7) .. <TimeDelta:0days,00:06:07.000>
+TimeDelta(msecs = 1000 * 6 + 7) .. <TimeDelta:0days,00:00:06.007>
+TimeDelta(usecs = 1000 * 6 + 7) .. <TimeDelta:0days,00:00:00.006007>
 ======== Minus Value ========
 TimeDelta(usecs = -1) .. <TimeDelta:-1days,23:59:59.999999>
 TimeDelta(msecs = -1) .. <TimeDelta:-1days,23:59:59.999>
@@ -57,7 +57,7 @@ TimeDelta(123, 12, 34, 56, 789) - TimeDelta(123, 13, 32, 10, 300) .. <TimeDelta:
 TimeDelta(8) / TimeDelta(2) .. 4
 TimeDelta(8) / TimeDelta(3) .. 2.66667
 TimeDelta(123, 12, 34, 56) / TimeDelta(23, 45, 6) .. 4.96497
-(TimeDelta(123, 12, 34, 56) / TimeDelta(23, 45, 6)) * TimeDelta(23, 45, 6) .. <TimeDelta:123days,12:34:56.000>
+TimeDelta(123, 12, 34, 56) / TimeDelta(23, 45, 6) * TimeDelta(23, 45, 6) .. <TimeDelta:123days,12:34:56.000>
 ======== TimeDelta % TimeDelta ========
 TimeDelta(8) % TimeDelta(2) .. <TimeDelta:0days,00:00:00.000>
 TimeDelta(8) % TimeDelta(3) .. <TimeDelta:2days,00:00:00.000>

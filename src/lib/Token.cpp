@@ -98,19 +98,19 @@ const TokenType TokenType::Unknown			{  0, "Unknown",		"[unk]",	OpType::None	};
 TokenType::TokenType(int category_, const char* typeName_, const char* symbol_, OpType opType_) :
 	category(category_), typeName(typeName_), symbol(symbol_), opType(opType_)
 {
-	_opTypeToTokenTypeMap[static_cast<size_t>(opType)] = this;
+	if (opType != OpType::None) _opTypeToTokenTypeMap[static_cast<size_t>(opType)] = this;
 }
 
 //------------------------------------------------------------------------------
 // Token
 //------------------------------------------------------------------------------
-static const Token::Precedence
-	LT = Token::Precedence::LT,
-	EQ = Token::Precedence::EQ,
-	GT = Token::Precedence::GT,
-	xx = Token::Precedence::Error;
+static const Precedence
+	LT = Precedence::LT,
+	EQ = Precedence::EQ,
+	GT = Precedence::GT,
+	xx = Precedence::Error;
 
-const Token::Precedence Token::_precMatrix[][31] = {
+const Precedence Token::_precMatrix[][31] = {
 	/*         e   B   =  |+| ||  &&   !  in   <  ..   |   ^   &  <<   +   *   ~  **   `   :  *:   .   (   )   [   ]   ,  \n   V   S   E */
 	/* e */ { xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx, xx },
 	/* B */ { xx, xx, LT, LT, LT, LT, LT, LT, LT, LT, LT, LT, LT, LT, LT, LT, LT, LT, LT, LT, LT, LT, LT, xx, LT, xx, EQ, EQ, LT, LT, EQ },

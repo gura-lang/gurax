@@ -15,9 +15,9 @@ OperatorMap Operator::_operatorMap_Binary;
 OperatorMap Operator::_operatorMap_Math;
 
 // Unary operators
-Operator* Operator::Inv				= new Operator(OpStyle::Unary,			"Inv",			"~",			OpType::Inv);
+Operator* Operator::Inv				= new Operator(OpStyle::Unary,			"Inv",			"~",			OpType::Inv, Operator::Flag::Map | Operator::Flag::BitOp);
 Operator* Operator::Neg				= new Operator(OpStyle::Unary,			"Neg",			"-",			OpType::Neg);
-Operator* Operator::Not				= new Operator(OpStyle::Unary,			"Not",			"!",			OpType::Not);
+Operator* Operator::Not				= new Operator(OpStyle::Unary,			"Not",			"!",			OpType::Not, Operator::Flag::Map | Operator::Flag::LogicOp);
 Operator* Operator::Pos				= new Operator(OpStyle::Unary,			"Pos",			"+",			OpType::Pos);
 Operator* Operator::Question		= new Operator(OpStyle::Unary,			"Question",		"?",			OpType::Question);
 Operator* Operator::PreAnd			= new Operator(OpStyle::Unary,			"PreAnd",		"&",			OpType::PreAnd);
@@ -34,7 +34,7 @@ Operator* Operator::PostQuestion	= new Operator(OpStyle::UnaryPost,		"PostQuesti
 Operator* Operator::PostSeq			= new Operator(OpStyle::UnaryPost,		"PostSeq",		"..",			OpType::PostSeq);
 // Binary operators
 Operator* Operator::Add				= new Operator(OpStyle::Binary,			"Add",			"+",			OpType::Add);
-Operator* Operator::And				= new Operator(OpStyle::Binary,			"And",			"&",			OpType::And);
+Operator* Operator::And				= new Operator(OpStyle::Binary,			"And",			"&",			OpType::And, Operator::Flag::Map | Operator::Flag::BitOp);
 Operator* Operator::AndAnd			= new Operator_AndAnd();
 Operator* Operator::As				= new Operator(OpStyle::Binary,			"As",			"as",			OpType::As);
 Operator* Operator::Cmp				= new Operator(OpStyle::Binary,			"Cmp",			"<=>",			OpType::Cmp);
@@ -55,16 +55,16 @@ Operator* Operator::Mod				= new Operator(OpStyle::Binary,			"Mod",			"%",			OpT
 Operator* Operator::ModMod			= new Operator(OpStyle::Binary,			"ModMod",		"%%",			OpType::ModMod);
 Operator* Operator::Mul				= new Operator(OpStyle::Binary,			"Mul",			"*",			OpType::Mul);
 Operator* Operator::Ne				= new Operator(OpStyle::Binary,			"Ne",			"!=",			OpType::Ne);
-Operator* Operator::Or				= new Operator(OpStyle::Binary,			"Or",			"|",			OpType::Or);
+Operator* Operator::Or				= new Operator(OpStyle::Binary,			"Or",			"|",			OpType::Or, Operator::Flag::Map | Operator::Flag::BitOp);
 Operator* Operator::OrOr			= new Operator_OrOr();
 Operator* Operator::Pair			= new Operator(OpStyle::Binary,			"Pair",			"=>",			OpType::Pair, Operator::Flag::NoMap);
 Operator* Operator::Pow				= new Operator(OpStyle::Binary,			"Pow",			"**",			OpType::Pow);
 Operator* Operator::Seq				= new Operator(OpStyle::Binary,			"Seq",			"..",			OpType::Seq);
-Operator* Operator::Shl				= new Operator(OpStyle::Binary,			"Shl",			"<<",			OpType::Shl);
-Operator* Operator::Shr				= new Operator(OpStyle::Binary,			"Shr",			">>",			OpType::Shr);
+Operator* Operator::Shl				= new Operator(OpStyle::Binary,			"Shl",			"<<",			OpType::Shl, Operator::Flag::Map | Operator::Flag::BitOp);
+Operator* Operator::Shr				= new Operator(OpStyle::Binary,			"Shr",			">>",			OpType::Shr, Operator::Flag::Map | Operator::Flag::BitOp);
 Operator* Operator::Sub				= new Operator(OpStyle::Binary,			"Sub",			"-",			OpType::Sub);
 Operator* Operator::Union			= new Operator(OpStyle::Binary,			"Union",		"|||",			OpType::Union, Operator::Flag::NoMap);
-Operator* Operator::Xor				= new Operator(OpStyle::Binary,			"Xor",			"^",			OpType::Xor);
+Operator* Operator::Xor				= new Operator(OpStyle::Binary,			"Xor",			"^",			OpType::Xor, Operator::Flag::Map | Operator::Flag::BitOp);
 // Mathematical functions
 Operator* Operator::math_Abs		= new Operator(OpStyle::MathUnary,		"math.Abs",		"Abs",			OpType::math_Abs);
 Operator* Operator::math_Acos		= new Operator(OpStyle::MathUnary,		"math.Acos",	"Acos",			OpType::math_Acos);
@@ -133,6 +133,11 @@ const Symbol* Operator::GetStyleAsSymbol() const
 const TokenType& Operator::GetTokenType() const
 {
 	return TokenType::OpTypeToTokenType(_opType);
+}
+
+Precedence Operator::LookupPrec(const Operator& opLeft, const Operator& opRight)
+{
+	return Token::LookupPrec(opLeft.GetTokenType(), opRight.GetTokenType());
 }
 
 void Operator::AssignEntry(VType& vtype, OpEntry* pOpEntry)

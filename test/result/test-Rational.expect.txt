@@ -106,91 +106,91 @@ rat.denom .. 4
 3r + 5r .. 8r
 3r + 5 .. 8r
 3 + 5r .. 8r
-(5r / 6) + (7r / 8) .. 41/24r
-(5r / 6) + 3 .. 23/6r
-3 + (5r / 6) .. 23/6r
+5r / 6 + 7r / 8 .. 41/24r
+5r / 6 + 3 .. 23/6r
+3 + 5r / 6 .. 23/6r
 ======== Operator a - b ========
 3r - 5r .. -2r
 3r - 5 .. -2r
 3 - 5r .. -2r
-(5r / 6) - (7r / 8) .. -1/24r
-(5r / 6) - 3 .. -13/6r
-3 - (5r / 6) .. 13/6r
+5r / 6 - 7r / 8 .. -1/24r
+5r / 6 - 3 .. -13/6r
+3 - 5r / 6 .. 13/6r
 ======== Operator a * b ========
 3r * 5r .. 15r
 3r * 5 .. 15r
 3 * 5r .. 15r
-(5r / 6) * (7r / 8) .. 35/48r
-(5r / 6) * 3 .. 5/2r
+5r / 6 * (7r / 8) .. 35/48r
+5r / 6 * 3 .. 5/2r
 3 * (5r / 6) .. 5/2r
 ======== Operator a / b ========
 3r / 5r .. 3/5r
 3r / 5 .. 3/5r
 3 / 5r .. 3/5r
-(5r / 6) / (7r / 8) .. 20/21r
-(5r / 6) / 3 .. 5/18r
+5r / 6 / (7r / 8) .. 20/21r
+5r / 6 / 3 .. 5/18r
 3 / (5r / 6) .. 18/5r
 3r / 0r .. divided by zero
 ======== Operator a == b ========
-(3 / 5r) == (6 / 7r) .. false
-(6 / 7r) == (6 / 7r) .. true
-(6 / 7r) == (3 / 5r) .. false
-(5 / 2r) == 3 .. false
-(6 / 2r) == 3 .. true
-(7 / 2r) == 3 .. false
-3 == (5 / 2r) .. false
-3 == (6 / 2r) .. true
-3 == (7 / 2r) .. false
+3 / 5r == 6 / 7r .. false
+6 / 7r == 6 / 7r .. true
+6 / 7r == 3 / 5r .. false
+5 / 2r == 3 .. false
+6 / 2r == 3 .. true
+7 / 2r == 3 .. false
+3 == 5 / 2r .. false
+3 == 6 / 2r .. true
+3 == 7 / 2r .. false
 ======== Operator a != b ========
-(3 / 5r) != (6 / 7r) .. true
-(6 / 7r) != (6 / 7r) .. false
-(6 / 7r) != (3 / 5r) .. true
-(5 / 2r) != 3 .. true
-(6 / 2r) != 3 .. false
-(7 / 2r) != 3 .. true
-3 != (5 / 2r) .. true
-3 != (6 / 2r) .. false
-3 != (7 / 2r) .. true
+3 / 5r != 6 / 7r .. true
+6 / 7r != 6 / 7r .. false
+6 / 7r != 3 / 5r .. true
+5 / 2r != 3 .. true
+6 / 2r != 3 .. false
+7 / 2r != 3 .. true
+3 != 5 / 2r .. true
+3 != 6 / 2r .. false
+3 != 7 / 2r .. true
 ======== Operator a < b ========
-(3 / 5r) < (6 / 7r) .. true
-(6 / 7r) < (6 / 7r) .. false
-(6 / 7r) < (3 / 5r) .. false
-(5 / 2r) < 3 .. true
-(6 / 2r) < 3 .. false
-(7 / 2r) < 3 .. false
-3 < (5 / 2r) .. false
-3 < (6 / 2r) .. false
-3 < (7 / 2r) .. true
+3 / 5r < 6 / 7r .. true
+6 / 7r < 6 / 7r .. false
+6 / 7r < 3 / 5r .. false
+5 / 2r < 3 .. true
+6 / 2r < 3 .. false
+7 / 2r < 3 .. false
+3 < 5 / 2r .. false
+3 < 6 / 2r .. false
+3 < 7 / 2r .. true
 ======== Operator a > b ========
-(3 / 5r) > (6 / 7r) .. false
-(6 / 7r) > (6 / 7r) .. false
-(6 / 7r) > (3 / 5r) .. true
-(5 / 2r) > 3 .. false
-(6 / 2r) > 3 .. false
-(7 / 2r) > 3 .. true
-3 > (5 / 2r) .. true
-3 > (6 / 2r) .. false
-3 > (7 / 2r) .. false
+3 / 5r > 6 / 7r .. false
+6 / 7r > 6 / 7r .. false
+6 / 7r > 3 / 5r .. true
+5 / 2r > 3 .. false
+6 / 2r > 3 .. false
+7 / 2r > 3 .. true
+3 > 5 / 2r .. true
+3 > 6 / 2r .. false
+3 > 7 / 2r .. false
 ======== Operator a <= b ========
-(3 / 5r) <= (6 / 7r) .. true
-(6 / 7r) <= (6 / 7r) .. true
-(6 / 7r) <= (3 / 5r) .. false
-(5 / 2r) <= 3 .. true
-(6 / 2r) <= 3 .. true
-(7 / 2r) <= 3 .. false
-3 <= (5 / 2r) .. false
-3 <= (6 / 2r) .. true
-3 <= (7 / 2r) .. true
+3 / 5r <= 6 / 7r .. true
+6 / 7r <= 6 / 7r .. true
+6 / 7r <= 3 / 5r .. false
+5 / 2r <= 3 .. true
+6 / 2r <= 3 .. true
+7 / 2r <= 3 .. false
+3 <= 5 / 2r .. false
+3 <= 6 / 2r .. true
+3 <= 7 / 2r .. true
 ======== Operator a >= b ========
-(3 / 5r) >= (6 / 7r) .. false
-(6 / 7r) >= (6 / 7r) .. true
-(6 / 7r) >= (3 / 5r) .. true
-(5 / 2r) >= 3 .. false
-(6 / 2r) >= 3 .. true
-(7 / 2r) >= 3 .. true
-3 >= (5 / 2r) .. true
-3 >= (6 / 2r) .. true
-3 >= (7 / 2r) .. false
+3 / 5r >= 6 / 7r .. false
+6 / 7r >= 6 / 7r .. true
+6 / 7r >= 3 / 5r .. true
+5 / 2r >= 3 .. false
+6 / 2r >= 3 .. true
+7 / 2r >= 3 .. true
+3 >= 5 / 2r .. true
+3 >= 6 / 2r .. true
+3 >= 7 / 2r .. false
 ======== Rational.format ========
 Rational.format = '%lld/%lld' .. %lld/%lld
 1234 / 5679r .. 1234/5679

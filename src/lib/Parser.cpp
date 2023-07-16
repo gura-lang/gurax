@@ -101,7 +101,7 @@ void Parser::FeedToken(RefPtr<Token> pToken)
 	for (;;) {
 		TokenStack::reverse_iterator ppTokenTop = tokenStack.SeekTerminal(tokenStack.rbegin());
 		DBGPARSER(::printf("%s  << %s\n", tokenStack.ToString().c_str(), pToken->GetSymbol()));
-		Token::Precedence prec = Token::LookupPrec(**ppTokenTop, *pToken);
+		Precedence prec = Token::LookupPrec(**ppTokenTop, *pToken);
 		if ((*ppTokenTop)->IsType(TokenType::Begin) && pToken->IsSeparatorToken()) {
 			size_t cntToken = tokenStack.size();
 			if (cntToken == 1) {
@@ -117,7 +117,7 @@ void Parser::FeedToken(RefPtr<Token> pToken)
 				IssueError(ErrorType::SyntaxError, pToken, "syntax error (%d)", __LINE__);
 			}
 			break;
-		} else if (prec == Token::Precedence::LT || prec == Token::Precedence::EQ) {
+		} else if (prec == Precedence::LT || prec == Precedence::EQ) {
 			Token *pTokenLast = tokenStack.back();
 			// concatenation of two sequences of string, binary and embed-string
 			if (pTokenLast->IsType(TokenType::String) && pToken->IsType(TokenType::String)) {
@@ -132,12 +132,12 @@ void Parser::FeedToken(RefPtr<Token> pToken)
 				tokenStack.Push(pToken->Reference());
 			}
 			break;
-		} else if (prec == Token::Precedence::GT) {
+		} else if (prec == Precedence::GT) {
 			TokenStack::reverse_iterator ppTokenLeft;
 			TokenStack::reverse_iterator ppTokenRight = ppTokenTop;
 			while (1) {
 				ppTokenLeft = tokenStack.SeekTerminal(ppTokenRight + 1);
-				if (Token::LookupPrec(**ppTokenLeft, **ppTokenRight) == Token::Precedence::LT) {
+				if (Token::LookupPrec(**ppTokenLeft, **ppTokenRight) == Precedence::LT) {
 					ppTokenLeft--;
 					break;
 				}

@@ -269,6 +269,8 @@ public:
 		static const Flags Raw		= 1 << 0;
 		static const Flags Map		= 1 << 1;
 		static const Flags NoMap	= 0 << 1;
+		static const Flags BitOp	= 1 << 2;
+		static const Flags LogicOp	= 1 << 3;
 	};
 private:
 	OpStyle _opStyle;
@@ -393,8 +395,12 @@ public:
 	bool IsMath() const					{ return IsMathUnary() || IsMathBinary(); }
 	bool IsMathUnary() const			{ return _opStyle == OpStyle::MathUnary; }
 	bool IsMathBinary() const			{ return _opStyle == OpStyle::MathBinary; }
+	bool IsBitOp() const				{ return (_flags & Flag::BitOp) != 0; }
+	bool IsLogicOp() const				{ return (_flags & Flag::LogicOp) != 0; }
+	bool IsBitOrLogicOp() const			{ return (_flags & (Flag::BitOp | Flag::LogicOp)) != 0; }
 	const Symbol* GetStyleAsSymbol() const;
 	const TokenType& GetTokenType() const;
+	static Precedence LookupPrec(const Operator& opLeft, const Operator& opRight);
 public:
 	void AssignEntry(VType& vtype, OpEntry* pOpEntry);
 	void AssignEntry(VType& vtypeL, VType& vtypeR, OpEntry* pOpEntry);
@@ -439,7 +445,7 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Operator_AndAnd : public Operator {
 public:
-	Operator_AndAnd() : Operator(OpStyle::Binary, "AndAnd", "&&", OpType::AndAnd, Flag::Raw) {}
+	Operator_AndAnd() : Operator(OpStyle::Binary, "AndAnd", "&&", OpType::AndAnd, Flag::Raw | Flag::LogicOp) {}
 public:
 	virtual void ComposeBinary(Composer& composer, Expr_Binary& expr) const override;
 };
@@ -449,7 +455,7 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Operator_OrOr : public Operator {
 public:
-	Operator_OrOr() : Operator(OpStyle::Binary, "OrOr", "||", OpType::OrOr, Flag::Raw) {}
+	Operator_OrOr() : Operator(OpStyle::Binary, "OrOr", "||", OpType::OrOr, Flag::Raw | Flag::LogicOp) {}
 public:
 	virtual void ComposeBinary(Composer& composer, Expr_Binary& expr) const override;
 };
