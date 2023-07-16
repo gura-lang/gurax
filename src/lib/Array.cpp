@@ -1561,41 +1561,44 @@ bool Array::GenericUnaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRt
 bool Array::GenericBinaryOp(RefPtr<Array>& pArrayRtn, const ElemTypeT& elemTypeRtn, const Array& arrayL, const Array& arrayR,
 	const std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>& func, const char* opDisp)
 {
-	size_t nRepeat = 1;
-	size_t nFwdRtn = 0;
-	size_t nFwdL = 0, nFwdR = 0;
-	const DimSizes* pDimSizesRtn = nullptr;
+	const void* pvL = arrayL.GetPointerC<void>();
+	const void* pvR = arrayR.GetPointerC<void>();
 	const DimSizes& dimSizesL = arrayL.GetDimSizes();
 	const DimSizes& dimSizesR = arrayR.GetDimSizes();
 	if (dimSizesL.size() >= dimSizesR.size()) {
 		size_t nDimsHead = dimSizesL.size() - dimSizesR.size();
-		nRepeat = DimSizes::CalcLength(dimSizesL.begin(), dimSizesL.begin() + nDimsHead);
-		nFwdL = nFwdRtn = dimSizesR.CalcLength();
-		nFwdR = 0;
-		if (dimSizesR.DoesMatch(dimSizesL, nDimsHead)) pDimSizesRtn = &dimSizesL;
-	} else {
-		size_t nDimsHead = dimSizesR.size() - dimSizesL.size();
-		nRepeat = DimSizes::CalcLength(dimSizesR.begin(), dimSizesR.begin() + nDimsHead);
-		nFwdR = nFwdRtn = dimSizesL.CalcLength();
-		nFwdL = 0;
-		if (dimSizesL.DoesMatch(dimSizesR, nDimsHead)) pDimSizesRtn = &dimSizesR;
-	}
-	//const DimSizes* pDimSizesRtn = DimSizes::DetermineResult(arrayL.GetDimSizes(), arrayR.GetDimSizes(), &nRepeat, &nFwdRtn, &nFwdL, &nFwdR);
-	if (!pDimSizesRtn) {
-		Error::Issue(ErrorType::SizeError, "unmatched array size: %s %s %s",
+		if (!dimSizesR.DoesMatch(dimSizesL, nDimsHead)) {
+			Error::Issue(ErrorType::SizeError, "unmatched array size: %s %s %s",
 				arrayL.ToString(StringStyle::BriefCram).c_str(), opDisp, arrayR.ToString(StringStyle::BriefCram).c_str());
-		return nullptr;
-	}
-	if (!pArrayRtn) pArrayRtn.reset(Create(elemTypeRtn, *pDimSizesRtn));
-	if (!pArrayRtn) return false;
-	void* pvRtn = pArrayRtn->GetPointerC<void>();
-	const void* pvL = arrayL.GetPointerC<void>();
-	const void* pvR = arrayR.GetPointerC<void>();
-	for (size_t i = 0; i < nRepeat; i++) {
-		func(pvRtn, pvL, pvR, nFwdRtn);
-		pvRtn = pArrayRtn->FwdPointer(pvRtn, nFwdRtn);
-		pvL = arrayL.FwdPointer(pvL, nFwdL);
-		pvR = arrayR.FwdPointer(pvR, nFwdR);
+			return false;
+		}
+		size_t nUnits = DimSizes::CalcLength(dimSizesL.begin(), dimSizesL.begin() + nDimsHead);
+		size_t nElemsUnit = dimSizesR.CalcLength();
+		if (!pArrayRtn) pArrayRtn.reset(Create(elemTypeRtn, dimSizesL));
+		if (!pArrayRtn) return false;
+		void* pvRtn = pArrayRtn->GetPointerC<void>();
+		for (size_t iUnit = 0; iUnit < nUnits; iUnit++) {
+			func(pvRtn, pvL, pvR, nElemsUnit);
+			pvRtn = pArrayRtn->FwdPointer(pvRtn, nElemsUnit);
+			pvL = arrayL.FwdPointer(pvL, nElemsUnit);
+		}
+	} else { // dimSizesL.size() < dimSizesR.size()
+		size_t nDimsHead = dimSizesR.size() - dimSizesL.size();
+		if (!dimSizesL.DoesMatch(dimSizesR, nDimsHead)) {
+			Error::Issue(ErrorType::SizeError, "unmatched array size: %s %s %s",
+				arrayL.ToString(StringStyle::BriefCram).c_str(), opDisp, arrayR.ToString(StringStyle::BriefCram).c_str());
+			return false;
+		}
+		size_t nUnits = DimSizes::CalcLength(dimSizesR.begin(), dimSizesR.begin() + nDimsHead);
+		size_t nElemsUnit = dimSizesL.CalcLength();
+		if (!pArrayRtn) pArrayRtn.reset(Create(elemTypeRtn, dimSizesR));
+		if (!pArrayRtn) return false;
+		void* pvRtn = pArrayRtn->GetPointerC<void>();
+		for (size_t iUnit = 0; iUnit < nUnits; iUnit++) {
+			func(pvRtn, pvL, pvR, nElemsUnit);
+			pvRtn = pArrayRtn->FwdPointer(pvRtn, nElemsUnit);
+			pvR = arrayR.FwdPointer(pvR, nElemsUnit);
+		}
 	}
 	return true;
 }
@@ -1686,15 +1689,14 @@ bool Array::GenericBinaryOpShrink(RefPtr<Array>& pArrayRtn, const ElemTypeT& ele
 		nRepeat = DimSizes::CalcLength(dimSizesL.begin(), dimSizesL.begin() + nDimsHead);
 		nFwdL = nFwdRtn = dimSizesR.CalcLength();
 		nFwdR = 0;
-		if (dimSizesR.DoesMatch(dimSizesL, nDimsHead)) pDimSizesRtn = &dimSizesL;
+		if (dimSizesR.DoesMatch(dimSizesL, nDimsHead)) pDimSizesRtn = &dimSizesR;
 	} else {
 		size_t nDimsHead = dimSizesR.size() - dimSizesL.size();
 		nRepeat = DimSizes::CalcLength(dimSizesR.begin(), dimSizesR.begin() + nDimsHead);
 		nFwdR = nFwdRtn = dimSizesL.CalcLength();
 		nFwdL = 0;
-		if (dimSizesL.DoesMatch(dimSizesR, nDimsHead)) pDimSizesRtn = &dimSizesR;
+		if (dimSizesL.DoesMatch(dimSizesR, nDimsHead)) pDimSizesRtn = &dimSizesL;
 	}
-	//const DimSizes* pDimSizesRtn = DimSizes::DetermineResult(arrayL.GetDimSizes(), arrayR.GetDimSizes(), &nRepeat, &nFwdRtn, &nFwdL, &nFwdR);
 	if (!pDimSizesRtn) {
 		Error::Issue(ErrorType::SizeError, "unmatched array size: %s %s %s",
 				arrayL.ToString(StringStyle::BriefCram).c_str(), opDisp, arrayR.ToString(StringStyle::BriefCram).c_str());
