@@ -299,6 +299,29 @@ Gurax_ImplementClassMethod(Array, ReduceMul)
 	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
 }
 
+// Array.ReduceDiv(arrayL as Array, arrayR as Array) {block?}
+Gurax_DeclareClassMethod(Array, ReduceDiv)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("arrayL", VTYPE_Array, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("arrayR", VTYPE_Array, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
+}
+
+Gurax_ImplementClassMethod(Array, ReduceDiv)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const Array& arrayL = args.Pick<Value_Array>().GetArray();
+	const Array& arrayR = args.Pick<Value_Array>().GetArray();
+	// Function body
+	RefPtr<Array> pArray;
+	if (!Array::ReduceDiv(pArray, arrayL, arrayR)) return Value::nil();
+	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
@@ -1345,6 +1368,7 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateClassMethod(Array, ReduceAdd));
 	Assign(Gurax_CreateClassMethod(Array, ReduceSub));
 	Assign(Gurax_CreateClassMethod(Array, ReduceMul));
+	Assign(Gurax_CreateClassMethod(Array, ReduceDiv));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Array, ArgMax));
 	Assign(Gurax_CreateMethod(Array, ArgMin));

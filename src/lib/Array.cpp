@@ -1687,7 +1687,7 @@ bool Array::GenericBinaryOpReduce(RefPtr<Array>& pArrayRtn, const ElemTypeT& ele
 		size_t nUnits = DimSizes::CalcLength(dimSizesR.begin(), dimSizesR.begin() + nDimsHead);
 		size_t nElemsUnit = dimSizesL.CalcLength();
 		if (!pArrayRtn) {
-			pArrayRtn.reset(Create(elemTypeRtn, dimSizesR));
+			pArrayRtn.reset(Create(elemTypeRtn, dimSizesL));
 			if (!pArrayRtn) return false;
 		}
 		void* pvRtn = pArrayRtn->GetPointerC<void>();
@@ -2333,7 +2333,7 @@ bool Array::ReduceSub(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array
 
 bool Array::ReduceMul(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
 {
-	return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Mul_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "*");
+	return GenericBinaryOpReduce(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Mul_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "*");
 }
 
 bool Array::ReduceDiv(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR)
@@ -2342,7 +2342,7 @@ bool Array::ReduceDiv(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array
 		Error::Issue(ErrorType::DividedByZero, "divided by zero");
 		return false;
 	}
-	return GenericBinaryOp(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Div_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "/");
+	return GenericBinaryOpReduce(pArrayRtn, GetElemTypeRtnForArithm(arrayL, arrayR), arrayL, arrayR, funcs.Div_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id], "/");
 }
 
 Value_List* Array::ToList() const
