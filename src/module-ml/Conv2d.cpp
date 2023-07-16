@@ -8,15 +8,18 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 // Conv2d
 //------------------------------------------------------------------------------
-Conv2d::Conv2d(size_t nFilters, size_t nRowsFilter, size_t nColsFilter, size_t stride, size_t padding) : Gear(true),
-	_nFilters(nFilters), _nRowsFilter(nRowsFilter), _nColsFilter(nColsFilter), _stride(stride), _padding(padding)
+Conv2d::Conv2d(size_t nFilters, size_t nRowsFilter, size_t nColsFilter, size_t stride, size_t padding, bool randInitFlag) : Gear(true),
+	_nFilters(nFilters), _nRowsFilter(nRowsFilter), _nColsFilter(nColsFilter), _stride(stride), _padding(padding), _randInitFlag(randInitFlag)
 {
 }
 
-Conv2d::Conv2d(size_t nFilters, size_t nRowsFilter, size_t nColsFilter, size_t stride, size_t padding, Array* pArrayFilter, Array* pArrayBias) : Gear(true),
-	_nFilters(nFilters), _nRowsFilter(nRowsFilter), _nColsFilter(nColsFilter), _stride(stride), _padding(padding),
-	_pArrayFilter(pArrayFilter), _pArrayBias(pArrayBias)
+Conv2d::Conv2d(Array* pArrayFilter, Array* pArrayBias, size_t stride, size_t padding, bool randInitFlag) : Gear(true),
+	_stride(stride), _padding(padding), _pArrayFilter(pArrayFilter), _pArrayBias(pArrayBias), _randInitFlag(randInitFlag)
 {
+	const DimSizes& dimSizes = pArrayFilter->GetDimSizes();
+	_nFilters = dimSizes[0];
+	_nRowsFilter = dimSizes[2];
+	_nColsFilter = dimSizes[3];
 }
 
 void Conv2d::Initialize()
@@ -41,14 +44,14 @@ bool Conv2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, cons
 	const DimSizes& dimSizesFwdIn = arrayFwdIn.GetDimSizes();
 	size_t nSamples = dimSizesFwdIn[0];
 	size_t nChannels = dimSizesFwdIn[1];
+	size_t nRowsIn = dimSizesFwdIn[2], nColsIn = dimSizesFwdIn[3];
 	if (!_pArrayFilter) {
-		const Array::ElemTypeT& elemType = arrayFwdIn.GetElemType();
-		size_t nRowsIn = dimSizesFwdIn[2], nColsIn = dimSizesFwdIn[3];
-		_pArrayFilter.reset(Array::Create(elemType, DimSizes(_nFilters, nChannels, _nRowsFilter, _nColsFilter)));
-		_pArrayBias.reset(Array::Create(elemType, DimSizes(_nFilters, CalcNRowsOut(nRowsIn), CalcNColsOut(nColsIn))));
-		Double stddev = ::sqrt(1. / nColsIn);
-		_pArrayFilter->FillRandomNormal(0, stddev, Random::Global());
-		_pArrayBias->FillRandomNormal(0, stddev, Random::Global());
+		_pArrayFilter.reset(Array::Create(arrayFwdIn.GetElemType(), DimSizes(_nFilters, nChannels, _nRowsFilter, _nColsFilter)));
+		if (_randInitFlag) _pArrayFilter->FillRandomNormal(0, ::sqrt(1. / nColsIn), Random::Global());
+	}
+	if (!_pArrayBias) {
+		_pArrayBias.reset(Array::Create(arrayFwdIn.GetElemType(), DimSizes(_nFilters, CalcNRowsOut(nRowsIn), CalcNColsOut(nColsIn))));
+		if (_randInitFlag) _pArrayBias->FillRandomNormal(0, ::sqrt(1. / nColsIn), Random::Global());
 	}
 	size_t nRowsFwdOut, nColsFwdOut;
 	if (!Img2dToCol(_pArrayFwd1, arrayFwdIn, _nRowsFilter, _nColsFilter, _stride, _stride, _padding, _padding, &nRowsFwdOut, &nColsFwdOut)) return false;
@@ -103,11 +106,9 @@ String Conv2d::ToString(const StringStyle& ss) const
 
 bool Conv2d::Serialize(Stream& stream) const
 {
-	if (!stream.SerializePackedNumber<size_t>(_nFilters)) return false;
-	if (!stream.SerializePackedNumber<size_t>(_nRowsFilter)) return false;
-	if (!stream.SerializePackedNumber<size_t>(_nColsFilter)) return false;
 	if (!stream.SerializePackedNumber<size_t>(_stride)) return false;
 	if (!stream.SerializePackedNumber<size_t>(_padding)) return false;
+	if (!stream.SerializeNumber<bool>(_randInitFlag)) return false;
 	if (!_pArrayFilter->Serialize(stream)) return false;
 	if (!_pArrayBias->Serialize(stream)) return false;
 	return true;
@@ -115,17 +116,16 @@ bool Conv2d::Serialize(Stream& stream) const
 
 Conv2d* Conv2d::Deserialize(Stream& stream)
 {
-	size_t nFilters, nRowsFilter, nColsFilter, stride, padding;
-	if (!stream.DeserializePackedNumber<size_t>(nFilters)) return nullptr;
-	if (!stream.DeserializePackedNumber<size_t>(nRowsFilter)) return nullptr;
-	if (!stream.DeserializePackedNumber<size_t>(nColsFilter)) return nullptr;
+	size_t stride, padding;
+	bool randInitFlag;
 	if (!stream.DeserializePackedNumber<size_t>(stride)) return nullptr;
 	if (!stream.DeserializePackedNumber<size_t>(padding)) return nullptr;
+	if (!stream.DeserializeNumber<bool>(randInitFlag)) return nullptr;
 	RefPtr<Array> pArrayFilter(Array::Deserialize(stream));
 	if (!pArrayFilter) return nullptr;
 	RefPtr<Array> pArrayBias(Array::Deserialize(stream));
 	if (!pArrayBias) return nullptr;
-	return new Conv2d(nFilters, nRowsFilter, nColsFilter, stride, padding, pArrayFilter.release(), pArrayBias.release());
+	return new Conv2d(pArrayFilter.release(), pArrayBias.release(), stride, padding, randInitFlag);
 }
 
 //------------------------------------------------------------------------------

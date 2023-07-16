@@ -20,8 +20,10 @@ private:
 	size_t _nFilters;
 	size_t _nRowsFilter;
 	size_t _nColsFilter;
+private:
 	size_t _stride;
 	size_t _padding;
+	Bool _randInitFlag;
 private:
 	RefPtr<Array> _pArrayFilter;
 	RefPtr<Array> _pArrayFilterGrad;
@@ -35,8 +37,8 @@ private:
 	RefPtr<Optimizer::Instance> _pOptimizerInstBias;
 public:
 	// Constructor
-	Conv2d(size_t nFilters, size_t nRowsFilter, size_t nColsFilter, size_t stride, size_t padding);
-	Conv2d(size_t nFilters, size_t nRowsFilter, size_t nColsFilter, size_t stride, size_t padding, Array* pArrayFilter, Array* pArrayBias);
+	Conv2d(size_t nFilters, size_t nRowsFilter, size_t nColsFilter, size_t stride, size_t padding, bool randInitFlag);
+	Conv2d(Array* pArrayFilter, Array* pArrayBias, size_t stride, size_t padding, bool randInitFlag);
 	// Copy constructor/operator
 	Conv2d(const Conv2d& src) = delete;
 	Conv2d& operator=(const Conv2d& src) = delete;

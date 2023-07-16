@@ -27,7 +27,7 @@ ${help.ComposeMethodHelp(ml.Conv2d, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// ml.Conv2d(nFilters as Number, nRowsFilter as Number, nColsFilter as Number, stride? as Number, padding? as Number) {block?}
+// ml.Conv2d(nFilters as Number, nRowsFilter as Number, nColsFilter as Number, stride? as Number, padding? as Number):[zero] {block?}
 Gurax_DeclareConstructor(Conv2d)
 {
 	Declare(VTYPE_Conv2d, Flag::None);
@@ -36,6 +36,7 @@ Gurax_DeclareConstructor(Conv2d)
 	DeclareArg("nColsFilter", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("padding", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(zero));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `ml.Conv2d` instance.
@@ -51,15 +52,51 @@ Gurax_ImplementConstructor(Conv2d)
 	size_t nColsFilter = args.PickNumberPos<size_t>();
 	size_t stride = args.IsValid()? args.PickNumberPos<size_t>() : 1;
 	size_t padding = args.IsValid()? args.PickNumberNonNeg<size_t>() : 0;
+	bool randInitFlag = !argument.IsSet(Gurax_Symbol(zero));
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	RefPtr<Conv2d> pConv2d(new Conv2d(nFilters, nRowsFilter, nColsFilter, stride, padding));
+	RefPtr<Conv2d> pConv2d(new Conv2d(nFilters, nRowsFilter, nColsFilter, stride, padding, randInitFlag));
 	return argument.ReturnValue(processor, new Value_Conv2d(pConv2d.release()));
 }
 
 //-----------------------------------------------------------------------------
-// Implementation of method
+// Implementation of class method
 //-----------------------------------------------------------------------------
+// Conv2d.Preset(filter as Array, bias? as Array, stride? as Number, padding? as Number) {block?}
+Gurax_DeclareClassMethod(Conv2d, Preset)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("filter", VTYPE_Array, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bias", VTYPE_Array, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("stride", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("padding", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
+}
+
+Gurax_ImplementClassMethod(Conv2d, Preset)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const Array& arrayFilter = args.Pick<Value_Array>().GetArray();
+	RefPtr<Array> pArrayBias(args.IsValid()? args.Pick<Value_Array>().GetArray().Reference() : nullptr);
+	size_t stride = args.IsValid()? args.PickNumberPos<size_t>() : 1;
+	size_t padding = args.IsValid()? args.PickNumberNonNeg<size_t>() : 0;
+	bool randInitFlag = false;
+	if (Error::IsIssued()) return Value::nil();
+	if (arrayFilter.GetDimSizes().size() != 4) {
+		Error::Issue(ErrorType::SizeError, "filter must be an Array of four dimensions");
+		return Value::nil();
+	}
+	if (pArrayBias && pArrayBias->GetDimSizes().size() != 3) {
+		Error::Issue(ErrorType::SizeError, "bias must be an Array of three dimensions");
+		return Value::nil();
+	}
+	// Function body
+	RefPtr<Conv2d> pConv2d(new Conv2d(arrayFilter.Reference(), pArrayBias.release(), stride, padding, randInitFlag));
+	return argument.ReturnValue(processor, new Value_Conv2d(pConv2d.release()));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -199,7 +236,8 @@ void VType_Conv2d::DoPrepare(Frame& frameOuter)
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Gear, Flag::Immutable, Gurax_CreateConstructor(Conv2d));
-	// Assignment of method
+	// Assignment of class method
+	Assign(Gurax_CreateClassMethod(Conv2d, Preset));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Conv2d, nFilters));
 	Assign(Gurax_CreateProperty(Conv2d, nRowsFilter));
