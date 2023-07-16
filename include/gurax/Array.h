@@ -152,12 +152,12 @@ public:
 		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Mul_ArrayArray[ElemTypeIdMax][ElemTypeIdMax];
 		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Mul_ArrayNumber[ElemTypeIdMax];
 		std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>	Mul_ArrayComplex[ElemTypeIdMax];
-		std::function<bool (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Div_ArrayArray[ElemTypeIdMax][ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Div_ArrayArray[ElemTypeIdMax][ElemTypeIdMax];
 		std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>			Div_NumberArray[ElemTypeIdMax];
 		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Div_ArrayNumber[ElemTypeIdMax];
 		std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>	Div_ComplexArray[ElemTypeIdMax];
 		std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>	Div_ArrayComplex[ElemTypeIdMax];
-		std::function<bool (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Pow_ArrayArray[ElemTypeIdMax][ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Pow_ArrayArray[ElemTypeIdMax][ElemTypeIdMax];
 		std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>			Pow_NumberArray[ElemTypeIdMax];
 		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Pow_ArrayNumber[ElemTypeIdMax];
 		std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>	Pow_ComplexArray[ElemTypeIdMax];
@@ -289,7 +289,6 @@ public:
 	static bool Add(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
 	static bool Add(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR);
 	static bool Add(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR);
-	static bool AddReduce(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
 	static bool And(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
 	static bool And(RefPtr<Array>& pArrayRtn, const Array& arrayL, UInt64 numR);
 	static bool Sub(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
@@ -297,11 +296,9 @@ public:
 	static bool Sub(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR);
 	static bool Sub(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR);
 	static bool Sub(RefPtr<Array>& pArrayRtn, const Complex& numL, const Array& arrayR);
-	static bool SubReduce(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
 	static bool Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
 	static bool Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR);
 	static bool Mul(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Complex& numR);
-	static bool MulReduce(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
 	static bool Div(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
 	static bool Div(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR);
 	static bool Div(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR);
@@ -333,6 +330,10 @@ public:
 	static bool Cmp(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR);
 	static bool Dot(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
 	static bool Cross(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
+	static bool ReduceAdd(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
+	static bool ReduceSub(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
+	static bool ReduceMul(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
+	static bool ReduceDiv(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
 public:
 	Value_List* ToList() const;
 	Value* ToValue() const;

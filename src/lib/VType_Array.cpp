@@ -230,6 +230,75 @@ Gurax_ImplementClassMethod(Array, Scalar)
 	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
 }
 
+// Array.ReduceAdd(arrayL as Array, arrayR as Array) {block?}
+Gurax_DeclareClassMethod(Array, ReduceAdd)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("arrayL", VTYPE_Array, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("arrayR", VTYPE_Array, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
+}
+
+Gurax_ImplementClassMethod(Array, ReduceAdd)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const Array& arrayL = args.Pick<Value_Array>().GetArray();
+	const Array& arrayR = args.Pick<Value_Array>().GetArray();
+	// Function body
+	RefPtr<Array> pArray;
+	if (!Array::ReduceAdd(pArray, arrayL, arrayR)) return Value::nil();
+	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
+}
+
+// Array.ReduceSub(arrayL as Array, arrayR as Array) {block?}
+Gurax_DeclareClassMethod(Array, ReduceSub)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("arrayL", VTYPE_Array, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("arrayR", VTYPE_Array, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
+}
+
+Gurax_ImplementClassMethod(Array, ReduceSub)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const Array& arrayL = args.Pick<Value_Array>().GetArray();
+	const Array& arrayR = args.Pick<Value_Array>().GetArray();
+	// Function body
+	RefPtr<Array> pArray;
+	if (!Array::ReduceSub(pArray, arrayL, arrayR)) return Value::nil();
+	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
+}
+
+// Array.ReduceMul(arrayL as Array, arrayR as Array) {block?}
+Gurax_DeclareClassMethod(Array, ReduceMul)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("arrayL", VTYPE_Array, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("arrayR", VTYPE_Array, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
+}
+
+Gurax_ImplementClassMethod(Array, ReduceMul)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const Array& arrayL = args.Pick<Value_Array>().GetArray();
+	const Array& arrayR = args.Pick<Value_Array>().GetArray();
+	// Function body
+	RefPtr<Array> pArray;
+	if (!Array::ReduceMul(pArray, arrayL, arrayR)) return Value::nil();
+	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
@@ -1273,6 +1342,9 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	// Assignment of class method
 	Assign(Gurax_CreateClassMethod(Array, Identity));
 	Assign(Gurax_CreateClassMethod(Array, Scalar));
+	Assign(Gurax_CreateClassMethod(Array, ReduceAdd));
+	Assign(Gurax_CreateClassMethod(Array, ReduceSub));
+	Assign(Gurax_CreateClassMethod(Array, ReduceMul));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Array, ArgMax));
 	Assign(Gurax_CreateMethod(Array, ArgMin));
