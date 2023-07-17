@@ -47,7 +47,8 @@ template<> Double CalcCrossEntropyError_T<Half>(const Array& arrayFwdOut, const 
 
 Trainer::Trainer(Processor* pProcessor, Expr* pExprModel, SymbolList symbolsInput, Optimizer* pOptimizer) :
 		_pProcessor(pProcessor), _pExprModel(pExprModel), _symbolsInput(symbolsInput), _pOptimizer(pOptimizer),
-		_pNodeBottom(new Node_Bottom()), _pNodeOwner(new NodeOwner()), _pNodeMap(new NodeMap())
+		_pNodeBottom(new Node_Bottom()), _pNodeOwner(new NodeOwner()), _pNodeMap(new NodeMap()),
+		_pRandom(new Random(0x12345678))
 {
 }
 

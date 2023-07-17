@@ -8,14 +8,14 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 // Dropout
 //------------------------------------------------------------------------------
-template<typename T_Elem> void Dropout_Forward_Array_T(Array& arrayFwdOut, Array& arrayBoolSaved, const Array& arrayFwdIn, Double rate)
+template<typename T_Elem> void Dropout_Forward_Array_T(Array& arrayFwdOut, Array& arrayBoolSaved, const Array& arrayFwdIn, Double rate, Random& random)
 {
 	const T_Elem* pFwdIn = arrayFwdIn.GetPointerC<T_Elem>();
 	const T_Elem* pFwdInEnd = pFwdIn + arrayFwdIn.GetDimSizes().CalcLength();
 	T_Elem* pFwdOut = arrayFwdOut.GetPointerC<T_Elem>();
 	Bool* pBoolSaved = arrayBoolSaved.GetPointerC<Bool>();
 	for ( ; pFwdIn != pFwdInEnd; pFwdIn++, pFwdOut++, pBoolSaved++) {
-		*pFwdOut = (*pBoolSaved = Random::Global().GenFloat<Double>() < rate)? 0 : *pFwdIn;
+		*pFwdOut = (*pBoolSaved = random.GenFloat<Double>() < rate)? 0 : *pFwdIn;
 	}
 }
 
@@ -28,7 +28,7 @@ template<typename T_Elem> void Dropout_Backward_Array_T(Array& arrayBwdOut, cons
 	for ( ; pBwdIn != pBwdInEnd; pBwdIn++, pBwdOut++, pBoolSaved++) *pBwdOut = *pBoolSaved? 0 : *pBwdIn;
 }
 
-std::function<void (Array& arrayFwdOut, Array& arrayBoolSaved, const Array& arrayFwdIn, Double rate)> Dropout_Forward_Array[Array::ElemTypeIdMax];
+std::function<void (Array& arrayFwdOut, Array& arrayBoolSaved, const Array& arrayFwdIn, Double rate, Random& random)> Dropout_Forward_Array[Array::ElemTypeIdMax];
 std::function<void (Array& arrayBwdOut, const Array& arrayBoolSaved, const Array& arrayBwdIn)> Dropout_Backward_Array[Array::ElemTypeIdMax];
 
 void Dropout::Initialize()
@@ -43,7 +43,7 @@ bool Dropout::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, con
 	if (!pArrayFwdOut) return false;
 	if (!_pArrayBoolSaved) _pArrayBoolSaved.reset(Array::Create(Array::ElemType::Bool, arrayFwdIn.GetDimSizes()));
 	if (!_pArrayBoolSaved) return false;
-	Dropout_Forward_Array[arrayFwdIn.GetElemType().id](*pArrayFwdOut, *_pArrayBoolSaved, arrayFwdIn, _rate);
+	Dropout_Forward_Array[arrayFwdIn.GetElemType().id](*pArrayFwdOut, *_pArrayBoolSaved, arrayFwdIn, _rate, controller.GetRandom());
 	return true;
 }
 

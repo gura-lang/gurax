@@ -25,6 +25,7 @@ public:
 		Controller() {}
 		virtual void InitArray(Array& array, size_t nInputs) const { /* nothing to do */ }
 		virtual bool IsTraining() const { return false; }
+		virtual Random& GetRandom() const { return Random::Global(); }
 	};
 private:
 	bool _hasVulnerableParamFlag;

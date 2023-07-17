@@ -29,6 +29,7 @@ public:
 	RefPtr<NodeOwner> _pNodeOwner;
 	RefPtr<NodeMap> _pNodeMap;
 	NodeList_Input _nodesInput;
+	RefPtr<Random> _pRandom;
 public:
 	// Constructor
 	Trainer(Processor* pProcessor, Expr* pExprModel, SymbolList symbolsInput, Optimizer* pOptimizer);
@@ -74,9 +75,10 @@ public:
 public:
 	// Virtual functions of Gear::Controller
 	virtual void InitArray(Array& array, size_t nInputs) const {
-		array.FillRandomNormal(0, ::sqrt(1. / nInputs), Random::Global());
+		array.FillRandomNormal(0, ::sqrt(1. / nInputs), GetRandom());
 	}
 	virtual bool IsTraining() const { return true; }
+	virtual Random& GetRandom() const { return *_pRandom; }
 };
 
 //------------------------------------------------------------------------------

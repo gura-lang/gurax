@@ -49,11 +49,11 @@ bool Conv2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, cons
 	if (!Img2dToCol(_pArrayFwd1, arrayFwdIn, _nRowsFilter, _nColsFilter, _stride, _stride, _padding, _padding, &nRowsFwdOut, &nColsFwdOut)) return false;
 	if (!_pArrayFilter) {
 		_pArrayFilter.reset(Array::Create(arrayFwdIn.GetElemType(), DimSizes(_nFilters, nChannels, _nRowsFilter, _nColsFilter)));
-		if (_randInitFlag) _pArrayFilter->FillRandomNormal(0, ::sqrt(1. / nColsIn), Random::Global());
+		controller.InitArray(*_pArrayFilter, nColsIn);
 	}
 	if (!_pArrayBias) {
 		_pArrayBias.reset(Array::Create(arrayFwdIn.GetElemType(), DimSizes(_nFilters, nRowsFwdOut, nColsFwdOut)));
-		if (_randInitFlag) _pArrayBias->FillRandomNormal(0, ::sqrt(1. / nColsIn), Random::Global());
+		controller.InitArray(*_pArrayBias, nColsIn);
 	}
 	_pArrayFilter->Reshape(_pArrayFwd2, DimSizes(_nFilters, nChannels * _nRowsFilter * _nColsFilter));
 	if (!_pArrayFwd2->Transpose2d(_pArrayFwd3)) return false;
