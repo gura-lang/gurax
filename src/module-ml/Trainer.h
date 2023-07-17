@@ -13,20 +13,12 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 // Trainer
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Trainer : public Referable {
+class GURAX_DLLDECLARE Trainer : public Referable, public Gear::Controller {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Trainer);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Trainer");
-public:
-	class GearController : public Gear::Controller {
-	public:
-		virtual void InitArray(Array& array, size_t nInputs) const {
-			array.FillRandomNormal(0, ::sqrt(1. / nInputs), Random::Global());
-		}
-		virtual bool IsTraining() const { return true; }
-	};
 public:
 	RefPtr<Processor> _pProcessor;
 	Composer _composer;
@@ -79,6 +71,12 @@ public:
 	bool IsEqualTo(const Trainer& other) const { return IsIdentical(other); }
 	bool IsLessThan(const Trainer& other) const { return this < &other; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
+public:
+	// Virtual functions of Gear::Controller
+	virtual void InitArray(Array& array, size_t nInputs) const {
+		array.FillRandomNormal(0, ::sqrt(1. / nInputs), Random::Global());
+	}
+	virtual bool IsTraining() const { return true; }
 };
 
 //------------------------------------------------------------------------------

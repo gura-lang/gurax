@@ -80,8 +80,8 @@ public:
 	virtual bool IsGear() const { return false; }
 	virtual bool IsVulnerable() const = 0;
 	virtual void Reset() {}
-	virtual bool EvalForward(Processor& processor) = 0;
-	virtual bool EvalBackward(Processor& processor) = 0;
+	virtual bool EvalForward(Trainer& trainer) = 0;
+	virtual bool EvalBackward(Trainer& trainer) = 0;
 	virtual bool GatherMemberSymbol(SymbolList& symbols) const;
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const;
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const;
@@ -99,8 +99,8 @@ public:
 class GURAX_DLLDECLARE NodeList : public ListBase<Node*> {
 public:
 	void Reset();
-	bool EvalForward(Processor& processor);
-	bool EvalBackward(Processor& processor);
+	bool EvalForward(Trainer& trainer);
+	bool EvalBackward(Trainer& trainer);
 };
 
 //------------------------------------------------------------------------------
@@ -141,8 +141,8 @@ protected:
 public:
 	Node_Branch() {}
 	virtual const Symbol* GetTypeSymbol() const override { return Gurax_Symbol(branch); }
-	virtual bool EvalForward(Processor& processor) override;
-	virtual bool EvalBackward(Processor& processor) override;
+	virtual bool EvalForward(Trainer& trainer) override;
+	virtual bool EvalBackward(Trainer& trainer) override;
 	virtual void Connect(Connector& connectorDst) override;
 	virtual bool GatherMemberSymbol(SymbolList& symbols) const;
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const;
@@ -157,7 +157,7 @@ protected:
 public:
 	Node_Expr(Expr* pExpr) : _pExpr(pExpr) {}
 	const Expr& GetExpr() const { return *_pExpr; }
-	virtual bool EvalForward(Processor& processor) override;
+	virtual bool EvalForward(Trainer& trainer) override;
 	virtual bool GatherMemberSymbol(SymbolList& symbols) const override;
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const override;
 	virtual void Print(Stream& stream, int indentLevel) const override;
@@ -174,7 +174,7 @@ public:
 	virtual bool IsVulnerable() const override { return true; }
 	virtual const Symbol* GetTypeSymbol() const override { return Gurax_Symbol(variable); }
 	virtual void Reset() override;
-	virtual bool EvalBackward(Processor& processor) override;
+	virtual bool EvalBackward(Trainer& trainer) override;
 	virtual String ToString(const StringStyle& ss) const;
 };
 
@@ -186,7 +186,7 @@ public:
 	Node_Const(Expr* pExpr) : Node_Expr(pExpr) {}
 	virtual bool IsVulnerable() const { return false; }
 	virtual const Symbol* GetTypeSymbol() const override { return Gurax_Symbol(const_); }
-	virtual bool EvalBackward(Processor& processor) override { return true; }
+	virtual bool EvalBackward(Trainer& trainer) override { return true; }
 	virtual String ToString(const StringStyle& ss) const;
 };
 
@@ -206,8 +206,8 @@ public:
 	virtual bool IsInput() const { return true; }
 	virtual void Reset();
 	virtual bool IsVulnerable() const;
-	virtual bool EvalForward(Processor& processor) override;
-	virtual bool EvalBackward(Processor& processor) override;
+	virtual bool EvalForward(Trainer& trainer) override;
+	virtual bool EvalBackward(Trainer& trainer) override;
 	virtual bool GatherMemberSymbol(SymbolList& symbols) const;
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const;
 	virtual String ToString(const StringStyle& ss) const;
@@ -235,9 +235,9 @@ public:
 	virtual const Symbol* GetTypeSymbol() const override { return Gurax_Symbol(bottom); }
 	virtual bool IsBottom() const { return true; }
 	virtual bool IsVulnerable() const;
-	virtual bool EvalForward(Processor& processor) override;
-	virtual bool EvalBackward(Processor& processor) override;
-	bool EvalBackwardTop(Processor& processor, const Array& arrayCorrect);
+	virtual bool EvalForward(Trainer& trainer) override;
+	virtual bool EvalBackward(Trainer& trainer) override;
+	bool EvalBackwardTop(Trainer& trainer, const Array& arrayCorrect);
 	virtual bool GatherMemberSymbol(SymbolList& symbols) const;
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const;
 	virtual String ToString(const StringStyle& ss) const;
@@ -269,8 +269,8 @@ class Node_Neg : public Node_Unary {
 public:
 	Node_Neg() {}
 	virtual const Symbol* GetTypeSymbol() const override { return Gurax_Symbol(neg); }
-	virtual bool EvalForward(Processor& processor) override;
-	virtual bool EvalBackward(Processor& processor) override;
+	virtual bool EvalForward(Trainer& trainer) override;
+	virtual bool EvalBackward(Trainer& trainer) override;
 };
 
 //------------------------------------------------------------------------------
@@ -301,8 +301,8 @@ class Node_Add : public Node_Binary {
 public:
 	Node_Add() {}
 	virtual const Symbol* GetTypeSymbol() const override { return Gurax_Symbol(add); }
-	virtual bool EvalForward(Processor& processor) override;
-	virtual bool EvalBackward(Processor& processor) override;
+	virtual bool EvalForward(Trainer& trainer) override;
+	virtual bool EvalBackward(Trainer& trainer) override;
 };
 
 //------------------------------------------------------------------------------
@@ -312,8 +312,8 @@ class Node_Sub : public Node_Binary {
 public:
 	Node_Sub() {}
 	virtual const Symbol* GetTypeSymbol() const override { return Gurax_Symbol(sub); }
-	virtual bool EvalForward(Processor& processor) override;
-	virtual bool EvalBackward(Processor& processor) override;
+	virtual bool EvalForward(Trainer& trainer) override;
+	virtual bool EvalBackward(Trainer& trainer) override;
 };
 
 //------------------------------------------------------------------------------
@@ -323,8 +323,8 @@ class Node_Mul : public Node_Binary {
 public:
 	Node_Mul() {}
 	virtual const Symbol* GetTypeSymbol() const override { return Gurax_Symbol(mul); }
-	virtual bool EvalForward(Processor& processor) override;
-	virtual bool EvalBackward(Processor& processor) override;
+	virtual bool EvalForward(Trainer& trainer) override;
+	virtual bool EvalBackward(Trainer& trainer) override;
 };
 
 //------------------------------------------------------------------------------
@@ -334,8 +334,8 @@ class Node_Div : public Node_Binary {
 public:
 	Node_Div() {}
 	virtual const Symbol* GetTypeSymbol() const override { return Gurax_Symbol(div); }
-	virtual bool EvalForward(Processor& processor) override;
-	virtual bool EvalBackward(Processor& processor) override;
+	virtual bool EvalForward(Trainer& trainer) override;
+	virtual bool EvalBackward(Trainer& trainer) override;
 };
 
 //------------------------------------------------------------------------------
@@ -347,8 +347,8 @@ private:
 public:
 	Node_Pow() {}
 	virtual const Symbol* GetTypeSymbol() const override { return Gurax_Symbol(pow); }
-	virtual bool EvalForward(Processor& processor) override;
-	virtual bool EvalBackward(Processor& processor) override;
+	virtual bool EvalForward(Trainer& trainer) override;
+	virtual bool EvalBackward(Trainer& trainer) override;
 };
 
 //------------------------------------------------------------------------------
@@ -361,8 +361,8 @@ private:
 public:
 	Node_Dot() {}
 	virtual const Symbol* GetTypeSymbol() const override { return Gurax_Symbol(dot); }
-	virtual bool EvalForward(Processor& processor) override;
-	virtual bool EvalBackward(Processor& processor) override;
+	virtual bool EvalForward(Trainer& trainer) override;
+	virtual bool EvalBackward(Trainer& trainer) override;
 };
 
 //------------------------------------------------------------------------------
@@ -381,8 +381,8 @@ public:
 	Gear& GetGear() { return _pValueGear->GetGear(); }
 	const Gear& GetGear() const { return _pValueGear->GetGear(); }
 	virtual bool IsVulnerable() const override;
-	virtual bool EvalForward(Processor& processor) override;
-	virtual bool EvalBackward(Processor& processor) override;
+	virtual bool EvalForward(Trainer& trainer) override;
+	virtual bool EvalBackward(Trainer& trainer) override;
 	virtual bool GatherMemberSymbol(SymbolList& symbols) const;
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr) const;
 	virtual String ToString(const StringStyle& ss) const;

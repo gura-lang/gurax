@@ -99,14 +99,12 @@ bool Trainer::EvalForward(const ValueList& valuesList)
 		(*ppNodeInput)->SetArray(array.Reference());
 		ppNodeInput++;
 	}
-	Processor& processor = GetProcessor();
-	return GetNodeOwner().EvalForward(processor) && GetNodeBottom().EvalForward(processor);
+	return GetNodeOwner().EvalForward(*this) && GetNodeBottom().EvalForward(*this);
 }
 
 bool Trainer::EvalBackward(const Array& arrayCorrect)
 {
-	Processor& processor = GetProcessor();
-	return GetNodeBottom().EvalBackwardTop(processor, arrayCorrect) && GetNodeOwner().EvalBackward(processor);
+	return GetNodeBottom().EvalBackwardTop(*this, arrayCorrect) && GetNodeOwner().EvalBackward(*this);
 }
 
 const Array& Trainer::GetResult() const

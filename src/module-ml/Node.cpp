@@ -49,20 +49,20 @@ void NodeList::Reset()
 	for (Node* pNode : *this)  pNode->Reset();
 }
 
-bool NodeList::EvalForward(Processor& processor)
+bool NodeList::EvalForward(Trainer& trainer)
 {
 	for (Node* pNode : *this) {
-		if (!pNode->EvalForward(processor)) return false;
+		if (!pNode->EvalForward(trainer)) return false;
 	}
 	return true;
 }
 
-bool NodeList::EvalBackward(Processor& processor)
+bool NodeList::EvalBackward(Trainer& trainer)
 {
 	for (auto ppNode = rbegin(); ppNode != rend(); ppNode++) {
 		Node* pNode = *ppNode;
 		//::printf("*%s\n", pNode->ToString().c_str());
-		if (!pNode->EvalBackward(processor)) return false;
+		if (!pNode->EvalBackward(trainer)) return false;
 	}
 	return true;
 }
@@ -112,12 +112,12 @@ void Node_Branch::Connect(Connector& connectorDst)
 	_connectorsDst.push_back(&connectorDst);
 }
 
-bool Node_Branch::EvalForward(Processor& processor)
+bool Node_Branch::EvalForward(Trainer& trainer)
 {
 	return true;
 }
 
-bool Node_Branch::EvalBackward(Processor& processor)
+bool Node_Branch::EvalBackward(Trainer& trainer)
 {
 	auto ppConnector = _connectorsDst.begin();
 	const Connector* pConnector = *ppConnector;
@@ -143,11 +143,11 @@ Value* Node_Branch::DoGetProperty(const Symbol* pSymbol, const Attribute& attr) 
 //-----------------------------------------------------------------------------
 // Node_Expr
 //-----------------------------------------------------------------------------
-bool Node_Expr::EvalForward(Processor& processor)
+bool Node_Expr::EvalForward(Trainer& trainer)
 {
 	//::printf("%s\n", GetExpr().ToString(StringStyle::Empty).c_str());
 	if (!_pArrayFwd.IsNull()) return true;
-	RefPtr<Value> pValue(GetExpr().Eval(processor));
+	RefPtr<Value> pValue(GetExpr().Eval(trainer.GetProcessor()));
 	if (Error::IsIssued()) return false;
 	if (pValue->IsType(VTYPE_Number)) {
 		_pArrayFwd.reset(Array::CreateScalar(Array::ElemType::Double, Value_Number::GetNumber<Double>(*pValue)));
@@ -188,9 +188,9 @@ void Node_Variable::Reset()
 	_pOptimizerInst->Reset();
 }
 
-bool Node_Variable::EvalBackward(Processor& processor)
+bool Node_Variable::EvalBackward(Trainer& trainer)
 {
-	return _pOptimizerInst->Update(processor, _pArrayFwd, _pConnectorDst->GetArrayGrad());
+	return _pOptimizerInst->Update(trainer.GetProcessor(), _pArrayFwd, _pConnectorDst->GetArrayGrad());
 }
 
 String Node_Variable::ToString(const StringStyle& ss) const
@@ -218,13 +218,13 @@ void Node_Input::Reset()
 {
 }
 
-bool Node_Input::EvalForward(Processor& processor)
+bool Node_Input::EvalForward(Trainer& trainer)
 {
 	_pArrayFwd.reset(_pArray.Reference());
 	return true;
 }
 
-bool Node_Input::EvalBackward(Processor& processor)
+bool Node_Input::EvalBackward(Trainer& trainer)
 {
 	return true;
 }
@@ -265,20 +265,20 @@ bool Node_Bottom::IsVulnerable() const
 	return GetConnectorSrc().GetNodeSrc().IsVulnerable();
 }
 
-bool Node_Bottom::EvalForward(Processor& processor)
+bool Node_Bottom::EvalForward(Trainer& trainer)
 {
-	//::printf("NodeBottom::EvalForward(Processor& processor)\n");
+	//::printf("NodeBottom::EvalForward(Trainer& trainer)\n");
 	_pArrayFwd.reset(GetConnectorSrc().GetArrayFwd().Reference());
 	return true;
 }
 
-bool Node_Bottom::EvalBackward(Processor& processor)
+bool Node_Bottom::EvalBackward(Trainer& trainer)
 {
 	// nothing to do
 	return true;
 }
 
-bool Node_Bottom::EvalBackwardTop(Processor& processor, const Array& arrayCorrect)
+bool Node_Bottom::EvalBackwardTop(Trainer& trainer, const Array& arrayCorrect)
 {
 	_pArrayCorrect.reset(arrayCorrect.Reference());
 	if (GetConnectorSrc().GetNodeSrc().IsVulnerable()) {
@@ -363,12 +363,12 @@ void Node_Unary::Print(Stream& stream, int indentLevel) const
 //-----------------------------------------------------------------------------
 // Node_Neg
 //-----------------------------------------------------------------------------
-bool Node_Neg::EvalForward(Processor& processor)
+bool Node_Neg::EvalForward(Trainer& trainer)
 {
 	return Array::Neg(_pArrayFwd, GetConnectorSrc().GetArrayFwd());
 }
 
-bool Node_Neg::EvalBackward(Processor& processor)
+bool Node_Neg::EvalBackward(Trainer& trainer)
 {
 	if (GetConnectorSrc().GetNodeSrc().IsVulnerable()) {
 		// inputGrad = -outputGrad
@@ -434,12 +434,12 @@ void Node_Binary::Print(Stream& stream, int indentLevel) const
 //-----------------------------------------------------------------------------
 // Node_Add
 //-----------------------------------------------------------------------------
-bool Node_Add::EvalForward(Processor& processor)
+bool Node_Add::EvalForward(Trainer& trainer)
 {
 	return Array::Add(_pArrayFwd, GetConnectorSrcLeft().GetArrayFwd(), GetConnectorSrcRight().GetArrayFwd());
 }
 
-bool Node_Add::EvalBackward(Processor& processor)
+bool Node_Add::EvalBackward(Trainer& trainer)
 {
 	const Array& arrayGrad = _pConnectorDst->GetArrayGrad();
 	if (GetConnectorSrcLeft().GetNodeSrc().IsVulnerable()) {
@@ -456,12 +456,12 @@ bool Node_Add::EvalBackward(Processor& processor)
 //-----------------------------------------------------------------------------
 // Node_Sub
 //-----------------------------------------------------------------------------
-bool Node_Sub::EvalForward(Processor& processor)
+bool Node_Sub::EvalForward(Trainer& trainer)
 {
 	return Array::Sub(_pArrayFwd, GetConnectorSrcLeft().GetArrayFwd(), GetConnectorSrcRight().GetArrayFwd());
 }
 
-bool Node_Sub::EvalBackward(Processor& processor)
+bool Node_Sub::EvalBackward(Trainer& trainer)
 {
 	if (GetConnectorSrcLeft().GetNodeSrc().IsVulnerable()) {
 		// inputGradL = outputGrad
@@ -477,12 +477,12 @@ bool Node_Sub::EvalBackward(Processor& processor)
 //-----------------------------------------------------------------------------
 // Node_Mul
 //-----------------------------------------------------------------------------
-bool Node_Mul::EvalForward(Processor& processor)
+bool Node_Mul::EvalForward(Trainer& trainer)
 {
 	return Array::Mul(_pArrayFwd, GetConnectorSrcLeft().GetArrayFwd(), GetConnectorSrcRight().GetArrayFwd());
 }
 
-bool Node_Mul::EvalBackward(Processor& processor)
+bool Node_Mul::EvalBackward(Trainer& trainer)
 {
 	if (GetConnectorSrcLeft().GetNodeSrc().IsVulnerable()) {
 		// inputGradL = outputGrad * inputR
@@ -500,12 +500,12 @@ bool Node_Mul::EvalBackward(Processor& processor)
 //-----------------------------------------------------------------------------
 // Node_Div
 //-----------------------------------------------------------------------------
-bool Node_Div::EvalForward(Processor& processor)
+bool Node_Div::EvalForward(Trainer& trainer)
 {
 	return Array::Div(_pArrayFwd, GetConnectorSrcLeft().GetArrayFwd(), GetConnectorSrcRight().GetArrayFwd());
 }
 
-bool Node_Div::EvalBackward(Processor& processor)
+bool Node_Div::EvalBackward(Trainer& trainer)
 {
 	if (GetConnectorSrcLeft().GetNodeSrc().IsVulnerable()) {
 		// inputGradL = outputGrad / inputR
@@ -527,12 +527,12 @@ bool Node_Div::EvalBackward(Processor& processor)
 //-----------------------------------------------------------------------------
 // Node_Pow
 //-----------------------------------------------------------------------------
-bool Node_Pow::EvalForward(Processor& processor)
+bool Node_Pow::EvalForward(Trainer& trainer)
 {
 	return Array::Pow(_pArrayFwd, GetConnectorSrcLeft().GetArrayFwd(), GetConnectorSrcRight().GetArrayFwd());
 }
 
-bool Node_Pow::EvalBackward(Processor& processor)
+bool Node_Pow::EvalBackward(Trainer& trainer)
 {
 	if (GetConnectorSrcLeft().GetNodeSrc().IsVulnerable()) {
 		// inputGradL = outputGrad * inputR * inputL ** (inputR - 1) = outputGrad * output * inputR / inputL
@@ -557,12 +557,12 @@ bool Node_Pow::EvalBackward(Processor& processor)
 //-----------------------------------------------------------------------------
 // Node_Dot
 //-----------------------------------------------------------------------------
-bool Node_Dot::EvalForward(Processor& processor)
+bool Node_Dot::EvalForward(Trainer& trainer)
 {
 	return Array::Dot(_pArrayFwd, GetConnectorSrcLeft().GetArrayFwd(), GetConnectorSrcRight().GetArrayFwd());
 }
 
-bool Node_Dot::EvalBackward(Processor& processor)
+bool Node_Dot::EvalBackward(Trainer& trainer)
 {
 	if (GetConnectorSrcLeft().GetNodeSrc().IsVulnerable()) {
 		// inputGradL = outputGrad |.| transpose(inputR)
@@ -587,10 +587,10 @@ bool Node_Gear::IsVulnerable() const
 	return GetConnectorSrc().GetNodeSrc().IsVulnerable() || (_pValueGear && GetGear().HasVulnerableParam());
 }
 
-bool Node_Gear::EvalForward(Processor& processor)
+bool Node_Gear::EvalForward(Trainer& trainer)
 {
 	if (!_pValueGear) {
-		RefPtr<Value> pValue(_pExprRight->Eval(processor));
+		RefPtr<Value> pValue(_pExprRight->Eval(trainer.GetProcessor()));
 		if (Error::IsIssued()) return false;
 		if (pValue->IsInstanceOf(VTYPE_Gear)) {
 			_pValueGear.reset(dynamic_cast<Value_Gear*>(pValue->Reference()));
@@ -600,13 +600,12 @@ bool Node_Gear::EvalForward(Processor& processor)
 			return false;
 		}
 	}
-	//return GetGear().EvalForward(processor, _pArrayFwd, GetConnectorSrc().GetArrayFwd(), true);
-	return false;
+	return GetGear().EvalForward(trainer.GetProcessor(), _pArrayFwd, GetConnectorSrc().GetArrayFwd(), trainer);
 }
 
-bool Node_Gear::EvalBackward(Processor& processor)
+bool Node_Gear::EvalBackward(Trainer& trainer)
 {
-	return GetGear().EvalBackward(processor, GetConnectorSrc().GetArrayGradRefPtr(),
+	return GetGear().EvalBackward(trainer.GetProcessor(), GetConnectorSrc().GetArrayGradRefPtr(),
 			_pConnectorDst->GetArrayGrad(), GetConnectorSrc().GetNodeSrc().IsVulnerable());
 }
 
