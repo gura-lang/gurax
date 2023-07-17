@@ -139,19 +139,19 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
-	// Initialize Util
-	InitializeUtil();
-	// Initialize Gear Operators
-	Conv1d::Initialize();
-	Conv2d::Initialize();
-	Conv3d::Initialize();
-	Dropout::Initialize();
-	Linear::Initialize();
-	ReLU::Initialize();
-	Sigmoid::Initialize();
-	Softmax::Initialize();
-	Tanh::Initialize();
-	Trainer::Initialize();
+	// Bootup Util
+	BootupUtil();
+	// Bootup Gear Operators
+	Conv1d::Bootup();
+	Conv2d::Bootup();
+	Conv3d::Bootup();
+	Dropout::Bootup();
+	Linear::Bootup();
+	ReLU::Bootup();
+	Sigmoid::Bootup();
+	Softmax::Bootup();
+	Tanh::Bootup();
+	Trainer::Bootup();
 	// Assignment of VType
 	Assign(VTYPE_Trainer);
 	Assign(VTYPE_Node);

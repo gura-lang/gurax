@@ -61,7 +61,7 @@ template<> void Conv1d_Backward_Array_T<Half>(Array& arrayBwdOut, const Array& a
 std::function<void (Array& arrayFwdOut, const Array& arrayFwdIn)> Conv1d_Forward_Array[Array::ElemTypeIdMax];
 std::function<void (Array& arrayBwdOut, const Array& arrayFwdSaved, const Array& arrayBwdIn)> Conv1d_Backward_Array[Array::ElemTypeIdMax];
 
-void Conv1d::Initialize()
+void Conv1d::Bootup()
 {
 	Gurax_SetArrayFuncSingle(Conv1d_Forward_Array, Conv1d_Forward_Array_T);
 	Gurax_SetArrayFuncSingle(Conv1d_Backward_Array, Conv1d_Backward_Array_T);

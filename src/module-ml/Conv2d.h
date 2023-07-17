@@ -47,7 +47,7 @@ public:
 protected:
 	~Conv2d() = default;
 public:
-	static void Initialize();
+	static void Bootup();
 	static bool ValidateArrayFilter(const Array& arrayFilter);
 public:
 	size_t GetNFilters() const { return _nFilters; }

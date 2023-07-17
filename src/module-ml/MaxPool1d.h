@@ -37,7 +37,7 @@ public:
 protected:
 	~MaxPool1d() = default;
 public:
-	static void Initialize();
+	static void Bootup();
 public:
 	bool CalcSizeOut(size_t nRowsIn, size_t nColsIn, size_t* pnRowsOut, size_t* pnColsOut) const;
 	virtual const char* GetName() const override { return "ml.MaxPool1d"; }

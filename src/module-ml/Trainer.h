@@ -42,7 +42,7 @@ public:
 protected:
 	~Trainer() = default;
 public:
-	static void Initialize();
+	static void Bootup();
 	Processor& GetProcessor() { return *_pProcessor; }
 	void SetRandom(Random* pRandom) { _pRandom.reset(pRandom); }
 	bool CreateFromExpr();
@@ -75,9 +75,6 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 public:
 	// Virtual functions of Gear::Controller
-	virtual void InitArray(Array& array, size_t nInputs) const override {
-		array.FillRandomNormal(0, ::sqrt(1. / nInputs), GetRandom());
-	}
 	virtual bool IsTraining() const override { return true; }
 	virtual Random& GetRandom() const override { return *_pRandom; }
 };

@@ -52,7 +52,7 @@ Trainer::Trainer(Processor* pProcessor, Expr* pExprModel, SymbolList symbolsInpu
 {
 }
 
-void Trainer::Initialize()
+void Trainer::Bootup()
 {
 	Gurax_SetArrayFuncSingle(CalcMeanSquareErrorTbl, CalcMeanSquareError_T);
 	Gurax_SetArrayFuncSingle(CalcCrossEntropyErrorTbl, CalcCrossEntropyError_T);

@@ -113,7 +113,7 @@ template<> void Softmax_Backward_Array_T<Half>(Array& arrayBwdOut, const Array& 
 std::function<void (Array& arrayFwdOut, const Array& arrayFwdIn, int axis)> Softmax_Forward_Array[Array::ElemTypeIdMax];
 std::function<void (Array& arrayBwdOut, const Array& arrayFwdOutSaved, const Array& arrayBwdIn)> Softmax_Backward_Array[Array::ElemTypeIdMax];
 
-void Softmax::Initialize()
+void Softmax::Bootup()
 {
 	Gurax_SetArrayFuncSingle(Softmax_Forward_Array, Softmax_Forward_Array_T);
 	Gurax_SetArrayFuncSingle(Softmax_Backward_Array, Softmax_Backward_Array_T);

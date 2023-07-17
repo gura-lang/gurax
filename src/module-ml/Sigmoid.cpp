@@ -65,7 +65,7 @@ template<> void Sigmoid_Backward_Array_T<Half>(Array& arrayBwdOut, const Array& 
 std::function<void (Array& arrayFwdOut, const Array& arrayFwdIn)> Sigmoid_Forward_Array[Array::ElemTypeIdMax];
 std::function<void (Array& arrayBwdOut, const Array& arrayFwdOutSaved, const Array& arrayBwdIn)> Sigmoid_Backward_Array[Array::ElemTypeIdMax];
 
-void Sigmoid::Initialize()
+void Sigmoid::Bootup()
 {
 	Gurax_SetArrayFuncSingle(Sigmoid_Forward_Array, Sigmoid_Forward_Array_T);
 	Gurax_SetArrayFuncSingle(Sigmoid_Backward_Array, Sigmoid_Backward_Array_T);

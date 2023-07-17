@@ -31,7 +31,7 @@ template<typename T_Elem> void Dropout_Backward_Array_T(Array& arrayBwdOut, cons
 std::function<void (Array& arrayFwdOut, Array& arrayBoolSaved, const Array& arrayFwdIn, Double rate, Random& random)> Dropout_Forward_Array[Array::ElemTypeIdMax];
 std::function<void (Array& arrayBwdOut, const Array& arrayBoolSaved, const Array& arrayBwdIn)> Dropout_Backward_Array[Array::ElemTypeIdMax];
 
-void Dropout::Initialize()
+void Dropout::Bootup()
 {
 	Gurax_SetArrayFuncSingle(Dropout_Forward_Array, Dropout_Forward_Array_T);
 	Gurax_SetArrayFuncSingle(Dropout_Backward_Array, Dropout_Backward_Array_T);

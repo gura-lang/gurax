@@ -30,7 +30,7 @@ public:
 protected:
 	~Tanh() = default;
 public:
-	static void Initialize();
+	static void Bootup();
 public:
 	virtual const char* GetName() const override { return "ml.Tanh"; }
 	virtual bool EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, const Controller& controller) override;

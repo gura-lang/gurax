@@ -36,7 +36,7 @@ public:
 protected:
 	~MaxPool2d() = default;
 public:
-	static void Initialize();
+	static void Bootup();
 public:
 	size_t GetNRowsKernel() const { return _nRowsKernel; }
 	size_t GetNColsKernel() const { return _nColsKernel; }

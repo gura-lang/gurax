@@ -61,7 +61,7 @@ template<> void Conv3d_Backward_Array_T<Half>(Array& arrayBwdOut, const Array& a
 std::function<void (Array& arrayFwdOut, const Array& arrayFwdIn)> Conv3d_Forward_Array[Array::ElemTypeIdMax];
 std::function<void (Array& arrayBwdOut, const Array& arrayFwdSaved, const Array& arrayBwdIn)> Conv3d_Backward_Array[Array::ElemTypeIdMax];
 
-void Conv3d::Initialize()
+void Conv3d::Bootup()
 {
 	Gurax_SetArrayFuncSingle(Conv3d_Forward_Array, Conv3d_Forward_Array_T);
 	Gurax_SetArrayFuncSingle(Conv3d_Backward_Array, Conv3d_Backward_Array_T);

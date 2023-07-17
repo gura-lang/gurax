@@ -19,7 +19,7 @@ Linear::Linear(Array* pArrayWeight, Array* pArrayBias) :
 {
 }
 
-void Linear::Initialize()
+void Linear::Bootup()
 {
 }
 
@@ -28,11 +28,11 @@ bool Linear::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, cons
 	size_t nColsIn = arrayFwdIn.GetDimSizes().GetColSize();
 	if (!_pArrayWeight) {
 		_pArrayWeight.reset(Array::Create(_elemType, DimSizes(nColsIn, _nColsOut)));
-		controller.InitArray(*_pArrayWeight, nColsIn);
+		if (controller.IsTraining()) _pArrayWeight->FillRandomNormal(0, ::sqrt(1. / nColsIn), controller.GetRandom());
 	}
 	if (!_pArrayBias) {
 		_pArrayBias.reset(Array::Create(_elemType, DimSizes(_nColsOut)));
-		controller.InitArray(*_pArrayBias, nColsIn);
+		if (controller.IsTraining()) _pArrayBias->FillRandomNormal(0, ::sqrt(1. / nColsIn), controller.GetRandom());
 	}
 	_pArrayFwdIn.reset(arrayFwdIn.Reference());
 	return Array::Dot(_pArrayFwd1, arrayFwdIn, *_pArrayWeight) &&

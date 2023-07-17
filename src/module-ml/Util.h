@@ -14,7 +14,7 @@ struct Funcs {
 
 extern Funcs funcs;
 
-void InitializeUtil();
+void BootupUtil();
 
 bool Img2dToCol(RefPtr<Array>& pArrayExp, const Array& arrayImg, size_t nRowsFilter, size_t nColsFilter,
 	size_t strideRow, size_t strideCol, size_t paddingRow, size_t paddingCol, size_t* pnRowsOut = nullptr, size_t* pnColsOut = nullptr);

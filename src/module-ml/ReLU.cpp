@@ -29,7 +29,7 @@ template<typename T_Elem> void ReLU_Backward_Array_T(Array& arrayBwdOut, const A
 std::function<void (Array& arrayFwdOut, Array& arrayBoolSaved, const Array& arrayFwdIn)> ReLU_Forward_Array[Array::ElemTypeIdMax];
 std::function<void (Array& arrayBwdOut, const Array& arrayBoolSaved, const Array& arrayBwdIn)> ReLU_Backward_Array[Array::ElemTypeIdMax];
 
-void ReLU::Initialize()
+void ReLU::Bootup()
 {
 	Gurax_SetArrayFuncSingle(ReLU_Forward_Array, ReLU_Forward_Array_T);
 	Gurax_SetArrayFuncSingle(ReLU_Backward_Array, ReLU_Backward_Array_T);

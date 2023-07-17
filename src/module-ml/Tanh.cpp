@@ -65,7 +65,7 @@ template<> void Tanh_Backward_Array_T<Half>(Array& arrayBwdOut, const Array& arr
 std::function<void (Array& arrayFwdOut, const Array& arrayFwdIn)> Tanh_Forward_Array[Array::ElemTypeIdMax];
 std::function<void (Array& arrayBwdOut, const Array& arrayFwdSaved, const Array& arrayBwdIn)> Tanh_Backward_Array[Array::ElemTypeIdMax];
 
-void Tanh::Initialize()
+void Tanh::Bootup()
 {
 	Gurax_SetArrayFuncSingle(Tanh_Forward_Array, Tanh_Forward_Array_T);
 	Gurax_SetArrayFuncSingle(Tanh_Backward_Array, Tanh_Backward_Array_T);

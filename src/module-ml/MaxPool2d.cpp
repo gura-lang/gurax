@@ -13,7 +13,7 @@ MaxPool2d::MaxPool2d(size_t nRowsKernel, size_t nColsKernel, size_t stride) : Ge
 {
 }
 
-void MaxPool2d::Initialize()
+void MaxPool2d::Bootup()
 {
 }
 

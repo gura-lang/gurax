@@ -13,7 +13,7 @@ MaxPool3d::MaxPool3d(size_t nRowsKernel, size_t nColsKernel, size_t strideRow, s
 {
 }
 
-void MaxPool3d::Initialize()
+void MaxPool3d::Bootup()
 {
 }
 

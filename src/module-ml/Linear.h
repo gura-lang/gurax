@@ -43,7 +43,7 @@ public:
 protected:
 	~Linear() = default;
 public:
-	static void Initialize();
+	static void Bootup();
 public:
 	virtual void SetOptimizer(const Optimizer& optimizer) override {
 		_pOptimizerInstWeight.reset(optimizer.CreateInstance());
