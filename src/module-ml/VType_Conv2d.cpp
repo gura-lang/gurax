@@ -27,7 +27,7 @@ ${help.ComposeMethodHelp(ml.Conv2d, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// ml.Conv2d(nFilters as Number, nRowsFilter as Number, nColsFilter as Number, stride? as Number, padding? as Number):[zero] {block?}
+// ml.Conv2d(nFilters as Number, nRowsFilter as Number, nColsFilter as Number, stride? as Number, padding? as Number) {block?}
 Gurax_DeclareConstructor(Conv2d)
 {
 	Declare(VTYPE_Conv2d, Flag::None);
@@ -36,7 +36,6 @@ Gurax_DeclareConstructor(Conv2d)
 	DeclareArg("nColsFilter", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("padding", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareAttrOpt(Gurax_Symbol(zero));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `ml.Conv2d` instance.
@@ -52,10 +51,9 @@ Gurax_ImplementConstructor(Conv2d)
 	size_t nColsFilter = args.PickNumberPos<size_t>();
 	size_t stride = args.IsValid()? args.PickNumberPos<size_t>() : 1;
 	size_t padding = args.IsValid()? args.PickNumberNonNeg<size_t>() : 0;
-	bool randInitFlag = !argument.IsSet(Gurax_Symbol(zero));
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	RefPtr<Conv2d> pConv2d(new Conv2d(nFilters, nRowsFilter, nColsFilter, stride, padding, randInitFlag));
+	RefPtr<Conv2d> pConv2d(new Conv2d(nFilters, nRowsFilter, nColsFilter, stride, padding));
 	return argument.ReturnValue(processor, new Value_Conv2d(pConv2d.release()));
 }
 
@@ -83,7 +81,6 @@ Gurax_ImplementClassMethod(Conv2d, Preset)
 	RefPtr<Array> pArrayBias(args.IsValid()? args.Pick<Value_Array>().GetArray().Reference() : nullptr);
 	size_t stride = args.IsValid()? args.PickNumberPos<size_t>() : 1;
 	size_t padding = args.IsValid()? args.PickNumberNonNeg<size_t>() : 0;
-	bool randInitFlag = false;
 	if (Error::IsIssued()) return Value::nil();
 	if (arrayFilter.GetDimSizes().size() != 4) {
 		Error::Issue(ErrorType::SizeError, "filter must be an Array of four dimensions");
@@ -94,7 +91,7 @@ Gurax_ImplementClassMethod(Conv2d, Preset)
 		return Value::nil();
 	}
 	// Function body
-	RefPtr<Conv2d> pConv2d(new Conv2d(arrayFilter.Reference(), pArrayBias.release(), stride, padding, randInitFlag));
+	RefPtr<Conv2d> pConv2d(new Conv2d(arrayFilter.Reference(), pArrayBias.release(), stride, padding));
 	return argument.ReturnValue(processor, new Value_Conv2d(pConv2d.release()));
 }
 
