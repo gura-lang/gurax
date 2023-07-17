@@ -30,7 +30,7 @@ bool Linear::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, cons
 		_pArrayWeight.reset(Array::Create(_elemType, DimSizes(nColsIn, _nColsOut)));
 		controller.InitArray(*_pArrayWeight, nColsIn);
 	}
-	if (_pArrayBias) {
+	if (!_pArrayBias) {
 		_pArrayBias.reset(Array::Create(_elemType, DimSizes(_nColsOut)));
 		controller.InitArray(*_pArrayBias, nColsIn);
 	}

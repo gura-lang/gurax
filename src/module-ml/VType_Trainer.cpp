@@ -203,6 +203,28 @@ Gurax_ImplementMethod(Trainer, Print)
 	return Value::nil();
 }
 
+// Trainer#SetRandom(random as Random):reduce
+Gurax_DeclareMethod(Trainer, SetRandom)
+{
+	Declare(VTYPE_Trainer, Flag::Reduce);
+	DeclareArg("random", VTYPE_Random, ArgOccur::Once, ArgFlag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementMethod(Trainer, SetRandom)
+{
+	// Target
+	Trainer& trainer = GetValueThis(argument).GetTrainer();
+	// Arguments
+	ArgPicker args(argument);
+	Random& random = args.Pick<Value_Random>().GetRandom();
+	// Function body
+	trainer.SetRandom(random.Reference());
+	return argument.GetValueThis().Reference();
+}
+
 // Trainer#Train(correct as Array, inputs* as Array)
 Gurax_DeclareMethod(Trainer, Train)
 {
@@ -371,6 +393,7 @@ void VType_Trainer::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Trainer, EvalBackward));
 	Assign(Gurax_CreateMethod(Trainer, GetNode));
 	Assign(Gurax_CreateMethod(Trainer, Print));
+	Assign(Gurax_CreateMethod(Trainer, SetRandom));
 	Assign(Gurax_CreateMethod(Trainer, Train));
 	Assign(Gurax_CreateMethod(Trainer, CalcMeanSquaredError));
 	Assign(Gurax_CreateMethod(Trainer, CalcCrossEntropyError));

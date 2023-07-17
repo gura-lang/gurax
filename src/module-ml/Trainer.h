@@ -44,6 +44,7 @@ protected:
 public:
 	static void Initialize();
 	Processor& GetProcessor() { return *_pProcessor; }
+	void SetRandom(Random* pRandom) { _pRandom.reset(pRandom); }
 	bool CreateFromExpr();
 	void Reset();
 	bool EvalForward(const ValueList& valuesInput);
@@ -74,11 +75,11 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 public:
 	// Virtual functions of Gear::Controller
-	virtual void InitArray(Array& array, size_t nInputs) const {
+	virtual void InitArray(Array& array, size_t nInputs) const override {
 		array.FillRandomNormal(0, ::sqrt(1. / nInputs), GetRandom());
 	}
-	virtual bool IsTraining() const { return true; }
-	virtual Random& GetRandom() const { return *_pRandom; }
+	virtual bool IsTraining() const override { return true; }
+	virtual Random& GetRandom() const override { return *_pRandom; }
 };
 
 //------------------------------------------------------------------------------

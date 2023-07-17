@@ -40,6 +40,7 @@ scope {
 	nSamples = 1000
 	Printf('Training with %d samples [Image Size: %dx%d, Label Size: %d]\n', nSamples, db.nRows, db.nCols, db.nClasses)
 	ml.Trainer(model, optimizer, `image) {|trainer|
+		//trainer.SetRandom(Random(0x12345678))
 		repeat (nTraining) {|iRepeat|
 			repeat (nSamples) {|i|
 				image = arrayImage[i].Reshape(shapeImage*)
