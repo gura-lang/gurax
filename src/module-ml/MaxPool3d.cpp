@@ -24,7 +24,7 @@ bool MaxPool3d::CalcSizeOut(size_t nRowsIn, size_t nColsIn, size_t* pnRowsOut, s
 	return true;
 }
 
-bool MaxPool3d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, bool trainingFlag)
+bool MaxPool3d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, const Controller& controller)
 {
 	// arrayFwdIn  .. (*, nRowsFwdIn, nColsFwdIn)
 	// arrayFwdOut .. (*, nRowsFwdOut, nColsFwdOut)

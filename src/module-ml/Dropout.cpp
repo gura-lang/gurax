@@ -16,7 +16,6 @@ template<typename T_Elem> void Dropout_Forward_Array_T(Array& arrayFwdOut, Array
 	Bool* pBoolSaved = arrayBoolSaved.GetPointerC<Bool>();
 	for ( ; pFwdIn != pFwdInEnd; pFwdIn++, pFwdOut++, pBoolSaved++) {
 		*pFwdOut = (*pBoolSaved = Random::Global().GenFloat<Double>() < rate)? 0 : *pFwdIn;
-		//*pFwdOut = *pFwdIn;
 	}
 }
 
@@ -27,7 +26,6 @@ template<typename T_Elem> void Dropout_Backward_Array_T(Array& arrayBwdOut, cons
 	T_Elem* pBwdOut = arrayBwdOut.GetPointerC<T_Elem>();
 	const Bool* pBoolSaved = arrayBoolSaved.GetPointerC<Bool>();
 	for ( ; pBwdIn != pBwdInEnd; pBwdIn++, pBwdOut++, pBoolSaved++) *pBwdOut = *pBoolSaved? 0 : *pBwdIn;
-	//for ( ; pBwdIn != pBwdInEnd; pBwdIn++, pBwdOut++, pBoolSaved++) *pBwdOut = *pBwdIn;
 }
 
 std::function<void (Array& arrayFwdOut, Array& arrayBoolSaved, const Array& arrayFwdIn, Double rate)> Dropout_Forward_Array[Array::ElemTypeIdMax];
@@ -39,7 +37,7 @@ void Dropout::Initialize()
 	Gurax_SetArrayFuncSingle(Dropout_Backward_Array, Dropout_Backward_Array_T);
 }
 
-bool Dropout::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, bool trainingFlag)
+bool Dropout::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, const Controller& controller)
 {
 	if (!pArrayFwdOut) pArrayFwdOut.reset(Array::Create(arrayFwdIn.GetElemType(), arrayFwdIn.GetDimSizes()));
 	if (!pArrayFwdOut) return false;

@@ -42,7 +42,7 @@ public:
 	size_t GetNColsKernel() const { return _nColsKernel; }
 	size_t GetStride() const { return _stride; }
 	virtual const char* GetName() const override { return "ml.MaxPool2d"; }
-	virtual bool EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, bool trainingFlag) override;
+	virtual bool EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, const Controller& controller) override;
 	virtual bool EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, const Array& arrayBwdIn, bool bwdPropagationFlag) override;
 public:
 	bool Serialize(Stream& stream) const;

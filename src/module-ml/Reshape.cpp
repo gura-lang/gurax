@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 // Reshape
 //------------------------------------------------------------------------------
-bool Reshape::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, bool trainingFlag)
+bool Reshape::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, const Controller& controller)
 {
 	_pArrayFwdInSaved.reset(arrayFwdIn.Reference());
 	return arrayFwdIn.Reshape(pArrayFwdOut, *_pValuesDimSize);

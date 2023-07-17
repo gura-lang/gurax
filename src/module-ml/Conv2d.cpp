@@ -31,7 +31,7 @@ bool Conv2d::ValidateArrayFilter(const Array& arrayFilter)
 	return true;
 }
 
-bool Conv2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, bool trainingFlag)
+bool Conv2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, const Controller& controller)
 {
 	// arrayFwdIn                                  .. (nSamples, nChannels, nRowsFwdIn, nColsFwdIn)
 	// _pArrayFilter                               .. (nFilters, nChannels, nRowsFilter, nColsFilter)
@@ -45,16 +45,16 @@ bool Conv2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, cons
 	size_t nSamples = dimSizesFwdIn[0];
 	size_t nChannels = dimSizesFwdIn[1];
 	size_t nRowsIn = dimSizesFwdIn[2], nColsIn = dimSizesFwdIn[3];
+	size_t nRowsFwdOut, nColsFwdOut;
+	if (!Img2dToCol(_pArrayFwd1, arrayFwdIn, _nRowsFilter, _nColsFilter, _stride, _stride, _padding, _padding, &nRowsFwdOut, &nColsFwdOut)) return false;
 	if (!_pArrayFilter) {
 		_pArrayFilter.reset(Array::Create(arrayFwdIn.GetElemType(), DimSizes(_nFilters, nChannels, _nRowsFilter, _nColsFilter)));
 		if (_randInitFlag) _pArrayFilter->FillRandomNormal(0, ::sqrt(1. / nColsIn), Random::Global());
 	}
 	if (!_pArrayBias) {
-		_pArrayBias.reset(Array::Create(arrayFwdIn.GetElemType(), DimSizes(_nFilters, CalcNRowsOut(nRowsIn), CalcNColsOut(nColsIn))));
+		_pArrayBias.reset(Array::Create(arrayFwdIn.GetElemType(), DimSizes(_nFilters, nRowsFwdOut, nColsFwdOut)));
 		if (_randInitFlag) _pArrayBias->FillRandomNormal(0, ::sqrt(1. / nColsIn), Random::Global());
 	}
-	size_t nRowsFwdOut, nColsFwdOut;
-	if (!Img2dToCol(_pArrayFwd1, arrayFwdIn, _nRowsFilter, _nColsFilter, _stride, _stride, _padding, _padding, &nRowsFwdOut, &nColsFwdOut)) return false;
 	_pArrayFilter->Reshape(_pArrayFwd2, DimSizes(_nFilters, nChannels * _nRowsFilter * _nColsFilter));
 	if (!_pArrayFwd2->Transpose2d(_pArrayFwd3)) return false;
 	if (!Array::Dot(_pArrayFwd4, *_pArrayFwd1, *_pArrayFwd3)) return false;
@@ -96,7 +96,7 @@ bool Conv2d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, con
 	if (bwdPropagationFlag && !ColToImg2d(pArrayBwdOut, _pArrayFwdInSaved->GetDimSizes(), *_pArrayBwd6,
 				_nRowsFilter, _nColsFilter, _stride, _stride, _padding, _padding)) return false;
 	return _pOptimizerInstFilter->Update(processor, _pArrayFilter, *_pArrayFilterGrad) &&
-			 _pOptimizerInstBias->Update(processor, _pArrayBias, *_pArrayBiasGrad);
+			_pOptimizerInstBias->Update(processor, _pArrayBias, *_pArrayBiasGrad);
 }
 
 String Conv2d::ToString(const StringStyle& ss) const

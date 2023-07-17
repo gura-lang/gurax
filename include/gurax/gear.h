@@ -17,6 +17,15 @@ public:
 	Gurax_DeclareReferable(Gear);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Gear");
+public:
+	class Controller {
+	public:
+		static Controller None;
+	public:
+		Controller() {}
+		virtual void InitArray(Array& array, size_t nInputs) const { /* nothing to do */ }
+		virtual bool IsTraining() const { return false; }
+	};
 private:
 	bool _hasVulnerableParamFlag;
 public:
@@ -35,7 +44,7 @@ public:
 public:
 	virtual void SetOptimizer(const Optimizer& optimizer) {}
 	virtual const char* GetName() const = 0; 
-	virtual bool EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, bool trainingFlag) = 0;
+	virtual bool EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, const Controller& controller = Controller::None) = 0;
 	virtual bool EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, const Array& arrayBwdIn, bool bwdPropagationFlag) = 0;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

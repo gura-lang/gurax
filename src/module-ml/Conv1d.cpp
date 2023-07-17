@@ -67,7 +67,7 @@ void Conv1d::Initialize()
 	Gurax_SetArrayFuncSingle(Conv1d_Backward_Array, Conv1d_Backward_Array_T);
 }
 
-bool Conv1d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, bool trainingFlag)
+bool Conv1d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, const Controller& controller)
 {
 	if (!pArrayFwdOut) {
 		pArrayFwdOut.reset(Array::Create(arrayFwdIn.GetElemType(), arrayFwdIn.GetDimSizes()));

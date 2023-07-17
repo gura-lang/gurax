@@ -24,7 +24,7 @@ void MaxPool2d::Initialize()
 //	return true;
 //}
 
-bool MaxPool2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, bool trainingFlag)
+bool MaxPool2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, const Controller& controller)
 {
 	// arrayFwdIn  .. (*, _nRowsFwdIn, _nColsFwdIn)
 	// arrayFwdOut .. (*, nRowsFwdOut, nColsFwdOut)

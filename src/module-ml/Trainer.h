@@ -20,6 +20,15 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Trainer");
 public:
+	class GearController : public Gear::Controller {
+	public:
+		virtual void InitArray(Array& array, size_t nInputs) const {
+			array.FillRandomNormal(0, ::sqrt(1. / nInputs), Random::Global());
+		}
+		virtual bool IsTraining() const { return true; }
+	};
+public:
+	RefPtr<Processor> _pProcessor;
 	Composer _composer;
 	RefPtr<Expr> _pExprModel;
 	SymbolList _symbolsInput;
@@ -30,7 +39,7 @@ public:
 	NodeList_Input _nodesInput;
 public:
 	// Constructor
-	Trainer(Expr* pExprModel, SymbolList symbolsInput, Optimizer* pOptimizer);
+	Trainer(Processor* pProcessor, Expr* pExprModel, SymbolList symbolsInput, Optimizer* pOptimizer);
 	// Copy constructor/operator
 	Trainer(const Trainer& src) = delete;
 	Trainer& operator=(const Trainer& src) = delete;
@@ -41,10 +50,11 @@ protected:
 	~Trainer() = default;
 public:
 	static void Initialize();
+	Processor& GetProcessor() { return *_pProcessor; }
 	bool CreateFromExpr();
 	void Reset();
-	bool EvalForward(Processor& processor, const ValueList& valuesInput);
-	bool EvalBackward(Processor& processor, const Array& arrayCorrect);
+	bool EvalForward(const ValueList& valuesInput);
+	bool EvalBackward(const Array& arrayCorrect);
 	const Array& GetResult() const;
 	Double CalcMeanSquareError(const Array& arrayCorrect) const;
 	Double CalcCrossEntropyError(const Array& arrayCorrect, Double epsilon) const;

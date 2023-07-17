@@ -45,8 +45,8 @@ template<typename T_Elem> Double CalcCrossEntropyError_T(const Array& arrayFwdOu
 template<> Double CalcCrossEntropyError_T<Complex>(const Array& arrayFwdOut, const Array& arrayTrain) { return 0; }
 template<> Double CalcCrossEntropyError_T<Half>(const Array& arrayFwdOut, const Array& arrayTrain) { return 0; }
 
-Trainer::Trainer(Expr* pExprModel, SymbolList symbolsInput, Optimizer* pOptimizer) :
-		_pExprModel(pExprModel), _symbolsInput(symbolsInput), _pOptimizer(pOptimizer),
+Trainer::Trainer(Processor* pProcessor, Expr* pExprModel, SymbolList symbolsInput, Optimizer* pOptimizer) :
+		_pProcessor(pProcessor), _pExprModel(pExprModel), _symbolsInput(symbolsInput), _pOptimizer(pOptimizer),
 		_pNodeBottom(new Node_Bottom()), _pNodeOwner(new NodeOwner()), _pNodeMap(new NodeMap())
 {
 }
@@ -84,7 +84,7 @@ void Trainer::Reset()
 	GetNodeOwner().Reset();
 }
 
-bool Trainer::EvalForward(Processor& processor, const ValueList& valuesList)
+bool Trainer::EvalForward(const ValueList& valuesList)
 {
 	if (valuesList.size() < _nodesInput.size()) {
 		Error::Issue(ErrorType::ArgumentError, "insufficient number of values for inputs");
@@ -99,11 +99,13 @@ bool Trainer::EvalForward(Processor& processor, const ValueList& valuesList)
 		(*ppNodeInput)->SetArray(array.Reference());
 		ppNodeInput++;
 	}
+	Processor& processor = GetProcessor();
 	return GetNodeOwner().EvalForward(processor) && GetNodeBottom().EvalForward(processor);
 }
 
-bool Trainer::EvalBackward(Processor& processor, const Array& arrayCorrect)
+bool Trainer::EvalBackward(const Array& arrayCorrect)
 {
+	Processor& processor = GetProcessor();
 	return GetNodeBottom().EvalBackwardTop(processor, arrayCorrect) && GetNodeOwner().EvalBackward(processor);
 }
 

@@ -77,7 +77,7 @@ Gurax_ImplementOpBinary(Gear, Array, Gear)
 	const Array& arrayL = Value_Array::GetArray(valueL);
 	Gear& gear = Value_Gear::GetGear(valueR);
 	RefPtr<Array> pArrayRtn;
-	if (!gear.EvalForward(processor, pArrayRtn, arrayL, false)) return Value::nil();
+	if (!gear.EvalForward(processor, pArrayRtn, arrayL)) return Value::nil();
 	return new Value_Array(pArrayRtn.release());
 }
 

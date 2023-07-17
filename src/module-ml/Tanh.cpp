@@ -71,7 +71,7 @@ void Tanh::Initialize()
 	Gurax_SetArrayFuncSingle(Tanh_Backward_Array, Tanh_Backward_Array_T);
 }
 
-bool Tanh::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, bool trainingFlag)
+bool Tanh::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, const Controller& controller)
 {
 	if (!pArrayFwdOut) {
 		pArrayFwdOut.reset(Array::Create(arrayFwdIn.GetElemType(), arrayFwdIn.GetDimSizes()));

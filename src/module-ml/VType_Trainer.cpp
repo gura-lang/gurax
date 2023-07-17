@@ -51,7 +51,7 @@ Gurax_ImplementConstructor(Trainer)
 	// Function body
 	SymbolList symbolListInput;
 	for (const Value* pValue : symbolsInput) symbolListInput.push_back(Value_Symbol::GetSymbol(*pValue));
-	RefPtr<Trainer> pTrainer(new Trainer(exprModel.Reference(), symbolListInput, pOptimizer.release()));
+	RefPtr<Trainer> pTrainer(new Trainer(processor.Reference(), exprModel.Reference(), symbolListInput, pOptimizer.release()));
 	if (!pTrainer->CreateFromExpr()) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Trainer(pTrainer.release()));
 }
@@ -122,7 +122,7 @@ Gurax_ImplementMethod(Trainer, Eval)
 	ArgPicker args(argument);
 	const ValueList& valuesInput = args.PickList();
 	// Function body
-	if (!trainer.EvalForward(processor, valuesInput)) return Value::nil();
+	if (!trainer.EvalForward(valuesInput)) return Value::nil();
 	return argument.ReturnValue(processor, trainer.GetResult().ToValue());
 }
 
@@ -145,7 +145,7 @@ Gurax_ImplementMethod(Trainer, EvalBackward)
 	ArgPicker args(argument);
 	const Array& arrayCorrect = args.Pick<Value_Array>().GetArray();
 	// Function body
-	trainer.EvalBackward(processor, arrayCorrect);
+	trainer.EvalBackward(arrayCorrect);
 	return Value::nil();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
 }
 
@@ -223,8 +223,8 @@ Gurax_ImplementMethod(Trainer, Train)
 	const Array& arrayCorrect = args.Pick<Value_Array>().GetArray();
 	const ValueList& valuesInput = args.PickList();
 	// Function body
-	if (!trainer.EvalForward(processor, valuesInput)) return Value::nil();
-	trainer.EvalBackward(processor, arrayCorrect);
+	if (!trainer.EvalForward(valuesInput)) return Value::nil();
+	trainer.EvalBackward(arrayCorrect);
 	return Value::nil();
 }
 

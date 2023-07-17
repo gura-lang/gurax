@@ -600,7 +600,8 @@ bool Node_Gear::EvalForward(Processor& processor)
 			return false;
 		}
 	}
-	return GetGear().EvalForward(processor, _pArrayFwd, GetConnectorSrc().GetArrayFwd(), true);
+	//return GetGear().EvalForward(processor, _pArrayFwd, GetConnectorSrc().GetArrayFwd(), true);
+	return false;
 }
 
 bool Node_Gear::EvalBackward(Processor& processor)

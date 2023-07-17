@@ -23,19 +23,20 @@ void Linear::Initialize()
 {
 }
 
-bool Linear::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, bool trainingFlag)
+bool Linear::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, const Controller& controller)
 {
+	size_t nColsIn = arrayFwdIn.GetDimSizes().GetColSize();
 	if (!_pArrayWeight) {
-		size_t nColsIn = arrayFwdIn.GetDimSizes().GetColSize();
 		_pArrayWeight.reset(Array::Create(_elemType, DimSizes(nColsIn, _nColsOut)));
+		_pArrayWeight->FillRandomNormal(0, ::sqrt(1. / nColsIn), Random::Global());
+	}
+	if (_pArrayBias) {
 		_pArrayBias.reset(Array::Create(_elemType, DimSizes(_nColsOut)));
-		Double stddev = ::sqrt(1. / nColsIn);
-		_pArrayWeight->FillRandomNormal(0, stddev, Random::Global());
-		_pArrayBias->FillRandomNormal(0, stddev, Random::Global());
+		_pArrayBias->FillRandomNormal(0, ::sqrt(1. / nColsIn), Random::Global());
 	}
 	_pArrayFwdIn.reset(arrayFwdIn.Reference());
-	if (!Array::Dot(_pArrayFwd1, arrayFwdIn, *_pArrayWeight)) return false;
-	return Array::Add(pArrayFwdOut, *_pArrayFwd1, *_pArrayBias);
+	return Array::Dot(_pArrayFwd1, arrayFwdIn, *_pArrayWeight) &&
+			Array::Add(pArrayFwdOut, *_pArrayFwd1, *_pArrayBias);
 }
 
 bool Linear::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, const Array& arrayBwdIn, bool bwdPropagationFlag)
@@ -52,7 +53,7 @@ bool Linear::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, con
 		if (!Array::Dot(_pArrayWeightGrad, *_pArrayFwdInTrans, arrayBwdIn)) return false;
 	} while (0);
 	return _pOptimizerInstWeight->Update(processor, _pArrayWeight, *_pArrayWeightGrad) &&
-			 _pOptimizerInstBias->Update(processor, _pArrayBias, *_pArrayBiasGrad);
+			_pOptimizerInstBias->Update(processor, _pArrayBias, *_pArrayBiasGrad);
 }
 
 String Linear::ToString(const StringStyle& ss) const

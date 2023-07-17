@@ -9,7 +9,7 @@
 
 Gurax_BeginModuleScope(ml)
 
-class Trainer; 
+class Trainer;
 
 //------------------------------------------------------------------------------
 // Node
