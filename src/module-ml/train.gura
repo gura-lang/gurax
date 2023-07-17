@@ -10,7 +10,7 @@ if (false) {
 	model = `(image |*| linear |*| ml.Softmax())
 	shapeImage = (1, db.nRows * db.nCols)
 	linear = ml.Linear(db.nClasses)
-} elsif (false) {
+} elsif (true) {
 	model = `(image |*| linear1 |*| ml.ReLU() |*| linear2 |*| ml.Softmax())
 	shapeImage = (1, db.nRows * db.nCols)
 	linear1 = ml.Linear(100)
@@ -38,9 +38,9 @@ scope {
 	//nSamples = arrayImage.nRows
 	//nSamples = 10000
 	nSamples = 1000
-	Printf('Training with %d samples [Image Size: %dx%d, Label Size: %d]\n', nSamples, db.nRows, db.nCols, db.nClasses)
+	Printf('Training with %d samples [Image Size:%dx%d, Label Size:%d]\n', nSamples, db.nRows, db.nCols, db.nClasses)
 	ml.Trainer(model, optimizer, `image) {|trainer|
-		//trainer.SetRandom(Random(0x12345678))
+		trainer.random.seed = 0x12345678
 		repeat (nTraining) {|iRepeat|
 			repeat (nSamples) {|i|
 				image = arrayImage[i].Reshape(shapeImage*)

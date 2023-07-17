@@ -203,28 +203,6 @@ Gurax_ImplementMethod(Trainer, Print)
 	return Value::nil();
 }
 
-// Trainer#SetRandom(random as Random):reduce
-Gurax_DeclareMethod(Trainer, SetRandom)
-{
-	Declare(VTYPE_Trainer, Flag::Reduce);
-	DeclareArg("random", VTYPE_Random, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"""(
-Skeleton.
-)""");
-}
-
-Gurax_ImplementMethod(Trainer, SetRandom)
-{
-	// Target
-	Trainer& trainer = GetValueThis(argument).GetTrainer();
-	// Arguments
-	ArgPicker args(argument);
-	Random& random = args.Pick<Value_Random>().GetRandom();
-	// Function body
-	trainer.SetRandom(random.Reference());
-	return argument.GetValueThis().Reference();
-}
-
 // Trainer#Train(correct as Array, inputs* as Array)
 Gurax_DeclareMethod(Trainer, Train)
 {
@@ -360,6 +338,27 @@ Gurax_ImplementPropertyGetter(Trainer, optimizer)
 	return new Value_Optimizer(trainer.GetOptimizer().Reference());
 }
 
+// Trainer#random
+Gurax_DeclareProperty_RW(Trainer, random)
+{
+	Declare(VTYPE_Random, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementPropertyGetter(Trainer, random)
+{
+	Trainer& trainer = GetValueThis(valueTarget).GetTrainer();
+	return new Value_Random(trainer.GetRandom().Reference());
+}
+
+Gurax_ImplementPropertySetter(Trainer, random)
+{
+	Trainer& trainer = GetValueThis(valueTarget).GetTrainer();
+	trainer.SetRandom(Value_Random::GetRandom(value).Reference());
+}
+
 // Trainer#result
 Gurax_DeclareProperty_R(Trainer, result)
 {
@@ -393,7 +392,6 @@ void VType_Trainer::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Trainer, EvalBackward));
 	Assign(Gurax_CreateMethod(Trainer, GetNode));
 	Assign(Gurax_CreateMethod(Trainer, Print));
-	Assign(Gurax_CreateMethod(Trainer, SetRandom));
 	Assign(Gurax_CreateMethod(Trainer, Train));
 	Assign(Gurax_CreateMethod(Trainer, CalcMeanSquaredError));
 	Assign(Gurax_CreateMethod(Trainer, CalcCrossEntropyError));
@@ -402,6 +400,7 @@ void VType_Trainer::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Trainer, node));
 	Assign(Gurax_CreateProperty(Trainer, nodeBottom));
 	Assign(Gurax_CreateProperty(Trainer, optimizer));
+	Assign(Gurax_CreateProperty(Trainer, random));
 	Assign(Gurax_CreateProperty(Trainer, result));
 }
 
