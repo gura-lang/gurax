@@ -102,22 +102,6 @@ public:
 		static ElemTypeT Double;
 		static ElemTypeT Complex;
 	};
-	enum class ElemTypePrec {
-		None,
-		Bool,
-		Int8,
-		UInt8,
-		Int16,
-		UInt16,
-		Int32,
-		UInt32,
-		Int64,
-		UInt64,
-		Half,
-		Float,
-		Double,
-		Complex,
-	};
 	struct Funcs {
 		std::function<void (Array& array)>													FillOne[ElemTypeIdMax];
 		std::function<void (Array& array, Double mean, Double stddev, Random& random)>		FillRandomNormal[ElemTypeIdMax];
@@ -219,10 +203,12 @@ public:
 	static Array* CreateScalar(const ElemTypeT& elemType, Double num);
 	static Array* CreateScalar(const ElemTypeT& elemType, const Complex& num);
 	static Array* CreateIdentity(const ElemTypeT& elemType, size_t n, Double mag);
+	static Array* CreateNone();
 	void Reshape(RefPtr<Array>& pArrayRtn, const DimSizes& dimSizes) const;
 	bool Reshape(RefPtr<Array>& pArrayRtn, const ValueList& values) const;
 	const ElemTypeT& GetElemType() const { return _elemType; }
 	bool IsElemType(const ElemTypeT& elemType) const { return _elemType.IsIdentical(elemType); }
+	bool IsNone() const { return _elemType.IsNone(); }
 	const char* GetElemTypeName() const { return _elemType.GetName(); }
 	Memory& GetMemory() { return *_pMemory; }
 	const Memory& GetMemory() const { return *_pMemory; }
