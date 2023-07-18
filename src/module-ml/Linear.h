@@ -58,6 +58,8 @@ public:
 public:
 	size_t GetNColsOut() const { return _nColsOut; }
 public:
+	void SetArrayWeight(Array* pArrayWeight) { _pArrayWeight.reset(pArrayWeight); }
+	void SetArrayBias(Array* pArrayBias) { _pArrayBias.reset(pArrayBias); }
 	const Array& GetArrayWeight() const { return *_pArrayWeight; }
 	const Array& GetArrayWeightGrad() const { return *_pArrayWeightGrad; }
 	const Array& GetArrayBias() const { return *_pArrayBias; }

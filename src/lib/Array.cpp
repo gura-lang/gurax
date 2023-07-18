@@ -1262,6 +1262,7 @@ void Array::Bootup()
 	RegisterToMap(Gurax_Symbol(uint),	Gurax_Symbol(at_uint),		(sizeof(int) == sizeof(Int32))? ElemType::UInt32 : ElemType::UInt64);
 	RegisterToMap(Gurax_Symbol(long_),	Gurax_Symbol(at_long),		(sizeof(long) == sizeof(Int32))? ElemType::Int32 : ElemType::Int64);
 	RegisterToMap(Gurax_Symbol(ulong),	Gurax_Symbol(at_ulong),		(sizeof(long) == sizeof(Int32))? ElemType::UInt32 : ElemType::UInt64);
+	ElemType::None.bytes				= 0;
 	ElemType::Bool.bytes				= sizeof(bool);
 	ElemType::Int8.bytes				= sizeof(Int8);
 	ElemType::UInt8.bytes				= sizeof(UInt8);
@@ -1485,7 +1486,9 @@ void Array::ToStringSub(const StringStyle& ss, String& str, size_t& offset, DimS
 
 void Array::ToString(const StringStyle& ss, String& str) const
 {
-	if (_dimSizes.empty()) {
+	if (IsNone()) {
+		str.Format("none");
+	} else if (_dimSizes.empty()) {
 		ToString(ss, str, 0, 0);
 	} else {
 		size_t offset = 0;
@@ -2394,7 +2397,6 @@ Array* Array::Deserialize(Stream& stream)
 	size_t byteOffset;
 	if (!stream.DeserializePackedNumList<size_t>(dimSizes)) return nullptr;
 	if (!stream.DeserializePackedNumber<size_t>(byteOffset)) return nullptr;
-	//if (!stream.DeserializeMemory(pMemory)) return nullptr;
 	RefPtr<Memory> pMemory(Memory::Deserialize(stream));
 	if (!pMemory) return nullptr;
 	const ElemTypeT& elemType = IdToElemType(elemTypeId);

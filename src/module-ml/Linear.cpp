@@ -26,22 +26,23 @@ void Linear::Bootup()
 bool Linear::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, const Controller& controller)
 {
 	size_t nColsIn = arrayFwdIn.GetDimSizes().GetColSize();
+	_pArrayFwdIn.reset(arrayFwdIn.Reference());
 	if (!_pArrayWeight) {
 		_pArrayWeight.reset(Array::Create(_elemType, DimSizes(nColsIn, _nColsOut)));
 		if (controller.IsTraining()) _pArrayWeight->FillRandomNormal(0, ::sqrt(1. / nColsIn), controller.GetRandom());
 	}
+	if (!Array::Dot(_pArrayFwd1, arrayFwdIn, *_pArrayWeight)) return false;
 	if (!_pArrayBias) {
 		_pArrayBias.reset(Array::Create(_elemType, DimSizes(_nColsOut)));
 		if (controller.IsTraining()) _pArrayBias->FillRandomNormal(0, ::sqrt(1. / nColsIn), controller.GetRandom());
+	} else if (_pArrayBias->IsNone()) {
+		return true;
 	}
-	_pArrayFwdIn.reset(arrayFwdIn.Reference());
-	return Array::Dot(_pArrayFwd1, arrayFwdIn, *_pArrayWeight) &&
-			Array::Add(pArrayFwdOut, *_pArrayFwd1, *_pArrayBias);
+	return Array::Add(pArrayFwdOut, *_pArrayFwd1, *_pArrayBias);
 }
 
 bool Linear::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, const Array& arrayBwdIn, bool bwdPropagationFlag)
 {
-	_pArrayBiasGrad.reset(arrayBwdIn.Reference());
 	if (bwdPropagationFlag) {
 		// pArrayBwdOut = arrayBwdIn |.| T(_pArrayWeight)
 		_pArrayWeight->Transpose2d(_pArrayWeightTrans);
@@ -52,8 +53,10 @@ bool Linear::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, con
 		_pArrayFwdIn->Transpose2d(_pArrayFwdInTrans);
 		if (!Array::Dot(_pArrayWeightGrad, *_pArrayFwdInTrans, arrayBwdIn)) return false;
 	} while (0);
-	return _pOptimizerInstWeight->Update(processor, _pArrayWeight, *_pArrayWeightGrad) &&
-			_pOptimizerInstBias->Update(processor, _pArrayBias, *_pArrayBiasGrad);
+	if (!_pOptimizerInstWeight->Update(processor, _pArrayWeight, *_pArrayWeightGrad)) return false;
+	if (_pArrayBias->IsNone()) return true;
+	_pArrayBiasGrad.reset(arrayBwdIn.Reference());
+	return _pOptimizerInstBias->Update(processor, _pArrayBias, *_pArrayBiasGrad);
 }
 
 String Linear::ToString(const StringStyle& ss) const

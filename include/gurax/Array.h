@@ -178,6 +178,7 @@ protected:
 	RefPtr<Memory> _pMemory;
 public:
 	static Funcs funcs;
+	static RefPtr<Array> None;
 protected:
 	static const ElemTypeT* _pElemTypeRtnForArithmTbl[ElemTypeIdMax][ElemTypeIdMax];
 	static MapIdToElemType _mapIdToElemType;
@@ -208,7 +209,6 @@ public:
 	bool Reshape(RefPtr<Array>& pArrayRtn, const ValueList& values) const;
 	const ElemTypeT& GetElemType() const { return _elemType; }
 	bool IsElemType(const ElemTypeT& elemType) const { return _elemType.IsIdentical(elemType); }
-	bool IsNone() const { return _elemType.IsNone(); }
 	const char* GetElemTypeName() const { return _elemType.GetName(); }
 	Memory& GetMemory() { return *_pMemory; }
 	const Memory& GetMemory() const { return *_pMemory; }
@@ -219,6 +219,7 @@ public:
 	template<typename T> T* GetPointerC(size_t byteOffset = 0) { return _pMemory->GetPointerC<T>(byteOffset + _byteOffset); }
 	template<typename T> const T* GetPointerC(size_t byteOffset = 0) const { return _pMemory->GetPointerC<T>(byteOffset + _byteOffset); }
 public:
+	bool IsNone() const { return _elemType.IsNone(); }
 	bool IsArray() const { return !_dimSizes.empty(); }
 	bool IsScalar() const { return _dimSizes.empty(); }
 	bool IsScalarNumber() const { return _dimSizes.empty() && !IsElemType(ElemType::Complex); }
