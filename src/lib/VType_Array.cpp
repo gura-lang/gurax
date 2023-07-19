@@ -242,7 +242,7 @@ Gurax_DeclareClassMethod(Array, None)
 Gurax_ImplementClassMethod(Array, None)
 {
 	// Function body
-	return argument.ReturnValue(processor, new Value_Array(Array::CreateNone()));
+	return argument.ReturnValue(processor, new Value_Array(Array::none()));
 }
 
 // Array.ReduceAdd(arrayL as Array, arrayR as Array) {block?}

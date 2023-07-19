@@ -58,11 +58,6 @@ Array* Array::CreateScalar(const ElemTypeT& elemType, const Complex& num)
 	return pArray.release();
 }
 
-Array* Array::CreateNone()
-{
-	return new Array(ElemType::None, DimSizes(), 0, Memory::Empty->Reference());
-}
-
 Array* Array::CreateIdentity(const ElemTypeT& elemType, size_t n, Double mag)
 {
 	RefPtr<Array> pArray(Create(elemType, DimSizes(n, n)));
@@ -1356,6 +1351,15 @@ void Array::Bootup()
 	Gurax_SetArrayFuncArithm(funcs.Cross_ArrayArray,	Cross_ArrayArray_T);
 }
 
+Array* Array::none()
+{
+	static Array* pArray = nullptr;
+	if (!pArray) {
+		pArray = new Array(ElemType::None, DimSizes(), 0, Memory::Empty->Reference());
+	}
+	return pArray->Reference();
+}
+
 void Array::FillOne()
 {
 	return funcs.FillOne[_elemType.id](*this);
@@ -2392,7 +2396,7 @@ Array* Array::Deserialize(Stream& stream)
 {
 	size_t elemTypeId;
 	if (!stream.DeserializePackedNumber<size_t>(elemTypeId)) return nullptr;
-	if (elemTypeId == ElemType::None.id) return CreateNone();
+	if (elemTypeId == ElemType::None.id) return none();
 	DimSizes dimSizes;
 	size_t byteOffset;
 	if (!stream.DeserializePackedNumList<size_t>(dimSizes)) return nullptr;

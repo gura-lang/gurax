@@ -170,8 +170,7 @@ Skeleton.
 Gurax_ImplementPropertyGetter(Conv2d, filter)
 {
 	Conv2d& conv2d = GetValueThis(valueTarget).GetConv2d();
-	return conv2d.HasArrayFilter()?
-		new Value_Array(conv2d.GetArrayFilter().Reference()) : Value::nil();
+	return conv2d.HasArrayFilter()? conv2d.GetArrayFilter().ToValue() : Value::nil();
 }
 
 // ml.Conv2d#filterGrad
@@ -186,8 +185,7 @@ Skeleton.
 Gurax_ImplementPropertyGetter(Conv2d, filterGrad)
 {
 	Conv2d& conv2d = GetValueThis(valueTarget).GetConv2d();
-	return conv2d.HasArrayFilterGrad()?
-		new Value_Array(conv2d.GetArrayFilterGrad().Reference()) : Value::nil();
+	return conv2d.HasArrayFilterGrad()? conv2d.GetArrayFilterGrad().ToValue() : Value::nil();
 }
 
 // ml.Conv2d#bias
@@ -202,8 +200,7 @@ Skeleton.
 Gurax_ImplementPropertyGetter(Conv2d, bias)
 {
 	Conv2d& conv2d = GetValueThis(valueTarget).GetConv2d();
-	return conv2d.HasArrayBias()?
-		new Value_Array(conv2d.GetArrayBias().Reference()) : Value::nil();
+	return conv2d.HasArrayBias()? conv2d.GetArrayBias().ToValue() : Value::nil();
 }
 
 // ml.Conv2d#biasGrad
@@ -218,8 +215,7 @@ Skeleton.
 Gurax_ImplementPropertyGetter(Conv2d, biasGrad)
 {
 	Conv2d& conv2d = GetValueThis(valueTarget).GetConv2d();
-	return conv2d.HasArrayBiasGrad()?
-		new Value_Array(conv2d.GetArrayBiasGrad().Reference()) : Value::nil();
+	return conv2d.HasArrayBiasGrad()? conv2d.GetArrayBiasGrad().ToValue() : Value::nil();
 }
 
 //------------------------------------------------------------------------------

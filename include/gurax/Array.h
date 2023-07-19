@@ -178,7 +178,6 @@ protected:
 	RefPtr<Memory> _pMemory;
 public:
 	static Funcs funcs;
-	static RefPtr<Array> None;
 protected:
 	static const ElemTypeT* _pElemTypeRtnForArithmTbl[ElemTypeIdMax][ElemTypeIdMax];
 	static MapIdToElemType _mapIdToElemType;
@@ -198,13 +197,14 @@ protected:
 public:
 	static void Bootup();
 public:
+	static Array* none();
+public:
 	Array* Clone() const { return new Array(*this); }
 	static Array* Create(const ElemTypeT& elemType, DimSizes dimSizes, Memory* pMemory);
 	static Array* Create(const ElemTypeT& elemType, DimSizes dimSizes);
 	static Array* CreateScalar(const ElemTypeT& elemType, Double num);
 	static Array* CreateScalar(const ElemTypeT& elemType, const Complex& num);
 	static Array* CreateIdentity(const ElemTypeT& elemType, size_t n, Double mag);
-	static Array* CreateNone();
 	void Reshape(RefPtr<Array>& pArrayRtn, const DimSizes& dimSizes) const;
 	bool Reshape(RefPtr<Array>& pArrayRtn, const ValueList& values) const;
 	const ElemTypeT& GetElemType() const { return _elemType; }

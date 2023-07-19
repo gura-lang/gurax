@@ -12,6 +12,7 @@ Gurax_DeclareSymbol(variable);
 Gurax_DeclareSymbol(const_);
 Gurax_DeclareSymbol(input);
 Gurax_DeclareSymbol(bottom);
+Gurax_DeclareSymbol(noBias);
 Gurax_DeclareSymbol(neg);
 Gurax_DeclareSymbol(add);
 Gurax_DeclareSymbol(sub);
