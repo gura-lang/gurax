@@ -1276,7 +1276,7 @@ void Array::Bootup()
 	ElemType::Float.bytes				= sizeof(Float);
 	ElemType::Double.bytes				= sizeof(Double);
 	ElemType::Complex.bytes				= sizeof(Complex);
-	ElemType::None.pSymbol				= Symbol::Empty;
+	ElemType::None.pSymbol				= Gurax_Symbol(none);
 	ElemType::Bool.pSymbol				= Gurax_Symbol(bool_);
 	ElemType::Int8.pSymbol				= Gurax_Symbol(int8);
 	ElemType::UInt8.pSymbol				= Gurax_Symbol(uint8);
@@ -2363,7 +2363,7 @@ Value_List* Array::ToList() const
 
 Value* Array::ToValue() const
 {
-	return IsScalar()? IndexGetValue(0) : new Value_Array(Reference());
+	return IsNone()? Value::nil() : IsScalar()? IndexGetValue(0) : new Value_Array(Reference());
 }
 
 Array* Array::CreateLike() const
@@ -2443,20 +2443,20 @@ String Array::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Array::ElemType
 //------------------------------------------------------------------------------
-Array::ElemTypeT Array::ElemType::None(-1);
-Array::ElemTypeT Array::ElemType::Bool(0);
-Array::ElemTypeT Array::ElemType::Int8(1);
-Array::ElemTypeT Array::ElemType::UInt8(2);
-Array::ElemTypeT Array::ElemType::Int16(3);
-Array::ElemTypeT Array::ElemType::UInt16(4);
-Array::ElemTypeT Array::ElemType::Int32(5);
-Array::ElemTypeT Array::ElemType::UInt32(6);
-Array::ElemTypeT Array::ElemType::Int64(7);
-Array::ElemTypeT Array::ElemType::UInt64(8);
-Array::ElemTypeT Array::ElemType::Half(9);
-Array::ElemTypeT Array::ElemType::Float(10);
-Array::ElemTypeT Array::ElemType::Double(11);
-Array::ElemTypeT Array::ElemType::Complex(12);
+Array::ElemTypeT Array::ElemType::None(0);
+Array::ElemTypeT Array::ElemType::Bool(1);
+Array::ElemTypeT Array::ElemType::Int8(2);
+Array::ElemTypeT Array::ElemType::UInt8(3);
+Array::ElemTypeT Array::ElemType::Int16(4);
+Array::ElemTypeT Array::ElemType::UInt16(5);
+Array::ElemTypeT Array::ElemType::Int32(6);
+Array::ElemTypeT Array::ElemType::UInt32(7);
+Array::ElemTypeT Array::ElemType::Int64(8);
+Array::ElemTypeT Array::ElemType::UInt64(9);
+Array::ElemTypeT Array::ElemType::Half(10);
+Array::ElemTypeT Array::ElemType::Float(11);
+Array::ElemTypeT Array::ElemType::Double(12);
+Array::ElemTypeT Array::ElemType::Complex(13);
 
 bool Array::ElemTypeT::IsNone() const
 {

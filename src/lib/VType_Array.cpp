@@ -230,6 +230,21 @@ Gurax_ImplementClassMethod(Array, Scalar)
 	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
 }
 
+// Array.None() {block?}
+Gurax_DeclareClassMethod(Array, None)
+{
+	Declare(VTYPE_Array, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
+}
+
+Gurax_ImplementClassMethod(Array, None)
+{
+	// Function body
+	return argument.ReturnValue(processor, new Value_Array(Array::CreateNone()));
+}
+
 // Array.ReduceAdd(arrayL as Array, arrayR as Array) {block?}
 Gurax_DeclareClassMethod(Array, ReduceAdd)
 {
@@ -1365,6 +1380,7 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	// Assignment of class method
 	Assign(Gurax_CreateClassMethod(Array, Identity));
 	Assign(Gurax_CreateClassMethod(Array, Scalar));
+	//Assign(Gurax_CreateClassMethod(Array, None));
 	Assign(Gurax_CreateClassMethod(Array, ReduceAdd));
 	Assign(Gurax_CreateClassMethod(Array, ReduceSub));
 	Assign(Gurax_CreateClassMethod(Array, ReduceMul));
@@ -1588,7 +1604,8 @@ bool Value_Array::DoSerialize(Stream& stream) const
 Value* VType_Array::DoDeserialize(Stream& stream) const
 {
 	RefPtr<Array> pArray(Array::Deserialize(stream));
-	return pArray? new Value_Array(pArray.release()) : nullptr;
+	if (!pArray) return nullptr;
+	return new Value_Array(pArray.release());
 }
 
 }

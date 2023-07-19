@@ -66,7 +66,7 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Array);
 public:
-	static const size_t ElemTypeIdMax = 13;
+	static const size_t ElemTypeIdMax = 14;
 	class GURAX_DLLDECLARE ElemTypeT {
 	public:
 		size_t id;
