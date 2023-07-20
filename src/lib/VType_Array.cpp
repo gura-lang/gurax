@@ -1606,6 +1606,7 @@ Value* VType_Array::DoDeserialize(Stream& stream) const
 	RefPtr<Array> pArray(Array::Deserialize(stream));
 	if (!pArray) return nullptr;
 	return new Value_Array(pArray.release());
+	//return pArray->ToValue();
 }
 
 }
