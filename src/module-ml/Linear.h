@@ -18,6 +18,7 @@ public:
 	Gurax_MemoryPoolAllocator("ml.Linear");
 private:
 	size_t _nColsOut;
+	bool _enableBiasFlag;
 private:
 	const Array::ElemTypeT& _elemType;
 	RefPtr<Array> _pArrayFwdIn;
@@ -32,8 +33,8 @@ private:
 	RefPtr<Optimizer::Instance> _pOptimizerInstBias;
 public:
 	// Constructor
-	Linear(size_t nColsOut, const Array::ElemTypeT& elemType);
-	Linear(Array* pArrayWeight, Array* pArrayBias);
+	Linear(size_t nColsOut, const Array::ElemTypeT& elemType, bool enableBiasFlag);
+	Linear(Array* pArrayWeight, Array* pArrayBias, bool enableBiasFlag);
 	// Copy constructor/operator
 	Linear(const Linear& src) = delete;
 	Linear& operator=(const Linear& src) = delete;

@@ -1257,7 +1257,7 @@ void Array::Bootup()
 	RegisterToMap(Gurax_Symbol(uint),	Gurax_Symbol(at_uint),		(sizeof(int) == sizeof(Int32))? ElemType::UInt32 : ElemType::UInt64);
 	RegisterToMap(Gurax_Symbol(long_),	Gurax_Symbol(at_long),		(sizeof(long) == sizeof(Int32))? ElemType::Int32 : ElemType::Int64);
 	RegisterToMap(Gurax_Symbol(ulong),	Gurax_Symbol(at_ulong),		(sizeof(long) == sizeof(Int32))? ElemType::UInt32 : ElemType::UInt64);
-	ElemType::None.bytes				= 0;
+	ElemType::None.bytes				= 1;
 	ElemType::Bool.bytes				= sizeof(bool);
 	ElemType::Int8.bytes				= sizeof(Int8);
 	ElemType::UInt8.bytes				= sizeof(UInt8);
@@ -1355,7 +1355,8 @@ Array* Array::none()
 {
 	static Array* pArray = nullptr;
 	if (!pArray) {
-		pArray = new Array(ElemType::None, DimSizes(), 0, Memory::Empty->Reference());
+		pArray = Create(ElemType::None, DimSizes());
+		//pArray = Array::Create(ElemType::Float, DimSizes(1, 1));
 	}
 	return pArray->Reference();
 }
@@ -2432,11 +2433,13 @@ const Array::ElemTypeT& Array::AtSymbolToElemType(const Symbol* pSymbol)
 String Array::ToString(const StringStyle& ss) const
 {
 	if (ss.IsBracket()) {
+		if (IsNone()) return "Array:none";
 		return String().Format("Array:@%s(%s)",
-				GetElemTypeName(), GetDimSizes().ToString(StringStyle::Cram, ss.GetComma()).c_str());
+				GetElemTypeName(), GetDimSizes().ToString(StringStyle::Cram, ",").c_str());
 	} else if (ss.IsBrief()) {
+		if (IsNone()) return "none";
 		return String().Format("@%s(%s)",
-				GetElemTypeName(), GetDimSizes().ToString(ss, ss.GetComma()).c_str());
+				GetElemTypeName(), GetDimSizes().ToString(StringStyle::Cram, ",").c_str());
 	} else {
 		String str;
 		ToString(ss, str);
@@ -2510,27 +2513,6 @@ size_t DimSizes::CalcOffset(size_t axis, const ValueList& valuesDim, size_t* pSt
 	}
 	return offset;
 }
-
-#if 0
-const DimSizes* DimSizes::DetermineResult(const DimSizes& dimSizesL, const DimSizes& dimSizesR,
-								size_t* pnRepeat, size_t* pnFwdRtn, size_t* pnFwdL, size_t* pnFwdR)
-{
-	if (dimSizesL.size() >= dimSizesR.size()) {
-		size_t nDimsHead = dimSizesL.size() - dimSizesR.size();
-		*pnRepeat = CalcLength(dimSizesL.begin(), dimSizesL.begin() + nDimsHead);
-		*pnFwdL = *pnFwdRtn = dimSizesR.CalcLength();
-		*pnFwdR = 0;
-		if (dimSizesR.DoesMatch(dimSizesL, nDimsHead)) return &dimSizesL;
-	} else {
-		size_t nDimsHead = dimSizesR.size() - dimSizesL.size();
-		*pnRepeat = CalcLength(dimSizesR.begin(), dimSizesR.begin() + nDimsHead);
-		*pnFwdR = *pnFwdRtn = dimSizesL.CalcLength();
-		*pnFwdL = 0;
-		if (dimSizesL.DoesMatch(dimSizesR, nDimsHead)) return &dimSizesR;
-	}
-	return nullptr;
-}
-#endif
 
 bool DimSizes::IsEqual(const DimSizes& dimSizes) const
 {

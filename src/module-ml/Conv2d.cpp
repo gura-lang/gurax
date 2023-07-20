@@ -9,7 +9,8 @@ Gurax_BeginModuleScope(ml)
 // Conv2d
 //------------------------------------------------------------------------------
 Conv2d::Conv2d(size_t nFilters, size_t nRowsFilter, size_t nColsFilter, size_t stride, size_t padding) : Gear(true),
-	_nFilters(nFilters), _nRowsFilter(nRowsFilter), _nColsFilter(nColsFilter), _stride(stride), _padding(padding)
+	_nFilters(nFilters), _nRowsFilter(nRowsFilter), _nColsFilter(nColsFilter), _stride(stride), _padding(padding),
+	_pArrayFilter(Array::none()), _pArrayBias(Array::none())
 {
 }
 
@@ -47,11 +48,11 @@ bool Conv2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, cons
 	size_t nRowsIn = dimSizesFwdIn[2], nColsIn = dimSizesFwdIn[3];
 	size_t nRowsFwdOut, nColsFwdOut;
 	if (!Img2dToCol(_pArrayFwd1, arrayFwdIn, _nRowsFilter, _nColsFilter, _stride, _stride, _padding, _padding, &nRowsFwdOut, &nColsFwdOut)) return false;
-	if (!_pArrayFilter) {
+	if (_pArrayFilter->IsNone()) {
 		_pArrayFilter.reset(Array::Create(arrayFwdIn.GetElemType(), DimSizes(_nFilters, nChannels, _nRowsFilter, _nColsFilter)));
 		if (controller.IsTraining()) _pArrayFilter->FillRandomNormal(0, ::sqrt(1. / nColsIn), controller.GetRandom());
 	}
-	if (!_pArrayBias) {
+	if (_pArrayBias->IsNone()) {
 		_pArrayBias.reset(Array::Create(arrayFwdIn.GetElemType(), DimSizes(_nFilters, nRowsFwdOut, nColsFwdOut)));
 		if (controller.IsTraining()) _pArrayBias->FillRandomNormal(0, ::sqrt(1. / nColsIn), controller.GetRandom());
 	}

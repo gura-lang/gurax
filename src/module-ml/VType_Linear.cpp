@@ -50,16 +50,39 @@ Gurax_ImplementConstructor(Linear)
 		Error::Issue(ErrorType::SymbolError, "invalid symbol for elemType");
 		return Value::nil();
 	}
-	bool noBiasFlag = argument.IsSet(Gurax_Symbol(noBias));
+	bool enableBiasFlag = !argument.IsSet(Gurax_Symbol(noBias));
 	// Function body
-	RefPtr<Linear> pLinear(new Linear(nColsOut, elemType));
+	RefPtr<Linear> pLinear(new Linear(nColsOut, elemType, enableBiasFlag));
 	//if (noBiasFlag) pLinear->SetArrayBias(Array::CreateNone());
 	return argument.ReturnValue(processor, new Value_Linear(pLinear.release()));
 }
 
 //-----------------------------------------------------------------------------
-// Implementation of method
+// Implementation of class method
 //-----------------------------------------------------------------------------
+// Linear.Preset(weight as Array, bias? as Array):[noBias] {block?}
+Gurax_DeclareClassMethod(Linear, Preset)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("weight", VTYPE_Array, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bias", VTYPE_Array, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(noBias));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
+}
+
+Gurax_ImplementClassMethod(Linear, Preset)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const Array& arrayWeight = args.Pick<Value_Array>().GetArray();
+	RefPtr<Array> pArrayBias(args.IsValid()? args.Pick<Value_Array>().GetArray().Reference() : Array::none());
+	bool enableBiasFlag = !argument.IsSet(Gurax_Symbol(noBias));
+	// Function body
+	RefPtr<Linear> pLinear(new Linear(arrayWeight.Reference(), pArrayBias.release(), enableBiasFlag));
+	return argument.ReturnValue(processor, new Value_Linear(pLinear.release()));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -147,7 +170,8 @@ void VType_Linear::DoPrepare(Frame& frameOuter)
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Gear, Flag::Immutable, Gurax_CreateConstructor(Linear));
-	// Assignment of method
+	// Assignment of class method
+	Assign(Gurax_CreateClassMethod(Linear, Preset));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Linear, nColsOut));
 	Assign(Gurax_CreateProperty(Linear, weight));

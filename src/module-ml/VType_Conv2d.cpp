@@ -78,7 +78,7 @@ Gurax_ImplementClassMethod(Conv2d, Preset)
 	// Arguments
 	ArgPicker args(argument);
 	const Array& arrayFilter = args.Pick<Value_Array>().GetArray();
-	RefPtr<Array> pArrayBias(args.IsValid()? args.Pick<Value_Array>().GetArray().Reference() : nullptr);
+	RefPtr<Array> pArrayBias(args.IsValid()? args.Pick<Value_Array>().GetArray().Reference() : Array::none());
 	size_t stride = args.IsValid()? args.PickNumberPos<size_t>() : 1;
 	size_t padding = args.IsValid()? args.PickNumberNonNeg<size_t>() : 0;
 	if (Error::IsIssued()) return Value::nil();

@@ -8,13 +8,15 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 // Linear
 //------------------------------------------------------------------------------
-Linear::Linear(size_t nColsOut, const Array::ElemTypeT& elemType) :
-	Gear(true), _elemType(elemType), _nColsOut(nColsOut)
+Linear::Linear(size_t nColsOut, const Array::ElemTypeT& elemType, bool enableBiasFlag) :
+	Gear(true), _elemType(elemType), _nColsOut(nColsOut), _enableBiasFlag(enableBiasFlag),
+	_pArrayWeight(Array::none()), _pArrayBias(Array::none())
 {
 }
 
-Linear::Linear(Array* pArrayWeight, Array* pArrayBias) :
-	Gear(true), _elemType(pArrayWeight->GetElemType()), _nColsOut(pArrayWeight->GetDimSizes().GetColSize()),
+Linear::Linear(Array* pArrayWeight, Array* pArrayBias, bool enableBiasFlag) :
+	Gear(true), _elemType(pArrayWeight->GetElemType()),
+	_nColsOut(pArrayWeight->GetDimSizes().GetColSize()), _enableBiasFlag(enableBiasFlag),
 	_pArrayWeight(pArrayWeight), _pArrayBias(pArrayBias)
 {
 }
@@ -27,16 +29,14 @@ bool Linear::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, cons
 {
 	size_t nColsIn = arrayFwdIn.GetDimSizes().GetColSize();
 	_pArrayFwdIn.reset(arrayFwdIn.Reference());
-	if (!_pArrayWeight) {
+	if (_pArrayWeight->IsNone()) {
 		_pArrayWeight.reset(Array::Create(_elemType, DimSizes(nColsIn, _nColsOut)));
 		if (controller.IsTraining()) _pArrayWeight->FillRandomNormal(0, ::sqrt(1. / nColsIn), controller.GetRandom());
 	}
 	if (!Array::Dot(_pArrayFwd1, arrayFwdIn, *_pArrayWeight)) return false;
-	if (!_pArrayBias) {
+	if (_pArrayBias->IsNone()) {
 		_pArrayBias.reset(Array::Create(_elemType, DimSizes(_nColsOut)));
 		if (controller.IsTraining()) _pArrayBias->FillRandomNormal(0, ::sqrt(1. / nColsIn), controller.GetRandom());
-	} else if (_pArrayBias->IsNone()) {
-		return true;
 	}
 	return Array::Add(pArrayFwdOut, *_pArrayFwd1, *_pArrayBias);
 }
@@ -61,13 +61,15 @@ bool Linear::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, con
 
 String Linear::ToString(const StringStyle& ss) const
 {
-	return String().Format("ml.Linear");
+	return String().Format("ml.Linear:%s:%s", _pArrayWeight->ToString(StringStyle::Brief).c_str(),
+					_pArrayBias->ToString(StringStyle::Brief).c_str());
 }
 
 bool Linear::Serialize(Stream& stream) const
 {
 	if (!_pArrayWeight->Serialize(stream)) return false;
 	if (!_pArrayBias->Serialize(stream)) return false;
+	if (!stream.SerializeNumber<bool>(_enableBiasFlag)) return false;
 	return true;
 }
 
@@ -77,7 +79,9 @@ Linear* Linear::Deserialize(Stream& stream)
 	if (!pArrayWeight) return nullptr;
 	RefPtr<Array> pArrayBias(Array::Deserialize(stream));
 	if (!pArrayBias) return nullptr;
-	return new Linear(pArrayWeight.release(), pArrayBias.release());
+	bool enableBiasFlag;
+	if (!stream.DeserializeNumber<bool>(enableBiasFlag)) return nullptr;
+	return new Linear(pArrayWeight.release(), pArrayBias.release(), enableBiasFlag);
 }
 
 //------------------------------------------------------------------------------
