@@ -20,7 +20,6 @@ private:
 	size_t _nColsOut;
 	bool _enableBiasFlag;
 private:
-	const Array::ElemTypeT& _elemType;
 	RefPtr<Array> _pArrayFwdIn;
 	RefPtr<Array> _pArrayWeight;
 	RefPtr<Array> _pArrayWeightGrad;
@@ -33,8 +32,8 @@ private:
 	RefPtr<Optimizer::Instance> _pOptimizerInstBias;
 public:
 	// Constructor
-	Linear(size_t nColsOut, const Array::ElemTypeT& elemType, bool enableBiasFlag);
-	Linear(Array* pArrayWeight, Array* pArrayBias, bool enableBiasFlag);
+	Linear(size_t nColsOut, bool enableBiasFlag);
+	Linear(size_t nColsOut, bool enableBiasFlag, Array* pArrayWeight, Array* pArrayBias);
 	// Copy constructor/operator
 	Linear(const Linear& src) = delete;
 	Linear& operator=(const Linear& src) = delete;

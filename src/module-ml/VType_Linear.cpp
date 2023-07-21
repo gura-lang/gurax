@@ -27,12 +27,11 @@ ${help.ComposeMethodHelp(ml.Linear, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// ml.Linear(nColsOut as Number, elemType? as Symbol):[noBias] {block?}
+// ml.Linear(nColsOut as Number):[noBias] {block?}
 Gurax_DeclareConstructor(Linear)
 {
 	Declare(VTYPE_Linear, Flag::None);
 	DeclareArg("nColsOut", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(noBias));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -45,15 +44,9 @@ Gurax_ImplementConstructor(Linear)
 	ArgPicker args(argument);
 	size_t nColsOut = args.PickNumberPos<size_t>();
 	if (Error::IsIssued()) return Value::nil();
-	const Array::ElemTypeT& elemType = args.IsValid()? Array::SymbolToElemType(args.PickSymbol()) : Array::ElemType::Float;
-	if (elemType.IsNone()) {
-		Error::Issue(ErrorType::SymbolError, "invalid symbol for elemType");
-		return Value::nil();
-	}
 	bool enableBiasFlag = !argument.IsSet(Gurax_Symbol(noBias));
 	// Function body
-	RefPtr<Linear> pLinear(new Linear(nColsOut, elemType, enableBiasFlag));
-	//if (noBiasFlag) pLinear->SetArrayBias(Array::CreateNone());
+	RefPtr<Linear> pLinear(new Linear(nColsOut, enableBiasFlag));
 	return argument.ReturnValue(processor, new Value_Linear(pLinear.release()));
 }
 
@@ -80,7 +73,8 @@ Gurax_ImplementClassMethod(Linear, Preset)
 	RefPtr<Array> pArrayBias(args.IsValid()? args.Pick<Value_Array>().GetArray().Reference() : Array::none());
 	bool enableBiasFlag = !argument.IsSet(Gurax_Symbol(noBias));
 	// Function body
-	RefPtr<Linear> pLinear(new Linear(arrayWeight.Reference(), pArrayBias.release(), enableBiasFlag));
+	RefPtr<Linear> pLinear(new Linear(arrayWeight.GetDimSizes().GetColSize(),
+							enableBiasFlag, arrayWeight.Reference(), pArrayBias.release()));
 	return argument.ReturnValue(processor, new Value_Linear(pLinear.release()));
 }
 

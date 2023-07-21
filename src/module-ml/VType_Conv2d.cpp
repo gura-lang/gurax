@@ -86,7 +86,7 @@ Gurax_ImplementClassMethod(Conv2d, Preset)
 		Error::Issue(ErrorType::SizeError, "filter must be an Array of four dimensions");
 		return Value::nil();
 	}
-	if (pArrayBias && pArrayBias->GetDimSizes().size() != 3) {
+	if (!pArrayBias->IsNone() && pArrayBias->GetDimSizes().size() != 3) {
 		Error::Issue(ErrorType::SizeError, "bias must be an Array of three dimensions");
 		return Value::nil();
 	}
