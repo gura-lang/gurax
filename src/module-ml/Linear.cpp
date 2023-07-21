@@ -61,7 +61,8 @@ bool Linear::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, con
 
 String Linear::ToString(const StringStyle& ss) const
 {
-	return String().Format("ml.Linear:%s:%s", _pArrayWeight->ToString(StringStyle::Brief).c_str(),
+	return String().Format("ml.Linear:%s:%s:%s", _enableBiasFlag? "bias" : "noBias",
+					_pArrayWeight->ToString(StringStyle::Brief).c_str(),
 					_pArrayBias->ToString(StringStyle::Brief).c_str());
 }
 
