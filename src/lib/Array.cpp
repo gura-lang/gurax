@@ -1042,6 +1042,66 @@ void Dot_ArrayArray_T(void* pvRtn, size_t m, size_t n, const void* pvL, const vo
 }
 
 template<typename T_ElemRtn, typename T_ElemL, typename T_ElemR>
+void Dot_ArrayTArray_T(void* pvRtn, size_t m, size_t n, const void* pvL, const void* pvR, size_t l)
+{
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemL* pBaseL = reinterpret_cast<const T_ElemL*>(pvL);
+	const T_ElemR* pBaseR = reinterpret_cast<const T_ElemR*>(pvR);
+	for (size_t i = 0; i < m; i++, pBaseL += l) {
+		const T_ElemR* pSaveR = pBaseR;
+		for (size_t j = 0; j < n; j++, pRtn++, pSaveR++) {
+			T_ElemRtn elemRtn = 0;
+			const T_ElemL* pL = pBaseL;
+			const T_ElemR* pR = pSaveR;
+			for (size_t k = 0; k < l; k++, pL++, pR += n) {
+				elemRtn += static_cast<T_ElemRtn>(*pL) * static_cast<T_ElemRtn>(*pR);
+			}
+			*pRtn = elemRtn;
+		}
+	}
+}
+
+template<typename T_ElemRtn, typename T_ElemL, typename T_ElemR>
+void Dot_ArrayArrayT_T(void* pvRtn, size_t m, size_t n, const void* pvL, const void* pvR, size_t l)
+{
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemL* pBaseL = reinterpret_cast<const T_ElemL*>(pvL);
+	const T_ElemR* pBaseR = reinterpret_cast<const T_ElemR*>(pvR);
+	for (size_t i = 0; i < m; i++, pBaseL += l) {
+		const T_ElemR* pSaveR = pBaseR;
+		for (size_t j = 0; j < n; j++, pRtn++, pSaveR++) {
+			T_ElemRtn elemRtn = 0;
+			const T_ElemL* pL = pBaseL;
+			const T_ElemR* pR = pSaveR;
+			for (size_t k = 0; k < l; k++, pL++, pR += n) {
+				elemRtn += static_cast<T_ElemRtn>(*pL) * static_cast<T_ElemRtn>(*pR);
+			}
+			*pRtn = elemRtn;
+		}
+	}
+}
+
+template<typename T_ElemRtn, typename T_ElemL, typename T_ElemR>
+void Dot_ArrayTArrayT_T(void* pvRtn, size_t m, size_t n, const void* pvL, const void* pvR, size_t l)
+{
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemL* pBaseL = reinterpret_cast<const T_ElemL*>(pvL);
+	const T_ElemR* pBaseR = reinterpret_cast<const T_ElemR*>(pvR);
+	for (size_t i = 0; i < m; i++, pBaseL += l) {
+		const T_ElemR* pSaveR = pBaseR;
+		for (size_t j = 0; j < n; j++, pRtn++, pSaveR++) {
+			T_ElemRtn elemRtn = 0;
+			const T_ElemL* pL = pBaseL;
+			const T_ElemR* pR = pSaveR;
+			for (size_t k = 0; k < l; k++, pL++, pR += n) {
+				elemRtn += static_cast<T_ElemRtn>(*pL) * static_cast<T_ElemRtn>(*pR);
+			}
+			*pRtn = elemRtn;
+		}
+	}
+}
+
+template<typename T_ElemRtn, typename T_ElemL, typename T_ElemR>
 void Cross_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t n)
 {
 	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
@@ -1348,6 +1408,9 @@ void Array::Bootup()
 	Gurax_SetArrayFuncSingle(funcs.Cmp_ArrayNumber,		Cmp_ArrayNumber_T);
 	Gurax_SetArrayFuncSingle(funcs.Cmp_NumberArray,		Cmp_NumberArray_T);
 	Gurax_SetArrayFuncArithm(funcs.Dot_ArrayArray,		Dot_ArrayArray_T);
+	Gurax_SetArrayFuncArithm(funcs.Dot_ArrayTArray,		Dot_ArrayTArray_T);
+	Gurax_SetArrayFuncArithm(funcs.Dot_ArrayArrayT,		Dot_ArrayArrayT_T);
+	Gurax_SetArrayFuncArithm(funcs.Dot_ArrayTArrayT,	Dot_ArrayTArrayT_T);
 	Gurax_SetArrayFuncArithm(funcs.Cross_ArrayArray,	Cross_ArrayArray_T);
 }
 
@@ -2321,9 +2384,10 @@ bool Array::Dot(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arra
 	void* pvRtn = pArrayRtn->GetPointerC<void>();
 	const void* pvL = arrayL.GetPointerC<void>();
 	const void* pvR = arrayR.GetPointerC<void>();
-	auto func = transFlagL? funcs.Dot_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id] :
-				transFlagR? funcs.Dot_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id] :
-				funcs.Dot_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id];
+	auto func = (!transFlagL && !transFlagR)? funcs.Dot_ArrayArray[arrayL.GetElemType().id][arrayR.GetElemType().id] :
+				(transFlagL && !transFlagR)? funcs.Dot_ArrayTArray[arrayL.GetElemType().id][arrayR.GetElemType().id] :
+				(!transFlagL && transFlagR)? funcs.Dot_ArrayArrayT[arrayL.GetElemType().id][arrayR.GetElemType().id] :
+				funcs.Dot_ArrayTArrayT[arrayL.GetElemType().id][arrayR.GetElemType().id];
 	for (size_t iRtn = 0; iRtn < nRtns; iRtn++) {
 		func(pvRtn, dimSizesRtn.GetRowSize(), dimSizesRtn.GetColSize(), pvL, pvR, nColsL);
 		pvRtn = pArrayRtn->FwdPointer(pvRtn, nElemsFwdRtn);
