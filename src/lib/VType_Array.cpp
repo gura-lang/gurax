@@ -158,6 +158,33 @@ Gurax_ImplementFunction(ConstructArray)
 //-----------------------------------------------------------------------------
 // Implementation of class method
 //-----------------------------------------------------------------------------
+// Array.Dot(arrayL as Array, arrayR as Array):[transL,transR] {block?}
+Gurax_DeclareClassMethod(Array, Dot)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("arrayL", VTYPE_Array, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("arrayR", VTYPE_Array, ArgOccur::Once, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(transL));
+	DeclareAttrOpt(Gurax_Symbol(transR));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
+}
+
+Gurax_ImplementClassMethod(Array, Dot)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const Array& arrayL = args.Pick<Value_Array>().GetArray();
+	const Array& arrayR = args.Pick<Value_Array>().GetArray();
+	bool transFlagL = argument.IsSet(Gurax_Symbol(transL));
+	bool transFlagR = argument.IsSet(Gurax_Symbol(transR));
+	// Function body
+	RefPtr<Array> pArray;
+	if (!Array::Dot(pArray, arrayL, arrayR, transFlagL, transFlagR)) return Value::nil();
+	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
+}
+
 // Array.Identity(elemType as Symbol, n as Array) {block?}
 Gurax_DeclareClassMethod(Array, Identity)
 {
@@ -1378,6 +1405,7 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	frameOuter.Assign(Gurax_CreateFunctionAlias(ConstructArray, "@long"));
 	frameOuter.Assign(Gurax_CreateFunctionAlias(ConstructArray, "@ulong"));
 	// Assignment of class method
+	Assign(Gurax_CreateClassMethod(Array, Dot));
 	Assign(Gurax_CreateClassMethod(Array, Identity));
 	Assign(Gurax_CreateClassMethod(Array, Scalar));
 	//Assign(Gurax_CreateClassMethod(Array, None));
