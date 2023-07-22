@@ -429,15 +429,16 @@ template<> void ToStringElem_T<Complex>(const StringStyle& ss, String& str, cons
 	p->ToString(str);
 }
 
-template<typename T_Elem> void ToString_T(const StringStyle& ss, String& str, const void* pv, size_t offset, size_t len)
+template<typename T_Elem> void ToString_T(const StringStyle& ss, String& str, const void* pv, size_t offset, size_t len, size_t stride)
 {
 	const T_Elem* pBegin = reinterpret_cast<const T_Elem*>(pv) + offset;
 	if (len == 0) {
 		ToStringElem_T(ss, str, pBegin);
 	} else {
 		const char* strComma = ss.IsCram()? "," : ", ";
-		const T_Elem* pEnd = pBegin + len;
-		for (const T_Elem* p = pBegin; p != pEnd; p++) {
+		const T_Elem* p = pBegin;
+		//const T_Elem* pEnd = pBegin + len;
+		for (size_t i = 0; i < len; i++, p += stride) {
 			if (p != pBegin) str += strComma;
 			ToStringElem_T(ss, str, p);
 		}
@@ -1531,36 +1532,36 @@ void Array::ExtractElems(ValueOwner& values) const
 	ExtractElemsSub(values, offset, _dimSizes.begin());
 }
 
-void Array::ToString(const StringStyle& ss, String& str, size_t offset, size_t len) const
+void Array::ToString(const StringStyle& ss, String& str, size_t offset, size_t len, size_t stride) const
 {
-	funcs.ToString[_elemType.id](ss, str, GetPointerC<void>(), offset, len);
+	funcs.ToString[_elemType.id](ss, str, GetPointerC<void>(), offset, len, stride);
 }
 
-void Array::ToStringSub(const StringStyle& ss, String& str, size_t& offset, DimSizes::const_iterator pDimSize) const
+void Array::ToStringSub(const StringStyle& ss, String& str, size_t& offset, DimSizes::const_iterator pDimSize, bool transFlag) const
 {
 	str += "[";
 	if (pDimSize + 1 == _dimSizes.end()) {
-		ToString(ss, str, offset, *pDimSize);
+		ToString(ss, str, offset, *pDimSize, 1);
 		offset += *pDimSize;
 	} else {
 		const char* strComma = ss.IsCram()? "," : ", ";
 		for (size_t i = 0; i < *pDimSize; i++) {
 			if (i > 0) str += strComma;
-			ToStringSub(ss, str, offset, pDimSize + 1);
+			ToStringSub(ss, str, offset, pDimSize + 1, transFlag);
 		}
 	}
 	str += "]";
 }
 
-void Array::ToString(const StringStyle& ss, String& str) const
+void Array::ToString(const StringStyle& ss, String& str, bool transFlag) const
 {
 	if (IsNone()) {
 		str.Format("none");
 	} else if (_dimSizes.empty()) {
-		ToString(ss, str, 0, 0);
+		ToString(ss, str, 0, 0, 0);
 	} else {
 		size_t offset = 0;
-		ToStringSub(ss, str, offset, _dimSizes.begin());
+		ToStringSub(ss, str, offset, _dimSizes.begin(), transFlag);
 	}
 }
 
@@ -2513,19 +2514,19 @@ const Array::ElemTypeT& Array::AtSymbolToElemType(const Symbol* pSymbol)
 	return (iter == _mapAtSymbolToElemType.end())? ElemType::None : *iter->second;
 }
 
-String Array::ToString(const StringStyle& ss) const
+String Array::ToString(const StringStyle& ss, bool transFlag) const
 {
 	if (ss.IsBracket()) {
 		if (IsNone()) return "Array:none";
 		return String().Format("Array:@%s(%s)",
-				GetElemTypeName(), GetDimSizes().ToString(StringStyle::Cram, ",").c_str());
+				GetElemTypeName(), GetDimSizes().ToString(StringStyle::Cram, ",", transFlag).c_str());
 	} else if (ss.IsBrief()) {
 		if (IsNone()) return "none";
 		return String().Format("@%s(%s)",
-				GetElemTypeName(), GetDimSizes().ToString(StringStyle::Cram, ",").c_str());
+				GetElemTypeName(), GetDimSizes().ToString(StringStyle::Cram, ",", transFlag).c_str());
 	} else {
 		String str;
-		ToString(ss, str);
+		ToString(ss, str, transFlag);
 		return str;
 	}
 }
@@ -2691,7 +2692,7 @@ bool DimSizes::RegulateAxis(int *pAxis) const
 	return true;
 }
 
-String DimSizes::ToString(const StringStyle& ss, const char* sep) const
+String DimSizes::ToString(const StringStyle& ss, const char* sep, bool transFlag) const
 {
 	if (empty()) return "scalar";
 	String str;

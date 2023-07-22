@@ -55,7 +55,7 @@ public:
 	bool Verify(const ValueList& values) const;
 	bool Reshape(DimSizes& dimSizesRtn, const ValueList& values) const;
 	bool RegulateAxis(int *pAxis) const;
-	String ToString(const StringStyle& ss, const char* sep) const;
+	String ToString(const StringStyle& ss, const char* sep, bool transFlag = false) const;
 };
 
 //------------------------------------------------------------------------------
@@ -118,7 +118,7 @@ public:
 		std::function<bool (Iterator& iterator, void* pv, size_t offset, size_t len)>		InjectFromIterator[ElemTypeIdMax];
 		std::function<void (ValueOwner& values, const void* pv, size_t offset, size_t len)> ExtractElems[ElemTypeIdMax];
 		std::function<void (void* pvDst, const void* pvSrc)>								Put[ElemTypeIdMax];
-		std::function<void (const StringStyle& ss, String& str, const void* pv, size_t offset, size_t len)> ToString[ElemTypeIdMax];
+		std::function<void (const StringStyle& ss, String& str, const void* pv, size_t offset, size_t len, size_t stride)> ToString[ElemTypeIdMax];
 		std::function<void (void* pvDst, const void* pvSrc, size_t offset, size_t len)> 	CopyElems[ElemTypeIdMax][ElemTypeIdMax];
 		std::function<void (void* pvDst, const void* pvSrc, size_t nRows, size_t nCols)>	Transpose2d[ElemTypeIdMax][ElemTypeIdMax];
 		std::function<void (void** ppvDst, const void* pvSrc, const DimSizes& dimSizesSrc,
@@ -252,9 +252,9 @@ public:
 	void ExtractElems(ValueOwner& values, size_t offset, size_t len) const;
 	void ExtractElemsSub(ValueOwner& values, size_t& offset, DimSizes::const_iterator pDimSize) const;
 	void ExtractElems(ValueOwner& values) const;
-	void ToString(const StringStyle& ss, String& str, size_t offset, size_t len) const;
-	void ToStringSub(const StringStyle& ss, String& str, size_t& offset, DimSizes::const_iterator pDimSize) const;
-	void ToString(const StringStyle& ss, String& str) const;
+	void ToString(const StringStyle& ss, String& str, size_t offset, size_t len, size_t stride) const;
+	void ToStringSub(const StringStyle& ss, String& str, size_t& offset, DimSizes::const_iterator pDimSize, bool transFlag) const;
+	void ToString(const StringStyle& ss, String& str, bool transFlag = false) const;
 public:
 	bool Transpose2d(RefPtr<Array>& pArrayRtn) const;
 	bool TransposeMulti(RefPtr<Array>& pArrayRtn, const NumList<size_t>& axes) const;
@@ -352,7 +352,7 @@ public:
 	bool IsIdentical(const Array& other) const { return this == &other; }
 	bool IsEqualTo(const Array& other) const { return IsIdentical(other); }
 	bool IsLessThan(const Array& other) const { return this < &other; }
-	String ToString(const StringStyle& ss = StringStyle::Empty) const;
+	String ToString(const StringStyle& ss = StringStyle::Empty, bool transFlag = false) const;
 };
 
 }
