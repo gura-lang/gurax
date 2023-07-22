@@ -10,7 +10,7 @@ if (false) {
 	model = `(image |*| linear |*| ml.Softmax())
 	shapeImage = (1, db.nRows * db.nCols)
 	linear = ml.Linear(db.nClasses)
-} elsif (true) {
+} elsif (false) {
 	model = `(image |*| linear1 |*| ml.ReLU() |*| linear2 |*| ml.Softmax())
 	shapeImage = (1, db.nRows * db.nCols)
 	linear1 = ml.Linear(100)

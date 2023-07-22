@@ -317,7 +317,7 @@ public:
 	static bool Cmp(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
 	static bool Cmp(RefPtr<Array>& pArrayRtn, const Array& arrayL, Double numR);
 	static bool Cmp(RefPtr<Array>& pArrayRtn, Double numL, const Array& arrayR);
-	static bool Dot(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
+	static bool Dot(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR, bool transFlagL = false, bool transFlagR = false);
 	static bool Cross(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
 	static bool ReduceAdd(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
 	static bool ReduceSub(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arrayR);
