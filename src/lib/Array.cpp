@@ -1042,19 +1042,20 @@ void Dot_ArrayArray_T(void* pvRtn, size_t m, size_t n, const void* pvL, const vo
 	}
 }
 
+// [m, n] = dot([l, m], [l, n])
 template<typename T_ElemRtn, typename T_ElemL, typename T_ElemR>
 void Dot_ArrayTArray_T(void* pvRtn, size_t m, size_t n, const void* pvL, const void* pvR, size_t l)
 {
 	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
 	const T_ElemL* pBaseL = reinterpret_cast<const T_ElemL*>(pvL);
 	const T_ElemR* pBaseR = reinterpret_cast<const T_ElemR*>(pvR);
-	for (size_t i = 0; i < m; i++, pBaseL += l) {
+	for (size_t i = 0; i < m; i++, pBaseL++) {
 		const T_ElemR* pSaveR = pBaseR;
 		for (size_t j = 0; j < n; j++, pRtn++, pSaveR++) {
 			T_ElemRtn elemRtn = 0;
 			const T_ElemL* pL = pBaseL;
 			const T_ElemR* pR = pSaveR;
-			for (size_t k = 0; k < l; k++, pL++, pR += n) {
+			for (size_t k = 0; k < l; k++, pL += m, pR += n) {
 				elemRtn += static_cast<T_ElemRtn>(*pL) * static_cast<T_ElemRtn>(*pR);
 			}
 			*pRtn = elemRtn;
@@ -1062,6 +1063,7 @@ void Dot_ArrayTArray_T(void* pvRtn, size_t m, size_t n, const void* pvL, const v
 	}
 }
 
+// [m, n] = dot([m, l], [n, l])
 template<typename T_ElemRtn, typename T_ElemL, typename T_ElemR>
 void Dot_ArrayArrayT_T(void* pvRtn, size_t m, size_t n, const void* pvL, const void* pvR, size_t l)
 {
@@ -1070,11 +1072,11 @@ void Dot_ArrayArrayT_T(void* pvRtn, size_t m, size_t n, const void* pvL, const v
 	const T_ElemR* pBaseR = reinterpret_cast<const T_ElemR*>(pvR);
 	for (size_t i = 0; i < m; i++, pBaseL += l) {
 		const T_ElemR* pSaveR = pBaseR;
-		for (size_t j = 0; j < n; j++, pRtn++, pSaveR++) {
+		for (size_t j = 0; j < n; j++, pRtn++, pSaveR += l) {
 			T_ElemRtn elemRtn = 0;
 			const T_ElemL* pL = pBaseL;
 			const T_ElemR* pR = pSaveR;
-			for (size_t k = 0; k < l; k++, pL++, pR += n) {
+			for (size_t k = 0; k < l; k++, pL++, pR++) {
 				elemRtn += static_cast<T_ElemRtn>(*pL) * static_cast<T_ElemRtn>(*pR);
 			}
 			*pRtn = elemRtn;
@@ -1082,19 +1084,20 @@ void Dot_ArrayArrayT_T(void* pvRtn, size_t m, size_t n, const void* pvL, const v
 	}
 }
 
+// [m, n] = dot([l, m], [n, l])
 template<typename T_ElemRtn, typename T_ElemL, typename T_ElemR>
 void Dot_ArrayTArrayT_T(void* pvRtn, size_t m, size_t n, const void* pvL, const void* pvR, size_t l)
 {
 	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
 	const T_ElemL* pBaseL = reinterpret_cast<const T_ElemL*>(pvL);
 	const T_ElemR* pBaseR = reinterpret_cast<const T_ElemR*>(pvR);
-	for (size_t i = 0; i < m; i++, pBaseL += l) {
+	for (size_t i = 0; i < m; i++, pBaseL++) {
 		const T_ElemR* pSaveR = pBaseR;
-		for (size_t j = 0; j < n; j++, pRtn++, pSaveR++) {
+		for (size_t j = 0; j < n; j++, pRtn++, pSaveR += l) {
 			T_ElemRtn elemRtn = 0;
 			const T_ElemL* pL = pBaseL;
 			const T_ElemR* pR = pSaveR;
-			for (size_t k = 0; k < l; k++, pL++, pR += n) {
+			for (size_t k = 0; k < l; k++, pL += m, pR++) {
 				elemRtn += static_cast<T_ElemRtn>(*pL) * static_cast<T_ElemRtn>(*pR);
 			}
 			*pRtn = elemRtn;
@@ -1537,6 +1540,7 @@ void Array::ToString(const StringStyle& ss, String& str, size_t offset, size_t l
 	funcs.ToString[_elemType.id](ss, str, GetPointerC<void>(), offset, len, stride);
 }
 
+//************************************************
 void Array::ToStringSub(const StringStyle& ss, String& str, size_t& offset, DimSizes::const_iterator pDimSize, bool transFlag) const
 {
 	str += "[";
@@ -1561,7 +1565,7 @@ void Array::ToString(const StringStyle& ss, String& str, bool transFlag) const
 		ToString(ss, str, 0, 0, 0);
 	} else {
 		size_t offset = 0;
-		ToStringSub(ss, str, offset, _dimSizes.begin(), transFlag);
+		ToStringSub(ss, str, offset, _dimSizes.begin(), transFlag && _dimSizes.size() >= 2);
 	}
 }
 
@@ -2694,11 +2698,25 @@ bool DimSizes::RegulateAxis(int *pAxis) const
 
 String DimSizes::ToString(const StringStyle& ss, const char* sep, bool transFlag) const
 {
+	const char* format = "%zu";
 	if (empty()) return "scalar";
 	String str;
-	for (size_t dimSize : *this) {
+	if (transFlag && size() >= 2) {
+		auto pDimSize = begin();
+		auto pDimSizeAt = begin() + size() - 2;
+		for ( ; pDimSize != pDimSizeAt; pDimSize++) {
+			if (!str.empty()) str += sep;
+			str.Format(format, *pDimSize);
+		}
 		if (!str.empty()) str += sep;
-		str.Format("%zu", dimSize);
+		str.Format(format, *(pDimSize + 1));
+		str += sep;
+		str.Format(format, *pDimSize);
+	} else {
+		for (size_t dimSize : *this) {
+			if (!str.empty()) str += sep;
+			str.Format(format, dimSize);
+		}
 	}
 	return str;
 }
