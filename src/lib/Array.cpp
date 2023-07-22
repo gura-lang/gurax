@@ -2356,7 +2356,8 @@ bool Array::Dot(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arra
 	}
 	if (dimSizesL.size() < 2 || dimSizesR.size() < 2 || nColsL != nRowsR) {
 		Error::Issue(ErrorType::SizeError, "unmatched array size: %s |.| %s",
-				arrayL.ToString(StringStyle::BriefCram).c_str(), arrayR.ToString(StringStyle::BriefCram).c_str());
+						arrayL.ToString(StringStyle::BriefCram, transFlagL).c_str(),
+						arrayR.ToString(StringStyle::BriefCram, transFlagR).c_str());
 		return false;
 	}
 	size_t nRtns = 1;
@@ -2377,7 +2378,8 @@ bool Array::Dot(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& arra
 		nElemsFwdR = dimSizesR.GetColSize() * dimSizesR.GetRowSize();
 	} else {
 		Error::Issue(ErrorType::SizeError, "unmatched array size: %s |.| %s",
-				arrayL.ToString(StringStyle::BriefCram).c_str(), arrayR.ToString(StringStyle::BriefCram).c_str());
+						arrayL.ToString(StringStyle::BriefCram, transFlagL).c_str(),
+						arrayR.ToString(StringStyle::BriefCram, transFlagR).c_str());
 		return false;
 	}
 	dimSizesRtn.push_back(nRowsRtn);
