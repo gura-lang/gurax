@@ -566,15 +566,13 @@ bool Node_Dot::EvalBackward(Trainer& trainer)
 {
 	if (GetConnectorSrcLeft().GetNodeSrc().IsVulnerable()) {
 		// inputGradL = outputGrad |.| T(inputR)
-		GetConnectorSrcRight().GetArrayFwd().Transpose2d(_pArrayFwdRightTrans);
 		if (!Array::Dot(GetConnectorSrcLeft().GetArrayGradRefPtr(),
-						_pConnectorDst->GetArrayGrad(), *_pArrayFwdRightTrans)) return false;
+			_pConnectorDst->GetArrayGrad(), GetConnectorSrcRight().GetArrayFwd(), false, true)) return false;
 	}
 	if (GetConnectorSrcRight().GetNodeSrc().IsVulnerable()) {
 		// inputGradR = T(inputL) |.| outputGrad
-		GetConnectorSrcLeft().GetArrayFwd().Transpose2d(_pArrayFwdLeftTrans);
 		if (!Array::Dot(GetConnectorSrcRight().GetArrayGradRefPtr(),
-						*_pArrayFwdLeftTrans, _pConnectorDst->GetArrayGrad())) return false;
+			GetConnectorSrcLeft().GetArrayFwd(), _pConnectorDst->GetArrayGrad(), true, false)) return false;
 	}
 	return true;
 }

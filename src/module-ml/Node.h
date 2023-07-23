@@ -355,9 +355,6 @@ public:
 // Node_Dot
 //------------------------------------------------------------------------------
 class Node_Dot : public Node_Binary {
-private:
-	RefPtr<Array> _pArrayFwdLeftTrans;
-	RefPtr<Array> _pArrayFwdRightTrans;
 public:
 	Node_Dot() {}
 	virtual const Symbol* GetTypeSymbol() const override { return Gurax_Symbol(dot); }

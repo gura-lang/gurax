@@ -7,6 +7,13 @@ import(util.tester) {*}
 db = ml.mnist.Database('../../sample/resource/mnist')
 
 if (false) {
+	model = `((image |.| weight + bias) |*| ml.Softmax())
+	shapeImage = (1, db.nRows * db.nCols)
+	weight = @float(db.nRows * db.nCols, db.nClasses)
+	bias = @float(db.nClasses)
+	weight.Inject(Random.NormalSeq(0, 1 / math.Sqrt(db.nRows * db.nCols)))
+	bias.Inject(Random.NormalSeq(0, 1 / math.Sqrt(db.nRows * db.nCols)))
+} elsif (false) {
 	model = `(image |*| linear |*| ml.Softmax())
 	shapeImage = (1, db.nRows * db.nCols)
 	linear = ml.Linear(db.nClasses)
@@ -37,7 +44,7 @@ scope {
 	optimizer = ml.Optimizer.GradientDescent(0.01)
 	//nSamples = arrayImage.nRows
 	//nSamples = 10000
-	nSamples = 100
+	nSamples = 1000
 	Printf('Training with %d samples [Image Size:%dx%d, Label Size:%d]\n', nSamples, db.nRows, db.nCols, db.nClasses)
 	ml.Trainer(model, optimizer, `image) {|trainer|
 		trainer.random.seed = 0x12345678
