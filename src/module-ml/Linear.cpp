@@ -45,13 +45,15 @@ bool Linear::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, con
 {
 	if (bwdPropagationFlag) {
 		// pArrayBwdOut = arrayBwdIn |.| T(_pArrayWeight)
-		_pArrayWeight->Transpose2d(_pArrayWeightTrans);
-		if (!Array::Dot(pArrayBwdOut, arrayBwdIn, *_pArrayWeightTrans)) return false;
+		//_pArrayWeight->Transpose2d(_pArrayWeightTrans);
+		//if (!Array::Dot(pArrayBwdOut, arrayBwdIn, *_pArrayWeightTrans)) return false;
+		if (!Array::Dot(pArrayBwdOut, arrayBwdIn, *_pArrayWeight, false, true)) return false;
 	}
 	do {
 		// _pArrayWeightGrad = T(_pArrayFwdIn) |.| arrayBwdIn
-		_pArrayFwdIn->Transpose2d(_pArrayFwdInTrans);
-		if (!Array::Dot(_pArrayWeightGrad, *_pArrayFwdInTrans, arrayBwdIn)) return false;
+		//_pArrayFwdIn->Transpose2d(_pArrayFwdInTrans);
+		//if (!Array::Dot(_pArrayWeightGrad, *_pArrayFwdInTrans, arrayBwdIn)) return false;
+		if (!Array::Dot(_pArrayWeightGrad, *_pArrayFwdIn, arrayBwdIn, true, false)) return false;
 	} while (0);
 	if (!_pOptimizerInstWeight->Update(processor, _pArrayWeight, *_pArrayWeightGrad)) return false;
 	if (_pArrayBias->IsNone()) return true;

@@ -57,8 +57,9 @@ bool Conv2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, cons
 		if (controller.IsTraining()) _pArrayBias->FillRandomNormal(0, ::sqrt(1. / nColsIn), controller.GetRandom());
 	}
 	_pArrayFilter->Reshape(_pArrayFwd2, DimSizes(_nFilters, nChannels * _nRowsFilter * _nColsFilter));
-	if (!_pArrayFwd2->Transpose2d(_pArrayFwd3)) return false;
-	if (!Array::Dot(_pArrayFwd4, *_pArrayFwd1, *_pArrayFwd3)) return false;
+	//if (!_pArrayFwd2->Transpose2d(_pArrayFwd3)) return false;
+	//if (!Array::Dot(_pArrayFwd4, *_pArrayFwd1, *_pArrayFwd3)) return false;
+	if (!Array::Dot(_pArrayFwd4, *_pArrayFwd1, *_pArrayFwd2, false, true)) return false;
 	_pArrayFwd4->Reshape(_pArrayFwd5, DimSizes(nSamples, nRowsFwdOut, nColsFwdOut, _nFilters));
 	_pArrayFwd5->TransposeMulti(_pArrayFwd6, NumList<size_t>::Create(0, 3, 1, 2));
 	Array::Add(pArrayFwdOut, *_pArrayFwd6, *_pArrayBias);
@@ -89,8 +90,9 @@ bool Conv2d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, con
 	_pArrayBiasGrad.reset(arrayBwdIn.Reference());
 	arrayBwdIn.TransposeMulti(_pArrayBwd1, NumList<size_t>::Create(0, 2, 3, 1));
 	_pArrayBwd1->Reshape(_pArrayBwd2, DimSizes(nSamples * nRowsBwdIn * nColsBwdIn, _nFilters));
-	_pArrayFwd1->Transpose2d(_pArrayBwd3);
-	if (!Array::Dot(_pArrayBwd4, *_pArrayBwd3, *_pArrayBwd2)) return false;
+	//_pArrayFwd1->Transpose2d(_pArrayBwd3);
+	//if (!Array::Dot(_pArrayBwd4, *_pArrayBwd3, *_pArrayBwd2)) return false;
+	if (!Array::Dot(_pArrayBwd4, *_pArrayFwd1, *_pArrayBwd2, true, false)) return false;
 	_pArrayBwd4->Transpose2d(_pArrayBwd5);
 	_pArrayBwd5->Reshape(_pArrayFilterGrad, DimSizes(_nFilters, nChannels, _nRowsFilter, _nColsFilter));
 	if (!Array::Dot(_pArrayBwd6, *_pArrayBwd2, *_pArrayFwd2)) return false;

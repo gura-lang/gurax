@@ -37,7 +37,7 @@ scope {
 	optimizer = ml.Optimizer.GradientDescent(0.01)
 	//nSamples = arrayImage.nRows
 	//nSamples = 10000
-	nSamples = 1000
+	nSamples = 100
 	Printf('Training with %d samples [Image Size:%dx%d, Label Size:%d]\n', nSamples, db.nRows, db.nCols, db.nClasses)
 	ml.Trainer(model, optimizer, `image) {|trainer|
 		trainer.random.seed = 0x12345678
