@@ -34,14 +34,13 @@ bool Conv2d::ValidateArrayFilter(const Array& arrayFilter)
 
 bool Conv2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, const Controller& controller)
 {
-	// arrayFwdIn                                  .. (nSamples, nChannels, nRowsFwdIn, nColsFwdIn)
-	// _pArrayFilter                               .. (nFilters, nChannels, nRowsFilter, nColsFilter)
-	// _pArrayFwd1 = Img2dToCol(arrayFwdIn)        .. (nSamples * nRowsFwdOut * nColsFwdOut, nChannels * nRowsFilter * nColsFilter)
-	// _pArrayFwd2 = _pArrayFilter.Reshape()       .. (nFilters, nChannels * nRowsFilter * nColsFilter)
-	// _pArrayFwd3 = _pArrayFwd2.Transpose2d()     .. (nChannels * nRowsFilter * nColsFilter, nFilters)
-	// _pArrayFwd4 = _pArrayFwd1 |.| _pArrayFwd3   .. (nSamples * nRowsFwdOut * nColsFwdOut, nFilters)
-	// _pArrayFwd5 = _pArrayFwd4.Reshape()         .. (nSamples, nRowsFwdOut, nColsFwdOut, nFilters)
-	// pArrayFwdOut = _pArrayFwd5.TransposeMulti() .. (nSamples, nFilters, nRowsFwdOut, nColsFwdOut)
+	// arrayFwdIn                                   .. (nSamples, nChannels, nRowsFwdIn, nColsFwdIn)
+	// _pArrayFilter                                .. (nFilters, nChannels, nRowsFilter, nColsFilter)
+	// _pArrayFwd1 = Img2dToCol(arrayFwdIn)         .. (nSamples * nRowsFwdOut * nColsFwdOut, nChannels * nRowsFilter * nColsFilter)
+	// _pArrayFwd2 = _pArrayFilter.Reshape()        .. (nFilters, nChannels * nRowsFilter * nColsFilter)
+	// _pArrayFwd4 = _pArrayFwd1 |.| T(_pArrayFwd2) .. (nSamples * nRowsFwdOut * nColsFwdOut, nFilters)
+	// _pArrayFwd5 = _pArrayFwd4.Reshape()          .. (nSamples, nRowsFwdOut, nColsFwdOut, nFilters)
+	// pArrayFwdOut = _pArrayFwd5.TransposeMulti()  .. (nSamples, nFilters, nRowsFwdOut, nColsFwdOut)
 	const DimSizes& dimSizesFwdIn = arrayFwdIn.GetDimSizes();
 	size_t nSamples = dimSizesFwdIn[0];
 	size_t nChannels = dimSizesFwdIn[1];
@@ -57,8 +56,6 @@ bool Conv2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, cons
 		if (controller.IsTraining()) _pArrayBias->FillRandomNormal(0, ::sqrt(1. / nColsIn), controller.GetRandom());
 	}
 	_pArrayFilter->Reshape(_pArrayFwd2, DimSizes(_nFilters, nChannels * _nRowsFilter * _nColsFilter));
-	//if (!_pArrayFwd2->Transpose2d(_pArrayFwd3)) return false;
-	//if (!Array::Dot(_pArrayFwd4, *_pArrayFwd1, *_pArrayFwd3)) return false;
 	if (!Array::Dot(_pArrayFwd4, *_pArrayFwd1, *_pArrayFwd2, false, true)) return false;
 	_pArrayFwd4->Reshape(_pArrayFwd5, DimSizes(nSamples, nRowsFwdOut, nColsFwdOut, _nFilters));
 	_pArrayFwd5->TransposeMulti(_pArrayFwd6, NumList<size_t>::Create(0, 3, 1, 2));
@@ -70,18 +67,17 @@ bool Conv2d::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, cons
 
 bool Conv2d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, const Array& arrayBwdIn, bool bwdPropagationFlag)
 {
-	// arrayBwdIn                                .. (nSamples, nFilters, nRowsBwdIn, nColsBwdIn)
-	// _pArrayFilter                             .. (nFilters, nChannels, nRowsFilter, nColsFilter)
-	// _pArrayFwd1                               .. (nSamples * nRowsFwdOut * nColsFwdOut, nChannels * nRowsFilter * nColsFilter)
-	// _pArrayFwd2                               .. (nFilters, nChannels * nRowsFilter * nColsFilter)
-	// _pArrayBwd1 = arrayBwdIn.TransposeMulti() .. (nSamples, nRowsBwdIn, nColsBwdIn, nFilters)
-	// _pArrayBwd2 = _pArrayBwd1.Reshape()       .. (nSamples * nRowsBwdIn * nColsBwdIn, nFilters)
-	// _pArrayBwd3 = _pArrayFwd1.Transpose2d()   .. (nChannels * nRowsFilter * nColsFilter, nSamples * nRowsFwdOut * nColsFwdOut)
-	// _pArrayBwd4 = _pArrayBwd3 |.| _pArrayBwd2 .. (nChannels * nRowsFilter * nColsFilter, nFilters)
-	// _pArrayBwd5 = _pArrayBwd4.Transpose2d()   .. (nFilters, nChannels * nRowsFilter * nColsFilter)
-	// _pArrayFilterGrad = _pArrayBwd5.Rehape()  .. (nFilters, nChannels, nRowsFilter, nColsFIlter)
-	// _pArrayBwd6 = _pArrayBwd2 |.| _pArrayFwd2 .. (nSamples * nRowsBwdIn * nColsBwdIn, nChannels * nRowsFilter * nColsFilter)
-	// pArrayBwdOut = ColToImg2d(_pArrayBwd6)    .. (nSamples, nChannels, nRowsFwdIn, nColsFwdIn)
+	// arrayBwdIn                                   .. (nSamples, nFilters, nRowsBwdIn, nColsBwdIn)
+	// _pArrayFilter                                .. (nFilters, nChannels, nRowsFilter, nColsFilter)
+	// _pArrayFwd1                                  .. (nSamples * nRowsFwdOut * nColsFwdOut, nChannels * nRowsFilter * nColsFilter)
+	// _pArrayFwd2                                  .. (nFilters, nChannels * nRowsFilter * nColsFilter)
+	// _pArrayBwd1 = arrayBwdIn.TransposeMulti()    .. (nSamples, nRowsBwdIn, nColsBwdIn, nFilters)
+	// _pArrayBwd2 = _pArrayBwd1.Reshape()          .. (nSamples * nRowsBwdIn * nColsBwdIn, nFilters)
+	// _pArrayBwd4 = T(_pArrayFwd1) |.| _pArrayBwd2 .. (nChannels * nRowsFilter * nColsFilter, nFilters)
+	// _pArrayBwd5 = _pArrayBwd4.Transpose2d()      .. (nFilters, nChannels * nRowsFilter * nColsFilter)
+	// _pArrayFilterGrad = _pArrayBwd5.Rehape()     .. (nFilters, nChannels, nRowsFilter, nColsFIlter)
+	// _pArrayBwd6 = _pArrayBwd2 |.| _pArrayFwd2    .. (nSamples * nRowsBwdIn * nColsBwdIn, nChannels * nRowsFilter * nColsFilter)
+	// pArrayBwdOut = ColToImg2d(_pArrayBwd6)       .. (nSamples, nChannels, nRowsFwdIn, nColsFwdIn)
 	const DimSizes& dimSizesFilter = _pArrayFilter->GetDimSizes();
 	size_t nChannels = dimSizesFilter[1];
 	const DimSizes& dimSizesBwdIn = arrayBwdIn.GetDimSizes();
@@ -90,8 +86,6 @@ bool Conv2d::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, con
 	_pArrayBiasGrad.reset(arrayBwdIn.Reference());
 	arrayBwdIn.TransposeMulti(_pArrayBwd1, NumList<size_t>::Create(0, 2, 3, 1));
 	_pArrayBwd1->Reshape(_pArrayBwd2, DimSizes(nSamples * nRowsBwdIn * nColsBwdIn, _nFilters));
-	//_pArrayFwd1->Transpose2d(_pArrayBwd3);
-	//if (!Array::Dot(_pArrayBwd4, *_pArrayBwd3, *_pArrayBwd2)) return false;
 	if (!Array::Dot(_pArrayBwd4, *_pArrayFwd1, *_pArrayBwd2, true, false)) return false;
 	_pArrayBwd4->Transpose2d(_pArrayBwd5);
 	_pArrayBwd5->Reshape(_pArrayFilterGrad, DimSizes(_nFilters, nChannels, _nRowsFilter, _nColsFilter));

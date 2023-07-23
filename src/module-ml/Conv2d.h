@@ -30,8 +30,8 @@ private:
 	RefPtr<Array> _pArrayBiasGrad;
 	RefPtr<Array> _pArrayFwdInSaved;
 	RefPtr<Array> _pArrayFwdOutSaved;
-	RefPtr<Array> _pArrayFwd1, _pArrayFwd2, _pArrayFwd3, _pArrayFwd4, _pArrayFwd5, _pArrayFwd6;
-	RefPtr<Array> _pArrayBwd1, _pArrayBwd2, _pArrayBwd3, _pArrayBwd4, _pArrayBwd5, _pArrayBwd6;
+	RefPtr<Array> _pArrayFwd1, _pArrayFwd2, _pArrayFwd4, _pArrayFwd5, _pArrayFwd6;
+	RefPtr<Array> _pArrayBwd1, _pArrayBwd2, _pArrayBwd4, _pArrayBwd5, _pArrayBwd6;
 	RefPtr<Optimizer::Instance> _pOptimizerInstFilter;
 	RefPtr<Optimizer::Instance> _pOptimizerInstBias;
 public:

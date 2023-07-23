@@ -25,8 +25,6 @@ private:
 	RefPtr<Array> _pArrayWeightGrad;
 	RefPtr<Array> _pArrayBias;
 	RefPtr<Array> _pArrayBiasGrad;
-	RefPtr<Array> _pArrayFwdInTrans;
-	RefPtr<Array> _pArrayWeightTrans;
 	RefPtr<Array> _pArrayFwd1;
 	RefPtr<Optimizer::Instance> _pOptimizerInstWeight;
 	RefPtr<Optimizer::Instance> _pOptimizerInstBias;
