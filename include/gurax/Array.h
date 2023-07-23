@@ -166,10 +166,8 @@ public:
 		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Cmp_ArrayArray[ElemTypeIdMax][ElemTypeIdMax];
 		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Cmp_ArrayNumber[ElemTypeIdMax];
 		std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>			Cmp_NumberArray[ElemTypeIdMax];
-		std::function<void (void* pvRtn, size_t m, size_t n, const void* pvL, const void* pvR, size_t l)> Dot_ArrayArray[ElemTypeIdMax][ElemTypeIdMax];
-		std::function<void (void* pvRtn, size_t m, size_t n, const void* pvL, const void* pvR, size_t l)> Dot_ArrayTArray[ElemTypeIdMax][ElemTypeIdMax];
-		std::function<void (void* pvRtn, size_t m, size_t n, const void* pvL, const void* pvR, size_t l)> Dot_ArrayArrayT[ElemTypeIdMax][ElemTypeIdMax];
-		std::function<void (void* pvRtn, size_t m, size_t n, const void* pvL, const void* pvR, size_t l)> Dot_ArrayTArrayT[ElemTypeIdMax][ElemTypeIdMax];
+		std::function<void (void* pvRtn, size_t m, size_t n, const void* pvL, const void* pvR, size_t l,
+			size_t strideRowL, size_t strideColL, size_t strideRowR, size_t strideColR)>	Dot_ArrayArray[ElemTypeIdMax][ElemTypeIdMax];
 		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t n)>		Cross_ArrayArray[ElemTypeIdMax][ElemTypeIdMax];
 	};
 	using MapIdToElemType = std::unordered_map<size_t, const ElemTypeT*>;
