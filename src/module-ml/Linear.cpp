@@ -47,10 +47,8 @@ bool Linear::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, con
 		// pArrayBwdOut = arrayBwdIn |.| T(_pArrayWeight)
 		if (!Array::Dot(pArrayBwdOut, arrayBwdIn, *_pArrayWeight, false, true)) return false;
 	}
-	do {
-		// _pArrayWeightGrad = T(_pArrayFwdIn) |.| arrayBwdIn
-		if (!Array::Dot(_pArrayWeightGrad, *_pArrayFwdIn, arrayBwdIn, true, false)) return false;
-	} while (0);
+	// _pArrayWeightGrad = T(_pArrayFwdIn) |.| arrayBwdIn
+	if (!Array::Dot(_pArrayWeightGrad, *_pArrayFwdIn, arrayBwdIn, true, false)) return false;
 	if (!_pOptimizerInstWeight->Update(processor, _pArrayWeight, *_pArrayWeightGrad)) return false;
 	if (_pArrayBias->IsNone()) return true;
 	_pArrayBiasGrad.reset(arrayBwdIn.Reference());
