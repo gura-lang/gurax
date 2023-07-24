@@ -50,9 +50,81 @@ Gurax_ImplementConstructor(PairSet)
 	return argument.ReturnValue(processor, new Value_PairSet(pPairSet.release()));
 }
 
+//------------------------------------------------------------------------------
+// Iterator_EachBatch
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_EachBatch : public Iterator {
+private:
+	RefPtr<PairSet> _pPairSet;
+	size_t _batchSize;
+	size_t _idx;
+	RefPtr<Array> _pArrayImage;
+	RefPtr<Array> _pArrayLabel;
+public:
+	Iterator_EachBatch(PairSet* pPairSet, size_t batchSize, const Array::ElemTypeT& elemType);
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override {
+		return Flag::Finite | Flag::LenDetermined;
+	}
+	virtual size_t GetLength() const override;
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// Iterator_EachBatch
+//------------------------------------------------------------------------------
+Iterator_EachBatch::Iterator_EachBatch(PairSet* pPairSet, size_t batchSize, const Array::ElemTypeT& elemType) :
+	_pPairSet(pPairSet), _batchSize(batchSize), _idx(0),
+	_pArrayImage(Array::Create(elemType, DimSizes(batchSize, pPairSet->GetImageSet().GetNRows(), pPairSet->GetImageSet().GetNCols()))),
+	_pArrayLabel(Array::Create(elemType, DimSizes(batchSize)))
+{
+}
+
+size_t Iterator_EachBatch::GetLength() const
+{
+	return _pPairSet->GetImageSet().GetNSamples() / _batchSize;
+}
+
+Value* Iterator_EachBatch::DoNextValue()
+{
+	return Value::nil();
+}
+
+String Iterator_EachBatch::ToString(const StringStyle& ss) const
+{
+	return String().Format("ml.mnist.EachBatch:batchSize=%zu", _batchSize);
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// ml.mnist.PairSet#Each(batchSize as Number) as Iterator {block?}
+Gurax_DeclareMethod(PairSet, Each)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareArg("batchSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementMethod(PairSet, Each)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	size_t batchSize = args.PickNumberPos<size_t>();
+	const Array::ElemTypeT& elemType = Array::ElemType::Float;
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	RefPtr<Iterator> pIterator(new Iterator_EachBatch(valueThis.GetPairSet().Reference(), batchSize, elemType));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
 // ml.mnist.PairSet#Shuffle(random? as Random):reduce
 Gurax_DeclareMethod(PairSet, Shuffle)
 {
