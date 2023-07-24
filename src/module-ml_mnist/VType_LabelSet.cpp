@@ -113,7 +113,7 @@ Skeleton.
 Gurax_ImplementPropertyGetter(LabelSet, nClasses)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetLabelSet().CountClasses());
+	return new Value_Number(valueThis.GetLabelSet().GetNClasses());
 }
 
 //------------------------------------------------------------------------------
@@ -132,6 +132,15 @@ void VType_LabelSet::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(LabelSet, nSamples));
 	Assign(Gurax_CreateProperty(LabelSet, nClasses));
+}
+
+Value* VType_LabelSet::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+{
+	RefPtr<Value_Stream> pValueCasted(value.Cast<Value_Stream>(flags));
+	if (!pValueCasted) return nullptr;
+	RefPtr<LabelSet> pLabelSet(new LabelSet());
+	if (!pLabelSet->Read(pValueCasted->GetStream())) return nullptr;
+	return new Value_LabelSet(pLabelSet.release());
 }
 
 //------------------------------------------------------------------------------

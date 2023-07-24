@@ -150,7 +150,7 @@ public:
 	bool IsEncrypted() const {
 		return (Gurax_UnpackUInt16(_fields.GeneralPurposeBitFlag) & (1 << 0)) != 0;
 	}
-	bool IsExistDataDescriptor() const {
+	bool DoesExistDataDescriptor() const {
 		return (Gurax_UnpackUInt16(_fields.GeneralPurposeBitFlag) & (1 << 3)) != 0;
 	}
 	bool IsStrongEncrypted() const {
@@ -331,7 +331,7 @@ public:
 	bool IsEncrypted() const {
 		return (Gurax_UnpackUInt16(_fields.GeneralPurposeBitFlag) & (1 << 0)) != 0;
 	}
-	bool IsExistDataDescriptor() const {
+	bool DoesExistDataDescriptor() const {
 		return (Gurax_UnpackUInt16(_fields.GeneralPurposeBitFlag) & (1 << 3)) != 0;
 	}
 	bool IsStrongEncrypted() const {

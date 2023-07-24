@@ -35,7 +35,7 @@ protected:
 	~LabelSet() = default;
 public:
 	size_t GetNSamples() const { return _nSamples; }
-	size_t CountClasses() const { return _nClasses; }
+	size_t GetNClasses() const { return _nClasses; }
 	bool Read(Stream& stream);
 	Array* Extract(const Array::ElemTypeT& elemType, size_t iSample, size_t nSamples, bool oneHotFlag) const;
 public:

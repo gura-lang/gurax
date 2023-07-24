@@ -154,6 +154,7 @@
 #include "gurax/VType_Vertex.h"
 #include "gurax/VType_VType.h"
 #include "gurax/Imp_Iterator.h"
+#include "gurax/Imp_ListBase.h"
 #include "gurax/Imp_VType_Number.h"
 
 namespace Gurax {

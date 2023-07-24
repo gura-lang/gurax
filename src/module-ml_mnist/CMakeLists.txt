@@ -39,8 +39,10 @@ target_sources(ml.mnist.gurd PRIVATE
 	Util.cpp
 	ImageSet.cpp
 	LabelSet.cpp
+	PairSet.cpp
 	VType_ImageSet.cpp
-	VType_LabelSet.cpp)
+	VType_LabelSet.cpp
+	VType_PairSet.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------

@@ -42,6 +42,7 @@ Gurax_ModulePrepare()
 	// Assignment of VType
 	Assign(VTYPE_ImageSet);
 	Assign(VTYPE_LabelSet);
+	Assign(VTYPE_PairSet);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));
 	return true;

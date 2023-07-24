@@ -7,6 +7,7 @@
 #include "Util.h"
 #include "VType_ImageSet.h"
 #include "VType_LabelSet.h"
+#include "VType_PairSet.h"
 
 Gurax_BeginModuleHeader(ml_mnist)
 Gurax_EndModuleHeader(ml_mnist)
