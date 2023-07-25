@@ -40,11 +40,13 @@ public:
 protected:
 	~ImageSet() = default;
 public:
+	static void Bootup();
+public:
 	size_t GetNSamples() const { return _nSamples; }
 	size_t GetNRows() const { return _nRows; }
 	size_t GetNCols() const { return _nCols; }
 	bool Read(Stream& stream);
-	Array* Extract(const Array::ElemTypeT& elemType, size_t iSample, size_t nSamples, bool flattenFlag, Double numCeil) const;
+	void Extract(const Array::ElemTypeT& elemType, void* pDst, size_t iSample, Double numCeil) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const ImageSet& other) const { return this == &other; }

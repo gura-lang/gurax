@@ -49,6 +49,7 @@ Gurax_ImplementConstructor(ImageSet)
 	return argument.ReturnValue(processor, new Value_ImageSet(pImageSet.release()));
 }
 
+#if 0
 //-----------------------------------------------------------------------------
 // Implementation of method
 //   flatten = false ... (nSamples, nRows, nCols)
@@ -84,6 +85,7 @@ Gurax_ImplementMethod(ImageSet, ToArray)
 	RefPtr<Array> pArray(valueThis.GetImageSet().Extract(elemType, 0, 0, flattenFlag, numCeil));
 	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
 }
+#endif
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -145,7 +147,7 @@ void VType_ImageSet::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(ImageSet));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(ImageSet, ToArray));
+	//Assign(Gurax_CreateMethod(ImageSet, ToArray));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(ImageSet, nSamples));
 	Assign(Gurax_CreateProperty(ImageSet, nRows));

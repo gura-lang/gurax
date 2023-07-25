@@ -5,9 +5,30 @@
 
 Gurax_BeginModuleScope(ml_mnist)
 
+template<typename T_Elem> void CopyElems_T(void* pDst, const UInt8* pElemSrc, size_t nElems, Double numCeil)
+{
+	T_Elem* pElemDst = reinterpret_cast<T_Elem*>(pDst);
+	if (numCeil > 0) {
+		for (size_t i = 0; i < nElems; i++, pElemSrc++, pElemDst++) {
+			*pElemDst = static_cast<T_Elem>(numCeil * *pElemSrc / 255);
+		}
+	} else {
+		for (size_t i = 0; i < nElems; i++, pElemSrc++, pElemDst++) {
+			*pElemDst = static_cast<T_Elem>(*pElemSrc);
+		}
+	}
+}
+
+std::function<void (void* pDst, const UInt8* pElemSrc, size_t nElems, Double numCeil)> CopyElems[Array::ElemTypeIdMax];
+
 //------------------------------------------------------------------------------
 // ImageSet
 //------------------------------------------------------------------------------
+void ImageSet::Bootup()
+{
+	Gurax_SetArrayFuncSingle(CopyElems, CopyElems_T);
+}
+
 bool ImageSet::Read(Stream& stream)
 {
 	size_t bytesRead = 0;
@@ -35,48 +56,12 @@ bool ImageSet::Read(Stream& stream)
 	return true;
 }
 
-template<typename T_Elem>
-Array* CreateArrayOfImages(const Array::ElemTypeT& elemType, DimSizes& dimSizes, const UInt8* pElemSrc, Double numCeil)
+void ImageSet::Extract(const Array::ElemTypeT& elemType, void* pDst, size_t iSample, Double numCeil) const
 {
-	RefPtr<Array> pArray(Array::Create(elemType, dimSizes));
-	size_t nElems = pArray->GetDimSizes().CalcLength();
-	T_Elem* pElemDst = pArray->GetPointerC<T_Elem>();
-	if (numCeil > 0) {
-		for (size_t i = 0; i < nElems; i++, pElemSrc++, pElemDst++) {
-			*pElemDst = static_cast<T_Elem>(numCeil * *pElemSrc / 255);
-		}
-	} else {
-		for (size_t i = 0; i < nElems; i++, pElemSrc++, pElemDst++) {
-			*pElemDst = static_cast<T_Elem>(*pElemSrc);
-		}
-	}
-	return pArray.release();
-}
-
-Array* ImageSet::Extract(const Array::ElemTypeT& elemType, size_t iSample, size_t nSamples, bool flattenFlag, Double numCeil) const
-{
-	RefPtr<Array> pArray;
-	DimSizes dimSizes;
-	dimSizes.push_back(_nSamples);
-	if (flattenFlag) {
-		dimSizes.push_back(_nRows * _nCols);
-	} else {
-		dimSizes.push_back(_nRows);
-		dimSizes.push_back(_nCols);
-	}
-	if (elemType.IsIdentical(Array::ElemType::UInt8)) {
-		pArray.reset(CreateArrayOfImages<UInt8>(elemType, dimSizes, _pMemory->GetPointerC<UInt8>(), numCeil));
-	} else if (elemType.IsIdentical(Array::ElemType::Half)) {
-		pArray.reset(CreateArrayOfImages<Half>(elemType, dimSizes, _pMemory->GetPointerC<UInt8>(), numCeil));
-	} else if (elemType.IsIdentical(Array::ElemType::Float)) {
-		pArray.reset(CreateArrayOfImages<Float>(elemType, dimSizes, _pMemory->GetPointerC<UInt8>(), numCeil));
-	} else if (elemType.IsIdentical(Array::ElemType::Double)) {
-		pArray.reset(CreateArrayOfImages<Double>(elemType, dimSizes, _pMemory->GetPointerC<UInt8>(), numCeil));
-	} else {
-		Error::Issue(ErrorType::ValueError, "can't create an array of %s", elemType.GetName());
-		return nullptr;
-	}
-	return pArray.release();
+	auto func = CopyElems[elemType.id];
+	size_t nElems = _nRows * _nCols;
+	const UInt8* pElemSrc = _pMemory->GetPointerC<UInt8>() + nElems * iSample;
+	func(pDst, pElemSrc, nElems, numCeil);
 }
 
 String ImageSet::ToString(const StringStyle& ss) const

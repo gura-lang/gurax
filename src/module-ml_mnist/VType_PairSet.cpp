@@ -56,12 +56,13 @@ Gurax_ImplementConstructor(PairSet)
 class GURAX_DLLDECLARE Iterator_EachBatch : public Iterator {
 private:
 	RefPtr<PairSet> _pPairSet;
-	size_t _batchSize;
-	size_t _idx;
 	RefPtr<Array> _pArrayImage;
 	RefPtr<Array> _pArrayLabel;
+	size_t _batchSize;
+	Double _numCeil;
+	size_t _idx;
 public:
-	Iterator_EachBatch(PairSet* pPairSet, size_t batchSize, const Array::ElemTypeT& elemType);
+	Iterator_EachBatch(PairSet* pPairSet, const Array::ElemTypeT& elemType, size_t batchSize, Double numCeil);
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override {
@@ -75,10 +76,11 @@ public:
 //------------------------------------------------------------------------------
 // Iterator_EachBatch
 //------------------------------------------------------------------------------
-Iterator_EachBatch::Iterator_EachBatch(PairSet* pPairSet, size_t batchSize, const Array::ElemTypeT& elemType) :
-	_pPairSet(pPairSet), _batchSize(batchSize), _idx(0),
+Iterator_EachBatch::Iterator_EachBatch(PairSet* pPairSet, const Array::ElemTypeT& elemType, size_t batchSize, Double numCeil) :
+	_pPairSet(pPairSet),
 	_pArrayImage(Array::Create(elemType, DimSizes(batchSize, pPairSet->GetImageSet().GetNRows(), pPairSet->GetImageSet().GetNCols()))),
-	_pArrayLabel(Array::Create(elemType, DimSizes(batchSize)))
+	_pArrayLabel(Array::Create(elemType, DimSizes(batchSize))),
+	_batchSize(batchSize), _numCeil(numCeil), _idx(0)
 {
 }
 
@@ -89,7 +91,17 @@ size_t Iterator_EachBatch::GetLength() const
 
 Value* Iterator_EachBatch::DoNextValue()
 {
-	return Value::nil();
+	void* pImageDst = _pArrayImage->GetPointerC<void>();
+	void* pLabelDst = _pArrayLabel->GetPointerC<void>();
+	size_t nElems = _pPairSet->GetImageSet().GetNRows() * _pPairSet->GetImageSet().GetNCols();
+	for (size_t i = 0; i < _batchSize; i++, _idx++) {
+		size_t iSample = _pPairSet->GetIndex(_idx);
+		_pPairSet->GetImageSet().Extract(_pArrayImage->GetElemType(), pImageDst, iSample, _numCeil);
+		//_pPairSet->GetLabelSet().Extract(_pArrayLabel->GetElemType(), pLabelDst, iSample);
+		pImageDst = _pArrayImage->FwdPointer(pImageDst, nElems);
+		pLabelDst = _pArrayLabel->FwdPointer(pLabelDst, 1);
+	}
+	return Value_Tuple::Create(new Value_Array(_pArrayImage->Reference()), new Value_Array(_pArrayLabel->Reference()));
 }
 
 String Iterator_EachBatch::ToString(const StringStyle& ss) const
@@ -100,11 +112,13 @@ String Iterator_EachBatch::ToString(const StringStyle& ss) const
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// ml.mnist.PairSet#Each(batchSize as Number) as Iterator {block?}
+// ml.mnist.PairSet#Each(elemType as Symbol, batchSize as Number, numCeil? as Number) as Iterator {block?}
 Gurax_DeclareMethod(PairSet, Each)
 {
 	Declare(VTYPE_Iterator, Flag::None);
+	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("batchSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("numCeil", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
@@ -117,11 +131,16 @@ Gurax_ImplementMethod(PairSet, Each)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
+	const Array::ElemTypeT& elemType = Array::SymbolToElemType(args.PickSymbol());
+	if (elemType.IsNone()) {
+		Error::Issue(ErrorType::ValueError, "invalid symbol for element type");
+		return Value::nil();
+	}
 	size_t batchSize = args.PickNumberPos<size_t>();
-	const Array::ElemTypeT& elemType = Array::ElemType::Float;
+	Double numCeil = args.IsValid()? args.PickNumberPos<Double>() : 1.;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_EachBatch(valueThis.GetPairSet().Reference(), batchSize, elemType));
+	RefPtr<Iterator> pIterator(new Iterator_EachBatch(valueThis.GetPairSet().Reference(), elemType, batchSize, numCeil));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
