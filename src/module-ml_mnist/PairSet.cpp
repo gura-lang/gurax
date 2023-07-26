@@ -51,8 +51,8 @@ size_t Iterator_EachBatch::GetLength() const
 
 Value* Iterator_EachBatch::DoNextValue()
 {
-	::printf("check\n");
 	void* pImageDst = _pArrayImage->GetPointerC<void>();
+	_pArrayLabel->FillZero();
 	size_t offset = 0;
 	size_t nElems = _pPairSet->GetImageSet().GetNRows() * _pPairSet->GetImageSet().GetNCols();
 	size_t nClasses = _pPairSet->GetLabelSet().GetNClasses();
