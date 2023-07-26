@@ -53,8 +53,8 @@ Gurax_ImplementConstructor(PairSet)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// ml.mnist.PairSet#Each(elemType as Symbol, batchSize as Number, numCeil? as Number) as Iterator {block?}
-Gurax_DeclareMethod(PairSet, Each)
+// ml.mnist.PairSet#EachBatch(elemType as Symbol, batchSize as Number, numCeil? as Number) as Iterator {block?}
+Gurax_DeclareMethod(PairSet, EachBatch)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
@@ -66,7 +66,7 @@ Skeleton.
 )""");
 }
 
-Gurax_ImplementMethod(PairSet, Each)
+Gurax_ImplementMethod(PairSet, EachBatch)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -212,6 +212,7 @@ void VType_PairSet::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(PairSet));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(PairSet, EachBatch));
 	Assign(Gurax_CreateMethod(PairSet, Shuffle));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(PairSet, imageSet));

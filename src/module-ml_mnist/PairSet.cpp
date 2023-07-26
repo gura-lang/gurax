@@ -39,7 +39,7 @@ void PairSetOwner::Clear()
 Iterator_EachBatch::Iterator_EachBatch(PairSet* pPairSet, const Array::ElemTypeT& elemType, size_t batchSize, Double numCeil) :
 	_pPairSet(pPairSet),
 	_pArrayImage(Array::Create(elemType, DimSizes(batchSize, pPairSet->GetImageSet().GetNRows(), pPairSet->GetImageSet().GetNCols()))),
-	_pArrayLabel(Array::Create(elemType, DimSizes(batchSize))),
+	_pArrayLabel(Array::Create(elemType, DimSizes(batchSize, pPairSet->GetLabelSet().GetNClasses()))),
 	_batchSize(batchSize), _numCeil(numCeil), _idx(0)
 {
 }
@@ -51,6 +51,7 @@ size_t Iterator_EachBatch::GetLength() const
 
 Value* Iterator_EachBatch::DoNextValue()
 {
+	::printf("check\n");
 	void* pImageDst = _pArrayImage->GetPointerC<void>();
 	size_t offset = 0;
 	size_t nElems = _pPairSet->GetImageSet().GetNRows() * _pPairSet->GetImageSet().GetNCols();
