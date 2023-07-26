@@ -124,6 +124,19 @@ Array* CreateArrayOfLabelsQMNIST(const Array::ElemTypeT& elemType, const Memory&
 	return pArray.release();
 }
 
+UInt32 LabelSet::GetLabel(size_t iSample) const
+{
+	if (_qmnistFlag) {
+		const UInt32* pElemSrc = _pMemory->GetPointerC<UInt32>();
+		pElemSrc += iSample * _nFields;
+		return *pElemSrc;
+	} else {
+		const UInt8* pElemSrc = _pMemory->GetPointerC<UInt8>();
+		pElemSrc += iSample;
+		return *pElemSrc;
+	}
+}
+
 Array* LabelSet::Extract(const Array::ElemTypeT& elemType, size_t iSample, size_t nSamples, bool oneHotFlag) const
 {
 	RefPtr<Array> pArray;
@@ -152,7 +165,7 @@ Array* LabelSet::Extract(const Array::ElemTypeT& elemType, size_t iSample, size_
 
 String LabelSet::ToString(const StringStyle& ss) const
 {
-	return String().Format("ml.mnist.LabelSet:%zusamples", GetNSamples());
+	return String().Format("ml.mnist.LabelSet:%zusamples:%zuclasses", GetNSamples(), GetNClasses());
 }
 
 //------------------------------------------------------------------------------

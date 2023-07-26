@@ -50,65 +50,6 @@ Gurax_ImplementConstructor(PairSet)
 	return argument.ReturnValue(processor, new Value_PairSet(pPairSet.release()));
 }
 
-//------------------------------------------------------------------------------
-// Iterator_EachBatch
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Iterator_EachBatch : public Iterator {
-private:
-	RefPtr<PairSet> _pPairSet;
-	RefPtr<Array> _pArrayImage;
-	RefPtr<Array> _pArrayLabel;
-	size_t _batchSize;
-	Double _numCeil;
-	size_t _idx;
-public:
-	Iterator_EachBatch(PairSet* pPairSet, const Array::ElemTypeT& elemType, size_t batchSize, Double numCeil);
-public:
-	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override {
-		return Flag::Finite | Flag::LenDetermined;
-	}
-	virtual size_t GetLength() const override;
-	virtual Value* DoNextValue() override;
-	virtual String ToString(const StringStyle& ss) const override;
-};
-
-//------------------------------------------------------------------------------
-// Iterator_EachBatch
-//------------------------------------------------------------------------------
-Iterator_EachBatch::Iterator_EachBatch(PairSet* pPairSet, const Array::ElemTypeT& elemType, size_t batchSize, Double numCeil) :
-	_pPairSet(pPairSet),
-	_pArrayImage(Array::Create(elemType, DimSizes(batchSize, pPairSet->GetImageSet().GetNRows(), pPairSet->GetImageSet().GetNCols()))),
-	_pArrayLabel(Array::Create(elemType, DimSizes(batchSize))),
-	_batchSize(batchSize), _numCeil(numCeil), _idx(0)
-{
-}
-
-size_t Iterator_EachBatch::GetLength() const
-{
-	return _pPairSet->GetImageSet().GetNSamples() / _batchSize;
-}
-
-Value* Iterator_EachBatch::DoNextValue()
-{
-	void* pImageDst = _pArrayImage->GetPointerC<void>();
-	void* pLabelDst = _pArrayLabel->GetPointerC<void>();
-	size_t nElems = _pPairSet->GetImageSet().GetNRows() * _pPairSet->GetImageSet().GetNCols();
-	for (size_t i = 0; i < _batchSize; i++, _idx++) {
-		size_t iSample = _pPairSet->GetIndex(_idx);
-		_pPairSet->GetImageSet().Extract(_pArrayImage->GetElemType(), pImageDst, iSample, _numCeil);
-		//_pPairSet->GetLabelSet().Extract(_pArrayLabel->GetElemType(), pLabelDst, iSample);
-		pImageDst = _pArrayImage->FwdPointer(pImageDst, nElems);
-		pLabelDst = _pArrayLabel->FwdPointer(pLabelDst, 1);
-	}
-	return Value_Tuple::Create(new Value_Array(_pArrayImage->Reference()), new Value_Array(_pArrayLabel->Reference()));
-}
-
-String Iterator_EachBatch::ToString(const StringStyle& ss) const
-{
-	return String().Format("ml.mnist.EachBatch:batchSize=%zu", _batchSize);
-}
-
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
