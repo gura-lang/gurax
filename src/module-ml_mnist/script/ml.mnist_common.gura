@@ -1,18 +1,9 @@
 #!/usr/bin/env gura
 import(ml.mnist):binary {*}
 
-DBPair = struct {
-	imageSet as ImageSet
-	labelSet as LabelSet
-	Print() = {
-		labelTbl = this.labelSet.ToArray().ToList()
-		nSamples = this.imageSet.nSamples
-		pattern = [' ', '.', ':', '#', '#']
-		imageTbl = this.imageSet.ToArray(`uint8, flatten = false, numMax = 4)
-		repeat (nSamples) {|i|
-			Printf('#%d/%d "%d"\n', i + 1, nSamples, labelTbl[i])
-			Printf('  0123456789012345678901234567\n',)
-			imageTbl[i].ToList().Each {|row, iRow| Printf('%2d%s\n', iRow, pattern.Get(row).Join())}
-		}
-	}
+pattern = [' ', '.', ':', '#', '#']
+
+PrintImage(array as Array, numCeil as Number = 1.) = {
+	Printf('  0123456789012345678901234567\n')
+	array.ToList().Each {|row, iRow| Printf('%2d%s\n', iRow, pattern.Get(row * 4 / numCeil).Join())}
 }

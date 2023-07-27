@@ -8,12 +8,23 @@ import(hash)
 
 buffSrc = B''
 buffSrc.p.Put(`uint8, (0..255).Cycle(4096))
-TestCase('Basic test') {
+
+TestCase('gzip.Reader() and gzip.Writer()') {
+	buffCompressed = B''
+	gzip.Writer(buffCompressed).Write(buffSrc)
+	Printf('Compressed: %s\n', hash.MD5(buffCompressed).digestHex)
+	//buffCompressed.Dump()
+	buffUncompressed = gzip.Reader(buffCompressed).Read()
+	Printf('Uncompressed: %s\n', hash.MD5(buffUncompressed).digestHex)
+	//buffUncompressed.Dump()
+}
+
+TestCase('Stream#Reader@gzip() and Stream#Writer@gzip()') {
 	buffCompressed = B''
 	buffCompressed.Writer().Writer@gzip().Write(buffSrc)
 	Printf('Compressed: %s\n', hash.MD5(buffCompressed).digestHex)
-	buffCompressed.Dump()
+	//buffCompressed.Dump()
 	buffUncompressed = buffCompressed.Reader().Reader@gzip().Read()
-	Println('Uncompressed')
-	buffUncompressed.Dump()
+	Printf('Uncompressed: %s\n', hash.MD5(buffUncompressed).digestHex)
+	//buffUncompressed.Dump()
 }

@@ -51,6 +51,7 @@ size_t Iterator_EachBatch::GetLength() const
 
 Value* Iterator_EachBatch::DoNextValue()
 {
+	if (_idx + _batchSize > _pPairSet->GetImageSet().GetNSamples()) return nullptr;
 	void* pImageDst = _pArrayImage->GetPointerC<void>();
 	_pArrayLabel->FillZero();
 	size_t offset = 0;
@@ -69,7 +70,8 @@ Value* Iterator_EachBatch::DoNextValue()
 
 String Iterator_EachBatch::ToString(const StringStyle& ss) const
 {
-	return String().Format("ml.mnist.EachBatch:batchSize=%zu", _batchSize);
+	return String().Format("ml.mnist.EachBatch:batchSize=%zu:%zu/%zu",
+		_batchSize, _idx / _batchSize, _pPairSet->GetImageSet().GetNSamples() / _batchSize);
 }
 
 Gurax_EndModuleScope(ml_mnist)
