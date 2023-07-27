@@ -4,17 +4,45 @@
 //==============================================================================
 import(util.tester) {*}
 import(ml.mnist)
+import(ml.qmnist)
 
 db = ml.mnist.Database('../../sample/resource/mnist')
+dbQ = ml.qmnist.Database('../../sample/resource/qmnist')
 
 TestCase('Basic test') {
-	Printf('nRows=%d, nCols=%d, nClasses=%d\n', db.nRows, db.nCols, db.nClasses)
+	Printf('MNIST: nRows=%d, nCols=%d, nClasses=%d\n', db.nRows, db.nCols, db.nClasses)
 	Printf('%s\n', db.train.imageSet)
 	Printf('%s\n', db.train.labelSet)
 	Printf('%s\n', db.test.imageSet)
 	Printf('%s\n', db.test.labelSet)
+	Printf('QMNIST: nRows=%d, nCols=%d, nClasses=%d\n', dbQ.nRows, dbQ.nCols, dbQ.nClasses)
+	Printf('%s\n', dbQ.train.imageSet)
+	Printf('%s\n', dbQ.train.labelSet)
+	Printf('%s\n', dbQ.test.imageSet)
+	Printf('%s\n', dbQ.test.labelSet)
 }
 
-TestCase('ml.mnist.DBPair#Print()') {
-	db.train.Print()
+TestCase('ml.mnist.PairSet#EachBatch()') {
+	db.train.EachBatch(`float, batchSize = 3).Head(2) {|pair|
+		[images, labels] = pair
+		repeat (images.shape[0]) {|i|
+			Println(labels[i].ArgMax())
+			ml.mnist.PrintImage(images[i], guideFlag = false)
+		}
+	}
+}
+
+TestCase('ml.mnist.PairSet#Shuffle()') {
+	rand = Random(0)
+	repeat (3) {
+		db.train.Shuffle(rand)
+		db.train.EachBatch(`float, batchSize = 3).Head(2) {|pair|
+			[images, labels] = pair
+			repeat (images.shape[0]) {|i|
+				Printf('%d', labels[i].ArgMax())
+				//ml.mnist.PrintImage(images[i], guideFlag = false)
+			}
+		}
+		Println()
+	}
 }

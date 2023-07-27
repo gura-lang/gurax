@@ -89,7 +89,7 @@ Gurax_ImplementMethod(PairSet, EachBatch)
 Gurax_DeclareMethod(PairSet, Shuffle)
 {
 	Declare(VTYPE_PairSet, Flag::Reduce);
-	DeclareArg("random", VTYPE_Random, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("random", VTYPE_Random, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
 )""");
