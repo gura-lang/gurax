@@ -10,11 +10,11 @@ Database = class {
 	nClasses as Number
 	__init__(dirName as String) = {
 		this.train = PairSet(
-			ImageSet(Open(path.Join(dirName, 'qmnist-train-images-idx3-ubyte.gz')).Reader@gzip())
-			LabelSet(Open(path.Join(dirName, 'qmnist-train-labels-idx2-int.gz')).Reader@gzip()))
+			gzip.Reader(path.Join(dirName, 'qmnist-train-images-idx3-ubyte.gz'))
+			gzip.Reader(path.Join(dirName, 'qmnist-train-labels-idx2-int.gz')))
 		this.test = PairSet(
-			ImageSet(Open(path.Join(dirName, 'qmnist-test-images-idx3-ubyte.gz')).Reader@gzip())
-			LabelSet(Open(path.Join(dirName, 'qmnist-test-labels-idx2-int.gz')).Reader@gzip()))
+			gzip.Reader(path.Join(dirName, 'qmnist-test-images-idx3-ubyte.gz'))
+			gzip.Reader(path.Join(dirName, 'qmnist-test-labels-idx2-int.gz')))
 		this.nRows = this.train.nRows
 		this.nCols = this.train.nCols
 		this.nClasses = Max(this.train.nClasses, this.test.nClasses)
