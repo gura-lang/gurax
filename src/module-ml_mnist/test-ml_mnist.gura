@@ -23,7 +23,7 @@ TestCase('Basic test') {
 }
 
 TestCase('ml.mnist.PairSet#EachBatch()') {
-	db.train.EachBatch(`float, batchSize = 3).Head(2) {|pair|
+	[db, dbQ]:*train:*EachBatch(`float, batchSize = 3)::Head(2) {|pair|
 		[images, labels] = pair
 		repeat (images.shape[0]) {|i|
 			Println(labels[i].ArgMax())

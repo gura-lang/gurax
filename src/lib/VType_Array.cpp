@@ -444,8 +444,8 @@ Gurax_ImplementMethod(Array, Cast)
 				new Value_Array(valueThis.GetArray().CreateCasted(elemType)));
 }
 
-// Array#Each() {block?}
-Gurax_DeclareMethod(Array, Each)
+// Array#EachElem() {block?}
+Gurax_DeclareMethod(Array, EachElem)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
@@ -454,12 +454,12 @@ Gurax_DeclareMethod(Array, Each)
 )""");
 }
 
-Gurax_ImplementMethod(Array, Each)
+Gurax_ImplementMethod(Array, EachElem)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Function body
-	RefPtr<Iterator> pIterator(new VType_Array::Iterator_Each(valueThis.GetArray().Reference()));
+	RefPtr<Iterator> pIterator(new VType_Array::Iterator_EachElem(valueThis.GetArray().Reference()));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
@@ -1417,7 +1417,7 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Array, ArgMax));
 	Assign(Gurax_CreateMethod(Array, ArgMin));
 	Assign(Gurax_CreateMethod(Array, Cast));
-	Assign(Gurax_CreateMethod(Array, Each));
+	Assign(Gurax_CreateMethod(Array, EachElem));
 	Assign(Gurax_CreateMethod(Array, FillOne));
 	Assign(Gurax_CreateMethod(Array, FillRandomNormal));
 	Assign(Gurax_CreateMethod(Array, FillZero));
@@ -1499,9 +1499,9 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 }
 
 //------------------------------------------------------------------------------
-// VType_Array::Iterator_Each
+// VType_Array::Iterator_EachElem
 //------------------------------------------------------------------------------
-Value* VType_Array::Iterator_Each::DoNextValue()
+Value* VType_Array::Iterator_EachElem::DoNextValue()
 {
 	if (_idx >= _len) return nullptr;
 	RefPtr<Value> pValue(_pArray->IndexGetValue(_idx));
@@ -1509,9 +1509,9 @@ Value* VType_Array::Iterator_Each::DoNextValue()
 	return pValue.release();
 }
 
-String VType_Array::Iterator_Each::ToString(const StringStyle& ss) const
+String VType_Array::Iterator_EachElem::ToString(const StringStyle& ss) const
 {
-	return "Array.Each";
+	return "Array.EachElem";
 }
 
 //------------------------------------------------------------------------------
