@@ -38,7 +38,7 @@ if (false) {
 }
 
 scope {
-	nTraining = 10
+	nEpochs = 10
 	arrayImage = db.train.imageSet.ToArray(`float, flatten = true, numCeil = 1)	// (nSamples, db.nRows * db.nCols)
 	arrayLabel = db.train.labelSet.ToArray(`float, oneHot = true)				// (nSamples, db.nClasses)
 	optimizer = ml.Optimizer.GradientDescent(0.01)
@@ -48,14 +48,14 @@ scope {
 	Printf('Training with %d samples [Image Size:%dx%d, Label Size:%d]\n', nSamples, db.nRows, db.nCols, db.nClasses)
 	ml.Trainer(model, optimizer, `image) {|trainer|
 		trainer.random.seed = 0x12345678
-		repeat (nTraining) {|iRepeat|
+		repeat (nEpochs) {|iEpoch|
 			repeat (nSamples) {|i|
 				image = arrayImage[i].Reshape(shapeImage*)
 				correct = arrayLabel[i].Reshape(1, nil)
 				trainer.Train(correct, image)
 			}
-			Printf('#%d error=%g\n', iRepeat + 1, trainer.CalcMeanSquaredError(correct))
+			Printf('#%d error=%g\n', iEpoch + 1, trainer.CalcMeanSquaredError(correct))
 		}
-		trainer.SaveAsModule('recog_mnist', `shapeImage)
+		trainer.CreateModule('recog_mnist', `shapeImage)
 	}
 }

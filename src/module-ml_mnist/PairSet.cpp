@@ -34,6 +34,41 @@ void PairSetOwner::Clear()
 }
 
 //------------------------------------------------------------------------------
+// Iterator_Each
+//------------------------------------------------------------------------------
+Iterator_Each::Iterator_Each(PairSet* pPairSet, const Array::ElemTypeT& elemType, Double numCeil) :
+	_pPairSet(pPairSet),
+	_pArrayImage(Array::Create(elemType, DimSizes(pPairSet->GetImageSet().GetNRows(), pPairSet->GetImageSet().GetNCols()))),
+	_pArrayLabel(Array::Create(elemType, DimSizes(pPairSet->GetLabelSet().GetNClasses()))),
+	_numCeil(numCeil), _idx(0)
+{
+}
+
+size_t Iterator_Each::GetLength() const
+{
+	return _pPairSet->GetImageSet().GetNSamples();
+}
+
+Value* Iterator_Each::DoNextValue()
+{
+	if (_idx > _pPairSet->GetImageSet().GetNSamples()) return nullptr;
+	void* pImageDst = _pArrayImage->GetPointerC<void>();
+	_pArrayLabel->FillZero();
+	size_t nElems = _pPairSet->GetImageSet().GetNRows() * _pPairSet->GetImageSet().GetNCols();
+	size_t nClasses = _pPairSet->GetLabelSet().GetNClasses();
+	size_t iSample = _pPairSet->GetIndex(_idx);
+	_pPairSet->GetImageSet().Extract(_pArrayImage->GetElemType(), pImageDst, iSample, _numCeil);
+	UInt32 label = _pPairSet->GetLabelSet().GetLabel(iSample);
+	_pArrayLabel->IndexSetDouble(label, 1.);
+	return Value_Tuple::Create(new Value_Array(_pArrayImage->Reference()), new Value_Array(_pArrayLabel->Reference()));
+}
+
+String Iterator_Each::ToString(const StringStyle& ss) const
+{
+	return String().Format("ml.mnist.EachBatch:%zu/%zu", _idx, _pPairSet->GetImageSet().GetNSamples());
+}
+
+//------------------------------------------------------------------------------
 // Iterator_EachBatch
 //------------------------------------------------------------------------------
 Iterator_EachBatch::Iterator_EachBatch(PairSet* pPairSet, const Array::ElemTypeT& elemType, size_t batchSize, Double numCeil) :

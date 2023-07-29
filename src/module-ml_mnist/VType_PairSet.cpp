@@ -53,6 +53,36 @@ Gurax_ImplementConstructor(PairSet)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// ml.mnist.PairSet#Each(elemType as Symbol, numCeil? as Number) as Iterator {block?}
+Gurax_DeclareMethod(PairSet, Each)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("numCeil", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementMethod(PairSet, Each)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const Array::ElemTypeT& elemType = Array::SymbolToElemType(args.PickSymbol());
+	if (elemType.IsNone()) {
+		Error::Issue(ErrorType::ValueError, "invalid symbol for element type");
+		return Value::nil();
+	}
+	Double numCeil = args.IsValid()? args.PickNumberPos<Double>() : 1.;
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetPairSet().Reference(), elemType, numCeil));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
 // ml.mnist.PairSet#EachBatch(elemType as Symbol, batchSize as Number, numCeil? as Number) as Iterator {block?}
 Gurax_DeclareMethod(PairSet, EachBatch)
 {
@@ -212,6 +242,7 @@ void VType_PairSet::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(PairSet));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(PairSet, Each));
 	Assign(Gurax_CreateMethod(PairSet, EachBatch));
 	Assign(Gurax_CreateMethod(PairSet, Shuffle));
 	// Assignment of property

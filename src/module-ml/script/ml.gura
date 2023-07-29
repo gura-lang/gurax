@@ -2,7 +2,7 @@
 import(gzip)
 import(ml):binary {*}
 
-Trainer.SaveAsModule(moduleName as String, variables* as Expr):dynamicScope = {
+Trainer.CreateModule(moduleName as String, variables* as Expr):dynamicScope = {
 	fileName = moduleName + '.gura'
 	out = Open(fileName, 'w')
 	tR'''

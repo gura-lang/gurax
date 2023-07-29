@@ -63,6 +63,26 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// Iterator_Each
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_Each : public Iterator {
+private:
+	RefPtr<PairSet> _pPairSet;
+	RefPtr<Array> _pArrayImage;
+	RefPtr<Array> _pArrayLabel;
+	Double _numCeil;
+	size_t _idx;
+public:
+	Iterator_Each(PairSet* pPairSet, const Array::ElemTypeT& elemType, Double numCeil);
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+	virtual size_t GetLength() const override;
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
 // Iterator_EachBatch
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Iterator_EachBatch : public Iterator {
@@ -77,9 +97,7 @@ public:
 	Iterator_EachBatch(PairSet* pPairSet, const Array::ElemTypeT& elemType, size_t batchSize, Double numCeil);
 public:
 	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override {
-		return Flag::Finite | Flag::LenDetermined;
-	}
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
 	virtual size_t GetLength() const override;
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
