@@ -393,6 +393,7 @@ TestCase('Iterator#Head()') {
 	Tester(`[0..10].Each().Head(10):list)
 	Tester(`[0..100].Each().Head(10):list)
 	Tester(`(0..).Head(10):list)
+	Tester(`[0..10].Each().Head(nil):list)
 }
 
 TestCase('Iterator#Join()') {

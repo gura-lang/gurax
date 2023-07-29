@@ -15,9 +15,9 @@ if (false) {
 	bias.Inject(Random.NormalSeq(0, 1 / math.Sqrt(db.nRows * db.nCols)))
 } elsif (false) {
 	model = `(image |*| linear |*| ml.Softmax())
-	shapeImage = (1, db.nRows * db.nCols)
+	shapeImage = (nil, db.nRows * db.nCols)
 	linear = ml.Linear(db.nClasses)
-} elsif (false) {
+} elsif (true) {
 	model = `(image |*| linear1 |*| ml.ReLU() |*| linear2 |*| ml.Softmax())
 	shapeImage = (1, db.nRows * db.nCols)
 	linear1 = ml.Linear(100)
@@ -39,22 +39,18 @@ if (false) {
 
 scope {
 	nEpochs = 10
-	arrayImage = db.train.imageSet.ToArray(`float, flatten = true, numCeil = 1)	// (nSamples, db.nRows * db.nCols)
-	arrayLabel = db.train.labelSet.ToArray(`float, oneHot = true)				// (nSamples, db.nClasses)
-	optimizer = ml.Optimizer.GradientDescent(0.01)
-	//nSamples = arrayImage.nRows
-	//nSamples = 10000
 	nSamples = 1000
-	Printf('Training with %d samples [Image Size:%dx%d, Label Size:%d]\n', nSamples, db.nRows, db.nCols, db.nClasses)
+	//nSamples = nil
+	optimizer = ml.Optimizer.GradientDescent(0.01)
+	Printf('Training [Image Size:%dx%d, Label Size:%d]\n', db.nRows, db.nCols, db.nClasses)
 	ml.Trainer(model, optimizer, `image) {|trainer|
 		trainer.random.seed = 0x12345678
 		repeat (nEpochs) {|iEpoch|
-			repeat (nSamples) {|i|
-				image = arrayImage[i].Reshape(shapeImage*)
-				correct = arrayLabel[i].Reshape(1, nil)
-				trainer.Train(correct, image)
+			db.train.Each(`float).Head(nSamples) {|pair|
+				[image, label] = pair
+				trainer.Train(label.Reshape(1, nil), image.Reshape(shapeImage*))
 			}
-			Printf('#%d error=%g\n', iEpoch + 1, trainer.CalcMeanSquaredError(correct))
+			Printf('#%d error=%g\n', iEpoch + 1, trainer.CalcMeanSquaredError(label.Reshape(1, nil)))
 		}
 		trainer.CreateModule('recog_mnist', `shapeImage)
 	}

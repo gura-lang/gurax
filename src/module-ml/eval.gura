@@ -3,28 +3,21 @@ import(recog_mnist)
 import(ml.mnist)
 
 db = ml.mnist.Database('../../sample/resource/mnist')
-
-pattern = [' ', '.', ':', '#', '#']
-scope {
-	// evaluation
-	arrayImage = db.test.imageSet.ToArray(`float, flatten = true, numCeil = 1)	// (nSamples, db.nRows * db.nCols)
-	arrayLabel = db.test.labelSet.ToArray(`float, oneHot = true)				// (nSamples, db.nClasses)
-	nCorrects = 0
-	nSamples = arrayImage.shape[0]
-	Printf('Test with %d samples\n', nSamples)
-	repeat (nSamples) {|i|
-		image = arrayImage[i].Reshape(recog_mnist.shapeImage*)
-		t = arrayLabel[i].Reshape(1, nil)
-		y = recog_mnist.Eval(image)
-		idxResult = y.ArgMax(-1, 0)
-		idxCorrect = t.ArgMax(-1, 0)
-		if (idxResult == idxCorrect) {
-			//Printf(' "%d" .. correct with likelihood %.1f%%\n', idxResult, y[0, idxResult] * 100)
-			nCorrects += 1
-		} else {
-			//arrayImage[i].ToList().Fold(db.test.imageSet.nCols) {|row| Printf('%s\n', pattern.Get(row * 4).Join())}
-			//Printf(' "%d" .. wrong. correct is "%d"\n', idxResult, idxCorrect)
-		}
+nCorrects = 0
+nSamples = db.test.nSamples
+Printf('Test with %d samples\n', nSamples)
+db.test.Each(`float) {|pair|
+	[image, label] = pair
+	image = image.Reshape(recog_mnist.shapeImage*)
+	result = recog_mnist.Eval(image)
+	idxResult = result.ArgMax(-1, 0)
+	idxLabel = label.ArgMax()
+	if (idxResult == idxLabel) {
+		//Printf(' "%d" .. correct with likelihood %.1f%%\n', idxResult, y[0, idxResult] * 100)
+		nCorrects += 1
+	} else {
+		//arrayImage[i].ToList().Fold(db.test.imageSet.nCols) {|row| Printf('%s\n', pattern.Get(row * 4).Join())}
+		//Printf(' "%d" .. wrong. correct is "%d"\n', idxResult, idxLabel)
 	}
-	sys.cerr.Printf('accuracy: %d/%d (%.1f%%)\n', nCorrects, nSamples, nCorrects / nSamples * 100)
 }
+sys.cerr.Printf('accuracy: %d/%d (%.1f%%)\n', nCorrects, nSamples, nCorrects / nSamples * 100)

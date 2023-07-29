@@ -57,6 +57,7 @@ Value* Iterator_Each::DoNextValue()
 	size_t nElems = _pPairSet->GetImageSet().GetNRows() * _pPairSet->GetImageSet().GetNCols();
 	size_t nClasses = _pPairSet->GetLabelSet().GetNClasses();
 	size_t iSample = _pPairSet->GetIndex(_idx);
+	_idx++;
 	_pPairSet->GetImageSet().Extract(_pArrayImage->GetElemType(), pImageDst, iSample, _numCeil);
 	UInt32 label = _pPairSet->GetLabelSet().GetLabel(iSample);
 	_pArrayLabel->IndexSetDouble(label, 1.);
