@@ -46,7 +46,7 @@ scope {
 	ml.Trainer(model, optimizer, `image) {|trainer|
 		trainer.random.seed = 0x12345678
 		repeat (nEpochs) {|iEpoch|
-			db.train.Each(`float).Head(nIterations) {|pair|
+			db.train.Each(`float).Head(nIterations) {|pair, iIteration|
 				[image, label] = pair
 				trainer.Train(label.Reshape(1, nil), image.Reshape(shapeImage*))
 			}
