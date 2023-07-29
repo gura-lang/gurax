@@ -39,14 +39,14 @@ if (false) {
 
 scope {
 	nEpochs = 10
-	nSamples = 1000
-	//nSamples = nil
+	nIterations = 1000
+	//nIterations = nil
 	optimizer = ml.Optimizer.GradientDescent(0.01)
 	Printf('Training [Image Size:%dx%d, Label Size:%d]\n', db.nRows, db.nCols, db.nClasses)
 	ml.Trainer(model, optimizer, `image) {|trainer|
 		trainer.random.seed = 0x12345678
 		repeat (nEpochs) {|iEpoch|
-			db.train.Each(`float).Head(nSamples) {|pair|
+			db.train.Each(`float).Head(nIterations) {|pair|
 				[image, label] = pair
 				trainer.Train(label.Reshape(1, nil), image.Reshape(shapeImage*))
 			}

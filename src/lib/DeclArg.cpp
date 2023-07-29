@@ -12,7 +12,7 @@ DeclArg* DeclArg::Undefined;
 DeclArg* DeclArg::Any;
 
 DeclArg::DeclArg(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,
-				 const Occur& occur, Flags flags, Expr* pExprDefault) :
+				const Occur& occur, Flags flags, Expr* pExprDefault) :
 	_pSymbol(pSymbol), _pDottedSymbol(pDottedSymbol),
 	_pVType(pDottedSymbol->IsEmpty()?
 			dynamic_cast<VType*>(&VTYPE_Any) : dynamic_cast<VType*>(&VTYPE_Undefined)),
@@ -21,7 +21,7 @@ DeclArg::DeclArg(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,
 }
 
 DeclArg::DeclArg(const Symbol* pSymbol, const VType& vtype,
-				 const Occur& occur, Flags flags, Expr* pExprDefault) :
+				const Occur& occur, Flags flags, Expr* pExprDefault) :
 	_pSymbol(pSymbol), _pDottedSymbol(vtype.MakeDottedSymbol()), _pVType(&vtype),
 	_occur(occur), _flags(flags), _pExprDefault(pExprDefault)
 {
@@ -138,7 +138,7 @@ Value* DeclArg::Cast(Frame& frame, const Value& value)
 {
 	if (GetVType().IsIdentical(VTYPE_Undefined) && !FixVType(frame)) {
 		Error::Issue(ErrorType::TypeError,
-					 "unknown value type: %s", GetDottedSymbol().ToString().c_str());
+					"unknown value type: %s", GetDottedSymbol().ToString().c_str());
 		return nullptr;
 	}
 	if (value.IsNil() && (IsSet(Flag::Nil) || IsOccurZeroOrOnce())) return value.Reference();
@@ -149,12 +149,12 @@ bool DeclArg::CheckFlagConfliction(Flags flags)
 {
 	if ((flags & Flag::Map) != 0 && (flags & Flag::NoMap) != 0) {
 		Error::Issue(ErrorType::ArgumentError,
-					 "attribute :map and :noMap can not be specified together");
+					"attribute :map and :noMap can not be specified together");
 		return false;
 	}
 	if ((flags & Flag::Public) != 0 && (flags & Flag::Private) != 0) {
 		Error::Issue(ErrorType::ArgumentError,
-					 "attribute :public and :private can not be specified together");
+					"attribute :public and :private can not be specified together");
 		return false;
 	}
 	return true;
@@ -226,8 +226,7 @@ bool DeclArgList::IsValidArgNum(size_t nArgs) const
 	if (nArgs < nMin) return false;
 	if (!empty()) {
 		const DeclArg* pDeclArg = back();
-		if (!(pDeclArg->IsOccurZeroOrMore() || pDeclArg->IsOccurOnceOrMore() || 
-			  nArgs <= size())) return false;
+		if (!(pDeclArg->IsOccurZeroOrMore() || pDeclArg->IsOccurOnceOrMore() || nArgs <= size())) return false;
 	}
 	return true;
 }

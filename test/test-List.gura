@@ -597,6 +597,7 @@ TestCase('List#Head()') {
 	Tester(`[0..9].Head(10):list)
 	Tester(`[0..10].Head(10):list)
 	Tester(`[0..100].Head(10):list)
+	Tester(`[0..10].Head(nil):list)
 }
 
 TestCase('List#Join()') {

@@ -5,8 +5,9 @@ import(ml)
 model = `(image |*| linear |*| ml.Softmax())
 linear = ml.Linear(db.nClasses)
 batchSize = 3
+nIterations = 1000
 ml.Trainer(model, optimizer, `image) {|trainer|
-	db.train.EachBatch(`float, batchSize = batchSize).Head(1000) {|pair, iRepeat|
+	db.train.EachBatch(`float, batchSize = batchSize).Head(nIterations) {|pair, iRepeat|
 		[images, labels] = pair
 		images = images.Reshape(batchSize, db.nRows * db.nCols)
 		trainer.Train(labels, images)

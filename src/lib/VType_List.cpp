@@ -755,11 +755,11 @@ Gurax_ImplementMethod(List, Fold)
 	return VType_Iterator::Method_Fold(processor, argument, *pIteratorSrc);
 }
 
-// List#Head(n as number):map {block?}
+// List#Head(n:nil as number):map {block?}
 Gurax_DeclareMethod(List, Head)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
-	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(VTYPE_Iterator, GetSymbol());
 }
@@ -771,6 +771,8 @@ Gurax_ImplementMethod(List, Head)
 	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
+	if (!args.IsValid()) return argument.ReturnIterator(processor,
+					new Iterator_Each(valueTypedOwner.GetValueOwnerReference()));
 	size_t n = args.PickNumberNonNeg<size_t>();
 	if (Error::IsIssued()) return Value::nil();
 	// Function body

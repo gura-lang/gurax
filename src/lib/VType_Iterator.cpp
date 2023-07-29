@@ -723,7 +723,7 @@ Value* VType_Iterator::Method_Fold(Processor& processor, Argument& argument, Ite
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// Iterator#Head(n;nil as Number):map {block?}
+// Iterator#Head(n:nil as Number):map {block?}
 Gurax_DeclareMethod(Iterator, Head)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
