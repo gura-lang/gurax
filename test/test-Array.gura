@@ -254,6 +254,17 @@ TestCase('Array#Cast()') {
 TestCase('Array#EachElem()') {
 }
 
+TestCase('Array#Flatten()') {
+	Tester(`@float(3, 4, 5, 2, 3, 1).Flatten().shape)
+	Tester(`@float(3, 4, 5, 2, 3, 1).Flatten(1).shape)
+	Tester(`@float(3, 4, 5, 2, 3, 1).Flatten(2).shape)
+	Tester(`@float(3, 4, 5, 2, 3, 1).Flatten(3).shape)
+	Tester(`@float(3, 4, 5, 2, 3, 1).Flatten(2, 3).shape)
+	Tester(`@float(3, 4, 5, 2, 3, 1).Flatten(3, 3).shape)
+	Tester(`@float(3, 4, 5, 2, 3, 1).Flatten(2, 2, 2).shape)
+	Tester(`@float(3, 4, 5, 2, 3, 1).Flatten(4, 3).shape)
+}
+
 TestCase('Array#Inject()') {
 	[`int8, `uint8, `int16, `uint16, `int32, `uint32, `int64, `uint64, `float, `double].Each {|elemType|
 		arr = Array(elemType, 3, 4, 5)

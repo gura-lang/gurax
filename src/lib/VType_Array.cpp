@@ -575,6 +575,29 @@ Gurax_ImplementMethod(Array, FillZero)
 	return valueThis.Reference();
 }
 
+// Array#Flatten(nDims* as Number) {block?}
+Gurax_DeclareMethod(Array, Flatten)
+{
+	Declare(VTYPE_Array, Flag::None);
+	DeclareArg("nDims", VTYPE_Number, ArgOccur::ZeroOrMore, ArgFlag::Nil);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
+}
+
+Gurax_ImplementMethod(Array, Flatten)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const ValueList& values = args.PickList();
+	// Function body
+	RefPtr<Array> pArrayRtn;
+	if (!valueThis.GetArray().Flatten(pArrayRtn, values)) return Value::nil();
+	return argument.ReturnValue(processor, new Value_Array(pArrayRtn.release()));
+}
+
 // Array#Inject(values as Iterator, offset? as Number):reduce
 Gurax_DeclareMethod(Array, Inject)
 {
@@ -1423,6 +1446,7 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Array, FillZero));
 	Assign(Gurax_CreateMethod(Array, FindMax));
 	Assign(Gurax_CreateMethod(Array, FindMin));
+	Assign(Gurax_CreateMethod(Array, Flatten));
 	Assign(Gurax_CreateMethod(Array, Inject));
 	Assign(Gurax_CreateMethod(Array, ToList));
 	Assign(Gurax_CreateMethod(Array, ToString));

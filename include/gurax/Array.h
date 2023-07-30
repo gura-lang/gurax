@@ -54,6 +54,7 @@ public:
 	size_t GetColSize() const { return empty()? 0 : back(); }
 	bool Verify(const ValueList& values) const;
 	bool Reshape(DimSizes& dimSizesRtn, const ValueList& values) const;
+	bool Flatten(DimSizes& dimSizesRtn, const ValueList& values) const;
 	bool RegulateAxis(int *pAxis) const;
 	String ToString(const StringStyle& ss, const char* sep, bool transFlag = false) const;
 };
@@ -208,6 +209,7 @@ public:
 	static Array* CreateIdentity(const ElemTypeT& elemType, size_t n, Double mag);
 	void Reshape(RefPtr<Array>& pArrayRtn, const DimSizes& dimSizes) const;
 	bool Reshape(RefPtr<Array>& pArrayRtn, const ValueList& values) const;
+	bool Flatten(RefPtr<Array>& pArrayRtn, const ValueList& values) const;
 	const ElemTypeT& GetElemType() const { return _elemType; }
 	bool IsElemType(const ElemTypeT& elemType) const { return _elemType.IsIdentical(elemType); }
 	const char* GetElemTypeName() const { return _elemType.GetName(); }

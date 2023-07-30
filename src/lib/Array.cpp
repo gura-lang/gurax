@@ -74,11 +74,17 @@ void Array::Reshape(RefPtr<Array>& pArrayRtn, const DimSizes& dimSizes) const
 bool Array::Reshape(RefPtr<Array>& pArrayRtn, const ValueList& values) const
 {
 	DimSizes dimSizes;
-	if (GetDimSizes().Reshape(dimSizes, values)) {
-		Reshape(pArrayRtn, dimSizes);
-		return true;
-	}
-	return false;
+	if (!GetDimSizes().Reshape(dimSizes, values)) return false;
+	Reshape(pArrayRtn, dimSizes);
+	return true;
+}
+
+bool Array::Flatten(RefPtr<Array>& pArrayRtn, const ValueList& values) const
+{
+	DimSizes dimSizes;
+	if (!GetDimSizes().Flatten(dimSizes, values)) return false;
+	pArrayRtn.reset(new Array(GetElemType(), dimSizes, _byteOffset, GetMemory().Reference()));
+	return true;
 }
 
 template<typename T_Elem> void FillOne_T(Array& array)
@@ -2624,6 +2630,37 @@ bool DimSizes::Reshape(DimSizes& dimSizesRtn, const ValueList& values) const
 		return false;
 	}
 	if (iUndetermined >= 0) dimSizesRtn[iUndetermined] = len / dimSizeProd;
+	return true;
+}
+
+bool DimSizes::Flatten(DimSizes& dimSizesRtn, const ValueList& values) const
+{
+	if (values.empty()) {
+		size_t dimSizeProd = 1;
+		for (size_t dimSize : *this) dimSizeProd *= dimSize;
+		dimSizesRtn.push_back(dimSizeProd);
+	} else {
+		size_t nDimsSum = 0;
+		for (const Value* pValue : values) {
+			size_t nDims = Value_Number::GetNumberPos<size_t>(*pValue);
+			if (Error::IsIssued()) return false;
+			nDimsSum += nDims;
+		}
+		if (nDimsSum > size()) {
+			Error::Issue(ErrorType::RangeError, "number of dimensions is out of range");
+			return false;
+		}
+		size_t nDimsKeep = size() - nDimsSum;
+		auto pDimSize = begin();
+		for (size_t i = 0; i < nDimsKeep; i++, pDimSize++) dimSizesRtn.push_back(*pDimSize);
+		for (const Value* pValue : values) {
+			size_t nDims = Value_Number::GetNumberPos<size_t>(*pValue);
+			if (Error::IsIssued()) return false;
+			size_t dimSizeProd = 1;
+			for (size_t i = 0; i < nDims; i++, pDimSize++) dimSizeProd *= *pDimSize;
+			dimSizesRtn.push_back(dimSizeProd);
+		}
+	}
 	return true;
 }
 
