@@ -8,15 +8,14 @@ nSamples = db.test.nSamples
 Printf('Test with %d samples\n', nSamples)
 db.test.Each(`float) {|pair|
 	[image, label] = pair
-	image = image.Reshape(recog_mnist.shapeImage*)
-	result = recog_mnist.Eval(image)
+	result = recog_mnist.Eval(image.Reshape(1, recog_mnist.shapeImage*))
 	idxResult = result.ArgMax(-1, 0)
 	idxLabel = label.ArgMax()
 	if (idxResult == idxLabel) {
 		//Printf(' "%d" .. correct with likelihood %.1f%%\n', idxResult, y[0, idxResult] * 100)
 		nCorrects += 1
 	} else {
-		//arrayImage[i].ToList().Fold(db.test.imageSet.nCols) {|row| Printf('%s\n', pattern.Get(row * 4).Join())}
+		//ml.mnist.PrintImage(image)
 		//Printf(' "%d" .. wrong. correct is "%d"\n', idxResult, idxLabel)
 	}
 }

@@ -51,7 +51,7 @@ size_t Iterator_Each::GetLength() const
 
 Value* Iterator_Each::DoNextValue()
 {
-	if (_idx > _pPairSet->GetImageSet().GetNSamples()) return nullptr;
+	if (_idx >= _pPairSet->GetImageSet().GetNSamples()) return nullptr;
 	void* pImageDst = _pArrayImage->GetPointerC<void>();
 	_pArrayLabel->FillZero();
 	size_t nElems = _pPairSet->GetImageSet().GetNRows() * _pPairSet->GetImageSet().GetNCols();

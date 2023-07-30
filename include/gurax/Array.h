@@ -50,7 +50,7 @@ public:
 	bool IsEqual(const DimSizes& dimSizes) const;
 	bool DoesMatch(const DimSizes& dimSizes, size_t offset = 0) const;
 	bool DoesMatchDot(const DimSizes& dimSizes, size_t offset = 0) const;
-	size_t GetRowSize() const { return (size() < 2)? 0 : *(rbegin() + 1); }
+	size_t GetRowSize() const { return (size() < 2)? 1 : *(rbegin() + 1); }
 	size_t GetColSize() const { return empty()? 0 : back(); }
 	bool Verify(const ValueList& values) const;
 	bool Reshape(DimSizes& dimSizesRtn, const ValueList& values) const;

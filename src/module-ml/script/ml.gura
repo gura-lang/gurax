@@ -2,6 +2,16 @@
 import(gzip)
 import(ml):binary {*}
 
+KeyAbort(keyCodes* as Number) = {
+	if (conio.ReadKey() in keyCodes) {
+		Print('Are you sure to abort? [y/N]')
+		key = conio.WaitKey()
+		Println()
+		return(key == Ord('y'))
+	}
+	return(false)
+}
+
 Trainer.CreateModule(moduleName as String, variables* as Expr):dynamicScope = {
 	fileName = moduleName + '.gura'
 	out = Open(fileName, 'w')
