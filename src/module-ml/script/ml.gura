@@ -1,6 +1,7 @@
 #!/usr/bin/env gura
 import(gzip)
 import(ml):binary {*}
+import(conio)
 
 KeyAbort(keyCodes* as Number) = {
 	if (conio.ReadKey() in keyCodes) {

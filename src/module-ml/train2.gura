@@ -1,0 +1,48 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+import(ml)
+import(ml.mnist)
+
+db = ml.mnist.Database('../../sample/resource/mnist')
+optimizer = ml.Optimizer.GradientDescent(0.01)
+
+if (true) {
+	model = `(image |*| linear |*| ml.Softmax())
+	shapeImage = (db.nRows * db.nCols,)
+	linear = ml.Linear(db.nClasses)
+} elsif (true) {
+	model = `(image |*| linear1 |*| ml.ReLU() |*| linear2 |*| ml.Softmax())
+	shapeImage = (db.nRows * db.nCols,)
+	linear1 = ml.Linear(100)
+	linear2 = ml.Linear(db.nClasses)
+} else {
+	model = `{
+		t1 = image |*| conv1 |*| ml.ReLU() |*| pool1 |*| flatten1
+		t2 = t1 |*| linear1 |*| ml.ReLU()
+		t3 = t2 |*| linear2
+		t4 = t3 |*| ml.Softmax()
+	}
+	shapeImage = (1, db.nRows, db.nCols)
+	conv1 = ml.Conv2d(nFilters = 30, nRowsFilter = 5, nColsFilter = 5, stride = 1, padding = 0)
+	pool1 = ml.MaxPool2d(nRowsKernel = 2, nColsKernel = 2, stride = 2)
+	flatten1 = ml.Reshape(1, nil)
+	linear1 = ml.Linear(100)
+	linear2 = ml.Linear(db.nClasses)
+}
+nEpochs = 100
+batchSize = 16
+nIterations = nil
+Printf('Training with %d samples [Image Size:%dx%d, Label Size:%d] -- Press Q to abort the process.\n',
+	cond(!nIterations || db.train.nSamples < batchSize * nIterations, db.train.nSamples, batchSize * nIterations),
+	db.nRows, db.nCols, db.nClasses)
+ml.Trainer(model, optimizer, `image) {|trainer|
+	repeat (nEpochs) {|iEpoch|
+		db.train.EachBatch(`float, batchSize = batchSize).Head(nIterations) {|pair|
+			[images, labels] = pair
+			trainer.Train(labels, images.Reshape(nil, shapeImage*))
+		}
+		Printf('Epoch#%d error=%g\n', iEpoch + 1, trainer.CalcMeanSquaredError(labels))
+		ml.KeyAbort(Ord('q')) && break
+	}
+	trainer.CreateModule('recog_mnist', `shapeImage)
+}
