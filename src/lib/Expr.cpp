@@ -462,7 +462,10 @@ String Expr_Member::ToString(const StringStyle& ss, int indentLevel) const
 {
 	String str;
 	const Expr& exprTarget = GetExprTarget();
+	bool needParenFlag = exprTarget.IsType<Expr_UnaryOp>() || exprTarget.IsType<Expr_BinaryOp>();
+	if (needParenFlag) str += '(';
 	str += exprTarget.ToString(ss, indentLevel);
+	if (needParenFlag) str += ')';
 	str += MemberModeToSymbol(GetMemberMode())->GetName();
 	str += GetSymbol()->ToString();
 	str += GetAttr().ToString(ss);
