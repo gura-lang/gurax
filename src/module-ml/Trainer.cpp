@@ -14,14 +14,18 @@ std::function<Double (const Array& arrayFwdOut, const Array& arrayTrain)> CalcCr
 template<typename T_Elem> Double CalcMeanSquareError_T(const Array& arrayFwdOut, const Array& arrayTrain)
 {
 	Double rtn = 0;
+	const DimSizes& dimSizesFwdOut = arrayFwdOut.GetDimSizes();
 	const T_Elem* pFwdOut = arrayFwdOut.GetPointerC<T_Elem>();
-	const T_Elem* pFwdOutEnd = pFwdOut + arrayFwdOut.GetDimSizes().CalcLength();
+	const T_Elem* pFwdOutEnd = pFwdOut + dimSizesFwdOut.CalcLength();
 	const T_Elem* pTrain = arrayTrain.GetPointerC<T_Elem>();
 	for ( ; pFwdOut != pFwdOutEnd; pFwdOut++, pTrain++) {
 		Double tmp = *pFwdOut - *pTrain;
 		rtn += tmp * tmp;
 	}
 	rtn /= 2;
+	if (dimSizesFwdOut.size() >= 2) {
+		rtn /= arrayFwdOut.GetDimSizes().CalcLength(dimSizesFwdOut.begin(), dimSizesFwdOut.begin() + dimSizesFwdOut.size() - 1);
+	}
 	return rtn;
 }
 
