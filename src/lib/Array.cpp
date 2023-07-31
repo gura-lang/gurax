@@ -2619,11 +2619,9 @@ bool DimSizes::Reshape(DimSizes& dimSizesRtn, const ValueList& values) const
 		}
 		i++;
 	}
-	if (len < dimSizeProd) {
-		Error::Issue(ErrorType::RangeError, "specified dimension exceeds the memory amount");
-		return false;
-	} else if (iUndetermined < 0 && len != dimSizeProd) {
-		Error::Issue(ErrorType::ValueError, "specified dimension is less than the memory amount");
+	if (len < dimSizeProd || (iUndetermined < 0 && len != dimSizeProd)) {
+		Error::Issue(ErrorType::RangeError, "can't reshape from (%s) to (%s)",
+				ToString(StringStyle::BriefCram, ",").c_str(), values.ToString(StringStyle::BriefCram).c_str());
 		return false;
 	} else if (len % dimSizeProd != 0) {
 		Error::Issue(ErrorType::ValueError, "invalid dimension");

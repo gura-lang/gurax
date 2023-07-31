@@ -13,7 +13,7 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Softmax : public VType {
 public:
-	static const SerialId serialId = 0x0000010b;
+	static const SerialId serialId = 0x0000010c;
 public:
 	VType_Softmax() : VType(serialId) {}
 	explicit VType_Softmax(const Symbol* pSymbol) : VType(serialId) {}

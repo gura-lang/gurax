@@ -13,7 +13,7 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Linear : public VType {
 public:
-	static const SerialId serialId = 0x00000104;
+	static const SerialId serialId = 0x00000105;
 public:
 	VType_Linear() : VType(serialId) {}
 	explicit VType_Linear(const Symbol* pSymbol) : VType(serialId) {}

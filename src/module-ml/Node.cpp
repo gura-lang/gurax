@@ -53,6 +53,7 @@ bool NodeList::EvalForward(Trainer& trainer)
 {
 	for (Node* pNode : *this) {
 		if (!pNode->EvalForward(trainer)) return false;
+		//::printf("Fwd: %s .. %s\n", pNode->ToString().c_str(), pNode->GetArrayFwd().ToString(StringStyle::BriefCram).c_str());
 	}
 	return true;
 }
@@ -61,8 +62,8 @@ bool NodeList::EvalBackward(Trainer& trainer)
 {
 	for (auto ppNode = rbegin(); ppNode != rend(); ppNode++) {
 		Node* pNode = *ppNode;
-		//::printf("*%s\n", pNode->ToString().c_str());
 		if (!pNode->EvalBackward(trainer)) return false;
+		//::printf("Bwd: %s\n", pNode->ToString().c_str());
 	}
 	return true;
 }

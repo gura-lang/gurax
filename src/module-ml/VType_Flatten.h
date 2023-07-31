@@ -13,7 +13,7 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Flatten : public VType {
 public:
-	static const SerialId serialId = 0x00000109;
+	static const SerialId serialId = 0x00000104;
 public:
 	VType_Flatten() : VType(serialId) {}
 	explicit VType_Flatten(const Symbol* pSymbol) : VType(serialId) {}

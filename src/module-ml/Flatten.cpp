@@ -35,8 +35,8 @@ bool Flatten::Serialize(Stream& stream) const
 
 Flatten* Flatten::Deserialize(Stream& stream)
 {
-	RefPtr<ValueOwner> pValuesDimSize(ValueOwner::Deserialize(stream));
-	return pValuesDimSize? new Flatten(pValuesDimSize.release()) : nullptr;
+	RefPtr<ValueOwner> pValuesNDims(ValueOwner::Deserialize(stream));
+	return pValuesNDims? new Flatten(pValuesNDims.release()) : nullptr;
 }
 
 String Flatten::ToString(const StringStyle& ss) const
