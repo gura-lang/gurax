@@ -221,6 +221,15 @@ x |*| ml.Reshape(3, 9) .. specified dimension exceeds the memory amount
 ======== Training of ml.Reshape ========
 [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
 [[[0.100, 1.100], [2.100, 3.100], [4.100, 5.100], [6.100, 7.100]], [[8.100, 9.100], [10.100, 11.100], [12.100, 13.100], [14.100, 15.100]], [[16.100, 17.100], [18.100, 19.100], [20.100, 21.100], [22.100, 23.100]]]
+======== ml.Flatten ========
+(@float(3, 4, 5, 2, 3, 1) |*| ml.Flatten()).shape .. (360,)
+(@float(3, 4, 5, 2, 3, 1) |*| ml.Flatten(1)).shape .. (3, 4, 5, 2, 3, 1)
+(@float(3, 4, 5, 2, 3, 1) |*| ml.Flatten(2)).shape .. (3, 4, 5, 2, 3)
+(@float(3, 4, 5, 2, 3, 1) |*| ml.Flatten(3)).shape .. (3, 4, 5, 6)
+(@float(3, 4, 5, 2, 3, 1) |*| ml.Flatten(2, 3)).shape .. (3, 20, 6)
+(@float(3, 4, 5, 2, 3, 1) |*| ml.Flatten(3, 3)).shape .. (60, 6)
+(@float(3, 4, 5, 2, 3, 1) |*| ml.Flatten(2, 2, 2)).shape .. (12, 10, 3)
+(@float(3, 4, 5, 2, 3, 1) |*| ml.Flatten(4, 3)).shape .. number of dimensions is out of range
 ======== Serialization of ml.Linear ========
 B'\x84\x02\x0a\x01\x00\x00'
 <ml.Linear:bias:none:none>

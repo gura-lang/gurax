@@ -19,8 +19,8 @@ Printf.__str__() .. <Function:Printf(format as String,values* as Any):map>
 "say 'hello'".__str__() .. say 'hello'
 "say 'hello'".__str__():quoteString .. "say 'hello'"
 'say "hello"'.__str__():quoteString .. 'say "hello"'
-`hello.__str__() .. hello
-`hello.__str__():quoteSymbol .. `hello
+(`hello).__str__() .. hello
+(`hello).__str__():quoteSymbol .. `hello
 nil.__str__() .. 
 nil.__str__():nilVisible .. <Nil>
 Color.black.__str__() .. <Color:#000000,ff>
@@ -31,8 +31,8 @@ Color.black.__str__():unbracket .. #000000,ff
 % {(`a) => 1, (`b) => 2, (`c) => 3}.__str__():bracket .. <Dict:3items>
 true.__str__():bracket .. <Bool:true>
 nil.__str__():bracket .. <Nil>
-2 / 3r.__str__():bracket .. <Rational:2/3r>
-2 + 3j.__str__():bracket .. <Complex:2+3j>
+(2 / 3r).__str__():bracket .. <Rational:2/3r>
+(2 + 3j).__str__():bracket .. <Complex:2+3j>
 ======== Object#__instanceOf__() ========
 math.e.__instanceOf__(Number) .. true
 math.e.__instanceOf__(Bool) .. false

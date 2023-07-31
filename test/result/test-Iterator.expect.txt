@@ -4,8 +4,8 @@ Iterator
   #tuple            Tuple        R
 ======== PUnit ========
 ======== Concatenation ========
-Range(6) |+| Range(4).Join(', ') .. 0, 1, 2, 3, 4, 5, 0, 1, 2, 3
-Range(6) |+| Range(4) |+| Range(7).Join(', ') .. 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 0, 1, 2, 3, 4, 5, 6
+(Range(6) |+| Range(4)).Join(', ') .. 0, 1, 2, 3, 4, 5, 0, 1, 2, 3
+(Range(6) |+| Range(4) |+| Range(7)).Join(', ') .. 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 0, 1, 2, 3, 4, 5, 6
 x .. <Iterator:Concat:(Range:begin=0:end=6:step=1) |+| (Range:begin=0:end=4:step=1)>
 x.IsFinite() .. true
 x.len .. 10
@@ -15,10 +15,10 @@ x.len .. <Nil>
 ======== Iterator#tuple ========
 Range(10).tuple .. (0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
 ======== Iterator#IsFinite() and Iterator#IsInfinite() ========
-1 .. 10.IsFinite() .. true
-1 .. 10.IsInfinite() .. false
-1...IsFinite() .. false
-1...IsInfinite() .. true
+(1 .. 10).IsFinite() .. true
+(1 .. 10).IsInfinite() .. false
+(1..).IsFinite() .. false
+(1..).IsInfinite() .. true
 ======== Iterator#NextValue() ========
 1
 2
@@ -47,9 +47,9 @@ x.Each().After(x < 0):list .. [4, 4, 4, 0]
 x.Each().After(& {$i < 0}).Offset(1):list .. [4, 4, 0]
 x.Each().After(x < 0).Offset(1):list .. [4, 4, 0]
 ======== Iterator#Align() ========
-0 .. 5.Align(10):list .. [0, 1, 2, 3, 4, 5, <Nil>, <Nil>, <Nil>, <Nil>]
-0 .. 5.Align(3):list .. [0, 1, 2]
-0 .. 5.Align(10, 0):list .. [0, 1, 2, 3, 4, 5, 0, 0, 0, 0]
+(0 .. 5).Align(10):list .. [0, 1, 2, 3, 4, 5, <Nil>, <Nil>, <Nil>, <Nil>]
+(0 .. 5).Align(3):list .. [0, 1, 2]
+(0 .. 5).Align(10, 0):list .. [0, 1, 2, 3, 4, 5, 0, 0, 0, 0]
 ======== Iterator#And() ========
 [].Each().And() .. <Nil>
 [false].Each().And() .. false
@@ -96,7 +96,7 @@ x.Each().Before(x < 0).Offset(1):list .. [3, 6, 1, 2, 3]
 [`apple, `grape, `banana].Each().Contains(`kiwi) .. false
 [`apple, `grape, `banana].Each().Contains('apple'.ToSymbol()) .. true
 [`apple, `grape, `banana].Each().Contains('kiwi'.ToSymbol()) .. false
-1...Contains(0) .. infinite iterator is unacceptable
+(1..).Contains(0) .. infinite iterator is unacceptable
 ======== Iterator#Count() ========
 [6, 2, 6, 3, 5, 2, 0, 2, 9, 3, 3, 0, 7, 3, 7, 0, 4, 0, 5, 6].Each().Count(3) .. 4
 ======== Iterator#CountFalse() ========
@@ -298,7 +298,7 @@ x.Each().Fold(5, 5):neat.Join(', ') .. [0, 1, 2, 3, 4], [5, 6, 7, 8, 9], [10, 11
 [0 .. 9].Each().Head(10):list .. [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 [0 .. 10].Each().Head(10):list .. [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 [0 .. 100].Each().Head(10):list .. [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-0...Head(10):list .. [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+(0..).Head(10):list .. [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 [0 .. 10].Each().Head(nil):list .. [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 ======== Iterator#Join() ========
 [].Each().Join() .. ''
@@ -628,11 +628,11 @@ words100.Each().Sort(`ascend, [99 .. 0]) .. ['cattle', 'nebulous', 'possess', 'r
 [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].Each().Sum() .. 55
 [0, 1, `a, 3, 4, 5, 6, 7, 8, 9, 10].Each().Sum() .. unsuppported binary operation: Number + Expr
 ======== Iterator#Tail() ========
-0 .. 100.Tail(0):list .. must be positive value
-0 .. 100.Tail(1):list .. [100]
-0 .. 100.Tail(10):list .. [91, 92, 93, 94, 95, 96, 97, 98, 99, 100]
-0 .. 4.Tail(5):list .. [0, 1, 2, 3, 4]
-0 .. 4.Tail(6):list .. [0, 1, 2, 3, 4]
+(0 .. 100).Tail(0):list .. must be positive value
+(0 .. 100).Tail(1):list .. [100]
+(0 .. 100).Tail(10):list .. [91, 92, 93, 94, 95, 96, 97, 98, 99, 100]
+(0 .. 4).Tail(5):list .. [0, 1, 2, 3, 4]
+(0 .. 4).Tail(6):list .. [0, 1, 2, 3, 4]
 ======== Iterator#Uniq() ========
 [].Each().Uniq():list .. []
 [1].Each().Uniq():list .. [1]

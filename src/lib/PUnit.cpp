@@ -834,7 +834,8 @@ void PUnit_UnaryOp<discardValueFlag>::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValue(processor.PopValue());
 	RefPtr<Value> pValueResult(GetOperator()->EvalUnary(processor, *pValue));
-	if (pValueResult->IsUndefined()) {
+	//if (pValueResult->IsUndefined()) {
+	if (Error::IsIssued()) {
 		processor.ErrorDone();
 		return;
 	}
@@ -872,7 +873,8 @@ void PUnit_BinaryOp<discardValueFlag>::Exec(Processor& processor) const
 	RefPtr<Value> pValueRight(processor.PopValue());
 	RefPtr<Value> pValueLeft(processor.PopValue());
 	RefPtr<Value> pValueResult(GetOperator()->EvalBinary(processor, *pValueLeft, *pValueRight));
-	if (pValueResult->IsUndefined()) {
+	//if (pValueResult->IsUndefined()) {
+	if (Error::IsIssued()) {
 		processor.ErrorDone();
 		return;
 	}

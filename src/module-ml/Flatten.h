@@ -17,12 +17,13 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("ml.Flatten");
 private:
-	RefPtr<ValueOwner> _pValuesDimSize; // all values are Number or Nil
+	RefPtr<ValueOwner> _pValuesNDim; // all values are Number
+	DimSizes _dimSizes;
 private:
 	RefPtr<Array> _pArrayFwdInSaved;
 public:
 	// Constructor
-	Flatten(ValueOwner* pValuesDimSize) : Gear(false), _pValuesDimSize(pValuesDimSize) {}
+	Flatten(ValueOwner* pValuesNDim) : Gear(false), _pValuesNDim(pValuesNDim) {}
 	// Copy constructor/operator
 	Flatten(const Flatten& src) = delete;
 	Flatten& operator=(const Flatten& src) = delete;

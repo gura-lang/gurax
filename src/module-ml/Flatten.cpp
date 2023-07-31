@@ -10,20 +10,26 @@ Gurax_BeginModuleScope(ml)
 //------------------------------------------------------------------------------
 bool Flatten::EvalForward(Processor& processor, RefPtr<Array>& pArrayFwdOut, const Array& arrayFwdIn, const Controller& controller)
 {
-	_pArrayFwdInSaved.reset(arrayFwdIn.Reference());
-	return arrayFwdIn.Flatten(pArrayFwdOut, *_pValuesDimSize);
+	if (!_pArrayFwdInSaved) {
+		_pArrayFwdInSaved.reset(arrayFwdIn.Reference());
+		if (!arrayFwdIn.GetDimSizes().Flatten(_dimSizes, *_pValuesNDim)) {
+			return false;
+		}
+	}
+	arrayFwdIn.Reshape(pArrayFwdOut, _dimSizes);
+	return true;
 }
 
 bool Flatten::EvalBackward(Processor& processor, RefPtr<Array>& pArrayBwdOut, const Array& arrayBwdIn, bool bwdPropagationFlag)
 {
 	if (!bwdPropagationFlag) return true;
-	//arrayBwdIn.Flatten(pArrayBwdOut, _pArrayFwdInSaved->GetDimSizes());
+	arrayBwdIn.Reshape(pArrayBwdOut, _pArrayFwdInSaved->GetDimSizes());
 	return true;
 }
 
 bool Flatten::Serialize(Stream& stream) const
 {
-	if (!_pValuesDimSize->Serialize(stream)) return false;
+	if (!_pValuesNDim->Serialize(stream)) return false;
 	return true;
 }
 
@@ -35,7 +41,7 @@ Flatten* Flatten::Deserialize(Stream& stream)
 
 String Flatten::ToString(const StringStyle& ss) const
 {
-	return String().Format("ml.Flatten:%s", _pValuesDimSize->ToString(StringStyle::Cram).c_str());
+	return String().Format("ml.Flatten:%s", _pValuesNDim->ToString(StringStyle::Cram).c_str());
 }
 
 //------------------------------------------------------------------------------

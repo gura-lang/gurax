@@ -1,56 +1,56 @@
 ======== Attribute#Each() ========
-`id.attr.Each():list .. []
-`id:a.attr.Each():list .. [`a]
-`id:a:b:c:d:e:f.attr.Each():list .. [`a, `b, `c, `d, `e, `f]
-`id:a:b:c:d:e:f:[aa,bb,cc,dd].attr.Each():list .. [`a, `b, `c, `d, `e, `f]
-`id:a:b:c:d:e:f:a.attr.Each():list .. [`a, `b, `c, `d, `e, `f, `a]
-`id:map:nomap:list:iter:a:b:c:d:e:f:a.attr.Each():list .. [`map, `nomap, `list, `iter, `a, `b, `c, `d, `e, `f, `a]
-`func().attr.Each():list .. []
-`func():a.attr.Each():list .. [`a]
-`func():a:b:c:d:e:f.attr.Each():list .. [`a, `b, `c, `d, `e, `f]
-`func():a:b:c:d:e:f:[aa,bb,cc,dd].attr.Each():list .. [`a, `b, `c, `d, `e, `f]
-`func():a:b:c:d:e:f:a.attr.Each():list .. [`a, `b, `c, `d, `e, `f, `a]
-`func():map:nomap:list:iter:a:b:c:d:e:f:a.attr.Each():list .. [`map, `nomap, `list, `iter, `a, `b, `c, `d, `e, `f, `a]
+(`id).attr.Each():list .. []
+(`id:a).attr.Each():list .. [`a]
+(`id:a:b:c:d:e:f).attr.Each():list .. [`a, `b, `c, `d, `e, `f]
+(`id:a:b:c:d:e:f:[aa,bb,cc,dd]).attr.Each():list .. [`a, `b, `c, `d, `e, `f]
+(`id:a:b:c:d:e:f:a).attr.Each():list .. [`a, `b, `c, `d, `e, `f, `a]
+(`id:map:nomap:list:iter:a:b:c:d:e:f:a).attr.Each():list .. [`map, `nomap, `list, `iter, `a, `b, `c, `d, `e, `f, `a]
+(`func()).attr.Each():list .. []
+(`func():a).attr.Each():list .. [`a]
+(`func():a:b:c:d:e:f).attr.Each():list .. [`a, `b, `c, `d, `e, `f]
+(`func():a:b:c:d:e:f:[aa,bb,cc,dd]).attr.Each():list .. [`a, `b, `c, `d, `e, `f]
+(`func():a:b:c:d:e:f:a).attr.Each():list .. [`a, `b, `c, `d, `e, `f, `a]
+(`func():map:nomap:list:iter:a:b:c:d:e:f:a).attr.Each():list .. [`map, `nomap, `list, `iter, `a, `b, `c, `d, `e, `f, `a]
 ======== Attribute#EachOpt() ========
-`id.attr.EachOpt():list .. []
-`id:[a].attr.EachOpt():list .. [`a]
-`id:[a,b,c,d,e,f].attr.EachOpt():list .. [`a, `b, `c, `d, `e, `f]
-`id:aa:bb:cc:dd:[a,b,c,d,e,f].attr.EachOpt():list .. [`a, `b, `c, `d, `e, `f]
-`id:[a,b,c,d,e,f,a].attr.EachOpt():list .. [`a, `b, `c, `d, `e, `f, `a]
-`id:[map,nomap,list,iter,a,b,c,d,e,f,a].attr.EachOpt():list .. [`map, `nomap, `list, `iter, `a, `b, `c, `d, `e, `f, `a]
-`func().attr.EachOpt():list .. []
-`func():[a].attr.EachOpt():list .. [`a]
-`func():[a,b,c,d,e,f].attr.EachOpt():list .. [`a, `b, `c, `d, `e, `f]
-`func():aa:bb:cc:dd:[a,b,c,d,e,f].attr.EachOpt():list .. [`a, `b, `c, `d, `e, `f]
-`func():[a,b,c,d,e,f,a].attr.EachOpt():list .. [`a, `b, `c, `d, `e, `f, `a]
-`func():[map,nomap,list,iter,a,b,c,d,e,f,a].attr.EachOpt():list .. [`map, `nomap, `list, `iter, `a, `b, `c, `d, `e, `f, `a]
+(`id).attr.EachOpt():list .. []
+(`id:[a]).attr.EachOpt():list .. [`a]
+(`id:[a,b,c,d,e,f]).attr.EachOpt():list .. [`a, `b, `c, `d, `e, `f]
+(`id:aa:bb:cc:dd:[a,b,c,d,e,f]).attr.EachOpt():list .. [`a, `b, `c, `d, `e, `f]
+(`id:[a,b,c,d,e,f,a]).attr.EachOpt():list .. [`a, `b, `c, `d, `e, `f, `a]
+(`id:[map,nomap,list,iter,a,b,c,d,e,f,a]).attr.EachOpt():list .. [`map, `nomap, `list, `iter, `a, `b, `c, `d, `e, `f, `a]
+(`func()).attr.EachOpt():list .. []
+(`func():[a]).attr.EachOpt():list .. [`a]
+(`func():[a,b,c,d,e,f]).attr.EachOpt():list .. [`a, `b, `c, `d, `e, `f]
+(`func():aa:bb:cc:dd:[a,b,c,d,e,f]).attr.EachOpt():list .. [`a, `b, `c, `d, `e, `f]
+(`func():[a,b,c,d,e,f,a]).attr.EachOpt():list .. [`a, `b, `c, `d, `e, `f, `a]
+(`func():[map,nomap,list,iter,a,b,c,d,e,f,a]).attr.EachOpt():list .. [`map, `nomap, `list, `iter, `a, `b, `c, `d, `e, `f, `a]
 ======== Attribute#IsSet() ========
-`id.attr.IsSet(`a) .. false
-`id:a:b:c:[d,e,f].attr.IsSet(`a) .. true
-`id:a:b:c:[d,e,f].attr.IsSet(`b) .. true
-`id:a:b:c:[d,e,f].attr.IsSet(`c) .. true
-`id:a:b:c:[d,e,f].attr.IsSet(`d) .. false
-`id:a:b:c:[d,e,f].attr.IsSet(`e) .. false
-`id:a:b:c:[d,e,f].attr.IsSet(`f) .. false
-`func().attr.IsSet(`a) .. false
-`func():a:b:c:[d,e,f].attr.IsSet(`a) .. true
-`func():a:b:c:[d,e,f].attr.IsSet(`b) .. true
-`func():a:b:c:[d,e,f].attr.IsSet(`c) .. true
-`func():a:b:c:[d,e,f].attr.IsSet(`d) .. false
-`func():a:b:c:[d,e,f].attr.IsSet(`e) .. false
-`func():a:b:c:[d,e,f].attr.IsSet(`f) .. false
+(`id).attr.IsSet(`a) .. false
+(`id:a:b:c:[d,e,f]).attr.IsSet(`a) .. true
+(`id:a:b:c:[d,e,f]).attr.IsSet(`b) .. true
+(`id:a:b:c:[d,e,f]).attr.IsSet(`c) .. true
+(`id:a:b:c:[d,e,f]).attr.IsSet(`d) .. false
+(`id:a:b:c:[d,e,f]).attr.IsSet(`e) .. false
+(`id:a:b:c:[d,e,f]).attr.IsSet(`f) .. false
+(`func()).attr.IsSet(`a) .. false
+(`func():a:b:c:[d,e,f]).attr.IsSet(`a) .. true
+(`func():a:b:c:[d,e,f]).attr.IsSet(`b) .. true
+(`func():a:b:c:[d,e,f]).attr.IsSet(`c) .. true
+(`func():a:b:c:[d,e,f]).attr.IsSet(`d) .. false
+(`func():a:b:c:[d,e,f]).attr.IsSet(`e) .. false
+(`func():a:b:c:[d,e,f]).attr.IsSet(`f) .. false
 ======== Attribute#IsSetOpt() ========
-`id.attr.IsSetOpt(`a) .. false
-`id:a:b:c:[d,e,f].attr.IsSetOpt(`a) .. false
-`id:a:b:c:[d,e,f].attr.IsSetOpt(`b) .. false
-`id:a:b:c:[d,e,f].attr.IsSetOpt(`c) .. false
-`id:a:b:c:[d,e,f].attr.IsSetOpt(`d) .. true
-`id:a:b:c:[d,e,f].attr.IsSetOpt(`e) .. true
-`id:a:b:c:[d,e,f].attr.IsSetOpt(`f) .. true
-`func().attr.IsSetOpt(`a) .. false
-`func():a:b:c:[d,e,f].attr.IsSetOpt(`a) .. false
-`func():a:b:c:[d,e,f].attr.IsSetOpt(`b) .. false
-`func():a:b:c:[d,e,f].attr.IsSetOpt(`c) .. false
-`func():a:b:c:[d,e,f].attr.IsSetOpt(`d) .. true
-`func():a:b:c:[d,e,f].attr.IsSetOpt(`e) .. true
-`func():a:b:c:[d,e,f].attr.IsSetOpt(`f) .. true
+(`id).attr.IsSetOpt(`a) .. false
+(`id:a:b:c:[d,e,f]).attr.IsSetOpt(`a) .. false
+(`id:a:b:c:[d,e,f]).attr.IsSetOpt(`b) .. false
+(`id:a:b:c:[d,e,f]).attr.IsSetOpt(`c) .. false
+(`id:a:b:c:[d,e,f]).attr.IsSetOpt(`d) .. true
+(`id:a:b:c:[d,e,f]).attr.IsSetOpt(`e) .. true
+(`id:a:b:c:[d,e,f]).attr.IsSetOpt(`f) .. true
+(`func()).attr.IsSetOpt(`a) .. false
+(`func():a:b:c:[d,e,f]).attr.IsSetOpt(`a) .. false
+(`func():a:b:c:[d,e,f]).attr.IsSetOpt(`b) .. false
+(`func():a:b:c:[d,e,f]).attr.IsSetOpt(`c) .. false
+(`func():a:b:c:[d,e,f]).attr.IsSetOpt(`d) .. true
+(`func():a:b:c:[d,e,f]).attr.IsSetOpt(`e) .. true
+(`func():a:b:c:[d,e,f]).attr.IsSetOpt(`f) .. true

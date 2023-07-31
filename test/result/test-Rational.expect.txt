@@ -218,8 +218,8 @@ Rational.formatInt = '%lld/%lld' .. too many format specifiers
 ======== Rational#sign ========
 0r.sign .. 0
 9r.sign .. 1
--9r.sign .. -1
-1 / 3r.sign .. 1
--(1 / 3r).sign .. -1
-1 / (-3r).sign .. -1
--(1 / (-3r)).sign .. 1
+(-9r).sign .. -1
+(1 / 3r).sign .. 1
+(-(1 / 3r)).sign .. -1
+(1 / (-3r)).sign .. -1
+(-(1 / (-3r))).sign .. 1
