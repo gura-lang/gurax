@@ -75,6 +75,10 @@ public:
 			GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
+public:
+	// Virtual functions for runtime process
+	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag) override;
+	virtual bool DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr) override;
 };
 
 Gurax_EndModuleScope(ml)

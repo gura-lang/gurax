@@ -3,11 +3,11 @@ import(ml.mnist):binary {*}
 
 pattern = [' ', '.', ':', '#', '#']
 
-PrintImage(array as Array, guideFlag as Bool = true, numCeil as Number = 1.) = {
+PrintImage(array as Array, out as Stream = sys.cout, guideFlag as Bool = true, numCeil as Number = 1.) = {
 	if (guideFlag) {
-		Printf('  0123456789012345678901234567\n')
-		array.ToList().Each {|row, iRow| Printf('%2d%s\n', iRow, pattern.Get(row * 4 / numCeil).Join())}
+		out.Printf('  0123456789012345678901234567\n')
+		array.ToList().Each {|row, iRow| out.Printf('%2d%s\n', iRow, pattern.Get(row * 4 / numCeil).Join())}
 	} else {
-		array.ToList().Each {|row, iRow| Printf('%s\n', pattern.Get(row * 4 / numCeil).Join())}
+		array.ToList().Each {|row, iRow| out.Printf('%s\n', pattern.Get(row * 4 / numCeil).Join())}
 	}
 }

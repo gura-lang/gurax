@@ -44,6 +44,32 @@ bool Optimizer_Adam::InstanceEx::Update(Processor& processor, RefPtr<Array>& pAr
 //------------------------------------------------------------------------------
 // Optimizer_GradientDescent
 //------------------------------------------------------------------------------
+void Optimizer_GradientDescent::GatherMemberSymbol(SymbolList& symbolList) const
+{
+	symbolList.push_back(Gurax_Symbol(learningRate));
+}
+
+Value* Optimizer_GradientDescent::DoGetProperty(const Symbol* pSymbol, const Attribute& attr)
+{
+	if (pSymbol->IsIdentical(Gurax_Symbol(learningRate))) {
+		return new Value_Number(_learningRate);
+	}
+	return nullptr;
+}
+
+bool Optimizer_GradientDescent::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
+{
+	if (pSymbol->IsIdentical(Gurax_Symbol(learningRate))) {
+		if (pValue->IsType(VTYPE_Number)) {
+			Error::Issue(ErrorType::TypeError, "property learningRate is a Number value");
+			return false;
+		}
+		_learningRate = Value_Number::GetNumberPos<Double>(*pValue);
+		return true;
+	}
+	return false;
+}
+
 void Optimizer_GradientDescent::InstanceEx::Reset()
 {
 }

@@ -193,4 +193,15 @@ String Value_Optimizer::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, GetOptimizer().ToString(ss));
 }
 
+Value* Value_Optimizer::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
+{
+	
+	return DoGetProperty(pSymbol, attr, notFoundErrorFlag);
+}
+
+bool Value_Optimizer::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
+{
+	return Value::DoSetProperty(pSymbol, pValue.release(), attr);
+}
+
 Gurax_EndModuleScope(ml)

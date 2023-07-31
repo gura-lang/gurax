@@ -82,6 +82,9 @@ private:
 public:
 	Optimizer_GradientDescent(Double learningRate) : Optimizer("GradientDescent"), _learningRate(learningRate) {}
 	virtual Instance* CreateInstance() const override { return new InstanceEx(_learningRate); }
+	virtual void GatherMemberSymbol(SymbolList& symbolList) const;
+	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr);
+	virtual bool DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr);
 };
 
 //------------------------------------------------------------------------------

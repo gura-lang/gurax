@@ -11,6 +11,7 @@ Gurax_RealizeSymbolAlias(const_, "const");
 Gurax_RealizeSymbol(input);
 Gurax_RealizeSymbol(bottom);
 Gurax_RealizeSymbol(noBias);
+Gurax_RealizeSymbol(learningRate);
 Gurax_RealizeSymbol(neg);
 Gurax_RealizeSymbol(add);
 Gurax_RealizeSymbol(sub);

@@ -58,6 +58,9 @@ protected:
 public:
 	const char* GetName() const { return _name; }
 	virtual Instance* CreateInstance() const = 0;
+	virtual void GatherMemberSymbol(SymbolList& symbolList) const {}
+	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr) { return nullptr; }
+	virtual bool DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr) { return false; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Optimizer& other) const { return this == &other; }

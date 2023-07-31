@@ -5,18 +5,20 @@ import(ml.mnist)
 db = ml.mnist.Database('../../sample/resource/mnist')
 nCorrects = 0
 nSamples = db.test.nSamples
-Printf('Test with %d samples\n', nSamples)
-db.test.Each(`float) {|pair|
-	[image, label] = pair
-	result = recog_mnist.Eval(image.Reshape(1, recog_mnist.shapeImage*))
-	idxResult = result.ArgMax(-1, 0)
-	idxLabel = label.ArgMax()
-	if (idxResult == idxLabel) {
-		//Printf(' "%d" .. correct with likelihood %.1f%%\n', idxResult, y[0, idxResult] * 100)
-		nCorrects += 1
-	} else {
-		//ml.mnist.PrintImage(image)
-		//Printf(' "%d" .. wrong. correct is "%d"\n', idxResult, idxLabel)
+Open('eval.result.txt', 'w') {|out|
+	sys.cerr.Printf('Test with %d samples\n', nSamples)
+	db.test.Each(`float) {|pair|
+		[image, label] = pair
+		result = recog_mnist.Eval(image.Reshape(1, recog_mnist.shapeImage*))
+		idxResult = result.ArgMax(-1, 0)
+		idxLabel = label.ArgMax()
+		if (idxResult == idxLabel) {
+			out.Printf(' "%d" .. correct with likelihood %.1f%%\n', idxResult, result[0, idxResult] * 100)
+			nCorrects += 1
+		} else {
+			out.Printf(' "%d" .. wrong. correct is "%d"\n', idxResult, idxLabel)
+			ml.mnist.PrintImage(image, out)
+		}
 	}
+	sys.cerr.Printf('accuracy: %d/%d (%.1f%%)\n', nCorrects, nSamples, nCorrects / nSamples * 100)
 }
-sys.cerr.Printf('accuracy: %d/%d (%.1f%%)\n', nCorrects, nSamples, nCorrects / nSamples * 100)
