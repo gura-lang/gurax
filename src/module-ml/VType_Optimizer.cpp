@@ -195,12 +195,14 @@ String Value_Optimizer::ToString(const StringStyle& ss) const
 
 Value* Value_Optimizer::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
 {
-	//_pOptimiz	
+	RefPtr<Value> pValueRtn(_pOptimizer->DoGetProperty(pSymbol, attr));
+	if (pValueRtn) return pValueRtn.release();
 	return DoGetProperty(pSymbol, attr, notFoundErrorFlag);
 }
 
 bool Value_Optimizer::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
+	if (!_pOptimizer->DoSetProperty(pSymbol, pValue.Reference(), attr)) return false;
 	return Value::DoSetProperty(pSymbol, pValue.release(), attr);
 }
 

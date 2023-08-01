@@ -6,7 +6,7 @@ import(ml.mnist)
 db = ml.mnist.Database('../../sample/resource/mnist')
 optimizer = ml.Optimizer.GradientDescent(0.01)
 
-if (false) {
+if (true) {
 	model = `(image |*| linear |*| ml.Softmax())
 	shapeImage = (db.nRows * db.nCols,)
 	linear = ml.Linear(db.nClasses)
