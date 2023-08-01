@@ -107,8 +107,8 @@ public:
 		std::function<void (Array& array)>													FillOne[ElemTypeIdMax];
 		std::function<void (Array& array, Double mean, Double stddev, Random& random)>		FillRandomNormal[ElemTypeIdMax];
 		std::function<bool (const Array& array)>											HasZero[ElemTypeIdMax];
-		std::function<Value* (const Array& array, size_t axis, const ValueList& valuesDim)>	FindMax[ElemTypeIdMax];
-		std::function<Value* (const Array& array, size_t axis, const ValueList& valuesDim)>	FindMin[ElemTypeIdMax];
+		std::function<Value* (const Array& array, size_t axis, const ValueList& valuesDim, bool pairFlag)> FindMax[ElemTypeIdMax];
+		std::function<Value* (const Array& array, size_t axis, const ValueList& valuesDim, bool pairFlag)> FindMin[ElemTypeIdMax];
 		std::function<Value* (const Array& array, size_t axis, const ValueList& valuesDim)>	ArgMax[ElemTypeIdMax];
 		std::function<Value* (const Array& array, size_t axis, const ValueList& valuesDim)>	ArgMin[ElemTypeIdMax];
 		std::function<bool (void* pv, size_t idx, const Value& value)>						IndexSetValue[ElemTypeIdMax];
@@ -240,8 +240,8 @@ public:
 	Value* IndexGetValue(size_t idx) const { return funcs.IndexGetValue[_elemType.id](GetPointerC<void>(), idx); }
 	Double IndexGetDouble(size_t idx) const { return funcs.IndexGetDouble[_elemType.id](GetPointerC<void>(), idx); }
 	bool HasZero() const;
-	Value* FindMax(int axis, const ValueList& valuesDim) const;
-	Value* FindMin(int axis, const ValueList& valuesDim) const;
+	Value* FindMax(int axis, const ValueList& valuesDim, bool pairFlag) const;
+	Value* FindMin(int axis, const ValueList& valuesDim, bool pairFlag) const;
 	Value* ArgMax(int axis, const ValueList& valuesDim) const;
 	Value* ArgMin(int axis, const ValueList& valuesDim) const;
 	void InjectElems(ValueList& values, size_t offset, size_t len);

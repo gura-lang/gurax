@@ -463,12 +463,13 @@ Gurax_ImplementMethod(Array, EachElem)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// Array#FindMax(axis? as Number, dims* as Number) {block?}
+// Array#FindMax(axis? as Number, dims* as Number):[pair] {block?}
 Gurax_DeclareMethod(Array, FindMax)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("axis", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("dims", VTYPE_Number, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(pair));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 
@@ -484,16 +485,18 @@ Gurax_ImplementMethod(Array, FindMax)
 	ArgPicker args(argument);
 	int axis = args.IsValid()? args.PickNumber<int>() : 0;
 	const ValueList& valuesDim = args.PickList();
+	bool pairFlag = argument.IsSet(Gurax_Symbol(pair));
 	// Function body
-	return array.FindMax(axis, valuesDim);
+	return array.FindMax(axis, valuesDim, pairFlag);
 }
 
-// Array#FindMin(axis? as Number, dims* as Number) {block?}
+// Array#FindMin(axis? as Number, dims* as Number):[pair] {block?}
 Gurax_DeclareMethod(Array, FindMin)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("axis", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("dims", VTYPE_Number, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(pair));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 
@@ -509,8 +512,9 @@ Gurax_ImplementMethod(Array, FindMin)
 	ArgPicker args(argument);
 	int axis = args.IsValid()? args.PickNumber<int>() : 0;
 	const ValueList& valuesDim = args.PickList();
+	bool pairFlag = argument.IsSet(Gurax_Symbol(pair));
 	// Function body
-	return array.FindMin(axis, valuesDim);
+	return array.FindMin(axis, valuesDim, pairFlag);
 }
 
 // Array#FillOne():reduce

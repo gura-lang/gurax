@@ -60,12 +60,12 @@ Value* Optimizer_GradientDescent::DoGetProperty(const Symbol* pSymbol, const Att
 bool Optimizer_GradientDescent::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
 	if (pSymbol->IsIdentical(Gurax_Symbol(learningRate))) {
-		if (pValue->IsType(VTYPE_Number)) {
+		if (!pValue->IsType(VTYPE_Number)) {
 			Error::Issue(ErrorType::TypeError, "property learningRate is a Number value");
 			return false;
 		}
 		_learningRate = Value_Number::GetNumberPos<Double>(*pValue);
-		return true;
+		return !Error::IsIssued();
 	}
 	return false;
 }

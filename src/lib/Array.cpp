@@ -142,7 +142,7 @@ template<> bool HasZero_T<Complex>(const Array& array)
 	return false;
 }
 
-template<typename T_Elem> Value* FindMax_T(const Array& array, size_t axis, const ValueList& valuesDim)
+template<typename T_Elem> Value* FindMax_T(const Array& array, size_t axis, const ValueList& valuesDim, bool pairFlag)
 {
 	size_t strides = 0;
 	const T_Elem* pElem = array.GetPointerC<T_Elem>() + array.GetDimSizes().CalcOffset(axis, valuesDim, &strides);
@@ -153,15 +153,26 @@ template<typename T_Elem> Value* FindMax_T(const Array& array, size_t axis, cons
 	T_Elem numMax = *pElem;
 	pElem += strides;
 	idx++;
-	for ( ; idx < dimSize; pElem += strides, idx++) {
-		if (numMax < *pElem) numMax = *pElem;
+	if (pairFlag) {
+		int idxMax = 0;
+		for ( ; idx < dimSize; pElem += strides, idx++) {
+			if (numMax < *pElem) {
+				numMax = *pElem;
+				idxMax = idx;
+			}
+		}
+		return Value_Tuple::Create(new Value_Number(numMax), new Value_Number(idxMax));
+	} else {
+		for ( ; idx < dimSize; pElem += strides, idx++) {
+			if (numMax < *pElem) numMax = *pElem;
+		}
+		return new Value_Number(numMax);
 	}
-	return new Value_Number(numMax);
 }
 
-template<> Value* FindMax_T<Complex>(const Array& array, size_t axis, const ValueList& valuesDim) { return Value::nil(); }
+template<> Value* FindMax_T<Complex>(const Array& array, size_t axis, const ValueList& valuesDim, bool pairFlag) { return Value::nil(); }
 
-template<typename T_Elem> Value* FindMin_T(const Array& array, size_t axis, const ValueList& valuesDim)
+template<typename T_Elem> Value* FindMin_T(const Array& array, size_t axis, const ValueList& valuesDim, bool pairFlag)
 {
 	size_t strides = 0;
 	const T_Elem* pElem = array.GetPointerC<T_Elem>() + array.GetDimSizes().CalcOffset(axis, valuesDim, &strides);
@@ -172,13 +183,24 @@ template<typename T_Elem> Value* FindMin_T(const Array& array, size_t axis, cons
 	T_Elem numMin = *pElem;
 	pElem += strides;
 	idx++;
-	for ( ; idx < dimSize; pElem += strides, idx++) {
-		if (numMin > *pElem) numMin = *pElem;
+	if (pairFlag) {
+		int idxMin = 0;
+		for ( ; idx < dimSize; pElem += strides, idx++) {
+			if (numMin > *pElem) {
+				numMin = *pElem;
+				idxMin = idx;
+			}
+		}
+		return Value_Tuple::Create(new Value_Number(numMin), new Value_Number(idxMin));
+	} else {
+		for ( ; idx < dimSize; pElem += strides, idx++) {
+			if (numMin > *pElem) numMin = *pElem;
+		}
+		return new Value_Number(numMin);
 	}
-	return new Value_Number(numMin);
 }
 
-template<> Value* FindMin_T<Complex>(const Array& array, size_t axis, const ValueList& valuesDim) { return Value::nil(); }
+template<> Value* FindMin_T<Complex>(const Array& array, size_t axis, const ValueList& valuesDim, bool pairFlag) { return Value::nil(); }
 
 template<typename T_Elem> Value* ArgMax_T(const Array& array, size_t axis, const ValueList& valuesDim)
 {
@@ -1384,24 +1406,24 @@ bool Array::HasZero() const
 	return funcs.HasZero[_elemType.id](*this);
 }
 
-Value* Array::FindMax(int axis, const ValueList& valuesDim) const
+Value* Array::FindMax(int axis, const ValueList& valuesDim, bool pairFlag) const
 {
 	if (!GetDimSizes().RegulateAxis(&axis)) return Value::nil();
 	if (GetDimSizes().size() != valuesDim.size() + 1) {
 		Error::Issue(ErrorType::ArgumentError, "invalid number of arguments");
 		return Value::nil();
 	}
-	return funcs.FindMax[_elemType.id](*this, axis, valuesDim);
+	return funcs.FindMax[_elemType.id](*this, axis, valuesDim, pairFlag);
 }
 
-Value* Array::FindMin(int axis, const ValueList& valuesDim) const
+Value* Array::FindMin(int axis, const ValueList& valuesDim, bool pairFlag) const
 {
 	if (!GetDimSizes().RegulateAxis(&axis)) return Value::nil();
 	if (GetDimSizes().size() != valuesDim.size() + 1) {
 		Error::Issue(ErrorType::ArgumentError, "invalid number of arguments");
 		return Value::nil();
 	}
-	return funcs.FindMin[_elemType.id](*this, axis, valuesDim);
+	return funcs.FindMin[_elemType.id](*this, axis, valuesDim, pairFlag);
 }
 
 Value* Array::ArgMax(int axis, const ValueList& valuesDim) const

@@ -202,7 +202,7 @@ Value* Value_Optimizer::DoGetProperty(const Symbol* pSymbol, const Attribute& at
 
 bool Value_Optimizer::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
-	if (!_pOptimizer->DoSetProperty(pSymbol, pValue.Reference(), attr)) return false;
+	if (_pOptimizer->DoSetProperty(pSymbol, pValue.Reference(), attr)) return true;
 	return Value::DoSetProperty(pSymbol, pValue.release(), attr);
 }
 

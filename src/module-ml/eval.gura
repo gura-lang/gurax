@@ -10,10 +10,10 @@ Open('eval.result.txt', 'w') {|out|
 	db.test.Each(`float) {|pair|
 		[image, label] = pair
 		result = recog_mnist.Eval(image.Reshape(1, recog_mnist.shapeImage*))
-		idxResult = result.ArgMax(-1, 0)
+		[likelihood, idxResult] = result.FindMax(-1, 0):pair
 		idxLabel = label.ArgMax()
 		if (idxResult == idxLabel) {
-			out.Printf(' "%d" .. correct with likelihood %.1f%%\n', idxResult, result[0, idxResult] * 100)
+			out.Printf(' "%d" .. correct with likelihood %.1f%%\n', idxResult, likelihood * 100)
 			nCorrects += 1
 		} else {
 			out.Printf(' "%d" .. wrong. correct is "%d"\n', idxResult, idxLabel)
