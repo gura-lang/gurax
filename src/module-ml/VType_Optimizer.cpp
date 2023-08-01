@@ -195,7 +195,7 @@ String Value_Optimizer::ToString(const StringStyle& ss) const
 
 Value* Value_Optimizer::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
 {
-	
+	//_pOptimiz	
 	return DoGetProperty(pSymbol, attr, notFoundErrorFlag);
 }
 

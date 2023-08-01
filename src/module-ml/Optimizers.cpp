@@ -77,7 +77,7 @@ void Optimizer_GradientDescent::InstanceEx::Reset()
 bool Optimizer_GradientDescent::InstanceEx::Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad)
 {
 	// _pArrayWork <- arrayGrad * _learningRate
-	if (!Array::Mul(_pArrayWork, arrayGrad, _learningRate)) return false;
+	if (!Array::Mul(_pArrayWork, arrayGrad, _pOptimizer->GetLearningRate())) return false;
 	// pArray <- pArray - _pArrayWork
 	if (!Array::ReduceSub(pArray, *pArray, *_pArrayWork)) return false;
 	return true;
@@ -93,10 +93,10 @@ void Optimizer_Momentum::InstanceEx::Reset()
 bool Optimizer_Momentum::InstanceEx::Update(Processor& processor, RefPtr<Array>& pArray, const Array& arrayGrad)
 {
 	// _pArrayWork <- pArrayGrad * _learningRate
-	if (!Array::Mul(_pArrayWork, arrayGrad, _learningRate)) return false;
+	if (!Array::Mul(_pArrayWork, arrayGrad, _pOptimizer->GetLearningRate())) return false;
 	// _pArrayVel <- _pArrayVel * _momentum
 	if (_pArrayVel.IsNull()) _pArrayVel.reset(_pArrayWork->CreateLike());
-	if (!Array::Mul(_pArrayVel, *_pArrayVel, _momentum)) return false;
+	if (!Array::Mul(_pArrayVel, *_pArrayVel, _pOptimizer->GetMomentum())) return false;
 	// _pArrayVel <- _pArrayVel - _pArrayWork
 	if (!Array::Sub(_pArrayVel, *_pArrayVel, *_pArrayWork)) return false;
 	// pArray <- pArray + _pArrayVel
