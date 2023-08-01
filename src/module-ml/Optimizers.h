@@ -56,9 +56,7 @@ public:
 	virtual Instance* CreateInstance() const override { return new InstanceEx(Reference()); }
 public:
 	Double GetLearningRate() const { return _learningRate; }
-	void SetLearningRate(Double learningRate) { _learningRate = learningRate; }
 	Double GetEpsilon() const { return _epsilon; }
-	void SetEpsilon(Double epsilon) { _epsilon = epsilon; }
 };
 
 //------------------------------------------------------------------------------
@@ -110,7 +108,6 @@ public:
 	virtual Instance* CreateInstance() const override { return new InstanceEx(Reference()); }
 public:
 	Double GetLearningRate() const { return _learningRate; }
-	void SetLearningRate(Double learningRate) { _learningRate = learningRate; }
 public:
 	virtual void GatherMemberSymbol(SymbolList& symbolList) const;
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr);
@@ -145,9 +142,7 @@ public:
 	virtual Instance* CreateInstance() const override { return new InstanceEx(Reference()); }
 public:
 	Double GetLearningRate() const { return _learningRate; }
-	void SetLearningRate(Double learningRate) { _learningRate = learningRate; }
 	Double GetMomentum() const { return _momentum; }
-	void SetMomentum(Double momentum) { _momentum = momentum; }
 };
 
 //------------------------------------------------------------------------------
