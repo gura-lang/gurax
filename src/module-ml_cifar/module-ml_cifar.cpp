@@ -40,7 +40,7 @@ Gurax_ModuleValidate()
 Gurax_ModulePrepare()
 {
 	// Assignment of VType
-	Assign(VTYPE_Cifar);
+	Assign(VTYPE_PairSet);
 	Assign(VTYPE_LabelSet);
 	Assign(VTYPE_ImageSet);
 	// Assignment of function
