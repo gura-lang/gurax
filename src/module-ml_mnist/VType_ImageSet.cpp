@@ -49,44 +49,6 @@ Gurax_ImplementConstructor(ImageSet)
 	return argument.ReturnValue(processor, new Value_ImageSet(pImageSet.release()));
 }
 
-#if 0
-//-----------------------------------------------------------------------------
-// Implementation of method
-//   flatten = false ... (nSamples, nRows, nCols)
-//   flatten = true  ... (nSamples, nRows * nCols)
-//-----------------------------------------------------------------------------
-// ml.mnist.ImageSet#ToArray(elemType? as Symbol, flatten? as Bool, numCeil? as Number):map {block?}
-Gurax_DeclareMethod(ImageSet, ToArray)
-{
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("flatten", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("numCeil", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"""(
-Skeleton.
-)""");
-}
-
-Gurax_ImplementMethod(ImageSet, ToArray)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	const Array::ElemTypeT& elemType = args.IsValid()? Array::SymbolToElemType(args.PickSymbol()) : Array::ElemType::UInt8;
-	Bool flattenFlag = args.IsValid()? args.PickBool() : false;
-	Float numCeil = args.IsValid()? args.PickNumber<Float>() : 0;
-	if (elemType.IsNone()) {
-		Error::Issue(ErrorType::ValueError, "invalid symbol for element type");
-		return Value::nil();
-	}
-	// Function body
-	RefPtr<Array> pArray(valueThis.GetImageSet().Extract(elemType, 0, 0, flattenFlag, numCeil));
-	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
-}
-#endif
-
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -147,7 +109,6 @@ void VType_ImageSet::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(ImageSet));
 	// Assignment of method
-	//Assign(Gurax_CreateMethod(ImageSet, ToArray));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(ImageSet, nSamples));
 	Assign(Gurax_CreateProperty(ImageSet, nRows));

@@ -94,6 +94,78 @@ Gurax_ImplementPropertyGetter(PairSet, nSamples)
 	return new Value_Number(valueThis.GetPairSet().GetNSamples());
 }
 
+// ml.mnist.PairSet#nChannels
+Gurax_DeclareProperty_R(PairSet, nChannels)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementPropertyGetter(PairSet, nChannels)
+{
+	return new Value_Number(ImageSet::nChannels);
+}
+
+// ml.mnist.PairSet#nRows
+Gurax_DeclareProperty_R(PairSet, nRows)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementPropertyGetter(PairSet, nRows)
+{
+	return new Value_Number(ImageSet::nRowsImage);
+}
+
+// ml.mnist.PairSet#nCols
+Gurax_DeclareProperty_R(PairSet, nCols)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementPropertyGetter(PairSet, nCols)
+{
+	return new Value_Number(ImageSet::nColsImage);
+}
+
+// ml.cifar.PairSet#nClasses
+Gurax_DeclareProperty_R(PairSet, nClasses)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementPropertyGetter(PairSet, nClasses)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetPairSet().GetLabelSet().GetNClasses());
+}
+
+// ml.cifar.PairSet#nClassesSuper
+Gurax_DeclareProperty_R(PairSet, nClassesSuper)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementPropertyGetter(PairSet, nClassesSuper)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetPairSet().GetLabelSet().GetNClassesSuper());
+}
+
 //------------------------------------------------------------------------------
 // VType_PairSet
 //------------------------------------------------------------------------------
@@ -109,6 +181,11 @@ void VType_PairSet::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(PairSet, Read));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(PairSet, nSamples));
+	Assign(Gurax_CreateProperty(PairSet, nChannels));
+	Assign(Gurax_CreateProperty(PairSet, nRows));
+	Assign(Gurax_CreateProperty(PairSet, nCols));
+	Assign(Gurax_CreateProperty(PairSet, nClasses));
+	Assign(Gurax_CreateProperty(PairSet, nClassesSuper));
 }
 
 //------------------------------------------------------------------------------

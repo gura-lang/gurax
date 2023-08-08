@@ -42,7 +42,8 @@ bool PairSet::Read(Stream& stream)
 
 String PairSet::ToString(const StringStyle& ss) const
 {
-	return String().Format("ml.cifar.PairSet:%zusamples", _nSamples);
+	return String().Format("ml.cifar.PairSet:%zusamples:%zuchannels:%zurows:%zucols:%zuclasses:%zusuper-classes",
+		_nSamples, ImageSet::nChannels, ImageSet::nRowsImage, ImageSet::nColsImage, GetLabelSet().GetNClasses(), GetLabelSet().GetNClassesSuper());
 }
 
 //------------------------------------------------------------------------------

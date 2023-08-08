@@ -17,11 +17,13 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("ml.cifar.LabelSet");
 private:
-	Binary _labelsSuper;
 	Binary _labels;
+	Binary _labelsSuper;
+	size_t _nClasses;
+	size_t _nClassesSuper;
 public:
 	// Constructor
-	LabelSet() {}
+	LabelSet() : _nClasses(0), _nClassesSuper(0) {}
 	// Copy constructor/operator
 	LabelSet(const LabelSet& src) = delete;
 	LabelSet& operator=(const LabelSet& src) = delete;
@@ -31,8 +33,10 @@ public:
 protected:
 	~LabelSet() = default;
 public:
-	void Add(UInt8 label) { _labels += label; }
-	void Add(UInt8 labelSuper, UInt8 label) { _labelsSuper += labelSuper; _labels += label; }
+	void Add(UInt8 label);
+	void Add(UInt8 labelSuper, UInt8 label);
+	size_t GetNClasses() const { return _nClasses; }
+	size_t GetNClassesSuper() const { return _nClassesSuper; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const LabelSet& other) const { return this == &other; }

@@ -8,7 +8,8 @@ import(ml.cifar100)
 import(tar)
 
 TestCase('Basic test') {
-	db = ml.cifar10.Database('.')
-	//db = ml.cifar100.Database('.')
-	Println(db)
+	//db = ml.cifar10.Database('.')
+	db = ml.cifar100.Database('.')
+	Println(db.train)
+	Println(db.test)
 }

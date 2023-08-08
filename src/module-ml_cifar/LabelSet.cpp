@@ -8,6 +8,20 @@ Gurax_BeginModuleScope(ml_cifar)
 //------------------------------------------------------------------------------
 // LabelSet
 //------------------------------------------------------------------------------
+void LabelSet::Add(UInt8 label)
+{
+	_labels += label;
+	if (_nClasses <= label) _nClasses = label + 1;
+}
+
+void LabelSet::Add(UInt8 labelSuper, UInt8 label)
+{
+	_labelsSuper += labelSuper;
+	_labels += label;
+	if (_nClasses <= label) _nClasses = label + 1;
+	if (_nClassesSuper <= labelSuper) _nClassesSuper = labelSuper + 1;
+}
+
 String LabelSet::ToString(const StringStyle& ss) const
 {
 	return String().Format("ml.cifar.LabelSet");

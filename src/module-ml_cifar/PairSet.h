@@ -37,6 +37,8 @@ protected:
 public:
 	bool Read(Stream& stream);
 	size_t GetNSamples() const { return _nSamples; }
+	const LabelSet& GetLabelSet() const { return *_pLabelSet; }
+	const ImageSet& GetImageSet() const { return *_pImageSet; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const PairSet& other) const { return this == &other; }

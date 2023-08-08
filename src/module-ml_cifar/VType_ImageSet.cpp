@@ -75,20 +75,6 @@ Gurax_ImplementMethod(ImageSet, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// ml.cifar.ImageSet#propSkeleton
-Gurax_DeclareProperty_R(ImageSet, propSkeleton)
-{
-	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"""(
-Skeleton.
-)""");
-}
-
-Gurax_ImplementPropertyGetter(ImageSet, propSkeleton)
-{
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
-}
 
 //------------------------------------------------------------------------------
 // VType_ImageSet
@@ -104,7 +90,7 @@ void VType_ImageSet::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(ImageSet, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(ImageSet, propSkeleton));
+	//Assign(Gurax_CreateProperty(ImageSet, propSkeleton));
 }
 
 //------------------------------------------------------------------------------
