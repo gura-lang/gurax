@@ -5,6 +5,9 @@
 
 Gurax_BeginModuleScope(ml_mnist)
 
+//------------------------------------------------------------------------------
+// Template Function
+//------------------------------------------------------------------------------
 template<typename T_Elem> void CopyElems_T(void* pDst, const UInt8* pElemSrc, size_t nElems, Double numCeil)
 {
 	T_Elem* pElemDst = reinterpret_cast<T_Elem*>(pDst);

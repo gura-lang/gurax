@@ -7,9 +7,17 @@ import(ml.cifar10)
 import(ml.cifar100)
 import(tar)
 
+PrintImage(image as Array, guideFlag as Bool = false) = {
+}
+
 TestCase('Basic test') {
 	//db = ml.cifar10.Database('.')
 	db = ml.cifar100.Database('.')
 	Println(db.train)
 	Println(db.test)
+	db.train.Each(`float) {|pair|
+		[image, label] = pair
+		Println(label.ArgMax())
+		PrintImage(image, guideFlag = false)
+	}
 }

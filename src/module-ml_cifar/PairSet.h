@@ -23,6 +23,7 @@ private:
 	size_t _nSamples;
 	RefPtr<LabelSet> _pLabelSet;
 	RefPtr<ImageSet> _pImageSet;
+	NumList<size_t> _indices;
 public:
 	// Constructor
 	PairSet(bool superClassFlag);
@@ -40,6 +41,9 @@ public:
 	const LabelSet& GetLabelSet() const { return *_pLabelSet; }
 	const ImageSet& GetImageSet() const { return *_pImageSet; }
 public:
+	void Shuffle(Random& random) { _indices.Shuffle(random); }
+	size_t GetIndex(size_t i) const { return _indices[i]; }
+public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const PairSet& other) const { return this == &other; }
 	bool IsEqualTo(const PairSet& other) const { return IsIdentical(other); }
@@ -48,18 +52,38 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// CifarList
+// PairSetList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE CifarList : public ListBase<PairSet*> {
+class GURAX_DLLDECLARE PairSetList : public ListBase<PairSet*> {
 };
 
 //------------------------------------------------------------------------------
-// CifarOwner
+// PairSetOwner
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE CifarOwner : public CifarList {
+class GURAX_DLLDECLARE PairSetOwner : public PairSetList {
 public:
-	~CifarOwner() { Clear(); }
+	~PairSetOwner() { Clear(); }
 	void Clear();
+};
+
+//------------------------------------------------------------------------------
+// Iterator_Each
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_Each : public Iterator {
+private:
+	RefPtr<PairSet> _pPairSet;
+	RefPtr<Array> _pArrayImage;
+	RefPtr<Array> _pArrayLabel;
+	Double _numCeil;
+	size_t _idx;
+public:
+	Iterator_Each(PairSet* pPairSet, const Array::ElemTypeT& elemType, Double numCeil);
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+	virtual size_t GetLength() const override;
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 Gurax_EndModuleScope(ml_cifar)

@@ -23,6 +23,8 @@ public:
 private:
 	Binary _buff;
 public:
+	static void Bootup();
+public:
 	// Constructor
 	ImageSet();
 	// Copy constructor/operator
@@ -35,6 +37,7 @@ protected:
 	~ImageSet() = default;
 public:
 	void Add(UInt8* buffImage) { _buff += buffImage; }
+	void Extract(const Array::ElemTypeT& elemType, void* pDst, size_t iSample, Double numCeil) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const ImageSet& other) const { return this == &other; }

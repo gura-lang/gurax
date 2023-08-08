@@ -38,7 +38,6 @@ public:
 	size_t GetNClasses() const { return _nClasses; }
 	bool Read(Stream& stream);
 	UInt32 GetLabel(size_t iSample) const;
-	Array* Extract(const Array::ElemTypeT& elemType, size_t iSample, size_t nSamples, bool oneHotFlag) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const LabelSet& other) const { return this == &other; }

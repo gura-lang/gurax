@@ -35,6 +35,8 @@ protected:
 public:
 	void Add(UInt8 label);
 	void Add(UInt8 labelSuper, UInt8 label);
+	UInt8 GetLabel(size_t iSample) const { return _labels[iSample]; }
+	UInt8 GetLabelSuper(size_t iSample) const { return _labelsSuper[iSample]; }
 	size_t GetNClasses() const { return _nClasses; }
 	size_t GetNClassesSuper() const { return _nClassesSuper; }
 public:

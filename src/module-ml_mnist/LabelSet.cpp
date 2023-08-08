@@ -137,32 +137,6 @@ UInt32 LabelSet::GetLabel(size_t iSample) const
 	}
 }
 
-Array* LabelSet::Extract(const Array::ElemTypeT& elemType, size_t iSample, size_t nSamples, bool oneHotFlag) const
-{
-	RefPtr<Array> pArray;
-	if (elemType.IsIdentical(Array::ElemType::UInt8)) {
-		pArray.reset(_qmnistFlag?
-			CreateArrayOfLabelsQMNIST<UInt8>(elemType, *_pMemory, _nSamples, _nFields, _nClasses, oneHotFlag) :
-			CreateArrayOfLabels<UInt8>(elemType, *_pMemory, _nSamples, _nClasses, oneHotFlag));
-	} else if (elemType.IsIdentical(Array::ElemType::Half)) {
-		pArray.reset(_qmnistFlag?
-			CreateArrayOfLabelsQMNIST<Half>(elemType, *_pMemory, _nSamples, _nFields, _nClasses, oneHotFlag) :
-			CreateArrayOfLabels<Half>(elemType, *_pMemory, _nSamples, _nClasses, oneHotFlag));
-	} else if (elemType.IsIdentical(Array::ElemType::Float)) {
-		pArray.reset(_qmnistFlag?
-			CreateArrayOfLabelsQMNIST<Float>(elemType, *_pMemory, _nSamples, _nFields, _nClasses, oneHotFlag) :
-			CreateArrayOfLabels<Float>(elemType, *_pMemory, _nSamples, _nClasses, oneHotFlag));
-	} else if (elemType.IsIdentical(Array::ElemType::Double)) {
-		pArray.reset(_qmnistFlag?
-			CreateArrayOfLabelsQMNIST<Double>(elemType, *_pMemory, _nSamples, _nFields, _nClasses, oneHotFlag) :
-			CreateArrayOfLabels<Double>(elemType, *_pMemory, _nSamples, _nClasses, oneHotFlag));
-	} else {
-		Error::Issue(ErrorType::ValueError, "can't create an array of %s", elemType.GetName());
-		return nullptr;
-	}
-	return Error::IsIssued()? nullptr : pArray.release();
-}
-
 String LabelSet::ToString(const StringStyle& ss) const
 {
 	return String().Format("ml.mnist.LabelSet:%zusamples:%zuclasses", GetNSamples(), GetNClasses());

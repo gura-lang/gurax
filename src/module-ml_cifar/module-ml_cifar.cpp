@@ -39,6 +39,7 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
+	ImageSet::Bootup();
 	// Assignment of VType
 	Assign(VTYPE_PairSet);
 	Assign(VTYPE_LabelSet);

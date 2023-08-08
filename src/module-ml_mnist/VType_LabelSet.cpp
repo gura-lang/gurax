@@ -50,40 +50,6 @@ Gurax_ImplementConstructor(LabelSet)
 }
 
 //-----------------------------------------------------------------------------
-// Implementation of method
-//   oneHot = true  ... (nSamples, nClasses)
-//   oneHot = false ... (nSamples)
-//-----------------------------------------------------------------------------
-// ml.mnist.LabelSet#ToArray(elemType? as Symbol, oneHot? as Bool):map {block?}
-Gurax_DeclareMethod(LabelSet, ToArray)
-{
-	Declare(VTYPE_Number, Flag::Map);
-	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("oneHot", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"""(
-Skeleton.
-)""");
-}
-
-Gurax_ImplementMethod(LabelSet, ToArray)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	const Array::ElemTypeT& elemType = args.IsValid()? Array::SymbolToElemType(args.PickSymbol()) : Array::ElemType::UInt8;
-	Bool oneHotFlag = args.IsValid()? args.PickBool() : false;
-	if (elemType.IsNone()) {
-		Error::Issue(ErrorType::ValueError, "invalid symbol for element type");
-		return Value::nil();
-	}
-	// Function body
-	RefPtr<Array> pArray(valueThis.GetLabelSet().Extract(elemType, 0, 0, oneHotFlag));
-	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
-}
-
-//-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
 // ml.mnist.LabelSet#nSamples
@@ -128,7 +94,6 @@ void VType_LabelSet::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(LabelSet));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(LabelSet, ToArray));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(LabelSet, nSamples));
 	Assign(Gurax_CreateProperty(LabelSet, nClasses));
