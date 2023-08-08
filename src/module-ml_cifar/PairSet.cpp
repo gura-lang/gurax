@@ -103,15 +103,11 @@ size_t Iterator_Each::GetLength() const
 Value* Iterator_Each::DoNextValue()
 {
 	if (_idx >= _pPairSet->GetNSamples()) return nullptr;
-	::printf("check1 %p\n", _pArrayImage.get());
 	void* pImageDst = _pArrayImage->GetPointerC<void>();
-	::printf("check2\n");
 	size_t iSample = _pPairSet->GetIndex(_idx);
 	_idx++;
-	::printf("check3\n");
 	_pPairSet->GetImageSet().Extract(_pArrayImage->GetElemType(), pImageDst, iSample, _numCeil);
 	UInt8 label = _pPairSet->GetLabelSet().GetLabel(iSample);
-	::printf("check4\n");
 	_pArrayLabel->FillZero();
 	_pArrayLabel->IndexSetDouble(label, 1.);
 	return Value_Tuple::Create(new Value_Array(_pArrayImage->Reference()), new Value_Array(_pArrayLabel->Reference()));
