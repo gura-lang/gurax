@@ -3,11 +3,12 @@
 // test-ml_cifar.gura
 //==============================================================================
 import(util.tester) {*}
+import(ml.cifar10)
 import(ml.cifar100)
 import(tar)
 
 TestCase('Basic test') {
-	//cifar = ml.cifar.Cifar10('.', `test)
-	cifar = ml.cifar100.Database('.', `train)
-	Println(cifar)
+	db = ml.cifar10.Database('.')
+	//db = ml.cifar100.Database('.')
+	Println(db)
 }
