@@ -87,10 +87,10 @@ public:
 //------------------------------------------------------------------------------
 // Iterator_Each
 //------------------------------------------------------------------------------
-Iterator_Each::Iterator_Each(PairSet* pPairSet, const Array::ElemTypeT& elemType, Double numCeil) :
+Iterator_Each::Iterator_Each(PairSet* pPairSet, const Array::ElemTypeT& elemType, Double numCeil, const Image::Format* pFormat) :
 	_pPairSet(pPairSet), _elemType(elemType),
 	_pArrayLabel(Array::Create(elemType, DimSizes(pPairSet->GetLabelSet().GetNClasses()))),
-	_numCeil(numCeil), _idx(0)
+	_numCeil(numCeil), _pFormat(pFormat), _idx(0)
 {
 }
 
@@ -108,12 +108,16 @@ Value* Iterator_Each::DoNextValue()
 	UInt8 label = _pPairSet->GetLabelSet().GetLabel(iSample);
 	_pArrayLabel->FillZero();
 	_pArrayLabel->IndexSetDouble(label, 1.);
+	if (_pFormat) {
+		_pPairSet->GetImageSet().ExtractAsImage(_pImage, *_pFormat, iSample);
+		return Value_Tuple::Create(new Value_Array(_pArrayImage.Reference()), new Value_Array(_pArrayLabel.Reference()), new Value_Image(_pImage.Reference()));
+	}
 	return Value_Tuple::Create(new Value_Array(_pArrayImage->Reference()), new Value_Array(_pArrayLabel->Reference()));
 }
 
 String Iterator_Each::ToString(const StringStyle& ss) const
 {
-	return String().Format("ml.mnist.EachBatch:%zu/%zu", _idx, _pPairSet->GetNSamples());
+	return String().Format("ml.cifar.Each:%zu/%zu", _idx, _pPairSet->GetNSamples());
 }
 
 #if 0

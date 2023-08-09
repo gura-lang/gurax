@@ -6,6 +6,7 @@ import(util.tester) {*}
 import(ml.cifar10)
 import(ml.cifar100)
 import(tar)
+import(png)
 
 pattern = [' ', '.', ':', '#', '#']
 
@@ -24,9 +25,11 @@ TestCase('Basic test') {
 	db = ml.cifar100.Database('.')
 	Println(db.train)
 	Println(db.test)
-	db.train.Each(`float) {|pair|
-		[image, label] = pair
+	db.train.Each(`float, format = `rgb).Head(3) {|pair, idx|
+		//[input, label, image] = pair
+		[input, label, image] = pair
 		Println(db.labelNames[label.ArgMax()])
-		PrintImage(image, guideFlag = true)
+		PrintImage(input, guideFlag = true)
+		image.Resize(100, 100).Write('a.png', `png)
 	}
 }

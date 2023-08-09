@@ -64,7 +64,7 @@ Value* Iterator_Each::DoNextValue()
 
 String Iterator_Each::ToString(const StringStyle& ss) const
 {
-	return String().Format("ml.mnist.EachBatch:%zu/%zu", _idx, _pPairSet->GetImageSet().GetNSamples());
+	return String().Format("ml.mnist.Each:%zu/%zu", _idx, _pPairSet->GetImageSet().GetNSamples());
 }
 
 //------------------------------------------------------------------------------

@@ -75,10 +75,12 @@ private:
 	const Array::ElemTypeT& _elemType;
 	RefPtr<Array> _pArrayImage;
 	RefPtr<Array> _pArrayLabel;
+	RefPtr<Image> _pImage;
 	Double _numCeil;
+	const Image::Format* _pFormat;
 	size_t _idx;
 public:
-	Iterator_Each(PairSet* pPairSet, const Array::ElemTypeT& elemType, Double numCeil);
+	Iterator_Each(PairSet* pPairSet, const Array::ElemTypeT& elemType, Double numCeil, const Image::Format* pFormat);
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }

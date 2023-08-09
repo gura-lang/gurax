@@ -51,12 +51,13 @@ Gurax_ImplementConstructor(PairSet)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// ml.cifar.PairSet#Each(elemType as Symbol, numCeil? as Number) as Iterator {block?}
+// ml.cifar.PairSet#Each(elemType as Symbol, numCeil? as Number, format? as Symbol) as Iterator {block?}
 Gurax_DeclareMethod(PairSet, Each)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("numCeil", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("format", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
@@ -75,9 +76,14 @@ Gurax_ImplementMethod(PairSet, Each)
 		return Value::nil();
 	}
 	Double numCeil = args.IsValid()? args.PickNumberPos<Double>() : 1.;
+	const Image::Format* pFormat = args.IsValid()? &Image::SymbolToFormat(args.PickSymbol()) : nullptr;
 	if (Error::IsIssued()) return Value::nil();
+	if (pFormat && !pFormat->IsValid()) {
+		Error::Issue(ErrorType::SymbolError, "invalid symbol for image format");
+		return Value::nil();
+	}
 	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetPairSet().Reference(), elemType, numCeil));
+	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetPairSet().Reference(), elemType, numCeil, pFormat));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
