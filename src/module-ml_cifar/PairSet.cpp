@@ -104,7 +104,7 @@ Value* Iterator_Each::DoNextValue()
 	if (_idx >= _pPairSet->GetNSamples()) return nullptr;
 	size_t iSample = _pPairSet->GetIndex(_idx);
 	_idx++;
-	_pPairSet->GetImageSet().Extract(_pArrayImage, _elemType, iSample, _numCeil);
+	_pPairSet->GetImageSet().ExtractAsArray(_pArrayImage, _elemType, _numCeil, iSample);
 	UInt8 label = _pPairSet->GetLabelSet().GetLabel(iSample);
 	_pArrayLabel->FillZero();
 	_pArrayLabel->IndexSetDouble(label, 1.);

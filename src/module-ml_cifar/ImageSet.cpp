@@ -36,13 +36,31 @@ ImageSet::ImageSet()
 {
 }
 
-void ImageSet::Extract(RefPtr<Array>& pArray, const Array::ElemTypeT& elemType, size_t iSample, Double numCeil) const
+void ImageSet::ExtractAsArray(RefPtr<Array>& pArray, const Array::ElemTypeT& elemType, Double numCeil, size_t iSample) const
 {
 	if (!pArray) pArray.reset(Array::Create(elemType, DimSizes(nChannels, nRowsImage, nColsImage)));
 	auto func = CopyElems[elemType.id];
 	size_t nElems = nChannels * nRowsImage * nColsImage;
 	const UInt8* pElemSrc = _buff.data() + nElems * iSample;
 	func(pArray->GetPointerC<void>(), pElemSrc, nElems, numCeil);
+}
+
+void ImageSet::ExtractAsImage(RefPtr<Image>& pImage, const Image::Format& format, size_t iSample) const
+{
+	if (!pImage) {
+		pImage.reset(new Image(format));
+		pImage->Allocate(nColsImage, nRowsImage);
+	}
+	UInt8* pDst = pImage->GetPointerC();
+	size_t nElemsPlate = nRowsImage * nColsImage;
+	const UInt8* pElemSrcR = _buff.data() + nElemsPlate * nChannels * iSample;
+	const UInt8* pElemSrcG = pElemSrcR + nElemsPlate;
+	const UInt8* pElemSrcB = pElemSrcR + nElemsPlate;
+	for (size_t i = 0; i < nElemsPlate; i++) {
+		*pDst++ = *pElemSrcR++;
+		*pDst++ = *pElemSrcG++;
+		*pDst++ = *pElemSrcB++;
+	}
 }
 
 String ImageSet::ToString(const StringStyle& ss) const
