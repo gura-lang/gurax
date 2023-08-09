@@ -36,12 +36,13 @@ ImageSet::ImageSet()
 {
 }
 
-void ImageSet::Extract(const Array::ElemTypeT& elemType, void* pDst, size_t iSample, Double numCeil) const
+void ImageSet::Extract(RefPtr<Array>& pArray, const Array::ElemTypeT& elemType, size_t iSample, Double numCeil) const
 {
+	if (!pArray) pArray.reset(Array::Create(elemType, DimSizes(nChannels, nRowsImage, nColsImage)));
 	auto func = CopyElems[elemType.id];
 	size_t nElems = nChannels * nRowsImage * nColsImage;
 	const UInt8* pElemSrc = _buff.data() + nElems * iSample;
-	func(pDst, pElemSrc, nElems, numCeil);
+	func(pArray->GetPointerC<void>(), pElemSrc, nElems, numCeil);
 }
 
 String ImageSet::ToString(const StringStyle& ss) const

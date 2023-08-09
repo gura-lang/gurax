@@ -88,8 +88,7 @@ public:
 // Iterator_Each
 //------------------------------------------------------------------------------
 Iterator_Each::Iterator_Each(PairSet* pPairSet, const Array::ElemTypeT& elemType, Double numCeil) :
-	_pPairSet(pPairSet),
-	_pArrayImage(Array::Create(elemType, DimSizes(ImageSet::nChannels, ImageSet::nRowsImage, ImageSet::nColsImage))),
+	_pPairSet(pPairSet), _elemType(elemType),
 	_pArrayLabel(Array::Create(elemType, DimSizes(pPairSet->GetLabelSet().GetNClasses()))),
 	_numCeil(numCeil), _idx(0)
 {
@@ -103,10 +102,9 @@ size_t Iterator_Each::GetLength() const
 Value* Iterator_Each::DoNextValue()
 {
 	if (_idx >= _pPairSet->GetNSamples()) return nullptr;
-	void* pImageDst = _pArrayImage->GetPointerC<void>();
 	size_t iSample = _pPairSet->GetIndex(_idx);
 	_idx++;
-	_pPairSet->GetImageSet().Extract(_pArrayImage->GetElemType(), pImageDst, iSample, _numCeil);
+	_pPairSet->GetImageSet().Extract(_pArrayImage, _elemType, iSample, _numCeil);
 	UInt8 label = _pPairSet->GetLabelSet().GetLabel(iSample);
 	_pArrayLabel->FillZero();
 	_pArrayLabel->IndexSetDouble(label, 1.);

@@ -72,6 +72,7 @@ public:
 class GURAX_DLLDECLARE Iterator_Each : public Iterator {
 private:
 	RefPtr<PairSet> _pPairSet;
+	const Array::ElemTypeT& _elemType;
 	RefPtr<Array> _pArrayImage;
 	RefPtr<Array> _pArrayLabel;
 	Double _numCeil;
