@@ -59,13 +59,24 @@ bool ImageSet::Read(Stream& stream)
 	return true;
 }
 
-void ImageSet::Extract(const Array::ElemTypeT& elemType, void* pDst, size_t iSample, Double numCeil) const
+void ImageSet::ExtractAsArray(RefPtr<Array>& pArray, const Array::ElemTypeT& elemType, Double numCeil, size_t iSample) const
+{
+	if (!pArray) pArray.reset(Array::Create(elemType, DimSizes(_nRows, _nCols)));
+	auto func = CopyElems[elemType.id];
+	size_t nElems = _nRows * _nCols;
+	const UInt8* pElemSrc = _pMemory->GetPointerC<UInt8>() + nElems * iSample;
+	func(pArray->GetPointerC<void>(), pElemSrc, nElems, numCeil);
+}
+
+#if 0
+void ImageSet::ExtractAsArray(RefPtr<Array>& pArray, const Array::ElemTypeT& elemType, void* pDst, Double numCeil, size_t iSample) const
 {
 	auto func = CopyElems[elemType.id];
 	size_t nElems = _nRows * _nCols;
 	const UInt8* pElemSrc = _pMemory->GetPointerC<UInt8>() + nElems * iSample;
 	func(pDst, pElemSrc, nElems, numCeil);
 }
+#endif
 
 String ImageSet::ToString(const StringStyle& ss) const
 {

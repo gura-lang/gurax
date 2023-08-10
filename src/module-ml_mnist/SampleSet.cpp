@@ -55,7 +55,7 @@ Value* Iterator_Each::DoNextValue()
 	void* pImageDst = _pArrayImage->GetPointerC<void>();
 	size_t iSample = _pSampleSet->GetIndex(_idx);
 	_idx++;
-	_pSampleSet->GetImageSet().Extract(_pArrayImage->GetElemType(), pImageDst, iSample, _numCeil);
+	//_pSampleSet->GetImageSet().Extract(_pArrayImage->GetElemType(), pImageDst, iSample, _numCeil);
 	UInt32 label = _pSampleSet->GetLabelSet().GetLabel(iSample);
 	_pArrayLabel->FillZero();
 	_pArrayLabel->IndexSetDouble(label, 1.);
@@ -93,7 +93,7 @@ Value* Iterator_EachBatch::DoNextValue()
 	size_t nClasses = _pSampleSet->GetLabelSet().GetNClasses();
 	for (size_t i = 0; i < _batchSize; i++, _idx++) {
 		size_t iSample = _pSampleSet->GetIndex(_idx);
-		_pSampleSet->GetImageSet().Extract(_pArrayImage->GetElemType(), pImageDst, iSample, _numCeil);
+		//_pSampleSet->GetImageSet().Extract(_pArrayImage->GetElemType(), pImageDst, iSample, _numCeil);
 		UInt32 label = _pSampleSet->GetLabelSet().GetLabel(iSample);
 		_pArrayLabel->IndexSetDouble(offset + label, 1.);
 		pImageDst = _pArrayImage->FwdPointer(pImageDst, nElems);

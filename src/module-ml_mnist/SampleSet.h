@@ -1,8 +1,8 @@
 //==============================================================================
 // SampleSet.h
 //==============================================================================
-#ifndef GURAX_MODULE_ML_MNIST_SampleSet_H
-#define GURAX_MODULE_ML_MNIST_SampleSet_H
+#ifndef GURAX_MODULE_ML_MNIST_SAMPLESET_H
+#define GURAX_MODULE_ML_MNIST_SAMPLESET_H
 #include <gurax.h>
 #include "ImageSet.h"
 #include "LabelSet.h"
