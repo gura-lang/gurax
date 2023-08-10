@@ -3,16 +3,16 @@ import(gzip)
 import(ml.mnist_common) {*}
 
 Database = class {
-	train as PairSet
-	test as PairSet
+	train as SampleSet
+	test as SampleSet
 	nRows as Number
 	nCols as Number
 	nClasses as Number
 	__init__(dirName as String) = {
-		this.train = PairSet(
+		this.train = SampleSet(
 			gzip.Reader(path.Join(dirName, 'qmnist-train-images-idx3-ubyte.gz'))
 			gzip.Reader(path.Join(dirName, 'qmnist-train-labels-idx2-int.gz')))
-		this.test = PairSet(
+		this.test = SampleSet(
 			gzip.Reader(path.Join(dirName, 'qmnist-test-images-idx3-ubyte.gz'))
 			gzip.Reader(path.Join(dirName, 'qmnist-test-labels-idx2-int.gz')))
 		this.nRows = this.train.nRows

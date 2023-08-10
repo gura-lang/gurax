@@ -1,8 +1,8 @@
 //==============================================================================
-// PairSet.h
+// SampleSet.h
 //==============================================================================
-#ifndef GURAX_MODULE_ML_MNIST_PAIRSET_H
-#define GURAX_MODULE_ML_MNIST_PAIRSET_H
+#ifndef GURAX_MODULE_ML_MNIST_SampleSet_H
+#define GURAX_MODULE_ML_MNIST_SampleSet_H
 #include <gurax.h>
 #include "ImageSet.h"
 #include "LabelSet.h"
@@ -10,29 +10,29 @@
 Gurax_BeginModuleScope(ml_mnist)
 
 //------------------------------------------------------------------------------
-// PairSet
+// SampleSet
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PairSet : public Referable {
+class GURAX_DLLDECLARE SampleSet : public Referable {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(PairSet);
+	Gurax_DeclareReferable(SampleSet);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("ml.mnist.PairSet");
+	Gurax_MemoryPoolAllocator("ml.mnist.SampleSet");
 private:
 	RefPtr<ImageSet> _pImageSet;
 	RefPtr<LabelSet> _pLabelSet;
 	NumList<size_t> _indices;
 public:
 	// Constructor
-	PairSet(ImageSet* pImageSet, LabelSet* pLabelSet);
+	SampleSet(ImageSet* pImageSet, LabelSet* pLabelSet);
 	// Copy constructor/operator
-	PairSet(const PairSet& src) = delete;
-	PairSet& operator=(const PairSet& src) = delete;
+	SampleSet(const SampleSet& src) = delete;
+	SampleSet& operator=(const SampleSet& src) = delete;
 	// Move constructor/operator
-	PairSet(PairSet&& src) noexcept = delete;
-	PairSet& operator=(PairSet&& src) noexcept = delete;
+	SampleSet(SampleSet&& src) noexcept = delete;
+	SampleSet& operator=(SampleSet&& src) noexcept = delete;
 protected:
-	~PairSet() = default;
+	~SampleSet() = default;
 public:
 	const ImageSet& GetImageSet() const { return *_pImageSet; }
 	const LabelSet& GetLabelSet() const { return *_pLabelSet; }
@@ -41,24 +41,24 @@ public:
 	size_t GetIndex(size_t i) const { return _indices[i]; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-	bool IsIdentical(const PairSet& other) const { return this == &other; }
-	bool IsEqualTo(const PairSet& other) const { return IsIdentical(other); }
-	bool IsLessThan(const PairSet& other) const { return this < &other; }
+	bool IsIdentical(const SampleSet& other) const { return this == &other; }
+	bool IsEqualTo(const SampleSet& other) const { return IsIdentical(other); }
+	bool IsLessThan(const SampleSet& other) const { return this < &other; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
 //------------------------------------------------------------------------------
-// PairSetList
+// SampleSetList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PairSetList : public ListBase<PairSet*> {
+class GURAX_DLLDECLARE SampleSetList : public ListBase<SampleSet*> {
 };
 
 //------------------------------------------------------------------------------
-// PairSetOwner
+// SampleSetOwner
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PairSetOwner : public PairSetList {
+class GURAX_DLLDECLARE SampleSetOwner : public SampleSetList {
 public:
-	~PairSetOwner() { Clear(); }
+	~SampleSetOwner() { Clear(); }
 	void Clear();
 };
 
@@ -67,13 +67,13 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Iterator_Each : public Iterator {
 private:
-	RefPtr<PairSet> _pPairSet;
+	RefPtr<SampleSet> _pSampleSet;
 	RefPtr<Array> _pArrayImage;
 	RefPtr<Array> _pArrayLabel;
 	Double _numCeil;
 	size_t _idx;
 public:
-	Iterator_Each(PairSet* pPairSet, const Array::ElemTypeT& elemType, Double numCeil);
+	Iterator_Each(SampleSet* pSampleSet, const Array::ElemTypeT& elemType, Double numCeil);
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
@@ -87,14 +87,14 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Iterator_EachBatch : public Iterator {
 private:
-	RefPtr<PairSet> _pPairSet;
+	RefPtr<SampleSet> _pSampleSet;
 	RefPtr<Array> _pArrayImage;
 	RefPtr<Array> _pArrayLabel;
 	size_t _batchSize;
 	Double _numCeil;
 	size_t _idx;
 public:
-	Iterator_EachBatch(PairSet* pPairSet, const Array::ElemTypeT& elemType, size_t batchSize, Double numCeil);
+	Iterator_EachBatch(SampleSet* pSampleSet, const Array::ElemTypeT& elemType, size_t batchSize, Double numCeil);
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }

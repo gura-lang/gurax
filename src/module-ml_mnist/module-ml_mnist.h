@@ -5,9 +5,10 @@
 #define GURAX_MODULE_ML_MNIST_H
 #include <gurax.h>
 #include "Util.h"
+#include "VType_Sample.h"
 #include "VType_ImageSet.h"
 #include "VType_LabelSet.h"
-#include "VType_PairSet.h"
+#include "VType_SampleSet.h"
 
 Gurax_BeginModuleHeader(ml_mnist)
 Gurax_EndModuleHeader(ml_mnist)

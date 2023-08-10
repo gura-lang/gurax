@@ -22,7 +22,7 @@ TestCase('Basic test') {
 	Printf('%s\n', dbQ.test.labelSet)
 }
 
-TestCase('ml.mnist.PairSet#EachBatch()') {
+TestCase('ml.mnist.SampleSet#EachBatch()') {
 	[db, dbQ]:*train:*EachBatch(`float, batchSize = 3)::Head(2) {|pair|
 		[images, labels] = pair
 		repeat (images.shape[0]) {|i|
@@ -32,7 +32,7 @@ TestCase('ml.mnist.PairSet#EachBatch()') {
 	}
 }
 
-TestCase('ml.mnist.PairSet#Shuffle()') {
+TestCase('ml.mnist.SampleSet#Shuffle()') {
 	rand = Random(0)
 	repeat (3) {
 		db.train.Shuffle(rand)

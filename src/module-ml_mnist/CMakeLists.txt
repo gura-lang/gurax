@@ -37,12 +37,14 @@ target_compile_definitions(ml.mnist.gurd PRIVATE GURAX_MODULE_SEPARATED
 target_sources(ml.mnist.gurd PRIVATE
 	module-ml_mnist.cpp
 	Util.cpp
+	Sample.cpp
 	ImageSet.cpp
 	LabelSet.cpp
-	PairSet.cpp
+	SampleSet.cpp
+	VType_Sample.cpp
 	VType_ImageSet.cpp
 	VType_LabelSet.cpp
-	VType_PairSet.cpp)
+	VType_SampleSet.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
