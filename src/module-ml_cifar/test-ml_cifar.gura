@@ -12,9 +12,9 @@ pattern = [' ', '.', ':', '#', '#']
 
 PrintImage(array as Array, out as Stream = sys.cout, guideFlag as Bool = true, numCeil as Number = 1.) = {
 	if (guideFlag) {
-		out.Printf('  0123456789012345678901234567\n')
 		arrayGray = 0.299 * array[0] + 0.587 * array[1] + 0.114 * array[2]
-		arrayGray.ToList().Each {|row, iRow| out.Printf('%2d%s\n', iRow, pattern.Get(row * 4 / numCeil).Join())}
+		out.Printf('   %s\n', Range(10).Cycle(arrayGray.nCols).Join())
+		arrayGray.ToList().Each {|row, iRow| out.Printf('%2d %s\n', iRow, pattern.Get(row * 4 / numCeil).Join())}
 	} else {
 		array.ToList().Each {|row, iRow| out.Printf('%s\n', pattern.Get(row * 4 / numCeil).Join())}
 	}
@@ -25,11 +25,9 @@ TestCase('Basic test') {
 	db = ml.cifar100.Database('.')
 	Println(db.train)
 	Println(db.test)
-	db.train.Each(`float, format = `rgb).Head(3) {|pair, idx|
-		//[input, label, image] = pair
-		[input, label, image] = pair
-		Println(db.labelNames[label.ArgMax()])
-		PrintImage(input, guideFlag = true)
-		image.Resize(100, 100).Write('a.png', `png)
+	db.train.Each(`float, format = `rgb).Head(3) {|sample, idx|
+		Println(db.labelNames[sample.label])
+		PrintImage(sample.input, guideFlag = true)
+		sample.image.Resize(100, 100).Write(Format('a%d.png', idx), `png)
 	}
 }

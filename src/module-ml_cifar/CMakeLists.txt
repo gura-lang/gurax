@@ -38,10 +38,12 @@ target_sources(ml.cifar.gurd PRIVATE
 	module-ml_cifar.cpp
 	Symbols.cpp
 	Util.cpp
-	PairSet.cpp
+	Sample.cpp
+	SampleSet.cpp
 	LabelSet.cpp
 	ImageSet.cpp
-	VType_PairSet.cpp
+	VType_Sample.cpp
+	VType_SampleSet.cpp
 	VType_LabelSet.cpp
 	VType_ImageSet.cpp)
 #-------------------------------------------------------------------------------

@@ -36,7 +36,7 @@ public:
 protected:
 	~ImageSet() = default;
 public:
-	void Add(UInt8* buffImage) { _buff += buffImage; }
+	void Add(const UInt8* buffImage, size_t bytes) { _buff.append(buffImage, bytes); }
 	void ExtractAsArray(RefPtr<Array>& pArray, const Array::ElemTypeT& elemType, Double numCeil, size_t iSample) const;
 	void ExtractAsImage(RefPtr<Image>& pImage, const Image::Format& format, size_t iSample) const;
 public:

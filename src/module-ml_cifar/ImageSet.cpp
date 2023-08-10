@@ -53,20 +53,20 @@ void ImageSet::ExtractAsImage(RefPtr<Image>& pImage, const Image::Format& format
 	}
 	UInt8* pDst = pImage->GetPointerC();
 	size_t nElemsPlate = nRowsImage * nColsImage;
-	const UInt8* pElemSrcR = _buff.data() + nRowsImage * nColsImage * nChannels * iSample;
+	const UInt8* pElemSrcR = _buff.data() + nElemsPlate * nChannels * iSample;
 	const UInt8* pElemSrcG = pElemSrcR + nElemsPlate;
 	const UInt8* pElemSrcB = pElemSrcR + nElemsPlate;
 	if (format.IsIdentical(Image::Format::RGB)) {
 		for (size_t i = 0; i < nElemsPlate; i++) {
-			*pDst++ = *pElemSrcR++;
-			*pDst++ = *pElemSrcG++;
 			*pDst++ = *pElemSrcB++;
+			*pDst++ = *pElemSrcG++;
+			*pDst++ = *pElemSrcR++;
 		}
 	} else { // Image::Format::RGBA
 		for (size_t i = 0; i < nElemsPlate; i++) {
-			*pDst++ = *pElemSrcR++;
-			*pDst++ = *pElemSrcG++;
 			*pDst++ = *pElemSrcB++;
+			*pDst++ = *pElemSrcG++;
+			*pDst++ = *pElemSrcR++;
 			*pDst++ = 0xff;
 		}
 	}

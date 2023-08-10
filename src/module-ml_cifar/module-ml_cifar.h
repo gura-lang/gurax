@@ -6,7 +6,8 @@
 #include <gurax.h>
 #include "Symbols.h"
 #include "Util.h"
-#include "VType_PairSet.h"
+#include "VType_Sample.h"
+#include "VType_SampleSet.h"
 #include "VType_LabelSet.h"
 #include "VType_ImageSet.h"
 
