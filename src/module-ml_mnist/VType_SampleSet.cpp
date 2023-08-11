@@ -78,8 +78,9 @@ Gurax_ImplementMethod(SampleSet, Each)
 	}
 	Double numCeil = args.IsValid()? args.PickNumberPos<Double>() : 1.;
 	if (Error::IsIssued()) return Value::nil();
+	const Image::Format& format = Image::Format::RGBA;
 	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetSampleSet().Reference(), elemType, numCeil));
+	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetSampleSet().Reference(), elemType, numCeil, format));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 

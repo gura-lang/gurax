@@ -41,7 +41,7 @@ public:
 	const Array& GetArrayInput();
 	const Array& GetArrayResult();
 	const Image& GetImage();
-	UInt8 GetLabel() const;
+	UInt32 GetLabel() const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Sample& other) const { return this == &other; }

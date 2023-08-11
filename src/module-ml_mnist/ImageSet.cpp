@@ -68,15 +68,30 @@ void ImageSet::ExtractAsArray(RefPtr<Array>& pArray, const Array::ElemTypeT& ele
 	func(pArray->GetPointerC<void>(), pElemSrc, nElems, numCeil);
 }
 
-#if 0
-void ImageSet::ExtractAsArray(RefPtr<Array>& pArray, const Array::ElemTypeT& elemType, void* pDst, Double numCeil, size_t iSample) const
+void ImageSet::ExtractAsImage(RefPtr<Image>& pImage, const Image::Format& format, size_t iSample) const
 {
-	auto func = CopyElems[elemType.id];
+	if (!pImage) {
+		pImage.reset(new Image(format));
+		pImage->Allocate(_nCols, _nRows);
+	}
+	UInt8* pDst = pImage->GetPointerC();
 	size_t nElems = _nRows * _nCols;
 	const UInt8* pElemSrc = _pMemory->GetPointerC<UInt8>() + nElems * iSample;
-	func(pDst, pElemSrc, nElems, numCeil);
+	if (format.IsIdentical(Image::Format::RGB)) {
+		for (size_t i = 0; i < nElems; i++) {
+			*pDst++ = *pElemSrc;
+			*pDst++ = *pElemSrc;
+			*pDst++ = *pElemSrc++;
+		}
+	} else { // Image::Format::RGBA
+		for (size_t i = 0; i < nElems; i++) {
+			*pDst++ = *pElemSrc;
+			*pDst++ = *pElemSrc;
+			*pDst++ = *pElemSrc++;
+			*pDst++ = 0xff;
+		}
+	}
 }
-#endif
 
 String ImageSet::ToString(const StringStyle& ss) const
 {

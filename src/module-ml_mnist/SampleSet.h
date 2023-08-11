@@ -68,12 +68,12 @@ public:
 class GURAX_DLLDECLARE Iterator_Each : public Iterator {
 private:
 	RefPtr<SampleSet> _pSampleSet;
-	RefPtr<Array> _pArrayImage;
-	RefPtr<Array> _pArrayLabel;
+	const Array::ElemTypeT& _elemType;
 	Double _numCeil;
+	const Image::Format& _format;
 	size_t _idx;
 public:
-	Iterator_Each(SampleSet* pSampleSet, const Array::ElemTypeT& elemType, Double numCeil);
+	Iterator_Each(SampleSet* pSampleSet, const Array::ElemTypeT& elemType, Double numCeil, const Image::Format& format);
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
@@ -88,13 +88,13 @@ public:
 class GURAX_DLLDECLARE Iterator_EachBatch : public Iterator {
 private:
 	RefPtr<SampleSet> _pSampleSet;
-	RefPtr<Array> _pArrayImage;
-	RefPtr<Array> _pArrayLabel;
+	const Array::ElemTypeT& _elemType;
 	size_t _batchSize;
 	Double _numCeil;
+	const Image::Format& _format;
 	size_t _idx;
 public:
-	Iterator_EachBatch(SampleSet* pSampleSet, const Array::ElemTypeT& elemType, size_t batchSize, Double numCeil);
+	Iterator_EachBatch(SampleSet* pSampleSet, const Array::ElemTypeT& elemType, size_t batchSize, Double numCeil, const Image::Format& format);
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }

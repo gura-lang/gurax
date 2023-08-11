@@ -5,8 +5,8 @@ pattern = [' ', '.', ':', '#', '#']
 
 PrintImage(array as Array, out as Stream = sys.cout, guideFlag as Bool = true, numCeil as Number = 1.) = {
 	if (guideFlag) {
-		out.Printf('  0123456789012345678901234567\n')
-		array.ToList().Each {|row, iRow| out.Printf('%2d%s\n', iRow, pattern.Get(row * 4 / numCeil).Join())}
+		out.Printf('   %s\n', Range(10).Cycle(array.nCols).Join())
+		array.ToList().Each {|row, iRow| out.Printf('%2d %s\n', iRow, pattern.Get(row * 4 / numCeil).Join())}
 	} else {
 		array.ToList().Each {|row, iRow| out.Printf('%s\n', pattern.Get(row * 4 / numCeil).Join())}
 	}

@@ -3,22 +3,11 @@
 // test-ml_cifar.gura
 //==============================================================================
 import(util.tester) {*}
+import(ml.cifar)
 import(ml.cifar10)
 import(ml.cifar100)
 import(tar)
 import(png)
-
-pattern = [' ', '.', ':', '#', '#']
-
-PrintImage(array as Array, out as Stream = sys.cout, guideFlag as Bool = true, numCeil as Number = 1.) = {
-	if (guideFlag) {
-		arrayGray = 0.299 * array[0] + 0.587 * array[1] + 0.114 * array[2]
-		out.Printf('   %s\n', Range(10).Cycle(arrayGray.nCols).Join())
-		arrayGray.ToList().Each {|row, iRow| out.Printf('%2d %s\n', iRow, pattern.Get(row * 4 / numCeil).Join())}
-	} else {
-		array.ToList().Each {|row, iRow| out.Printf('%s\n', pattern.Get(row * 4 / numCeil).Join())}
-	}
-}
 
 TestCase('Basic test') {
 	//db = ml.cifar10.Database('.')
@@ -27,7 +16,7 @@ TestCase('Basic test') {
 	Println(db.test)
 	db.train.Each(`float, format = `rgb).Head(3) {|sample, idx|
 		Println(db.labelNames[sample.label])
-		PrintImage(sample.input, guideFlag = true)
+		ml.cifar.PrintImage(sample.input, guideFlag = true)
 		sample.image.Resize(100, 100).Write(Format('a%d.png', idx), `png)
 	}
 }

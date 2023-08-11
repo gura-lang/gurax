@@ -15,7 +15,7 @@ Sample::Sample(SampleSet* pSampleSet, const Array::ElemTypeT& elemType, Double n
 
 const Array& Sample::GetArrayInput()
 {
-	//_pSampleSet->GetImageSet().ExtractAsArray(_pArrayInput, _elemType, _numCeil, _iSample);
+	_pSampleSet->GetImageSet().ExtractAsArray(_pArrayInput, _elemType, _numCeil, _iSample);
 	return *_pArrayInput;
 }
 
@@ -30,11 +30,11 @@ const Array& Sample::GetArrayResult()
 
 const Image& Sample::GetImage()
 {
-	//_pSampleSet->GetImageSet().ExtractAsImage(_pImage, _format, _iSample);
+	_pSampleSet->GetImageSet().ExtractAsImage(_pImage, _format, _iSample);
 	return *_pImage;
 }
 
-UInt8 Sample::GetLabel() const
+UInt32 Sample::GetLabel() const
 {
 	return _pSampleSet->GetLabelSet().GetLabel(_iSample);
 }

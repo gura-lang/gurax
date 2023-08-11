@@ -80,6 +80,7 @@ bool LabelSet::Read(Stream& stream)
 	return true;
 }
 
+#if 0
 template<typename T_Elem>
 Array* CreateArrayOfLabels(const Array::ElemTypeT& elemType, const Memory& memory, size_t nSamples, size_t nClases, bool oneHotFlag)
 {
@@ -123,6 +124,7 @@ Array* CreateArrayOfLabelsQMNIST(const Array::ElemTypeT& elemType, const Memory&
 	}
 	return pArray.release();
 }
+#endif
 
 UInt32 LabelSet::GetLabel(size_t iSample) const
 {

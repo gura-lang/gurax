@@ -63,4 +63,4 @@ target_link_libraries(ml.cifar.gurd PRIVATE guraxcore
 # Install
 #-------------------------------------------------------------------------------
 install(TARGETS ml.cifar.gurd RUNTIME DESTINATION module/site)
-install(PROGRAMS script/ml.cifar10.gura script/ml.cifar100.gura DESTINATION module/site)
+install(PROGRAMS script/ml.cifar.gura script/ml.cifar10.gura script/ml.cifar100.gura DESTINATION module/site)
