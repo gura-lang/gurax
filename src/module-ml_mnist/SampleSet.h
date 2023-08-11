@@ -39,6 +39,7 @@ public:
 public:
 	void Shuffle(Random& random) { _indices.Shuffle(random); }
 	size_t GetIndex(size_t i) const { return _indices[i]; }
+	size_t GetNSamples() const { return _indices.size(); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const SampleSet& other) const { return this == &other; }
@@ -71,30 +72,10 @@ private:
 	const Array::ElemTypeT& _elemType;
 	Double _numCeil;
 	const Image::Format& _format;
-	size_t _idx;
-public:
-	Iterator_Each(SampleSet* pSampleSet, const Array::ElemTypeT& elemType, Double numCeil, const Image::Format& format);
-public:
-	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
-	virtual size_t GetLength() const override;
-	virtual Value* DoNextValue() override;
-	virtual String ToString(const StringStyle& ss) const override;
-};
-
-//------------------------------------------------------------------------------
-// Iterator_EachBatch
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Iterator_EachBatch : public Iterator {
-private:
-	RefPtr<SampleSet> _pSampleSet;
-	const Array::ElemTypeT& _elemType;
 	size_t _batchSize;
-	Double _numCeil;
-	const Image::Format& _format;
 	size_t _idx;
 public:
-	Iterator_EachBatch(SampleSet* pSampleSet, const Array::ElemTypeT& elemType, size_t batchSize, Double numCeil, const Image::Format& format);
+	Iterator_Each(SampleSet* pSampleSet, const Array::ElemTypeT& elemType, Double numCeil, const Image::Format& format, size_t batchSize);
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }

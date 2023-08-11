@@ -59,16 +59,28 @@ bool ImageSet::Read(Stream& stream)
 	return true;
 }
 
-void ImageSet::ExtractAsArray(RefPtr<Array>& pArray, const Array::ElemTypeT& elemType, Double numCeil, size_t iSample) const
+void ImageSet::ExtractAsArray(RefPtr<Array>& pArray, const SampleSet& sampleSet, const Array::ElemTypeT& elemType, Double numCeil, size_t idx, size_t batchSize) const
 {
-	if (!pArray) pArray.reset(Array::Create(elemType, DimSizes(_nRows, _nCols)));
 	auto func = CopyElems[elemType.id];
 	size_t nElems = _nRows * _nCols;
-	const UInt8* pElemSrc = _pMemory->GetPointerC<UInt8>() + nElems * iSample;
-	func(pArray->GetPointerC<void>(), pElemSrc, nElems, numCeil);
+	if (batchSize == 0) {
+		if (!pArray) pArray.reset(Array::Create(elemType, DimSizes(_nRows, _nCols)));
+		UInt8* pElemDst = pArray->GetPointerC<UInt8>();
+		const UInt8* pElemSrc = _pMemory->GetPointerC<UInt8>() + nElems * sampleSet.GetIndex(idx);
+		func(pElemDst, pElemSrc, nElems, numCeil);
+	} else {
+		if (!pArray) pArray.reset(Array::Create(elemType, DimSizes(batchSize, _nRows, _nCols)));
+		UInt8* pElemDst = pArray->GetPointerC<UInt8>();
+		size_t bytesForward = nElems * elemType.bytes;
+		for (size_t i = 0; i < batchSize; i++, idx++) {
+			const UInt8* pElemSrc = _pMemory->GetPointerC<UInt8>() + nElems * sampleSet.GetIndex(idx);
+			func(pElemDst, pElemSrc, nElems, numCeil);
+			pElemDst += bytesForward;
+		}
+	}
 }
 
-void ImageSet::ExtractAsImage(RefPtr<Image>& pImage, const Image::Format& format, size_t iSample) const
+void ImageSet::ExtractAsImage(RefPtr<Image>& pImage, const SampleSet& sampleSet, const Image::Format& format, size_t idx, size_t batchSize) const
 {
 	if (!pImage) {
 		pImage.reset(new Image(format));
@@ -76,7 +88,7 @@ void ImageSet::ExtractAsImage(RefPtr<Image>& pImage, const Image::Format& format
 	}
 	UInt8* pDst = pImage->GetPointerC();
 	size_t nElems = _nRows * _nCols;
-	const UInt8* pElemSrc = _pMemory->GetPointerC<UInt8>() + nElems * iSample;
+	const UInt8* pElemSrc = _pMemory->GetPointerC<UInt8>() + nElems * sampleSet.GetIndex(idx);
 	if (format.IsIdentical(Image::Format::RGB)) {
 		for (size_t i = 0; i < nElems; i++) {
 			*pDst++ = *pElemSrc;

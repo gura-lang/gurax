@@ -7,6 +7,8 @@
 
 Gurax_BeginModuleScope(ml_mnist)
 
+class SampleSet;
+
 //------------------------------------------------------------------------------
 // ImageSet
 //------------------------------------------------------------------------------
@@ -46,9 +48,8 @@ public:
 	size_t GetNRows() const { return _nRows; }
 	size_t GetNCols() const { return _nCols; }
 	bool Read(Stream& stream);
-	//void Extract(const Array::ElemTypeT& elemType, void* pDst, size_t iSample, Double numCeil) const;
-	void ExtractAsArray(RefPtr<Array>& pArray, const Array::ElemTypeT& elemType, Double numCeil, size_t iSample) const;
-	void ExtractAsImage(RefPtr<Image>& pImage, const Image::Format& format, size_t iSample) const;
+	void ExtractAsArray(RefPtr<Array>& pArray, const SampleSet& sampleSet, const Array::ElemTypeT& elemType, Double numCeil, size_t idx, size_t batchSize) const;
+	void ExtractAsImage(RefPtr<Image>& pImage, const SampleSet& sampleSet, const Image::Format& format, size_t idx, size_t batchSize) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const ImageSet& other) const { return this == &other; }

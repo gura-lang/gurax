@@ -80,7 +80,7 @@ Gurax_ImplementMethod(SampleSet, Each)
 	if (Error::IsIssued()) return Value::nil();
 	const Image::Format& format = Image::Format::RGBA;
 	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetSampleSet().Reference(), elemType, numCeil, format));
+	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetSampleSet().Reference(), elemType, numCeil, format, 0));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
@@ -111,8 +111,9 @@ Gurax_ImplementMethod(SampleSet, EachBatch)
 	size_t batchSize = args.PickNumberPos<size_t>();
 	Double numCeil = args.IsValid()? args.PickNumberPos<Double>() : 1.;
 	if (Error::IsIssued()) return Value::nil();
+	const Image::Format& format = Image::Format::RGBA;
 	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_EachBatch(valueThis.GetSampleSet().Reference(), elemType, batchSize, numCeil));
+	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetSampleSet().Reference(), elemType, numCeil, format, batchSize));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
