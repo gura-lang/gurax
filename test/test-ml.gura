@@ -1,0 +1,532 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+import(ml)
+
+Number.format@float = '%.3f'
+
+TestCase('Array.Img2dToCol()') {
+	// [padding = 0]
+	//   11  12  13  14  15  16  17  18  19
+	//   21  22  23  24  25  26  27  28  29
+	//   31  32  33  34  35  36  37  38  39
+	//   41  42  43  44  45  46  47  48  49
+	//   51  52  53  54  55  56  57  58  59
+	//   61  62  63  64  65  66  67  68  69
+	//   71  72  73  74  75  76  77  78  79
+	//   81  82  83  84  85  86  87  88  89
+	//   91  92  93  94  95  96  97  98  99
+	// [padding = 1]
+	//   00  00  00  00  00  00  00  00  00  00  00
+	//   00  11  12  13  14  15  16  17  18  19  00
+	//   00  21  22  23  24  25  26  27  28  29  00
+	//   00  31  32  33  34  35  36  37  38  39  00
+	//   00  41  42  43  44  45  46  47  48  49  00
+	//   00  51  52  53  54  55  56  57  58  59  00
+	//   00  61  62  63  64  65  66  67  68  69  00
+	//   00  71  72  73  74  75  76  77  78  79  00
+	//   00  81  82  83  84  85  86  87  88  89  00
+	//   00  91  92  93  94  95  96  97  98  99  00
+	//   00  00  00  00  00  00  00  00  00  00  00
+	// [padding = 2]
+	//   00  00  00  00  00  00  00  00  00  00  00  00  00
+	//   00  00  00  00  00  00  00  00  00  00  00  00  00
+	//   00  00  11  12  13  14  15  16  17  18  19  00  00
+	//   00  00  21  22  23  24  25  26  27  28  29  00  00
+	//   00  00  31  32  33  34  35  36  37  38  39  00  00
+	//   00  00  41  42  43  44  45  46  47  48  49  00  00
+	//   00  00  51  52  53  54  55  56  57  58  59  00  00
+	//   00  00  61  62  63  64  65  66  67  68  69  00  00
+	//   00  00  71  72  73  74  75  76  77  78  79  00  00
+	//   00  00  81  82  83  84  85  86  87  88  89  00  00
+	//   00  00  91  92  93  94  95  96  97  98  99  00  00
+	//   00  00  00  00  00  00  00  00  00  00  00  00  00
+	//   00  00  00  00  00  00  00  00  00  00  00  00  00
+	//--------------------------------------------------------------------------
+	tbl9x9 =  ((Range(9) + 11) |+| (Range(9) + 21) |+| (Range(9) + 31) |+| \
+			(Range(9) + 41) |+| (Range(9) + 51) |+| (Range(9) + 61) |+| \
+			(Range(9) + 71) |+| (Range(9) + 81) |+| (Range(9) + 91))[]
+	img = @float(1, 1, 9, 9)
+	img.Inject(tbl9x9)
+	Tester(`img)
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 1, padding = 0))
+	Println()
+	Tester(`img.Img2dToCol(4, 4, stride = 1, padding = 0))
+	Println()
+	Tester(`img.Img2dToCol(5, 5, stride = 1, padding = 0))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 2, padding = 0))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 3, padding = 0))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 4, padding = 0))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 1, padding = 1))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 2, padding = 1))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 3, padding = 1))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 4, padding = 1))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 1, padding = 2))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 2, padding = 2))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 3, padding = 2))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 4, padding = 2))
+	//--------------------------------------------------------------------------
+	tbl3x9x9 = ((tbl9x9 + 100).Each() |+| (tbl9x9 + 200).Each() |+| (tbl9x9 + 300).Each())[]
+	img = @float(1, 3, 9, 9)
+	img.Inject(tbl3x9x9)
+	Tester(`img)
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 1, padding = 0))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 2, padding = 0))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 3, padding = 0))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 4, padding = 0))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 1, padding = 1))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 2, padding = 1))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 3, padding = 1))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 4, padding = 1))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 1, padding = 2))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 2, padding = 2))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 3, padding = 2))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 4, padding = 2))
+	//--------------------------------------------------------------------------
+	tbl4x3x9x9 = ((tbl3x9x9 + 1000).Each() |+| (tbl3x9x9 + 2000).Each() |+| (tbl3x9x9 + 3000).Each() |+| (tbl3x9x9 + 4000).Each())[]
+	img = @float(4, 3, 9, 9)
+	img.Inject(tbl4x3x9x9)
+	Tester(`img)
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 1, padding = 0))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 2, padding = 0))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 3, padding = 0))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 4, padding = 0))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 1, padding = 1))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 2, padding = 1))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 3, padding = 1))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 4, padding = 1))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 1, padding = 2))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 2, padding = 2))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 3, padding = 2))
+	Println()
+	Tester(`img.Img2dToCol(3, 3, stride = 4, padding = 2))
+}
+
+TestCase('Array.ColToImg2d()') {
+	tbl9x9 =  ((Range(9) + 11) |+| (Range(9) + 21) |+| (Range(9) + 31) |+| \
+			(Range(9) + 41) |+| (Range(9) + 51) |+| (Range(9) + 61) |+| \
+			(Range(9) + 71) |+| (Range(9) + 81) |+| (Range(9) + 91))[]
+	//--------------------------------------------------------------------------
+	img = @float(1, 1, 9, 9)
+	img.Inject(tbl9x9)
+	Tester(`img)
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 1, padding = 0).ColToImg2d(img.shape*, 3, 3, stride = 1, padding = 0) / img))
+	Println()
+	Tester(`(img.Img2dToCol(4, 4, stride = 1, padding = 0).ColToImg2d(img.shape*, 4, 4, stride = 1, padding = 0) / img))
+	Println()
+	Tester(`(img.Img2dToCol(5, 5, stride = 1, padding = 0).ColToImg2d(img.shape*, 5, 5, stride = 1, padding = 0) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 2, padding = 0).ColToImg2d(img.shape*, 3, 3, stride = 2, padding = 0) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 3, padding = 0).ColToImg2d(img.shape*, 3, 3, stride = 3, padding = 0) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 4, padding = 0).ColToImg2d(img.shape*, 3, 3, stride = 4, padding = 0) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 1, padding = 1).ColToImg2d(img.shape*, 3, 3, stride = 1, padding = 1) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 2, padding = 1).ColToImg2d(img.shape*, 3, 3, stride = 2, padding = 1) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 3, padding = 1).ColToImg2d(img.shape*, 3, 3, stride = 3, padding = 1) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 4, padding = 1).ColToImg2d(img.shape*, 3, 3, stride = 4, padding = 1) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 1, padding = 2).ColToImg2d(img.shape*, 3, 3, stride = 1, padding = 2) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 2, padding = 2).ColToImg2d(img.shape*, 3, 3, stride = 2, padding = 2) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 3, padding = 2).ColToImg2d(img.shape*, 3, 3, stride = 3, padding = 2) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 4, padding = 2).ColToImg2d(img.shape*, 3, 3, stride = 4, padding = 2) / img))
+	//--------------------------------------------------------------------------
+	tbl3x9x9 = ((tbl9x9 + 100).Each() |+| (tbl9x9 + 200).Each() |+| (tbl9x9 + 300).Each())[]
+	img = @float(1, 3, 9, 9)
+	img.Inject(tbl3x9x9)
+	Tester(`img)
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 1, padding = 0).ColToImg2d(img.shape*, 3, 3, stride = 1, padding = 0) / img))
+	Println()
+	Tester(`(img.Img2dToCol(4, 4, stride = 1, padding = 0).ColToImg2d(img.shape*, 4, 4, stride = 1, padding = 0) / img))
+	Println()
+	Tester(`(img.Img2dToCol(5, 5, stride = 1, padding = 0).ColToImg2d(img.shape*, 5, 5, stride = 1, padding = 0) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 2, padding = 0).ColToImg2d(img.shape*, 3, 3, stride = 2, padding = 0) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 3, padding = 0).ColToImg2d(img.shape*, 3, 3, stride = 3, padding = 0) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 4, padding = 0).ColToImg2d(img.shape*, 3, 3, stride = 4, padding = 0) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 1, padding = 1).ColToImg2d(img.shape*, 3, 3, stride = 1, padding = 1) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 2, padding = 1).ColToImg2d(img.shape*, 3, 3, stride = 2, padding = 1) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 3, padding = 1).ColToImg2d(img.shape*, 3, 3, stride = 3, padding = 1) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 4, padding = 1).ColToImg2d(img.shape*, 3, 3, stride = 4, padding = 1) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 1, padding = 2).ColToImg2d(img.shape*, 3, 3, stride = 1, padding = 2) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 2, padding = 2).ColToImg2d(img.shape*, 3, 3, stride = 2, padding = 2) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 3, padding = 2).ColToImg2d(img.shape*, 3, 3, stride = 3, padding = 2) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 4, padding = 2).ColToImg2d(img.shape*, 3, 3, stride = 4, padding = 2) / img))
+	//--------------------------------------------------------------------------
+	tbl4x3x9x9 = ((tbl3x9x9 + 1000).Each() |+| (tbl3x9x9 + 2000).Each() |+| (tbl3x9x9 + 3000).Each() |+| (tbl3x9x9 + 4000).Each())[]
+	img = @float(4, 3, 9, 9)
+	img.Inject(tbl4x3x9x9)
+	Tester(`img)
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 1, padding = 0).ColToImg2d(img.shape*, 3, 3, stride = 1, padding = 0) / img))
+	Println()
+	Tester(`(img.Img2dToCol(4, 4, stride = 1, padding = 0).ColToImg2d(img.shape*, 4, 4, stride = 1, padding = 0) / img))
+	Println()
+	Tester(`(img.Img2dToCol(5, 5, stride = 1, padding = 0).ColToImg2d(img.shape*, 5, 5, stride = 1, padding = 0) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 2, padding = 0).ColToImg2d(img.shape*, 3, 3, stride = 2, padding = 0) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 3, padding = 0).ColToImg2d(img.shape*, 3, 3, stride = 3, padding = 0) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 4, padding = 0).ColToImg2d(img.shape*, 3, 3, stride = 4, padding = 0) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 1, padding = 1).ColToImg2d(img.shape*, 3, 3, stride = 1, padding = 1) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 2, padding = 1).ColToImg2d(img.shape*, 3, 3, stride = 2, padding = 1) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 3, padding = 1).ColToImg2d(img.shape*, 3, 3, stride = 3, padding = 1) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 4, padding = 1).ColToImg2d(img.shape*, 3, 3, stride = 4, padding = 1) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 1, padding = 2).ColToImg2d(img.shape*, 3, 3, stride = 1, padding = 2) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 2, padding = 2).ColToImg2d(img.shape*, 3, 3, stride = 2, padding = 2) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 3, padding = 2).ColToImg2d(img.shape*, 3, 3, stride = 3, padding = 2) / img))
+	Println()
+	Tester(`(img.Img2dToCol(3, 3, stride = 4, padding = 2).ColToImg2d(img.shape*, 3, 3, stride = 4, padding = 2) / img))
+}
+
+TestCase('ml.MaxPool2d') {
+	x = @float([
+		[59, 10, 5]
+		[92, 83, 22]
+		[47, 86, 24]])
+	Tester(`x)
+	Tester(`(x |*| ml.MaxPool2d(3, 3, 1)))
+	Tester(`(x |*| ml.MaxPool2d(3, 3, 2)))
+	x = @float([
+		[59, 10, 5, 81, 5]
+		[92, 83, 22, 83, 90]
+		[47, 86, 24, 82, 27]
+		[89, 68, 62, 40, 47]
+		[53, 77, 13, 41, 36]])
+	Tester(`x)
+	Tester(`(x |*| ml.MaxPool2d(3, 3, 1)))
+	Tester(`(x |*| ml.MaxPool2d(3, 3, 2)))
+	Tester(`(x |*| ml.MaxPool2d(3, 3, 3)))
+	x = @float([
+		[73, 65, 46, 4, 95, 66]
+		[25, 19, 80, 27, 48, 34]
+		[90, 21, 70, 71, 11, 50]
+		[28, 81, 45, 10, 51, 29]
+		[73, 74, 13, 0, 85, 7]
+		[74, 8, 53, 12, 10, 65]])
+	Tester(`x)
+	Tester(`(x |*| ml.MaxPool2d(3, 3, 1)))
+	Tester(`(x |*| ml.MaxPool2d(3, 3, 2)))
+	Tester(`(x |*| ml.MaxPool2d(3, 3, 3)))
+	x = @float([
+		[37, 89, 18, 43, 61, 63, 88, 17]
+		[33, 46, 50, 38, 90, 94, 16, 56]
+		[95, 31, 32, 96, 74, 17, 17, 28]
+		[9, 95, 37, 71, 1, 49, 57, 42]
+		[61, 3, 40, 38, 30, 1, 25, 11]
+		[75, 84, 63, 2, 0, 43, 38, 71]
+		[1, 58, 39, 45, 97, 30, 90, 14]
+		[38, 27, 17, 29, 82, 87, 1, 24]])
+	Tester(`x)
+	Tester(`(x |*| ml.MaxPool2d(3, 3, 1)))
+	Tester(`(x |*| ml.MaxPool2d(3, 3, 2)))
+	Tester(`(x |*| ml.MaxPool2d(3, 3, 3)))
+	x = @float([
+		[[30, 63, 24, 80]
+		 [18, 89, 27, 14]
+		 [30, 78, 23, 21]
+		 [96, 57, 89, 77]]
+		[[77, 42, 93, 67]
+		 [12, 18, 18, 79]
+		 [69, 34, 2, 12]
+		 [62, 68, 13, 59]]
+		[[37, 73, 65, 11]
+		 [52, 26, 50, 68]
+		 [75, 66, 37, 82]
+		 [38, 61, 50, 46]]])
+	Tester(`x)
+	Tester(`(x |*| ml.MaxPool2d(3, 3, 1)))
+	Tester(`(x |*| ml.MaxPool2d(3, 3, 2)))
+	x = @float([
+		[[[17, 51, 41, 91]
+		  [15, 27, 44, 28]
+		  [16, 55, 46, 77]
+		  [78, 28, 10, 76]]
+		 [[0, 73, 10, 11]
+		  [69, 80, 6, 20]
+		  [37, 33, 30, 79]
+		  [5, 46, 99, 86]]
+		 [[19, 47, 50, 84]
+		  [11, 75, 72, 95]
+		  [60, 74, 31, 67]
+		  [63, 68, 83, 21]]]
+		[[[38, 76, 84, 31]
+		  [98, 64, 92, 5]
+		  [94, 87, 1, 23]
+		  [51, 95, 16, 38]]
+		 [[85, 7, 35, 13]
+		  [97, 91, 52, 58]
+		  [99, 45, 52, 24]
+		  [27, 37, 11, 78]]
+		 [[78, 87, 93, 51]
+		  [91, 77, 54, 4]
+		  [49, 3, 84, 75]
+		  [46, 5, 95, 19]]]])
+	Tester(`x)
+	Tester(`(x |*| ml.MaxPool2d(3, 3, 1)))
+	Tester(`(x |*| ml.MaxPool2d(3, 3, 2)))
+}
+
+TestCase('ml.Conv2d') {
+	x = @float([
+		[3, 3, 0, 1, 4]
+		[0, 0, 1, 0, 2]
+		[4, 0, 3, 1, 0]
+		[0, 2, 4, 3, 0]
+		[4, 2, 4, 3, 3]]).Reshape(1, 1, 5, 5)
+	filter = @float([
+		[1, 2, 1]
+		[0, 2, 0]
+		[0, 1, 1]]).Reshape(1, 1, 3, 3)
+	Tester(`x)
+	Tester(`filter)
+	Tester(`(x |*| ml.Conv2d.Preset(filter)))
+	Tester(`(x |*| ml.Conv2d.Preset(filter, stride = 1, padding = 1)))
+	Tester(`(x |*| ml.Conv2d.Preset(filter, stride = 1, padding = 2)))
+	Tester(`(x |*| ml.Conv2d.Preset(filter, stride = 2)))
+	Tester(`(x |*| ml.Conv2d.Preset(filter, stride = 2, padding = 1)))
+	Tester(`(x |*| ml.Conv2d.Preset(filter, stride = 2, padding = 2)))
+}
+
+TestCase('Training of ml.Conv2d') {
+	x = @float([
+		[.3, .3, .0, .1, .4, .2]
+		[.0, .0, .1, .0, .2, .0]
+		[.4, .0, .3, .1, .0, .1]
+		[.0, .2, .4, .3, .0, .1]
+		[.4, .2, .4, .3, .3, .2]
+		[.2, .0, .2, .1, .0, .1]]).Reshape(1, 1, 6, 6)
+	filter = @float([
+		[.1, .2, .1]
+		[.0, .2, .0]
+		[.0, .1, .1]]).Reshape(1, 1, 3, 3)
+	correct = @float([
+		[.3, .0, .0, .0]
+		[.0, .3, .0, .0]
+		[.0, .0, .3, .0]
+		[.0, .0, .0, .3]]).Reshape(1, 1, 4, 4)
+	model = `(rtn = x |*| ml.Conv2d.Preset(filter))
+	optimizer = ml.Optimizer.GradientDescent(0.01)
+	t = ml.Trainer(model, optimizer, `x)
+	t.random.seed = 0
+	repeat (5000) { t.Train(correct, x) }
+	Println(t.Eval(x))
+}
+
+TestCase('Training of MaxPool2d') {
+	x = @float([
+		[59, 10, 5, 81, 5]
+		[92, 83, 22, 83, 90]
+		[47, 86, 24, 82, 27]
+		[89, 68, 62, 40, 47]
+		[53, 77, 13, 41, 36]])
+	correct = @float([
+		[59, 10, 5, 81, 5]
+		[92, 83, 22, 83, 90]
+		[47, 86, 24, 82, 27]
+		[89, 68, 62, 40, 47]
+		[53, 77, 13, 41, 36]]) + 1
+	model = `(rtn = x |*| ml.MaxPool2d(1, 1, 1))
+	optimizer = ml.Optimizer.GradientDescent(.1)
+	t = ml.Trainer(model, optimizer)
+	t.random.seed = 0
+	t.Train(correct)
+	Println(t.node.rtn.inputGrad)
+	Println(x)
+	//--------------------------------------------------------------------------
+	x = @float([
+		[59, 10, 5, 81, 5]
+		[92, 83, 22, 83, 90]
+		[47, 86, 24, 82, 27]
+		[89, 68, 62, 40, 47]
+		[53, 77, 13, 41, 36]])
+	correct = @float([
+		[92, 86, 90]
+		[92, 86, 90]
+		[89, 86, 82]]) + 1
+	model = `(rtn = x |*| ml.MaxPool2d(3, 3, 1))
+	optimizer = ml.Optimizer.GradientDescent(.1)
+	t = ml.Trainer(model, optimizer)
+	Println(t.Eval())
+	t.Train(correct)
+	Println(t.node.rtn.inputGrad)
+	Println(x)
+	//--------------------------------------------------------------------------
+	x = @float([
+		[59, 10, 5, 81, 5]
+		[92, 83, 22, 83, 90]
+		[47, 86, 24, 82, 27]
+		[89, 68, 62, 40, 47]
+		[53, 77, 13, 41, 36]])
+	correct = @float([
+		[92, 90]
+		[89, 82]]) + 1
+	model = `(rtn = x |*| ml.MaxPool2d(3, 3, 2))
+	optimizer = ml.Optimizer.GradientDescent(.1)
+	t = ml.Trainer(model, optimizer)
+	t.random.seed = 0
+	Println(t.Eval())
+	t.Train(correct)
+	Println(t.node.rtn.inputGrad)
+	Println(x)
+	//--------------------------------------------------------------------------
+	x = @float([
+		[[[17, 51, 41, 91]
+		  [15, 27, 44, 28]
+		  [16, 55, 46, 77]
+		  [78, 28, 10, 76]]
+		 [[0, 73, 10, 11]
+		  [69, 80, 6, 20]
+		  [37, 33, 30, 79]
+		  [5, 46, 99, 86]]
+		 [[19, 47, 50, 84]
+		  [11, 75, 72, 95]
+		  [60, 74, 31, 67]
+		  [63, 68, 83, 21]]]
+		[[[38, 76, 84, 31]
+		  [98, 64, 92, 5]
+		  [94, 87, 1, 23]
+		  [51, 95, 16, 38]]
+		 [[85, 7, 35, 13]
+		  [97, 91, 52, 58]
+		  [99, 45, 52, 24]
+		  [27, 37, 11, 78]]
+		 [[78, 87, 93, 51]
+		  [91, 77, 54, 4]
+		  [49, 3, 84, 75]
+		  [46, 5, 95, 19]]]])
+	correct = @float([
+		[[[55, 91], [78, 77]]
+		 [[80, 80], [99, 99]]
+		 [[75, 95], [83, 95]]]
+		[[[98, 92], [98, 95]]
+		 [[99, 91], [99, 91]]
+		 [[93, 93], [95, 95]]]]) + 1
+	model = `(rtn = x |*| ml.MaxPool2d(3, 3, 1))
+	optimizer = ml.Optimizer.GradientDescent(.1)
+	t = ml.Trainer(model, optimizer)
+	t.random.seed = 0
+	Println(t.Eval())
+	t.Train(correct)
+	Println(t.node.rtn.inputGrad)
+	Println(x)
+}
+
+TestCase('ml.Reshape') {
+	x = @float(3, 4, 2)
+	x.Inject(0..)
+	Tester(`x)
+	Tester(`(x |*| ml.Reshape(3, 8)))
+	Tester(`(x |*| ml.Reshape(nil, 8)))
+	Tester(`(x |*| ml.Reshape(24)))
+	Tester(`(x |*| ml.Reshape(3, 2, 2, 2)))
+	Tester(`(x |*| ml.Reshape(3, 9)))
+}
+
+TestCase('Training of ml.Reshape') {
+	x = @float(3, 4, 2)
+	x.Inject(0..)
+	model = `(x |*| ml.Reshape(24))
+	correct = x.Reshape(24) + 1
+	optimizer = ml.Optimizer.GradientDescent(.1)
+	t = ml.Trainer(model, optimizer)
+	t.random.seed = 0
+	Println(t.Eval())
+	t.Train(correct)
+	Println(x)
+}
+
+TestCase('ml.Flatten') {
+	Tester(`(@float(3, 4, 5, 2, 3, 1) |*| ml.Flatten()).shape)
+	Tester(`(@float(3, 4, 5, 2, 3, 1) |*| ml.Flatten(1)).shape)
+	Tester(`(@float(3, 4, 5, 2, 3, 1) |*| ml.Flatten(2)).shape)
+	Tester(`(@float(3, 4, 5, 2, 3, 1) |*| ml.Flatten(3)).shape)
+	Tester(`(@float(3, 4, 5, 2, 3, 1) |*| ml.Flatten(2, 3)).shape)
+	Tester(`(@float(3, 4, 5, 2, 3, 1) |*| ml.Flatten(3, 3)).shape)
+	Tester(`(@float(3, 4, 5, 2, 3, 1) |*| ml.Flatten(2, 2, 2)).shape)
+	Tester(`(@float(3, 4, 5, 2, 3, 1) |*| ml.Flatten(4, 3)).shape)
+}
+
+TestCase('Serialization of ml.Linear') {
+	Binary {|buff|
+		buff.Writer().Serialize(ml.Linear(10))
+		Println(buff)
+		Println(buff.Reader().Deserialize())
+	}
+	Binary {|buff|
+		buff.Writer().Serialize(ml.Linear(10):noBias)
+		Println(buff)
+		Println(buff.Reader().Deserialize())
+	}
+	Binary {|buff|
+		buff.Writer().Serialize(ml.Linear.Preset(@float(3, 4), @float(4)))
+		Println(buff)
+		Println(buff.Reader().Deserialize())
+	}
+	Binary {|buff|
+		buff.Writer().Serialize(ml.Linear.Preset(@float(3, 4), @float(4)):noBias)
+		Println(buff)
+		Println(buff.Reader().Deserialize())
+	}
+}
