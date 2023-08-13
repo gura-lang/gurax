@@ -1,14 +1,14 @@
 #!/usr/bin/env gurax
-import(recog_mnist)
+import(train_recog)
 import(ml.mnist)
 
 db = ml.mnist.Database('../../sample/resource/mnist')
 nCorrects = 0
 nSamples = db.test.nSamples
-Open('eval.result.txt', 'w') {|out|
+Open('train_eval.result.txt', 'w') {|out|
 	sys.cerr.Printf('Test with %d samples\n', nSamples)
 	db.test.Each(`float) {|sample|
-		result = recog_mnist.Eval(sample.input)
+		result = train_recog.Eval(sample.input)
 		[likelihood, idxResult] = result.FindMax(-1, 0):pair
 		if (idxResult == sample.label) {
 			out.Printf(' "%d" .. correct with likelihood %.1f%%\n', idxResult, likelihood * 100)

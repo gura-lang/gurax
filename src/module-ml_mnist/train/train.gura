@@ -5,7 +5,7 @@ import(ml.mnist)
 
 db = ml.mnist.Database('../../sample/resource/mnist')
 optimizer = ml.Optimizer.GradientDescent(0.01)
-if (false) {
+if (true) {
 	model = `(image |*| reshape |*| linear |*| ml.Softmax())
 	reshape = ml.Reshape(nil, db.nRows * db.nCols)
 	linear = ml.Linear(db.nClasses)
@@ -44,5 +44,5 @@ ml.Trainer(model, optimizer, `image) {|trainer|
 		Printf('Epoch#%d error=%g\n', iEpoch + 1, trainer.CalcMeanSquaredError(sampleLast.result))
 		ml.KeyAbort(Ord('q')) && break
 	}
-	trainer.CreateModule('recog_mnist')
+	trainer.CreateModule('train_recog')
 }
