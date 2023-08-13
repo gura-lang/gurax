@@ -7,17 +7,15 @@ nCorrects = 0
 nSamples = db.test.nSamples
 Open('eval.result.txt', 'w') {|out|
 	sys.cerr.Printf('Test with %d samples\n', nSamples)
-	db.test.Each(`float) {|pair|
-		[image, label] = pair
-		result = recog_mnist.Eval(image.Reshape(1, recog_mnist.shapeImage*))
+	db.test.Each(`float) {|sample|
+		result = recog_mnist.Eval(sample.input.Reshape(1, recog_mnist.shapeImage*))
 		[likelihood, idxResult] = result.FindMax(-1, 0):pair
-		idxLabel = label.ArgMax()
-		if (idxResult == idxLabel) {
+		if (idxResult == sample.label) {
 			out.Printf(' "%d" .. correct with likelihood %.1f%%\n', idxResult, likelihood * 100)
 			nCorrects += 1
 		} else {
-			out.Printf(' "%d" .. wrong. correct is "%d"\n', idxResult, idxLabel)
-			ml.mnist.PrintImage(image, out)
+			out.Printf(' "%d" .. wrong. correct is "%d"\n', idxResult, sample.label)
+			ml.mnist.PrintImage(sample.input, out)
 		}
 	}
 	sys.cerr.Printf('accuracy: %d/%d (%.1f%%)\n', nCorrects, nSamples, nCorrects / nSamples * 100)

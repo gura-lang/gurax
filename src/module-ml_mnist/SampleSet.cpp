@@ -48,9 +48,10 @@ size_t Iterator_Each::GetLength() const
 
 Value* Iterator_Each::DoNextValue()
 {
-	if (_idx >= _pSampleSet->GetImageSet().GetNSamples()) return nullptr;
+	size_t nChars = (_batchSize == 0)? 1 : _batchSize;
+	if (_idx + nChars > _pSampleSet->GetImageSet().GetNSamples()) return nullptr;
 	RefPtr<Sample> pSample(new Sample(_pSampleSet->Reference(), _elemType, _numCeil, _format, _idx, _batchSize));
-	_idx++;
+	_idx += nChars;
 	return new Value_Sample(pSample.release());
 }
 

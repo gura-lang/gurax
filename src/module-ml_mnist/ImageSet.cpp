@@ -82,25 +82,31 @@ void ImageSet::ExtractAsArray(RefPtr<Array>& pArray, const SampleSet& sampleSet,
 
 void ImageSet::ExtractAsImage(RefPtr<Image>& pImage, const SampleSet& sampleSet, const Image::Format& format, size_t idx, size_t batchSize) const
 {
+	size_t nChars = (batchSize == 0)? 1 : batchSize;
 	if (!pImage) {
 		pImage.reset(new Image(format));
-		pImage->Allocate(_nCols, _nRows);
+		pImage->Allocate(_nCols, _nRows * nChars);
 	}
 	UInt8* pDst = pImage->GetPointerC();
 	size_t nElems = _nRows * _nCols;
-	const UInt8* pElemSrc = _pMemory->GetPointerC<UInt8>() + nElems * sampleSet.GetIndex(idx);
 	if (format.IsIdentical(Image::Format::RGB)) {
-		for (size_t i = 0; i < nElems; i++) {
-			*pDst++ = *pElemSrc;
-			*pDst++ = *pElemSrc;
-			*pDst++ = *pElemSrc++;
+		for (size_t iChar = 0; iChar < nChars; iChar++, idx++) {
+			const UInt8* pElemSrc = _pMemory->GetPointerC<UInt8>() + nElems * sampleSet.GetIndex(idx);
+			for (size_t i = 0; i < nElems; i++) {
+				*pDst++ = *pElemSrc;
+				*pDst++ = *pElemSrc;
+				*pDst++ = *pElemSrc++;
+			}
 		}
 	} else { // Image::Format::RGBA
-		for (size_t i = 0; i < nElems; i++) {
-			*pDst++ = *pElemSrc;
-			*pDst++ = *pElemSrc;
-			*pDst++ = *pElemSrc++;
-			*pDst++ = 0xff;
+		for (size_t iChar = 0; iChar < nChars; iChar++, idx++) {
+			const UInt8* pElemSrc = _pMemory->GetPointerC<UInt8>() + nElems * sampleSet.GetIndex(idx);
+			for (size_t i = 0; i < nElems; i++) {
+				*pDst++ = *pElemSrc;
+				*pDst++ = *pElemSrc;
+				*pDst++ = *pElemSrc++;
+				*pDst++ = 0xff;
+			}
 		}
 	}
 }

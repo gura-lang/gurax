@@ -37,11 +37,11 @@ Printf('Training with %d samples [Image Size:%dx%d, Label Size:%d] -- Press Q to
 	db.nRows, db.nCols, db.nClasses)
 ml.Trainer(model, optimizer, `image) {|trainer|
 	repeat (nEpochs) {|iEpoch|
-		db.train.EachBatch(`float, batchSize = batchSize).Head(nIterations) {|pair|
-			[images, labels] = pair
-			trainer.Train(labels, images.Reshape(nil, shapeImage*))
+		db.train.EachBatch(`float, batchSize = batchSize).Head(nIterations) {|sample|
+			trainer.Train(sample.result, sample.input.Reshape(nil, shapeImage*))
+			result = sample.result
 		}
-		Printf('Epoch#%d error=%g\n', iEpoch + 1, trainer.CalcMeanSquaredError(labels))
+		Printf('Epoch#%d error=%g\n', iEpoch + 1, trainer.CalcMeanSquaredError(result))
 		ml.KeyAbort(Ord('q')) && break
 	}
 	trainer.CreateModule('recog_mnist', `shapeImage)
