@@ -5,25 +5,25 @@ import(ml.mnist)
 
 db = ml.mnist.Database('../../sample/resource/mnist')
 optimizer = ml.Optimizer.GradientDescent(0.01)
-if (true) {
-	model = `(image |*| linear |*| ml.Softmax())
-	shapeImage = (db.nRows * db.nCols,)
+if (false) {
+	model = `(image |*| reshape |*| linear |*| ml.Softmax())
+	reshape = ml.Reshape(nil, db.nRows * db.nCols)
 	linear = ml.Linear(db.nClasses)
-} elsif (true) {
-	model = `(image |*| linear1 |*| ml.ReLU() |*| linear2 |*| ml.Softmax())
-	shapeImage = (db.nRows * db.nCols,)
+} elsif (false) {
+	model = `(image |*| reshape |*| linear1 |*| ml.ReLU() |*| linear2 |*| ml.Softmax())
+	reshape = ml.Reshape(nil, db.nRows * db.nCols)
 	linear1 = ml.Linear(100)
 	linear2 = ml.Linear(db.nClasses)
 } else {
 	model = `{
-		t0 = image
+		t0 = image |*| reshape
 		t1 = t0 |*| conv1 |*| ml.ReLU() |*| pool1
 		t2 = t1 |*| ml.Flatten(3)
 		t3 = t2 |*| linear1 |*| ml.ReLU()
 		t4 = t3 |*| linear2
 		t5 = t4 |*| ml.Softmax()
 	}
-	shapeImage = (1, db.nRows, db.nCols)
+	reshape = ml.Reshape(nil, 1, db.nRows, db.nCols)
 	conv1 = ml.Conv2d(nFilters = 30, nRowsFilter = 5, nColsFilter = 5, stride = 1, padding = 0)
 	pool1 = ml.MaxPool2d(nRowsKernel = 2, nColsKernel = 2, stride = 2)
 	linear1 = ml.Linear(100)
@@ -31,18 +31,18 @@ if (true) {
 }
 nEpochs = 100
 batchSize = 16
-nIterations = nil
+nIterations = 100
 Printf('Training with %d samples [Image Size:%dx%d, Label Size:%d] -- Press Q to abort the process.\n',
 	cond(!nIterations || db.train.nSamples < batchSize * nIterations, db.train.nSamples, batchSize * nIterations),
 	db.nRows, db.nCols, db.nClasses)
 ml.Trainer(model, optimizer, `image) {|trainer|
 	repeat (nEpochs) {|iEpoch|
 		db.train.EachBatch(`float, batchSize = batchSize).Head(nIterations) {|sample|
-			trainer.Train(sample.result, sample.input.Reshape(nil, shapeImage*))
-			result = sample.result
+			trainer.Train(sample.result, sample.input)
+			sampleLast = sample
 		}
-		Printf('Epoch#%d error=%g\n', iEpoch + 1, trainer.CalcMeanSquaredError(result))
+		Printf('Epoch#%d error=%g\n', iEpoch + 1, trainer.CalcMeanSquaredError(sampleLast.result))
 		ml.KeyAbort(Ord('q')) && break
 	}
-	trainer.CreateModule('recog_mnist', `shapeImage)
+	trainer.CreateModule('recog_mnist')
 }

@@ -8,7 +8,7 @@ nSamples = db.test.nSamples
 Open('eval.result.txt', 'w') {|out|
 	sys.cerr.Printf('Test with %d samples\n', nSamples)
 	db.test.Each(`float) {|sample|
-		result = recog_mnist.Eval(sample.input.Reshape(1, recog_mnist.shapeImage*))
+		result = recog_mnist.Eval(sample.input)
 		[likelihood, idxResult] = result.FindMax(-1, 0):pair
 		if (idxResult == sample.label) {
 			out.Printf(' "%d" .. correct with likelihood %.1f%%\n', idxResult, likelihood * 100)
