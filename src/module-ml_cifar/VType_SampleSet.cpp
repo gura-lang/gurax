@@ -78,7 +78,40 @@ Gurax_ImplementMethod(SampleSet, Each)
 	Double numCeil = args.IsValid()? args.PickNumberPos<Double>() : 1.;
 	const Image::Format& format = Image::Format::RGBA;
 	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetSampleSet().Reference(), elemType, numCeil, format));
+	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetSampleSet().Reference(), elemType, numCeil, format, 0));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
+// ml.cifar.SampleSet#EachBatch(elemType as Symbol, batchSize as Number, numCeil? as Number) as Iterator {block?}
+Gurax_DeclareMethod(SampleSet, EachBatch)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("batchSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("numCeil", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementMethod(SampleSet, EachBatch)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const Array::ElemTypeT& elemType = Array::SymbolToElemType(args.PickSymbol());
+	if (elemType.IsNone()) {
+		Error::Issue(ErrorType::ValueError, "invalid symbol for element type");
+		return Value::nil();
+	}
+	size_t batchSize = args.PickNumberPos<size_t>();
+	Double numCeil = args.IsValid()? args.PickNumberPos<Double>() : 1.;
+	if (Error::IsIssued()) return Value::nil();
+	const Image::Format& format = Image::Format::RGBA;
+	// Function body
+	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetSampleSet().Reference(), elemType, numCeil, format, batchSize));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
@@ -125,7 +158,7 @@ Gurax_ImplementPropertyGetter(SampleSet, nSamples)
 	return new Value_Number(valueThis.GetSampleSet().GetNSamples());
 }
 
-// ml.mnist.SampleSet#nChannels
+// ml.cifar.SampleSet#nChannels
 Gurax_DeclareProperty_R(SampleSet, nChannels)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -139,7 +172,7 @@ Gurax_ImplementPropertyGetter(SampleSet, nChannels)
 	return new Value_Number(ImageSet::nChannels);
 }
 
-// ml.mnist.SampleSet#nRows
+// ml.cifar.SampleSet#nRows
 Gurax_DeclareProperty_R(SampleSet, nRows)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -153,7 +186,7 @@ Gurax_ImplementPropertyGetter(SampleSet, nRows)
 	return new Value_Number(ImageSet::nRowsImage);
 }
 
-// ml.mnist.SampleSet#nCols
+// ml.cifar.SampleSet#nCols
 Gurax_DeclareProperty_R(SampleSet, nCols)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -210,6 +243,7 @@ void VType_SampleSet::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(SampleSet));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(SampleSet, Each));
+	Assign(Gurax_CreateMethod(SampleSet, EachBatch));
 	Assign(Gurax_CreateMethod(SampleSet, Read));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SampleSet, nSamples));

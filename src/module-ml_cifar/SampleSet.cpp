@@ -87,22 +87,24 @@ public:
 //------------------------------------------------------------------------------
 // Iterator_Each
 //------------------------------------------------------------------------------
-Iterator_Each::Iterator_Each(SampleSet* pSampleSet, const Array::ElemTypeT& elemType, Double numCeil, const Image::Format& format) :
-	_pSampleSet(pSampleSet), _elemType(elemType), _numCeil(numCeil), _format(format), _idx(0)
+Iterator_Each::Iterator_Each(SampleSet* pSampleSet, const Array::ElemTypeT& elemType, Double numCeil, const Image::Format& format, size_t batchSize) :
+	_pSampleSet(pSampleSet), _elemType(elemType), _numCeil(numCeil), _format(format), _batchSize(batchSize), _idx(0)
 {
 }
 
 size_t Iterator_Each::GetLength() const
 {
-	return _pSampleSet->GetNSamples();
+	size_t nChars = (_batchSize == 0)? 1 : _batchSize;
+	return _pSampleSet->GetNSamples() / nChars;
 }
 
 Value* Iterator_Each::DoNextValue()
 {
-	if (_idx >= _pSampleSet->GetNSamples()) return nullptr;
-	size_t iSample = _pSampleSet->GetIndex(_idx);
-	_idx++;
-	return new Value_Sample(new Sample(_pSampleSet->Reference(), _elemType, _numCeil, _format, iSample));
+	size_t nChars = (_batchSize == 0)? 1 : _batchSize;
+	if (_idx + nChars > _pSampleSet->GetNSamples()) return nullptr;
+	RefPtr<Sample> pSample(new Sample(_pSampleSet->Reference(), _elemType, _numCeil, _format, _idx, _batchSize));
+	_idx += nChars;
+	return new Value_Sample(pSample.release());
 }
 
 String Iterator_Each::ToString(const StringStyle& ss) const

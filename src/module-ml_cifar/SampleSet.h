@@ -75,9 +75,10 @@ private:
 	const Array::ElemTypeT& _elemType;
 	Double _numCeil;
 	const Image::Format& _format;
+	size_t _batchSize;
 	size_t _idx;
 public:
-	Iterator_Each(SampleSet* pSampleSet, const Array::ElemTypeT& elemType, Double numCeil, const Image::Format& format);
+	Iterator_Each(SampleSet* pSampleSet, const Array::ElemTypeT& elemType, Double numCeil, const Image::Format& format, size_t batchSize);
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }

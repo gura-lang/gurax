@@ -43,7 +43,8 @@ Iterator_Each::Iterator_Each(SampleSet* pSampleSet, const Array::ElemTypeT& elem
 
 size_t Iterator_Each::GetLength() const
 {
-	return _pSampleSet->GetImageSet().GetNSamples();
+	size_t nChars = (_batchSize == 0)? 1 : _batchSize;
+	return _pSampleSet->GetImageSet().GetNSamples() / nChars;
 }
 
 Value* Iterator_Each::DoNextValue()
