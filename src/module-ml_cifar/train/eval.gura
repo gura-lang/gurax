@@ -1,0 +1,23 @@
+#!/usr/bin/env gurax
+import(recog)
+import(ml.cifar)
+import(ml.cifar10)
+
+db = ml.cifar10.Database('..')
+nCorrects = 0
+nSamples = db.test.nSamples
+Open('eval.result.txt', 'w') {|out|
+	sys.cerr.Printf('Test with %d samples\n', nSamples)
+	db.test.Each(`float) {|sample|
+		result = recog.Eval(sample.input)
+		[likelihood, labelRecog] = result.FindMax(-1, 0):pair
+		if (labelRecog == sample.label) {
+			out.Printf(' "%s" .. correct with likelihood %.1f%%\n', db.labelNames[labelRecog], likelihood * 100)
+			nCorrects += 1
+		} else {
+			out.Printf(' "%s" .. wrong. correct is "%s"\n', db.labelNames[labelRecog], db.labelNames[sample.label])
+			ml.cifar.PrintImage(sample.input, out)
+		}
+	}
+	sys.cerr.Printf('accuracy: %d/%d (%.1f%%)\n', nCorrects, nSamples, nCorrects / nSamples * 100)
+}
