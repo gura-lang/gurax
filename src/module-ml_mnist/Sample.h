@@ -20,16 +20,17 @@ public:
 private:
 	RefPtr<SampleSet> _pSampleSet;
 	const Array::ElemTypeT& _elemType;
-	Double _numCeil;
 	const Image::Format& _format;
-	size_t _idx;
 	size_t _batchSize;
+	Double _numCeil;
+	size_t _idx;
 	RefPtr<Array> _pArrayInput;
 	RefPtr<Array> _pArrayResult;
 	RefPtr<Image> _pImage;
+	RefPtr<ValueOwner> _pValuesLabel;
 public:
 	// Constructor
-	Sample(SampleSet* pSampleSet, const Array::ElemTypeT& elemType, Double numCeil, const Image::Format& format, size_t idx, size_t batchSize);
+	Sample(SampleSet* pSampleSet, const Array::ElemTypeT& elemType, const Image::Format& format, size_t batchSize, Double numCeil, size_t idx);
 	// Copy constructor/operator
 	Sample(const Sample& src) = delete;
 	Sample& operator=(const Sample& src) = delete;
@@ -44,6 +45,7 @@ public:
 	const Image& GetImage();
 	UInt32 GetLabel(size_t idx) const;
 	UInt32 GetLabel() const { return GetLabel(_idx); }
+	const ValueOwner& GetValuesLabel();
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Sample& other) const { return this == &other; }

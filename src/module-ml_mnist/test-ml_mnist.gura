@@ -23,11 +23,10 @@ TestCase('Basic test') {
 }
 
 TestCase('ml.mnist.SampleSet#EachBatch()') {
-	[db, dbQ]:*train:*EachBatch(`float, batchSize = 3)::Head(2) {|pair|
-		[images, labels] = pair
-		repeat (images.shape[0]) {|i|
-			Println(labels[i].ArgMax())
-			ml.mnist.PrintImage(images[i], guideFlag = false)
+	[db, dbQ]:*train:*EachBatch(`float, 3)::Head(2) {|sample|
+		repeat (sample.input.shape[0]) {|i|
+			Println(sample.labels[i])
+			ml.mnist.PrintImage(sample.input[i], guideFlag = false)
 		}
 	}
 }
@@ -36,8 +35,7 @@ TestCase('ml.mnist.SampleSet#Shuffle()') {
 	rand = Random(0)
 	repeat (3) {
 		db.train.Shuffle(rand)
-		pair = db.train.EachBatch(`float, batchSize = 32).NextValue()
-		[images, labels] = pair
-		Println(repeat (images.shape[0]):iter {|i| Format('%d', labels[i].ArgMax())}.Join(','))
+		sample = db.train.EachBatch(`float, 32).NextValue()
+		Println(sample.labels.Each():iter {|label| Format('%d', label)}.Join(','))
 	}
 }

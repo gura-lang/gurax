@@ -57,7 +57,6 @@ Gurax_DeclareMethod(SampleSet, Each)
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("numCeil", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("format", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
@@ -76,9 +75,10 @@ Gurax_ImplementMethod(SampleSet, Each)
 		return Value::nil();
 	}
 	Double numCeil = args.IsValid()? args.PickNumberPos<Double>() : 1.;
+	if (Error::IsIssued()) return Value::nil();
 	const Image::Format& format = Image::Format::RGBA;
 	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetSampleSet().Reference(), elemType, numCeil, format, 0));
+	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetSampleSet().Reference(), elemType, format, 0, numCeil));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
@@ -111,7 +111,7 @@ Gurax_ImplementMethod(SampleSet, EachBatch)
 	if (Error::IsIssued()) return Value::nil();
 	const Image::Format& format = Image::Format::RGBA;
 	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetSampleSet().Reference(), elemType, numCeil, format, batchSize));
+	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetSampleSet().Reference(), elemType, format, batchSize, numCeil));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
@@ -183,7 +183,7 @@ Skeleton.
 
 Gurax_ImplementPropertyGetter(SampleSet, nRows)
 {
-	return new Value_Number(ImageSet::nRowsImage);
+	return new Value_Number(ImageSet::nRows);
 }
 
 // ml.cifar.SampleSet#nCols
@@ -197,7 +197,7 @@ Skeleton.
 
 Gurax_ImplementPropertyGetter(SampleSet, nCols)
 {
-	return new Value_Number(ImageSet::nColsImage);
+	return new Value_Number(ImageSet::nCols);
 }
 
 // ml.cifar.SampleSet#nClasses

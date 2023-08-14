@@ -20,8 +20,8 @@ public:
 	Gurax_MemoryPoolAllocator("ml.cifar.ImageSet");
 public:
 	static const size_t nChannels = 3;
-	static const size_t nRowsImage = 32;
-	static const size_t nColsImage = 32;
+	static const size_t nRows = 32;
+	static const size_t nCols = 32;
 private:
 	Binary _buff;
 public:
@@ -39,8 +39,8 @@ protected:
 	~ImageSet() = default;
 public:
 	void Add(const UInt8* buffImage, size_t bytes) { _buff.append(buffImage, bytes); }
-	void ExtractAsArray(RefPtr<Array>& pArray, const SampleSet& sampleSet, const Array::ElemTypeT& elemType, Double numCeil, size_t idx, size_t batchSize) const;
-	void ExtractAsImage(RefPtr<Image>& pImage, const SampleSet& sampleSet, const Image::Format& format, size_t idx, size_t batchSize) const;
+	void ExtractAsArray(RefPtr<Array>& pArray, const SampleSet& sampleSet, const Array::ElemTypeT& elemType, size_t batchSize, Double numCeil, size_t idx) const;
+	void ExtractAsImage(RefPtr<Image>& pImage, const SampleSet& sampleSet, const Image::Format& format, size_t batchSize, size_t idx) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const ImageSet& other) const { return this == &other; }

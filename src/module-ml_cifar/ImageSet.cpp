@@ -36,17 +36,17 @@ ImageSet::ImageSet()
 {
 }
 
-void ImageSet::ExtractAsArray(RefPtr<Array>& pArray, const SampleSet& sampleSet, const Array::ElemTypeT& elemType, Double numCeil, size_t idx, size_t batchSize) const
+void ImageSet::ExtractAsArray(RefPtr<Array>& pArray, const SampleSet& sampleSet, const Array::ElemTypeT& elemType, size_t batchSize, Double numCeil, size_t idx) const
 {
 	auto func = CopyElems[elemType.id];
-	size_t nElems = nChannels * nRowsImage * nColsImage;
+	size_t nElems = nChannels * nRows * nCols;
 	if (batchSize == 0) {
-		if (!pArray) pArray.reset(Array::Create(elemType, DimSizes(nRowsImage, nColsImage)));
+		if (!pArray) pArray.reset(Array::Create(elemType, DimSizes(nChannels, nRows, nCols)));
 		UInt8* pElemDst = pArray->GetPointerC<UInt8>();
 		const UInt8* pElemSrc = _buff.data() + nElems * sampleSet.GetIndex(idx);
 		func(pElemDst, pElemSrc, nElems, numCeil);
 	} else {
-		if (!pArray) pArray.reset(Array::Create(elemType, DimSizes(batchSize, nRowsImage, nColsImage)));
+		if (!pArray) pArray.reset(Array::Create(elemType, DimSizes(batchSize, nChannels, nRows, nCols)));
 		UInt8* pElemDst = pArray->GetPointerC<UInt8>();
 		size_t bytesForward = nElems * elemType.bytes;
 		for (size_t i = 0; i < batchSize; i++, idx++) {
@@ -60,23 +60,23 @@ void ImageSet::ExtractAsArray(RefPtr<Array>& pArray, const SampleSet& sampleSet,
 #if 0
 void ImageSet::ExtractAsArray(RefPtr<Array>& pArray, const Array::ElemTypeT& elemType, Double numCeil, size_t iSample) const
 {
-	if (!pArray) pArray.reset(Array::Create(elemType, DimSizes(nChannels, nRowsImage, nColsImage)));
+	if (!pArray) pArray.reset(Array::Create(elemType, DimSizes(nChannels, nRows, nCols)));
 	auto func = CopyElems[elemType.id];
-	size_t nElems = nChannels * nRowsImage * nColsImage;
+	size_t nElems = nChannels * nRows * nCols;
 	const UInt8* pElemSrc = _buff.data() + nElems * iSample;
 	func(pArray->GetPointerC<void>(), pElemSrc, nElems, numCeil);
 }
 #endif
 
-void ImageSet::ExtractAsImage(RefPtr<Image>& pImage, const SampleSet& sampleSet, const Image::Format& format, size_t idx, size_t batchSize) const
+void ImageSet::ExtractAsImage(RefPtr<Image>& pImage, const SampleSet& sampleSet, const Image::Format& format, size_t batchSize, size_t idx) const
 {
 	size_t nItems = (batchSize == 0)? 1 : batchSize;
 	if (!pImage) {
 		pImage.reset(new Image(format));
-		pImage->Allocate(nColsImage, nRowsImage * nItems);
+		pImage->Allocate(nCols, nRows * nItems);
 	}
 	UInt8* pDst = pImage->GetPointerC();
-	size_t nPixels = nRowsImage * nColsImage;
+	size_t nPixels = nRows * nCols;
 	if (format.IsIdentical(Image::Format::RGB)) {
 		for (size_t iItem = 0; iItem < nItems; iItem++, idx++) {
 			const UInt8* pElemSrcR = _buff.data() + nPixels * nChannels * sampleSet.GetIndex(idx);
@@ -108,10 +108,10 @@ void ImageSet::ExtractAsImage(RefPtr<Image>& pImage, const Image::Format& format
 {
 	if (!pImage) {
 		pImage.reset(new Image(format));
-		pImage->Allocate(nColsImage, nRowsImage);
+		pImage->Allocate(nCols, nRows);
 	}
 	UInt8* pDst = pImage->GetPointerC();
-	size_t nElemsPlate = nRowsImage * nColsImage;
+	size_t nElemsPlate = nRows * nCols;
 	const UInt8* pElemSrcR = _buff.data() + nElemsPlate * nChannels * iSample;
 	const UInt8* pElemSrcG = pElemSrcR + nElemsPlate;
 	const UInt8* pElemSrcB = pElemSrcG + nElemsPlate;

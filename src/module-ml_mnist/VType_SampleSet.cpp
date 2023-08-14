@@ -80,7 +80,7 @@ Gurax_ImplementMethod(SampleSet, Each)
 	if (Error::IsIssued()) return Value::nil();
 	const Image::Format& format = Image::Format::RGBA;
 	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetSampleSet().Reference(), elemType, numCeil, format, 0));
+	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetSampleSet().Reference(), elemType, format, 0, numCeil));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
@@ -113,7 +113,7 @@ Gurax_ImplementMethod(SampleSet, EachBatch)
 	if (Error::IsIssued()) return Value::nil();
 	const Image::Format& format = Image::Format::RGBA;
 	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetSampleSet().Reference(), elemType, numCeil, format, batchSize));
+	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetSampleSet().Reference(), elemType, format, batchSize, numCeil));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 

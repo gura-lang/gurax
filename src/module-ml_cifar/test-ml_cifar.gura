@@ -14,9 +14,18 @@ TestCase('Basic test') {
 	db = ml.cifar100.Database('.')
 	Println(db.train)
 	Println(db.test)
-	db.train.Each(`float, format = `rgb).Head(3) {|sample, idx|
+	/*
+	db.train.Each(`float).Head(3) {|sample, idx|
 		Println(db.labelNames[sample.label])
 		ml.cifar.PrintImage(sample.input, guideFlag = true)
-		sample.image.Resize(100, 100).Write(Format('a%d.png', idx), `png)
+		sample.image.Resize(100, nil).Write(Format('a%d.png', idx), `png)
+	}
+	*/
+	db.train.EachBatch(`float, 16).Head(1) {|sample, idx|
+		repeat (sample.input.shape[0]) {|i|
+			Println(db.labelNames[sample.labels[i]])
+			ml.cifar.PrintImage(sample.input[i], guideFlag = true)
+		}
+		sample.image.Resize(100, nil).Write(Format('a%d.png', idx), `png)
 	}
 }

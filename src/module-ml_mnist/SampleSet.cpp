@@ -36,8 +36,8 @@ void SampleSetOwner::Clear()
 //------------------------------------------------------------------------------
 // Iterator_Each
 //------------------------------------------------------------------------------
-Iterator_Each::Iterator_Each(SampleSet* pSampleSet, const Array::ElemTypeT& elemType, Double numCeil, const Image::Format& format, size_t batchSize) :
-	_pSampleSet(pSampleSet), _elemType(elemType), _numCeil(numCeil), _format(format), _batchSize(batchSize), _idx(0)
+Iterator_Each::Iterator_Each(SampleSet* pSampleSet, const Array::ElemTypeT& elemType, const Image::Format& format, size_t batchSize, Double numCeil) :
+	_pSampleSet(pSampleSet), _elemType(elemType), _format(format), _batchSize(batchSize), _numCeil(numCeil), _idx(0)
 {
 }
 
@@ -51,7 +51,7 @@ Value* Iterator_Each::DoNextValue()
 {
 	size_t nChars = (_batchSize == 0)? 1 : _batchSize;
 	if (_idx + nChars > _pSampleSet->GetImageSet().GetNSamples()) return nullptr;
-	RefPtr<Sample> pSample(new Sample(_pSampleSet->Reference(), _elemType, _numCeil, _format, _idx, _batchSize));
+	RefPtr<Sample> pSample(new Sample(_pSampleSet->Reference(), _elemType, _format, _batchSize, _numCeil, _idx));
 	_idx += nChars;
 	return new Value_Sample(pSample.release());
 }

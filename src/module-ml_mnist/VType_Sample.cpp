@@ -113,6 +113,21 @@ Gurax_ImplementPropertyGetter(Sample, label)
 	return new Value_Number(valueThis.GetSample().GetLabel());
 }
 
+// ml.mnist.Sample#labels
+Gurax_DeclareProperty_R(Sample, labels)
+{
+	Declare(VTYPE_List, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementPropertyGetter(Sample, labels)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_List(VTYPE_Number, valueThis.GetSample().GetValuesLabel().Reference());
+}
+
 //------------------------------------------------------------------------------
 // VType_Sample
 //------------------------------------------------------------------------------
@@ -131,6 +146,7 @@ void VType_Sample::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Sample, result));
 	Assign(Gurax_CreateProperty(Sample, image));
 	Assign(Gurax_CreateProperty(Sample, label));
+	Assign(Gurax_CreateProperty(Sample, labels));
 }
 
 //------------------------------------------------------------------------------

@@ -59,7 +59,7 @@ bool ImageSet::Read(Stream& stream)
 	return true;
 }
 
-void ImageSet::ExtractAsArray(RefPtr<Array>& pArray, const SampleSet& sampleSet, const Array::ElemTypeT& elemType, Double numCeil, size_t idx, size_t batchSize) const
+void ImageSet::ExtractAsArray(RefPtr<Array>& pArray, const SampleSet& sampleSet, const Array::ElemTypeT& elemType, size_t batchSize, Double numCeil, size_t idx) const
 {
 	auto func = CopyElems[elemType.id];
 	size_t nElems = _nRows * _nCols;
@@ -80,7 +80,7 @@ void ImageSet::ExtractAsArray(RefPtr<Array>& pArray, const SampleSet& sampleSet,
 	}
 }
 
-void ImageSet::ExtractAsImage(RefPtr<Image>& pImage, const SampleSet& sampleSet, const Image::Format& format, size_t idx, size_t batchSize) const
+void ImageSet::ExtractAsImage(RefPtr<Image>& pImage, const SampleSet& sampleSet, const Image::Format& format, size_t batchSize, size_t idx) const
 {
 	size_t nItems = (batchSize == 0)? 1 : batchSize;
 	if (!pImage) {

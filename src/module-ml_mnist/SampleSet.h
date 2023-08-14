@@ -70,12 +70,12 @@ class GURAX_DLLDECLARE Iterator_Each : public Iterator {
 private:
 	RefPtr<SampleSet> _pSampleSet;
 	const Array::ElemTypeT& _elemType;
-	Double _numCeil;
 	const Image::Format& _format;
 	size_t _batchSize;
+	Double _numCeil;
 	size_t _idx;
 public:
-	Iterator_Each(SampleSet* pSampleSet, const Array::ElemTypeT& elemType, Double numCeil, const Image::Format& format, size_t batchSize);
+	Iterator_Each(SampleSet* pSampleSet, const Array::ElemTypeT& elemType, const Image::Format& format, size_t batchSize, Double numCeil);
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
