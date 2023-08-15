@@ -32,7 +32,7 @@ if (true) {
 nEpochs = 100
 batchSize = 16
 nIterations = 100
-Printf('Training with %d samples [Image Size:%dx%d, Label Size:%d] -- Press Q to abort the process.\n',
+Printf('Training with %d samples [Image Size:%dx%d, Classes:%d] -- Press Q to abort the process.\n',
 	cond(!nIterations || db.train.nSamples < batchSize * nIterations, db.train.nSamples, batchSize * nIterations),
 	db.nRows, db.nCols, db.nClasses)
 ml.Trainer(model, optimizer, `image) {|trainer|

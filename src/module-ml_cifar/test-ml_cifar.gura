@@ -3,28 +3,26 @@
 // test-ml_cifar.gura
 //==============================================================================
 import(util.tester) {*}
-import(ml.cifar)
-import(ml.cifar10)
-import(ml.cifar100)
 import(tar)
 import(png)
+//cifar = import(ml.cifar10)
+cifar = import(ml.cifar100)
 
 TestCase('Basic test') {
-	//db = ml.cifar10.Database('.')
-	db = ml.cifar100.Database('.')
+	db = cifar.Database('.')
 	Println(db.train)
 	Println(db.test)
 	/*
 	db.train.Each(`float).Head(3) {|sample, idx|
 		Println(db.labelNames[sample.label])
-		ml.cifar.PrintImage(sample.input, guideFlag = true)
+		cifar.PrintImage(sample.input, guideFlag = true)
 		sample.image.Resize(100, nil).Write(Format('a%d.png', idx), `png)
 	}
 	*/
 	db.train.EachBatch(`float, 16).Head(1) {|sample, idx|
 		repeat (sample.input.shape[0]) {|i|
 			Println(db.labelNames[sample.labels[i]])
-			ml.cifar.PrintImage(sample.input[i], guideFlag = true)
+			cifar.PrintImage(sample.input[i], guideFlag = true)
 		}
 		sample.image.Resize(100, nil).Write(Format('a%d.png', idx), `png)
 	}

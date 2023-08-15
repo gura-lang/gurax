@@ -1,9 +1,8 @@
 #!/usr/bin/env gurax
 import(recog)
-import(ml.cifar)
-import(ml.cifar10)
+cifar = import(ml.cifar100)
 
-db = ml.cifar10.Database('..')
+db = cifar.Database('..')
 nCorrects = 0
 nSamples = db.test.nSamples
 Open('eval.result.txt', 'w') {|out|
@@ -16,7 +15,7 @@ Open('eval.result.txt', 'w') {|out|
 			nCorrects += 1
 		} else {
 			out.Printf(' "%s" .. wrong. correct is "%s"\n', db.labelNames[labelRecog], db.labelNames[sample.label])
-			ml.cifar.PrintImage(sample.input, out)
+			cifar.PrintImage(sample.input, out)
 		}
 	}
 	sys.cerr.Printf('accuracy: %d/%d (%.1f%%)\n', nCorrects, nSamples, nCorrects / nSamples * 100)
