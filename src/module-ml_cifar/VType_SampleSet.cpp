@@ -115,7 +115,7 @@ Gurax_ImplementMethod(SampleSet, EachBatch)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// ml.mnist.SampleSet#Get(idx as Number, elemType? as Symbol, numCeil? as Number) as ml.mnist.Sample {block?}
+// ml.cifar.SampleSet#Get(idx as Number, elemType? as Symbol, numCeil? as Number) as ml.cifar.Sample {block?}
 Gurax_DeclareMethod(SampleSet, Get)
 {
 	Declare(VTYPE_Sample, Flag::None);
@@ -175,6 +175,28 @@ Gurax_ImplementMethod(SampleSet, Read)
 		Error::Issue(ErrorType::FormatError, "invalid format of CIFAR-10/100 file");
 		return Value::nil();
 	}
+	return valueThis.Reference();
+}
+
+// ml.cifar.SampleSet#Shuffle(random? as Random):reduce
+Gurax_DeclareMethod(SampleSet, Shuffle)
+{
+	Declare(VTYPE_SampleSet, Flag::Reduce);
+	DeclareArg("random", VTYPE_Random, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementMethod(SampleSet, Shuffle)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	Random& random = args.IsValid()? args.Pick<Value_Random>().GetRandom() : Random::Global();
+	// Function body
+	valueThis.GetSampleSet().Shuffle(random);
 	return valueThis.Reference();
 }
 
@@ -284,6 +306,7 @@ void VType_SampleSet::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(SampleSet, EachBatch));
 	Assign(Gurax_CreateMethod(SampleSet, Get));
 	Assign(Gurax_CreateMethod(SampleSet, Read));
+	Assign(Gurax_CreateMethod(SampleSet, Shuffle));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SampleSet, nSamples));
 	Assign(Gurax_CreateProperty(SampleSet, nChannels));

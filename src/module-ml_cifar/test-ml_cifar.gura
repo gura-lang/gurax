@@ -5,25 +5,65 @@
 import(util.tester) {*}
 import(tar)
 import(png)
-//cifar = import(ml.cifar10)
-cifar = import(ml.cifar100)
+import(ml.cifar)
+import(ml.cifar10)
+import(ml.cifar100)
+
+Println('Reading Cifar10')
+db10 = ml.cifar10.Database('.')
+Println('Reading Cifar100')
+db100 = ml.cifar100.Database('.')
 
 TestCase('Basic test') {
-	db = cifar.Database('.')
-	Println(db.train)
-	Println(db.test)
-	/*
-	db.train.Each(`float).Head(3) {|sample, idx|
-		Println(db.labelNames[sample.label])
-		cifar.PrintImage(sample.input, guideFlag = true)
-		sample.image.Resize(100, nil).Write(Format('a%d.png', idx), `png)
-	}
-	*/
-	db.train.EachBatch(`float, 16).Head(1) {|sample, idx|
-		repeat (sample.input.shape[0]) {|i|
-			Println(db.labelNames[sample.labels[i]])
-			cifar.PrintImage(sample.input[i], guideFlag = true)
+	Printf('Cifar10: nChannels=%d, nRows=%d, nCols=%d, nClasses=%d\n', db10.nChannels, db10.nRows, db10.nCols, db10.nClasses)
+	Printf('Cifar100: nChannels=%d, nRows=%d, nCols=%d, nClasses=%d\n', db100.nChannels, db100.nRows, db100.nCols, db100.nClasses)
+	//Printf('%s\n', db10.train.imageSet)
+	//Printf('%s\n', db10.train.labelSet)
+	//Printf('%s\n', db10.test.imageSet)
+	//Printf('%s\n', db10.test.labelSet)
+	//Printf('%s\n', db100.train.imageSet)
+	//Printf('%s\n', db100.train.labelSet)
+	//Printf('%s\n', db100.test.imageSet)
+	//Printf('%s\n', db100.test.labelSet)
+}
+
+TestCase('ml.cifar.SampleSet#Each()') {
+	[db10, db100].Each {|db|
+		db.train.Each(`float).Head(6) {|sample|
+			Println(db.labelNames[sample.label])
+			ml.cifar.PrintImage(sample.input, guideFlag = false)
 		}
-		sample.image.Resize(100, nil).Write(Format('a%d.png', idx), `png)
+	}
+}
+
+TestCase('ml.cifar.SampleSet#EachBatch()') {
+	[db10, db100].Each {|db|
+		db.train.EachBatch(3, `float).Head(2) {|sample|
+			repeat (sample.input.shape[0]) {|i|
+				Println(sample.label)
+				ml.cifar.PrintImage(sample.input[i], guideFlag = false)
+			}
+		}
+	}
+}
+
+TestCase('ml.cifar.SampleSet#Get()') {
+	[db10, db100].Each {|db|
+		repeat (6) {|i|
+			sample = db.train.Get(i, `float)
+			Println(sample.label)
+			ml.cifar.PrintImage(sample.input, guideFlag = false)
+		}
+	}
+}
+
+TestCase('ml.cifar.SampleSet#Shuffle()') {
+	rand = Random(0)
+	[db10, db100].Each {|db|
+		repeat (3) {
+			db.train.Shuffle(rand)
+			sample = db.train.EachBatch(32, `float).NextValue()
+			Println(sample.labels.Each():iter {|label| Format('%d', label)}.Join(','))
+		}
 	}
 }
