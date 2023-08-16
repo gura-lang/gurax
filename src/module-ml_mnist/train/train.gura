@@ -37,7 +37,7 @@ Printf('Training with %d samples [Image Size:%dx%d, Classes:%d] -- Press Q to ab
 	db.nRows, db.nCols, db.nClasses)
 ml.Trainer(model, optimizer, `image) {|trainer|
 	repeat (nEpochs) {|iEpoch|
-		db.train.EachBatch(`float, batchSize = batchSize).Head(nIterations) {|sample|
+		db.train.EachBatch(batchSize, `float).Head(nIterations) {|sample|
 			trainer.Train(sample.result, sample.input)
 			sampleLast = sample
 		}

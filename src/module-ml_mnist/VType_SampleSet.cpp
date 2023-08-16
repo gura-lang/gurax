@@ -53,11 +53,11 @@ Gurax_ImplementConstructor(SampleSet)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// ml.mnist.SampleSet#Each(elemType as Symbol, numCeil? as Number) as Iterator {block?}
+// ml.mnist.SampleSet#Each(elemType? as Symbol, numCeil? as Number) as Iterator {block?}
 Gurax_DeclareMethod(SampleSet, Each)
 {
 	Declare(VTYPE_Iterator, Flag::None);
-	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("numCeil", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -71,7 +71,7 @@ Gurax_ImplementMethod(SampleSet, Each)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	const Array::ElemTypeT& elemType = Array::SymbolToElemType(args.PickSymbol());
+	const Array::ElemTypeT& elemType = args.IsValid()? Array::SymbolToElemType(args.PickSymbol()) : Array::ElemType::Float;
 	if (elemType.IsNone()) {
 		Error::Issue(ErrorType::ValueError, "invalid symbol for element type");
 		return Value::nil();
@@ -84,12 +84,12 @@ Gurax_ImplementMethod(SampleSet, Each)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// ml.mnist.SampleSet#EachBatch(elemType as Symbol, batchSize as Number, numCeil? as Number) as Iterator {block?}
+// ml.mnist.SampleSet#EachBatch(batchSize as Number, elemType? as Symbol, numCeil? as Number) as Iterator {block?}
 Gurax_DeclareMethod(SampleSet, EachBatch)
 {
 	Declare(VTYPE_Iterator, Flag::None);
-	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("batchSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("numCeil", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -103,18 +103,56 @@ Gurax_ImplementMethod(SampleSet, EachBatch)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	const Array::ElemTypeT& elemType = Array::SymbolToElemType(args.PickSymbol());
+	size_t batchSize = args.PickNumberPos<size_t>();
+	const Array::ElemTypeT& elemType = args.IsValid()? Array::SymbolToElemType(args.PickSymbol()) : Array::ElemType::Float;
 	if (elemType.IsNone()) {
 		Error::Issue(ErrorType::ValueError, "invalid symbol for element type");
 		return Value::nil();
 	}
-	size_t batchSize = args.PickNumberPos<size_t>();
 	Double numCeil = args.IsValid()? args.PickNumberPos<Double>() : 1.;
 	if (Error::IsIssued()) return Value::nil();
 	const Image::Format& format = Image::Format::RGBA;
 	// Function body
 	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetSampleSet().Reference(), elemType, format, batchSize, numCeil));
 	return argument.ReturnIterator(processor, pIterator.release());
+}
+
+// ml.mnist.SampleSet#Get(idx as Number, elemType? as Symbol, numCeil? as Number) as ml.mnist.Sample {block?}
+Gurax_DeclareMethod(SampleSet, Get)
+{
+	Declare(VTYPE_Sample, Flag::None);
+	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("numCeil", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementMethod(SampleSet, Get)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	size_t idx = args.PickNumberNonNeg<size_t>();
+	const Array::ElemTypeT& elemType = args.IsValid()? Array::SymbolToElemType(args.PickSymbol()) : Array::ElemType::Float;
+	if (elemType.IsNone()) {
+		Error::Issue(ErrorType::ValueError, "invalid symbol for element type");
+		return Value::nil();
+	}
+	Double numCeil = args.IsValid()? args.PickNumberPos<Double>() : 1.;
+	if (Error::IsIssued()) return Value::nil();
+	const Image::Format& format = Image::Format::RGBA;
+	// Function body
+	const SampleSet& sampleSet = valueThis.GetSampleSet();
+	if (idx >= sampleSet.GetImageSet().GetNSamples()) {
+		Error::Issue(ErrorType::IndexError, "index is out of range");
+		return Value::nil();
+	}
+	RefPtr<Sample> pSample(new Sample(sampleSet.Reference(), elemType, format, 0, numCeil, idx));
+	return argument.ReturnValue(processor, new Value_Sample(pSample.release()));
 }
 
 // ml.mnist.SampleSet#Shuffle(random? as Random):reduce
@@ -246,6 +284,7 @@ void VType_SampleSet::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(SampleSet, Each));
 	Assign(Gurax_CreateMethod(SampleSet, EachBatch));
+	Assign(Gurax_CreateMethod(SampleSet, Get));
 	Assign(Gurax_CreateMethod(SampleSet, Shuffle));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SampleSet, imageSet));
