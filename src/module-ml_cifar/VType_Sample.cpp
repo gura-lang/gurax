@@ -53,6 +53,21 @@ Gurax_ImplementMethod(Sample, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
+// ml.cifar.Sample#hasSuperClass
+Gurax_DeclareProperty_R(Sample, hasSuperClass)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementPropertyGetter(Sample, hasSuperClass)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Bool(valueThis.GetSample().HasSuperClass());
+}
+
 // ml.cifar.Sample#input
 Gurax_DeclareProperty_R(Sample, input)
 {
@@ -113,6 +128,53 @@ Gurax_ImplementPropertyGetter(Sample, label)
 	return new Value_Number(valueThis.GetSample().GetLabel());
 }
 
+// ml.cifar.Sample#labelSuper:nil
+Gurax_DeclareProperty_R(Sample, labelSuper)
+{
+	Declare(VTYPE_Number, Flag::Nil);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementPropertyGetter(Sample, labelSuper)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	if (!valueThis.GetSample().HasSuperClass()) return Value::nil();
+	return new Value_Number(valueThis.GetSample().GetLabelSuper());
+}
+
+// ml.cifar.Sample#labelName
+Gurax_DeclareProperty_R(Sample, labelName)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementPropertyGetter(Sample, labelName)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(valueThis.GetSample().GetLabelName());
+}
+
+// ml.cifar.Sample#labelNameSuper:nil
+Gurax_DeclareProperty_R(Sample, labelNameSuper)
+{
+	Declare(VTYPE_String, Flag::Nil);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementPropertyGetter(Sample, labelNameSuper)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	if (!valueThis.GetSample().HasSuperClass()) return Value::nil();
+	return new Value_String(valueThis.GetSample().GetLabelNameSuper());
+}
+
 // ml.cifar.Sample#labels
 Gurax_DeclareProperty_R(Sample, labels)
 {
@@ -126,6 +188,53 @@ Gurax_ImplementPropertyGetter(Sample, labels)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_List(VTYPE_Number, valueThis.GetSample().GetValuesLabel().Reference());
+}
+
+// ml.cifar.Sample#labelsSuper:nil
+Gurax_DeclareProperty_R(Sample, labelsSuper)
+{
+	Declare(VTYPE_List, Flag::Nil);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementPropertyGetter(Sample, labelsSuper)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	if (!valueThis.GetSample().HasSuperClass()) return Value::nil();
+	return new Value_List(VTYPE_Number, valueThis.GetSample().GetValuesLabelSuper().Reference());
+}
+
+// ml.cifar.Sample#labelNames
+Gurax_DeclareProperty_R(Sample, labelNames)
+{
+	Declare(VTYPE_List, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementPropertyGetter(Sample, labelNames)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_List(VTYPE_Number, valueThis.GetSample().GetValuesLabelName().Reference());
+}
+
+// ml.cifar.Sample#labelNamesSuper:nil
+Gurax_DeclareProperty_R(Sample, labelNamesSuper)
+{
+	Declare(VTYPE_List, Flag::Nil);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementPropertyGetter(Sample, labelNamesSuper)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	if (!valueThis.GetSample().HasSuperClass()) return Value::nil();
+	return new Value_List(VTYPE_Number, valueThis.GetSample().GetValuesLabelNameSuper().Reference());
 }
 
 //------------------------------------------------------------------------------
@@ -142,11 +251,18 @@ void VType_Sample::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Sample, MethodSkeleton));
 	// Assignment of property
+	Assign(Gurax_CreateProperty(Sample, hasSuperClass));
 	Assign(Gurax_CreateProperty(Sample, input));
 	Assign(Gurax_CreateProperty(Sample, result));
 	Assign(Gurax_CreateProperty(Sample, image));
 	Assign(Gurax_CreateProperty(Sample, label));
+	Assign(Gurax_CreateProperty(Sample, labelSuper));
+	Assign(Gurax_CreateProperty(Sample, labelName));
+	Assign(Gurax_CreateProperty(Sample, labelNameSuper));
 	Assign(Gurax_CreateProperty(Sample, labels));
+	Assign(Gurax_CreateProperty(Sample, labelsSuper));
+	Assign(Gurax_CreateProperty(Sample, labelNames));
+	Assign(Gurax_CreateProperty(Sample, labelNamesSuper));
 }
 
 //------------------------------------------------------------------------------

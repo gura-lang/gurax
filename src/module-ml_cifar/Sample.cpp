@@ -47,6 +47,21 @@ UInt8 Sample::GetLabel(size_t idx) const
 	return _pSampleSet->GetLabelSet().GetLabel(_pSampleSet->GetIndex(idx));
 }
 
+UInt8 Sample::GetLabelSuper(size_t idx) const
+{
+	return _pSampleSet->GetLabelSet().GetLabelSuper(_pSampleSet->GetIndex(idx));
+}
+
+String Sample::GetLabelName(size_t idx) const
+{
+	return _pSampleSet->GetLabelSet().GetLabelName(_pSampleSet->GetIndex(idx));
+}
+
+String Sample::GetLabelNameSuper(size_t idx) const
+{
+	return _pSampleSet->GetLabelSet().GetLabelNameSuper(_pSampleSet->GetIndex(idx));
+}
+
 const ValueOwner& Sample::GetValuesLabel()
 {
 	if (!_pValuesLabel) {
@@ -59,6 +74,48 @@ const ValueOwner& Sample::GetValuesLabel()
 		}
 	}
 	return *_pValuesLabel;
+}
+
+const ValueOwner& Sample::GetValuesLabelSuper()
+{
+	if (!_pValuesLabelSuper) {
+		size_t idx = _idx;
+		size_t nItems = (_batchSize == 0)? 1 : _batchSize;
+		_pValuesLabelSuper.reset(new ValueOwner());
+		_pValuesLabelSuper->reserve(nItems);
+		for (size_t iItem = 0; iItem < nItems; iItem++, idx++) {
+			_pValuesLabelSuper->push_back(new Value_Number(GetLabelSuper(idx)));
+		}
+	}
+	return *_pValuesLabelSuper;
+}
+
+const ValueOwner& Sample::GetValuesLabelName()
+{
+	if (!_pValuesLabelName) {
+		size_t idx = _idx;
+		size_t nItems = (_batchSize == 0)? 1 : _batchSize;
+		_pValuesLabelName.reset(new ValueOwner());
+		_pValuesLabelName->reserve(nItems);
+		for (size_t iItem = 0; iItem < nItems; iItem++, idx++) {
+			_pValuesLabelName->push_back(new Value_String(GetLabelName(idx)));
+		}
+	}
+	return *_pValuesLabelName;
+}
+
+const ValueOwner& Sample::GetValuesLabelNameSuper()
+{
+	if (!_pValuesLabelSuperName) {
+		size_t idx = _idx;
+		size_t nItems = (_batchSize == 0)? 1 : _batchSize;
+		_pValuesLabelSuperName.reset(new ValueOwner());
+		_pValuesLabelSuperName->reserve(nItems);
+		for (size_t iItem = 0; iItem < nItems; iItem++, idx++) {
+			_pValuesLabelSuperName->push_back(new Value_String(GetLabelNameSuper(idx)));
+		}
+	}
+	return *_pValuesLabelSuperName;
 }
 
 String Sample::ToString(const StringStyle& ss) const

@@ -29,8 +29,13 @@ TestCase('Basic test') {
 
 TestCase('ml.cifar.SampleSet#Each()') {
 	[db10, db100].Each {|db|
-		db.train.Each(`float).Head(6) {|sample|
-			Println(db.labelNames[sample.label])
+		db.train.Each(`float).Head(8 * 3) {|sample|
+			//Println(db.labelNames[sample.label])
+			if (sample.hasSuperClass) {
+				Printf('%s : %s\n', sample.labelName, sample.labelNameSuper)
+			} else {
+				Printf('%s\n', sample.labelName)
+			}
 			ml.cifar.PrintImage(sample.input, guideFlag = false)
 		}
 	}
@@ -38,9 +43,13 @@ TestCase('ml.cifar.SampleSet#Each()') {
 
 TestCase('ml.cifar.SampleSet#EachBatch()') {
 	[db10, db100].Each {|db|
-		db.train.EachBatch(3, `float).Head(2) {|sample|
+		db.train.EachBatch(8, `float).Head(3) {|sample|
 			repeat (sample.input.shape[0]) {|i|
-				Println(sample.label)
+				if (sample.hasSuperClass) {
+					Printf('%s : %s\n', sample.labelNames[i], sample.labelNamesSuper[i])
+				} else {
+					Printf('%s\n', sample.labelNames[i])
+				}
 				ml.cifar.PrintImage(sample.input[i], guideFlag = false)
 			}
 		}
@@ -49,9 +58,13 @@ TestCase('ml.cifar.SampleSet#EachBatch()') {
 
 TestCase('ml.cifar.SampleSet#Get()') {
 	[db10, db100].Each {|db|
-		repeat (6) {|i|
+		repeat (8 * 3) {|i|
 			sample = db.train.Get(i, `float)
-			Println(sample.label)
+			if (sample.hasSuperClass) {
+				Printf('%s : %s\n', sample.labelName, sample.labelNameSuper)
+			} else {
+				Printf('%s\n', sample.labelName)
+			}
 			ml.cifar.PrintImage(sample.input, guideFlag = false)
 		}
 	}

@@ -88,7 +88,7 @@ void VType_ImageSet::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(ImageSet));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(ImageSet, MethodSkeleton));
+	//Assign(Gurax_CreateMethod(ImageSet, MethodSkeleton));
 	// Assignment of property
 	//Assign(Gurax_CreateProperty(ImageSet, propSkeleton));
 }

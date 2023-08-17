@@ -36,9 +36,12 @@ public:
 protected:
 	~SampleSet() = default;
 public:
+	bool HasSuperClass() const { return _superClassFlag; }
 	bool Read(Stream& stream);
 	size_t GetNSamples() const { return _nSamples; }
+	LabelSet& GetLabelSet() { return *_pLabelSet; }
 	const LabelSet& GetLabelSet() const { return *_pLabelSet; }
+	ImageSet& GetImageSet() { return *_pImageSet; }
 	const ImageSet& GetImageSet() const { return *_pImageSet; }
 public:
 	void Shuffle(Random& random) { _indices.Shuffle(random); }

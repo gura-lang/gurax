@@ -19,6 +19,8 @@ public:
 private:
 	Binary _labels;
 	Binary _labelsSuper;
+	StringList _labelNames;
+	StringList _labelNamesSuper;
 	size_t _nClasses;
 	size_t _nClassesSuper;
 public:
@@ -37,6 +39,10 @@ public:
 	void Add(UInt8 labelSuper, UInt8 label);
 	UInt8 GetLabel(size_t iSample) const { return _labels[iSample]; }
 	UInt8 GetLabelSuper(size_t iSample) const { return _labelsSuper[iSample]; }
+	String GetLabelName(size_t iSample) const;
+	String GetLabelNameSuper(size_t iSample) const;
+	void SetLabelNames(StringList labelNames) { _labelNames = labelNames; }
+	void SetLabelNamesSuper(StringList labelNamesSuper) { _labelNamesSuper = labelNamesSuper; }
 	size_t GetNClasses() const { return _nClasses; }
 	size_t GetNClassesSuper() const { return _nClassesSuper; }
 public:

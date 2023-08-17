@@ -178,6 +178,50 @@ Gurax_ImplementMethod(SampleSet, Read)
 	return valueThis.Reference();
 }
 
+// ml.cifar.SampleSet#SetLabelNames(labelNames[] as String):reduce
+Gurax_DeclareMethod(SampleSet, SetLabelNames)
+{
+	Declare(VTYPE_LabelSet, Flag::None);
+	DeclareArg("labelNames", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementMethod(SampleSet, SetLabelNames)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	StringList labelNames = args.PickStringList();
+	// Function body
+	valueThis.GetSampleSet().GetLabelSet().SetLabelNames(std::move(labelNames));
+	return valueThis.Reference();
+}
+
+// ml.cifar.SampleSet#SetLabelNamesSuper(labelNamesSuper[] as String):reduce
+Gurax_DeclareMethod(SampleSet, SetLabelNamesSuper)
+{
+	Declare(VTYPE_LabelSet, Flag::None);
+	DeclareArg("labelNamesSuper", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementMethod(SampleSet, SetLabelNamesSuper)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	StringList labelNamesSuper = args.PickStringList();
+	// Function body
+	valueThis.GetSampleSet().GetLabelSet().SetLabelNamesSuper(std::move(labelNamesSuper));
+	return valueThis.Reference();
+}
+
 // ml.cifar.SampleSet#Shuffle(random? as Random):reduce
 Gurax_DeclareMethod(SampleSet, Shuffle)
 {
@@ -306,6 +350,8 @@ void VType_SampleSet::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(SampleSet, EachBatch));
 	Assign(Gurax_CreateMethod(SampleSet, Get));
 	Assign(Gurax_CreateMethod(SampleSet, Read));
+	Assign(Gurax_CreateMethod(SampleSet, SetLabelNames));
+	Assign(Gurax_CreateMethod(SampleSet, SetLabelNamesSuper));
 	Assign(Gurax_CreateMethod(SampleSet, Shuffle));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(SampleSet, nSamples));

@@ -28,6 +28,9 @@ private:
 	RefPtr<Array> _pArrayResult;
 	RefPtr<Image> _pImage;
 	RefPtr<ValueOwner> _pValuesLabel;
+	RefPtr<ValueOwner> _pValuesLabelSuper;
+	RefPtr<ValueOwner> _pValuesLabelName;
+	RefPtr<ValueOwner> _pValuesLabelSuperName;
 public:
 	// Constructor
 	Sample(SampleSet* pSampleSet, const Array::ElemTypeT& elemType, const Image::Format& format, size_t batchSize, Double numCeil, size_t idx);
@@ -40,12 +43,22 @@ public:
 protected:
 	~Sample() = default;
 public:
+	bool HasSuperClass() const { return _pSampleSet->HasSuperClass(); }
 	const Array& GetArrayInput();
 	const Array& GetArrayResult();
 	const Image& GetImage();
 	UInt8 GetLabel(size_t idx) const;
 	UInt8 GetLabel() const { return GetLabel(_idx); }
+	UInt8 GetLabelSuper(size_t idx) const;
+	UInt8 GetLabelSuper() const { return GetLabelSuper(_idx); }
+	String GetLabelName(size_t idx) const;
+	String GetLabelName() const { return GetLabelName(_idx); }
+	String GetLabelNameSuper(size_t idx) const;
+	String GetLabelNameSuper() const { return GetLabelNameSuper(_idx); }
 	const ValueOwner& GetValuesLabel();
+	const ValueOwner& GetValuesLabelSuper();
+	const ValueOwner& GetValuesLabelName();
+	const ValueOwner& GetValuesLabelNameSuper();
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Sample& other) const { return this == &other; }
