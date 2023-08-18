@@ -1,6 +1,6 @@
 #!/usr/bin/env gurax
 import(recog)
-cifar = import(ml.cifar100)
+cifar = import(ml.cifar10)
 
 db = cifar.Database('..')
 nCorrects = 0

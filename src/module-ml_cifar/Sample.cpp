@@ -36,6 +36,23 @@ const Array& Sample::GetArrayResult()
 	return *_pArrayResult;
 }
 
+const Array& Sample::GetArrayResultSuper()
+{
+	size_t nClassesSuper = _pSampleSet->GetLabelSet().GetNClassesSuper();
+	if (_pArrayResultSuper) {
+		// nothing to do
+	} else if (_batchSize == 0) {
+		_pArrayResultSuper.reset(Array::Create(_elemType, DimSizes(nClassesSuper)));
+		_pArrayResultSuper->IndexSetDouble(GetLabelSuper(_idx), 1.);
+	} else {
+		_pArrayResultSuper.reset(Array::Create(_elemType, DimSizes(_batchSize, nClassesSuper)));
+		for (size_t i = 0; i < _batchSize; i++) {
+			_pArrayResultSuper->IndexSetDouble(i * nClassesSuper + GetLabelSuper(_idx + i), 1.);
+		}
+	}
+	return *_pArrayResultSuper;
+}
+
 const Image& Sample::GetImage()
 {
 	_pSampleSet->GetImageSet().ExtractAsImage(_pImage, *_pSampleSet, _format, _batchSize, _idx);

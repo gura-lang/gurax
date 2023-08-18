@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(ml_cifar)
 //------------------------------------------------------------------------------
 // SampleSet
 //------------------------------------------------------------------------------
-SampleSet::SampleSet(bool superClassFlag) : _superClassFlag(superClassFlag), _nSamples(0),
+SampleSet::SampleSet(bool superClassFlag) : _hasSuperClassFlag(superClassFlag), _nSamples(0),
 							_pLabelSet(new LabelSet()), _pImageSet(new ImageSet())
 {
 }
@@ -21,7 +21,7 @@ bool SampleSet::Read(Stream& stream)
 	};
 	UInt8 buffImage[ImageSet::nChannels * ImageSet::nRows * ImageSet::nCols];
 	for (;;) {
-		if (_superClassFlag) {
+		if (_hasSuperClassFlag) {
 			Pack pack;
 			size_t bytesRead = stream.Read(&pack, sizeof(pack));
 			if (bytesRead == 0) break;

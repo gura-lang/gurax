@@ -26,6 +26,7 @@ private:
 	size_t _idx;
 	RefPtr<Array> _pArrayInput;
 	RefPtr<Array> _pArrayResult;
+	RefPtr<Array> _pArrayResultSuper;
 	RefPtr<Image> _pImage;
 	RefPtr<ValueOwner> _pValuesLabel;
 	RefPtr<ValueOwner> _pValuesLabelSuper;
@@ -46,6 +47,7 @@ public:
 	bool HasSuperClass() const { return _pSampleSet->HasSuperClass(); }
 	const Array& GetArrayInput();
 	const Array& GetArrayResult();
+	const Array& GetArrayResultSuper();
 	const Image& GetImage();
 	UInt8 GetLabel(size_t idx) const;
 	UInt8 GetLabel() const { return GetLabel(_idx); }

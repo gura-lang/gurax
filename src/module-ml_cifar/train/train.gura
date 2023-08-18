@@ -1,11 +1,13 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 import(ml)
-cifar = import(ml.cifar100)
+cifar = import(ml.cifar10)
 
 db = cifar.Database('..')
 optimizer = ml.Optimizer.GradientDescent(0.01)
+superClassFlag = false
 //------------------------------------------------------------------------------
+nClasses = cond(superClassFlag, db.nClassesSuper, db.nClasses)
 model = `{
 	t0 = image |*| reshape
 	t1 = t0 |*| conv1 |*| ml.ReLU() |*| pool1
@@ -18,21 +20,24 @@ reshape = ml.Reshape(nil, 3, db.nRows, db.nCols)
 conv1 = ml.Conv2d(nFilters = 30, nRowsFilter = 5, nColsFilter = 5, stride = 1, padding = 0)
 pool1 = ml.MaxPool2d(nRowsKernel = 2, nColsKernel = 2, stride = 2)
 linear1 = ml.Linear(100)
-linear2 = ml.Linear(db.nClasses)
+linear2 = ml.Linear(nClasses)
 //------------------------------------------------------------------------------
 nEpochs = 100
 batchSize = 16
 nIterations = 100
 Printf('Training with %d samples [Image Size:%dx%d, Classes:%d] -- Press Q to abort the process.\n',
 	cond(!nIterations || db.train.nSamples < batchSize * nIterations, db.train.nSamples, batchSize * nIterations),
-	db.nRows, db.nCols, db.nClasses)
+	db.nRows, db.nCols, nClasses)
+progressBar = ProgressBar(nIterations * batchSize)
 ml.Trainer(model, optimizer, `image) {|trainer|
 	repeat (nEpochs) {|iEpoch|
-		db.train.EachBatch(batchSize, `float).Head(nIterations) {|sample|
-			trainer.Train(sample.result, sample.input)
-			sampleLast = sample
+		progressBar.Reset()
+		db.train.EachBatch(batchSize, `float).Head(nIterations) {|sample, iIteration|
+			result = cond(superClassFlag, sample.resultSuper, sample.result)
+			trainer.Train(result, sample.input)
+			progressBar.Progress(iIteration * batchSize)
 		}
-		Printf('Epoch#%d error=%g\n', iEpoch + 1, trainer.CalcMeanSquaredError(sampleLast.result))
+		Printf('Epoch#%d error=%g\n', iEpoch + 1, trainer.CalcMeanSquaredError(result))
 		ml.KeyAbort(Ord('q')) && break
 	}
 	trainer.CreateModule('recog')

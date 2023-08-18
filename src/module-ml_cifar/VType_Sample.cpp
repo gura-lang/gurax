@@ -98,6 +98,22 @@ Gurax_ImplementPropertyGetter(Sample, result)
 	return new Value_Array(valueThis.GetSample().GetArrayResult().Reference());
 }
 
+// ml.cifar.Sample#resultSuper:nil
+Gurax_DeclareProperty_R(Sample, resultSuper)
+{
+	Declare(VTYPE_Array, Flag::Nil);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Skeleton.
+)""");
+}
+
+Gurax_ImplementPropertyGetter(Sample, resultSuper)
+{
+	Sample& sample = GetValueThis(valueTarget).GetSample();
+	if (!sample.HasSuperClass()) return Value::nil();
+	return new Value_Array(sample.GetArrayResultSuper().Reference());
+}
+
 // ml.cifar.Sample#image
 Gurax_DeclareProperty_R(Sample, image)
 {
@@ -254,6 +270,7 @@ void VType_Sample::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Sample, hasSuperClass));
 	Assign(Gurax_CreateProperty(Sample, input));
 	Assign(Gurax_CreateProperty(Sample, result));
+	Assign(Gurax_CreateProperty(Sample, resultSuper));
 	Assign(Gurax_CreateProperty(Sample, image));
 	Assign(Gurax_CreateProperty(Sample, label));
 	Assign(Gurax_CreateProperty(Sample, labelSuper));

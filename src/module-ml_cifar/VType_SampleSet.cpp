@@ -27,11 +27,11 @@ ${help.ComposeMethodHelp(ml.cifar.SampleSet, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// ml.cifar.SampleSet(superClassFlag as Bool) {block?}
+// ml.cifar.SampleSet(hasSuperClassFlag as Bool) {block?}
 Gurax_DeclareConstructor(SampleSet)
 {
 	Declare(VTYPE_SampleSet, Flag::None);
-	DeclareArg("superClassFlag", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("hasSuperClassFlag", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `ml.cifar.SampleSet` instance.
@@ -42,9 +42,9 @@ Gurax_ImplementConstructor(SampleSet)
 {
 	// Arguments
 	ArgPicker args(argument);
-	Bool superClassFlag = args.PickBool();
+	Bool hasSuperClassFlag = args.PickBool();
 	// Function body
-	RefPtr<SampleSet> pSampleSet(new SampleSet(superClassFlag));
+	RefPtr<SampleSet> pSampleSet(new SampleSet(hasSuperClassFlag));
 	return argument.ReturnValue(processor, new Value_SampleSet(pSampleSet.release()));
 }
 

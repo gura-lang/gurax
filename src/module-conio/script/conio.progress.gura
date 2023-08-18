@@ -1,0 +1,53 @@
+#!/usr/bin/env gurax
+import(conio)
+
+ProgressBar = class {
+	nLightsMax as Number
+	valueMax as Number
+	nLights as Number = 0
+	nColsValue as Number
+	__init__(nLightsMax as Number, valueMax as Number) = {
+		this.nLightsMax = nLightsMax
+		this.valueMax = valueMax
+		this.nColsValue = Format('%d', valueMax).len
+	}
+	Reset() = { this.nLights = 0 }
+	SetValue(value as Number) = {
+		nLightsCur = Int(this.nLightsMax * value / this.valueMax)
+		if (this.nLights < nLightsCur) {
+			Printf('%s%s %*d/%d\r', '#' * nLightsCur, '-' * (this.nLightsMax - nLightsCur), this.nColsValue, value, this.valueMax)
+			this.nLights = nLightsCur
+		}
+	}
+}
+
+if (__name__ == '__main__') {
+	ProgressBar(20, 10) {|progressBar|
+		repeat (progressBar.valueMax + 1) {|value|
+			progressBar.SetValue(value)
+			os.Sleep(.1)
+		}
+		Println()
+	}
+	ProgressBar(20, 20) {|progressBar|
+		repeat (progressBar.valueMax + 1) {|value|
+			progressBar.SetValue(value)
+			os.Sleep(.1)
+		}
+		Println()
+	}
+	ProgressBar(40, 10) {|progressBar|
+		repeat (progressBar.valueMax + 1) {|value|
+			progressBar.SetValue(value)
+			os.Sleep(.1)
+		}
+		Println()
+	}
+	ProgressBar(40, 20) {|progressBar|
+		repeat (progressBar.valueMax + 1) {|value|
+			progressBar.SetValue(value)
+			os.Sleep(.1)
+		}
+		Println()
+	}
+}

@@ -19,14 +19,14 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("ml.cifar.SampleSet");
 private:
-	bool _superClassFlag;
+	bool _hasSuperClassFlag;
 	size_t _nSamples;
 	RefPtr<LabelSet> _pLabelSet;
 	RefPtr<ImageSet> _pImageSet;
 	NumList<size_t> _indices;
 public:
 	// Constructor
-	SampleSet(bool superClassFlag);
+	SampleSet(bool hasSuperClassFlag);
 	// Copy constructor/operator
 	SampleSet(const SampleSet& src) = delete;
 	SampleSet& operator=(const SampleSet& src) = delete;
@@ -36,7 +36,7 @@ public:
 protected:
 	~SampleSet() = default;
 public:
-	bool HasSuperClass() const { return _superClassFlag; }
+	bool HasSuperClass() const { return _hasSuperClassFlag; }
 	bool Read(Stream& stream);
 	size_t GetNSamples() const { return _nSamples; }
 	LabelSet& GetLabelSet() { return *_pLabelSet; }
