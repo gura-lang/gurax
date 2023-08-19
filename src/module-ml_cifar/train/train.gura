@@ -1,6 +1,8 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 import(ml)
+import(conio.progress)
+
 cifar = import(ml.cifar10)
 
 db = cifar.Database('..')
@@ -17,28 +19,32 @@ model = `{
 	t5 = t4 |*| ml.Softmax()
 }
 reshape = ml.Reshape(nil, 3, db.nRows, db.nCols)
-conv1 = ml.Conv2d(nFilters = 30, nRowsFilter = 5, nColsFilter = 5, stride = 1, padding = 0)
+conv1 = ml.Conv2d(nFilters = 30, nRowsFilter = 3, nColsFilter = 3, stride = 1, padding = 0)
 pool1 = ml.MaxPool2d(nRowsKernel = 2, nColsKernel = 2, stride = 2)
 linear1 = ml.Linear(100)
 linear2 = ml.Linear(nClasses)
 //------------------------------------------------------------------------------
 nEpochs = 100
 batchSize = 16
-nIterations = 100
-Printf('Training with %d samples [Image Size:%dx%d, Classes:%d] -- Press Q to abort the process.\n',
-	cond(!nIterations || db.train.nSamples < batchSize * nIterations, db.train.nSamples, batchSize * nIterations),
-	db.nRows, db.nCols, nClasses)
-progressBar = ProgressBar(nIterations * batchSize)
+nIterations = 1000
+nSamples = cond(!nIterations || db.train.nSamples < batchSize * nIterations, db.train.nSamples, batchSize * nIterations)
+Printf('Training with %d samples [Image Size:%dx%d, Classes:%d] -- Press Q to abort the process.\n', nSamples, db.nRows, db.nCols, nClasses)
 ml.Trainer(model, optimizer, `image) {|trainer|
+	abortFlag = false
 	repeat (nEpochs) {|iEpoch|
-		progressBar.Reset()
-		db.train.EachBatch(batchSize, `float).Head(nIterations) {|sample, iIteration|
-			result = cond(superClassFlag, sample.resultSuper, sample.result)
-			trainer.Train(result, sample.input)
-			progressBar.Progress(iIteration * batchSize)
+		conio.progress.ProgressBar(20, nSamples, 'Epoch#%d ', iEpoch + 1) {|progressBar|
+			db.train.EachBatch(batchSize, `float).Head(nIterations) {|sample, iIteration|
+				result = cond(superClassFlag, sample.resultSuper, sample.result)
+				trainer.Train(result, sample.input)
+				if (progressBar.SetValue(iIteration * batchSize) && ml.KeyAbort(nil, Ord('q'))) {
+					abortFlag = true
+					break
+				}
+			}
+			progressBar.Clear()
 		}
 		Printf('Epoch#%d error=%g\n', iEpoch + 1, trainer.CalcMeanSquaredError(result))
-		ml.KeyAbort(Ord('q')) && break
+		abortFlag && break
 	}
 	trainer.CreateModule('recog')
 }

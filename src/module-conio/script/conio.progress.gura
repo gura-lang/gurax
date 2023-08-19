@@ -4,21 +4,28 @@ import(conio)
 ProgressBar = class {
 	nLightsMax as Number
 	valueMax as Number
-	nLights as Number = 0
+	nLights as Number = -1
 	nColsValue as Number
-	__init__(nLightsMax as Number, valueMax as Number) = {
+	strHead as String
+	__init__(nLightsMax as Number, valueMax as Number, formatHead as String = '', args*) = {
 		this.nLightsMax = nLightsMax
 		this.valueMax = valueMax
 		this.nColsValue = Format('%d', valueMax).len
+		this.strHead = Format(formatHead, args*)
 	}
-	Reset() = { this.nLights = 0 }
+	Reset() = {
+		this.nLights = -1
+	}
 	SetValue(value as Number) = {
 		nLightsCur = Int(this.nLightsMax * value / this.valueMax)
-		if (this.nLights < nLightsCur) {
-			Printf('%s%s %*d/%d\r', '#' * nLightsCur, '-' * (this.nLightsMax - nLightsCur), this.nColsValue, value, this.valueMax)
-			this.nLights = nLightsCur
-		}
+		(this.nLights == nLightsCur) && return(false)
+		Printf('%s%s%s %*d/%d\r', this.strHead,
+				'#' * nLightsCur, '-' * (this.nLightsMax - nLightsCur),
+				this.nColsValue, value, this.valueMax)
+		this.nLights = nLightsCur
+		true
 	}
+	Clear() = conio.Clear(`line)
 }
 
 if (__name__ == '__main__') {
@@ -27,23 +34,30 @@ if (__name__ == '__main__') {
 			progressBar.SetValue(value)
 			os.Sleep(.1)
 		}
-		Println()
+		progressBar.Clear()
 	}
 	ProgressBar(20, 20) {|progressBar|
 		repeat (progressBar.valueMax + 1) {|value|
 			progressBar.SetValue(value)
 			os.Sleep(.1)
 		}
-		Println()
+		progressBar.Clear()
 	}
 	ProgressBar(40, 10) {|progressBar|
 		repeat (progressBar.valueMax + 1) {|value|
 			progressBar.SetValue(value)
 			os.Sleep(.1)
 		}
-		Println()
+		progressBar.Clear()
 	}
 	ProgressBar(40, 20) {|progressBar|
+		repeat (progressBar.valueMax + 1) {|value|
+			progressBar.SetValue(value)
+			os.Sleep(.1)
+		}
+		progressBar.Clear()
+	}
+	ProgressBar(20, 20, 'Phase#%d,%d ', 3, 2) {|progressBar|
 		repeat (progressBar.valueMax + 1) {|value|
 			progressBar.SetValue(value)
 			os.Sleep(.1)

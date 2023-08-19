@@ -3,14 +3,37 @@ import(gzip)
 import(ml):binary {*}
 import(conio)
 
-KeyAbort(keyCodes* as Number) = {
+KeyAbort(msg? as String, keyCodes* as Number) = {
 	if (conio.ReadKey() in keyCodes) {
-		Print('Are you sure to abort? [y/N]')
+		conio.Clear(`line)
+		Print(msg || 'Are you sure to abort? [y/N]')
 		key = conio.WaitKey()
 		Println()
 		return(key == Ord('y'))
 	}
 	return(false)
+}
+
+Trainer.DoTraining(iterator as Iterator, nSamplesWhole as Number, nEpochs as Number, batchSize as Number, nIterations? as Number, moduleNameProduct as String = 'recog') = {
+	nSamples = cond(!nIterations || nSamplesWhole < batchSize * nIterations, nSamplesWhole, batchSize * nIterations)
+	Printf('Training with %d samples -- Press Q to abort the process.\n', nSamples)
+	abortFlag = false
+	repeat (nEpochs) {|iEpoch|
+		conio.progress.ProgressBar(20, nSamples, 'Epoch%d ', iEpoch + 1) {|progressBar|
+			iterator.Head(nIterations) {|sample, iIteration|
+				result = sample.result
+				this.Train(result, sample.input)
+				if (progressBar.SetValue(iIteration * batchSize) && KeyAbort(nil, Ord('q'))) {
+					abortFlag = true
+					break
+				}
+			}
+			progressBar.Clear()
+		}
+		Printf('Epoch%d error=%g\n', iEpoch + 1, this.CalcMeanSquaredError(result))
+		abortFlag && break
+	}
+	this.CreateModule(moduleNameProduct)
 }
 
 Trainer.CreateModule(moduleName as String, variables* as Expr):dynamicScope = {
