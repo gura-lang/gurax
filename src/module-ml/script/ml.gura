@@ -14,13 +14,16 @@ KeyAbort(msg? as String, keyCodes* as Number) = {
 	return(false)
 }
 
-Trainer.DoTraining(iterator as Iterator, nSamplesWhole as Number, nEpochs as Number, batchSize as Number, nIterations? as Number, moduleNameProduct as String = 'recog') = {
+Trainer.DoTraining(iteratorGenerator as Function, nSamplesWhole as Number, nEpochs as Number,
+				batchSize as Number, nIterations? as Number, moduleNameProduct as String = 'recog') = {
 	nSamples = cond(!nIterations || nSamplesWhole < batchSize * nIterations, nSamplesWhole, batchSize * nIterations)
-	Printf('Training with %d samples -- Press Q to abort the process.\n', nSamples)
+	Printf('Training with %d samples for %d epochs -- Press Q to abort the process\n', nSamples, nEpochs)
 	abortFlag = false
+	nColsEpoch = Format('%d', nEpochs).len
 	repeat (nEpochs) {|iEpoch|
-		conio.progress.ProgressBar(20, nSamples, 'Epoch%d ', iEpoch + 1) {|progressBar|
-			iterator.Head(nIterations) {|sample, iIteration|
+		strHead = Format('%*d/%d ', nColsEpoch, iEpoch + 1, nEpochs)
+		conio.progress.ProgressBar(strHead, 30, nSamples) {|progressBar|
+			iteratorGenerator().Head(nIterations) {|sample, iIteration|
 				result = sample.result
 				this.Train(result, sample.input)
 				if (progressBar.SetValue(iIteration * batchSize) && KeyAbort(nil, Ord('q'))) {
@@ -30,8 +33,8 @@ Trainer.DoTraining(iterator as Iterator, nSamplesWhole as Number, nEpochs as Num
 			}
 			progressBar.Clear()
 		}
-		Printf('Epoch%d error=%g\n', iEpoch + 1, this.CalcMeanSquaredError(result))
 		abortFlag && break
+		Printf('%serror=%g\n', strHead, this.CalcMeanSquaredError(result))
 	}
 	this.CreateModule(moduleNameProduct)
 }

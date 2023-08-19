@@ -7,17 +7,17 @@ import(conio.progress)
 db = ml.mnist.Database(path.Join(sys.dirBase, 'sample/resource/mnist'))
 optimizer = ml.Optimizer.GradientDescent(0.01)
 if (false) {
-	model = `(image |*| reshape |*| linear |*| ml.Softmax())
+	model = `(input |*| reshape |*| linear |*| ml.Softmax())
 	reshape = ml.Reshape(nil, db.nRows * db.nCols)
 	linear = ml.Linear(db.nClasses)
 } elsif (true) {
-	model = `(image |*| reshape |*| linear1 |*| ml.ReLU() |*| linear2 |*| ml.Softmax())
+	model = `(input |*| reshape |*| linear1 |*| ml.ReLU() |*| linear2 |*| ml.Softmax())
 	reshape = ml.Reshape(nil, db.nRows * db.nCols)
 	linear1 = ml.Linear(100)
 	linear2 = ml.Linear(db.nClasses)
 } else {
 	model = `{
-		t0 = image |*| reshape
+		t0 = input |*| reshape
 		t1 = t0 |*| conv1 |*| ml.ReLU() |*| pool1
 		t2 = t1 |*| ml.Flatten(3)
 		t3 = t2 |*| linear1 |*| ml.ReLU()
@@ -31,67 +31,9 @@ if (false) {
 	linear2 = ml.Linear(db.nClasses)
 }
 //------------------------------------------------------------------------------
-nEpochs = 100
-batchSize = 16
-nIterations = nil
-nClasses = db.nClasses
-nSamples = cond(!nIterations || db.train.nSamples < batchSize * nIterations, db.train.nSamples, batchSize * nIterations)
-Printf('Training with %d samples [Image Size:%dx%d, Classes:%d] -- Press Q to abort the process.\n', nSamples, db.nRows, db.nCols, nClasses)
-ml.Trainer(model, optimizer, `image) {|trainer|
-	abortFlag = false
-	repeat (nEpochs) {|iEpoch|
-		conio.progress.ProgressBar(20, nSamples, 'Epoch#%d ', iEpoch + 1) {|progressBar|
-			db.train.EachBatch(batchSize, `float).Head(nIterations) {|sample, iIteration|
-				result = sample.result
-				trainer.Train(result, sample.input)
-				if (progressBar.SetValue(iIteration * batchSize) && ml.KeyAbort(nil, Ord('q'))) {
-					abortFlag = true
-					break
-				}
-			}
-			progressBar.Clear()
-		}
-		Printf('Epoch#%d error=%g\n', iEpoch + 1, trainer.CalcMeanSquaredError(result))
-		abortFlag && break
-	}
-	trainer.CreateModule('recog')
-}
-
-
-
-/*
-ml.Trainer(model, optimizer, `image).DoTraining(
-	iterator = db.train.EachBatch(16, `float)
+ml.Trainer(model, optimizer, `input).DoTraining(
+	iteratorGenerator = &{db.train.EachBatch(32, `float)}
 	nSamplesWhole = db.train.nSamples
-	nEpochs = 100
-	batchSize = 16
+	nEpochs = 20
+	batchSize = 32
 	nIterations = nil)
-*/
-
-/*
-iterator = db.train.EachBatch(16, `float)
-nSamplesWhole = db.train.nSamples
-nEpochs = 100
-batchSize = 16
-nIterations = nil
-trainer = ml.Trainer(model, optimizer, `image)
-nSamples = cond(!nIterations || nSamplesWhole < batchSize * nIterations, nSamplesWhole, batchSize * nIterations)
-Printf('Training with %d samples -- Press Q to abort the process.\n', nSamples)
-abortFlag = false
-repeat (nEpochs) {|iEpoch|
-	conio.progress.ProgressBar(20, nSamples, 'Epoch%d ', iEpoch + 1) {|progressBar|
-		iterator.Head(nIterations) {|sample, iIteration|
-			result = sample.result
-			trainer.Train(result, sample.input)
-			if (progressBar.SetValue(iIteration * batchSize) && ml.KeyAbort(nil, Ord('q'))) {
-				abortFlag = true
-				break
-			}
-		}
-		progressBar.Clear()
-	}
-	Printf('Epoch%d error=%g\n', iEpoch + 1, trainer.CalcMeanSquaredError(result))
-	//abortFlag && break
-}
-trainer.CreateModule(moduleNameProduct)
-*/

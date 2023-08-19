@@ -2,27 +2,27 @@
 import(conio)
 
 ProgressBar = class {
-	nLightsMax as Number
-	valueMax as Number
-	nLights as Number = -1
-	nColsValue as Number
 	strHead as String
-	__init__(nLightsMax as Number, valueMax as Number, formatHead as String = '', args*) = {
-		this.nLightsMax = nLightsMax
+	nBarsMax as Number
+	valueMax as Number
+	nBars as Number = -1
+	nColsValue as Number
+	__init__(strHead as String, nBarsMax as Number, valueMax as Number) = {
+		this.strHead = strHead
+		this.nBarsMax = nBarsMax
 		this.valueMax = valueMax
 		this.nColsValue = Format('%d', valueMax).len
-		this.strHead = Format(formatHead, args*)
 	}
 	Reset() = {
-		this.nLights = -1
+		this.nBars = -1
 	}
 	SetValue(value as Number) = {
-		nLightsCur = Int(this.nLightsMax * value / this.valueMax)
-		(this.nLights == nLightsCur) && return(false)
+		nBarsCur = Int(this.nBarsMax * value / this.valueMax)
+		(this.nBars == nBarsCur) && return(false)
 		Printf('%s%s%s %*d/%d\r', this.strHead,
-				'#' * nLightsCur, '-' * (this.nLightsMax - nLightsCur),
+				'#' * nBarsCur, '-' * (this.nBarsMax - nBarsCur),
 				this.nColsValue, value, this.valueMax)
-		this.nLights = nLightsCur
+		this.nBars = nBarsCur
 		true
 	}
 	Clear() = conio.Clear(`line)

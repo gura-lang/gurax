@@ -8,7 +8,7 @@ nCorrects = 0
 nSamples = db.test.nSamples
 Open('eval.result.txt', 'w') {|out|
 	sys.cerr.Printf('Test with %d samples\n', nSamples)
-	conio.progress.ProgressBar(20, nSamples) {|progressBar|
+	conio.progress.ProgressBar('', 20, nSamples) {|progressBar|
 		db.test.Each(`float) {|sample, iSample|
 			result = recog.Eval(sample.input)
 			progressBar.SetValue(iSample)
