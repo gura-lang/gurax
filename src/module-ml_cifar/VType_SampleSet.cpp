@@ -51,12 +51,14 @@ Gurax_ImplementConstructor(SampleSet)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// ml.cifar.SampleSet#Each(elemType? as Symbol, numCeil? as Number) as Iterator {block?}
+// ml.cifar.SampleSet#Each(elemType? as Symbol, numCeil? as Number):[fine,super] as Iterator {block?}
 Gurax_DeclareMethod(SampleSet, Each)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("numCeil", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(fine));
+	DeclareAttrOpt(Gurax_Symbol(super));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
@@ -75,20 +77,23 @@ Gurax_ImplementMethod(SampleSet, Each)
 		return Value::nil();
 	}
 	Double numCeil = args.IsValid()? args.PickNumberPos<Double>() : 1.;
+	bool defaultSuperClassFlag = argument.IsSet(Gurax_Symbol(super));
 	if (Error::IsIssued()) return Value::nil();
 	const Image::Format& format = Image::Format::RGBA;
 	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetSampleSet().Reference(), elemType, format, 0, numCeil));
+	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetSampleSet().Reference(), elemType, format, 0, numCeil, defaultSuperClassFlag));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// ml.cifar.SampleSet#EachBatch(elemType as Symbol, batchSize as Number, numCeil? as Number) as Iterator {block?}
+// ml.cifar.SampleSet#EachBatch(elemType as Symbol, batchSize as Number, numCeil? as Number):[fine,super] as Iterator {block?}
 Gurax_DeclareMethod(SampleSet, EachBatch)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("batchSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("numCeil", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(fine));
+	DeclareAttrOpt(Gurax_Symbol(super));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
@@ -108,20 +113,23 @@ Gurax_ImplementMethod(SampleSet, EachBatch)
 		return Value::nil();
 	}
 	Double numCeil = args.IsValid()? args.PickNumberPos<Double>() : 1.;
+	bool defaultSuperClassFlag = argument.IsSet(Gurax_Symbol(super));
 	if (Error::IsIssued()) return Value::nil();
 	const Image::Format& format = Image::Format::RGBA;
 	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetSampleSet().Reference(), elemType, format, batchSize, numCeil));
+	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetSampleSet().Reference(), elemType, format, batchSize, numCeil, defaultSuperClassFlag));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// ml.cifar.SampleSet#Get(idx as Number, elemType? as Symbol, numCeil? as Number) as ml.cifar.Sample {block?}
+// ml.cifar.SampleSet#Get(idx as Number, elemType? as Symbol, numCeil? as Number):[fine,super] as ml.cifar.Sample {block?}
 Gurax_DeclareMethod(SampleSet, Get)
 {
 	Declare(VTYPE_Sample, Flag::None);
 	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("numCeil", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(fine));
+	DeclareAttrOpt(Gurax_Symbol(super));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
@@ -141,6 +149,7 @@ Gurax_ImplementMethod(SampleSet, Get)
 		return Value::nil();
 	}
 	Double numCeil = args.IsValid()? args.PickNumberPos<Double>() : 1.;
+	bool defaultSuperClassFlag = argument.IsSet(Gurax_Symbol(super));
 	if (Error::IsIssued()) return Value::nil();
 	const Image::Format& format = Image::Format::RGBA;
 	// Function body
@@ -149,7 +158,7 @@ Gurax_ImplementMethod(SampleSet, Get)
 		Error::Issue(ErrorType::IndexError, "index is out of range");
 		return Value::nil();
 	}
-	RefPtr<Sample> pSample(new Sample(sampleSet.Reference(), elemType, format, 0, numCeil, idx));
+	RefPtr<Sample> pSample(new Sample(sampleSet.Reference(), elemType, format, 0, numCeil, idx, defaultSuperClassFlag));
 	return argument.ReturnValue(processor, new Value_Sample(pSample.release()));
 }
 

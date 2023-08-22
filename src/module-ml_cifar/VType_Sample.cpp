@@ -83,10 +83,12 @@ Gurax_ImplementPropertyGetter(Sample, input)
 	return new Value_Array(valueThis.GetSample().GetArrayInput().Reference());
 }
 
-// ml.cifar.Sample#result
+// ml.cifar.Sample#result:nil:[fine,super]
 Gurax_DeclareProperty_R(Sample, result)
 {
-	Declare(VTYPE_Array, Flag::None);
+	Declare(VTYPE_Array, Flag::Nil);
+	DeclareAttrOpt(Gurax_Symbol(fine));
+	DeclareAttrOpt(Gurax_Symbol(super));
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
 )""");
@@ -94,24 +96,10 @@ Skeleton.
 
 Gurax_ImplementPropertyGetter(Sample, result)
 {
-	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Array(valueThis.GetSample().GetArrayResult().Reference());
-}
-
-// ml.cifar.Sample#resultSuper:nil
-Gurax_DeclareProperty_R(Sample, resultSuper)
-{
-	Declare(VTYPE_Array, Flag::Nil);
-	AddHelp(Gurax_Symbol(en), u8R"""(
-Skeleton.
-)""");
-}
-
-Gurax_ImplementPropertyGetter(Sample, resultSuper)
-{
-	Sample& sample = GetValueThis(valueTarget).GetSample();
-	if (!sample.HasSuperClass()) return Value::nil();
-	return new Value_Array(sample.GetArrayResultSuper().Reference());
+	auto& sample = GetValueThis(valueTarget).GetSample();
+	return !sample.GetSuperClassFlag(attr)? new Value_Array(sample.GetArrayResult().Reference()) :
+		sample.HasSuperClass()? new Value_Array(sample.GetArrayResultSuper().Reference()) :
+		Value::nil();
 }
 
 // ml.cifar.Sample#image
@@ -129,10 +117,12 @@ Gurax_ImplementPropertyGetter(Sample, image)
 	return new Value_Image(valueThis.GetSample().GetImage().Reference());
 }
 
-// ml.cifar.Sample#label
+// ml.cifar.Sample#label:nil:[fine,super]
 Gurax_DeclareProperty_R(Sample, label)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Number, Flag::Nil);
+	DeclareAttrOpt(Gurax_Symbol(fine));
+	DeclareAttrOpt(Gurax_Symbol(super));
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
 )""");
@@ -140,30 +130,18 @@ Skeleton.
 
 Gurax_ImplementPropertyGetter(Sample, label)
 {
-	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetSample().GetLabel());
+	auto& sample = GetValueThis(valueTarget).GetSample();
+	return !sample.GetSuperClassFlag(attr)? new Value_Number(sample.GetLabel()) :
+		sample.HasSuperClass()? new Value_Number(sample.GetLabelSuper()) :
+		Value::nil();
 }
 
-// ml.cifar.Sample#labelSuper:nil
-Gurax_DeclareProperty_R(Sample, labelSuper)
-{
-	Declare(VTYPE_Number, Flag::Nil);
-	AddHelp(Gurax_Symbol(en), u8R"""(
-Skeleton.
-)""");
-}
-
-Gurax_ImplementPropertyGetter(Sample, labelSuper)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	if (!valueThis.GetSample().HasSuperClass()) return Value::nil();
-	return new Value_Number(valueThis.GetSample().GetLabelSuper());
-}
-
-// ml.cifar.Sample#labelName
+// ml.cifar.Sample#labelName:nil:[fine,super]
 Gurax_DeclareProperty_R(Sample, labelName)
 {
-	Declare(VTYPE_String, Flag::None);
+	Declare(VTYPE_String, Flag::Nil);
+	DeclareAttrOpt(Gurax_Symbol(fine));
+	DeclareAttrOpt(Gurax_Symbol(super));
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
 )""");
@@ -171,30 +149,18 @@ Skeleton.
 
 Gurax_ImplementPropertyGetter(Sample, labelName)
 {
-	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_String(valueThis.GetSample().GetLabelName());
+	auto& sample = GetValueThis(valueTarget).GetSample();
+	return !sample.GetSuperClassFlag(attr)? new Value_String(sample.GetLabelName()) :
+		sample.HasSuperClass()? new Value_String(sample.GetLabelNameSuper()) :
+		Value::nil();
 }
 
-// ml.cifar.Sample#labelNameSuper:nil
-Gurax_DeclareProperty_R(Sample, labelNameSuper)
-{
-	Declare(VTYPE_String, Flag::Nil);
-	AddHelp(Gurax_Symbol(en), u8R"""(
-Skeleton.
-)""");
-}
-
-Gurax_ImplementPropertyGetter(Sample, labelNameSuper)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	if (!valueThis.GetSample().HasSuperClass()) return Value::nil();
-	return new Value_String(valueThis.GetSample().GetLabelNameSuper());
-}
-
-// ml.cifar.Sample#labels
+// ml.cifar.Sample#labels:nil:[fine,super]
 Gurax_DeclareProperty_R(Sample, labels)
 {
-	Declare(VTYPE_List, Flag::None);
+	Declare(VTYPE_List, Flag::Nil);
+	DeclareAttrOpt(Gurax_Symbol(fine));
+	DeclareAttrOpt(Gurax_Symbol(super));
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
 )""");
@@ -202,30 +168,18 @@ Skeleton.
 
 Gurax_ImplementPropertyGetter(Sample, labels)
 {
-	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_List(VTYPE_Number, valueThis.GetSample().GetValuesLabel().Reference());
+	auto& sample = GetValueThis(valueTarget).GetSample();
+	return !sample.GetSuperClassFlag(attr)? new Value_List(VTYPE_Number, sample.GetValuesLabel().Reference()) :
+		sample.HasSuperClass()? new Value_List(VTYPE_Number, sample.GetValuesLabelSuper().Reference()) :
+		Value::nil();
 }
 
-// ml.cifar.Sample#labelsSuper:nil
-Gurax_DeclareProperty_R(Sample, labelsSuper)
-{
-	Declare(VTYPE_List, Flag::Nil);
-	AddHelp(Gurax_Symbol(en), u8R"""(
-Skeleton.
-)""");
-}
-
-Gurax_ImplementPropertyGetter(Sample, labelsSuper)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	if (!valueThis.GetSample().HasSuperClass()) return Value::nil();
-	return new Value_List(VTYPE_Number, valueThis.GetSample().GetValuesLabelSuper().Reference());
-}
-
-// ml.cifar.Sample#labelNames
+// ml.cifar.Sample#labelNames:nil:[fine,super]
 Gurax_DeclareProperty_R(Sample, labelNames)
 {
-	Declare(VTYPE_List, Flag::None);
+	Declare(VTYPE_List, Flag::Nil);
+	DeclareAttrOpt(Gurax_Symbol(fine));
+	DeclareAttrOpt(Gurax_Symbol(super));
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
 )""");
@@ -233,24 +187,10 @@ Skeleton.
 
 Gurax_ImplementPropertyGetter(Sample, labelNames)
 {
-	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_List(VTYPE_Number, valueThis.GetSample().GetValuesLabelName().Reference());
-}
-
-// ml.cifar.Sample#labelNamesSuper:nil
-Gurax_DeclareProperty_R(Sample, labelNamesSuper)
-{
-	Declare(VTYPE_List, Flag::Nil);
-	AddHelp(Gurax_Symbol(en), u8R"""(
-Skeleton.
-)""");
-}
-
-Gurax_ImplementPropertyGetter(Sample, labelNamesSuper)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	if (!valueThis.GetSample().HasSuperClass()) return Value::nil();
-	return new Value_List(VTYPE_Number, valueThis.GetSample().GetValuesLabelNameSuper().Reference());
+	auto& sample = GetValueThis(valueTarget).GetSample();
+	return !sample.GetSuperClassFlag(attr)? new Value_List(VTYPE_String, sample.GetValuesLabelName().Reference()) :
+		sample.HasSuperClass()? new Value_List(VTYPE_String, sample.GetValuesLabelNameSuper().Reference()) :
+		Value::nil();
 }
 
 //------------------------------------------------------------------------------
@@ -270,16 +210,11 @@ void VType_Sample::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Sample, hasSuperClass));
 	Assign(Gurax_CreateProperty(Sample, input));
 	Assign(Gurax_CreateProperty(Sample, result));
-	Assign(Gurax_CreateProperty(Sample, resultSuper));
 	Assign(Gurax_CreateProperty(Sample, image));
 	Assign(Gurax_CreateProperty(Sample, label));
-	Assign(Gurax_CreateProperty(Sample, labelSuper));
 	Assign(Gurax_CreateProperty(Sample, labelName));
-	Assign(Gurax_CreateProperty(Sample, labelNameSuper));
 	Assign(Gurax_CreateProperty(Sample, labels));
-	Assign(Gurax_CreateProperty(Sample, labelsSuper));
 	Assign(Gurax_CreateProperty(Sample, labelNames));
-	Assign(Gurax_CreateProperty(Sample, labelNamesSuper));
 }
 
 //------------------------------------------------------------------------------

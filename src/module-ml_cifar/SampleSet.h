@@ -80,8 +80,9 @@ private:
 	size_t _batchSize;
 	Double _numCeil;
 	size_t _idx;
+	bool _defaultSuperClassFlag;
 public:
-	Iterator_Each(SampleSet* pSampleSet, const Array::ElemTypeT& elemType, const Image::Format& format, size_t batchSize, Double numCeil);
+	Iterator_Each(SampleSet* pSampleSet, const Array::ElemTypeT& elemType, const Image::Format& format, size_t batchSize, Double numCeil, bool defaultSuperClassFlag);
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }

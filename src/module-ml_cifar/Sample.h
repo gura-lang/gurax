@@ -24,6 +24,7 @@ private:
 	size_t _batchSize;
 	Double _numCeil;
 	size_t _idx;
+	bool _defaultSuperClassFlag;
 	RefPtr<Array> _pArrayInput;
 	RefPtr<Array> _pArrayResult;
 	RefPtr<Array> _pArrayResultSuper;
@@ -34,7 +35,7 @@ private:
 	RefPtr<ValueOwner> _pValuesLabelSuperName;
 public:
 	// Constructor
-	Sample(SampleSet* pSampleSet, const Array::ElemTypeT& elemType, const Image::Format& format, size_t batchSize, Double numCeil, size_t idx);
+	Sample(SampleSet* pSampleSet, const Array::ElemTypeT& elemType, const Image::Format& format, size_t batchSize, Double numCeil, size_t idx, bool defaultSuperClassFlag);
 	// Copy constructor/operator
 	Sample(const Sample& src) = delete;
 	Sample& operator=(const Sample& src) = delete;
@@ -45,6 +46,7 @@ protected:
 	~Sample() = default;
 public:
 	bool HasSuperClass() const { return _pSampleSet->HasSuperClass(); }
+	bool GetSuperClassFlag(const Attribute& attr) const;
 	const Array& GetArrayInput();
 	const Array& GetArrayResult();
 	const Array& GetArrayResultSuper();

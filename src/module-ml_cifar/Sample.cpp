@@ -8,9 +8,16 @@ Gurax_BeginModuleScope(ml_cifar)
 //------------------------------------------------------------------------------
 // Sample
 //------------------------------------------------------------------------------
-Sample::Sample(SampleSet* pSampleSet, const Array::ElemTypeT& elemType, const Image::Format& format, size_t batchSize, Double numCeil, size_t idx) :
-		_pSampleSet(pSampleSet), _elemType(elemType), _format(format), _batchSize(batchSize), _numCeil(numCeil), _idx(idx)
+Sample::Sample(SampleSet* pSampleSet, const Array::ElemTypeT& elemType, const Image::Format& format,
+								size_t batchSize, Double numCeil, size_t idx, bool defaultSuperClassFlag) :
+		_pSampleSet(pSampleSet), _elemType(elemType), _format(format),
+		_batchSize(batchSize), _numCeil(numCeil), _idx(idx), _defaultSuperClassFlag(defaultSuperClassFlag)
 {
+}
+
+bool Sample::GetSuperClassFlag(const Attribute& attr) const
+{
+	return attr.IsSet(Gurax_Symbol(fine))? false : attr.IsSet(Gurax_Symbol(super))? true : _defaultSuperClassFlag;
 }
 
 const Array& Sample::GetArrayInput()
