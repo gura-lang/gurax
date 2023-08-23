@@ -68,7 +68,7 @@ Skeleton.
 Gurax_ImplementMethod(SampleSet, Each)
 {
 	// Target
-	auto& valueThis = GetValueThis(argument);
+	auto& sampleSet = GetValueThis(argument).GetSampleSet();
 	// Arguments
 	ArgPicker args(argument);
 	const Array::ElemTypeT& elemType = args.IsValid()? Array::SymbolToElemType(args.PickSymbol()) : Array::ElemType::Float;
@@ -79,9 +79,13 @@ Gurax_ImplementMethod(SampleSet, Each)
 	Double numCeil = args.IsValid()? args.PickNumberPos<Double>() : 1.;
 	bool defaultSuperClassFlag = argument.IsSet(Gurax_Symbol(super));
 	if (Error::IsIssued()) return Value::nil();
+	if (defaultSuperClassFlag && !sampleSet.HasSuperClass()) {
+		Error::Issue(ErrorType::ValueError, "there is no super class data");
+		return Value::nil();
+	}
 	const Image::Format& format = Image::Format::RGBA;
 	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetSampleSet().Reference(), elemType, format, 0, numCeil, defaultSuperClassFlag));
+	RefPtr<Iterator> pIterator(new Iterator_Each(sampleSet.Reference(), elemType, format, 0, numCeil, defaultSuperClassFlag));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
@@ -103,7 +107,7 @@ Skeleton.
 Gurax_ImplementMethod(SampleSet, EachBatch)
 {
 	// Target
-	auto& valueThis = GetValueThis(argument);
+	auto& sampleSet = GetValueThis(argument).GetSampleSet();
 	// Arguments
 	ArgPicker args(argument);
 	size_t batchSize = args.PickNumberPos<size_t>();
@@ -115,9 +119,13 @@ Gurax_ImplementMethod(SampleSet, EachBatch)
 	Double numCeil = args.IsValid()? args.PickNumberPos<Double>() : 1.;
 	bool defaultSuperClassFlag = argument.IsSet(Gurax_Symbol(super));
 	if (Error::IsIssued()) return Value::nil();
+	if (defaultSuperClassFlag && !sampleSet.HasSuperClass()) {
+		Error::Issue(ErrorType::ValueError, "there is no super class data");
+		return Value::nil();
+	}
 	const Image::Format& format = Image::Format::RGBA;
 	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetSampleSet().Reference(), elemType, format, batchSize, numCeil, defaultSuperClassFlag));
+	RefPtr<Iterator> pIterator(new Iterator_Each(sampleSet.Reference(), elemType, format, batchSize, numCeil, defaultSuperClassFlag));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
@@ -139,7 +147,7 @@ Skeleton.
 Gurax_ImplementMethod(SampleSet, Get)
 {
 	// Target
-	auto& valueThis = GetValueThis(argument);
+	auto& sampleSet = GetValueThis(argument).GetSampleSet();
 	// Arguments
 	ArgPicker args(argument);
 	size_t idx = args.PickNumberNonNeg<size_t>();
@@ -151,9 +159,12 @@ Gurax_ImplementMethod(SampleSet, Get)
 	Double numCeil = args.IsValid()? args.PickNumberPos<Double>() : 1.;
 	bool defaultSuperClassFlag = argument.IsSet(Gurax_Symbol(super));
 	if (Error::IsIssued()) return Value::nil();
+	if (defaultSuperClassFlag && !sampleSet.HasSuperClass()) {
+		Error::Issue(ErrorType::ValueError, "there is no super class data");
+		return Value::nil();
+	}
 	const Image::Format& format = Image::Format::RGBA;
 	// Function body
-	const SampleSet& sampleSet = valueThis.GetSampleSet();
 	if (idx >= sampleSet.GetNSamples()) {
 		Error::Issue(ErrorType::IndexError, "index is out of range");
 		return Value::nil();
