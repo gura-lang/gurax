@@ -1,0 +1,2 @@
+#!/usr/bin/env gurax
+import(curl):binary {*}

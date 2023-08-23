@@ -68,3 +68,4 @@ target_link_libraries(curl.gurd PRIVATE guraxcore
 # Install
 #-------------------------------------------------------------------------------
 install(TARGETS curl.gurd RUNTIME DESTINATION module/site)
+install(PROGRAMS script/curl.gura DESTINATION module/site)
