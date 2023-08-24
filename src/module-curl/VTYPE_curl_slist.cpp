@@ -44,6 +44,7 @@ Gurax_ImplementConstructor(curl_slist)
 	ArgPicker args(argument);
 	Iterator& iter = args.PickIterator();
 	// Function body
+#if 0	
 	curl_slist* slist = nullptr;
 	for (;;) {
 		RefPtr<Value> pValue(iter.NextValue());
@@ -55,7 +56,10 @@ Gurax_ImplementConstructor(curl_slist)
 		slist = curl_slist_append(slist, Value_String::GetString(*pValue));
 	}
 	if (Error::IsIssued()) return Value::nil();
-	return argument.ReturnValue(processor, new Value_curl_slist(slist));
+#endif
+	curl_slist* slist = CreateSListFromIterator(iter);
+	if (Error::IsIssued()) return Value::nil();
+	return argument.ReturnValue(processor, slist? new Value_curl_slist(slist) : Value::nil());
 }
 
 //-----------------------------------------------------------------------------

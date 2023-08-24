@@ -7,6 +7,7 @@
 
 Gurax_BeginModuleScope(curl)
 
+curl_slist* CreateSListFromIterator(Iterator& iter);
 curl_slist* CreateSListFromValueList(const ValueList& values);
 ValueOwner* CreateValueOwnerFromSList(const curl_slist* slist);
 
