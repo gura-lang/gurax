@@ -347,7 +347,7 @@ errorDone:
 	composer.EndTryBlock();
 }
 
-// catch(errorType?:ErrorType) {`block}
+// catch(errorType? as ErrorType) {`block}
 Gurax_DeclareStatementAlias(catch_, "catch")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -417,13 +417,13 @@ Gurax_ImplementStatement(for_)
 	for (Expr* pExpr = exprCaller.GetExprParamFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		if (!pExpr->IsType<Expr_BinaryOp>()) {
 			Error::IssueWith(ErrorType::ArgumentError, *pExpr,
-							 "invalid argument for for-statement");
+							"invalid argument for for-statement");
 			return;
 		}
 		Expr_BinaryOp* pExprEx = dynamic_cast<Expr_BinaryOp*>(pExpr);
 		if (!pExprEx->GetOperator()->IsType(OpType::Contains)) {
 			Error::IssueWith(ErrorType::ArgumentError, *pExpr,
-							 "invalid argument for for-statement");
+							"invalid argument for for-statement");
 			return;
 		}
 		RefPtr<DeclArg> pDeclArg(DeclArg::CreateFromExpr(pExprEx->GetExprLeft()));
@@ -530,7 +530,7 @@ Gurax_ImplementStatement(for_)
 			composer.Add_PopFrame(exprCaller);
 		} else {
 			Error::IssueWith(ErrorType::ArgumentError, exprCaller,
-							 "invalid number of block parameters");
+							"invalid number of block parameters");
 			return;
 		}
 	}
@@ -660,13 +660,13 @@ Gurax_ImplementStatement(while_)
 			composer.Add_PopFrame(exprCaller);
 		} else {
 			Error::IssueWith(ErrorType::ArgumentError, exprCaller,
-							 "invalid number of block parameters");
+							"invalid number of block parameters");
 			return;
 		}
 	}
 }
 
-// repeat (cnt?:number) {block}
+// repeat (cnt? as number) {block}
 Gurax_DeclareStatement(repeat)
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -796,7 +796,7 @@ Gurax_ImplementStatement(repeat)
 			}
 		} else {
 			Error::IssueWith(ErrorType::ArgumentError, exprCaller,
-							 "invalid number of block parameters");
+							"invalid number of block parameters");
 			return;
 		}
 	}
@@ -815,7 +815,7 @@ Gurax_ImplementStatement(break_)
 {
 	if (!composer.HasValidRepeaterInfo()) {
 		Error::IssueWith(ErrorType::ContextError, exprCaller,
-						 "break-statement can only be used in a loop");
+						"break-statement can only be used in a loop");
 		return;
 	}
 	const Composer::RepeaterInfo& repeaterInfo = composer.GetRepeaterInfoCur();
@@ -858,7 +858,7 @@ Gurax_ImplementStatement(continue_)
 {
 	if (!composer.HasValidRepeaterInfo()) {
 		Error::IssueWith(ErrorType::ContextError, exprCaller,
-						 "continue-statement can only be used in a loop");
+						"continue-statement can only be used in a loop");
 		return;
 	}
 	const Composer::RepeaterInfo& repeaterInfo = composer.GetRepeaterInfoCur();
@@ -977,11 +977,11 @@ Gurax_ImplementStatement(import)
 						binaryFlag, mixInFlag, overwriteFlag, symbolForModuleFlag, exprCaller);
 }
 
-// scope(scp?:Scope) {`block}
+// scope(scope? as Scope) {`block}
 Gurax_DeclareStatement(scope)
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareArg("scp", VTYPE_Scope, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("scope", VTYPE_Scope, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
 }
 
@@ -1001,7 +1001,7 @@ Gurax_ImplementStatement(scope)
 	}
 }
 
-// class(parent?:VType) {`block}
+// class(parent? as VType) {`block}
 Gurax_DeclareStatementAlias(class_, "class")
 {
 	Declare(VTYPE_VType, Flag::None);

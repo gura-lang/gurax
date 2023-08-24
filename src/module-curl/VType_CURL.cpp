@@ -80,7 +80,7 @@ Gurax_ImplementPropertyGetter(CURL, opt)
 	return new Value_Opt(valueThis.GetOpt().Reference());
 }
 
-// curl.CURL#streamSrc
+// curl.CURL#streamSrc:r
 Gurax_DeclareProperty_RW(CURL, streamSrc)
 {
 	Declare(VTYPE_Stream, Flag::StreamR);
@@ -101,7 +101,7 @@ Gurax_ImplementPropertySetter(CURL, streamSrc)
 	valueThis.SetStreamRead(Value_Stream::GetStream(value).Reference());
 }
 
-// curl.CURL#streamDst
+// curl.CURL#streamDst:w:nil
 Gurax_DeclareProperty_RW(CURL, streamDst)
 {
 	Declare(VTYPE_Stream, Flag::StreamW | Flag::Nil);
@@ -123,7 +123,7 @@ Gurax_ImplementPropertySetter(CURL, streamDst)
 	valueThis.SetStreamWrite(value.IsValid()? Value_Stream::GetStream(value).Reference() : nullptr);
 }
 
-// curl.CURL#streamHeader
+// curl.CURL#streamHeader:w
 Gurax_DeclareProperty_RW(CURL, streamHeader)
 {
 	Declare(VTYPE_Stream, Flag::StreamW | Flag::Nil);
