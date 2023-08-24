@@ -50,46 +50,10 @@ Gurax_ImplementConstructor(curl_mime)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// curl.curl_mime#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(curl_mime, MethodSkeleton)
-{
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"""(
-Skeleton.
-)""");
-}
-
-Gurax_ImplementMethod(curl_mime, MethodSkeleton)
-{
-	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
-	// Function body
-	return new Value_Number(num1 + num2);
-}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// curl.curl_mime#propSkeleton
-Gurax_DeclareProperty_R(curl_mime, propSkeleton)
-{
-	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"""(
-
-)""");
-}
-
-Gurax_ImplementPropertyGetter(curl_mime, propSkeleton)
-{
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
-}
 
 //------------------------------------------------------------------------------
 // VType_curl_mime
@@ -103,9 +67,9 @@ void VType_curl_mime::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(curl_mime));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(curl_mime, MethodSkeleton));
+	//Assign(Gurax_CreateMethod(curl_mime, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(curl_mime, propSkeleton));
+	//Assign(Gurax_CreateProperty(curl_mime, propSkeleton));
 }
 
 //------------------------------------------------------------------------------
