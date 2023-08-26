@@ -4,7 +4,7 @@ import(ml)
 import(ml.mnist)
 import(conio.progress)
 
-db = ml.mnist.Database(path.Join(sys.dirBase, 'sample/resource/mnist'))
+db = ml.mnist.Database('.')
 optimizer = ml.Optimizer.GradientDescent(0.01)
 if (false) {
 	model = `(input |*| reshape |*| linear |*| ml.Softmax())

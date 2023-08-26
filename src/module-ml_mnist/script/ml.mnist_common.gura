@@ -1,7 +1,18 @@
 #!/usr/bin/env gura
+import(curl.util)
 import(ml.mnist):binary {*}
 
 pattern = [' ', '.', ':', '#', '#']
+
+DownloadFiles(urlBase as String, fileNames[] as String, dirName as String) = {
+	fileNames.Each {|fileName|
+		if (!fs.Exists(path.Join(dirName, fileName))) {
+			url = path.Join(urlBase, fileName):uri
+			sys.cerr.Printf('download: %s\n', url)
+			curl.util.Get(url, output = dirName)
+		}
+	}
+}
 
 PrintImage(array as Array, out as Stream = sys.cout, guideFlag as Bool = true, numCeil as Number = 1.) = {
 	if (guideFlag) {

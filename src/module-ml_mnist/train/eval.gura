@@ -3,7 +3,7 @@ import(recog)
 import(conio.progress)
 import(ml.mnist)
 
-db = ml.mnist.Database(path.Join(sys.dirBase, 'sample/resource/mnist'))
+db = ml.mnist.Database('.')
 nCorrects = 0
 nSamples = db.test.nSamples
 Open('eval.result.txt', 'w') {|out|
