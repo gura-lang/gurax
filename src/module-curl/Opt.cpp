@@ -72,10 +72,10 @@ bool Opt::SetItem(CURLoption option, const Value& value, CURLcode* pCode)
 			pValue_READ.reset(value.Reference());
 			break;
 		}
-		case CURLOPT_PROGRESSDATA: {
-			pValue_PROGRESS.reset(value.Reference());
-			break;
-		}
+		//case CURLOPT_PROGRESSDATA: {
+		//	pValue_PROGRESS.reset(value.Reference());
+		//	break;
+		//}
 		case CURLOPT_HEADERDATA: {
 			pValue_HEADER.reset(value.Reference());
 			break;
@@ -140,10 +140,10 @@ bool Opt::SetItem(CURLoption option, const Value& value, CURLcode* pCode)
 			pValue_CLOSESOCKET.reset(value.Reference());
 			break;
 		}
-		//case CURLOPT_XFERINFODATA: {
-		//	pValue_XFERINFO.reset(value.Reference());
-		//	break;
-		//}
+		case CURLOPT_XFERINFODATA: { // = CURLOPT_PROGRESSDATA
+			pValue_XFERINFO.reset(value.Reference());
+			break;
+		}
 		case CURLOPT_RESOLVER_START_DATA: {
 			pValue_RESOLVER_START.reset(value.Reference());
 			break;
@@ -195,43 +195,36 @@ bool Opt::SetItem(CURLoption option, const Value& value, CURLcode* pCode)
 		}
 		case CURLOPT_PROGRESSFUNCTION: {
 			curl_easy_setopt(_curl, CURLOPT_PROGRESSFUNCTION, Value_CURL::Callback_PROGRESS);
-			curl_easy_setopt(_curl, CURLOPT_PROGRESSDATA, this);
 			pFunc_PROGRESS.reset(func.Reference());
 			break;
 		}
 		case CURLOPT_HEADERFUNCTION: {
 			curl_easy_setopt(_curl, CURLOPT_HEADERFUNCTION, Value_CURL::Callback_HEADER);
-			curl_easy_setopt(_curl, CURLOPT_HEADERDATA, this);
 			pFunc_HEADER.reset(func.Reference());
 			break;
 		}
 		case CURLOPT_DEBUGFUNCTION: {
 			curl_easy_setopt(_curl, CURLOPT_DEBUGFUNCTION, Value_CURL::Callback_DEBUG);
-			curl_easy_setopt(_curl, CURLOPT_DEBUGDATA, this);
 			pFunc_DEBUG.reset(func.Reference());
 			break;
 		}
 		case CURLOPT_SSL_CTX_FUNCTION: {
 			curl_easy_setopt(_curl, CURLOPT_SSL_CTX_FUNCTION, Value_CURL::Callback_SSL_CTX);
-			curl_easy_setopt(_curl, CURLOPT_SSL_CTX_DATA, this);
 			pFunc_SSL_CTX.reset(func.Reference());
 			break;
 		}
 		case CURLOPT_IOCTLFUNCTION: {
 			curl_easy_setopt(_curl, CURLOPT_IOCTLFUNCTION, Value_CURL::Callback_IOCTL);
-			curl_easy_setopt(_curl, CURLOPT_IOCTLDATA, this);
 			pFunc_IOCTL.reset(func.Reference());
 			break;
 		}
 		case CURLOPT_CONV_FROM_NETWORK_FUNCTION: {
 			curl_easy_setopt(_curl, CURLOPT_CONV_FROM_NETWORK_FUNCTION, Value_CURL::Callback_CONV_FROM_NETWORK);
-			//curl_easy_setopt(_curl, CURLOPT_CONV_FROM_NETWORK_DATA, this);
 			pFunc_CONV_FROM_NETWORK.reset(func.Reference());
 			break;
 		}
 		case CURLOPT_CONV_TO_NETWORK_FUNCTION: {
 			curl_easy_setopt(_curl, CURLOPT_CONV_TO_NETWORK_FUNCTION, Value_CURL::Callback_CONV_TO_NETWORK);
-			//curl_easy_setopt(_curl, CURLOPT_CONV_TO_NETWORK_DATA, this);
 			pFunc_CONV_TO_NETWORK.reset(func.Reference());
 			break;
 		}
@@ -243,37 +236,31 @@ bool Opt::SetItem(CURLoption option, const Value& value, CURLcode* pCode)
 		}
 		case CURLOPT_SOCKOPTFUNCTION: {
 			curl_easy_setopt(_curl, CURLOPT_SOCKOPTFUNCTION, Value_CURL::Callback_SOCKOPT);
-			curl_easy_setopt(_curl, CURLOPT_SOCKOPTDATA, this);
 			pFunc_SOCKOPT.reset(func.Reference());
 			break;
 		}
 		case CURLOPT_OPENSOCKETFUNCTION: {
 			curl_easy_setopt(_curl, CURLOPT_OPENSOCKETFUNCTION, Value_CURL::Callback_OPENSOCKET);
-			curl_easy_setopt(_curl, CURLOPT_OPENSOCKETDATA, this);
 			pFunc_OPENSOCKET.reset(func.Reference());
 			break;
 		}
 		case CURLOPT_SEEKFUNCTION: {
 			curl_easy_setopt(_curl, CURLOPT_SEEKFUNCTION, Value_CURL::Callback_SEEK);
-			curl_easy_setopt(_curl, CURLOPT_SEEKDATA, this);
 			pFunc_SEEK.reset(func.Reference());
 			break;
 		}
 		case CURLOPT_SSH_KEYFUNCTION: {
 			curl_easy_setopt(_curl, CURLOPT_SSH_KEYFUNCTION, Value_CURL::Callback_SSH_KEY);
-			curl_easy_setopt(_curl, CURLOPT_SSH_KEYDATA, this);
 			pFunc_SSH_KEY.reset(func.Reference());
 			break;
 		}
 		case CURLOPT_INTERLEAVEFUNCTION: {
 			curl_easy_setopt(_curl, CURLOPT_INTERLEAVEFUNCTION, Value_CURL::Callback_INTERLEAVE);
-			curl_easy_setopt(_curl, CURLOPT_INTERLEAVEDATA, this);
 			pFunc_INTERLEAVE.reset(func.Reference());
 			break;
 		}
 		case CURLOPT_CHUNK_BGN_FUNCTION: {
 			curl_easy_setopt(_curl, CURLOPT_CHUNK_BGN_FUNCTION, Value_CURL::Callback_CHUNK_BGN);
-			//curl_easy_setopt(_curl, CURLOPT_CHUNK_BGN_DATA, this);
 			pFunc_CHUNK_BGN.reset(func.Reference());
 			break;
 		}
@@ -285,31 +272,26 @@ bool Opt::SetItem(CURLoption option, const Value& value, CURLcode* pCode)
 		}
 		case CURLOPT_FNMATCH_FUNCTION: {
 			curl_easy_setopt(_curl, CURLOPT_FNMATCH_FUNCTION, Value_CURL::Callback_FNMATCH);
-			curl_easy_setopt(_curl, CURLOPT_FNMATCH_DATA, this);
 			pFunc_FNMATCH.reset(func.Reference());
 			break;
 		}
 		case CURLOPT_CLOSESOCKETFUNCTION: {
 			curl_easy_setopt(_curl, CURLOPT_CLOSESOCKETFUNCTION, Value_CURL::Callback_CLOSESOCKET);
-			curl_easy_setopt(_curl, CURLOPT_CLOSESOCKETDATA, this);
 			pFunc_CLOSESOCKET.reset(func.Reference());
 			break;
 		}
 		case CURLOPT_XFERINFOFUNCTION: {
 			curl_easy_setopt(_curl, CURLOPT_XFERINFOFUNCTION, Value_CURL::Callback_XFERINFO);
-			curl_easy_setopt(_curl, CURLOPT_XFERINFODATA, this);
 			pFunc_XFERINFO.reset(func.Reference());
 			break;
 		}
 		case CURLOPT_RESOLVER_START_FUNCTION: {
 			curl_easy_setopt(_curl, CURLOPT_RESOLVER_START_FUNCTION, Value_CURL::Callback_RESOLVER_START);
-			curl_easy_setopt(_curl, CURLOPT_RESOLVER_START_DATA, this);
 			pFunc_RESOLVER_START.reset(func.Reference());
 			break;
 		}
 		case CURLOPT_TRAILERFUNCTION: {
 			curl_easy_setopt(_curl, CURLOPT_TRAILERFUNCTION, Value_CURL::Callback_TRAILER);
-			curl_easy_setopt(_curl, CURLOPT_TRAILERDATA, this);
 			pFunc_TRAILER.reset(func.Reference());
 			break;
 		}

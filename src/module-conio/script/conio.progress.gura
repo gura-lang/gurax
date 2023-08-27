@@ -29,35 +29,35 @@ ProgressBar = class {
 }
 
 if (__name__ == '__main__') {
-	ProgressBar(20, 10) {|progressBar|
+	ProgressBar('', 20, 10) {|progressBar|
 		repeat (progressBar.valueMax + 1) {|value|
 			progressBar.SetValue(value)
 			os.Sleep(.1)
 		}
 		progressBar.Clear()
 	}
-	ProgressBar(20, 20) {|progressBar|
+	ProgressBar('', 20, 20) {|progressBar|
 		repeat (progressBar.valueMax + 1) {|value|
 			progressBar.SetValue(value)
 			os.Sleep(.1)
 		}
 		progressBar.Clear()
 	}
-	ProgressBar(40, 10) {|progressBar|
+	ProgressBar('', 40, 10) {|progressBar|
 		repeat (progressBar.valueMax + 1) {|value|
 			progressBar.SetValue(value)
 			os.Sleep(.1)
 		}
 		progressBar.Clear()
 	}
-	ProgressBar(40, 20) {|progressBar|
+	ProgressBar('', 40, 20) {|progressBar|
 		repeat (progressBar.valueMax + 1) {|value|
 			progressBar.SetValue(value)
 			os.Sleep(.1)
 		}
 		progressBar.Clear()
 	}
-	ProgressBar(20, 20, 'Phase#%d,%d ', 3, 2) {|progressBar|
+	ProgressBar(Format('Phase#%d,%d ', 3, 2), 20, 20) {|progressBar|
 		repeat (progressBar.valueMax + 1) {|value|
 			progressBar.SetValue(value)
 			os.Sleep(.1)

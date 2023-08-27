@@ -267,6 +267,12 @@ public:
 						RefPtr<Value> pValueArg3, DeclCallable::Flags flags = DeclCallable::Flag::None) const;
 	Value* EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2,
 						RefPtr<Value> pValueArg3, RefPtr<Value> pValueArg4, DeclCallable::Flags flags = DeclCallable::Flag::None) const;
+	Value* EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2,
+						RefPtr<Value> pValueArg3, RefPtr<Value> pValueArg4, RefPtr<Value> pValueArg5,
+						DeclCallable::Flags flags = DeclCallable::Flag::None) const;
+	Value* EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2,
+						RefPtr<Value> pValueArg3, RefPtr<Value> pValueArg4, RefPtr<Value> pValueArg5,
+						RefPtr<Value> pValueArg6, DeclCallable::Flags flags = DeclCallable::Flag::None) const;
 	void Call(Processor& processor, Argument& argument) const;
 	void Compose(Composer& composer, Expr_Caller& exprCaller) const;
 	void PresentHelp(Processor& processor, const Symbol* pLangCode) const;

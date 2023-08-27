@@ -64,6 +64,7 @@ public:
 		return dynamic_cast<const Value_CURL&>(value).GetEntityPtr();
 	}
 public:
+	Processor& GetProcessor() { return *_pProcessor; }
 	void SetStreamWrite(Stream* pStream) { _pStreamWrite.reset(pStream); }
 	void SetStreamRead(Stream* pStream) { _pStreamRead.reset(pStream); }
 	void SetStreamHeader(Stream* pStream) { _pStreamHeader.reset(pStream); }
@@ -96,7 +97,6 @@ public:
 public:
 	static size_t Callback_WRITE(char* ptr, size_t size, size_t nitems, void* userdata);
 	static size_t Callback_READ(char* ptr, size_t size, size_t nitems, void* userdata);
-	static curlioerr Callback_PROGRESS(CURL* curl, int cmd, void* userdata);
 	static size_t Callback_HEADER(char* ptr, size_t size,   size_t nitems, void* userdata);
 	static int Callback_DEBUG(CURL* curl, curl_infotype type, char* data, size_t size, void* userdata);
 	static CURLcode Callback_SSL_CTX(CURL* curl, void* ssl_ctx, void* userdata);
@@ -113,6 +113,7 @@ public:
 	static long Callback_CHUNK_END(void* userdata);
 	static int Callback_FNMATCH(void* userdata, const char* pattern, const char* string);
 	static int Callback_CLOSESOCKET(void* userdata, curl_socket_t item);
+	static int Callback_PROGRESS(void* userdata, curl_off_t dltotal, curl_off_t dlnow, curl_off_t ultotal, curl_off_t ulnow);
 	static int Callback_XFERINFO(void* userdata, curl_off_t dltotal, curl_off_t dlnow, curl_off_t ultotal, curl_off_t ulnow);
 	static int Callback_RESOLVER_START(void* resover_state, void* reserved, void* userdata);
 	static int Callback_TRAILER(struct curl_slist** list, void* userdata);

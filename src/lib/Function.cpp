@@ -92,8 +92,7 @@ Value* Function::EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr
 	return Eval(processor, *pArg);
 }
 
-Value* Function::EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2,
-										RefPtr<Value> pValueArg3, DeclCallable::Flags flags) const
+Value* Function::EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2, RefPtr<Value> pValueArg3, DeclCallable::Flags flags) const
 {
 	RefPtr<Argument> pArg(new Argument(processor, *this, flags));
 	ArgFeeder args(*pArg, processor.GetFrameCur());
@@ -103,12 +102,33 @@ Value* Function::EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr
 }
 
 Value* Function::EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2,
-										RefPtr<Value> pValueArg3, RefPtr<Value> pValueArg4, DeclCallable::Flags flags) const
+						RefPtr<Value> pValueArg3, RefPtr<Value> pValueArg4, DeclCallable::Flags flags) const
 {
 	RefPtr<Argument> pArg(new Argument(processor, *this, flags));
 	ArgFeeder args(*pArg, processor.GetFrameCur());
 	if (!args.FeedValues(pValueArg1.release(),
 			pValueArg2.release(), pValueArg3.release(), pValueArg4.release())) return Value::nil();
+	return Eval(processor, *pArg);
+}
+
+Value* Function::EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2,
+						RefPtr<Value> pValueArg3, RefPtr<Value> pValueArg4, RefPtr<Value> pValueArg5, DeclCallable::Flags flags) const
+{
+	RefPtr<Argument> pArg(new Argument(processor, *this, flags));
+	ArgFeeder args(*pArg, processor.GetFrameCur());
+	if (!args.FeedValues(pValueArg1.release(),
+			pValueArg2.release(), pValueArg3.release(), pValueArg4.release(), pValueArg5.release())) return Value::nil();
+	return Eval(processor, *pArg);
+}
+
+Value* Function::EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2,
+						RefPtr<Value> pValueArg3, RefPtr<Value> pValueArg4, RefPtr<Value> pValueArg5, RefPtr<Value> pValueArg6,
+						DeclCallable::Flags flags) const
+{
+	RefPtr<Argument> pArg(new Argument(processor, *this, flags));
+	ArgFeeder args(*pArg, processor.GetFrameCur());
+	if (!args.FeedValues(pValueArg1.release(),
+			pValueArg2.release(), pValueArg3.release(), pValueArg4.release(), pValueArg5.release(), pValueArg6.release())) return Value::nil();
 	return Eval(processor, *pArg);
 }
 

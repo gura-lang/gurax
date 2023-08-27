@@ -170,10 +170,8 @@ void VType_CURL::DoPrepare(Frame& frameOuter)
 VType& Value_CURL::vtype = VTYPE_CURL;
 
 Value_CURL::Value_CURL(Processor* pProcessor, CURL* curl, VType& vtype) :
-		Value_Object(vtype), _pProcessor(pProcessor), _curl(curl),
-		_pInfo(new Info(curl)), _pOpt(new Opt(curl)),
-		_pStreamWrite(Stream::COut->Reference()),
-		_pStreamRead(Stream::CIn->Reference())
+	Value_Object(vtype), _pProcessor(pProcessor), _curl(curl), _pInfo(new Info(curl)), _pOpt(new Opt(curl)),
+	_pStreamWrite(Stream::COut->Reference()), _pStreamRead(Stream::CIn->Reference())
 {
 	SetupCallback();
 }
@@ -182,10 +180,28 @@ void Value_CURL::SetupCallback()
 {
 	curl_easy_setopt(_curl, CURLOPT_WRITEFUNCTION, Callback_WRITE);
 	curl_easy_setopt(_curl, CURLOPT_READFUNCTION, Callback_READ);
-	curl_easy_setopt(_curl, CURLOPT_HEADERFUNCTION, Callback_HEADER);
+	curl_easy_setopt(_curl, CURLOPT_XFERINFOFUNCTION, Callback_XFERINFO);
+	//curl_easy_setopt(_curl, CURLOPT_HEADERFUNCTION, Callback_HEADER);
 	curl_easy_setopt(_curl, CURLOPT_WRITEDATA, this);
 	curl_easy_setopt(_curl, CURLOPT_READDATA, this);
+	curl_easy_setopt(_curl, CURLOPT_PROGRESSDATA, this);
 	curl_easy_setopt(_curl, CURLOPT_HEADERDATA, this);
+	curl_easy_setopt(_curl, CURLOPT_DEBUGDATA, this);
+	curl_easy_setopt(_curl, CURLOPT_SSL_CTX_DATA, this);
+	curl_easy_setopt(_curl, CURLOPT_IOCTLDATA, this);
+	//curl_easy_setopt(_curl, CURLOPT_CONV_FROM_NETWORK_DATA, this);
+	//curl_easy_setopt(_curl, CURLOPT_CONV_TO_NETWORK_DATA, this);
+	curl_easy_setopt(_curl, CURLOPT_SOCKOPTDATA, this);
+	curl_easy_setopt(_curl, CURLOPT_OPENSOCKETDATA, this);
+	curl_easy_setopt(_curl, CURLOPT_SEEKDATA, this);
+	curl_easy_setopt(_curl, CURLOPT_SSH_KEYDATA, this);
+	curl_easy_setopt(_curl, CURLOPT_INTERLEAVEDATA, this);
+	//curl_easy_setopt(_curl, CURLOPT_CHUNK_BGN_DATA, this);
+	curl_easy_setopt(_curl, CURLOPT_FNMATCH_DATA, this);
+	curl_easy_setopt(_curl, CURLOPT_CLOSESOCKETDATA, this);
+	curl_easy_setopt(_curl, CURLOPT_XFERINFODATA, this);
+	curl_easy_setopt(_curl, CURLOPT_RESOLVER_START_DATA, this);
+	curl_easy_setopt(_curl, CURLOPT_TRAILERDATA, this);
 }
 
 String Value_CURL::ToString(const StringStyle& ss) const
@@ -196,49 +212,40 @@ String Value_CURL::ToString(const StringStyle& ss) const
 size_t Value_CURL::Callback_WRITE(char* ptr, size_t size, size_t nitems, void* userdata)
 {
 	Value_CURL* pThis = reinterpret_cast<Value_CURL*>(userdata);
-	if (pThis->GetOpt().pFunc_WRITE) {
-		//RefPtr<Memory> pMemory(new Memory_Sloth(buffer, nitems));
-		//pThis->pFunc_WRITE->EvalEasy(pThis->GetProcesor(), new Value_Pointer(pMemory.release()));
-		return 0;
-	} else {
-		return (!pThis->IsValidStreamWrite() ||
-			pThis->GetStreamWrite().Write(ptr, size * nitems))? size * nitems : 0;
+	if (!pThis->GetOpt().pFunc_WRITE) {
+		return (!pThis->IsValidStreamWrite() || pThis->GetStreamWrite().Write(ptr, size * nitems))? size * nitems : 0;
 	}
+	RefPtr<Pointer> pPointer(new Pointer_Memory(new MemorySloth(size * nitems, ptr)));
+	RefPtr<Value> pValueRtn(pThis->GetOpt().pFunc_WRITE->EvalEasy(
+		pThis->GetProcessor(), new Value_Pointer(pPointer.release()), new Value_Number(size), new Value_Number(nitems),
+		pThis->GetOpt().pValue_WRITE.Reference()));
+	if (Error::IsIssued()) return CURL_WRITEFUNC_PAUSE;
+	return pValueRtn->IsType(VTYPE_Number)? Value_Number::GetNumber<size_t>(*pValueRtn) : 0;
 }
 
 size_t Value_CURL::Callback_READ(char* ptr, size_t size, size_t nitems, void* userdata)
 {
 	Value_CURL* pThis = reinterpret_cast<Value_CURL*>(userdata);
-	if (pThis->GetOpt().pFunc_READ) {
-		return 0;
-	} else {
-		return pThis->IsValidStreamRead()?
-			pThis->GetStreamRead().Read(ptr, size * nitems) : 0;
+	if (!pThis->GetOpt().pFunc_READ) {
+		return pThis->IsValidStreamRead()? pThis->GetStreamRead().Read(ptr, size * nitems) : 0;
 	}
-}
-
-curlioerr Value_CURL::Callback_PROGRESS(CURL* curl, int cmd, void* userdata)
-{
-#if 0
-	Value_CURL* pThis = reinterpret_cast<Value_CURL*>(userdata);
-	if (pThis->GetOpt().pFunc_PROGRESS) {
-	} else {
-	}
-#endif
-	return CURLIOE_OK;
+	RefPtr<Pointer> pPointer(new Pointer_Memory(new MemorySloth(size * nitems, ptr)));
+	RefPtr<Value> pValueRtn(pThis->GetOpt().pFunc_READ->EvalEasy(
+		pThis->GetProcessor(), new Value_Pointer(pPointer.release()), new Value_Number(size), new Value_Number(nitems),
+		pThis->GetOpt().pValue_READ.Reference()));
+	if (Error::IsIssued()) return CURL_READFUNC_PAUSE;
+	return pValueRtn->IsType(VTYPE_Number)? Value_Number::GetNumber<size_t>(*pValueRtn) : 0;
 }
 
 size_t Value_CURL::Callback_HEADER(char* ptr, size_t size,   size_t nitems, void* userdata)
 {
 	Value_CURL* pThis = reinterpret_cast<Value_CURL*>(userdata);
-	if (pThis->GetOpt().pFunc_HEADER) {
-		//RefPtr<Memory> pMemory(new Memory_Sloth(buffer, nitems));
-		//pThis->GetOpt().pFunc_WRITE->EvalEasy(pThis->GetProcesor(), new Value_Pointer(pMemory.release()));
-		return 0;
-	} else {
-		return (!pThis->IsValidStreamHeader() ||
-			pThis->GetStreamHeader().Write(ptr, size * nitems))? size * nitems : 0;
+	if (!pThis->GetOpt().pFunc_HEADER) {
+		return (!pThis->IsValidStreamHeader() || pThis->GetStreamHeader().Write(ptr, size * nitems))? size * nitems : 0;
 	}
+	//RefPtr<Memory> pMemory(new Memory_Sloth(buffer, nitems));
+	//pThis->GetOpt().pFunc_WRITE->EvalEasy(pThis->GetProcesor(), new Value_Pointer(pMemory.release()));
+	return 0;
 }
 
 int Value_CURL::Callback_DEBUG(CURL* curl, curl_infotype type, char* data, size_t size, void* userdata)
@@ -406,15 +413,25 @@ int Value_CURL::Callback_CLOSESOCKET(void* userdata, curl_socket_t item)
 	return 0;
 }
 
-int Value_CURL::Callback_XFERINFO(void* userdata, curl_off_t dltotal, curl_off_t dlnow, curl_off_t ultotal, curl_off_t ulnow)
+int Value_CURL::Callback_PROGRESS(void* userdata, curl_off_t dltotal, curl_off_t dlnow, curl_off_t ultotal, curl_off_t ulnow)
 {
 #if 0
 	Value_CURL* pThis = reinterpret_cast<Value_CURL*>(userdata);
-	if (pThis->GetOpt().pFunc_XFERINFO) {
+	if (pThis->GetOpt().pFunc_PROGRESS) {
 	} else {
 	}
 #endif
 	return 0;
+}
+
+int Value_CURL::Callback_XFERINFO(void* userdata, curl_off_t dltotal, curl_off_t dlnow, curl_off_t ultotal, curl_off_t ulnow)
+{
+	Value_CURL* pThis = reinterpret_cast<Value_CURL*>(userdata);
+	if (!pThis->GetOpt().pFunc_XFERINFO) return CURL_PROGRESSFUNC_CONTINUE;
+	RefPtr<Value> pValueRtn(pThis->GetOpt().pFunc_XFERINFO->EvalEasy(pThis->GetProcessor(), pThis->GetOpt().pValue_XFERINFO.Reference(),
+		new Value_Number(dltotal), new Value_Number(dlnow), new Value_Number(ultotal), new Value_Number(ulnow)));
+	if (Error::IsIssued()) return -1;
+	return pValueRtn->IsType(VTYPE_Number)? Value_Number::GetNumber<size_t>(*pValueRtn) : 0;
 }
 
 int Value_CURL::Callback_RESOLVER_START(void* resover_state, void* reserved, void* userdata)

@@ -30,7 +30,6 @@ private:
 public:
 	RefPtr<Function> pFunc_WRITE;
 	RefPtr<Function> pFunc_READ;
-	RefPtr<Function> pFunc_PROGRESS;
 	RefPtr<Function> pFunc_HEADER;
 	RefPtr<Function> pFunc_DEBUG;
 	RefPtr<Function> pFunc_SSL_CTX;
@@ -47,12 +46,12 @@ public:
 	RefPtr<Function> pFunc_CHUNK_END;
 	RefPtr<Function> pFunc_FNMATCH;
 	RefPtr<Function> pFunc_CLOSESOCKET;
+	RefPtr<Function> pFunc_PROGRESS;
 	RefPtr<Function> pFunc_XFERINFO;
 	RefPtr<Function> pFunc_RESOLVER_START;
 	RefPtr<Function> pFunc_TRAILER;
 	RefPtr<Value> pValue_WRITE;
 	RefPtr<Value> pValue_READ;
-	RefPtr<Value> pValue_PROGRESS;
 	RefPtr<Value> pValue_HEADER;
 	RefPtr<Value> pValue_DEBUG;
 	RefPtr<Value> pValue_SSL_CTX;
@@ -69,6 +68,7 @@ public:
 	RefPtr<Value> pValue_CHUNK_END;
 	RefPtr<Value> pValue_FNMATCH;
 	RefPtr<Value> pValue_CLOSESOCKET;
+	RefPtr<Value> pValue_PROGRESS;
 	RefPtr<Value> pValue_XFERINFO;
 	RefPtr<Value> pValue_RESOLVER_START;
 	RefPtr<Value> pValue_TRAILER;
