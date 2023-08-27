@@ -1,5 +1,6 @@
 #!/usr/bin/env gura
 import(gzip)
+import(curl.util)
 import(ml.mnist_common) {*}
 
 Database = class {
@@ -9,7 +10,7 @@ Database = class {
 	nCols as Number
 	nClasses as Number
 	__init__(dirName as String) = {
-		DownloadFiles('http://yann.lecun.com/exdb/mnist', [
+		curl.util.GetLackingFile('http://yann.lecun.com/exdb/mnist', [
 			'train-images-idx3-ubyte.gz', 'train-labels-idx1-ubyte.gz',
 			't10k-images-idx3-ubyte.gz', 't10k-labels-idx1-ubyte.gz'], dirName)
 		this.train = SampleSet(

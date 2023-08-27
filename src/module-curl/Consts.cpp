@@ -712,6 +712,8 @@ void AssignConsts(Frame& frame)
 	AssignConst(CURL_TIMECOND_IFUNMODSINCE);
 	AssignConst(CURL_TIMECOND_LASTMOD);
 	AssignConst(CURL_TIMECOND_LAST);
+	// CURL Progress
+	AssignConst(CURL_PROGRESSFUNC_CONTINUE);
 	// CURLformoption
 	AssignConst(CURLFORM_NOTHING);
 	AssignConst(CURLFORM_COPYNAME);

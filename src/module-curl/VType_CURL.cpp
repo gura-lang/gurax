@@ -181,7 +181,7 @@ void Value_CURL::SetupCallback()
 	curl_easy_setopt(_curl, CURLOPT_WRITEFUNCTION, Callback_WRITE);
 	curl_easy_setopt(_curl, CURLOPT_READFUNCTION, Callback_READ);
 	curl_easy_setopt(_curl, CURLOPT_XFERINFOFUNCTION, Callback_XFERINFO);
-	//curl_easy_setopt(_curl, CURLOPT_HEADERFUNCTION, Callback_HEADER);
+	curl_easy_setopt(_curl, CURLOPT_HEADERFUNCTION, Callback_HEADER);
 	curl_easy_setopt(_curl, CURLOPT_WRITEDATA, this);
 	curl_easy_setopt(_curl, CURLOPT_READDATA, this);
 	curl_easy_setopt(_curl, CURLOPT_PROGRESSDATA, this);
