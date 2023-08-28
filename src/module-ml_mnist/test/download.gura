@@ -1,0 +1,24 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+import(ml.mnist)
+import(ml.qmnist)
+import(ml.kmnist)
+
+Println('-' * 20)
+Println('mnist')
+ml.mnist.Database('.') {|db|
+	Println(db.train)
+	Println(db.test)
+}
+Println('-' * 20)
+Println('qmnist')
+ml.qmnist.Database('.') {|db|
+	Println(db.train)
+	Println(db.test)
+}
+Println('-' * 20)
+Println('kmnist')
+ml.kmnist.Database('.') {|db|
+	Println(db.train)
+	Println(db.test)
+}

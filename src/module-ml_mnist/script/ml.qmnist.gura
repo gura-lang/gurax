@@ -10,7 +10,7 @@ Database = class {
 	nCols as Number
 	nClasses as Number
 	__init__(dirName as String) = {
-		curl.util.GetLackingFile('https://github.com/facebookresearch/qmnist/raw/main', [
+		curl.util.DownloadFile('https://github.com/facebookresearch/qmnist/raw/main', [
 			'qmnist-train-images-idx3-ubyte.gz', 'qmnist-train-labels-idx2-int.gz'
 			'qmnist-test-images-idx3-ubyte.gz', 'qmnist-test-labels-idx2-int.gz'], dirName)
 		this.train = SampleSet(

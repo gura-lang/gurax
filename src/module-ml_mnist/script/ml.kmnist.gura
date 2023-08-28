@@ -10,7 +10,7 @@ Database = class {
 	nCols as Number
 	nClasses as Number
 	__init__(dirName as String) = {
-		curl.util.GetLackingFile('http://codh.rois.ac.jp/kmnist/dataset/kmnist', [
+		curl.util.DownloadFile('http://codh.rois.ac.jp/kmnist/dataset/kmnist', [
 			'train-images-idx3-ubyte.gz:kmnist-train-images-idx3-ubyte.gz',
 			'train-labels-idx1-ubyte.gz:kmnist-train-labels-idx1-ubyte.gz',
 			't10k-images-idx3-ubyte.gz:kmnist-t10k-images-idx3-ubyte.gz',
