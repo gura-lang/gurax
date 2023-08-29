@@ -1,7 +1,10 @@
 #!/usr/bin/env gura
 import(gzip)
+import(csv)
 import(curl.util)
 import(ml.mnist_common) {*}
+
+ClassMap = struct { index:stringCast as Number, codepoint as String, char as String }
 
 Database = class {
 	train as SampleSet
@@ -9,6 +12,7 @@ Database = class {
 	nRows as Number
 	nCols as Number
 	nClasses as Number
+	classMapTbl = Dim(50)
 	__init__(dirName as String) = {
 		curl.util.DownloadFile('http://codh.rois.ac.jp/kmnist/dataset/kmnist', [
 			'train-images-idx3-ubyte.gz:kmnist-train-images-idx3-ubyte.gz',
@@ -25,6 +29,12 @@ Database = class {
 		this.nRows = this.train.nRows
 		this.nCols = this.train.nCols
 		this.nClasses = Max(this.train.nClasses, this.test.nClasses)
+		lines = csv.Reader('kmnist_classmap.csv').ReadLines()
+		lines.NextValue()
+		lines.Each {|line|
+			classMap = ClassMap * line
+			this.classMapTbl[classMap.index] = classMap
+		}
 	} %% R'''
 	Reads MNIST database files in a directory specified by `dirName` and returns a `ml.mnist.Database` instance.
 	'''

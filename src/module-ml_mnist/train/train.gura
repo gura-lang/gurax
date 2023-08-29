@@ -1,7 +1,9 @@
 #!/usr/bin/env gurax
-import(util.tester) {*}
 import(ml)
 import(ml.mnist)
+import(ml.qmnist)
+import(ml.kmnist)
+import(util.tester) {*}
 import(conio.progress)
 
 db = ml.mnist.Database('.')

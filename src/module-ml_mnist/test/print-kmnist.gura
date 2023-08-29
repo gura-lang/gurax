@@ -1,0 +1,12 @@
+//==============================================================================
+// print-kmnist.gura
+//==============================================================================
+import(csv)
+import(util.tester) {*}
+import(ml.kmnist)
+
+db = ml.kmnist.Database('.')
+db.train.Each(`float) {|sample|
+	Println(db.classMapTbl[sample.label].char)
+	ml.kmnist.PrintImage(sample.input, guideFlag = false)
+}

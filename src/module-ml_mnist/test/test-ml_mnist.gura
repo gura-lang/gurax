@@ -5,9 +5,11 @@
 import(util.tester) {*}
 import(ml.mnist)
 import(ml.qmnist)
+import(ml.kmnist)
 
-db = ml.mnist.Database(path.Join(sys.dirBase, 'sample/resource/mnist'))
-dbQ = ml.qmnist.Database(path.Join(sys.dirBase, 'sample/resource/qmnist'))
+db = ml.mnist.Database('.')
+dbQ = ml.qmnist.Database('.')
+dbK = ml.kmnist.Database('.')
 
 TestCase('Basic test') {
 	Printf('MNIST: nRows=%d, nCols=%d, nClasses=%d\n', db.nRows, db.nCols, db.nClasses)
@@ -20,17 +22,22 @@ TestCase('Basic test') {
 	Printf('%s\n', dbQ.train.labelSet)
 	Printf('%s\n', dbQ.test.imageSet)
 	Printf('%s\n', dbQ.test.labelSet)
+	Printf('KMNIST: nRows=%d, nCols=%d, nClasses=%d\n', dbK.nRows, dbK.nCols, dbK.nClasses)
+	Printf('%s\n', dbK.train.imageSet)
+	Printf('%s\n', dbK.train.labelSet)
+	Printf('%s\n', dbK.test.imageSet)
+	Printf('%s\n', dbK.test.labelSet)
 }
 
 TestCase('ml.mnist.SampleSet#Each()') {
-	[db, dbQ]:*train:*Each(`float)::Head(6) {|sample|
+	[db, dbQ, dbK]:*train:*Each(`float)::Head(6) {|sample|
 		Println(sample.label)
 		ml.mnist.PrintImage(sample.input, guideFlag = false)
 	}
 }
 
 TestCase('ml.mnist.SampleSet#EachBatch()') {
-	[db, dbQ]:*train:*EachBatch(3, `float)::Head(2) {|sample|
+	[db, dbQ, dbK]:*train:*EachBatch(3, `float)::Head(2) {|sample|
 		repeat (sample.input.shape[0]) {|i|
 			Println(sample.label)
 			ml.mnist.PrintImage(sample.input[i], guideFlag = false)
@@ -39,7 +46,7 @@ TestCase('ml.mnist.SampleSet#EachBatch()') {
 }
 
 TestCase('ml.mnist.SampleSet#Get()') {
-	[db, dbQ].Each {|db|
+	[db, dbQ, dbK].Each {|db|
 		repeat (6) {|i|
 			sample = db.train.Get(i, `float)
 			Println(sample.label)

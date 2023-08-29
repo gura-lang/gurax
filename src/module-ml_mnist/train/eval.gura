@@ -1,7 +1,9 @@
 #!/usr/bin/env gurax
+import(ml.mnist)
+import(ml.qmnist)
+import(ml.kmnist)
 import(recog)
 import(conio.progress)
-import(ml.mnist)
 
 db = ml.mnist.Database('.')
 nCorrects = 0
