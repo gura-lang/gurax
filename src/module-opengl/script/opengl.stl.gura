@@ -1,0 +1,40 @@
+#!/usr/bin/env gurax
+import(opengl) {*}
+import(model.stl)
+
+CreateList(stream as Stream, scaleFlag as Bool = true, centerFlag as Bool = true) = {
+	list = glGenLists(1)
+	faces = model.stl.Solid(stream).EachFace():list
+	scale = 1
+	vertexMean = Vertex(0, 0, 0)
+	if (scaleFlag) {
+		xMax = Max(faces:*vertex1:*x.Max(), faces:*vertex2:*x.Max(), faces:*vertex3:*x.Max())
+		xMin = Min(faces:*vertex1:*x.Min(), faces:*vertex2:*x.Min(), faces:*vertex3:*x.Min())
+		xMean = (xMax + xMin) / 2
+		yMax = Max(faces:*vertex1:*y.Max(), faces:*vertex2:*y.Max(), faces:*vertex3:*y.Max())
+		yMin = Min(faces:*vertex1:*y.Min(), faces:*vertex2:*y.Min(), faces:*vertex3:*y.Min())
+		yMean = (yMax + yMin) / 2
+		zMax = Max(faces:*vertex1:*z.Max(), faces:*vertex2:*z.Max(), faces:*vertex3:*z.Max())
+		zMin = Min(faces:*vertex1:*z.Min(), faces:*vertex2:*z.Min(), faces:*vertex3:*z.Min())
+		zMean = (zMax + zMin) / 2
+		coordMax = Max(xMax - xMean, yMax - yMean, zMax - zMean)
+		if (centerFlag) {
+			vertexMean = Vertex(xMean, yMean, zMean)
+		}
+		if (coordMax != 0) {
+			scale = 1 / coordMax
+		}
+	}
+	glNewList(list, GL_COMPILE)
+	faces.Each {|face|
+		glNormal3f(face.normal.x, face.normal.y, face.normal.z)
+		v = (face.vertex1 - vertexMean) * scale
+		glVertex3f(v.x, v.y, v.z)
+		v = (face.vertex2 - vertexMean) * scale
+		glVertex3f(v.x, v.y, v.z)
+		v = (face.vertex3 - vertexMean) * scale
+		glVertex3f(v.x, v.y, v.z)
+	}
+	glEndList()
+	list
+}
