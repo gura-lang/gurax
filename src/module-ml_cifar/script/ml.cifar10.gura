@@ -1,0 +1,40 @@
+#!/usr/bin/env gurax
+import(tar)
+import(curl.util)
+import(ml.cifar) {*}
+
+Database = class {
+	name = 'CIFAR-10'
+	train as SampleSet
+	test as SampleSet
+	nChannels as Number
+	nRows as Number
+	nCols as Number
+	nClasses as Number
+	nClassesSuper as Number
+	labelNames[] as String
+	__init__(pathNameTar as String) = {
+		if (path.ExtName(pathNameTar).Lower() != '.gz') {
+			curl.util.DownloadFile('https://www.cs.toronto.edu/~kriz', 'cifar-10-binary.tar.gz', pathNameTar)
+			pathNameTar = path.Join(pathNameTar, 'cifar-10-binary.tar.gz')
+		}
+		this.train = SampleSet(false)
+		this.test = SampleSet(false)
+		tar.Reader(pathNameTar).EachEntry {|stream|
+			if (stream.identifier in ['data_batch_1.bin', 'data_batch_2.bin', 'data_batch_3.bin', 'data_batch_4.bin', 'data_batch_5.bin']) {
+				this.train.Read(stream)
+			} elsif (stream.identifier == 'test_batch.bin') {
+				this.test.Read(stream)
+			} elsif (stream.identifier == 'batches.meta.txt') {
+				this.labelNames = ReadLines(stream):chop.Filter(&{$line != ''}):list
+				this.train.SetLabelNames(this.labelNames)
+				this.test.SetLabelNames(this.labelNames)
+			}
+		}
+		this.nChannels = this.train.nChannels
+		this.nRows = this.train.nRows
+		this.nCols = this.train.nCols
+		this.nClasses = Max(this.train.nClasses, this.test.nClasses)
+		this.nClassesSuper = Max(this.train.nClassesSuper, this.test.nClassesSuper)
+	}
+}

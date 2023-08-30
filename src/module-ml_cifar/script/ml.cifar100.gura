@@ -1,0 +1,43 @@
+#!/usr/bin/env gurax
+import(tar)
+import(curl.util)
+import(ml.cifar) {*}
+
+Database = class {
+	name = 'CIFAR-100'
+	train as SampleSet
+	test as SampleSet
+	nChannels as Number
+	nRows as Number
+	nCols as Number
+	nClasses as Number
+	labelNames[] as String
+	labelNamesSuper[] as String
+	__init__(pathNameTar as String) = {
+		if (path.ExtName(pathNameTar).Lower() != '.gz') {
+			curl.util.DownloadFile('https://www.cs.toronto.edu/~kriz', 'cifar-100-binary.tar.gz', pathNameTar)
+			pathNameTar = path.Join(pathNameTar, 'cifar-100-binary.tar.gz')
+		}
+		this.train = SampleSet(true)
+		this.test = SampleSet(true)
+		tar.Reader(pathNameTar).EachEntry {|stream|
+			if (stream.identifier == 'train.bin') {
+				this.train.Read(stream)
+			} elsif (stream.identifier == 'test.bin') {
+				this.test.Read(stream)
+			} elsif (stream.identifier == 'fine_label_names.txt') {
+				this.labelNames = ReadLines(stream):chop.Filter(&{$line != ''}):list
+				this.train.SetLabelNames(this.labelNames)
+				this.test.SetLabelNames(this.labelNames)
+			} elsif (stream.identifier == 'coarse_label_names.txt') {
+				this.labelNamesSuper = ReadLines(stream):chop.Filter(&{$line != ''}):list
+				this.train.SetLabelNamesSuper(this.labelNamesSuper)
+				this.test.SetLabelNamesSuper(this.labelNamesSuper)
+			}
+		}
+		this.nChannels = this.train.nChannels
+		this.nRows = this.train.nRows
+		this.nCols = this.train.nCols
+		this.nClasses = Max(this.train.nClasses, this.test.nClasses)
+	}
+}

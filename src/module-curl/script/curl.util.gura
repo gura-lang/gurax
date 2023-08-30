@@ -1,0 +1,49 @@
+#!/usr/bin/env gurax
+import(conio.progress)
+import(curl):binary {*}
+
+ProgressInfo = struct {
+	fileName as String
+	progressBar as conio.progress.ProgressBar = nil
+}
+
+CallbackXFERINFO(progressInfo as ProgressInfo, dltotal as Number, dlnow as Number, ultotal as Number, ulnow as Number) = {
+	(dltotal == 0) && return(0)
+	if (!progressInfo.progressBar) {
+		progressInfo.progressBar = conio.progress.ProgressBar(Format('%s ', progressInfo.fileName), 20, dltotal)
+	}
+	progressInfo.progressBar.SetValue(dlnow)
+	0
+}
+
+DownloadFile(urlBase as String, fileName as String, dirName as String, overwriteFlag as Bool = false):map:void = {
+	fields = fileName.Split(':'):list
+	if (fields.len == 1) {
+		fileNameSrc = fileNameDst = fileName
+	} elsif (fields.len == 2) {
+		[fileNameSrc, fileNameDst] = fields
+	} else {
+		Error.Raise(Error.FormatError, 'invalid number of separators')
+	}
+	pathNameDst = path.Join(dirName, fileNameDst)
+	!overwriteFlag && fs.Exists(pathNameDst) && return
+	curl = curl_easy_init()
+	!curl && Error.Raise(Error.GuestError, 'curl_easy_init() failed\n')
+	progressInfo = ProgressInfo(fileNameSrc)
+	curl_easy_setopt(curl, CURLOPT_URL, path.Join(urlBase, fileNameSrc):uri)
+	curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1)
+	curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0)
+	curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, CallbackXFERINFO)
+	curl_easy_setopt(curl, CURLOPT_XFERINFODATA, progressInfo)
+	curl.streamDst = pathNameDst
+	res = curl_easy_perform(curl)
+	errorMsg = curl_easy_strerror(res)
+	curl_easy_cleanup(curl)
+	progressInfo.progressBar && progressInfo.progressBar.Clear()
+	sys.cerr.Println(fileNameDst)
+	(res != CURLE_OK) && Error.Raise(Error.GuestError, 'curl_easy_perform() failed: %s\n', errorMsg)
+}
+
+if (__name__ == '__main__') {
+	DownloadFile('https://github.com/gura-lang/gura/releases/download/v0.7.0', 'gura-0.7.0-win32.msi', '.')
+}

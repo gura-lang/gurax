@@ -1,0 +1,14 @@
+#!/usr/bin/env gura
+import(ml.cifar):binary {*}
+
+pattern = [' ', '.', ':', '#', '#']
+
+PrintImage(array as Array, out as Stream = sys.cout, guideFlag as Bool = true, numCeil as Number = 1.) = {
+	arrayGray = 0.299 * array[0] + 0.587 * array[1] + 0.114 * array[2]
+	if (guideFlag) {
+		out.Printf('   %s\n', Range(10).Cycle(arrayGray.nCols).Join())
+		arrayGray.ToList().Each {|row, iRow| out.Printf('%2d %s\n', iRow, pattern.Get(row * 4 / numCeil).Join())}
+	} else {
+		arrayGray.ToList().Each {|row, iRow| out.Printf('%s\n', pattern.Get(row * 4 / numCeil).Join())}
+	}
+}
