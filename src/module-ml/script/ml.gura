@@ -15,7 +15,8 @@ KeyAbort(msg? as String, keyCodes* as Number) = {
 }
 
 Trainer.DoTraining(iteratorGenerator as Function, nSamplesWhole as Number, nEpochs as Number,
-				batchSize as Number, nIterations? as Number, moduleNameProduct as String = 'recog') = {
+				batchSize as Number, nIterations? as Number, moduleNameProduct as String = 'recog',
+				extraCodeInModule? as String) = {
 	nSamples = cond(!nIterations || nSamplesWhole < batchSize * nIterations, nSamplesWhole, batchSize * nIterations)
 	Printf('Training with %d samples for %d epochs -- Press Q to abort the process\n', nSamples, nEpochs)
 	abortFlag = false
@@ -36,10 +37,10 @@ Trainer.DoTraining(iteratorGenerator as Function, nSamplesWhole as Number, nEpoc
 		abortFlag && break
 		Printf('%serror=%g\n', strHead, this.CalcMeanSquaredError(result))
 	}
-	this.CreateModule(moduleNameProduct)
+	this.CreateModule(moduleNameProduct, extraCodeInModule)
 }
 
-Trainer.CreateModule(moduleName as String, variables* as Expr):dynamicScope = {
+Trainer.CreateModule(moduleName as String, extraCodeInModule? as String, variables* as Expr):dynamicScope = {
 	fileName = moduleName + '.gura'
 	out = Open(fileName, 'w')
 	tR'''
@@ -48,6 +49,7 @@ Trainer.CreateModule(moduleName as String, variables* as Expr):dynamicScope = {
 	import(gzip)
 
 	timeStamp = '${DateTime.Now().__str__()}'
+	${extraCodeInModule}
 
 	Eval(${(this.EachInputSymbol() + ' as Array').Join(', ')}) = {
 		${if (this.model.type == `Block)}

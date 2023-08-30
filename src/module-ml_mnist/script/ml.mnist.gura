@@ -4,6 +4,7 @@ import(curl.util)
 import(ml.mnist_common) {*}
 
 Database = class {
+	name:static = 'mnist'
 	train as SampleSet
 	test as SampleSet
 	nRows as Number

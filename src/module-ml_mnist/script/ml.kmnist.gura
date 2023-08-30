@@ -7,6 +7,7 @@ import(ml.mnist_common) {*}
 ClassMap = struct { index:stringCast as Number, codepoint as String, char as String }
 
 Database = class {
+	name:static = 'kmnist'
 	train as SampleSet
 	test as SampleSet
 	nRows as Number

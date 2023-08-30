@@ -5,11 +5,20 @@ import(ml.kmnist)
 import(recog)
 import(conio.progress)
 
-db = ml.mnist.Database('.')
+if (recog.dbName == 'mnist') {
+	db = ml.mnist.Database('.')
+} elsif (recog.dbName == 'qmnist') {
+	db = ml.qmnist.Database('.')
+} elsif (recog.dbName == 'kmnist') {
+	db = ml.kmnist.Database('.')
+} else {
+	sys.cerr.Printf('unknown database: %s', recog.dbName)
+	sys.Exit()
+}
 nCorrects = 0
 nSamples = db.test.nSamples
 Open('eval.result.txt', 'w') {|out|
-	sys.cerr.Printf('Test with %d samples\n', nSamples)
+	sys.cerr.Printf('Test with %d samples in %s\n', nSamples, recog.dbName)
 	conio.progress.ProgressBar('', 20, nSamples) {|progressBar|
 		db.test.Each(`float) {|sample, iSample|
 			result = recog.Eval(sample.input)
