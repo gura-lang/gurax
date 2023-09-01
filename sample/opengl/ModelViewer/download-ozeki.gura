@@ -1,0 +1,10 @@
+#!/usr/bin/env gurax
+import(curl.util)
+
+curl.util.DownloadFile('https://ozeki.hu/attachments/116', [
+	'Cube_3d_printing_sample.stl'
+	'Menger_sponge_sample.stl'
+	'Eiffel_tower_sample.STL'
+	'Stanford_Bunny_sample.stl'
+	], '.')
+
