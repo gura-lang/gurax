@@ -185,8 +185,8 @@ main() = {
 		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
 	])
 
-	cubeVAO = @uint {|v| glGenVertexArrays(1, v), v[0]}
-	VBO = @uint {|v| glGenBuffers(1, v), v[0]}
+	cubeVAO = @uint {|v| glGenVertexArrays(1, v), v.@}
+	VBO = @uint {|v| glGenBuffers(1, v), v.@}
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, vertices.bytes, vertices, GL_STATIC_DRAW);
@@ -201,7 +201,7 @@ main() = {
 	glEnableVertexAttribArray(1);
 
 	// second, configure the light's VAO (VBO stays the same; the vertices are the same for the light object which is also a 3D cube)
-	lightCubeVAO = @uint{|v| glGenVertexArrays(1, v), v[0]};
+	lightCubeVAO = @uint{|v| glGenVertexArrays(1, v), v.@};
 	glBindVertexArray(lightCubeVAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -266,8 +266,8 @@ main() = {
 
 	// optional: de-allocate all resources once they've outlived their purpose:
 	// ------------------------------------------------------------------------
-	glDeleteVertexArrays(1, @uint {|v| v[0] = cubeVAO, v})
-	glDeleteBuffers(1, @uint {|v| v[0] = VBO, v})
+	glDeleteVertexArrays(1, @uint {|v| v.@ = cubeVAO, v})
+	glDeleteBuffers(1, @uint {|v| v.@ = VBO, v})
 
 	// glfw: terminate, clearing all previously allocated GLFW resources.
 	// ------------------------------------------------------------------

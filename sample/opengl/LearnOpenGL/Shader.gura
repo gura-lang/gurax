@@ -20,7 +20,7 @@ Shader = class {
 		glAttachShader(this.ID, shaderVertex);
 		glAttachShader(this.ID, shaderFragment);
 		glLinkProgram(this.ID);
-		success = @int {|v| glGetProgramiv(this.ID, GL_LINK_STATUS, v), v[0]}
+		success = @int {|v| glGetProgramiv(this.ID, GL_LINK_STATUS, v), v.@}
 		if (success == 0) {
 			infoLog = @char(1024)
 			glGetProgramInfoLog(this.ID, infoLog.bytes, nil, infoLog);
@@ -87,7 +87,7 @@ Shader = class {
 	CompileShader(shader as Number, shaderCode as String, typeName as String) = {
 		glShaderSource(shader, [shaderCode], []);
 		glCompileShader(shader);
-		success = @int {|v| glGetShaderiv(shader, GL_COMPILE_STATUS, v), v[0]}
+		success = @int {|v| glGetShaderiv(shader, GL_COMPILE_STATUS, v), v.@}
 		if (success == 0) {
 			infoLog = @char(1024)
 			glGetShaderInfoLog(shader, infoLog.bytes, nil, infoLog);

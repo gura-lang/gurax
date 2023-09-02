@@ -1,5 +1,6 @@
 ======== Property ========
 Array
+  #@                Number       R/W
   #bytes            Number       R
   #bytesPerElem     Number       R
   #elemType         Symbol       R
@@ -18,26 +19,26 @@ Array(`int, [3j]) .. Number value is expected
 Array(`int, ['hello']) .. Number value is expected
 Array(`complex, [[0, 1 + 1j, 2 + 2j], [3 + 3j, 4 + 4j, 5 + 5j]]) .. [[0.000, 1+1j, 2+2j], [3+3j, 4+4j, 5+5j]]
 ======== Array constructor (2) ========
-@int8() .. [0]
-@uint8() .. [0]
-@int16() .. [0]
-@uint16() .. [0]
-@int32() .. [0]
-@uint32() .. [0]
-@int64() .. [0]
-@uint64() .. [0]
-@half() .. [0]
-@float() .. [0]
-@double() .. [0]
-@complex() .. [0.000]
-@char() .. [0]
-@uchar() .. [0]
-@short() .. [0]
-@ushort() .. [0]
-@int() .. [0]
-@uint() .. [0]
-@long() .. [0]
-@ulong() .. [0]
+@int8() .. 0
+@uint8() .. 0
+@int16() .. 0
+@uint16() .. 0
+@int32() .. 0
+@uint32() .. 0
+@int64() .. 0
+@uint64() .. 0
+@half() .. 0
+@float() .. 0
+@double() .. 0
+@complex() .. 0.000
+@char() .. 0
+@uchar() .. 0
+@short() .. 0
+@ushort() .. 0
+@int() .. 0
+@uint() .. 0
+@long() .. 0
+@ulong() .. 0
 @int8(3, 4, 2) .. [[[0, 0], [0, 0], [0, 0], [0, 0]], [[0, 0], [0, 0], [0, 0], [0, 0]], [[0, 0], [0, 0], [0, 0], [0, 0]]]
 @uint8(3, 4, 2) .. [[[0, 0], [0, 0], [0, 0], [0, 0]], [[0, 0], [0, 0], [0, 0], [0, 0]], [[0, 0], [0, 0], [0, 0], [0, 0]]]
 @int16(3, 4, 2) .. [[[0, 0], [0, 0], [0, 0], [0, 0]], [[0, 0], [0, 0], [0, 0], [0, 0]], [[0, 0], [0, 0], [0, 0], [0, 0]]]

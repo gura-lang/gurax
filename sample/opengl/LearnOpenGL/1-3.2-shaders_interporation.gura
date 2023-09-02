@@ -63,7 +63,7 @@ main() = {
 	glCompileShader(vertexShader);
 	// check for shader compile errors
 	infoLog = @char(512)
-	success = @int {|v| glGetShaderiv(vertexShader, GL_COMPILE_STATUS, v), v[0]}
+	success = @int {|v| glGetShaderiv(vertexShader, GL_COMPILE_STATUS, v), v.@}
 	if (success == 0) {
 		glGetShaderInfoLog(vertexShader, infoLog.len, nil, infoLog);
 		Println('ERROR::SHADER::VERTEX::COMPILATION_FAILED')
@@ -75,7 +75,7 @@ main() = {
 	glShaderSource(fragmentShader, [fragmentShaderSource], [])
 	glCompileShader(fragmentShader)
 	// check for shader compile errors
-	success = @int {|v| glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, v), v[0]}
+	success = @int {|v| glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, v), v.@}
 	if (success == 0) {
 		glGetShaderInfoLog(fragmentShader, infoLog.len, nil, infoLog);
 		Println('ERROR::SHADER::FRAGMENT::COMPILATION_FAILED')
@@ -87,7 +87,7 @@ main() = {
 	glAttachShader(shaderProgram, vertexShader)
 	glAttachShader(shaderProgram, fragmentShader)
 	glLinkProgram(shaderProgram);
-	success = @int {|v| glGetProgramiv(shaderProgram, GL_LINK_STATUS, v), v[0]}
+	success = @int {|v| glGetProgramiv(shaderProgram, GL_LINK_STATUS, v), v.@}
 	if (success == 0) {
 		glGetProgramInfoLog(shaderProgram, infoLog.len, nil, infoLog);
 		Println('ERROR::SHADER::PROGRAM::LINKING_FAILED')
@@ -105,8 +105,8 @@ main() = {
 		-0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  // bottom left
 		 0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f   // top 
  	])
-	VAO = @uint {|v| glGenVertexArrays(1, v), v[0]}
-	VBO = @uint {|v| glGenBuffers(1, v), v[0]}
+	VAO = @uint {|v| glGenVertexArrays(1, v), v.@}
+	VBO = @uint {|v| glGenBuffers(1, v), v.@}
 	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
 	glBindVertexArray(VAO);
 
@@ -151,8 +151,8 @@ main() = {
 
 	// optional: de-allocate all resources once they've outlived their purpose:
 	// ------------------------------------------------------------------------
-	glDeleteVertexArrays(1, @uint {|v| v[0] = VAO, v})
-	glDeleteBuffers(1, @uint {|v| v[0] = VBO, v})
+	glDeleteVertexArrays(1, @uint {|v| v.@ = VAO, v})
+	glDeleteBuffers(1, @uint {|v| v.@ = VBO, v})
 	glDeleteProgram(shaderProgram);
 
 	// glfw: terminate, clearing all previously allocated GLFW resources.

@@ -102,7 +102,8 @@ Gurax_ImplementConstructor(Array)
 	const ValueList& values = args.PickList();
 	RefPtr<Array> pArray;
 	if (values.empty()) {
-		pArray.reset(Array::Create(elemType, DimSizes(1)));
+		//pArray.reset(Array::Create(elemType, DimSizes(1)));
+		pArray.reset(Array::CreateScalar(elemType, 0));
 	} else if (values.size() == 1 && values.front()->IsType(VTYPE_List)) {
 		pArray.reset(Value_List::GetValueOwner(*values.front()).CreateArray(elemType));
 	} else if (values.size() == 1 && values.front()->IsType(VTYPE_Tuple)) {
@@ -138,7 +139,8 @@ Gurax_ImplementFunction(ConstructArray)
 	const ValueList& values = args.PickList();
 	RefPtr<Array> pArray;
 	if (values.empty()) {
-		pArray.reset(Array::Create(elemType, DimSizes(1)));
+		//pArray.reset(Array::Create(elemType, DimSizes(1)));
+		pArray.reset(Array::CreateScalar(elemType, 0));
 	} else if (values.size() == 1 && values.front()->IsType(VTYPE_List)) {
 		pArray.reset(Value_List::GetValueOwner(*values.front()).CreateArray(elemType));
 	} else if (values.size() == 1 && values.front()->IsType(VTYPE_Tuple)) {
@@ -756,6 +758,27 @@ Gurax_ImplementMethod(Array, Reshape)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
+// Array#@
+Gurax_DeclarePropertyAlias_RW(Array, at_, "@")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+The accessor for the first element of the array.
+)""");
+}
+
+Gurax_ImplementPropertyGetter(Array, at_)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return valueThis.GetArray().IndexGetValue(0);
+}
+
+Gurax_ImplementPropertySetter(Array, at_)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetArray().IndexSetValue(0, value);
+}
+
 // Array#bytes
 Gurax_DeclareProperty_R(Array, bytes)
 {
@@ -1458,6 +1481,7 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Array, VerifyShape));
 	Assign(Gurax_CreateMethod(Array, Reshape));
 	// Assignment of property
+	Assign(Gurax_CreateProperty(Array, at_));
 	Assign(Gurax_CreateProperty(Array, bytes));
 	Assign(Gurax_CreateProperty(Array, bytesPerElem));
 	Assign(Gurax_CreateProperty(Array, elemType));
