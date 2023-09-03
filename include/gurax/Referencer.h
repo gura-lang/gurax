@@ -32,6 +32,11 @@ public:
 protected:
 	~Referencer() = default;
 public:
+	Frame& GetFrame() { return *_pFrame; }
+	const Symbol* GetSymbol() const { return _pSymbol; }
+	void SetValue(Value* pValue);
+	Value& GetValue() { return *_pValue; }
+public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Referencer& other) const { return this == &other; }
 	bool IsEqualTo(const Referencer& other) const { return IsIdentical(other); }

@@ -149,7 +149,10 @@ void PUnit_Referencer<discardValueFlag>::Exec(Processor& processor) const
 		processor.ErrorDone();
 		return;
 	}
-	if constexpr (!discardValueFlag) processor.PushValue(pValue.release());
+	if constexpr (!discardValueFlag) {
+		RefPtr<Referencer> pReferencer(new Referencer(frame.Reference(), GetSymbol(), pValue.release()));
+		processor.PushValue(new Value_Referencer(pReferencer.release()));
+	}
 	processor.SetPUnitCur(_GetPUnitCont());
 }
 

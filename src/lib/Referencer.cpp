@@ -12,9 +12,15 @@ Referencer::Referencer(Frame* pFrame, const Symbol* pSymbol, Value* pValue) : _p
 {
 }
 
+void Referencer::SetValue(Value* pValue)
+{
+	_pValue.reset(pValue->Reference());
+	GetFrame().Assign(GetSymbol(), pValue);
+}
+
 String Referencer::ToString(const StringStyle& ss) const
 {
-	return String().Format("Referencer");
+	return String().Format("Referencer:%s", GetSymbol()->GetName());
 }
 
 //------------------------------------------------------------------------------

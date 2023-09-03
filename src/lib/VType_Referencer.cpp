@@ -51,6 +51,7 @@ Gurax_ImplementConstructor(Referencer)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+#if 0
 // Referencer#MethodSkeleton(num1 as Number, num2 as Number)
 Gurax_DeclareMethod(Referencer, MethodSkeleton)
 {
@@ -73,23 +74,30 @@ Gurax_ImplementMethod(Referencer, MethodSkeleton)
 	// Function body
 	return new Value_Number(num1 + num2);
 }
+#endif
 
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// Referencer#propSkeleton
-Gurax_DeclareProperty_R(Referencer, propSkeleton)
+// Referencer#@
+Gurax_DeclarePropertyAlias_RW(Referencer, at_, "@")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Skeleton.
 )""");
 }
 
-Gurax_ImplementPropertyGetter(Referencer, propSkeleton)
+Gurax_ImplementPropertyGetter(Referencer, at_)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return valueThis.GetReferencer().GetValue().Reference();
+}
+
+Gurax_ImplementPropertySetter(Referencer, at_)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetReferencer().SetValue(value.Reference());
 }
 
 //------------------------------------------------------------------------------
@@ -104,9 +112,9 @@ void VType_Referencer::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Referencer, MethodSkeleton));
+	//Assign(Gurax_CreateMethod(Referencer, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Referencer, propSkeleton));
+	Assign(Gurax_CreateProperty(Referencer, at_));
 }
 
 //------------------------------------------------------------------------------
