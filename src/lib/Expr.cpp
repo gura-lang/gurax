@@ -708,7 +708,13 @@ const Expr::TypeInfo Expr_UnaryOp::typeInfo(TypeId::UnaryOp, "UnaryOp");
 
 void Expr_UnaryOp::Compose(Composer& composer)
 {
-	if (GetOperator()->GetRawFlag()) {
+	if (GetOperator()->IsType(OpType::PreAnd)) {
+		if (!GetExprChild().IsType<Expr_Identifier>()) {
+			Error::IssueWith(ErrorType::SyntaxError, *this, "referencer can only be applied to an indentifier");
+			return;
+		}
+		composer.Add_Referencer(dynamic_cast<Expr_Identifier&>(GetExprChild()).GetSymbol(), *this);
+	} else if (GetOperator()->GetRawFlag()) {
 		GetOperator()->ComposeUnary(composer, *this);							// [Result]
 	} else {
 		GetExprChild().ComposeOrNil(composer);									// [Any]
@@ -958,8 +964,7 @@ void Expr_Assign::ComposeWithinArgSlot(Composer& composer)
 		pExprLeft = &dynamic_cast<const Expr_BinaryOp*>(pExprLeft)->GetExprLeft();
 	}
 	if (GetOperator() || !pExprLeft->IsType<Expr_Identifier>()) {
-		Error::IssueWith(ErrorType::ArgumentError, *this,
-						"invalid declaration of named argument");
+		Error::IssueWith(ErrorType::ArgumentError, *this, "invalid declaration of named argument");
 		return;
 	}
 	const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(pExprLeft)->GetSymbol();
