@@ -90,6 +90,7 @@ target_sources(guraxcore PRIVATE
 	Random.cpp
 	Rational.cpp
 	Referable.cpp
+	Referencer.cpp
 	Stat.cpp
 	Stream.cpp
 	String.cpp
@@ -160,6 +161,7 @@ target_sources(guraxcore PRIVATE
 	VType_Quote.cpp
 	VType_Random.cpp
 	VType_Rational.cpp
+	VType_Referencer.cpp
 	VType_Scope.cpp
 	VType_Semaphore.cpp
 	VType_Stat.cpp

@@ -135,6 +135,44 @@ PUnit* PUnitFactory_Lookup::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
+// PUnit_Referencer
+// Stack View: [] -> [Any] (continue)
+//                -> []    (discard)
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+void PUnit_Referencer<discardValueFlag>::Exec(Processor& processor) const
+{
+	Frame& frame = processor.GetFrameCur();
+	RefPtr<Value> pValue(frame.Retrieve(GetSymbol()));
+	if (!pValue) {
+		Error::Issue(ErrorType::ValueError, "symbol '%s' is not found", GetSymbol()->GetName());
+		processor.ErrorDone();
+		return;
+	}
+	if constexpr (!discardValueFlag) processor.PushValue(pValue.release());
+	processor.SetPUnitCur(_GetPUnitCont());
+}
+
+template<bool discardValueFlag>
+String PUnit_Referencer<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str.Format("Referencer(`%s)", GetSymbol()->GetName());
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_Referencer::Create(bool discardValueFlag)
+{
+	if (discardValueFlag) {
+		_pPUnitCreated = new PUnit_Referencer<true>(_pSymbol, _pExprSrc.Reference());
+	} else {
+		_pPUnitCreated = new PUnit_Referencer<false>(_pSymbol, _pExprSrc.Reference());
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_Suffixed
 // Stack View: [Any] -> [Result] (continue)
 //                   -> []       (discard)

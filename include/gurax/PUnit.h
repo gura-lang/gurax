@@ -225,6 +225,47 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_Referencer
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+class GURAX_DLLDECLARE PUnit_Referencer : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+private:
+	const Symbol* _pSymbol;
+public:
+	// Constructor
+	PUnit_Referencer(const Symbol* pSymbol, Expr* pExprSrc) : PUnit(pExprSrc), _pSymbol(pSymbol) {}
+public:
+	const Symbol* GetSymbol() const { return _pSymbol; }
+public:
+	// Virtual functions of PUnit
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual const PUnit* GetPUnitAdjacent() const override { return this + 1; }
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return this + 1; }
+};
+
+class GURAX_DLLDECLARE PUnitFactory_Referencer : public PUnitFactory {
+public:
+	Gurax_MemoryPoolAllocator("PUnitFactory_Referencer");
+private:
+	const Symbol* _pSymbol;
+public:
+	PUnitFactory_Referencer(const Symbol* pSymbol, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pSymbol(pSymbol) {}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_Referencer<false>);
+	}
+	virtual PUnit* Create(bool discardValueFlag) override;
+};
+
+//------------------------------------------------------------------------------
 // PUnit_Suffixed
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>

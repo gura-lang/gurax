@@ -56,6 +56,7 @@ void BasicVType::Prepare(Frame& frame)
 	frame.Assign(VTYPE_Quote);
 	frame.Assign(VTYPE_Rational);
 	frame.Assign(VTYPE_Random);
+	frame.Assign(VTYPE_Referencer);
 	frame.Assign(VTYPE_Scope);
 	frame.Assign(VTYPE_Semaphore);
 	frame.Assign(VTYPE_Stat);

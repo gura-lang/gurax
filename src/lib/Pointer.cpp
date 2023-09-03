@@ -26,43 +26,43 @@ bool Pointer::PutValue(ElemType elemType, bool bigEndianFlag, const Value& value
 {
 	if (value.IsType(VTYPE_Number)) {
 		switch (elemType) {
-		case Pointer::ElemType::Int8:
+		case ElemType::Int8:
 			return bigEndianFlag?
 				Put<Int8, true>(Value_Number::GetNumber<Int8>(value)) :
 				Put<Int8, false>(Value_Number::GetNumber<Int8>(value));
-		case Pointer::ElemType::UInt8:
+		case ElemType::UInt8:
 			return bigEndianFlag?
 				Put<UInt8, true>(Value_Number::GetNumber<UInt8>(value)) :
 				Put<UInt8, false>(Value_Number::GetNumber<UInt8>(value));
-		case Pointer::ElemType::Int16:
+		case ElemType::Int16:
 			return bigEndianFlag?
 				Put<Int16, true>(Value_Number::GetNumber<Int16>(value)) :
 				Put<Int16, false>(Value_Number::GetNumber<Int16>(value));
-		case Pointer::ElemType::UInt16:
+		case ElemType::UInt16:
 			return bigEndianFlag?
 				Put<UInt16, true>(Value_Number::GetNumber<UInt16>(value)) :
 				Put<UInt16, false>(Value_Number::GetNumber<UInt16>(value));
-		case Pointer::ElemType::Int32:
+		case ElemType::Int32:
 			return bigEndianFlag?
 				Put<Int32, true>(Value_Number::GetNumber<Int32>(value)) :
 				Put<Int32, false>(Value_Number::GetNumber<Int32>(value));
-		case Pointer::ElemType::UInt32:
+		case ElemType::UInt32:
 			return bigEndianFlag?
 				Put<UInt32, true>(Value_Number::GetNumber<UInt32>(value)) :
 				Put<UInt32, false>(Value_Number::GetNumber<UInt32>(value));
-		case Pointer::ElemType::Int64:
+		case ElemType::Int64:
 			return bigEndianFlag?
 				Put<Int64, true>(Value_Number::GetNumber<Int64>(value)) :
 				Put<Int64, false>(Value_Number::GetNumber<Int64>(value));
-		case Pointer::ElemType::UInt64:
+		case ElemType::UInt64:
 			return bigEndianFlag?
 				Put<UInt64, true>(Value_Number::GetNumber<UInt64>(value)) :
 				Put<UInt64, false>(Value_Number::GetNumber<UInt64>(value));
-		case Pointer::ElemType::Float:
+		case ElemType::Float:
 			return bigEndianFlag?
 				Put<Float, true>(Value_Number::GetNumber<Float>(value)) :
 				Put<Float, false>(Value_Number::GetNumber<Float>(value));
-		case Pointer::ElemType::Double:
+		case ElemType::Double:
 			return bigEndianFlag?
 				Put<Double, true>(Value_Number::GetNumber<Double>(value)) :
 				Put<Double, false>(Value_Number::GetNumber<Double>(value));
