@@ -79,6 +79,9 @@ DeclArg* DeclArg::CreateFromExpr(const Expr& expr)
 		} else if (pOp->IsType(OpType::PostQuestion)) {
 			// x?
 			pOccur = &Occur::ZeroOrOnce;
+		} else if (pOp->IsType(OpType::PreAnd)) {
+			// &x
+			flags |= Flag::Referencer;
 		} else {
 			Error::IssueWith(ErrorType::SyntaxError, *pExpr, "invalid format of declaration");
 			return nullptr;
@@ -166,7 +169,8 @@ String DeclArg::FlagsToString(Flags flags)
 	for (Flags flag = 1; flags; flag <<= 1, flags >>= 1) {
 		if (flags & 1) {
 			str += ':';
-			str += FlagToSymbol(flag)->GetName();
+			const Symbol* pSymbol = FlagToSymbol(flag);
+			if (!pSymbol->IsEmpty()) str += pSymbol->GetName();
 		}
 	}
 	return str;
@@ -177,15 +181,13 @@ String DeclArg::ToString(const StringStyle& ss) const
 	String str;
 	bool quoteFlag = GetVType().IsIdentical(VTYPE_Quote);
 	if (quoteFlag) str += '`';
+	if (GetFlags() & Flag::Referencer) str += '&';
 	str += GetSymbol()->GetName();
 	if (GetFlags() & Flag::ListVar) str += "[]";
 	str += GetOccur().GetMarker();
-	str += FlagsToString(GetFlags() & ~Flag::ListVar);
+	str += FlagsToString(GetFlags() & ~(Flag::ListVar | Flag::Referencer));
 	if (quoteFlag) {
 		// nothing to do 
-	//} else if (_pVType) {
-	//	str += " as ";
-	//	str += _pVType->ToString(ss);
 	} else if (!GetDottedSymbol().IsEmpty()) {
 		str += " as ";
 		str += GetDottedSymbol().ToString();

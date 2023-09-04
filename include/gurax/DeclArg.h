@@ -37,6 +37,7 @@ public:
 		static const Flags Private		= 1 << 12;	// :private
 		static const Flags Readable		= 1 << 13;	// :readable
 		static const Flags Writable		= 1 << 14;	// :writable
+		static const Flags Referencer	= 1 << 16;	// &x
 	};
 	class GURAX_DLLDECLARE Occur {
 	private:
@@ -87,6 +88,7 @@ public:
 			Assoc(Gurax_Symbol(private_),	Flag::Private);
 			Assoc(Gurax_Symbol(R),			Flag::Readable);
 			Assoc(Gurax_Symbol(W),			Flag::Writable);
+			Assoc(Symbol::Empty,			Flag::Referencer);
 			Assoc(Gurax_Symbol(const_),		Flag::None);		// only for DoesExit()
 		}
 		static const SymbolAssoc& GetInstance() {
