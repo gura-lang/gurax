@@ -1,0 +1,35 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+
+TestCase('Property') {
+	Referencer.PrintPropSlots()
+}
+
+TestCase('Modification in a Function') {
+	f(a as Referencer) = {
+		a.@ = 'hello'
+		nil
+	}
+	x = 1
+	Tester(`x)
+	Tester(`f(&x))
+	Tester(`x)
+	g(a as Referencer, b as Referencer, c as Referencer, str as String) = {
+		a.@ = str + '-a'
+		b.@ = str + '-b'
+		c.@ = str + '-c'
+		nil
+	}
+	[x, y, z] = [1, 2, 3]
+	Tester(`x)
+	Tester(`y)
+	Tester(`z)
+	Tester(`g(&x, &y, &z, 'hello'))
+	Tester(`x)
+	Tester(`y)
+	Tester(`z)
+	Tester(`g([&x, &y, &z]*, 'bye'))
+	Tester(`x)
+	Tester(`y)
+	Tester(`z)
+}

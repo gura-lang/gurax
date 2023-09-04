@@ -1,0 +1,18 @@
+======== Property ========
+Referencer
+  #@                Any          R/W
+======== Modification in a Function ========
+x .. 1
+f(&x) .. <Nil>
+x .. hello
+x .. 1
+y .. 2
+z .. 3
+g(&x, &y, &z, 'hello') .. <Nil>
+x .. hello-a
+y .. hello-b
+z .. hello-c
+g([&x, &y, &z]*, 'bye') .. <Nil>
+x .. bye-a
+y .. bye-b
+z .. bye-c
