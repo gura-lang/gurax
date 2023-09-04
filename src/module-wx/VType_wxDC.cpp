@@ -1872,10 +1872,14 @@ Gurax_ImplementMethodEx(wxDC, DestroyClippingRegion_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// wx.DC#GetClippingBox()
+// wx.DC#GetClippingBox(x as Referencer, y as Referencer, width as Referencer, height as Referencer)
 Gurax_DeclareMethodAlias(wxDC, GetClippingBox_gurax, "GetClippingBox")
 {
-	Declare(VTYPE_Tuple, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x", VTYPE_Referencer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Referencer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Referencer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Referencer, ArgOccur::Once, ArgFlag::None);
 }
 
 Gurax_ImplementMethodEx(wxDC, GetClippingBox_gurax, processor_gurax, argument_gurax)
@@ -1884,10 +1888,20 @@ Gurax_ImplementMethodEx(wxDC, GetClippingBox_gurax, processor_gurax, argument_gu
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Gurax::Referencer& x = args_gurax.PickReferencer();
+	Gurax::Referencer& y = args_gurax.PickReferencer();
+	Gurax::Referencer& width = args_gurax.PickReferencer();
+	Gurax::Referencer& height = args_gurax.PickReferencer();
 	// Function body
-	wxCoord x, y, width, height;
-	pEntity_gurax->GetClippingBox(&x, &y, &width, &height);
-	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y), new Value_Number(width), new Value_Number(height));
+	wxCoord x_, y_, width_, height_;
+	pEntity_gurax->GetClippingBox(&x_, &y_, &width_, &height_);
+	x.SetValue(new Value_Number(x_));
+	y.SetValue(new Value_Number(y_));
+	width.SetValue(new Value_Number(width_));
+	height.SetValue(new Value_Number(height_));
+	return Value::nil();
 }
 
 // wx.DC#SetClippingRegion(args* as Any)

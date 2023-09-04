@@ -800,11 +800,23 @@ DC = Class {
 		'''
 	// Clipping region functions
 	DestroyClippingRegion() as void
+	/*
 	GetClippingBox() as Tuple@gurax = \
 		R'''
 		wxCoord x, y, width, height;
 		pEntity_gurax->GetClippingBox(&x, &y, &width, &height);
 		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y), new Value_Number(width), new Value_Number(height));
+		'''
+	*/
+	GetClippingBox(x as Referencer@gurax, y as Referencer@gurax, width as Referencer@gurax, height as Referencer@gurax) as void = \
+		R'''
+		wxCoord x_, y_, width_, height_;
+		pEntity_gurax->GetClippingBox(&x_, &y_, &width_, &height_);
+		x.SetValue(new Value_Number(x_));
+		y.SetValue(new Value_Number(y_));
+		width.SetValue(new Value_Number(width_));
+		height.SetValue(new Value_Number(height_));
+		return Value::nil();
 		'''
 	SetClippingRegion(args* as any) as void = \
 		R'''
