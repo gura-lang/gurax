@@ -559,6 +559,10 @@ Renderer.__init__() = {
 		codePickerVec = R'''
 		const Gurax::ValueList& ${varName} = args_gurax.PickList();
 		''')
+	this.DeclareType('Referencer@gurax', '', 'Referencer',
+		codePicker = R'''
+		Gurax::Referencer& ${varName} = args_gurax.PickReferencer();
+		''')
 	this.DeclareType('Function@gurax', '', 'Function',
 		codePicker = R'''
 		RefPtr<Function> ${varName}(args_gurax.PickFunction().Reference());

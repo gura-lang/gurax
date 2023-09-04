@@ -18,6 +18,7 @@
 #include "VType_Pixel.h"
 #include "VType_Pointer.h"
 #include "VType_Random.h"
+#include "VType_Referencer.h"
 #include "VType_Stat.h"
 #include "VType_Template.h"
 #include "VType_DateTime.h"
@@ -127,6 +128,7 @@ public:
 	Template& PickTemplate()		{ return Pick<Value_Template>().GetTemplate(); }
 	TimeDelta& PickTimeDelta()		{ return Pick<Value_TimeDelta>().GetTimeDelta(); }
 	ValueDict& PickValueDict()		{ return Pick<Value_Dict>().GetValueDict(); }
+	Referencer& PickReferencer()	{ return Pick<Value_Referencer>().GetReferencer(); }
 };
 
 }

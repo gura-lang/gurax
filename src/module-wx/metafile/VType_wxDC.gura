@@ -18,11 +18,21 @@ DC = Class {
 	GetPPI() as Size
 	GetSize() as Size
 	GetSizeMM() as Size
+	/*
 	GetUserScale() as Tuple@gurax = \
 		R'''
 		double x, y;
 		pEntity_gurax->GetUserScale(&x, &y);
 		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+		'''
+	*/
+	GetUserScale(x as Referencer@gurax, y as Referencer@gurax) as void = \
+		R'''
+		double x_, y_;
+		pEntity_gurax->GetUserScale(&x_, &y_);
+		x.SetValue(new Value_Number(x_));
+		y.SetValue(new Value_Number(y_));
+		return Value::nil();
 		'''
 	IsOk() as bool
 	SetAxisOrientation(xLeftRight as bool, yBottomUp as bool) as void

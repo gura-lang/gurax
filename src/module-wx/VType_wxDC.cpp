@@ -219,10 +219,12 @@ Gurax_ImplementMethodEx(wxDC, GetSizeMM_gurax, processor_gurax, argument_gurax)
 		pEntity_gurax->GetSizeMM()));
 }
 
-// wx.DC#GetUserScale()
+// wx.DC#GetUserScale(x as Referencer, y as Referencer)
 Gurax_DeclareMethodAlias(wxDC, GetUserScale_gurax, "GetUserScale")
 {
-	Declare(VTYPE_Tuple, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x", VTYPE_Referencer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Referencer, ArgOccur::Once, ArgFlag::None);
 }
 
 Gurax_ImplementMethodEx(wxDC, GetUserScale_gurax, processor_gurax, argument_gurax)
@@ -231,10 +233,16 @@ Gurax_ImplementMethodEx(wxDC, GetUserScale_gurax, processor_gurax, argument_gura
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Gurax::Referencer& x = args_gurax.PickReferencer();
+	Gurax::Referencer& y = args_gurax.PickReferencer();
 	// Function body
-	double x, y;
-	pEntity_gurax->GetUserScale(&x, &y);
-	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+	double x_, y_;
+	pEntity_gurax->GetUserScale(&x_, &y_);
+	x.SetValue(new Value_Number(x_));
+	y.SetValue(new Value_Number(y_));
+	return Value::nil();
 }
 
 // wx.DC#IsOk()
