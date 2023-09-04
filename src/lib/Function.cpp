@@ -251,17 +251,17 @@ void Function::Compose(Composer& composer, Expr_Caller& exprCaller) const
 {
 	if (!GetDeclCallable().GetDeclArgOwner().IsValidArgNum(exprCaller.CountExprParam())) {
 		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
-						 "invalid number of arguments for %s-statement", MakeFullName().c_str());
+						"invalid number of arguments for %s-statement", MakeFullName().c_str());
 		return;
 	}
 	if (GetDeclCallable().GetDeclBlock().IsOccurZero() && exprCaller.HasExprOfBlock()) {
 		Error::IssueWith(ErrorType::SyntaxError, exprCaller,
-						 "unnecessary block for %s-statement", MakeFullName().c_str());
+						"unnecessary block for %s-statement", MakeFullName().c_str());
 		return;
 	}
 	if (GetDeclCallable().GetDeclBlock().IsOccurOnce() && !exprCaller.HasExprOfBlock()) {
 		Error::IssueWith(ErrorType::SyntaxError, exprCaller,
-						 "missing block for %s-statement", MakeFullName().c_str());
+						"missing block for %s-statement", MakeFullName().c_str());
 		return;
 	}
 	return DoCompose(composer, exprCaller);
