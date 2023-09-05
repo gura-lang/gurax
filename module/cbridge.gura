@@ -78,6 +78,7 @@ ArgInfo = class {
 	typeName as String
 	defaultValue as String
 	listVarFlag as Bool
+	referencerFlag as Bool
 	occurSymbol as Symbol
 	nilFlag as Bool
 	streamWFlag as Bool
@@ -85,7 +86,7 @@ ArgInfo = class {
 	typeInfo as TypeInfo
 	tmplDeclaration:static as Template
 	tmplRangeCheck:static as Template
-	__init__(r as Renderer, name as String, typeName:nil as String, defaultValue:nil as String, attr:nil as Attribute, listVarFlag as Bool, occurSymbol as Symbol) = {
+	__init__(r as Renderer, name as String, typeName:nil as String, defaultValue:nil as String, attr:nil as Attribute, listVarFlag as Bool, referencerFlag as Bool, occurSymbol as Symbol) = {
 		if (defaultValue == 'wxEmptyString') {
 			defaultValue = '""'
 		}
@@ -93,6 +94,7 @@ ArgInfo = class {
 		this.typeName = typeName
 		this.defaultValue = defaultValue
 		this.listVarFlag = listVarFlag
+		this.referencerFlag = referencerFlag
 		this.occurSymbol = occurSymbol
 		if (attr) {
 			this.nilFlag = attr.IsSet(`nil)
@@ -155,6 +157,7 @@ CreateArgInfoTbl(r as Renderer, expr as Expr) = {
 		//Println(exprParam)
 		defaultValue = nil
 		listVarFlag = false
+		referencerFlag = false
 		occurSymbol = `Once
 		typeName = 'any'
 		if (exprParam.IsAssign()) {
@@ -193,7 +196,7 @@ CreateArgInfoTbl(r as Renderer, expr as Expr) = {
 			exprParam = exprParam.car
 		}
 		!exprParam.IsIdentifier() && ErrorDone(exprParam, 'Identifier is expected in parameter list')
-		argInfoTbl.Add(ArgInfo(r, exprParam.symbolName, typeName, defaultValue, attr, listVarFlag, occurSymbol))
+		argInfoTbl.Add(ArgInfo(r, exprParam.symbolName, typeName, defaultValue, attr, listVarFlag, referencerFlag, occurSymbol))
 	}
 	argInfoTbl
 }
@@ -334,25 +337,27 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 		defaultValue = nil
 		attr = nil
 		listVarFlag = false
+		referencerFlag = false
 		occurSymbol = `Once
 		type = `operator
 		operator = expr.operator
 		symbolName = expr.operator.name
 		argInfoTbl = [
-			ArgInfo(r, 'left', expr.left.__str__(), defaultValue, attr, listVarFlag, occurSymbol)
-			ArgInfo(r, 'right', expr.right.__str__(), defaultValue, attr, listVarFlag, occurSymbol)
+			ArgInfo(r, 'left', expr.left.__str__(), defaultValue, attr, listVarFlag, referencerFlag, occurSymbol)
+			ArgInfo(r, 'right', expr.right.__str__(), defaultValue, attr, listVarFlag, referencerFlag, occurSymbol)
 		]
 	} elsif (expr.IsUnaryOp()) {
 		symbolName = expr.operator.name
 		defaultValue = nil
 		attr = nil
 		listVarFlag = false
+		referencerFlag = false
 		occurSymbol = `Once
 		type = `operator
 		operator = expr.operator
 		symbolName = expr.operator.name
 		argInfoTbl = [
-			ArgInfo(r, 'value', expr.child.__str__(), defaultValue, attr, listVarFlag, occurSymbol)
+			ArgInfo(r, 'value', expr.child.__str__(), defaultValue, attr, listVarFlag, referencerFlag, occurSymbol)
 		]
 	} else {
 		ErrorDone(expr, 'Caller is expected')
