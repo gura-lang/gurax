@@ -179,7 +179,9 @@ CreateArgInfoTbl(r as Renderer, expr as Expr) = {
 			exprParam = exprParam.left
 		}
 		if (exprParam.IsUnaryOp()) {
-			if (exprParam.operator.symbol == `?) {
+			if (exprParam.operator.symbol == `&) {
+				referencerFlag = true
+			} elsif (exprParam.operator.symbol == `?) {
 				occurSymbol = `ZeroOrOnce
 			} elsif (exprParam.operator.symbol == `*) {
 				occurSymbol = `ZeroOrMore

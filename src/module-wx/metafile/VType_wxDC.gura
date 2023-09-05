@@ -27,6 +27,7 @@ DC = Class {
 		'''
 	*/
 	GetUserScale(x as Referencer@gurax, y as Referencer@gurax) as void = \
+	//GetUserScale(&x, &y) as void = \
 		R'''
 		double x_, y_;
 		pEntity_gurax->GetUserScale(&x_, &y_);
