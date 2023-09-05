@@ -1,7 +1,7 @@
 ======== Property ========
 Referencer
   #@                Any          R/W
-======== Modification in a Function ========
+======== Modification in a Function (1) ========
 x .. 1
 f(&x) .. <Nil>
 x .. hello
@@ -12,6 +12,59 @@ g(&x, &y, &z, 'hello') .. <Nil>
 x .. hello-a
 y .. hello-b
 z .. hello-c
+g([&x, &y, &z]*, 'bye') .. <Nil>
+x .. bye-a
+y .. bye-b
+z .. bye-c
+======== Modification in a Function (2) ========
+<Function:f1(&a)>
+--------
+x .. 123
+f1(&x) .. <Nil>
+x .. 12345
+--------
+x .. hello
+f1(&x) .. <Nil>
+x .. 12345
+--------
+x .. <Nil>
+f1(&x) .. <Nil>
+x .. 12345
+<Function:f2(&a as Number)>
+--------
+x .. 123
+f2(&x) .. <Nil>
+x .. 12345
+--------
+x .. hello
+f2(&x) .. a can't cast from String to Number
+x .. hello
+--------
+x .. <Nil>
+f2(&x) .. a can't accept nil value
+x .. <Nil>
+<Function:f3(&a:nil as Number)>
+--------
+x .. 123
+f3(&x) .. <Nil>
+x .. 12345
+--------
+x .. hello
+f3(&x) .. a can't cast from String to Number
+x .. hello
+--------
+x .. <Nil>
+f3(&x) .. <Nil>
+x .. 12345
+--------
+x .. 1
+y .. 2
+z .. 3
+g(&x, &y, &z, 'hello') .. <Nil>
+x .. hello-a
+y .. hello-b
+z .. hello-c
+--------
 g([&x, &y, &z]*, 'bye') .. <Nil>
 x .. bye-a
 y .. bye-b
