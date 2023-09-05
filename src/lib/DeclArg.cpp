@@ -151,8 +151,13 @@ Value* DeclArg::Cast(Frame& frame, const Value& value)
 		}
 		const Referencer& referencer = dynamic_cast<const Value_Referencer&>(value).GetReferencer();
 		const Value& valueContent = referencer.GetValue();
-		RefPtr<Value> pValueContentCasted(GetVType().Cast(valueContent, GetSymbol(), GetFlags()));
-		if (!pValueContentCasted) return nullptr;
+		RefPtr<Value> pValueContentCasted;
+		if (valueContent.IsNil() && (IsSet(Flag::Nil) || IsOccurZeroOrOnce())) {
+			pValueContentCasted.reset(valueContent.Reference());
+		} else {
+			pValueContentCasted.reset(GetVType().Cast(valueContent, GetSymbol(), GetFlags()));
+			if (!pValueContentCasted) return nullptr;
+		}
 		if (valueContent.IsIdentical(pValueContentCasted.get())) return value.Reference();
 		RefPtr<Referencer> pReferencerCasted(new Referencer(referencer.GetFrame().Reference(),
 								referencer.GetSymbol(), pValueContentCasted.release()));

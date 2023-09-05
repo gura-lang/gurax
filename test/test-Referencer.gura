@@ -5,7 +5,7 @@ TestCase('Property') {
 	Referencer.PrintPropSlots()
 }
 
-TestCase('Modification in a Function') {
+TestCase('Modification in a Function (1)') {
 	f(a as Referencer) = {
 		a.@ = 'hello'
 		nil
@@ -32,4 +32,96 @@ TestCase('Modification in a Function') {
 	Tester(`x)
 	Tester(`y)
 	Tester(`z)
+}
+
+TestCase('Modification in a Function (2)') {
+	f1(&a) = {
+		a.@ = 12345
+		nil
+	}
+	Println(f1)
+	Println('--------')
+	x = 123
+	Tester(`x)
+	Tester(`f1(&x))
+	Tester(`x)
+	Println('--------')
+	x = 'hello'
+	Tester(`x)
+	Tester(`f1(&x))
+	Tester(`x)
+	Println('--------')
+	x = nil
+	Tester(`x)
+	Tester(`f1(&x))
+	Tester(`x)
+	f2(&a as Number) = {
+		a.@ = 12345
+		nil
+	}
+	Println(f2)
+	Println('--------')
+	x = 123
+	Tester(`x)
+	Tester(`f2(&x))
+	Tester(`x)
+	Println('--------')
+	x = 'hello'
+	Tester(`x)
+	Tester(`f2(&x))
+	Tester(`x)
+	Println('--------')
+	x = nil
+	Tester(`x)
+	Tester(`f2(&x))
+	Tester(`x)
+	f3(&a:nil as Number) = {
+		a.@ = 12345
+		nil
+	}
+	Println(f3)
+	Println('--------')
+	x = 123
+	Tester(`x)
+	Tester(`f3(&x))
+	Tester(`x)
+	Println('--------')
+	x = 'hello'
+	Tester(`x)
+	Tester(`f3(&x))
+	Tester(`x)
+	Println('--------')
+	x = nil
+	Tester(`x)
+	Tester(`f3(&x))
+	Tester(`x)
+	g(&a, &b, &c, str as String) = {
+		a.@ = str + '-a'
+		b.@ = str + '-b'
+		c.@ = str + '-c'
+		nil
+	}
+	Println('--------')
+	[x, y, z] = [1, 2, 3]
+	Tester(`x)
+	Tester(`y)
+	Tester(`z)
+	Tester(`g(&x, &y, &z, 'hello'))
+	Tester(`x)
+	Tester(`y)
+	Tester(`z)
+	Println('--------')
+	Tester(`g([&x, &y, &z]*, 'bye'))
+	Tester(`x)
+	Tester(`y)
+	Tester(`z)
+/*
+	f(&a as Number) = {
+		Println(a.@.__vtype__.__name__)
+		a.@ = 33333
+	}
+	x = nil
+	f(&x)
+	Println(x)
+*/
 }
