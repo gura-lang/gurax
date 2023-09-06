@@ -38,6 +38,8 @@ public:
 	void SetValue(Value* pValue);
 	Value& GetValue() { return *_pValue; }
 	const Value& GetValue() const { return *_pValue; }
+	template<typename T> T& Get() { dynamic_cast<T&>(GetValue()); }
+	template<typename T> const T& Get() const { dynamic_cast<const T&>(GetValue()); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Referencer& other) const { return this == &other; }
