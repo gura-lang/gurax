@@ -107,7 +107,7 @@ ArgInfo = class {
 		}
 	}
 	IsList() = {
-		if (!this.typeInfo) { this.typeInfo = r.typeInfoMap[this.typeName] }
+		this.GetTypeInfo()
 		this.listVarFlag || this.typeInfo.listVarFlag
 	}
 	ComposeDeclaration() = {
@@ -117,6 +117,7 @@ ArgInfo = class {
 		this.nilFlag && argFlags.Add('Nil')
 		this.streamWFlag && argFlags.Add('StreamW')
 		this.streamRFlag && argFlags.Add('StreamR')
+		this.referencerFlag && argFlags.Add('Referencer')
 		argFlags.IsEmpty() && argFlags.Add('None')
 		strArgFlags = ('ArgFlag::' + argFlags).Join(' | ')
 		this.tmplDeclaration.Eval()
@@ -126,23 +127,23 @@ ArgInfo = class {
 		this.typeInfo
 	}
 	ComposeImplementation() = {
-		if (!this.typeInfo) { this.typeInfo = r.typeInfoMap[this.typeName] }
-		this.typeInfo.ComposePicker(this.name, this.defaultValue,
+		typeInfo = cond(this.referencerFlag, r.typeInfoMap['Referencer@gurax'], this.GetTypeInfo())
+		typeInfo.ComposePicker(this.name, this.defaultValue,
 			(this.occurSymbol == `ZeroOrMore) || (this.occurSymbol == `OnceOrMore) || this.IsList(),
 			(this.occurSymbol == `ZeroOrOnce) || this.nilFlag)
 	}
 	ComposeConvToGurax() = this.typeInfo.ComposeConvToGurax(this.name)
 	ComposeArgRef() = {
-		if (!this.typeInfo) { this.typeInfo = r.typeInfoMap[this.typeName] }
+		this.GetTypeInfo()
 		this.typeInfo.ComposeArgRef(this.name)
 	}
 	ComposeArgCDecl() = {
-		if (!this.typeInfo) { this.typeInfo = r.typeInfoMap[this.typeName] }
+		this.GetTypeInfo()
 		this.typeInfo.ComposeArgCDecl(this.name)
 	}
 	ToString() = {
-		if (!this.typeInfo) { this.typeInfo = r.typeInfoMap[this.typeName] }
-		Format('%s%s%s%s%s%s as %s', this.name, cond(this.IsList(), '[]', ''),
+		this.GetTypeInfo()
+		Format('%s%s%s%s%s%s%s as %s', cond(this.referencerFlag, '&', ''), this.name, cond(this.IsList(), '[]', ''),
 			cond(this.occurSymbol == `ZeroOrOnce, '?', cond(this.occurSymbol == `ZeroOrMore, '*',
 				cond(this.occurSymbol == `OnceOrMore, '+', ''))),
 			cond(this.nilFlag, ':nil', ''),
@@ -568,6 +569,9 @@ Renderer.__init__() = {
 		''')
 	this.DeclareType('Referencer@gurax', '', 'Referencer',
 		codePicker = R'''
+		Gurax::Referencer& ${varName} = args_gurax.PickReferencer();
+		'''
+		codePickerValidation = R'''
 		Gurax::Referencer& ${varName} = args_gurax.PickReferencer();
 		''')
 	this.DeclareType('Function@gurax', '', 'Function',

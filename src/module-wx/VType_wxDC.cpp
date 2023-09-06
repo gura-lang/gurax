@@ -219,12 +219,12 @@ Gurax_ImplementMethodEx(wxDC, GetSizeMM_gurax, processor_gurax, argument_gurax)
 		pEntity_gurax->GetSizeMM()));
 }
 
-// wx.DC#GetUserScale(x as Referencer, y as Referencer)
+// wx.DC#GetUserScale(&x:nil as Number, &y:nil as Number)
 Gurax_DeclareMethodAlias(wxDC, GetUserScale_gurax, "GetUserScale")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("x", VTYPE_Referencer, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("y", VTYPE_Referencer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil | ArgFlag::Referencer);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxDC, GetUserScale_gurax, processor_gurax, argument_gurax)

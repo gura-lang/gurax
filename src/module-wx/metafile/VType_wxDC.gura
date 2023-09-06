@@ -26,8 +26,7 @@ DC = Class {
 		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
 		'''
 	*/
-	GetUserScale(x as Referencer@gurax, y as Referencer@gurax) as void = \
-	//GetUserScale(&x, &y) as void = \
+	GetUserScale(&x:nil as double, &y:nil as double) as void = \
 		R'''
 		double x_, y_;
 		pEntity_gurax->GetUserScale(&x_, &y_);
