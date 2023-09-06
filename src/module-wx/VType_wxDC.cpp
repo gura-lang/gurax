@@ -440,10 +440,12 @@ Gurax_ImplementMethodEx(wxDC, SetLogicalScale_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// wx.DC#GetLogicalScale()
+// wx.DC#GetLogicalScale(&x:nil as Number, &y:nil as Number)
 Gurax_DeclareMethodAlias(wxDC, GetLogicalScale_gurax, "GetLogicalScale")
 {
-	Declare(VTYPE_Tuple, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil | ArgFlag::Referencer);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxDC, GetLogicalScale_gurax, processor_gurax, argument_gurax)
@@ -452,10 +454,16 @@ Gurax_ImplementMethodEx(wxDC, GetLogicalScale_gurax, processor_gurax, argument_g
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Gurax::Referencer& x = args_gurax.PickReferencer();
+	Gurax::Referencer& y = args_gurax.PickReferencer();
 	// Function body
-	double x, y;
-	pEntity_gurax->GetLogicalScale(&x, &y);
-	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+	double x_, y_;
+	pEntity_gurax->GetLogicalScale(&x_, &y_);
+	x.SetValue(new Value_Number(x_));
+	y.SetValue(new Value_Number(y_));
+	return Value::nil();
 }
 
 // wx.DC#SetLogicalOrigin(x as Number, y as Number)
@@ -1872,14 +1880,14 @@ Gurax_ImplementMethodEx(wxDC, DestroyClippingRegion_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// wx.DC#GetClippingBox(x as Referencer, y as Referencer, width as Referencer, height as Referencer)
+// wx.DC#GetClippingBox(&x:nil as Number, &y:nil as Number, &width:nil as Number, &height:nil as Number)
 Gurax_DeclareMethodAlias(wxDC, GetClippingBox_gurax, "GetClippingBox")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("x", VTYPE_Referencer, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("y", VTYPE_Referencer, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("width", VTYPE_Referencer, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("height", VTYPE_Referencer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil | ArgFlag::Referencer);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil | ArgFlag::Referencer);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil | ArgFlag::Referencer);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxDC, GetClippingBox_gurax, processor_gurax, argument_gurax)
