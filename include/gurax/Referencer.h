@@ -32,6 +32,8 @@ public:
 protected:
 	~Referencer() = default;
 public:
+	static void Bootup();
+public:
 	Frame& GetFrame() { return *_pFrame; }
 	const Frame& GetFrame() const { return *_pFrame; }
 	const Symbol* GetSymbol() const { return _pSymbol; }

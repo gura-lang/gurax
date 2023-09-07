@@ -8,6 +8,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Referencer
 //------------------------------------------------------------------------------
+void Referencer::Bootup()
+{
+}
+
 Referencer::Referencer(Frame* pFrame, const Symbol* pSymbol, Value* pValue) : _pFrame(pFrame), _pSymbol(pSymbol), _pValue(pValue)
 {
 }

@@ -28,6 +28,7 @@ bool Initialize(int& argc, char** argv)
 	Operator::Bootup();
 	Palette::Bootup();
 	Random::Bootup();
+	Referencer::Bootup();
 	Stream::Bootup();
 	//Template::Bootup();
 	Token::Bootup();

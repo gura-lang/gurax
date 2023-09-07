@@ -18,14 +18,6 @@ DC = Class {
 	GetPPI() as Size
 	GetSize() as Size
 	GetSizeMM() as Size
-	/*
-	GetUserScale() as Tuple@gurax = \
-		R'''
-		double x, y;
-		pEntity_gurax->GetUserScale(&x, &y);
-		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
-		'''
-	*/
 	GetUserScale(&x:nil as double, &y:nil as double) as void = \
 		R'''
 		double x_, y_;
@@ -44,14 +36,6 @@ DC = Class {
 	//GetHandle()
 	GetAsBitmap(subrect as const_Rect_p = nullptr) as Bitmap
 	SetLogicalScale(x as double, y as double) as void
-	/*
-	GetLogicalScale() as Tuple@gurax = \
-		R'''
-		double x, y;
-		pEntity_gurax->GetLogicalScale(&x, &y);
-		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
-		'''
-	*/
 	GetLogicalScale(&x:nil as double, &y:nil as double) as void = \
 		R'''
 		double x_, y_;
@@ -810,14 +794,6 @@ DC = Class {
 		'''
 	// Clipping region functions
 	DestroyClippingRegion() as void
-	/*
-	GetClippingBox() as Tuple@gurax = \
-		R'''
-		wxCoord x, y, width, height;
-		pEntity_gurax->GetClippingBox(&x, &y, &width, &height);
-		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y), new Value_Number(width), new Value_Number(height));
-		'''
-	*/
 	GetClippingBox(&x:nil as Coord, &y:nil as Coord, &width:nil as Coord, &height:nil as Coord) as void = \
 		R'''
 		wxCoord x_, y_, width_, height_;
@@ -938,11 +914,13 @@ DC = Class {
 	// query capabilities
 	CanDrawBitmap() as bool
 	CanGetTextExtent() as bool
-	GetLogicalOriginXY() as Tuple@gurax = \
+	GetLogicalOriginXY(&x:nil as Coord, &y:nil as Coord) as void = \
 		R'''
-		wxCoord x, y;
-		pEntity_gurax->GetLogicalOrigin(&x, &y);
-		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+		wxCoord x_, y_;
+		pEntity_gurax->GetLogicalOrigin(&x_, &y_);
+		x.SetValue(new Value_Number(x_));
+		y.SetValue(new Value_Number(y_));
+		return Value::nil();
 		'''
 	GetLogicalOrigin() as Point
 } %% R'''
