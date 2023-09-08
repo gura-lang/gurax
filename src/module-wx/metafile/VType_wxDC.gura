@@ -18,12 +18,12 @@ DC = Class {
 	GetPPI() as Size
 	GetSize() as Size
 	GetSizeMM() as Size
-	GetUserScale(&x:nil as double, &y:nil as double) as void = \
+	GetUserScale(&x, &y) as void = \
 		R'''
 		double x_, y_;
 		pEntity_gurax->GetUserScale(&x_, &y_);
-		x.SetValue(new Value_Number(x_));
-		y.SetValue(new Value_Number(y_));
+		x->SetValue(new Value_Number(x_));
+		y->SetValue(new Value_Number(y_));
 		return Value::nil();
 		'''
 	IsOk() as bool
@@ -36,12 +36,12 @@ DC = Class {
 	//GetHandle()
 	GetAsBitmap(subrect as const_Rect_p = nullptr) as Bitmap
 	SetLogicalScale(x as double, y as double) as void
-	GetLogicalScale(&x:nil as double, &y:nil as double) as void = \
+	GetLogicalScale(&x, &y) as void = \
 		R'''
 		double x_, y_;
 		pEntity_gurax->GetLogicalScale(&x_, &y_);
-		x.SetValue(new Value_Number(x_));
-		y.SetValue(new Value_Number(y_));
+		x->SetValue(new Value_Number(x_));
+		y->SetValue(new Value_Number(y_));
 		return Value::nil();
 		'''
 	SetLogicalOrigin(x as Coord, y as Coord) as void
@@ -794,14 +794,14 @@ DC = Class {
 		'''
 	// Clipping region functions
 	DestroyClippingRegion() as void
-	GetClippingBox(&x:nil as Coord, &y:nil as Coord, &width:nil as Coord, &height:nil as Coord) as void = \
+	GetClippingBox(&x, &y, &width, &height) as void = \
 		R'''
 		wxCoord x_, y_, width_, height_;
 		pEntity_gurax->GetClippingBox(&x_, &y_, &width_, &height_);
-		x.SetValue(new Value_Number(x_));
-		y.SetValue(new Value_Number(y_));
-		width.SetValue(new Value_Number(width_));
-		height.SetValue(new Value_Number(height_));
+		x->SetValue(new Value_Number(x_));
+		y->SetValue(new Value_Number(y_));
+		width->SetValue(new Value_Number(width_));
+		height->SetValue(new Value_Number(height_));
 		return Value::nil();
 		'''
 	SetClippingRegion(args* as any) as void = \
@@ -914,12 +914,12 @@ DC = Class {
 	// query capabilities
 	CanDrawBitmap() as bool
 	CanGetTextExtent() as bool
-	GetLogicalOriginXY(&x:nil as Coord, &y:nil as Coord) as void = \
+	GetLogicalOriginXY(&x, &y) as void = \
 		R'''
 		wxCoord x_, y_;
 		pEntity_gurax->GetLogicalOrigin(&x_, &y_);
-		x.SetValue(new Value_Number(x_));
-		y.SetValue(new Value_Number(y_));
+		x->SetValue(new Value_Number(x_));
+		y->SetValue(new Value_Number(y_));
 		return Value::nil();
 		'''
 	GetLogicalOrigin() as Point

@@ -219,12 +219,12 @@ Gurax_ImplementMethodEx(wxDC, GetSizeMM_gurax, processor_gurax, argument_gurax)
 		pEntity_gurax->GetSizeMM()));
 }
 
-// wx.DC#GetUserScale(&x:nil as Number, &y:nil as Number)
+// wx.DC#GetUserScale(&x as Any, &y as Any)
 Gurax_DeclareMethodAlias(wxDC, GetUserScale_gurax, "GetUserScale")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil | ArgFlag::Referencer);
-	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil | ArgFlag::Referencer);
+	DeclareArg("x", VTYPE_Any, ArgOccur::Once, ArgFlag::Referencer);
+	DeclareArg("y", VTYPE_Any, ArgOccur::Once, ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxDC, GetUserScale_gurax, processor_gurax, argument_gurax)
@@ -235,13 +235,13 @@ Gurax_ImplementMethodEx(wxDC, GetUserScale_gurax, processor_gurax, argument_gura
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Gurax::Referencer& x = args_gurax.PickReferencer();
-	Gurax::Referencer& y = args_gurax.PickReferencer();
+	RefPtr<Referencer> x(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y(args_gurax.PickReferencer().Reference());
 	// Function body
 	double x_, y_;
 	pEntity_gurax->GetUserScale(&x_, &y_);
-	x.SetValue(new Value_Number(x_));
-	y.SetValue(new Value_Number(y_));
+	x->SetValue(new Value_Number(x_));
+	y->SetValue(new Value_Number(y_));
 	return Value::nil();
 }
 
@@ -440,12 +440,12 @@ Gurax_ImplementMethodEx(wxDC, SetLogicalScale_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// wx.DC#GetLogicalScale(&x:nil as Number, &y:nil as Number)
+// wx.DC#GetLogicalScale(&x as Any, &y as Any)
 Gurax_DeclareMethodAlias(wxDC, GetLogicalScale_gurax, "GetLogicalScale")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil | ArgFlag::Referencer);
-	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil | ArgFlag::Referencer);
+	DeclareArg("x", VTYPE_Any, ArgOccur::Once, ArgFlag::Referencer);
+	DeclareArg("y", VTYPE_Any, ArgOccur::Once, ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxDC, GetLogicalScale_gurax, processor_gurax, argument_gurax)
@@ -456,13 +456,13 @@ Gurax_ImplementMethodEx(wxDC, GetLogicalScale_gurax, processor_gurax, argument_g
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Gurax::Referencer& x = args_gurax.PickReferencer();
-	Gurax::Referencer& y = args_gurax.PickReferencer();
+	RefPtr<Referencer> x(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y(args_gurax.PickReferencer().Reference());
 	// Function body
 	double x_, y_;
 	pEntity_gurax->GetLogicalScale(&x_, &y_);
-	x.SetValue(new Value_Number(x_));
-	y.SetValue(new Value_Number(y_));
+	x->SetValue(new Value_Number(x_));
+	y->SetValue(new Value_Number(y_));
 	return Value::nil();
 }
 
@@ -1880,14 +1880,14 @@ Gurax_ImplementMethodEx(wxDC, DestroyClippingRegion_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// wx.DC#GetClippingBox(&x:nil as Number, &y:nil as Number, &width:nil as Number, &height:nil as Number)
+// wx.DC#GetClippingBox(&x as Any, &y as Any, &width as Any, &height as Any)
 Gurax_DeclareMethodAlias(wxDC, GetClippingBox_gurax, "GetClippingBox")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil | ArgFlag::Referencer);
-	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil | ArgFlag::Referencer);
-	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil | ArgFlag::Referencer);
-	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil | ArgFlag::Referencer);
+	DeclareArg("x", VTYPE_Any, ArgOccur::Once, ArgFlag::Referencer);
+	DeclareArg("y", VTYPE_Any, ArgOccur::Once, ArgFlag::Referencer);
+	DeclareArg("width", VTYPE_Any, ArgOccur::Once, ArgFlag::Referencer);
+	DeclareArg("height", VTYPE_Any, ArgOccur::Once, ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxDC, GetClippingBox_gurax, processor_gurax, argument_gurax)
@@ -1898,17 +1898,17 @@ Gurax_ImplementMethodEx(wxDC, GetClippingBox_gurax, processor_gurax, argument_gu
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Gurax::Referencer& x = args_gurax.PickReferencer();
-	Gurax::Referencer& y = args_gurax.PickReferencer();
-	Gurax::Referencer& width = args_gurax.PickReferencer();
-	Gurax::Referencer& height = args_gurax.PickReferencer();
+	RefPtr<Referencer> x(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> width(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> height(args_gurax.PickReferencer().Reference());
 	// Function body
 	wxCoord x_, y_, width_, height_;
 	pEntity_gurax->GetClippingBox(&x_, &y_, &width_, &height_);
-	x.SetValue(new Value_Number(x_));
-	y.SetValue(new Value_Number(y_));
-	width.SetValue(new Value_Number(width_));
-	height.SetValue(new Value_Number(height_));
+	x->SetValue(new Value_Number(x_));
+	y->SetValue(new Value_Number(y_));
+	width->SetValue(new Value_Number(width_));
+	height->SetValue(new Value_Number(height_));
 	return Value::nil();
 }
 
@@ -2803,10 +2803,12 @@ Gurax_ImplementMethodEx(wxDC, CanGetTextExtent_gurax, processor_gurax, argument_
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.DC#GetLogicalOriginXY()
+// wx.DC#GetLogicalOriginXY(&x as Any, &y as Any)
 Gurax_DeclareMethodAlias(wxDC, GetLogicalOriginXY_gurax, "GetLogicalOriginXY")
 {
-	Declare(VTYPE_Tuple, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x", VTYPE_Any, ArgOccur::Once, ArgFlag::Referencer);
+	DeclareArg("y", VTYPE_Any, ArgOccur::Once, ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxDC, GetLogicalOriginXY_gurax, processor_gurax, argument_gurax)
@@ -2815,10 +2817,16 @@ Gurax_ImplementMethodEx(wxDC, GetLogicalOriginXY_gurax, processor_gurax, argumen
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Referencer> x(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y(args_gurax.PickReferencer().Reference());
 	// Function body
-	wxCoord x, y;
-	pEntity_gurax->GetLogicalOrigin(&x, &y);
-	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+	wxCoord x_, y_;
+	pEntity_gurax->GetLogicalOrigin(&x_, &y_);
+	x->SetValue(new Value_Number(x_));
+	y->SetValue(new Value_Number(y_));
+	return Value::nil();
 }
 
 // wx.DC#GetLogicalOrigin() {block?}

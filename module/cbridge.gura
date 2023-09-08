@@ -569,10 +569,10 @@ Renderer.__init__() = {
 		''')
 	this.DeclareType('Referencer@gurax', '', 'Referencer',
 		codePicker = R'''
-		Gurax::Referencer& ${varName} = args_gurax.PickReferencer();
+		RefPtr<Referencer> ${varName}(args_gurax.PickReferencer().Reference());
 		'''
 		codePickerValidation = R'''
-		Gurax::Referencer& ${varName} = args_gurax.PickReferencer();
+		RefPtr<Referencer> ${varName}(args_gurax.IsValid()? args_gurax.PickReferencer().Reference() : ${defaultValue || 'nullptr'});
 		''')
 	this.DeclareType('Function@gurax', '', 'Function',
 		codePicker = R'''
