@@ -872,6 +872,11 @@ DC = Class {
 	GetMultiLineTextExtent(string as String) as Size
 	//GetPartialTextExtents(text as String, wxArrayInt &widths) as bool
 	//GetTextExtent(const wxString &string, wxCoord *w, wxCoord *h, wxCoord *descent=NULL, wxCoord *externalLeading=NULL, const wxFont *font=NULL) as void
+	//GetTextExtent(string as const_String_r, &w:nilRef as Coord, &h:nilRef as Coord, &descent?:nilRef as Coord, &externalLeading?:nilRef as Coord, &font?:nilRef as Font) as void = {
+	//	wxCoord w, h, descent, externalLeading;
+	//	wxFont
+	//	return Value::nil();
+	//}
 	GetTextExtent(string as String) as Size
 	// Text properties functions
 	GetBackgroundMode() as int
