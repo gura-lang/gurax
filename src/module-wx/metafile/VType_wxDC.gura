@@ -18,7 +18,7 @@ DC = Class {
 	GetPPI() as Size
 	GetSize() as Size
 	GetSizeMM() as Size
-	GetUserScale(&x, &y) as void = \
+	GetUserScale(&x:nilRef as double, &y:nilRef as double) as void = \
 		R'''
 		double x_, y_;
 		pEntity_gurax->GetUserScale(&x_, &y_);
@@ -36,7 +36,7 @@ DC = Class {
 	//GetHandle()
 	GetAsBitmap(subrect as const_Rect_p = nullptr) as Bitmap
 	SetLogicalScale(x as double, y as double) as void
-	GetLogicalScale(&x, &y) as void = \
+	GetLogicalScale(&x:nilRef as double, &y:nilRef as double) as void = \
 		R'''
 		double x_, y_;
 		pEntity_gurax->GetLogicalScale(&x_, &y_);
@@ -794,7 +794,7 @@ DC = Class {
 		'''
 	// Clipping region functions
 	DestroyClippingRegion() as void
-	GetClippingBox(&x, &y, &width, &height) as void = \
+	GetClippingBox(&x:nilRef as Coord, &y:nilRef as Coord, &width:nilRef as Coord, &height:nilRef as Coord) as void = \
 		R'''
 		wxCoord x_, y_, width_, height_;
 		pEntity_gurax->GetClippingBox(&x_, &y_, &width_, &height_);
@@ -914,7 +914,7 @@ DC = Class {
 	// query capabilities
 	CanDrawBitmap() as bool
 	CanGetTextExtent() as bool
-	GetLogicalOriginXY(&x, &y) as void = \
+	GetLogicalOriginXY(&x:nilRef as Coord, &y:nilRef as Coord) as void = \
 		R'''
 		wxCoord x_, y_;
 		pEntity_gurax->GetLogicalOrigin(&x_, &y_);

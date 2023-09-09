@@ -144,24 +144,21 @@ Value* DeclArg::Cast(Frame& frame, const Value& value)
 					"unknown value type: %s", GetDottedSymbol().ToString().c_str());
 		return nullptr;
 	}
-	if (value.IsNil() && (IsSet(Flag::Nil) || IsOccurZeroOrOnce())) {
-		return value.Reference();
+	if (value.IsNil() && (IsSet(Flag::Nil) || IsOccurZeroOrOnce())) return value.Reference();
+	if (!IsSet(Flag::Referencer)) return GetVType().Cast(value, GetSymbol(), GetFlags());
+	if (!value.IsType(VTYPE_Referencer)) {
+		Error::Issue(ErrorType::TypeError, "referencer is expected");
+		return nullptr;
 	}
-	if (IsSet(Flag::Referencer)) {
-		if (!value.IsType(VTYPE_Referencer)) {
-			Error::Issue(ErrorType::TypeError, "referencer is expected");
-			return nullptr;
-		}
-		const Referencer& referencer = dynamic_cast<const Value_Referencer&>(value).GetReferencer();
-		const Value& valueContent = referencer.GetValue();
-		RefPtr<Value> pValueContentCasted(GetVType().Cast(valueContent, GetSymbol(), GetFlags()));
-		if (!pValueContentCasted) return nullptr;
-		if (valueContent.IsIdentical(pValueContentCasted.get())) return value.Reference();
-		RefPtr<Referencer> pReferencerCasted(new Referencer(referencer.GetFrame().Reference(),
-								referencer.GetSymbol(), pValueContentCasted.release()));
-		return new Value_Referencer(pReferencerCasted.release());
-	}
-	return GetVType().Cast(value, GetSymbol(), GetFlags());
+	const Referencer& referencer = dynamic_cast<const Value_Referencer&>(value).GetReferencer();
+	const Value& valueContent = referencer.GetValue();
+	if (IsSet(Flag::NilRef) && valueContent.IsNil()) return value.Reference();
+	RefPtr<Value> pValueContentCasted(GetVType().Cast(valueContent, GetSymbol(), GetFlags()));
+	if (!pValueContentCasted) return nullptr;
+	if (valueContent.IsIdentical(pValueContentCasted.get())) return value.Reference();
+	RefPtr<Referencer> pReferencerCasted(new Referencer(referencer.GetFrame().Reference(),
+							referencer.GetSymbol(), pValueContentCasted.release()));
+	return new Value_Referencer(pReferencerCasted.release());
 }
 
 bool DeclArg::CheckFlagConfliction(Flags flags)

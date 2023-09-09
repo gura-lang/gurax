@@ -81,6 +81,7 @@ ArgInfo = class {
 	referencerFlag as Bool
 	occurSymbol as Symbol
 	nilFlag as Bool
+	nilRefFlag as Bool
 	streamWFlag as Bool
 	streamRFlag as Bool
 	typeInfo as TypeInfo
@@ -98,10 +99,12 @@ ArgInfo = class {
 		this.occurSymbol = occurSymbol
 		if (attr) {
 			this.nilFlag = attr.IsSet(`nil)
+			this.nilRefFlag = attr.IsSet(`nilRef)
 			this.streamWFlag = attr.IsSet(`w)
 			this.streamRFlag = attr.IsSet(`r)
 		} else {
 			this.nilFlag = false
+			this.nilRefFlag = false
 			this.streamWFlag = false
 			this.streamRFlag = false
 		}
@@ -115,6 +118,7 @@ ArgInfo = class {
 		argFlags = []
 		this.IsList() && argFlags.Add('ListVar')
 		this.nilFlag && argFlags.Add('Nil')
+		this.nilRefFlag && argFlags.Add('NilRef')
 		this.streamWFlag && argFlags.Add('StreamW')
 		this.streamRFlag && argFlags.Add('StreamR')
 		this.referencerFlag && argFlags.Add('Referencer')
@@ -143,10 +147,10 @@ ArgInfo = class {
 	}
 	ToString() = {
 		this.GetTypeInfo()
-		Format('%s%s%s%s%s%s%s as %s', cond(this.referencerFlag, '&', ''), this.name, cond(this.IsList(), '[]', ''),
+		Format('%s%s%s%s%s%s%s%s as %s', cond(this.referencerFlag, '&', ''), this.name, cond(this.IsList(), '[]', ''),
 			cond(this.occurSymbol == `ZeroOrOnce, '?', cond(this.occurSymbol == `ZeroOrMore, '*',
 				cond(this.occurSymbol == `OnceOrMore, '+', ''))),
-			cond(this.nilFlag, ':nil', ''),
+			cond(this.nilFlag, ':nil', ''), cond(this.nilRefFlag, ':nilRef', ''),
 			cond(this.streamWFlag, ':w', ''), cond(this.streamRFlag, ':r', ''),
 			this.typeInfo.vtypeDisplay)
 	}

@@ -43,7 +43,7 @@ x .. hello
 x .. <Nil>
 f2(&x) .. a can't accept nil value
 x .. <Nil>
-<Function:f3(&a:nil as Number)>
+<Function:f3(&a:nilRef as Number)>
 --------
 x .. 123
 f3(&x) .. <Nil>

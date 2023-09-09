@@ -219,12 +219,12 @@ Gurax_ImplementMethodEx(wxDC, GetSizeMM_gurax, processor_gurax, argument_gurax)
 		pEntity_gurax->GetSizeMM()));
 }
 
-// wx.DC#GetUserScale(&x as Any, &y as Any)
+// wx.DC#GetUserScale(&x:nilRef as Number, &y:nilRef as Number)
 Gurax_DeclareMethodAlias(wxDC, GetUserScale_gurax, "GetUserScale")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("x", VTYPE_Any, ArgOccur::Once, ArgFlag::Referencer);
-	DeclareArg("y", VTYPE_Any, ArgOccur::Once, ArgFlag::Referencer);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxDC, GetUserScale_gurax, processor_gurax, argument_gurax)
@@ -440,12 +440,12 @@ Gurax_ImplementMethodEx(wxDC, SetLogicalScale_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// wx.DC#GetLogicalScale(&x as Any, &y as Any)
+// wx.DC#GetLogicalScale(&x:nilRef as Number, &y:nilRef as Number)
 Gurax_DeclareMethodAlias(wxDC, GetLogicalScale_gurax, "GetLogicalScale")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("x", VTYPE_Any, ArgOccur::Once, ArgFlag::Referencer);
-	DeclareArg("y", VTYPE_Any, ArgOccur::Once, ArgFlag::Referencer);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxDC, GetLogicalScale_gurax, processor_gurax, argument_gurax)
@@ -1880,14 +1880,14 @@ Gurax_ImplementMethodEx(wxDC, DestroyClippingRegion_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// wx.DC#GetClippingBox(&x as Any, &y as Any, &width as Any, &height as Any)
+// wx.DC#GetClippingBox(&x:nilRef as Number, &y:nilRef as Number, &width:nilRef as Number, &height:nilRef as Number)
 Gurax_DeclareMethodAlias(wxDC, GetClippingBox_gurax, "GetClippingBox")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("x", VTYPE_Any, ArgOccur::Once, ArgFlag::Referencer);
-	DeclareArg("y", VTYPE_Any, ArgOccur::Once, ArgFlag::Referencer);
-	DeclareArg("width", VTYPE_Any, ArgOccur::Once, ArgFlag::Referencer);
-	DeclareArg("height", VTYPE_Any, ArgOccur::Once, ArgFlag::Referencer);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxDC, GetClippingBox_gurax, processor_gurax, argument_gurax)
@@ -2803,12 +2803,12 @@ Gurax_ImplementMethodEx(wxDC, CanGetTextExtent_gurax, processor_gurax, argument_
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.DC#GetLogicalOriginXY(&x as Any, &y as Any)
+// wx.DC#GetLogicalOriginXY(&x:nilRef as Number, &y:nilRef as Number)
 Gurax_DeclareMethodAlias(wxDC, GetLogicalOriginXY_gurax, "GetLogicalOriginXY")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("x", VTYPE_Any, ArgOccur::Once, ArgFlag::Referencer);
-	DeclareArg("y", VTYPE_Any, ArgOccur::Once, ArgFlag::Referencer);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxDC, GetLogicalOriginXY_gurax, processor_gurax, argument_gurax)

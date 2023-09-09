@@ -23,21 +23,22 @@ public:
 	struct GURAX_DLLDECLARE Flag {
 		static const Flags None			= 0;
 		static const Flags ListVar		= 1 << 0;	// :listVar
-		static const Flags Nil			= 1 << 1;	// :nil
-		static const Flags StreamR		= 1 << 2;	// :r
-		static const Flags StreamW		= 1 << 3;	// :w
-		static const Flags Map			= 1 << 4;	// :map
-		static const Flags NoMap		= 1 << 5;	// :noMap
-		static const Flags NoCast		= 1 << 6;	// :noCast
-		static const Flags StringCast	= 1 << 7;	// :stringCast
-		static const Flags ExplicitCast	= 1 << 8;	// :explicitCast
-		static const Flags OfClass		= 1 << 9;	// :static
-		static const Flags OfInstance	= 1 << 10;	// :instance
-		static const Flags Public		= 1 << 11;	// :public
-		static const Flags Private		= 1 << 12;	// :private
-		static const Flags Readable		= 1 << 13;	// :readable
-		static const Flags Writable		= 1 << 14;	// :writable
-		static const Flags Referencer	= 1 << 16;	// &x
+		static const Flags Referencer	= 1 << 1;	// &x
+		static const Flags Nil			= 1 << 2;	// :nil
+		static const Flags NilRef		= 1 << 3;	// :nilRef
+		static const Flags StreamR		= 1 << 4;	// :r
+		static const Flags StreamW		= 1 << 5;	// :w
+		static const Flags Map			= 1 << 6;	// :map
+		static const Flags NoMap		= 1 << 7;	// :noMap
+		static const Flags NoCast		= 1 << 8;	// :noCast
+		static const Flags StringCast	= 1 << 9;	// :stringCast
+		static const Flags ExplicitCast	= 1 << 10;	// :explicitCast
+		static const Flags OfClass		= 1 << 11;	// :static
+		static const Flags OfInstance	= 1 << 12;	// :instance
+		static const Flags Public		= 1 << 13;	// :public
+		static const Flags Private		= 1 << 14;	// :private
+		static const Flags Readable		= 1 << 15;	// :readable
+		static const Flags Writable		= 1 << 16;	// :writable
 	};
 	class GURAX_DLLDECLARE Occur {
 	private:
@@ -75,7 +76,9 @@ public:
 	public:
 		SymbolAssoc_Flag() {
 			Assoc(Gurax_Symbol(listVar),	Flag::ListVar);
+			Assoc(Gurax_Symbol(referencer),	Flag::Referencer);
 			Assoc(Gurax_Symbol(nil),		Flag::Nil);
+			Assoc(Gurax_Symbol(nilRef),		Flag::NilRef);
 			Assoc(Gurax_Symbol(r),			Flag::StreamR);
 			Assoc(Gurax_Symbol(w),			Flag::StreamW);
 			Assoc(Gurax_Symbol(map),		Flag::Map);
@@ -88,7 +91,6 @@ public:
 			Assoc(Gurax_Symbol(private_),	Flag::Private);
 			Assoc(Gurax_Symbol(R),			Flag::Readable);
 			Assoc(Gurax_Symbol(W),			Flag::Writable);
-			Assoc(Symbol::Empty,			Flag::Referencer);
 			Assoc(Gurax_Symbol(const_),		Flag::None);		// only for DoesExit()
 		}
 		static const SymbolAssoc& GetInstance() {

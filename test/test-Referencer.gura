@@ -75,7 +75,7 @@ TestCase('Modification in a Function (2)') {
 	Tester(`x)
 	Tester(`f2(&x))
 	Tester(`x)
-	f3(&a:nil as Number) = {
+	f3(&a:nilRef as Number) = {
 		a.@ = 12345
 		nil
 	}
