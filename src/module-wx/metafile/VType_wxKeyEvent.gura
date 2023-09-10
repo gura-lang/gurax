@@ -12,11 +12,13 @@ KeyEvent = Class(Event) {
 	DoAllowNextEvent() as void
 	IsNextEventAllowed() as bool
 	GetPosition() as Point
-	GetPositionXY() as Tuple@gurax = \
+	GetPositionXY(&x:nilRef as Coord, &y:nilRef as Coord) as void = \
 		R'''
-		wxCoord x, y;
-		pEntity_gurax->GetPosition(&x, &y);
-		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+		wxCoord x_, y_;
+		pEntity_gurax->GetPosition(&x_, &y_);
+		x->SetValue(new Value_Number(x_));
+		y->SetValue(new Value_Number(y_));
+		return Value::nil();
 		'''
 } %% R'''
 # Overview

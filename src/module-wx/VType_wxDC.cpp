@@ -2061,6 +2061,39 @@ Gurax_ImplementMethodEx(wxDC, GetFontMetrics_gurax, processor_gurax, argument_gu
 		pEntity_gurax->GetFontMetrics()));
 }
 
+// wx.DC#GetMultiLineTextExtentWH(string as String, &w:nilRef as Number, &h:nilRef as Number, &heightLine?:nilRef as Number, font? as wx.Font)
+Gurax_DeclareMethodAlias(wxDC, GetMultiLineTextExtentWH_gurax, "GetMultiLineTextExtentWH")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("string", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("h", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("heightLine", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("font", VTYPE_wxFont, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxDC, GetMultiLineTextExtentWH_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* string = args_gurax.PickString();
+	RefPtr<Referencer> w(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> h(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> heightLine(args_gurax.IsValid()? args_gurax.PickReferencer().Reference() : nullptr);
+	const wxFont* font = args_gurax.IsValid()? args_gurax.Pick<Value_wxFont>().GetEntityPtr() : nullptr;
+	// Function body
+	wxCoord w_, h_, heightLine_;
+	pEntity_gurax->GetMultiLineTextExtent(string, &w_, &h_, &heightLine_, font);
+	w->SetValue(new Value_Number(w_));
+	h->SetValue(new Value_Number(h_));
+	if (heightLine) heightLine->SetValue(new Value_Number(heightLine_));
+	return Value::nil();
+}
+
 // wx.DC#GetMultiLineTextExtent(string as String) {block?}
 Gurax_DeclareMethodAlias(wxDC, GetMultiLineTextExtent_gurax, "GetMultiLineTextExtent")
 {
@@ -2081,6 +2114,42 @@ Gurax_ImplementMethodEx(wxDC, GetMultiLineTextExtent_gurax, processor_gurax, arg
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
 		pEntity_gurax->GetMultiLineTextExtent(string)));
+}
+
+// wx.DC#GetTextExtentWH(string as String, &w:nilRef as Number, &h:nilRef as Number, &descent?:nilRef as Number, &externalLeading?:nilRef as Number, font? as wx.Font)
+Gurax_DeclareMethodAlias(wxDC, GetTextExtentWH_gurax, "GetTextExtentWH")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("string", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("h", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("descent", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("externalLeading", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("font", VTYPE_wxFont, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxDC, GetTextExtentWH_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* string = args_gurax.PickString();
+	RefPtr<Referencer> w(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> h(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> descent(args_gurax.IsValid()? args_gurax.PickReferencer().Reference() : nullptr);
+	RefPtr<Referencer> externalLeading(args_gurax.IsValid()? args_gurax.PickReferencer().Reference() : nullptr);
+	const wxFont* font = args_gurax.IsValid()? args_gurax.Pick<Value_wxFont>().GetEntityPtr() : nullptr;
+	// Function body
+	wxCoord w_, h_, descent_, externalLeading_;
+	pEntity_gurax->GetTextExtent(string, &w_, &h_, &descent_, &externalLeading_, font);
+	w->SetValue(new Value_Number(w_));
+	h->SetValue(new Value_Number(h_));
+	if (descent) descent->SetValue(new Value_Number(descent_));
+	if (externalLeading) externalLeading->SetValue(new Value_Number(externalLeading_));
+	return Value::nil();
 }
 
 // wx.DC#GetTextExtent(string as String) {block?}
@@ -2924,7 +2993,9 @@ void VType_wxDC::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxDC, GetCharHeight_gurax));
 	Assign(Gurax_CreateMethod(wxDC, GetCharWidth_gurax));
 	Assign(Gurax_CreateMethod(wxDC, GetFontMetrics_gurax));
+	Assign(Gurax_CreateMethod(wxDC, GetMultiLineTextExtentWH_gurax));
 	Assign(Gurax_CreateMethod(wxDC, GetMultiLineTextExtent_gurax));
+	Assign(Gurax_CreateMethod(wxDC, GetTextExtentWH_gurax));
 	Assign(Gurax_CreateMethod(wxDC, GetTextExtent_gurax));
 	Assign(Gurax_CreateMethod(wxDC, GetBackgroundMode_gurax));
 	Assign(Gurax_CreateMethod(wxDC, GetFont_gurax));

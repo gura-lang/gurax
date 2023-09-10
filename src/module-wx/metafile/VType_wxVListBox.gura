@@ -8,19 +8,23 @@ VListBox = Class(VScrolledWindow) {
 	//Create(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0, name as const_String_r = wxVListBoxNameStr) as bool
 	DeselectAll() as bool
 	//GetFirstSelected(cookie as unsigned_long_r) as int
-	GetFirstSelected(cookie as unsigned_long) as Tuple@gurax = \
+	GetFirstSelected(&cookie as unsigned_long) as int = \
 		R'''
-		int rtn = pEntity_gurax->GetFirstSelected(cookie);
-		return Value_Tuple::Create(new Value_Number(rtn), new Value_Number(cookie));
+		unsigned long cookie_ = cookie->Get<Value_Number>().GetNumber<unsigned long>();
+		int rtn = pEntity_gurax->GetFirstSelected(cookie_);
+		cookie->SetValue(new Value_Number(cookie_));
+		return new Value_Number(rtn);
 		'''
 	GetItemCount() as size_t
 	GetMargins() as Point
 	GetItemRect(item as size_t) as Rect
 	//GetNextSelected(cookie as unsigned_long_r) as int = \
-	GetNextSelected(cookie as unsigned_long) as Tuple@gurax = \
+	GetNextSelected(&cookie as unsigned_long) as int = \
 		R'''
-		int rtn = pEntity_gurax->GetNextSelected(cookie);
-		return Value_Tuple::Create(new Value_Number(rtn), new Value_Number(cookie));
+		unsigned long cookie_ = cookie->Get<Value_Number>().GetNumber<unsigned long>();
+		int rtn = pEntity_gurax->GetNextSelected(cookie_);
+		cookie->SetValue(new Value_Number(cookie_));
+		return new Value_Number(rtn);
 		'''
 	GetSelectedCount() as size_t
 	GetSelection() as int

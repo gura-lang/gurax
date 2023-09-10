@@ -100,11 +100,13 @@ Window = Class(EvtHandler) {
 	GetBestHeight(width as int) as int
 	GetBestWidth(height as int) as int
 	GetClientSize() as Size
-	GetClientSizeWH() as Tuple@gurax = \
+	GetClientSizeWH(&width:nilRef as int, &height:nilRef as int) as void = \
 		R'''
-		int width, height;
-		pEntity_gurax->GetClientSize(&width, &height);
-		return Value_Tuple::Create(new Value_Number(width), new Value_Number(height));
+		int width_, height_;
+		pEntity_gurax->GetClientSize(&width_, &height_);
+		width->SetValue(new Value_Number(width_));
+		height->SetValue(new Value_Number(height_));
+		return Value::nil();
 		'''
 	GetEffectiveMinSize() as Size
 	GetMaxClientSize() as Size
@@ -116,18 +118,22 @@ Window = Class(EvtHandler) {
 	GetMaxWidth() as int
 	GetMaxHeight() as int
 	GetSize() as Size
-	GetSizeWH() as Tuple@gurax = \
+	GetSizeWH(&width:nilRef as int, &height:nilRef as int) as void = \
 		R'''
-		int width, height;
-		pEntity_gurax->GetSize(&width, &height);
-		return Value_Tuple::Create(new Value_Number(width), new Value_Number(height));
+		int width_, height_;
+		pEntity_gurax->GetSize(&width_, &height_);
+		width->SetValue(new Value_Number(width_));
+		height->SetValue(new Value_Number(height_));
+		return Value::nil();
 		'''
 	GetVirtualSize() as Size
-	GetVirtualSizeWH() as Tuple@gurax = \
+	GetVirtualSizeWH(&width:nilRef as int, &height:nilRef as int) as void = \
 		R'''
-		int width, height;
-		pEntity_gurax->GetVirtualSize(&width, &height);
-		return Value_Tuple::Create(new Value_Number(width), new Value_Number(height));
+		int width_, height_;
+		pEntity_gurax->GetVirtualSize(&width_, &height_);
+		width->SetValue(new Value_Number(width_));
+		height->SetValue(new Value_Number(height_));
+		return Value::nil();
 		'''
 	GetBestVirtualSize() as Size
 	GetContentScaleFactor() as double
@@ -358,19 +364,23 @@ Window = Class(EvtHandler) {
 	CenterOnParent(dir as int = wxBOTH) as void
 	Centre(direction as int = wxBOTH) as void
 	CentreOnParent(direction as int = wxBOTH) as void
-	GetPositionXY() as Tuple@gurax = \
+	GetPositionXY(&x:nilRef as int, &y:nilRef as int) as void = \
 		R'''
-		int x, y;
-		pEntity_gurax->GetPosition(&x, &y);
-		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+		int x_, y_;
+		pEntity_gurax->GetPosition(&x_, &y_);
+		x->SetValue(new Value_Number(x_));
+		y->SetValue(new Value_Number(y_));
+		return Value::nil();
 		'''
 	GetPosition() as Point
 	GetRect() as Rect
-	GetScreenPositionXY() as Tuple@gurax = \
+	GetScreenPositionXY(&x:nilRef as int, &y:nilRef as int) as void = \
 		R'''
-		int x, y;
-		pEntity_gurax->GetScreenPosition(&x, &y);
-		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+		int x_, y_;
+		pEntity_gurax->GetScreenPosition(&x_, &y_);
+		x->SetValue(new Value_Number(x_));
+		y->SetValue(new Value_Number(y_));
+		return Value::nil();
 		'''
 	GetScreenPosition() as Point
 	GetScreenRect() as Rect
@@ -425,17 +435,21 @@ Window = Class(EvtHandler) {
 			static DeclCallable* pDeclCallable = nullptr;
 			if (!pDeclCallable) {
 				pDeclCallable = new DeclCallable();
-				pDeclCallable->DeclareArg("x", VTYPE_Number);
-				pDeclCallable->DeclareArg("y", VTYPE_Number);
+				pDeclCallable->DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::Referencer);
+				pDeclCallable->DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::Referencer);
 			}
 			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
 			Error::Clear();
 			ArgPicker args(*pArgument);
-			int x = args.PickNumber<int>();
-			int y = args.PickNumber<int>();
-			pEntity_gurax->ClientToScreen(&x, &y);
-			return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+			RefPtr<Referencer> x(args.PickReferencer().Reference());
+			RefPtr<Referencer> y(args.PickReferencer().Reference());
+			int x_ = x->Get<Value_Number>().GetNumber<int>();
+			int y_ = y->Get<Value_Number>().GetNumber<int>();
+			pEntity_gurax->ClientToScreen(&x_, &y_);
+			x->SetValue(new Value_Number(x_));
+			y->SetValue(new Value_Number(y_));
+			return Value::nil();
 		} while (0);
 		Error::ClearIssuedFlag();
 		do {
@@ -526,17 +540,21 @@ Window = Class(EvtHandler) {
 			static DeclCallable* pDeclCallable = nullptr;
 			if (!pDeclCallable) {
 				pDeclCallable = new DeclCallable();
-				pDeclCallable->DeclareArg("x", VTYPE_Number);
-				pDeclCallable->DeclareArg("y", VTYPE_Number);
+				pDeclCallable->DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::Referencer);
+				pDeclCallable->DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::Referencer);
 			}
 			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
 			Error::Clear();
 			ArgPicker args(*pArgument);
-			int x = args.PickNumber<int>();
-			int y = args.PickNumber<int>();
-			pEntity_gurax->ScreenToClient(&x, &y);
-			return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+			RefPtr<Referencer> x(args.PickReferencer().Reference());
+			RefPtr<Referencer> y(args.PickReferencer().Reference());
+			int x_ = x->Get<Value_Number>().GetNumber<int>();
+			int y_ = y->Get<Value_Number>().GetNumber<int>();
+			pEntity_gurax->ScreenToClient(&x_, &y_);
+			x->SetValue(new Value_Number(x_));
+			y->SetValue(new Value_Number(y_));
+			return Value::nil();
 		} while (0);
 		Error::ClearIssuedFlag();
 		do {
@@ -569,11 +587,15 @@ Window = Class(EvtHandler) {
 	GetDefaultAttributes() as VisualAttributes
 	GetFont() as Font
 	GetForegroundColour() as Colour
-	GetTextExtentWH(string as const_String_r, font? as const_Font_p) as Tuple@gurax = \
+	GetTextExtentWH(string as const_String_r, &w:nilRef as int, &h:nilRef as int, &descent:nilRef as int, &externalLeading:nilRef as int, font? as const_Font_p) as void = \
 		R'''
-		int w, h, descent, externalLeading;
-		pEntity_gurax->GetTextExtent(string, &w, &h, &descent, &externalLeading, font);
-		return Value_Tuple::Create(new Value_Number(w), new Value_Number(h), new Value_Number(descent), new Value_Number(externalLeading));
+		int w_, h_, descent_, externalLeading_;
+		pEntity_gurax->GetTextExtent(string, &w_, &h_, &descent_, &externalLeading_, font);
+		w->SetValue(new Value_Number(w_));
+		h->SetValue(new Value_Number(h_));
+		descent->SetValue(new Value_Number(descent_));
+		externalLeading->SetValue(new Value_Number(externalLeading_));
+		return Value::nil();
 		'''
 	GetTextExtent(string as const_String_r) as Size
 	GetUpdateRegion() as Region

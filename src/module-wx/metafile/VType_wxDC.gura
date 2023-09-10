@@ -869,14 +869,28 @@ DC = Class {
 	GetCharWidth() as Coord
 	GetFontMetrics() as FontMetrics
 	//GetMultiLineTextExtent(string as String, wxCoord *w, wxCoord *h, wxCoord *heightLine=NULL, const wxFont *font=NULL) as void
+	GetMultiLineTextExtentWH(string as String, &w:nilRef as Coord, &h:nilRef as Coord, &heightLine?:nilRef as Coord, font? as const_Font_p) as void = \
+		R'''
+		wxCoord w_, h_, heightLine_;
+		pEntity_gurax->GetMultiLineTextExtent(string, &w_, &h_, &heightLine_, font);
+		w->SetValue(new Value_Number(w_));
+		h->SetValue(new Value_Number(h_));
+		if (heightLine) heightLine->SetValue(new Value_Number(heightLine_));
+		return Value::nil();
+		'''
 	GetMultiLineTextExtent(string as String) as Size
 	//GetPartialTextExtents(text as String, wxArrayInt &widths) as bool
 	//GetTextExtent(const wxString &string, wxCoord *w, wxCoord *h, wxCoord *descent=NULL, wxCoord *externalLeading=NULL, const wxFont *font=NULL) as void
-	//GetTextExtent(string as const_String_r, &w:nilRef as Coord, &h:nilRef as Coord, &descent?:nilRef as Coord, &externalLeading?:nilRef as Coord, &font?:nilRef as Font) as void = {
-	//	wxCoord w, h, descent, externalLeading;
-	//	wxFont
-	//	return Value::nil();
-	//}
+	GetTextExtentWH(string as const_String_r, &w:nilRef as Coord, &h:nilRef as Coord, &descent?:nilRef as Coord, &externalLeading?:nilRef as Coord, font? as const_Font_p) as void = \
+		R'''
+		wxCoord w_, h_, descent_, externalLeading_;
+		pEntity_gurax->GetTextExtent(string, &w_, &h_, &descent_, &externalLeading_, font);
+		w->SetValue(new Value_Number(w_));
+		h->SetValue(new Value_Number(h_));
+		if (descent) descent->SetValue(new Value_Number(descent_));
+		if (externalLeading) externalLeading->SetValue(new Value_Number(externalLeading_));
+		return Value::nil();
+		'''
 	GetTextExtent(string as String) as Size
 	// Text properties functions
 	GetBackgroundMode() as int

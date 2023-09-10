@@ -82,11 +82,11 @@ Gurax_ImplementMethodEx(wxVListBox, DeselectAll_gurax, processor_gurax, argument
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.VListBox#GetFirstSelected(cookie as Number)
+// wx.VListBox#GetFirstSelected(&cookie as Number)
 Gurax_DeclareMethodAlias(wxVListBox, GetFirstSelected_gurax, "GetFirstSelected")
 {
-	Declare(VTYPE_Tuple, Flag::None);
-	DeclareArg("cookie", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("cookie", VTYPE_Number, ArgOccur::Once, ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxVListBox, GetFirstSelected_gurax, processor_gurax, argument_gurax)
@@ -97,10 +97,12 @@ Gurax_ImplementMethodEx(wxVListBox, GetFirstSelected_gurax, processor_gurax, arg
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	unsigned long cookie = args_gurax.PickNumber<unsigned long>();
+	RefPtr<Referencer> cookie(args_gurax.PickReferencer().Reference());
 	// Function body
-	int rtn = pEntity_gurax->GetFirstSelected(cookie);
-	return Value_Tuple::Create(new Value_Number(rtn), new Value_Number(cookie));
+	unsigned long cookie_ = cookie->Get<Value_Number>().GetNumber<unsigned long>();
+	int rtn = pEntity_gurax->GetFirstSelected(cookie_);
+	cookie->SetValue(new Value_Number(cookie_));
+	return new Value_Number(rtn);
 }
 
 // wx.VListBox#GetItemCount()
@@ -160,11 +162,11 @@ Gurax_ImplementMethodEx(wxVListBox, GetItemRect_gurax, processor_gurax, argument
 		pEntity_gurax->GetItemRect(item)));
 }
 
-// wx.VListBox#GetNextSelected(cookie as Number)
+// wx.VListBox#GetNextSelected(&cookie as Number)
 Gurax_DeclareMethodAlias(wxVListBox, GetNextSelected_gurax, "GetNextSelected")
 {
-	Declare(VTYPE_Tuple, Flag::None);
-	DeclareArg("cookie", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("cookie", VTYPE_Number, ArgOccur::Once, ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxVListBox, GetNextSelected_gurax, processor_gurax, argument_gurax)
@@ -175,10 +177,12 @@ Gurax_ImplementMethodEx(wxVListBox, GetNextSelected_gurax, processor_gurax, argu
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	unsigned long cookie = args_gurax.PickNumber<unsigned long>();
+	RefPtr<Referencer> cookie(args_gurax.PickReferencer().Reference());
 	// Function body
-	int rtn = pEntity_gurax->GetNextSelected(cookie);
-	return Value_Tuple::Create(new Value_Number(rtn), new Value_Number(cookie));
+	unsigned long cookie_ = cookie->Get<Value_Number>().GetNumber<unsigned long>();
+	int rtn = pEntity_gurax->GetNextSelected(cookie_);
+	cookie->SetValue(new Value_Number(cookie_));
+	return new Value_Number(rtn);
 }
 
 // wx.VListBox#GetSelectedCount()

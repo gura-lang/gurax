@@ -70,11 +70,12 @@ Gurax_ImplementMethodEx(wxBookCtrlBase, SetPageSize_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// wx.BookCtrlBase#HitTest(pt as wx.Point)
+// wx.BookCtrlBase#HitTest(pt as wx.Point, &flags?:nilRef as Number)
 Gurax_DeclareMethodAlias(wxBookCtrlBase, HitTest_gurax, "HitTest")
 {
-	Declare(VTYPE_Tuple, Flag::None);
+	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxBookCtrlBase, HitTest_gurax, processor_gurax, argument_gurax)
@@ -87,11 +88,12 @@ Gurax_ImplementMethodEx(wxBookCtrlBase, HitTest_gurax, processor_gurax, argument
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
 	const wxPoint& pt = value_pt.GetEntity();
+	RefPtr<Referencer> flags(args_gurax.IsValid()? args_gurax.PickReferencer().Reference() : nullptr);
 	// Function body
-	long flags;
-	int rtn = pEntity_gurax->HitTest(pt, &flags);
-	if (rtn == wxNOT_FOUND) return Value::nil();
-	return Value_Tuple::Create(new Value_Number(rtn), new Value_Number(flags));
+	long flags_;
+	int rtn = pEntity_gurax->HitTest(pt, &flags_);
+	if (flags) flags->SetValue(new Value_Number(flags_));
+	return new Value_Number(rtn);
 }
 
 // wx.BookCtrlBase#GetPageImage(nPage as Number)

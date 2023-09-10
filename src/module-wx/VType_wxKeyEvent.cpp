@@ -206,10 +206,12 @@ Gurax_ImplementMethodEx(wxKeyEvent, GetPosition_gurax, processor_gurax, argument
 		pEntity_gurax->GetPosition()));
 }
 
-// wx.KeyEvent#GetPositionXY()
+// wx.KeyEvent#GetPositionXY(&x:nilRef as Number, &y:nilRef as Number)
 Gurax_DeclareMethodAlias(wxKeyEvent, GetPositionXY_gurax, "GetPositionXY")
 {
-	Declare(VTYPE_Tuple, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxKeyEvent, GetPositionXY_gurax, processor_gurax, argument_gurax)
@@ -218,10 +220,16 @@ Gurax_ImplementMethodEx(wxKeyEvent, GetPositionXY_gurax, processor_gurax, argume
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Referencer> x(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y(args_gurax.PickReferencer().Reference());
 	// Function body
-	wxCoord x, y;
-	pEntity_gurax->GetPosition(&x, &y);
-	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+	wxCoord x_, y_;
+	pEntity_gurax->GetPosition(&x_, &y_);
+	x->SetValue(new Value_Number(x_));
+	y->SetValue(new Value_Number(y_));
+	return Value::nil();
 }
 
 // wx.KeyEvent#GetModifiers()

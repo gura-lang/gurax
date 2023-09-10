@@ -6,12 +6,12 @@ BookCtrlBase = Class(Control) {
 	@mixin[WithImages]
 	SetPageSize(size as const_Size_r) as void
 	//HitTest(pt as const_Point_r, flags as long_p = NULL) as int
-	HitTest(pt as const_Point_r) as Tuple@gurax = \
+	HitTest(pt as const_Point_r, &flags?:nilRef as long) as int = \
 		R'''
-		long flags;
-		int rtn = pEntity_gurax->HitTest(pt, &flags);
-		if (rtn == wxNOT_FOUND) return Value::nil();
-		return Value_Tuple::Create(new Value_Number(rtn), new Value_Number(flags));
+		long flags_;
+		int rtn = pEntity_gurax->HitTest(pt, &flags_);
+		if (flags) flags->SetValue(new Value_Number(flags_));
+		return new Value_Number(rtn);
 		'''
 	GetPageImage(nPage as size_t) as int
 	SetPageImage(page as size_t, image as int) as bool

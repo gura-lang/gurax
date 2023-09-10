@@ -993,10 +993,12 @@ Gurax_ImplementMethodEx(wxWindow, GetClientSize_gurax, processor_gurax, argument
 		pEntity_gurax->GetClientSize()));
 }
 
-// wx.Window#GetClientSizeWH()
+// wx.Window#GetClientSizeWH(&width:nilRef as Number, &height:nilRef as Number)
 Gurax_DeclareMethodAlias(wxWindow, GetClientSizeWH_gurax, "GetClientSizeWH")
 {
-	Declare(VTYPE_Tuple, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxWindow, GetClientSizeWH_gurax, processor_gurax, argument_gurax)
@@ -1005,10 +1007,16 @@ Gurax_ImplementMethodEx(wxWindow, GetClientSizeWH_gurax, processor_gurax, argume
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Referencer> width(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> height(args_gurax.PickReferencer().Reference());
 	// Function body
-	int width, height;
-	pEntity_gurax->GetClientSize(&width, &height);
-	return Value_Tuple::Create(new Value_Number(width), new Value_Number(height));
+	int width_, height_;
+	pEntity_gurax->GetClientSize(&width_, &height_);
+	width->SetValue(new Value_Number(width_));
+	height->SetValue(new Value_Number(height_));
+	return Value::nil();
 }
 
 // wx.Window#GetEffectiveMinSize() {block?}
@@ -1187,10 +1195,12 @@ Gurax_ImplementMethodEx(wxWindow, GetSize_gurax, processor_gurax, argument_gurax
 		pEntity_gurax->GetSize()));
 }
 
-// wx.Window#GetSizeWH()
+// wx.Window#GetSizeWH(&width:nilRef as Number, &height:nilRef as Number)
 Gurax_DeclareMethodAlias(wxWindow, GetSizeWH_gurax, "GetSizeWH")
 {
-	Declare(VTYPE_Tuple, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxWindow, GetSizeWH_gurax, processor_gurax, argument_gurax)
@@ -1199,10 +1209,16 @@ Gurax_ImplementMethodEx(wxWindow, GetSizeWH_gurax, processor_gurax, argument_gur
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Referencer> width(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> height(args_gurax.PickReferencer().Reference());
 	// Function body
-	int width, height;
-	pEntity_gurax->GetSize(&width, &height);
-	return Value_Tuple::Create(new Value_Number(width), new Value_Number(height));
+	int width_, height_;
+	pEntity_gurax->GetSize(&width_, &height_);
+	width->SetValue(new Value_Number(width_));
+	height->SetValue(new Value_Number(height_));
+	return Value::nil();
 }
 
 // wx.Window#GetVirtualSize() {block?}
@@ -1223,10 +1239,12 @@ Gurax_ImplementMethodEx(wxWindow, GetVirtualSize_gurax, processor_gurax, argumen
 		pEntity_gurax->GetVirtualSize()));
 }
 
-// wx.Window#GetVirtualSizeWH()
+// wx.Window#GetVirtualSizeWH(&width:nilRef as Number, &height:nilRef as Number)
 Gurax_DeclareMethodAlias(wxWindow, GetVirtualSizeWH_gurax, "GetVirtualSizeWH")
 {
-	Declare(VTYPE_Tuple, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxWindow, GetVirtualSizeWH_gurax, processor_gurax, argument_gurax)
@@ -1235,10 +1253,16 @@ Gurax_ImplementMethodEx(wxWindow, GetVirtualSizeWH_gurax, processor_gurax, argum
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Referencer> width(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> height(args_gurax.PickReferencer().Reference());
 	// Function body
-	int width, height;
-	pEntity_gurax->GetVirtualSize(&width, &height);
-	return Value_Tuple::Create(new Value_Number(width), new Value_Number(height));
+	int width_, height_;
+	pEntity_gurax->GetVirtualSize(&width_, &height_);
+	width->SetValue(new Value_Number(width_));
+	height->SetValue(new Value_Number(height_));
+	return Value::nil();
 }
 
 // wx.Window#GetBestVirtualSize() {block?}
@@ -1904,10 +1928,12 @@ Gurax_ImplementMethodEx(wxWindow, CentreOnParent_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// wx.Window#GetPositionXY()
+// wx.Window#GetPositionXY(&x:nilRef as Number, &y:nilRef as Number)
 Gurax_DeclareMethodAlias(wxWindow, GetPositionXY_gurax, "GetPositionXY")
 {
-	Declare(VTYPE_Tuple, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxWindow, GetPositionXY_gurax, processor_gurax, argument_gurax)
@@ -1916,10 +1942,16 @@ Gurax_ImplementMethodEx(wxWindow, GetPositionXY_gurax, processor_gurax, argument
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Referencer> x(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y(args_gurax.PickReferencer().Reference());
 	// Function body
-	int x, y;
-	pEntity_gurax->GetPosition(&x, &y);
-	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+	int x_, y_;
+	pEntity_gurax->GetPosition(&x_, &y_);
+	x->SetValue(new Value_Number(x_));
+	y->SetValue(new Value_Number(y_));
+	return Value::nil();
 }
 
 // wx.Window#GetPosition() {block?}
@@ -1958,10 +1990,12 @@ Gurax_ImplementMethodEx(wxWindow, GetRect_gurax, processor_gurax, argument_gurax
 		pEntity_gurax->GetRect()));
 }
 
-// wx.Window#GetScreenPositionXY()
+// wx.Window#GetScreenPositionXY(&x:nilRef as Number, &y:nilRef as Number)
 Gurax_DeclareMethodAlias(wxWindow, GetScreenPositionXY_gurax, "GetScreenPositionXY")
 {
-	Declare(VTYPE_Tuple, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxWindow, GetScreenPositionXY_gurax, processor_gurax, argument_gurax)
@@ -1970,10 +2004,16 @@ Gurax_ImplementMethodEx(wxWindow, GetScreenPositionXY_gurax, processor_gurax, ar
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Referencer> x(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y(args_gurax.PickReferencer().Reference());
 	// Function body
-	int x, y;
-	pEntity_gurax->GetScreenPosition(&x, &y);
-	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+	int x_, y_;
+	pEntity_gurax->GetScreenPosition(&x_, &y_);
+	x->SetValue(new Value_Number(x_));
+	y->SetValue(new Value_Number(y_));
+	return Value::nil();
 }
 
 // wx.Window#GetScreenPosition() {block?}
@@ -2146,17 +2186,21 @@ Gurax_ImplementMethodEx(wxWindow, ClientToScreen_gurax, processor_gurax, argumen
 		static DeclCallable* pDeclCallable = nullptr;
 		if (!pDeclCallable) {
 			pDeclCallable = new DeclCallable();
-			pDeclCallable->DeclareArg("x", VTYPE_Number);
-			pDeclCallable->DeclareArg("y", VTYPE_Number);
+			pDeclCallable->DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::Referencer);
+			pDeclCallable->DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::Referencer);
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
 		Error::Clear();
 		ArgPicker args(*pArgument);
-		int x = args.PickNumber<int>();
-		int y = args.PickNumber<int>();
-		pEntity_gurax->ClientToScreen(&x, &y);
-		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+		RefPtr<Referencer> x(args.PickReferencer().Reference());
+		RefPtr<Referencer> y(args.PickReferencer().Reference());
+		int x_ = x->Get<Value_Number>().GetNumber<int>();
+		int y_ = y->Get<Value_Number>().GetNumber<int>();
+		pEntity_gurax->ClientToScreen(&x_, &y_);
+		x->SetValue(new Value_Number(x_));
+		y->SetValue(new Value_Number(y_));
+		return Value::nil();
 	} while (0);
 	Error::ClearIssuedFlag();
 	do {
@@ -2295,17 +2339,21 @@ Gurax_ImplementMethodEx(wxWindow, ScreenToClient_gurax, processor_gurax, argumen
 		static DeclCallable* pDeclCallable = nullptr;
 		if (!pDeclCallable) {
 			pDeclCallable = new DeclCallable();
-			pDeclCallable->DeclareArg("x", VTYPE_Number);
-			pDeclCallable->DeclareArg("y", VTYPE_Number);
+			pDeclCallable->DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::Referencer);
+			pDeclCallable->DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::Referencer);
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
 		Error::Clear();
 		ArgPicker args(*pArgument);
-		int x = args.PickNumber<int>();
-		int y = args.PickNumber<int>();
-		pEntity_gurax->ScreenToClient(&x, &y);
-		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+		RefPtr<Referencer> x(args.PickReferencer().Reference());
+		RefPtr<Referencer> y(args.PickReferencer().Reference());
+		int x_ = x->Get<Value_Number>().GetNumber<int>();
+		int y_ = y->Get<Value_Number>().GetNumber<int>();
+		pEntity_gurax->ScreenToClient(&x_, &y_);
+		x->SetValue(new Value_Number(x_));
+		y->SetValue(new Value_Number(y_));
+		return Value::nil();
 	} while (0);
 	Error::ClearIssuedFlag();
 	do {
@@ -2516,11 +2564,15 @@ Gurax_ImplementMethodEx(wxWindow, GetForegroundColour_gurax, processor_gurax, ar
 		pEntity_gurax->GetForegroundColour()));
 }
 
-// wx.Window#GetTextExtentWH(string as String, font? as wx.Font)
+// wx.Window#GetTextExtentWH(string as String, &w:nilRef as Number, &h:nilRef as Number, &descent:nilRef as Number, &externalLeading:nilRef as Number, font? as wx.Font)
 Gurax_DeclareMethodAlias(wxWindow, GetTextExtentWH_gurax, "GetTextExtentWH")
 {
-	Declare(VTYPE_Tuple, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("string", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("h", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("descent", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("externalLeading", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 	DeclareArg("font", VTYPE_wxFont, ArgOccur::ZeroOrOnce, ArgFlag::None);
 }
 
@@ -2533,11 +2585,19 @@ Gurax_ImplementMethodEx(wxWindow, GetTextExtentWH_gurax, processor_gurax, argume
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	const char* string = args_gurax.PickString();
+	RefPtr<Referencer> w(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> h(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> descent(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> externalLeading(args_gurax.PickReferencer().Reference());
 	const wxFont* font = args_gurax.IsValid()? args_gurax.Pick<Value_wxFont>().GetEntityPtr() : nullptr;
 	// Function body
-	int w, h, descent, externalLeading;
-	pEntity_gurax->GetTextExtent(string, &w, &h, &descent, &externalLeading, font);
-	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h), new Value_Number(descent), new Value_Number(externalLeading));
+	int w_, h_, descent_, externalLeading_;
+	pEntity_gurax->GetTextExtent(string, &w_, &h_, &descent_, &externalLeading_, font);
+	w->SetValue(new Value_Number(w_));
+	h->SetValue(new Value_Number(h_));
+	descent->SetValue(new Value_Number(descent_));
+	externalLeading->SetValue(new Value_Number(externalLeading_));
+	return Value::nil();
 }
 
 // wx.Window#GetTextExtent(string as String) {block?}

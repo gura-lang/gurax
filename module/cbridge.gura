@@ -183,7 +183,7 @@ CreateArgInfoTbl(r as Renderer, expr as Expr) = {
 			}
 			exprParam = exprParam.left
 		}
-		if (exprParam.IsUnaryOp()) {
+		while (exprParam.IsUnaryOp()) {
 			if (exprParam.operator.symbol == `&) {
 				referencerFlag = true
 			} elsif (exprParam.operator.symbol == `?) {
