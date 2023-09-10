@@ -8,22 +8,24 @@ GenericProgressDialog = Class(Dialog) {
 	GetRange() as int
 	GetMessage() as String
 	//Pulse(newmsg as const_String_r = wxEmptyString, skip as bool_p = NULL) as bool
-	Pulse(newmsg as const_String_r = wxEmptyString) as Tuple@gurax = \
+	Pulse(newmsg as const_String_r = wxEmptyString, &skip?:nilRef as bool) as bool = \
 		R'''
-		bool skip;
-		bool cont = pEntity_gurax->Pulse(newmsg, &skip);
-		return Value_Tuple::Create(new Value_Bool(cont), new Value_Bool(skip));
+		bool skip_;
+		bool cont = pEntity_gurax->Pulse(newmsg, &skip_);
+		if (skip) skip->SetValue(new Value_Bool(skip_));
+		return new Value_Bool(cont);
 		'''
 	Resume() as void
 	SetRange(maximum as int) as void
 	WasCancelled() as bool
 	WasSkipped() as bool
 	//Update(value as int, newmsg as const_String_r = wxEmptyString, skip as bool_p = NULL) as bool
-	Update(value as int, newmsg as const_String_r = wxEmptyString) as Tuple@gurax = \
+	Update(value as int, newmsg as const_String_r = wxEmptyString, &skip?:nilRef as bool) as bool = \
 		R'''
-		bool skip;
-		bool cont = pEntity_gurax->Update(value, newmsg, &skip);
-		return Value_Tuple::Create(new Value_Bool(cont), new Value_Bool(skip));
+		bool skip_;
+		bool cont = pEntity_gurax->Update(value, newmsg, &skip_);
+		if (skip) skip->SetValue(new Value_Bool(skip_));
+		return new Value_Bool(cont);
 		'''
 } %% R'''
 # Overview

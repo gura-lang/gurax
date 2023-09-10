@@ -82,11 +82,11 @@ Gurax_ImplementMethodEx(wxVListBox, DeselectAll_gurax, processor_gurax, argument
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.VListBox#GetFirstSelected(&cookie as Number)
+// wx.VListBox#GetFirstSelected(&cookie:nilRef as Number)
 Gurax_DeclareMethodAlias(wxVListBox, GetFirstSelected_gurax, "GetFirstSelected")
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("cookie", VTYPE_Number, ArgOccur::Once, ArgFlag::Referencer);
+	DeclareArg("cookie", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxVListBox, GetFirstSelected_gurax, processor_gurax, argument_gurax)
@@ -162,11 +162,11 @@ Gurax_ImplementMethodEx(wxVListBox, GetItemRect_gurax, processor_gurax, argument
 		pEntity_gurax->GetItemRect(item)));
 }
 
-// wx.VListBox#GetNextSelected(&cookie as Number)
+// wx.VListBox#GetNextSelected(&cookie:nilRef as Number)
 Gurax_DeclareMethodAlias(wxVListBox, GetNextSelected_gurax, "GetNextSelected")
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("cookie", VTYPE_Number, ArgOccur::Once, ArgFlag::Referencer);
+	DeclareArg("cookie", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxVListBox, GetNextSelected_gurax, processor_gurax, argument_gurax)

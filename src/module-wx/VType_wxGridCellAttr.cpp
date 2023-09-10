@@ -83,10 +83,12 @@ Gurax_ImplementMethodEx(wxGridCellAttr, DecRef_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// wx.GridCellAttr#GetAlignment()
+// wx.GridCellAttr#GetAlignment(&hAlign:nilRef as Number, &vAlign:nilRef as Number)
 Gurax_DeclareMethodAlias(wxGridCellAttr, GetAlignment_gurax, "GetAlignment")
 {
-	Declare(VTYPE_Tuple, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("hAlign", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("vAlign", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, GetAlignment_gurax, processor_gurax, argument_gurax)
@@ -95,10 +97,16 @@ Gurax_ImplementMethodEx(wxGridCellAttr, GetAlignment_gurax, processor_gurax, arg
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Referencer> hAlign(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> vAlign(args_gurax.PickReferencer().Reference());
 	// Function body
-	int hAlign, vAlign;
-	pEntity_gurax->GetAlignment(&hAlign, &vAlign);
-	return Value_Tuple::Create(new Value_Number(hAlign), new Value_Number(vAlign));
+	int hAlign_, vAlign_;
+	pEntity_gurax->GetAlignment(&hAlign_, &vAlign_);
+	hAlign->SetValue(new Value_Number(&hAlign_));
+	vAlign->SetValue(new Value_Number(&vAlign_));
+	return Value::nil();
 }
 
 // wx.GridCellAttr#GetBackgroundColour() {block?}
@@ -164,10 +172,12 @@ Gurax_ImplementMethodEx(wxGridCellAttr, GetFont_gurax, processor_gurax, argument
 		pEntity_gurax->GetFont()));
 }
 
-// wx.GridCellAttr#GetNonDefaultAlignment()
+// wx.GridCellAttr#GetNonDefaultAlignment(&hAlign:nilRef as Number, &vAlign:nilRef as Number)
 Gurax_DeclareMethodAlias(wxGridCellAttr, GetNonDefaultAlignment_gurax, "GetNonDefaultAlignment")
 {
-	Declare(VTYPE_Tuple, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("hAlign", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("vAlign", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, GetNonDefaultAlignment_gurax, processor_gurax, argument_gurax)
@@ -176,10 +186,16 @@ Gurax_ImplementMethodEx(wxGridCellAttr, GetNonDefaultAlignment_gurax, processor_
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Referencer> hAlign(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> vAlign(args_gurax.PickReferencer().Reference());
 	// Function body
-	int hAlign, vAlign;
-	pEntity_gurax->GetNonDefaultAlignment(&hAlign, &vAlign);
-	return Value_Tuple::Create(new Value_Number(hAlign), new Value_Number(vAlign));
+	int hAlign_, vAlign_;
+	pEntity_gurax->GetNonDefaultAlignment(&hAlign_, &vAlign_);
+	hAlign->SetValue(new Value_Number(&hAlign_));
+	vAlign->SetValue(new Value_Number(&vAlign_));
+	return Value::nil();
 }
 
 // wx.GridCellAttr#GetRenderer(grid as wx.Grid, row as Number, col as Number) {block?}
@@ -656,10 +672,12 @@ Gurax_ImplementMethodEx(wxGridCellAttr, HasSize_gurax, processor_gurax, argument
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.GridCellAttr#GetSize()
+// wx.GridCellAttr#GetSize(&num_rows:nilRef as Number, &num_cols:nilRef as Number)
 Gurax_DeclareMethodAlias(wxGridCellAttr, GetSize_gurax, "GetSize")
 {
-	Declare(VTYPE_Tuple, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("num_rows", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("num_cols", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, GetSize_gurax, processor_gurax, argument_gurax)
@@ -668,10 +686,16 @@ Gurax_ImplementMethodEx(wxGridCellAttr, GetSize_gurax, processor_gurax, argument
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Referencer> num_rows(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> num_cols(args_gurax.PickReferencer().Reference());
 	// Function body
-	int num_rows, num_cols;
-	pEntity_gurax->GetNonDefaultAlignment(&num_rows, &num_cols);
-	return Value_Tuple::Create(new Value_Number(num_rows), new Value_Number(num_cols));
+	int num_rows_, num_cols_;
+	pEntity_gurax->GetSize(&num_rows_, &num_cols_);
+	num_rows->SetValue(new Value_Number(&num_rows_));
+	num_cols->SetValue(new Value_Number(&num_cols_));
+	return Value::nil();
 }
 
 // wx.GridCellAttr#GetOverflow()

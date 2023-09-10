@@ -89,12 +89,14 @@ ListCtrl = Class(Control) {
 	GetTopItem() as long
 	GetViewRect() as Rect
 	SetAlternateRowColour(colour as const_Colour_r) as void
-	HitTest(point as const_Point_r) as Tuple@gurax = \
+	HitTest(point as const_Point_r, &flags:nilRef as int, &ptrSubItem:nilRef as long) as long = \
 		R'''
-		int flags;
-		long ptrSubItem;
-		long rtn = pEntity_gurax->HitTest(point, flags, &ptrSubItem);
-		return Value_Tuple::Create(new Value_Number(rtn), new Value_Number(flags), new Value_Number(ptrSubItem));
+		int flags_;
+		long ptrSubItem_;
+		long rtn = pEntity_gurax->HitTest(point, flags_, &ptrSubItem_);
+		flags->SetValue(new Value_Number(flags_));
+		ptrSubItem->SetValue(new Value_Number(ptrSubItem_));
+		return new Value_Number(rtn);
 		'''
 	InReportView() as bool
 	InsertColumn(args* as any) = \

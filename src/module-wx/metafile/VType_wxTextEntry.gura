@@ -19,11 +19,13 @@ TextEntry = Class():mixin {
 	GetInsertionPoint() as long
 	GetLastPosition() as long
 	GetRange(from as long, to as long) as String
-	GetSelection() as Tuple@gurax = \
+	GetSelection(&from:nilRef as long, &to:nilRef as long) as void = \
 		R'''
-		long from, to;
-		pEntity_gurax->GetSelection(&from, &to);
-		return Value_Tuple::Create(new Value_Number(from), new Value_Number(to));
+		long from_, to_;
+		pEntity_gurax->GetSelection(&from_, &to_);
+		from->SetValue(new Value_Number(from_));
+		to->SetValue(new Value_Number(to_));
+		return Value::nil();
 		'''
 	GetStringSelection() as String
 	GetValue() as String

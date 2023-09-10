@@ -267,22 +267,30 @@ Gurax_ImplementMethodEx(wxGBSizerItem, GetPos_gurax, processor_gurax, argument_g
 		pEntity_gurax->GetPos()));
 }
 
-// wx.GBSizerItem#GetPosTuple()
-Gurax_DeclareMethodAlias(wxGBSizerItem, GetPosTuple_gurax, "GetPosTuple")
+// wx.GBSizerItem#GetPosRowCol(&row:nilRef as Number, &col:nilRef as Number)
+Gurax_DeclareMethodAlias(wxGBSizerItem, GetPosRowCol_gurax, "GetPosRowCol")
 {
-	Declare(VTYPE_Tuple, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
-Gurax_ImplementMethodEx(wxGBSizerItem, GetPosTuple_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementMethodEx(wxGBSizerItem, GetPosRowCol_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Referencer> row(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> col(args_gurax.PickReferencer().Reference());
 	// Function body
-	int row, col;
-	pEntity_gurax->GetPos(row, col);
-	return Value_Tuple::Create(new Value_Number(row), new Value_Number(col));
+	int row_, col_;
+	pEntity_gurax->GetPos(row_, col_);
+	row->SetValue(new Value_Number(row_));
+	col->SetValue(new Value_Number(col_));
+	return Value::nil();
 }
 
 //-----------------------------------------------------------------------------
@@ -308,7 +316,7 @@ void VType_wxGBSizerItem::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxGBSizerItem, SetSpan_gurax));
 	Assign(Gurax_CreateMethod(wxGBSizerItem, SetGBSizer_gurax));
 	Assign(Gurax_CreateMethod(wxGBSizerItem, GetPos_gurax));
-	Assign(Gurax_CreateMethod(wxGBSizerItem, GetPosTuple_gurax));
+	Assign(Gurax_CreateMethod(wxGBSizerItem, GetPosRowCol_gurax));
 }
 
 //------------------------------------------------------------------------------

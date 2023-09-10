@@ -96,11 +96,13 @@ GBSizerItem = Class(SizerItem) {
 	//GetGBSizer() as GridBagSizer_p
 	SetGBSizer(sizer as GridBagSizer_p) as void
 	GetPos() as GBPosition
-	GetPosTuple() as Tuple@gurax = \
+	GetPosRowCol(&row:nilRef as int, &col:nilRef as int) as void = \
 		R'''
-		int row, col;
-		pEntity_gurax->GetPos(row, col);
-		return Value_Tuple::Create(new Value_Number(row), new Value_Number(col));
+		int row_, col_;
+		pEntity_gurax->GetPos(row_, col_);
+		row->SetValue(new Value_Number(row_));
+		col->SetValue(new Value_Number(col_));
+		return Value::nil();
 		'''
 	//GetSpan() as GBSpan
 } %% R'''

@@ -129,11 +129,12 @@ Gurax_ImplementMethodEx(wxGenericProgressDialog, GetMessage_gurax, processor_gur
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
-// wx.GenericProgressDialog#Pulse(newmsg? as String)
+// wx.GenericProgressDialog#Pulse(newmsg? as String, &skip?:nilRef as Bool)
 Gurax_DeclareMethodAlias(wxGenericProgressDialog, Pulse_gurax, "Pulse")
 {
-	Declare(VTYPE_Tuple, Flag::None);
+	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("newmsg", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("skip", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxGenericProgressDialog, Pulse_gurax, processor_gurax, argument_gurax)
@@ -145,10 +146,12 @@ Gurax_ImplementMethodEx(wxGenericProgressDialog, Pulse_gurax, processor_gurax, a
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	const char* newmsg = args_gurax.IsValid()? args_gurax.PickString() : "";
+	RefPtr<Referencer> skip(args_gurax.IsValid()? args_gurax.PickReferencer().Reference() : nullptr);
 	// Function body
-	bool skip;
-	bool cont = pEntity_gurax->Pulse(newmsg, &skip);
-	return Value_Tuple::Create(new Value_Bool(cont), new Value_Bool(skip));
+	bool skip_;
+	bool cont = pEntity_gurax->Pulse(newmsg, &skip_);
+	if (skip) skip->SetValue(new Value_Bool(skip_));
+	return new Value_Bool(cont);
 }
 
 // wx.GenericProgressDialog#Resume()
@@ -223,12 +226,13 @@ Gurax_ImplementMethodEx(wxGenericProgressDialog, WasSkipped_gurax, processor_gur
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.GenericProgressDialog#Update(value as Number, newmsg? as String)
+// wx.GenericProgressDialog#Update(value as Number, newmsg? as String, &skip?:nilRef as Bool)
 Gurax_DeclareMethodAlias(wxGenericProgressDialog, Update_gurax, "Update")
 {
-	Declare(VTYPE_Tuple, Flag::None);
+	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("newmsg", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("skip", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxGenericProgressDialog, Update_gurax, processor_gurax, argument_gurax)
@@ -241,10 +245,12 @@ Gurax_ImplementMethodEx(wxGenericProgressDialog, Update_gurax, processor_gurax, 
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int value = args_gurax.PickNumber<int>();
 	const char* newmsg = args_gurax.IsValid()? args_gurax.PickString() : "";
+	RefPtr<Referencer> skip(args_gurax.IsValid()? args_gurax.PickReferencer().Reference() : nullptr);
 	// Function body
-	bool skip;
-	bool cont = pEntity_gurax->Update(value, newmsg, &skip);
-	return Value_Tuple::Create(new Value_Bool(cont), new Value_Bool(skip));
+	bool skip_;
+	bool cont = pEntity_gurax->Update(value, newmsg, &skip_);
+	if (skip) skip->SetValue(new Value_Bool(skip_));
+	return new Value_Bool(cont);
 }
 
 //-----------------------------------------------------------------------------

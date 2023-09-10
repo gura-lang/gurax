@@ -12900,10 +12900,12 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetRange_gurax, processor_gurax, argum
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
-// wx.StyledTextCtrl#GetSelection()
+// wx.StyledTextCtrl#GetSelection(&from:nilRef as Number, &to:nilRef as Number)
 Gurax_DeclareMethodAlias(wxStyledTextCtrl, GetSelection_gurax, "GetSelection")
 {
-	Declare(VTYPE_Tuple, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("from", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("to", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxStyledTextCtrl, GetSelection_gurax, processor_gurax, argument_gurax)
@@ -12912,10 +12914,16 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetSelection_gurax, processor_gurax, a
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Referencer> from(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> to(args_gurax.PickReferencer().Reference());
 	// Function body
-	long from, to;
-	pEntity_gurax->GetSelection(&from, &to);
-	return Value_Tuple::Create(new Value_Number(from), new Value_Number(to));
+	long from_, to_;
+	pEntity_gurax->GetSelection(&from_, &to_);
+	from->SetValue(new Value_Number(from_));
+	to->SetValue(new Value_Number(to_));
+	return Value::nil();
 }
 
 // wx.StyledTextCtrl#GetStringSelection()

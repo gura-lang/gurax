@@ -224,11 +224,12 @@ Gurax_ImplementMethodEx(wxTextCtrl, GetStyle_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.TextCtrl#HitTestPos(pt as wx.Point)
+// wx.TextCtrl#HitTestPos(pt as wx.Point, &pos:nilRef as Number)
 Gurax_DeclareMethodAlias(wxTextCtrl, HitTestPos_gurax, "HitTestPos")
 {
-	Declare(VTYPE_Tuple, Flag::None);
+	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxTextCtrl, HitTestPos_gurax, processor_gurax, argument_gurax)
@@ -241,17 +242,21 @@ Gurax_ImplementMethodEx(wxTextCtrl, HitTestPos_gurax, processor_gurax, argument_
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
 	const wxPoint& pt = value_pt.GetEntity();
+	RefPtr<Referencer> pos(args_gurax.PickReferencer().Reference());
 	// Function body
-	long pos;
-	wxTextCtrlHitTestResult rtn = pEntity_gurax->HitTest(pt, &pos);
-	return Value_Tuple::Create(new Value_Number(rtn), new Value_Number(pos));
+	long pos_;
+	wxTextCtrlHitTestResult rtn = pEntity_gurax->HitTest(pt, &pos_);
+	pos->SetValue(new Value_Number(pos_));
+	return new Value_Number(rtn);
 }
 
-// wx.TextCtrl#HitTestCoord(pt as wx.Point)
+// wx.TextCtrl#HitTestCoord(pt as wx.Point, &col:nilRef as Number, &row:nilRef as Number)
 Gurax_DeclareMethodAlias(wxTextCtrl, HitTestCoord_gurax, "HitTestCoord")
 {
-	Declare(VTYPE_Tuple, Flag::None);
+	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxTextCtrl, HitTestCoord_gurax, processor_gurax, argument_gurax)
@@ -264,10 +269,14 @@ Gurax_ImplementMethodEx(wxTextCtrl, HitTestCoord_gurax, processor_gurax, argumen
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
 	const wxPoint& pt = value_pt.GetEntity();
+	RefPtr<Referencer> col(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> row(args_gurax.PickReferencer().Reference());
 	// Function body
-	wxTextCoord col, row;
-	wxTextCtrlHitTestResult rtn = pEntity_gurax->HitTest(pt, &col, &row);
-	return Value_Tuple::Create(new Value_Number(rtn), new Value_Number(col), new Value_Number(row));
+	wxTextCoord col_, row_;
+	wxTextCtrlHitTestResult rtn = pEntity_gurax->HitTest(pt, &col_, &row_);
+	col->SetValue(new Value_Number(col_));
+	row->SetValue(new Value_Number(row_));
+	return new Value_Number(rtn);
 }
 
 // wx.TextCtrl#IsModified()
@@ -384,11 +393,13 @@ Gurax_ImplementMethodEx(wxTextCtrl, OnDropFiles_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// wx.TextCtrl#PositionToXY(pos as Number)
+// wx.TextCtrl#PositionToXY(pos as Number, &x:nilRef as Number, &y:nilRef as Number)
 Gurax_DeclareMethodAlias(wxTextCtrl, PositionToXY_gurax, "PositionToXY")
 {
-	Declare(VTYPE_Tuple, Flag::None);
+	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxTextCtrl, PositionToXY_gurax, processor_gurax, argument_gurax)
@@ -400,10 +411,14 @@ Gurax_ImplementMethodEx(wxTextCtrl, PositionToXY_gurax, processor_gurax, argumen
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	long pos = args_gurax.PickNumber<long>();
+	RefPtr<Referencer> x(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y(args_gurax.PickReferencer().Reference());
 	// Function body
-	long x, y;
-	bool rtn = pEntity_gurax->PositionToXY(pos, &x, &y);
-	return rtn? Value_Tuple::Create(new Value_Number(x), new Value_Number(y)) : Value::nil();
+	long x_, y_;
+	bool rtn = pEntity_gurax->PositionToXY(pos, &x_, &y_);
+	x->SetValue(new Value_Number(x_));
+	y->SetValue(new Value_Number(y_));
+	return new Value_Bool(rtn);
 }
 
 // wx.TextCtrl#PositionToCoords(pos as Number) {block?}
@@ -856,10 +871,12 @@ Gurax_ImplementMethodEx(wxTextCtrl, GetRange_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
-// wx.TextCtrl#GetSelection()
+// wx.TextCtrl#GetSelection(&from:nilRef as Number, &to:nilRef as Number)
 Gurax_DeclareMethodAlias(wxTextCtrl, GetSelection_gurax, "GetSelection")
 {
-	Declare(VTYPE_Tuple, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("from", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("to", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxTextCtrl, GetSelection_gurax, processor_gurax, argument_gurax)
@@ -868,10 +885,16 @@ Gurax_ImplementMethodEx(wxTextCtrl, GetSelection_gurax, processor_gurax, argumen
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Referencer> from(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> to(args_gurax.PickReferencer().Reference());
 	// Function body
-	long from, to;
-	pEntity_gurax->GetSelection(&from, &to);
-	return Value_Tuple::Create(new Value_Number(from), new Value_Number(to));
+	long from_, to_;
+	pEntity_gurax->GetSelection(&from_, &to_);
+	from->SetValue(new Value_Number(from_));
+	to->SetValue(new Value_Number(to_));
+	return Value::nil();
 }
 
 // wx.TextCtrl#GetStringSelection()

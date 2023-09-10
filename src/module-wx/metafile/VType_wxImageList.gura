@@ -63,11 +63,13 @@ ImageList = Class():loosePointer {
 	GetBitmap(index as int) as Bitmap
 	GetIcon(index as int) as Icon
 	GetImageCount() as int
-	GetSize(index as int):nil as Tuple@gurax = \
+	GetSize(index as int, &width:nilRef as int, &height:nilRef as int) as bool = \
 		R'''
-		int width, height;
-		if (!pEntity_gurax->GetSize(index, width, height)) return Value::nil();
-		return Value_Tuple::Create(new Value_Number(width), new Value_Number(height));
+		int width_, height_;
+		bool rtn = pEntity_gurax->GetSize(index, width_, height_);
+		width->SetValue(new Value_Number(width_));
+		height->SetValue(new Value_Number(height_));
+		return new Value_Number(rtn);
 		'''
 	Remove(index as int) as bool
 	RemoveAll() as bool

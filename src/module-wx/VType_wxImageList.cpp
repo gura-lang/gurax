@@ -266,11 +266,13 @@ Gurax_ImplementMethodEx(wxImageList, GetImageCount_gurax, processor_gurax, argum
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.ImageList#GetSize(index as Number)
+// wx.ImageList#GetSize(index as Number, &width:nilRef as Number, &height:nilRef as Number)
 Gurax_DeclareMethodAlias(wxImageList, GetSize_gurax, "GetSize")
 {
-	Declare(VTYPE_Tuple, Flag::None);
+	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxImageList, GetSize_gurax, processor_gurax, argument_gurax)
@@ -282,10 +284,14 @@ Gurax_ImplementMethodEx(wxImageList, GetSize_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int index = args_gurax.PickNumber<int>();
+	RefPtr<Referencer> width(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> height(args_gurax.PickReferencer().Reference());
 	// Function body
-	int width, height;
-	if (!pEntity_gurax->GetSize(index, width, height)) return Value::nil();
-	return Value_Tuple::Create(new Value_Number(width), new Value_Number(height));
+	int width_, height_;
+	bool rtn = pEntity_gurax->GetSize(index, width_, height_);
+	width->SetValue(new Value_Number(width_));
+	height->SetValue(new Value_Number(height_));
+	return new Value_Number(rtn);
 }
 
 // wx.ImageList#Remove(index as Number)

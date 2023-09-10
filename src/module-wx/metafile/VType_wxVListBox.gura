@@ -8,7 +8,7 @@ VListBox = Class(VScrolledWindow) {
 	//Create(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0, name as const_String_r = wxVListBoxNameStr) as bool
 	DeselectAll() as bool
 	//GetFirstSelected(cookie as unsigned_long_r) as int
-	GetFirstSelected(&cookie as unsigned_long) as int = \
+	GetFirstSelected(&cookie:nilRef as unsigned_long) as int = \
 		R'''
 		unsigned long cookie_ = cookie->Get<Value_Number>().GetNumber<unsigned long>();
 		int rtn = pEntity_gurax->GetFirstSelected(cookie_);
@@ -19,7 +19,7 @@ VListBox = Class(VScrolledWindow) {
 	GetMargins() as Point
 	GetItemRect(item as size_t) as Rect
 	//GetNextSelected(cookie as unsigned_long_r) as int = \
-	GetNextSelected(&cookie as unsigned_long) as int = \
+	GetNextSelected(&cookie:nilRef as unsigned_long) as int = \
 		R'''
 		unsigned long cookie_ = cookie->Get<Value_Number>().GetNumber<unsigned long>();
 		int rtn = pEntity_gurax->GetNextSelected(cookie_);

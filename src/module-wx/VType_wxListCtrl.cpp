@@ -974,11 +974,13 @@ Gurax_ImplementMethodEx(wxListCtrl, SetAlternateRowColour_gurax, processor_gurax
 	return Gurax::Value::nil();
 }
 
-// wx.ListCtrl#HitTest(point as wx.Point)
+// wx.ListCtrl#HitTest(point as wx.Point, &flags:nilRef as Number, &ptrSubItem:nilRef as Number)
 Gurax_DeclareMethodAlias(wxListCtrl, HitTest_gurax, "HitTest")
 {
-	Declare(VTYPE_Tuple, Flag::None);
+	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("point", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("ptrSubItem", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxListCtrl, HitTest_gurax, processor_gurax, argument_gurax)
@@ -991,11 +993,15 @@ Gurax_ImplementMethodEx(wxListCtrl, HitTest_gurax, processor_gurax, argument_gur
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxPoint& value_point = args_gurax.Pick<Value_wxPoint>();
 	const wxPoint& point = value_point.GetEntity();
+	RefPtr<Referencer> flags(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> ptrSubItem(args_gurax.PickReferencer().Reference());
 	// Function body
-	int flags;
-	long ptrSubItem;
-	long rtn = pEntity_gurax->HitTest(point, flags, &ptrSubItem);
-	return Value_Tuple::Create(new Value_Number(rtn), new Value_Number(flags), new Value_Number(ptrSubItem));
+	int flags_;
+	long ptrSubItem_;
+	long rtn = pEntity_gurax->HitTest(point, flags_, &ptrSubItem_);
+	flags->SetValue(new Value_Number(flags_));
+	ptrSubItem->SetValue(new Value_Number(ptrSubItem_));
+	return new Value_Number(rtn);
 }
 
 // wx.ListCtrl#InReportView()

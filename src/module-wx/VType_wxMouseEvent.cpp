@@ -957,10 +957,12 @@ Gurax_ImplementMethodEx(wxMouseEvent, GetPosition_gurax, processor_gurax, argume
 		pEntity_gurax->GetPosition()));
 }
 
-// wx.MouseEvent#GetPositionXY()
+// wx.MouseEvent#GetPositionXY(&x:nilRef as Number, &y:nilRef as Number)
 Gurax_DeclareMethodAlias(wxMouseEvent, GetPositionXY_gurax, "GetPositionXY")
 {
-	Declare(VTYPE_Tuple, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, GetPositionXY_gurax, processor_gurax, argument_gurax)
@@ -969,10 +971,16 @@ Gurax_ImplementMethodEx(wxMouseEvent, GetPositionXY_gurax, processor_gurax, argu
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Referencer> x(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y(args_gurax.PickReferencer().Reference());
 	// Function body
-	int x, y;
-	pEntity_gurax->GetPosition(&x, &y);
-	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+	int x_, y_;
+	pEntity_gurax->GetPosition(&x_, &y_);
+	x->SetValue(new Value_Number(x_));
+	y->SetValue(new Value_Number(y_));
+	return Value::nil();
 }
 
 // wx.MouseEvent#GetModifiers()

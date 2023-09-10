@@ -7,21 +7,25 @@ GridCellAttr = Class(ClientDataContainer) {
 	Clone() as GridCellAttr_p
 	DecRef() as void
 	//GetAlignment(hAlign as int_p, vAlign as int_p) as void
-	GetAlignment() as Tuple@gurax = \
+	GetAlignment(&hAlign:nilRef as int, &vAlign:nilRef as int) as void = \
 		R'''
-		int hAlign, vAlign;
-		pEntity_gurax->GetAlignment(&hAlign, &vAlign);
-		return Value_Tuple::Create(new Value_Number(hAlign), new Value_Number(vAlign));
+		int hAlign_, vAlign_;
+		pEntity_gurax->GetAlignment(&hAlign_, &vAlign_);
+		hAlign->SetValue(new Value_Number(&hAlign_));
+		vAlign->SetValue(new Value_Number(&vAlign_));
+		return Value::nil();
 		'''
 	GetBackgroundColour() as Colour
 	GetEditor(grid as const_Grid_p, row as int, col as int) as GridCellEditor_p
 	GetFont() as Font
 	//GetNonDefaultAlignment(hAlign as int_p, vAlign as int_p) as void
-	GetNonDefaultAlignment() as Tuple@gurax = \
+	GetNonDefaultAlignment(&hAlign:nilRef as int, &vAlign:nilRef as int) as void = \
 		R'''
-		int hAlign, vAlign;
-		pEntity_gurax->GetNonDefaultAlignment(&hAlign, &vAlign);
-		return Value_Tuple::Create(new Value_Number(hAlign), new Value_Number(vAlign));
+		int hAlign_, vAlign_;
+		pEntity_gurax->GetNonDefaultAlignment(&hAlign_, &vAlign_);
+		hAlign->SetValue(new Value_Number(&hAlign_));
+		vAlign->SetValue(new Value_Number(&vAlign_));
+		return Value::nil();
 		'''
 	GetRenderer(grid as const_Grid_p, row as int, col as int) as GridCellRenderer_p
 	GetTextColour() as Colour
@@ -49,11 +53,13 @@ GridCellAttr = Class(ClientDataContainer) {
 	HasOverflowMode() as bool
 	HasSize() as bool
 	//GetSize(num_rows as int_p, num_cols as int_p) as void
-	GetSize() as Tuple@gurax = \
+	GetSize(&num_rows:nilRef as int, &num_cols:nilRef as int) as void = \
 		R'''
-		int num_rows, num_cols;
-		pEntity_gurax->GetNonDefaultAlignment(&num_rows, &num_cols);
-		return Value_Tuple::Create(new Value_Number(num_rows), new Value_Number(num_cols));
+		int num_rows_, num_cols_;
+		pEntity_gurax->GetSize(&num_rows_, &num_cols_);
+		num_rows->SetValue(new Value_Number(&num_rows_));
+		num_cols->SetValue(new Value_Number(&num_cols_));
+		return Value::nil();
 		'''
 	GetOverflow() as bool
 	//GetKind() as AttrKind
