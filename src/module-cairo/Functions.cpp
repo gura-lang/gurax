@@ -625,13 +625,13 @@ Gurax_ImplementFunctionEx(cairo_identity_matrix_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_user_to_device(cr as cairo_t, x as Number, y as Number)
+// cairo.cairo_user_to_device(cr as cairo_t, &x as Number, &y as Number)
 Gurax_DeclareFunctionAlias(cairo_user_to_device_gurax, "cairo_user_to_device")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::Referencer);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(cairo_user_to_device_gurax, processor_gurax, argument_gurax)
@@ -640,20 +640,24 @@ Gurax_ImplementFunctionEx(cairo_user_to_device_gurax, processor_gurax, argument_
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_cr = args_gurax.Pick<Value_cairo_t>();
 	cairo_t* cr = value_cr.GetEntityPtr();
-	double x = args_gurax.PickNumber<double>();
-	double y = args_gurax.PickNumber<double>();
+	RefPtr<Referencer> x(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y(args_gurax.PickReferencer().Reference());
 	// Function body
-	cairo_user_to_device(cr, &x, &y);
-	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+	double x_ = x->Get<Value_Number>().GetNumber<double>();
+	double y_ = y->Get<Value_Number>().GetNumber<double>();
+	cairo_user_to_device(cr, &x_, &y_);
+	x->SetValue(new Value_Number(x_));
+	y->SetValue(new Value_Number(y_));
+	return Value::nil();
 }
 
-// cairo.cairo_user_to_device_distance(cr as cairo_t, dx as Number, dy as Number)
+// cairo.cairo_user_to_device_distance(cr as cairo_t, &dx as Number, &dy as Number)
 Gurax_DeclareFunctionAlias(cairo_user_to_device_distance_gurax, "cairo_user_to_device_distance")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("dx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("dy", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dx", VTYPE_Number, ArgOccur::Once, ArgFlag::Referencer);
+	DeclareArg("dy", VTYPE_Number, ArgOccur::Once, ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(cairo_user_to_device_distance_gurax, processor_gurax, argument_gurax)
@@ -662,20 +666,24 @@ Gurax_ImplementFunctionEx(cairo_user_to_device_distance_gurax, processor_gurax, 
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_cr = args_gurax.Pick<Value_cairo_t>();
 	cairo_t* cr = value_cr.GetEntityPtr();
-	double dx = args_gurax.PickNumber<double>();
-	double dy = args_gurax.PickNumber<double>();
+	RefPtr<Referencer> dx(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> dy(args_gurax.PickReferencer().Reference());
 	// Function body
-	cairo_user_to_device_distance(cr, &dx, &dy);
-	return Value_Tuple::Create(new Value_Number(dx), new Value_Number(dy));
+	double dx_ = dx->Get<Value_Number>().GetNumber<double>();
+	double dy_ = dy->Get<Value_Number>().GetNumber<double>();
+	cairo_user_to_device_distance(cr, &dx_, &dy_);
+	dx->SetValue(new Value_Number(dx_));
+	dy->SetValue(new Value_Number(dy_));
+	return Value::nil();
 }
 
-// cairo.cairo_device_to_user(cr as cairo_t, x as Number, y as Number)
+// cairo.cairo_device_to_user(cr as cairo_t, &x as Number, &y as Number)
 Gurax_DeclareFunctionAlias(cairo_device_to_user_gurax, "cairo_device_to_user")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::Referencer);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(cairo_device_to_user_gurax, processor_gurax, argument_gurax)
@@ -684,20 +692,24 @@ Gurax_ImplementFunctionEx(cairo_device_to_user_gurax, processor_gurax, argument_
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_cr = args_gurax.Pick<Value_cairo_t>();
 	cairo_t* cr = value_cr.GetEntityPtr();
-	double x = args_gurax.PickNumber<double>();
-	double y = args_gurax.PickNumber<double>();
+	RefPtr<Referencer> x(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y(args_gurax.PickReferencer().Reference());
 	// Function body
-	cairo_device_to_user(cr, &x, &y);
-	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+	double x_ = x->Get<Value_Number>().GetNumber<double>();
+	double y_ = y->Get<Value_Number>().GetNumber<double>();
+	cairo_device_to_user(cr, &x_, &y_);
+	x->SetValue(new Value_Number(x_));
+	y->SetValue(new Value_Number(y_));
+	return Value::nil();
 }
 
-// cairo.cairo_device_to_user_distance(cr as cairo_t, dx as Number, dy as Number)
+// cairo.cairo_device_to_user_distance(cr as cairo_t, &dx as Number, &dy as Number)
 Gurax_DeclareFunctionAlias(cairo_device_to_user_distance_gurax, "cairo_device_to_user_distance")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("dx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("dy", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dx", VTYPE_Number, ArgOccur::Once, ArgFlag::Referencer);
+	DeclareArg("dy", VTYPE_Number, ArgOccur::Once, ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(cairo_device_to_user_distance_gurax, processor_gurax, argument_gurax)
@@ -706,11 +718,15 @@ Gurax_ImplementFunctionEx(cairo_device_to_user_distance_gurax, processor_gurax, 
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_cr = args_gurax.Pick<Value_cairo_t>();
 	cairo_t* cr = value_cr.GetEntityPtr();
-	double dx = args_gurax.PickNumber<double>();
-	double dy = args_gurax.PickNumber<double>();
+	RefPtr<Referencer> dx(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> dy(args_gurax.PickReferencer().Reference());
 	// Function body
-	cairo_device_to_user_distance(cr, &dx, &dy);
-	return Value_Tuple::Create(new Value_Number(dx), new Value_Number(dy));
+	double dx_ = dx->Get<Value_Number>().GetNumber<double>();
+	double dy_ = dy->Get<Value_Number>().GetNumber<double>();
+	cairo_device_to_user_distance(cr, &dx_, &dy_);
+	dx->SetValue(new Value_Number(dx_));
+	dy->SetValue(new Value_Number(dy_));
+	return Value::nil();
 }
 
 // cairo.cairo_new_path(cr as cairo_t)
@@ -997,11 +1013,15 @@ Gurax_ImplementFunctionEx(cairo_close_path_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_path_extents(cr as cairo_t)
+// cairo.cairo_path_extents(cr as cairo_t, &x1:nilRef as Number, &y1:nilRef as Number, &x2:nilRef as Number, &y2:nilRef as Number)
 Gurax_DeclareFunctionAlias(cairo_path_extents_gurax, "cairo_path_extents")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x1", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("y1", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("x2", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("y2", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(cairo_path_extents_gurax, processor_gurax, argument_gurax)
@@ -1010,10 +1030,18 @@ Gurax_ImplementFunctionEx(cairo_path_extents_gurax, processor_gurax, argument_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_cr = args_gurax.Pick<Value_cairo_t>();
 	cairo_t* cr = value_cr.GetEntityPtr();
+	RefPtr<Referencer> x1(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y1(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> x2(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y2(args_gurax.PickReferencer().Reference());
 	// Function body
-	double x1, y1, x2, y2;
-	cairo_path_extents(cr, &x1, &y1, &x2, &y2);
-	return Value_Tuple::Create(new Value_Number(x1), new Value_Number(y1), new Value_Number(x2), new Value_Number(y2));
+	double x1_, y1_, x2_, y2_;
+	cairo_path_extents(cr, &x1_, &y1_, &x2_, &y2_);
+	x1->SetValue(new Value_Number(x1_));
+	y1->SetValue(new Value_Number(y1_));
+	x2->SetValue(new Value_Number(x2_));
+	y2->SetValue(new Value_Number(y2_));
+	return Value::nil();
 }
 
 // cairo.cairo_paint(cr as cairo_t)
@@ -1274,11 +1302,15 @@ Gurax_ImplementFunctionEx(cairo_in_clip_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// cairo.cairo_stroke_extents(cr as cairo_t)
+// cairo.cairo_stroke_extents(cr as cairo_t, &x1:nilRef as Number, &y1:nilRef as Number, &x2:nilRef as Number, &y2:nilRef as Number)
 Gurax_DeclareFunctionAlias(cairo_stroke_extents_gurax, "cairo_stroke_extents")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x1", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("y1", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("x2", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("y2", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(cairo_stroke_extents_gurax, processor_gurax, argument_gurax)
@@ -1287,17 +1319,29 @@ Gurax_ImplementFunctionEx(cairo_stroke_extents_gurax, processor_gurax, argument_
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_cr = args_gurax.Pick<Value_cairo_t>();
 	cairo_t* cr = value_cr.GetEntityPtr();
+	RefPtr<Referencer> x1(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y1(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> x2(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y2(args_gurax.PickReferencer().Reference());
 	// Function body
-	double x1, y1, x2, y2;
-	cairo_stroke_extents(cr, &x1, &y1, &x2, &y2);
-	return Value_Tuple::Create(new Value_Number(x1), new Value_Number(y1), new Value_Number(x2), new Value_Number(y2));
+	double x1_, y1_, x2_, y2_;
+	cairo_stroke_extents(cr, &x1_, &y1_, &x2_, &y2_);
+	x1->SetValue(new Value_Number(x1_));
+	y1->SetValue(new Value_Number(y1_));
+	x2->SetValue(new Value_Number(x2_));
+	y2->SetValue(new Value_Number(y2_));
+	return Value::nil();
 }
 
-// cairo.cairo_fill_extents(cr as cairo_t)
+// cairo.cairo_fill_extents(cr as cairo_t, &x1:nilRef as Number, &y1:nilRef as Number, &x2:nilRef as Number, &y2:nilRef as Number)
 Gurax_DeclareFunctionAlias(cairo_fill_extents_gurax, "cairo_fill_extents")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x1", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("y1", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("x2", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("y2", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(cairo_fill_extents_gurax, processor_gurax, argument_gurax)
@@ -1306,10 +1350,18 @@ Gurax_ImplementFunctionEx(cairo_fill_extents_gurax, processor_gurax, argument_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_cr = args_gurax.Pick<Value_cairo_t>();
 	cairo_t* cr = value_cr.GetEntityPtr();
+	RefPtr<Referencer> x1(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y1(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> x2(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y2(args_gurax.PickReferencer().Reference());
 	// Function body
-	double x1, y1, x2, y2;
-	cairo_fill_extents(cr, &x1, &y1, &x2, &y2);
-	return Value_Tuple::Create(new Value_Number(x1), new Value_Number(y1), new Value_Number(x2), new Value_Number(y2));
+	double x1_, y1_, x2_, y2_;
+	cairo_fill_extents(cr, &x1_, &y1_, &x2_, &y2_);
+	x1->SetValue(new Value_Number(x1_));
+	y1->SetValue(new Value_Number(y1_));
+	x2->SetValue(new Value_Number(x2_));
+	y2->SetValue(new Value_Number(y2_));
+	return Value::nil();
 }
 
 // cairo.cairo_reset_clip(cr as cairo_t)
@@ -1366,11 +1418,15 @@ Gurax_ImplementFunctionEx(cairo_clip_preserve_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_clip_extents(cr as cairo_t)
+// cairo.cairo_clip_extents(cr as cairo_t, &x1:nilRef as Number, &y1:nilRef as Number, &x2:nilRef as Number, &y2:nilRef as Number)
 Gurax_DeclareFunctionAlias(cairo_clip_extents_gurax, "cairo_clip_extents")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x1", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("y1", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("x2", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("y2", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(cairo_clip_extents_gurax, processor_gurax, argument_gurax)
@@ -1379,10 +1435,18 @@ Gurax_ImplementFunctionEx(cairo_clip_extents_gurax, processor_gurax, argument_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_cr = args_gurax.Pick<Value_cairo_t>();
 	cairo_t* cr = value_cr.GetEntityPtr();
+	RefPtr<Referencer> x1(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y1(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> x2(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y2(args_gurax.PickReferencer().Reference());
 	// Function body
-	double x1, y1, x2, y2;
-	cairo_clip_extents(cr, &x1, &y1, &x2, &y2);
-	return Value_Tuple::Create(new Value_Number(x1), new Value_Number(y1), new Value_Number(x2), new Value_Number(y2));
+	double x1_, y1_, x2_, y2_;
+	cairo_clip_extents(cr, &x1_, &y1_, &x2_, &y2_);
+	x1->SetValue(new Value_Number(x1_));
+	y1->SetValue(new Value_Number(y1_));
+	x2->SetValue(new Value_Number(x2_));
+	y2->SetValue(new Value_Number(y2_));
+	return Value::nil();
 }
 
 // cairo.cairo_copy_clip_rectangle_list(cr as cairo_t)
@@ -2817,11 +2881,13 @@ Gurax_ImplementFunctionEx(cairo_has_current_point_gurax, processor_gurax, argume
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// cairo.cairo_get_current_point(cr as cairo_t)
+// cairo.cairo_get_current_point(cr as cairo_t, &x:nilRef as Number, &y:nilRef as Number)
 Gurax_DeclareFunctionAlias(cairo_get_current_point_gurax, "cairo_get_current_point")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(cairo_get_current_point_gurax, processor_gurax, argument_gurax)
@@ -2830,10 +2896,14 @@ Gurax_ImplementFunctionEx(cairo_get_current_point_gurax, processor_gurax, argume
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_cr = args_gurax.Pick<Value_cairo_t>();
 	cairo_t* cr = value_cr.GetEntityPtr();
+	RefPtr<Referencer> x(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y(args_gurax.PickReferencer().Reference());
 	// Function body
-	double x, y;
-	cairo_get_current_point(cr, &x, &y);
-	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+	double x_, y_;
+	cairo_get_current_point(cr, &x_, &y_);
+	x->SetValue(new Value_Number(x_));
+	y->SetValue(new Value_Number(y_));
+	return Value::nil();
 }
 
 // cairo.cairo_get_fill_rule(cr as cairo_t)

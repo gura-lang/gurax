@@ -196,28 +196,44 @@ cairo_set_matrix(cr as cairo_t_p, matrix as const_cairo_matrix_t_p):void
 
 cairo_identity_matrix(cr as cairo_t_p):void
 
-cairo_user_to_device(cr as cairo_t_p, x as double, y as double) = \
+cairo_user_to_device(cr as cairo_t_p, &x as double, &y as double):void = \
 	R'''
-	cairo_user_to_device(cr, &x, &y);
-	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+	double x_ = x->Get<Value_Number>().GetNumber<double>();
+	double y_ = y->Get<Value_Number>().GetNumber<double>();
+	cairo_user_to_device(cr, &x_, &y_);
+	x->SetValue(new Value_Number(x_));
+	y->SetValue(new Value_Number(y_));
+	return Value::nil();
 	'''
 
-cairo_user_to_device_distance(cr as cairo_t_p, dx as double, dy as double) = \
+cairo_user_to_device_distance(cr as cairo_t_p, &dx as double, &dy as double) = \
 	R'''
-	cairo_user_to_device_distance(cr, &dx, &dy);
-	return Value_Tuple::Create(new Value_Number(dx), new Value_Number(dy));
+	double dx_ = dx->Get<Value_Number>().GetNumber<double>();
+	double dy_ = dy->Get<Value_Number>().GetNumber<double>();
+	cairo_user_to_device_distance(cr, &dx_, &dy_);
+	dx->SetValue(new Value_Number(dx_));
+	dy->SetValue(new Value_Number(dy_));
+	return Value::nil();
 	'''
 
-cairo_device_to_user(cr as cairo_t_p, x as double, y as double) = \
+cairo_device_to_user(cr as cairo_t_p, &x as double, &y as double) = \
 	R'''
-	cairo_device_to_user(cr, &x, &y);
-	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+	double x_ = x->Get<Value_Number>().GetNumber<double>();
+	double y_ = y->Get<Value_Number>().GetNumber<double>();
+	cairo_device_to_user(cr, &x_, &y_);
+	x->SetValue(new Value_Number(x_));
+	y->SetValue(new Value_Number(y_));
+	return Value::nil();
 	'''
 
-cairo_device_to_user_distance(cr as cairo_t_p, dx as double, dy as double) = \
+cairo_device_to_user_distance(cr as cairo_t_p, &dx as double, &dy as double) = \
 	R'''
-	cairo_device_to_user_distance(cr, &dx, &dy);
-	return Value_Tuple::Create(new Value_Number(dx), new Value_Number(dy));
+	double dx_ = dx->Get<Value_Number>().GetNumber<double>();
+	double dy_ = dy->Get<Value_Number>().GetNumber<double>();
+	cairo_device_to_user_distance(cr, &dx_, &dy_);
+	dx->SetValue(new Value_Number(dx_));
+	dy->SetValue(new Value_Number(dy_));
+	return Value::nil();
 	'''
 
 cairo_new_path(cr as cairo_t_p):void
@@ -248,12 +264,15 @@ cairo_rectangle(cr as cairo_t_p, x as double, y as double, width as double, heig
 
 cairo_close_path(cr as cairo_t_p):void
 
-//cairo_path_extents(cr as cairo_t_p, x1 as double_p, y1 as double_p, x2 as double_p, y2 as double_p):void
-cairo_path_extents(cr as cairo_t_p) = \
+cairo_path_extents(cr as cairo_t_p, &x1:nilRef as double, &y1:nilRef as double, &x2:nilRef as double, &y2:nilRef as double):void = \
 	R'''
-	double x1, y1, x2, y2;
-	cairo_path_extents(cr, &x1, &y1, &x2, &y2);
-	return Value_Tuple::Create(new Value_Number(x1), new Value_Number(y1), new Value_Number(x2), new Value_Number(y2));
+	double x1_, y1_, x2_, y2_;
+	cairo_path_extents(cr, &x1_, &y1_, &x2_, &y2_);
+	x1->SetValue(new Value_Number(x1_));
+	y1->SetValue(new Value_Number(y1_));
+	x2->SetValue(new Value_Number(x2_));
+	y2->SetValue(new Value_Number(y2_));
+	return Value::nil();
 	'''
 
 cairo_paint(cr as cairo_t_p):void
@@ -283,19 +302,27 @@ cairo_in_fill(cr as cairo_t_p, x as double, y as double) as cairo_bool_t
 cairo_in_clip(cr as cairo_t_p, x as double, y as double) as cairo_bool_t
 
 //cairo_stroke_extents(cr as cairo_t_p, x1 as double_p, y1 as double_p, x2 as double_p, y2 as double_p):void
-cairo_stroke_extents(cr as cairo_t_p) = \
+cairo_stroke_extents(cr as cairo_t_p, &x1:nilRef as double, &y1:nilRef as double, &x2:nilRef as double, &y2:nilRef as double) = \
 	R'''
-	double x1, y1, x2, y2;
-	cairo_stroke_extents(cr, &x1, &y1, &x2, &y2);
-	return Value_Tuple::Create(new Value_Number(x1), new Value_Number(y1), new Value_Number(x2), new Value_Number(y2));
+	double x1_, y1_, x2_, y2_;
+	cairo_stroke_extents(cr, &x1_, &y1_, &x2_, &y2_);
+	x1->SetValue(new Value_Number(x1_));
+	y1->SetValue(new Value_Number(y1_));
+	x2->SetValue(new Value_Number(x2_));
+	y2->SetValue(new Value_Number(y2_));
+	return Value::nil();
 	'''
 
 //cairo_fill_extents(cr as cairo_t_p, x1 as double_p, y1 as double_p, x2 as double_p, y2 as double_p):void
-cairo_fill_extents(cr as cairo_t_p) = \
+cairo_fill_extents(cr as cairo_t_p, &x1:nilRef as double, &y1:nilRef as double, &x2:nilRef as double, &y2:nilRef as double):void = \
 	R'''
-	double x1, y1, x2, y2;
-	cairo_fill_extents(cr, &x1, &y1, &x2, &y2);
-	return Value_Tuple::Create(new Value_Number(x1), new Value_Number(y1), new Value_Number(x2), new Value_Number(y2));
+	double x1_, y1_, x2_, y2_;
+	cairo_fill_extents(cr, &x1_, &y1_, &x2_, &y2_);
+	x1->SetValue(new Value_Number(x1_));
+	y1->SetValue(new Value_Number(y1_));
+	x2->SetValue(new Value_Number(x2_));
+	y2->SetValue(new Value_Number(y2_));
+	return Value::nil();
 	'''
 
 cairo_reset_clip(cr as cairo_t_p):void
@@ -305,11 +332,15 @@ cairo_clip(cr as cairo_t_p):void
 cairo_clip_preserve(cr as cairo_t_p):void
 
 //cairo_clip_extents(cr as cairo_t_p, x1 as double_p, y1 as double_p, x2 as double_p, y2 as double_p):void
-cairo_clip_extents(cr as cairo_t_p) = \
+cairo_clip_extents(cr as cairo_t_p, &x1:nilRef as double, &y1:nilRef as double, &x2:nilRef as double, &y2:nilRef as double):void = \
 	R'''
-	double x1, y1, x2, y2;
-	cairo_clip_extents(cr, &x1, &y1, &x2, &y2);
-	return Value_Tuple::Create(new Value_Number(x1), new Value_Number(y1), new Value_Number(x2), new Value_Number(y2));
+	double x1_, y1_, x2_, y2_;
+	cairo_clip_extents(cr, &x1_, &y1_, &x2_, &y2_);
+	x1->SetValue(new Value_Number(x1_));
+	y1->SetValue(new Value_Number(y1_));
+	x2->SetValue(new Value_Number(x2_));
+	y2->SetValue(new Value_Number(y2_));
+	return Value::nil();
 	'''
 
 cairo_copy_clip_rectangle_list(cr as cairo_t_p) as cairo_rectangle_list_t_p
@@ -483,11 +514,13 @@ cairo_get_antialias(cr as cairo_t_p) as cairo_antialias_t
 cairo_has_current_point(cr as cairo_t_p) as cairo_bool_t
 
 //cairo_get_current_point(cr as cairo_t_p, x as double_p, y as double_p):void
-cairo_get_current_point(cr as cairo_t_p) = \
+cairo_get_current_point(cr as cairo_t_p, &x:nilRef as double, &y:nilRef as double) = \
 	R'''
-	double x, y;
-	cairo_get_current_point(cr, &x, &y);
-	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+	double x_, y_;
+	cairo_get_current_pointer(cr, &x_, &y_);
+	x->SetValue(new Value_Number(x_));
+	y->SetValue(new Value_Number(y_));
+	return Value::nil();
 	'''
 
 cairo_get_fill_rule(cr as cairo_t_p) as cairo_fill_rule_t
