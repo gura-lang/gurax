@@ -12,19 +12,24 @@ void Referencer::Bootup()
 {
 }
 
-Referencer::Referencer(Frame* pFrame, const Symbol* pSymbol, Value* pValue) : _pFrame(pFrame), _pSymbol(pSymbol), _pValue(pValue)
+
+//------------------------------------------------------------------------------
+// Referencer_Lookup
+//------------------------------------------------------------------------------
+Referencer_Lookup::Referencer_Lookup(Frame* pFrame, const Symbol* pSymbol, Value* pValue) :
+							_pFrame(pFrame), _pSymbol(pSymbol), _pValue(pValue)
 {
 }
 
-void Referencer::SetValue(Value* pValue)
+void Referencer_Lookup::SetValue(Value* pValue)
 {
 	_pValue.reset(pValue->Reference());
 	GetFrame().Assign(GetSymbol(), pValue);
 }
 
-String Referencer::ToString(const StringStyle& ss) const
+String Referencer_Lookup::ToString(const StringStyle& ss) const
 {
-	return String().Format("Referencer:%s", GetSymbol()->GetName());
+	return String().Format("Referencer_Lookup:%s", GetSymbol()->GetName());
 }
 
 //------------------------------------------------------------------------------

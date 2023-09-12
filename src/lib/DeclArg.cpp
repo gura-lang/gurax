@@ -156,9 +156,7 @@ Value* DeclArg::Cast(Frame& frame, const Value& value)
 	RefPtr<Value> pValueContentCasted(GetVType().Cast(valueContent, GetSymbol(), GetFlags()));
 	if (!pValueContentCasted) return nullptr;
 	if (valueContent.IsIdentical(pValueContentCasted.get())) return value.Reference();
-	RefPtr<Referencer> pReferencerCasted(new Referencer(referencer.GetFrame().Reference(),
-							referencer.GetSymbol(), pValueContentCasted.release()));
-	return new Value_Referencer(pReferencerCasted.release());
+	return new Value_Referencer(referencer.CloneWithCastedValue(pValueContentCasted.release()));
 }
 
 bool DeclArg::CheckFlagConfliction(Flags flags)

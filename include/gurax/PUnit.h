@@ -225,10 +225,10 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_Referencer
+// PUnit_Referencer_Lookup
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
-class GURAX_DLLDECLARE PUnit_Referencer : public PUnit {
+class GURAX_DLLDECLARE PUnit_Referencer_Lookup : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
@@ -236,7 +236,7 @@ private:
 	const Symbol* _pSymbol;
 public:
 	// Constructor
-	PUnit_Referencer(const Symbol* pSymbol, Expr* pExprSrc) : PUnit(pExprSrc), _pSymbol(pSymbol) {}
+	PUnit_Referencer_Lookup(const Symbol* pSymbol, Expr* pExprSrc) : PUnit(pExprSrc), _pSymbol(pSymbol) {}
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 public:
@@ -251,16 +251,16 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class GURAX_DLLDECLARE PUnitFactory_Referencer : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_Referencer_Lookup : public PUnitFactory {
 public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_Referencer");
+	Gurax_MemoryPoolAllocator("PUnitFactory_Referencer_Lookup");
 private:
 	const Symbol* _pSymbol;
 public:
-	PUnitFactory_Referencer(const Symbol* pSymbol, Expr* pExprSrc) :
+	PUnitFactory_Referencer_Lookup(const Symbol* pSymbol, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pSymbol(pSymbol) {}
 	virtual size_t GetPUnitSize() const override {
-		return sizeof(PUnit_Referencer<false>);
+		return sizeof(PUnit_Referencer_Lookup<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };

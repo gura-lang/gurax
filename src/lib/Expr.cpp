@@ -709,11 +709,12 @@ const Expr::TypeInfo Expr_UnaryOp::typeInfo(TypeId::UnaryOp, "UnaryOp");
 void Expr_UnaryOp::Compose(Composer& composer)
 {
 	if (GetOperator()->IsType(OpType::PreAnd)) {
-		if (!GetExprChild().IsType<Expr_Identifier>()) {
+		if (GetExprChild().IsType<Expr_Identifier>()) {
+			composer.Add_Referencer_Lookup(dynamic_cast<Expr_Identifier&>(GetExprChild()).GetSymbol(), *this);
+		} else {
 			Error::IssueWith(ErrorType::SyntaxError, *this, "referencer can only be applied to an indentifier");
 			return;
 		}
-		composer.Add_Referencer(dynamic_cast<Expr_Identifier&>(GetExprChild()).GetSymbol(), *this);
 	} else if (GetOperator()->GetRawFlag()) {
 		GetOperator()->ComposeUnary(composer, *this);							// [Result]
 	} else {

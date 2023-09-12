@@ -135,12 +135,12 @@ PUnit* PUnitFactory_Lookup::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
-// PUnit_Referencer
+// PUnit_Referencer_Lookup
 // Stack View: [] -> [Any] (continue)
 //                -> []    (discard)
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
-void PUnit_Referencer<discardValueFlag>::Exec(Processor& processor) const
+void PUnit_Referencer_Lookup<discardValueFlag>::Exec(Processor& processor) const
 {
 	Frame& frame = processor.GetFrameCur();
 	RefPtr<Value> pValue(frame.Retrieve(GetSymbol()));
@@ -150,27 +150,27 @@ void PUnit_Referencer<discardValueFlag>::Exec(Processor& processor) const
 		return;
 	}
 	if constexpr (!discardValueFlag) {
-		RefPtr<Referencer> pReferencer(new Referencer(frame.Reference(), GetSymbol(), pValue.release()));
+		RefPtr<Referencer_Lookup> pReferencer(new Referencer_Lookup(frame.Reference(), GetSymbol(), pValue.release()));
 		processor.PushValue(new Value_Referencer(pReferencer.release()));
 	}
 	processor.SetPUnitCur(_GetPUnitCont());
 }
 
 template<bool discardValueFlag>
-String PUnit_Referencer<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+String PUnit_Referencer_Lookup<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("Referencer(`%s)", GetSymbol()->GetName());
+	str.Format("Referencer_Lookup(`%s)", GetSymbol()->GetName());
 	AppendInfoToString(str, ss);
 	return str;
 }
 
-PUnit* PUnitFactory_Referencer::Create(bool discardValueFlag)
+PUnit* PUnitFactory_Referencer_Lookup::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_Referencer<true>(_pSymbol, _pExprSrc.Reference());
+		_pPUnitCreated = new PUnit_Referencer_Lookup<true>(_pSymbol, _pExprSrc.Reference());
 	} else {
-		_pPUnitCreated = new PUnit_Referencer<false>(_pSymbol, _pExprSrc.Reference());
+		_pPUnitCreated = new PUnit_Referencer_Lookup<false>(_pSymbol, _pExprSrc.Reference());
 	}
 	return _pPUnitCreated;
 }

@@ -138,8 +138,8 @@ public:
 	void Add_Lookup(const Symbol* pSymbol, const Expr& exprSrc) {
 		SetFactory(new PUnitFactory_Lookup(pSymbol, exprSrc.Reference()));
 	}
-	void Add_Referencer(const Symbol* pSymbol, const Expr& exprSrc) {
-		SetFactory(new PUnitFactory_Referencer(pSymbol, exprSrc.Reference()));
+	void Add_Referencer_Lookup(const Symbol* pSymbol, const Expr& exprSrc) {
+		SetFactory(new PUnitFactory_Referencer_Lookup(pSymbol, exprSrc.Reference()));
 	}
 	void Add_Suffixed(StringReferable* pStrSegment, SuffixMgr::Mode mode, const Symbol* pSymbol,
 					const Expr& exprSrc) {
