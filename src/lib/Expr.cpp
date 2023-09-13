@@ -193,6 +193,11 @@ void Expr::ComposeWithinArgSlot(Composer& composer)
 	SetPUnitEnd(composer.PeekPUnitCont());
 }
 
+void Expr::ComposeReferencer(Composer& composer)
+{
+	Error::IssueWith(ErrorType::InvalidOperation, *this, "%s can not create Referencer", GetTypeInfo().GetName());
+}
+
 bool Expr::IsPureAssign() const
 {
 	return IsType<Expr_Assign>() && !InspectOperator();
@@ -448,6 +453,11 @@ void Expr_Member::ComposeWithinAssignment(
 	}
 }
 
+void Expr_Member::ComposeReferencer(Composer& composer)
+{
+	Error::IssueWith(ErrorType::UnimplementedError, *this, "not implemented yet");
+}
+
 const Symbol* Expr_Member::GetMemberModeAsSymbol() const
 {
 	return
@@ -605,6 +615,11 @@ void Expr_Identifier::ComposeWithinArgSlot(Composer& composer)
 	SetPUnitEnd(composer.PeekPUnitCont());
 }
 
+void Expr_Identifier::ComposeReferencer(Composer& composer)
+{
+	composer.Add_Referencer_Lookup(GetSymbol(), *this);
+}
+
 String Expr_Identifier::ToString(const StringStyle& ss, const char* strInsert) const
 {
 	String str;
@@ -709,12 +724,7 @@ const Expr::TypeInfo Expr_UnaryOp::typeInfo(TypeId::UnaryOp, "UnaryOp");
 void Expr_UnaryOp::Compose(Composer& composer)
 {
 	if (GetOperator()->IsType(OpType::PreAnd)) {
-		if (GetExprChild().IsType<Expr_Identifier>()) {
-			composer.Add_Referencer_Lookup(dynamic_cast<Expr_Identifier&>(GetExprChild()).GetSymbol(), *this);
-		} else {
-			Error::IssueWith(ErrorType::SyntaxError, *this, "referencer can only be applied to an indentifier");
-			return;
-		}
+		GetExprChild().ComposeReferencer(composer);
 	} else if (GetOperator()->GetRawFlag()) {
 		GetOperator()->ComposeUnary(composer, *this);							// [Result]
 	} else {
@@ -1341,6 +1351,11 @@ void Expr_Indexer::ComposeWithinAssignmentInClass(
 	exprAssigned.ComposeOrNil(composer);										// [VType Value]
 	composer.Add_AssignPropSlot(exprCar.GetSymbol(), pDottedSymbol.release(), flags, GetAttr(), true, *this);
 	composer.FlushDiscard();													// [VType]
+}
+
+void Expr_Indexer::ComposeReferencer(Composer& composer)
+{
+	Error::IssueWith(ErrorType::UnimplementedError, *this, "not implemented yet");
 }
 
 String Expr_Indexer::ToString(const StringStyle& ss, const char* strInsert, int indentLevel) const

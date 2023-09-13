@@ -73,7 +73,7 @@ Iterator* Composer::EachPUnit() const
 }
 
 void Composer::Add_AssignPropSlot(const Symbol* pSymbol, RefPtr<DottedSymbol> pDottedSymbol, PropSlot::Flags flags,
-									 const Attribute& attr, bool initializerFlag, const Expr& exprSrc)
+									const Attribute& attr, bool initializerFlag, const Expr& exprSrc)
 {
 	auto& symbolAssoc = PropSlot::SymbolAssoc_Flag::GetInstance();
 	if (!pDottedSymbol) pDottedSymbol.reset(DottedSymbol::Empty.Reference());

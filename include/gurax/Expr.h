@@ -218,6 +218,7 @@ public:
 	virtual void ComposeWithinAssignmentInClass(
 		Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag);
 	virtual void ComposeWithinArgSlot(Composer& composer);
+	virtual void ComposeReferencer(Composer& composer);
 	virtual Attribute* GetAttrToAppend() { return nullptr; }
 	virtual void ResetAttrToAppend() {}
 	virtual bool DoPrepare() { return true; }
@@ -541,6 +542,7 @@ public:
 	virtual void ComposeWithinValueAssignment(Composer& composer, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol) override;
 	virtual void ComposeWithinAssignment(
 		Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol) override;
+	virtual void ComposeReferencer(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss, int indentLevel) const override;
 public:
 	// Virtual functions for structure inspecting
@@ -617,6 +619,7 @@ public:
 	virtual void ComposeWithinAssignmentInClass(
 		Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag) override;
 	virtual void ComposeWithinArgSlot(Composer& composer) override;
+	virtual void ComposeReferencer(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss, int indentLevel) const override { return ToString(ss, ""); }
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
 	virtual void ResetAttrToAppend() { _pAttr.reset(new Attribute()); }
@@ -919,6 +922,7 @@ public:
 	virtual void ComposeWithinClass(Composer& composer, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag) override;
 	virtual void ComposeWithinAssignmentInClass(
 		Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag) override;
+	virtual void ComposeReferencer(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss, int indentLevel) const override { return ToString(ss, "", indentLevel); }
 	String ToString(const StringStyle& ss, const char* strInsert, int indentLevel = 0) const;
 };

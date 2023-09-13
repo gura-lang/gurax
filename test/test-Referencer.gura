@@ -125,3 +125,13 @@ TestCase('Modification in a Function (2)') {
 	Println(x)
 */
 }
+
+TestCase('Modification of Indexer') {
+	f(&x as Number) = {
+		x.@ += 10
+	}
+	a = [1, 2, 3, 4, 5]
+	//Tester(`f(&a[0]))
+}
+
+
