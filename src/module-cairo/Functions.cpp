@@ -5851,19 +5851,24 @@ Gurax_ImplementFunctionEx(cairo_pdf_surface_restrict_to_version_gurax, processor
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_pdf_get_versions()
+// cairo.cairo_pdf_get_versions(&versions:nilRef as List)
 Gurax_DeclareFunctionAlias(cairo_pdf_get_versions_gurax, "cairo_pdf_get_versions")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("versions", VTYPE_List, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(cairo_pdf_get_versions_gurax, processor_gurax, argument_gurax)
 {
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Referencer> versions(args_gurax.PickReferencer().Reference());
 	// Function body
-	const cairo_pdf_version_t* versions;
-	int num_version;
-	cairo_pdf_get_versions(&versions, &num_version);
-	return Value_List::Create(reinterpret_cast<const int*>(versions), num_version);
+	const cairo_pdf_version_t* versions_;
+	int num_version_;
+	cairo_pdf_get_versions(&versions_, &num_version_);
+	versions->SetValue(Value_List::Create(reinterpret_cast<const int*>(versions_), num_version_));
+	return Value::nil();
 }
 
 // cairo.cairo_pdf_version_to_string(version as Number)
@@ -6417,19 +6422,24 @@ Gurax_ImplementFunctionEx(cairo_svg_surface_restrict_to_version_gurax, processor
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_svg_get_versions()
+// cairo.cairo_svg_get_versions(&versions:nilRef as List)
 Gurax_DeclareFunctionAlias(cairo_svg_get_versions_gurax, "cairo_svg_get_versions")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("versions", VTYPE_List, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(cairo_svg_get_versions_gurax, processor_gurax, argument_gurax)
 {
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Referencer> versions(args_gurax.PickReferencer().Reference());
 	// Function body
-	const cairo_svg_version_t* versions;
-	int num_version;
-	cairo_svg_get_versions(&versions, &num_version);
-	return Value_List::Create(reinterpret_cast<const int*>(versions), num_version);
+	const cairo_svg_version_t* versions_;
+	int num_version_;
+	cairo_svg_get_versions(&versions_, &num_version_);
+	versions->SetValue(Value_List::Create(reinterpret_cast<const int*>(versions_), num_version_));
+	return Value::nil();
 }
 
 // cairo.cairo_svg_version_to_string(version as Number)

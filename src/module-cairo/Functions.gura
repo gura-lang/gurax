@@ -992,12 +992,13 @@ cairo_pdf_surface_create_for_stream(stream:w as Stream@gurax, width_in_points as
 cairo_pdf_surface_restrict_to_version(surface as cairo_surface_t_p, version as cairo_pdf_version_t):void
 
 //cairo_pdf_get_versions(versions as cairo_pdf_version_t_const_pp, num_versions as int_p):void
-cairo_pdf_get_versions() = \
+cairo_pdf_get_versions(&versions:nilRef as List@gurax):void = \
 	R'''
-	const cairo_pdf_version_t* versions;
-	int num_version;
-	cairo_pdf_get_versions(&versions, &num_version);
-	return Value_List::Create(reinterpret_cast<const int*>(versions), num_version);
+	const cairo_pdf_version_t* versions_;
+	int num_version_;
+	cairo_pdf_get_versions(&versions_, &num_version_);
+	versions->SetValue(Value_List::Create(reinterpret_cast<const int*>(versions_), num_version_));
+	return Value::nil();
 	'''
 
 cairo_pdf_version_to_string(version as cairo_pdf_version_t) as const_char_p
@@ -1078,12 +1079,13 @@ cairo_svg_surface_create_for_stream(stream:w as Stream@gurax, width_in_points as
 cairo_svg_surface_restrict_to_version(surface as cairo_surface_t_p, version as cairo_svg_version_t):void
 
 //cairo_svg_get_versions(versions as cairo_svg_version_t_const_pp, num_versions as int_p):void
-cairo_svg_get_versions() = \
+cairo_svg_get_versions(&versions:nilRef as List@gurax):void = \
 	R'''
-	const cairo_svg_version_t* versions;
-	int num_version;
-	cairo_svg_get_versions(&versions, &num_version);
-	return Value_List::Create(reinterpret_cast<const int*>(versions), num_version);
+	const cairo_svg_version_t* versions_;
+	int num_version_;
+	cairo_svg_get_versions(&versions_, &num_version_);
+	versions->SetValue(Value_List::Create(reinterpret_cast<const int*>(versions_), num_version_));
+	return Value::nil();
 	'''
 
 cairo_svg_version_to_string(version as cairo_svg_version_t) as const_char_p
