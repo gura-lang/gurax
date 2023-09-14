@@ -3014,11 +3014,13 @@ Gurax_ImplementFunctionEx(cairo_get_dash_count_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_get_dash(cr as cairo_t)
+// cairo.cairo_get_dash(cr as cairo_t, &dashes:nilRef as List, &offset:nilRef as Number)
 Gurax_DeclareFunctionAlias(cairo_get_dash_gurax, "cairo_get_dash")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dashes", VTYPE_List, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(cairo_get_dash_gurax, processor_gurax, argument_gurax)
@@ -3027,12 +3029,16 @@ Gurax_ImplementFunctionEx(cairo_get_dash_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_cr = args_gurax.Pick<Value_cairo_t>();
 	cairo_t* cr = value_cr.GetEntityPtr();
+	RefPtr<Referencer> dashes(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> offset(args_gurax.PickReferencer().Reference());
 	// Function body
-	double offset;
-	int dash_count = cairo_get_dash_count(cr);
-	std::unique_ptr<double []> dashes(new double [dash_count]);
-	cairo_get_dash(cr, dashes.get(), &offset);
-	return Value_Tuple::Create(Value_List::Create(dashes.get(), dash_count), new Value_Number(offset));
+	double offset_;
+	int dash_count_ = cairo_get_dash_count(cr);
+	std::unique_ptr<double []> dashes_(new double [dash_count_]);
+	cairo_get_dash(cr, dashes_.get(), &offset_);
+	dashes->SetValue(Value_List::Create(dashes_.get(), dash_count_));
+	offset->SetValue(new Value_Number(offset_));
+	return Value::nil();
 }
 
 // cairo.cairo_get_matrix(cr as cairo_t, matrix as cairo_matrix_t)
@@ -3969,11 +3975,13 @@ Gurax_ImplementFunctionEx(cairo_surface_set_device_scale_gurax, processor_gurax,
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_surface_get_device_scale(surface as cairo_surface_t)
+// cairo.cairo_surface_get_device_scale(surface as cairo_surface_t, &x_scale:nilRef as Number, &y_scale:nilRef as Number)
 Gurax_DeclareFunctionAlias(cairo_surface_get_device_scale_gurax, "cairo_surface_get_device_scale")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x_scale", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("y_scale", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(cairo_surface_get_device_scale_gurax, processor_gurax, argument_gurax)
@@ -3982,10 +3990,14 @@ Gurax_ImplementFunctionEx(cairo_surface_get_device_scale_gurax, processor_gurax,
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_surface = args_gurax.Pick<Value_cairo_surface_t>();
 	cairo_surface_t* surface = value_surface.GetEntityPtr();
+	RefPtr<Referencer> x_scale(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y_scale(args_gurax.PickReferencer().Reference());
 	// Function body
-	double x_scale, y_scale;
-	cairo_surface_get_device_scale(surface, &x_scale, &y_scale);
-	return Value_Tuple::Create(new Value_Number(x_scale), new Value_Number(y_scale));
+	double x_scale_, y_scale_;
+	cairo_surface_get_device_scale(surface, &x_scale_, &y_scale_);
+	x_scale->SetValue(new Value_Number(x_scale_));
+	y_scale->SetValue(new Value_Number(y_scale_));
+	return Value::nil();
 }
 
 // cairo.cairo_surface_set_device_offset(surface as cairo_surface_t, x_offset as Number, y_offset as Number)
@@ -4010,11 +4022,13 @@ Gurax_ImplementFunctionEx(cairo_surface_set_device_offset_gurax, processor_gurax
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_surface_get_device_offset(surface as cairo_surface_t)
+// cairo.cairo_surface_get_device_offset(surface as cairo_surface_t, &x_offset:nilRef as Number, &y_offset:nilRef as Number)
 Gurax_DeclareFunctionAlias(cairo_surface_get_device_offset_gurax, "cairo_surface_get_device_offset")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x_offset", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("y_offset", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(cairo_surface_get_device_offset_gurax, processor_gurax, argument_gurax)
@@ -4023,10 +4037,14 @@ Gurax_ImplementFunctionEx(cairo_surface_get_device_offset_gurax, processor_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_surface = args_gurax.Pick<Value_cairo_surface_t>();
 	cairo_surface_t* surface = value_surface.GetEntityPtr();
+	RefPtr<Referencer> x_offset(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y_offset(args_gurax.PickReferencer().Reference());
 	// Function body
-	double x_offset, y_offset;
-	cairo_surface_get_device_offset(surface, &x_offset, &y_offset);
-	return Value_Tuple::Create(new Value_Number(x_offset), new Value_Number(y_offset));
+	double x_offset_, y_offset_;
+	cairo_surface_get_device_offset(surface, &x_offset_, &y_offset_);
+	x_offset->SetValue(new Value_Number(x_offset_));
+	y_offset->SetValue(new Value_Number(y_offset_));
+	return Value::nil();
 }
 
 // cairo.cairo_surface_set_fallback_resolution(surface as cairo_surface_t, x_pixels_per_inch as Number, y_pixels_per_inch as Number)
@@ -4051,11 +4069,13 @@ Gurax_ImplementFunctionEx(cairo_surface_set_fallback_resolution_gurax, processor
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_surface_get_fallback_resolution(surface as cairo_surface_t)
+// cairo.cairo_surface_get_fallback_resolution(surface as cairo_surface_t, &x_pixels_per_inch:nilRef as Number, &y_pixels_per_inch:nilRef as Number)
 Gurax_DeclareFunctionAlias(cairo_surface_get_fallback_resolution_gurax, "cairo_surface_get_fallback_resolution")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x_pixels_per_inch", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("y_pixels_per_inch", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(cairo_surface_get_fallback_resolution_gurax, processor_gurax, argument_gurax)
@@ -4064,10 +4084,14 @@ Gurax_ImplementFunctionEx(cairo_surface_get_fallback_resolution_gurax, processor
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_surface = args_gurax.Pick<Value_cairo_surface_t>();
 	cairo_surface_t* surface = value_surface.GetEntityPtr();
+	RefPtr<Referencer> x_pixels_per_inch(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y_pixels_per_inch(args_gurax.PickReferencer().Reference());
 	// Function body
-	double x_pixels_per_inch, y_pixels_per_inch;
-	cairo_surface_get_device_offset(surface, &x_pixels_per_inch, &y_pixels_per_inch);
-	return Value_Tuple::Create(new Value_Number(x_pixels_per_inch), new Value_Number(y_pixels_per_inch));
+	double x_pixels_per_inch_, y_pixels_per_inch_;
+	cairo_surface_get_device_offset(surface, &x_pixels_per_inch_, &y_pixels_per_inch_);
+	x_pixels_per_inch->SetValue(new Value_Number(x_pixels_per_inch_));
+	y_pixels_per_inch->SetValue(new Value_Number(y_pixels_per_inch_));
+	return Value::nil();
 }
 
 // cairo.cairo_surface_copy_page(surface as cairo_surface_t)

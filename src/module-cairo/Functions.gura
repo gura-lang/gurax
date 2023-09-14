@@ -517,7 +517,7 @@ cairo_has_current_point(cr as cairo_t_p) as cairo_bool_t
 cairo_get_current_point(cr as cairo_t_p, &x:nilRef as double, &y:nilRef as double) = \
 	R'''
 	double x_, y_;
-	cairo_get_current_pointer(cr, &x_, &y_);
+	cairo_get_current_point(cr, &x_, &y_);
 	x->SetValue(new Value_Number(x_));
 	y->SetValue(new Value_Number(y_));
 	return Value::nil();
@@ -536,13 +536,15 @@ cairo_get_miter_limit(cr as cairo_t_p) as double
 cairo_get_dash_count(cr as cairo_t_p) as int
 
 //cairo_get_dash(cr as cairo_t_p, dashes as double_p, offset as double_p):void
-cairo_get_dash(cr as cairo_t_p) = \
+cairo_get_dash(cr as cairo_t_p, &dashes:nilRef as List@gurax, &offset:nilRef as double) as void = \
 	R'''
-	double offset;
-	int dash_count = cairo_get_dash_count(cr);
-	std::unique_ptr<double []> dashes(new double [dash_count]);
-	cairo_get_dash(cr, dashes.get(), &offset);
-	return Value_Tuple::Create(Value_List::Create(dashes.get(), dash_count), new Value_Number(offset));
+	double offset_;
+	int dash_count_ = cairo_get_dash_count(cr);
+	std::unique_ptr<double []> dashes_(new double [dash_count_]);
+	cairo_get_dash(cr, dashes_.get(), &offset_);
+	dashes->SetValue(Value_List::Create(dashes_.get(), dash_count_));
+	offset->SetValue(new Value_Number(offset_));
+	return Value::nil();
 	'''
 
 cairo_get_matrix(cr as cairo_t_p, matrix as cairo_matrix_t_p):void
@@ -682,31 +684,37 @@ cairo_surface_mark_dirty_rectangle(surface as cairo_surface_t_p, x as int, y as 
 cairo_surface_set_device_scale(surface as cairo_surface_t_p, x_scale as double, y_scale as double):void
 
 //cairo_surface_get_device_scale(surface as cairo_surface_t_p, x_scale as double_p, y_scale as double_p):void
-cairo_surface_get_device_scale(surface as cairo_surface_t_p) = \
+cairo_surface_get_device_scale(surface as cairo_surface_t_p, &x_scale:nilRef as double, &y_scale:nilRef as double):void = \
 	R'''
-	double x_scale, y_scale;
-	cairo_surface_get_device_scale(surface, &x_scale, &y_scale);
-	return Value_Tuple::Create(new Value_Number(x_scale), new Value_Number(y_scale));
+	double x_scale_, y_scale_;
+	cairo_surface_get_device_scale(surface, &x_scale_, &y_scale_);
+	x_scale->SetValue(new Value_Number(x_scale_));
+	y_scale->SetValue(new Value_Number(y_scale_));
+	return Value::nil();
 	'''
 
 cairo_surface_set_device_offset(surface as cairo_surface_t_p, x_offset as double, y_offset as double):void
 
 //cairo_surface_get_device_offset(surface as cairo_surface_t_p, x_offset as double_p, y_offset as double_p):void
-cairo_surface_get_device_offset(surface as cairo_surface_t_p) = \
+cairo_surface_get_device_offset(surface as cairo_surface_t_p, &x_offset:nilRef as double, &y_offset:nilRef as double) = \
 	R'''
-	double x_offset, y_offset;
-	cairo_surface_get_device_offset(surface, &x_offset, &y_offset);
-	return Value_Tuple::Create(new Value_Number(x_offset), new Value_Number(y_offset));
+	double x_offset_, y_offset_;
+	cairo_surface_get_device_offset(surface, &x_offset_, &y_offset_);
+	x_offset->SetValue(new Value_Number(x_offset_));
+	y_offset->SetValue(new Value_Number(y_offset_));
+	return Value::nil();
 	'''
 
 cairo_surface_set_fallback_resolution(surface as cairo_surface_t_p, x_pixels_per_inch as double, y_pixels_per_inch as double):void
 
 //cairo_surface_get_fallback_resolution(surface as cairo_surface_t_p, x_pixels_per_inch as double_p, y_pixels_per_inch as double_p):void
-cairo_surface_get_fallback_resolution(surface as cairo_surface_t_p) = \
+cairo_surface_get_fallback_resolution(surface as cairo_surface_t_p, &x_pixels_per_inch:nilRef as double, &y_pixels_per_inch:nilRef as double) = \
 	R'''
-	double x_pixels_per_inch, y_pixels_per_inch;
-	cairo_surface_get_device_offset(surface, &x_pixels_per_inch, &y_pixels_per_inch);
-	return Value_Tuple::Create(new Value_Number(x_pixels_per_inch), new Value_Number(y_pixels_per_inch));
+	double x_pixels_per_inch_, y_pixels_per_inch_;
+	cairo_surface_get_device_offset(surface, &x_pixels_per_inch_, &y_pixels_per_inch_);
+	x_pixels_per_inch->SetValue(new Value_Number(x_pixels_per_inch_));
+	y_pixels_per_inch->SetValue(new Value_Number(y_pixels_per_inch_));
+	return Value::nil();
 	'''
 
 cairo_surface_copy_page(surface as cairo_surface_t_p):void
