@@ -15,6 +15,7 @@ class Iterator;
 class Processor;
 class PUnit;
 class Value;
+class Expr_Binary;
 
 //------------------------------------------------------------------------------
 // MemberMode

@@ -20,7 +20,7 @@ Operator* Operator::Neg				= new Operator(OpStyle::Unary,			"Neg",			"-",			OpTy
 Operator* Operator::Not				= new Operator(OpStyle::Unary,			"Not",			"!",			OpType::Not, Operator::Flag::Map | Operator::Flag::LogicOp);
 Operator* Operator::Pos				= new Operator(OpStyle::Unary,			"Pos",			"+",			OpType::Pos);
 Operator* Operator::Question		= new Operator(OpStyle::Unary,			"Question",		"?",			OpType::Question);
-Operator* Operator::PreAnd			= new Operator(OpStyle::Unary,			"PreAnd",		"&",			OpType::PreAnd);
+Operator* Operator::PreAnd			= new Operator_PreAnd();
 Operator* Operator::PreMod			= new Operator(OpStyle::Unary,			"PreMod",		"%",			OpType::PreMod);
 Operator* Operator::PreModMod		= new Operator(OpStyle::Unary,			"PreModMod",	"%%",			OpType::PreModMod);
 Operator* Operator::PreMul			= new Operator(OpStyle::Unary,			"PreMul",		"*",			OpType::PreMul);
@@ -250,6 +250,19 @@ Value* Operator::EvalBinary(Processor& processor, Value& valueL, Value& valueR)
 	return pOpEntry? pOpEntry->EvalBinary(processor, valueL, valueR) : Value::undefined();
 }
 
+void Operator::ComposeUnary(Composer& composer, Expr_UnaryOp& expr) const
+{
+	expr.GetExprChild().ComposeOrNil(composer);									// [Any]
+	composer.Add_UnaryOp(expr.GetOperator(), expr);								// [Result]
+}
+
+void Operator::ComposeBinary(Composer& composer, Expr_BinaryOp& expr) const
+{
+	expr.GetExprLeft().ComposeOrNil(composer);									// [Left]
+	expr.GetExprRight().ComposeOrNil(composer);									// [Left Right]
+	composer.Add_BinaryOp(expr.GetOperator(), expr);							// [Result]
+}
+
 Operator* Operator::LookupUnary(const Symbol* pSymbol)
 {
 	return _operatorMap_Unary.Lookup(pSymbol);
@@ -313,9 +326,18 @@ Operator* OperatorMap::Lookup(const Symbol* pSymbol) const
 }
 
 //------------------------------------------------------------------------------
+// Operator_PreAnd
+//------------------------------------------------------------------------------
+void Operator_PreAnd::ComposeUnary(Composer& composer, Expr_UnaryOp& expr) const
+{
+	Expr& exprChild = expr.GetExprChild();
+	exprChild.ComposeReferencer(composer);										// [Result]
+}
+
+//------------------------------------------------------------------------------
 // Operator_Quote
 //------------------------------------------------------------------------------
-void Operator_Quote::ComposeUnary(Composer& composer, Expr_Unary& expr) const
+void Operator_Quote::ComposeUnary(Composer& composer, Expr_UnaryOp& expr) const
 {
 	Expr& exprChild = expr.GetExprChild();
 	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
@@ -329,7 +351,7 @@ void Operator_Quote::ComposeUnary(Composer& composer, Expr_Unary& expr) const
 //------------------------------------------------------------------------------
 // Operator_AndAnd
 //------------------------------------------------------------------------------
-void Operator_AndAnd::ComposeBinary(Composer& composer, Expr_Binary& expr) const
+void Operator_AndAnd::ComposeBinary(Composer& composer, Expr_BinaryOp& expr) const
 {
 	expr.GetExprLeft().ComposeOrNil(composer);									// [Bool]
 	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
@@ -342,7 +364,7 @@ void Operator_AndAnd::ComposeBinary(Composer& composer, Expr_Binary& expr) const
 //------------------------------------------------------------------------------
 // Operator_OrOr
 //------------------------------------------------------------------------------
-void Operator_OrOr::ComposeBinary(Composer& composer, Expr_Binary& expr) const
+void Operator_OrOr::ComposeBinary(Composer& composer, Expr_BinaryOp& expr) const
 {
 	expr.GetExprLeft().ComposeOrNil(composer);									// [Bool]
 	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();

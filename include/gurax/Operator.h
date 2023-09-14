@@ -34,8 +34,8 @@ Operator::opType->AssignEntry(VTYPE_##typeNameL, VTYPE_##typeNameR, new OpEntry_
 namespace Gurax {
 
 class Expr;
-class Expr_Unary;
-class Expr_Binary;
+class Expr_UnaryOp;
+class Expr_BinaryOp;
 class Composer;
 class Operator;
 struct TokenType;
@@ -420,8 +420,8 @@ public:
 	String ToString(const StringStyle& ss) const;
 	String ToString(const StringStyle& ss, const VType& vtype) const;
 	String ToString(const StringStyle& ss, const VType& vtypeL, const VType& vtypeR) const;
-	virtual void ComposeUnary(Composer& composer, Expr_Unary& expr) const {}
-	virtual void ComposeBinary(Composer& composer, Expr_Binary& expr) const {}
+	virtual void ComposeUnary(Composer& composer, Expr_UnaryOp& expr) const;
+	virtual void ComposeBinary(Composer& composer, Expr_BinaryOp& expr) const;
 public:
 	static Operator* Lookup(OpType opType) { return _operatorTbl[static_cast<size_t>(opType)]; }
 	static Operator* LookupUnary(const Symbol* pSymbol);
@@ -431,13 +431,23 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// Operator_PreAnd
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Operator_PreAnd : public Operator {
+public:
+	Operator_PreAnd() : Operator(OpStyle::Unary, "PreAnd", "&", OpType::PreAnd, Flag::Raw) {}
+public:
+	virtual void ComposeUnary(Composer& composer, Expr_UnaryOp& expr) const override;
+};
+
+//------------------------------------------------------------------------------
 // Operator_Quote
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Operator_Quote : public Operator {
 public:
 	Operator_Quote() : Operator(OpStyle::Unary, "Quote", "`", OpType::Quote, Flag::Raw) {}
 public:
-	virtual void ComposeUnary(Composer& composer, Expr_Unary& expr) const override;
+	virtual void ComposeUnary(Composer& composer, Expr_UnaryOp& expr) const override;
 };
 
 //------------------------------------------------------------------------------
@@ -447,7 +457,7 @@ class GURAX_DLLDECLARE Operator_AndAnd : public Operator {
 public:
 	Operator_AndAnd() : Operator(OpStyle::Binary, "AndAnd", "&&", OpType::AndAnd, Flag::Raw | Flag::LogicOp) {}
 public:
-	virtual void ComposeBinary(Composer& composer, Expr_Binary& expr) const override;
+	virtual void ComposeBinary(Composer& composer, Expr_BinaryOp& expr) const override;
 };
 
 //------------------------------------------------------------------------------
@@ -457,7 +467,7 @@ class GURAX_DLLDECLARE Operator_OrOr : public Operator {
 public:
 	Operator_OrOr() : Operator(OpStyle::Binary, "OrOr", "||", OpType::OrOr, Flag::Raw | Flag::LogicOp) {}
 public:
-	virtual void ComposeBinary(Composer& composer, Expr_Binary& expr) const override;
+	virtual void ComposeBinary(Composer& composer, Expr_BinaryOp& expr) const override;
 };
 
 };

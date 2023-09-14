@@ -69,3 +69,4 @@ g([&x, &y, &z]*, 'bye') .. <Nil>
 x .. bye-a
 y .. bye-b
 z .. bye-c
+======== Modification of Indexer ========
