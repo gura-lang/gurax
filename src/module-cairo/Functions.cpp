@@ -4955,11 +4955,15 @@ Gurax_ImplementFunctionEx(cairo_pattern_get_filter_gurax, processor_gurax, argum
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_pattern_get_rgba(pattern as cairo_pattern_t)
+// cairo.cairo_pattern_get_rgba(pattern as cairo_pattern_t, &red:nilRef as Number, &green:nilRef as Number, &blue:nilRef as Number, &alpha:nilRef as Number)
 Gurax_DeclareFunctionAlias(cairo_pattern_get_rgba_gurax, "cairo_pattern_get_rgba")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("pattern", VTYPE_cairo_pattern_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("alpha", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(cairo_pattern_get_rgba_gurax, processor_gurax, argument_gurax)
@@ -4968,18 +4972,31 @@ Gurax_ImplementFunctionEx(cairo_pattern_get_rgba_gurax, processor_gurax, argumen
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_pattern = args_gurax.Pick<Value_cairo_pattern_t>();
 	cairo_pattern_t* pattern = value_pattern.GetEntityPtr();
+	RefPtr<Referencer> red(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> green(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> blue(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> alpha(args_gurax.PickReferencer().Reference());
 	// Function body
-	double red, green, blue, alpha;
-	if (!IsOK(cairo_pattern_get_rgba(pattern, &red, &green, &blue, &alpha))) return Value::nil();
-	return Value_Tuple::Create(new Value_Number(red), new Value_Number(green), new Value_Number(blue), new Value_Number(alpha));
+	double red_, green_, blue_, alpha_;
+	cairo_status_t rtn = cairo_pattern_get_rgba(pattern, &red_, &green_, &blue_, &alpha_);
+	red->SetValue(new Value_Number(red_));
+	green->SetValue(new Value_Number(green_));
+	blue->SetValue(new Value_Number(blue_));
+	alpha->SetValue(new Value_Number(alpha_));
+	return new Value_Number(rtn);
 }
 
-// cairo.cairo_pattern_get_color_stop_rgba(pattern as cairo_pattern_t, index as Number)
+// cairo.cairo_pattern_get_color_stop_rgba(pattern as cairo_pattern_t, index as Number, &offset:nilRef as Number, &red:nilRef as Number, &green:nilRef as Number, &blue:nilRef as Number, &alpha:nilRef as Number)
 Gurax_DeclareFunctionAlias(cairo_pattern_get_color_stop_rgba_gurax, "cairo_pattern_get_color_stop_rgba")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("pattern", VTYPE_cairo_pattern_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("alpha", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(cairo_pattern_get_color_stop_rgba_gurax, processor_gurax, argument_gurax)
@@ -4989,10 +5006,20 @@ Gurax_ImplementFunctionEx(cairo_pattern_get_color_stop_rgba_gurax, processor_gur
 	auto& value_pattern = args_gurax.Pick<Value_cairo_pattern_t>();
 	cairo_pattern_t* pattern = value_pattern.GetEntityPtr();
 	int index = args_gurax.PickNumber<int>();
+	RefPtr<Referencer> offset(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> red(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> green(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> blue(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> alpha(args_gurax.PickReferencer().Reference());
 	// Function body
-	double offset, red, green, blue, alpha;
-	if (!IsOK(cairo_pattern_get_color_stop_rgba(pattern, index, &offset, &red, &green, &blue, &alpha))) return Value::nil();
-	return Value_Tuple::Create(new Value_Number(offset), new Value_Number(red), new Value_Number(green), new Value_Number(blue), new Value_Number(alpha));
+	double offset_, red_, green_, blue_, alpha_;
+	cairo_status_t rtn = cairo_pattern_get_color_stop_rgba(pattern, index, &offset_, &red_, &green_, &blue_, &alpha_);
+	offset->SetValue(new Value_Number(offset_));
+	red->SetValue(new Value_Number(red_));
+	green->SetValue(new Value_Number(green_));
+	blue->SetValue(new Value_Number(blue_));
+	alpha->SetValue(new Value_Number(alpha_));
+	return new Value_Number(rtn);
 }
 
 // cairo.cairo_mesh_pattern_get_path(pattern as cairo_pattern_t, patch_num as Number)
@@ -5234,13 +5261,13 @@ Gurax_ImplementFunctionEx(cairo_matrix_multiply_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_matrix_transform_distance(matrix as cairo_matrix_t, dx as Number, dy as Number)
+// cairo.cairo_matrix_transform_distance(matrix as cairo_matrix_t, &dx as Number, &dy as Number)
 Gurax_DeclareFunctionAlias(cairo_matrix_transform_distance_gurax, "cairo_matrix_transform_distance")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("matrix", VTYPE_cairo_matrix_t, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("dx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("dy", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dx", VTYPE_Number, ArgOccur::Once, ArgFlag::Referencer);
+	DeclareArg("dy", VTYPE_Number, ArgOccur::Once, ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(cairo_matrix_transform_distance_gurax, processor_gurax, argument_gurax)
@@ -5249,20 +5276,24 @@ Gurax_ImplementFunctionEx(cairo_matrix_transform_distance_gurax, processor_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_matrix = args_gurax.Pick<Value_cairo_matrix_t>();
 	const cairo_matrix_t* matrix = value_matrix.GetEntityPtr();
-	double dx = args_gurax.PickNumber<double>();
-	double dy = args_gurax.PickNumber<double>();
+	RefPtr<Referencer> dx(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> dy(args_gurax.PickReferencer().Reference());
 	// Function body
-	cairo_matrix_transform_distance(matrix, &dx, &dy);
-	return Value_Tuple::Create(new Value_Number(dx), new Value_Number(dy));
+	double dx_ = dx->Get<Value_Number>().GetNumber<double>();
+	double dy_ = dy->Get<Value_Number>().GetNumber<double>();
+	cairo_matrix_transform_distance(matrix, &dx_, &dy_);
+	dx->SetValue(new Value_Number(dx_));
+	dy->SetValue(new Value_Number(dy_));
+	return Value::nil();
 }
 
-// cairo.cairo_matrix_transform_point(matrix as cairo_matrix_t, x as Number, y as Number)
+// cairo.cairo_matrix_transform_point(matrix as cairo_matrix_t, &x as Number, &y as Number)
 Gurax_DeclareFunctionAlias(cairo_matrix_transform_point_gurax, "cairo_matrix_transform_point")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("matrix", VTYPE_cairo_matrix_t, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::Referencer);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(cairo_matrix_transform_point_gurax, processor_gurax, argument_gurax)
@@ -5271,11 +5302,15 @@ Gurax_ImplementFunctionEx(cairo_matrix_transform_point_gurax, processor_gurax, a
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_matrix = args_gurax.Pick<Value_cairo_matrix_t>();
 	const cairo_matrix_t* matrix = value_matrix.GetEntityPtr();
-	double x = args_gurax.PickNumber<double>();
-	double y = args_gurax.PickNumber<double>();
+	RefPtr<Referencer> x(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y(args_gurax.PickReferencer().Reference());
 	// Function body
-	cairo_matrix_transform_distance(matrix, &x, &y);
-	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+	double x_ = x->Get<Value_Number>().GetNumber<double>();
+	double y_ = y->Get<Value_Number>().GetNumber<double>();
+	cairo_matrix_transform_distance(matrix, &x_, &y_);
+	x->SetValue(new Value_Number(x_));
+	y->SetValue(new Value_Number(y_));
+	return Value::nil();
 }
 
 // cairo.cairo_region_create()

@@ -830,21 +830,30 @@ cairo_pattern_set_filter(pattern as cairo_pattern_t_p, filter as cairo_filter_t)
 cairo_pattern_get_filter(pattern as cairo_pattern_t_p) as cairo_filter_t
 
 //cairo_pattern_get_rgba(pattern as cairo_pattern_t_p, red as double_p, green as double_p, blue as double_p, alpha as double_p) as cairo_status_t
-cairo_pattern_get_rgba(pattern as cairo_pattern_t_p) = \
+cairo_pattern_get_rgba(pattern as cairo_pattern_t_p, &red:nilRef as double, &green:nilRef as double, &blue:nilRef as double, &alpha:nilRef as double) as cairo_status_t = \
 	R'''
-	double red, green, blue, alpha;
-	if (!IsOK(cairo_pattern_get_rgba(pattern, &red, &green, &blue, &alpha))) return Value::nil();
-	return Value_Tuple::Create(new Value_Number(red), new Value_Number(green), new Value_Number(blue), new Value_Number(alpha));
+	double red_, green_, blue_, alpha_;
+	cairo_status_t rtn = cairo_pattern_get_rgba(pattern, &red_, &green_, &blue_, &alpha_);
+	red->SetValue(new Value_Number(red_));
+	green->SetValue(new Value_Number(green_));
+	blue->SetValue(new Value_Number(blue_));
+	alpha->SetValue(new Value_Number(alpha_));
+	return new Value_Number(rtn);
 	'''
 
 //cairo_pattern_get_surface(pattern as cairo_pattern_t_p, surface as cairo_surface_t_pp) as cairo_status_t
 
 //cairo_pattern_get_color_stop_rgba(pattern as cairo_pattern_t_p, index as int, offset as double_p, red as double_p, green as double_p, blue as double_p, alpha as double_p) as cairo_status_t
-cairo_pattern_get_color_stop_rgba(pattern as cairo_pattern_t_p, index as int) = \
+cairo_pattern_get_color_stop_rgba(pattern as cairo_pattern_t_p, index as int, &offset:nilRef as double, &red:nilRef as double, &green:nilRef as double, &blue:nilRef as double, &alpha:nilRef as double) = \
 	R'''
-	double offset, red, green, blue, alpha;
-	if (!IsOK(cairo_pattern_get_color_stop_rgba(pattern, index, &offset, &red, &green, &blue, &alpha))) return Value::nil();
-	return Value_Tuple::Create(new Value_Number(offset), new Value_Number(red), new Value_Number(green), new Value_Number(blue), new Value_Number(alpha));
+	double offset_, red_, green_, blue_, alpha_;
+	cairo_status_t rtn = cairo_pattern_get_color_stop_rgba(pattern, index, &offset_, &red_, &green_, &blue_, &alpha_);
+	offset->SetValue(new Value_Number(offset_));
+	red->SetValue(new Value_Number(red_));
+	green->SetValue(new Value_Number(green_));
+	blue->SetValue(new Value_Number(blue_));
+	alpha->SetValue(new Value_Number(alpha_));
+	return new Value_Number(rtn);
 	'''
 
 //cairo_pattern_get_color_stop_count(pattern as cairo_pattern_t_p, count as int_p) as cairo_status_t
@@ -882,17 +891,25 @@ cairo_matrix_invert(matrix as cairo_matrix_t_p) as cairo_status_t
 cairo_matrix_multiply(result as cairo_matrix_t_p, a as const_cairo_matrix_t_p, b as const_cairo_matrix_t_p):void
 
 //cairo_matrix_transform_distance(matrix as const_cairo_matrix_t_p, dx as double_p, dy as double_p):void
-cairo_matrix_transform_distance(matrix as const_cairo_matrix_t_p, dx as double, dy as double) = \
+cairo_matrix_transform_distance(matrix as const_cairo_matrix_t_p, &dx as double, &dy as double):void = \
 	R'''
-	cairo_matrix_transform_distance(matrix, &dx, &dy);
-	return Value_Tuple::Create(new Value_Number(dx), new Value_Number(dy));
+	double dx_ = dx->Get<Value_Number>().GetNumber<double>();
+	double dy_ = dy->Get<Value_Number>().GetNumber<double>();
+	cairo_matrix_transform_distance(matrix, &dx_, &dy_);
+	dx->SetValue(new Value_Number(dx_));
+	dy->SetValue(new Value_Number(dy_));
+	return Value::nil();
 	'''
 
 //cairo_matrix_transform_point(matrix as const_cairo_matrix_t_p, x as double_p, y as double_p):void
-cairo_matrix_transform_point(matrix as const_cairo_matrix_t_p, x as double, y as double) = \
+cairo_matrix_transform_point(matrix as const_cairo_matrix_t_p, &x as double, &y as double):void = \
 	R'''
-	cairo_matrix_transform_distance(matrix, &x, &y);
-	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+	double x_ = x->Get<Value_Number>().GetNumber<double>();
+	double y_ = y->Get<Value_Number>().GetNumber<double>();
+	cairo_matrix_transform_distance(matrix, &x_, &y_);
+	x->SetValue(new Value_Number(x_));
+	y->SetValue(new Value_Number(y_));
+	return Value::nil();
 	'''
 
 cairo_region_create() as cairo_region_t_p
