@@ -11,12 +11,12 @@ namespace Gurax {
 static const char* g_docHelp_en = u8R"""(
 # Overview
 
-- `p.int8 = 10` .. Writes data into the pointed memory and increments the address by 1 byte.
-- `p.int32 = 10` .. Writes data into the pointed memory and increments the address by 4 byte.
-- `x = p.int8` ..  Reads data from the pointed memory and increments the address by 1 byte.
-- `x = p.int16` ..  Reads data from the pointed memory and increments the address by 2 byte.
+- `p.int8 = 10` .. Writes data into the pointed.
+- `p.int32 = 10` .. Writes data into the pointed.
+- `x = p.int8` ..  Reads data from the pointed.
+- `x = p.int16` ..  Reads data from the pointed.
 
-- `p.int8:stay = 10` .. Writes data into the pointed memory and keeps the address intact.
+- `p.int8:fwd = 10` .. Writes data into the pointed memory and increases the address by 1 byte.
 
 ${help.ComposePropertyHelp(Pointer, `en)}
 
@@ -49,7 +49,7 @@ ${help.ComposeMethodHelp(Pointer, `en)}
 // Template function
 //------------------------------------------------------------------------------
 template<typename T_Num>
-Value* PointerGetTmpl(Value_Pointer& valueTarget, const Attribute& attr)
+Value* PointerGetTmpl(Value_Pointer& valueTarget, const Attribute& attr, bool forwardFlag)
 {
 	bool stayFlag = attr.IsSet(Gurax_Symbol(stay));
 	bool bigEndianFlag = attr.IsSet(Gurax_Symbol(be));
@@ -58,21 +58,21 @@ Value* PointerGetTmpl(Value_Pointer& valueTarget, const Attribute& attr)
 	T_Num num;
 	size_t offset = pointer.GetOffset();
 	bool rtn = bigEndianFlag?
-		pointer.Get<T_Num, true>(&num, exceedErrorFlag) :
-		pointer.Get<T_Num, false>(&num, exceedErrorFlag);
+		pointer.Get<T_Num, true>(&num, exceedErrorFlag, forwardFlag) :
+		pointer.Get<T_Num, false>(&num, exceedErrorFlag, forwardFlag);
 	if (stayFlag) pointer.SetOffset(offset);
 	return rtn? new Value_Number(num) : Value::nil();
 }
 
 template<typename T_Num>
-void PointerPutTmpl(Value_Pointer& valueTarget, const Attribute& attr, const Value& value)
+void PointerPutTmpl(Value_Pointer& valueTarget, const Attribute& attr, const Value& value, bool forwardFlag)
 {
 	bool stayFlag = attr.IsSet(Gurax_Symbol(stay));
 	bool bigEndianFlag = attr.IsSet(Gurax_Symbol(be));
 	Pointer& pointer = valueTarget.GetPointer();
 	T_Num num = Value_Number::GetNumber<T_Num>(value);
 	size_t offset = pointer.GetOffset();
-	if (bigEndianFlag) { pointer.Put<T_Num, true>(num); } else { pointer.Put<T_Num, false>(num); }
+	if (bigEndianFlag) { pointer.Put<T_Num, true>(num, forwardFlag); } else { pointer.Put<T_Num, false>(num, forwardFlag); }
 	if (stayFlag) pointer.SetOffset(offset);
 }
 
@@ -513,12 +513,14 @@ read or write a number stored in a format of signed 8-bit integer.
 
 Gurax_ImplementPropertyGetter(Pointer, int8)
 {
-	return PointerGetTmpl<Int8>(GetValueThis(valueTarget), attr);
+	bool forwardFlag = true;
+	return PointerGetTmpl<Int8>(GetValueThis(valueTarget), attr, forwardFlag);
 }
 
 Gurax_ImplementPropertySetter(Pointer, int8)
 {
-	PointerPutTmpl<Int8>(GetValueThis(valueTarget), attr, value);
+	bool forwardFlag = true;
+	PointerPutTmpl<Int8>(GetValueThis(valueTarget), attr, value, forwardFlag);
 }
 
 // Pointer#int16:[be,stay]
@@ -534,12 +536,14 @@ read or write a number stored in a format of signed 16-bit integer.
 
 Gurax_ImplementPropertyGetter(Pointer, int16)
 {
-	return PointerGetTmpl<Int16>(GetValueThis(valueTarget), attr);
+	bool forwardFlag = true;
+	return PointerGetTmpl<Int16>(GetValueThis(valueTarget), attr, forwardFlag);
 }
 
 Gurax_ImplementPropertySetter(Pointer, int16)
 {
-	PointerPutTmpl<Int16>(GetValueThis(valueTarget), attr, value);
+	bool forwardFlag = true;
+	PointerPutTmpl<Int16>(GetValueThis(valueTarget), attr, value, forwardFlag);
 }
 
 // Pointer#int32:[be,stay]
@@ -555,12 +559,14 @@ read or write a number stored in a format of signed 32-bit integer.
 
 Gurax_ImplementPropertyGetter(Pointer, int32)
 {
-	return PointerGetTmpl<Int32>(GetValueThis(valueTarget), attr);
+	bool forwardFlag = true;
+	return PointerGetTmpl<Int32>(GetValueThis(valueTarget), attr, forwardFlag);
 }
 
 Gurax_ImplementPropertySetter(Pointer, int32)
 {
-	PointerPutTmpl<Int32>(GetValueThis(valueTarget), attr, value);
+	bool forwardFlag = true;
+	PointerPutTmpl<Int32>(GetValueThis(valueTarget), attr, value, forwardFlag);
 }
 
 // Pointer#int64:[be,stay]
@@ -576,12 +582,14 @@ read or write a number stored in a format of signed 64-bit integer.
 
 Gurax_ImplementPropertyGetter(Pointer, int64)
 {
-	return PointerGetTmpl<Int64>(GetValueThis(valueTarget), attr);
+	bool forwardFlag = true;
+	return PointerGetTmpl<Int64>(GetValueThis(valueTarget), attr, forwardFlag);
 }
 
 Gurax_ImplementPropertySetter(Pointer, int64)
 {
-	PointerPutTmpl<Int64>(GetValueThis(valueTarget), attr, value);
+	bool forwardFlag = true;
+	PointerPutTmpl<Int64>(GetValueThis(valueTarget), attr, value, forwardFlag);
 }
 
 // Pointer#uint8:[be,stay]
@@ -597,12 +605,14 @@ read or write a number stored in a format of unsigned 8-bit integer.
 
 Gurax_ImplementPropertyGetter(Pointer, uint8)
 {
-	return PointerGetTmpl<UInt8>(GetValueThis(valueTarget), attr);
+	bool forwardFlag = true;
+	return PointerGetTmpl<UInt8>(GetValueThis(valueTarget), attr, forwardFlag);
 }
 
 Gurax_ImplementPropertySetter(Pointer, uint8)
 {
-	PointerPutTmpl<UInt8>(GetValueThis(valueTarget), attr, value);
+	bool forwardFlag = true;
+	PointerPutTmpl<UInt8>(GetValueThis(valueTarget), attr, value, forwardFlag);
 }
 
 // Pointer#uint16:[be,stay]
@@ -618,12 +628,14 @@ read or write a number stored in a format of unsigned 16-bit integer.
 
 Gurax_ImplementPropertyGetter(Pointer, uint16)
 {
-	return PointerGetTmpl<UInt16>(GetValueThis(valueTarget), attr);
+	bool forwardFlag = true;
+	return PointerGetTmpl<UInt16>(GetValueThis(valueTarget), attr, forwardFlag);
 }
 
 Gurax_ImplementPropertySetter(Pointer, uint16)
 {
-	PointerPutTmpl<UInt16>(GetValueThis(valueTarget), attr, value);
+	bool forwardFlag = true;
+	PointerPutTmpl<UInt16>(GetValueThis(valueTarget), attr, value, forwardFlag);
 }
 
 // Pointer#uint32:[be,stay]
@@ -639,12 +651,14 @@ read or write a number stored in a format of unsigned 32-bit integer.
 
 Gurax_ImplementPropertyGetter(Pointer, uint32)
 {
-	return PointerGetTmpl<UInt32>(GetValueThis(valueTarget), attr);
+	bool forwardFlag = true;
+	return PointerGetTmpl<UInt32>(GetValueThis(valueTarget), attr, forwardFlag);
 }
 
 Gurax_ImplementPropertySetter(Pointer, uint32)
 {
-	PointerPutTmpl<UInt32>(GetValueThis(valueTarget), attr, value);
+	bool forwardFlag = true;
+	PointerPutTmpl<UInt32>(GetValueThis(valueTarget), attr, value, forwardFlag);
 }
 
 // Pointer#uint64:[be,stay]
@@ -660,12 +674,14 @@ read or write a number stored in a format of unsigned 64-bit integer.
 
 Gurax_ImplementPropertyGetter(Pointer, uint64)
 {
-	return PointerGetTmpl<UInt64>(GetValueThis(valueTarget), attr);
+	bool forwardFlag = true;
+	return PointerGetTmpl<UInt64>(GetValueThis(valueTarget), attr, forwardFlag);
 }
 
 Gurax_ImplementPropertySetter(Pointer, uint64)
 {
-	PointerPutTmpl<UInt64>(GetValueThis(valueTarget), attr, value);
+	bool forwardFlag = true;
+	PointerPutTmpl<UInt64>(GetValueThis(valueTarget), attr, value, forwardFlag);
 }
 
 // Pointer#float:[be,stay]
@@ -681,12 +697,14 @@ read or write a number stored in a format of unsigned 64-bit integer.
 
 Gurax_ImplementPropertyGetter(Pointer, float_)
 {
-	return PointerGetTmpl<Float>(GetValueThis(valueTarget), attr);
+	bool forwardFlag = true;
+	return PointerGetTmpl<Float>(GetValueThis(valueTarget), attr, forwardFlag);
 }
 
 Gurax_ImplementPropertySetter(Pointer, float_)
 {
-	PointerPutTmpl<Float>(GetValueThis(valueTarget), attr, value);
+	bool forwardFlag = true;
+	PointerPutTmpl<Float>(GetValueThis(valueTarget), attr, value, forwardFlag);
 }
 
 // Pointer#double:[be,stay]
@@ -702,12 +720,14 @@ read or write a number stored in a format of unsigned 64-bit integer.
 
 Gurax_ImplementPropertyGetter(Pointer, double_)
 {
-	return PointerGetTmpl<Double>(GetValueThis(valueTarget), attr);
+	bool forwardFlag = true;
+	return PointerGetTmpl<Double>(GetValueThis(valueTarget), attr, forwardFlag);
 }
 
 Gurax_ImplementPropertySetter(Pointer, double_)
 {
-	PointerPutTmpl<Double>(GetValueThis(valueTarget), attr, value);
+	bool forwardFlag = true;
+	PointerPutTmpl<Double>(GetValueThis(valueTarget), attr, value, forwardFlag);
 }
 
 //------------------------------------------------------------------------------

@@ -23,8 +23,8 @@ public:
 public:
 	// Virtual functions of Packer
 	virtual bool StorePrepare(size_t bytes) override { return false; }
-	virtual void StoreBuffer(const void* buff, size_t bytes) override {}
-	virtual const UInt8* ExtractPrepare(size_t bytes) override;
+	virtual void StoreBuffer(const void* buff, size_t bytes, bool forwardFlag) override {}
+	virtual const UInt8* ExtractPrepare(size_t bytes, bool forwardFlag) override;
 public:
 	// Virtual functions of Pointer
 	virtual Pointer* Clone() const override { return new Pointer_String(*this); }
@@ -51,8 +51,8 @@ public:
 public:
 	// Virtual functions of Packer
 	virtual bool StorePrepare(size_t bytes) override;
-	virtual void StoreBuffer(const void* buff, size_t bytes) override;
-	virtual const UInt8* ExtractPrepare(size_t bytes) override;
+	virtual void StoreBuffer(const void* buff, size_t bytes, bool forwardFlag) override;
+	virtual const UInt8* ExtractPrepare(size_t bytes, bool forwardFlag) override;
 public:
 	// Virtual functions of Pointer
 	virtual Pointer* Clone() const override { return new Pointer_Binary(*this); }
@@ -79,8 +79,8 @@ public:
 public:
 	// Virtual functions of Packer
 	virtual bool StorePrepare(size_t bytes) override;
-	virtual void StoreBuffer(const void* buff, size_t bytes) override;
-	virtual const UInt8* ExtractPrepare(size_t bytes) override;
+	virtual void StoreBuffer(const void* buff, size_t bytes, bool forwardFlag) override;
+	virtual const UInt8* ExtractPrepare(size_t bytes, bool forwardFlag) override;
 public:
 	// Virtual functions of Pointer
 	virtual Pointer* Clone() const override { return new Pointer_Memory(*this); }
