@@ -148,7 +148,7 @@ DateTime* DateTime::CreateFromString(const char* str, const char** next)
 				nCols++;
 				year = year * 10 + (ch - '0');
 				if (nCols > 4) return nullptr;
-			} else if (ch == '-') {
+			} else if (ch == '-' || ch == '.') {
 				if (nCols > 4) return nullptr;
 				nCols = 0;
 				stat = Stat::W3C_Month;
@@ -162,7 +162,7 @@ DateTime* DateTime::CreateFromString(const char* str, const char** next)
 				nCols++;
 				month = month * 10 + (ch - '0');
 				if (nCols > 2) return nullptr;
-			} else if (ch == '-') {
+			} else if (ch == '-' || ch == '.') {
 				if (nCols > 2) return nullptr;
 				nCols = 0;
 				stat = Stat::W3C_Day;
@@ -250,7 +250,7 @@ DateTime* DateTime::CreateFromString(const char* str, const char** next)
 				nCols++;
 				day = day * 10 + (ch - '0');
 				if (nCols > 2) return nullptr;
-			} else if (String::IsWhite(ch) || ch == '-') {
+			} else if (String::IsWhite(ch) || ch == '-' || ch == '.') {
 				nCols = 0;
 				statNext = Stat::DateRFC_Month;
 				stat = Stat::SkipWhite;
@@ -262,7 +262,7 @@ DateTime* DateTime::CreateFromString(const char* str, const char** next)
 		case Stat::DateRFC_Month: {
 			if (String::IsAlpha(ch)) {
 				token += ch;
-			} else if (String::IsWhite(ch) || ch == '-') {
+			} else if (String::IsWhite(ch) || ch == '-' || ch == '.') {
 				size_t i = 0;
 				for (i = 0; i < Gurax_ArraySizeOf(monthNames); i++) {
 					if (::strcasecmp(token.c_str(), monthNames[i]) == 0) break;
