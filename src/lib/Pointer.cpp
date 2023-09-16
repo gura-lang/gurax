@@ -40,44 +40,44 @@ bool Pointer::PutValue(const ElemType& elemType, bool bigEndianFlag, const Value
 		switch (elemType.id) {
 		case ElemTypeId::Int8:
 			return bigEndianFlag?
-				Put<Int8, true>(Value_Number::GetNumber<Int8>(value), true) :
-				Put<Int8, false>(Value_Number::GetNumber<Int8>(value), true);
+				Put<Int8, true>(value, true) :
+				Put<Int8, false>(value, true);
 		case ElemTypeId::UInt8:
 			return bigEndianFlag?
-				Put<UInt8, true>(Value_Number::GetNumber<UInt8>(value), true) :
-				Put<UInt8, false>(Value_Number::GetNumber<UInt8>(value), true);
+				Put<UInt8, true>(value, true) :
+				Put<UInt8, false>(value, true);
 		case ElemTypeId::Int16:
 			return bigEndianFlag?
-				Put<Int16, true>(Value_Number::GetNumber<Int16>(value), true) :
-				Put<Int16, false>(Value_Number::GetNumber<Int16>(value), true);
+				Put<Int16, true>(value, true) :
+				Put<Int16, false>(value, true);
 		case ElemTypeId::UInt16:
 			return bigEndianFlag?
-				Put<UInt16, true>(Value_Number::GetNumber<UInt16>(value), true) :
-				Put<UInt16, false>(Value_Number::GetNumber<UInt16>(value), true);
+				Put<UInt16, true>(value, true) :
+				Put<UInt16, false>(value, true);
 		case ElemTypeId::Int32:
 			return bigEndianFlag?
-				Put<Int32, true>(Value_Number::GetNumber<Int32>(value), true) :
-				Put<Int32, false>(Value_Number::GetNumber<Int32>(value), true);
+				Put<Int32, true>(value, true) :
+				Put<Int32, false>(value, true);
 		case ElemTypeId::UInt32:
 			return bigEndianFlag?
-				Put<UInt32, true>(Value_Number::GetNumber<UInt32>(value), true) :
-				Put<UInt32, false>(Value_Number::GetNumber<UInt32>(value), true);
+				Put<UInt32, true>(value, true) :
+				Put<UInt32, false>(value, true);
 		case ElemTypeId::Int64:
 			return bigEndianFlag?
-				Put<Int64, true>(Value_Number::GetNumber<Int64>(value), true) :
-				Put<Int64, false>(Value_Number::GetNumber<Int64>(value), true);
+				Put<Int64, true>(value, true) :
+				Put<Int64, false>(value, true);
 		case ElemTypeId::UInt64:
 			return bigEndianFlag?
-				Put<UInt64, true>(Value_Number::GetNumber<UInt64>(value), true) :
-				Put<UInt64, false>(Value_Number::GetNumber<UInt64>(value), true);
+				Put<UInt64, true>(value, true) :
+				Put<UInt64, false>(value, true);
 		case ElemTypeId::Float:
 			return bigEndianFlag?
-				Put<Float, true>(Value_Number::GetNumber<Float>(value), true) :
-				Put<Float, false>(Value_Number::GetNumber<Float>(value), true);
+				Put<Float, true>(value, true) :
+				Put<Float, false>(value, true);
 		case ElemTypeId::Double:
 			return bigEndianFlag?
-				Put<Double, true>(Value_Number::GetNumber<Double>(value), true) :
-				Put<Double, false>(Value_Number::GetNumber<Double>(value), true);
+				Put<Double, true>(value, true) :
+				Put<Double, false>(value, true);
 		default:
 			break;
 		}

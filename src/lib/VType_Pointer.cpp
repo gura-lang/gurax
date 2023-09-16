@@ -68,11 +68,10 @@ void PointerPutTmpl(Value_Pointer& valueTarget, const Attribute& attr, const Val
 	bool bigEndianFlag = attr.IsSet(Gurax_Symbol(be));
 	bool forwardFlag = attr.IsSet(Gurax_Symbol(fwd));
 	Pointer& pointer = valueTarget.GetPointer();
-	T_Num num = Value_Number::GetNumber<T_Num>(value);
 	if (bigEndianFlag) {
-		pointer.Put<T_Num, true>(num, forwardFlag);
+		pointer.Put<T_Num, true>(value, forwardFlag);
 	} else {
-		pointer.Put<T_Num, false>(num, forwardFlag);
+		pointer.Put<T_Num, false>(value, forwardFlag);
 	}
 }
 

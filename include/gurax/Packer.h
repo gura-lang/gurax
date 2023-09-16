@@ -22,7 +22,7 @@ protected:
 public:
 	bool Pack(const char* format, const ValueList& valListArg);
 	Value* Unpack(const char* format, const ValueList& valListArg, bool exceedErrorFlag);
-	template<typename T, bool bigEndianFlag> bool Put(T num, bool forwardFlag);
+	template<typename T, bool bigEndianFlag> bool Put(const Value& value, bool forwardFlag);
 	template<typename T, bool bigEndianFlag> bool Get(T* pNum, bool exceedErrorFlag, bool forwardFlag);
 	bool PutBuffer(const void* buff, size_t bytes);
 	bool PutPointer(const Pointer& pointer);
@@ -36,10 +36,10 @@ private:
 	template<typename T, bool bigEndianFlag> T Extract(const UInt8* pByte);
 };
 
-template<typename T, bool bigEndianFlag> bool Packer::Put(T num, bool forwardFlag)
+template<typename T, bool bigEndianFlag> bool Packer::Put(const Value& value, bool forwardFlag)
 {
 	if (!StorePrepare(sizeof(T))) return false;
-	Store<T, bigEndianFlag>(num, forwardFlag);
+	Store<T, bigEndianFlag>(Value_Number::GetNumber<T>(value), forwardFlag);
 	return true;
 }
 

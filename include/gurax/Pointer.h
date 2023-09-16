@@ -48,27 +48,6 @@ public:
 		bool IsIdentical(const ElemType& elemType) const { return this == &elemType; }
 		bool IsNone() const { return IsIdentical(None); }
 	};
-#if 0
-	class GURAX_DLLDECLARE SymbolAssoc_ElemType : public SymbolAssoc<ElemTypeId, ElemTypeId::None> {
-	public:
-		SymbolAssoc_ElemType() {
-			Assoc(Gurax_Symbol(int8),			ElemTypeId::Int8);
-			Assoc(Gurax_Symbol(uint8),			ElemTypeId::UInt8);
-			Assoc(Gurax_Symbol(int16),			ElemTypeId::Int16);
-			Assoc(Gurax_Symbol(uint16),			ElemTypeId::UInt16);
-			Assoc(Gurax_Symbol(int32),			ElemTypeId::Int32);
-			Assoc(Gurax_Symbol(uint32),			ElemTypeId::UInt32);
-			Assoc(Gurax_Symbol(int64),			ElemTypeId::Int64);
-			Assoc(Gurax_Symbol(uint64),			ElemTypeId::UInt64);
-			Assoc(Gurax_Symbol(float_),			ElemTypeId::Float);
-			Assoc(Gurax_Symbol(double_),		ElemTypeId::Double);
-		}
-		static const SymbolAssoc& GetInstance() {
-			static SymbolAssoc* pSymbolAssoc = nullptr;
-			return pSymbolAssoc? *pSymbolAssoc : *(pSymbolAssoc = new SymbolAssoc_ElemType());
-		}
-	};
-#endif
 protected:
 	size_t _offset;
 public:
@@ -120,12 +99,6 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 public:
 	static const ElemType& SymbolToElemType(const Symbol* pSymbol);
-	//static ElemType SymbolToElemType(const Symbol* pSymbol) {
-	//	return SymbolAssoc_ElemType::GetInstance().ToAssociated(pSymbol);
-	//}
-	//static const Symbol* ElemTypeToSymbol(ElemType elemType) {
-	//	return SymbolAssoc_ElemType::GetInstance().ToSymbol(elemType);
-	//}
 };
 
 }
