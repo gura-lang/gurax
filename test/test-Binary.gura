@@ -15,21 +15,21 @@ TestCase('Binary#p') {
 	buff = b'\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f'
 	Tester(`buff.p)
 	p = buff.p
-	Tester(`while (num = p.uint8):list { Format('%02x', num) })
+	Tester(`while (num = p.uint8:fwd):list { Format('%02x', num) })
 	p = buff.p
-	Tester(`while (num = p.uint16):list { Format('%04x', num) })
+	Tester(`while (num = p.uint16:fwd):list { Format('%04x', num) })
 	p = buff.p
-	Tester(`while (num = p.uint32):list { Format('%08x', num) })
+	Tester(`while (num = p.uint32:fwd):list { Format('%08x', num) })
 	//p = buff.p
-	//Tester(`while (num = p.uint64):list { Format('%016x', num) })
+	//Tester(`while (num = p.uint64:fwd):list { Format('%016x', num) })
 	buff = B'', p = buff.p
-	Range(8) {|n| p.uint8 = n + (n << 4)}
+	Range(8) {|n| p.uint8:fwd = n + (n << 4)}
 	buff.Dump()
 	buff = B'', p = buff.p
-	Range(8) {|n| p.uint16 = n + (n << 4) + (n << 8) + (n << 12)}
+	Range(8) {|n| p.uint16:fwd = n + (n << 4) + (n << 8) + (n << 12)}
 	buff.Dump()
 	buff = B'', p = buff.p
-	Range(8) {|n| p.uint32 = n + (n << 4) + (n << 8) + (n << 12) + (n << 16) + (n << 20) + (n << 24) + (n << 28)}
+	Range(8) {|n| p.uint32:fwd = n + (n << 4) + (n << 8) + (n << 12) + (n << 16) + (n << 20) + (n << 24) + (n << 28)}
 	buff.Dump()
 }
 
@@ -79,13 +79,13 @@ TestCase('Binary#Pointer()') {
 	Tester(`buff.Pointer())
 	Tester(`buff.Pointer(6))
 	p = buff.Pointer(6)
-	Tester(`while (num = p.uint8):list { Format('%02x', num) })
+	Tester(`while (num = p.uint8:fwd):list { Format('%02x', num) })
 	p = buff.Pointer(6)
-	Tester(`while (num = p.uint16):list { Format('%04x', num) })
+	Tester(`while (num = p.uint16:fwd):list { Format('%04x', num) })
 	p = buff.Pointer(6)
-	Tester(`while (num = p.uint32):list { Format('%08x', num) })
+	Tester(`while (num = p.uint32:fwd):list { Format('%08x', num) })
 	//p = buff.Pointer(6)
-	//Tester(`while (num = p.uint64):list { Format('%016x', num) })
+	//Tester(`while (num = p.uint64:fwd):list { Format('%016x', num) })
 }
 
 TestCase('Binary#Reader()') {

@@ -49,31 +49,31 @@ ${help.ComposeMethodHelp(Pointer, `en)}
 // Template function
 //------------------------------------------------------------------------------
 template<typename T_Num>
-Value* PointerGetTmpl(Value_Pointer& valueTarget, const Attribute& attr, bool forwardFlag)
+Value* PointerGetTmpl(Value_Pointer& valueTarget, const Attribute& attr)
 {
-	bool stayFlag = attr.IsSet(Gurax_Symbol(stay));
 	bool bigEndianFlag = attr.IsSet(Gurax_Symbol(be));
+	bool forwardFlag = attr.IsSet(Gurax_Symbol(fwd));
 	bool exceedErrorFlag = false;
 	Pointer& pointer = valueTarget.GetPointer();
 	T_Num num;
-	size_t offset = pointer.GetOffset();
 	bool rtn = bigEndianFlag?
 		pointer.Get<T_Num, true>(&num, exceedErrorFlag, forwardFlag) :
 		pointer.Get<T_Num, false>(&num, exceedErrorFlag, forwardFlag);
-	if (stayFlag) pointer.SetOffset(offset);
 	return rtn? new Value_Number(num) : Value::nil();
 }
 
 template<typename T_Num>
-void PointerPutTmpl(Value_Pointer& valueTarget, const Attribute& attr, const Value& value, bool forwardFlag)
+void PointerPutTmpl(Value_Pointer& valueTarget, const Attribute& attr, const Value& value)
 {
-	bool stayFlag = attr.IsSet(Gurax_Symbol(stay));
 	bool bigEndianFlag = attr.IsSet(Gurax_Symbol(be));
+	bool forwardFlag = attr.IsSet(Gurax_Symbol(fwd));
 	Pointer& pointer = valueTarget.GetPointer();
 	T_Num num = Value_Number::GetNumber<T_Num>(value);
-	size_t offset = pointer.GetOffset();
-	if (bigEndianFlag) { pointer.Put<T_Num, true>(num, forwardFlag); } else { pointer.Put<T_Num, false>(num, forwardFlag); }
-	if (stayFlag) pointer.SetOffset(offset);
+	if (bigEndianFlag) {
+		pointer.Put<T_Num, true>(num, forwardFlag);
+	} else {
+		pointer.Put<T_Num, false>(num, forwardFlag);
+	}
 }
 
 //------------------------------------------------------------------------------
@@ -500,12 +500,12 @@ Gurax_ImplementPropertySetter(Pointer, offset)
 	valueThis.GetPointer().SetOffset(offset);
 }
 
-// Pointer#int8:[be,stay]
+// Pointer#int8:[be,fwd]
 Gurax_DeclareProperty_RW(Pointer, int8)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
-	DeclareAttrOpt(Gurax_Symbol(stay));
+	DeclareAttrOpt(Gurax_Symbol(fwd));
 	AddHelp(Gurax_Symbol(en), u8R"""(
 read or write a number stored in a format of signed 8-bit integer.
 )""");
@@ -513,22 +513,20 @@ read or write a number stored in a format of signed 8-bit integer.
 
 Gurax_ImplementPropertyGetter(Pointer, int8)
 {
-	bool forwardFlag = true;
-	return PointerGetTmpl<Int8>(GetValueThis(valueTarget), attr, forwardFlag);
+	return PointerGetTmpl<Int8>(GetValueThis(valueTarget), attr);
 }
 
 Gurax_ImplementPropertySetter(Pointer, int8)
 {
-	bool forwardFlag = true;
-	PointerPutTmpl<Int8>(GetValueThis(valueTarget), attr, value, forwardFlag);
+	PointerPutTmpl<Int8>(GetValueThis(valueTarget), attr, value);
 }
 
-// Pointer#int16:[be,stay]
+// Pointer#int16:[be,fwd]
 Gurax_DeclareProperty_RW(Pointer, int16)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
-	DeclareAttrOpt(Gurax_Symbol(stay));
+	DeclareAttrOpt(Gurax_Symbol(fwd));
 	AddHelp(Gurax_Symbol(en), u8R"""(
 read or write a number stored in a format of signed 16-bit integer.
 )""");
@@ -536,22 +534,20 @@ read or write a number stored in a format of signed 16-bit integer.
 
 Gurax_ImplementPropertyGetter(Pointer, int16)
 {
-	bool forwardFlag = true;
-	return PointerGetTmpl<Int16>(GetValueThis(valueTarget), attr, forwardFlag);
+	return PointerGetTmpl<Int16>(GetValueThis(valueTarget), attr);
 }
 
 Gurax_ImplementPropertySetter(Pointer, int16)
 {
-	bool forwardFlag = true;
-	PointerPutTmpl<Int16>(GetValueThis(valueTarget), attr, value, forwardFlag);
+	PointerPutTmpl<Int16>(GetValueThis(valueTarget), attr, value);
 }
 
-// Pointer#int32:[be,stay]
+// Pointer#int32:[be,fwd]
 Gurax_DeclareProperty_RW(Pointer, int32)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
-	DeclareAttrOpt(Gurax_Symbol(stay));
+	DeclareAttrOpt(Gurax_Symbol(fwd));
 	AddHelp(Gurax_Symbol(en), u8R"""(
 read or write a number stored in a format of signed 32-bit integer.
 )""");
@@ -559,22 +555,20 @@ read or write a number stored in a format of signed 32-bit integer.
 
 Gurax_ImplementPropertyGetter(Pointer, int32)
 {
-	bool forwardFlag = true;
-	return PointerGetTmpl<Int32>(GetValueThis(valueTarget), attr, forwardFlag);
+	return PointerGetTmpl<Int32>(GetValueThis(valueTarget), attr);
 }
 
 Gurax_ImplementPropertySetter(Pointer, int32)
 {
-	bool forwardFlag = true;
-	PointerPutTmpl<Int32>(GetValueThis(valueTarget), attr, value, forwardFlag);
+	PointerPutTmpl<Int32>(GetValueThis(valueTarget), attr, value);
 }
 
-// Pointer#int64:[be,stay]
+// Pointer#int64:[be,fwd]
 Gurax_DeclareProperty_RW(Pointer, int64)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
-	DeclareAttrOpt(Gurax_Symbol(stay));
+	DeclareAttrOpt(Gurax_Symbol(fwd));
 	AddHelp(Gurax_Symbol(en), u8R"""(
 read or write a number stored in a format of signed 64-bit integer.
 )""");
@@ -582,22 +576,20 @@ read or write a number stored in a format of signed 64-bit integer.
 
 Gurax_ImplementPropertyGetter(Pointer, int64)
 {
-	bool forwardFlag = true;
-	return PointerGetTmpl<Int64>(GetValueThis(valueTarget), attr, forwardFlag);
+	return PointerGetTmpl<Int64>(GetValueThis(valueTarget), attr);
 }
 
 Gurax_ImplementPropertySetter(Pointer, int64)
 {
-	bool forwardFlag = true;
-	PointerPutTmpl<Int64>(GetValueThis(valueTarget), attr, value, forwardFlag);
+	PointerPutTmpl<Int64>(GetValueThis(valueTarget), attr, value);
 }
 
-// Pointer#uint8:[be,stay]
+// Pointer#uint8:[be,fwd]
 Gurax_DeclareProperty_RW(Pointer, uint8)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
-	DeclareAttrOpt(Gurax_Symbol(stay));
+	DeclareAttrOpt(Gurax_Symbol(fwd));
 	AddHelp(Gurax_Symbol(en), u8R"""(
 read or write a number stored in a format of unsigned 8-bit integer.
 )""");
@@ -605,22 +597,20 @@ read or write a number stored in a format of unsigned 8-bit integer.
 
 Gurax_ImplementPropertyGetter(Pointer, uint8)
 {
-	bool forwardFlag = true;
-	return PointerGetTmpl<UInt8>(GetValueThis(valueTarget), attr, forwardFlag);
+	return PointerGetTmpl<UInt8>(GetValueThis(valueTarget), attr);
 }
 
 Gurax_ImplementPropertySetter(Pointer, uint8)
 {
-	bool forwardFlag = true;
-	PointerPutTmpl<UInt8>(GetValueThis(valueTarget), attr, value, forwardFlag);
+	PointerPutTmpl<UInt8>(GetValueThis(valueTarget), attr, value);
 }
 
-// Pointer#uint16:[be,stay]
+// Pointer#uint16:[be,fwd]
 Gurax_DeclareProperty_RW(Pointer, uint16)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
-	DeclareAttrOpt(Gurax_Symbol(stay));
+	DeclareAttrOpt(Gurax_Symbol(fwd));
 	AddHelp(Gurax_Symbol(en), u8R"""(
 read or write a number stored in a format of unsigned 16-bit integer.
 )""");
@@ -628,22 +618,20 @@ read or write a number stored in a format of unsigned 16-bit integer.
 
 Gurax_ImplementPropertyGetter(Pointer, uint16)
 {
-	bool forwardFlag = true;
-	return PointerGetTmpl<UInt16>(GetValueThis(valueTarget), attr, forwardFlag);
+	return PointerGetTmpl<UInt16>(GetValueThis(valueTarget), attr);
 }
 
 Gurax_ImplementPropertySetter(Pointer, uint16)
 {
-	bool forwardFlag = true;
-	PointerPutTmpl<UInt16>(GetValueThis(valueTarget), attr, value, forwardFlag);
+	PointerPutTmpl<UInt16>(GetValueThis(valueTarget), attr, value);
 }
 
-// Pointer#uint32:[be,stay]
+// Pointer#uint32:[be,fwd]
 Gurax_DeclareProperty_RW(Pointer, uint32)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
-	DeclareAttrOpt(Gurax_Symbol(stay));
+	DeclareAttrOpt(Gurax_Symbol(fwd));
 	AddHelp(Gurax_Symbol(en), u8R"""(
 read or write a number stored in a format of unsigned 32-bit integer.
 )""");
@@ -651,22 +639,20 @@ read or write a number stored in a format of unsigned 32-bit integer.
 
 Gurax_ImplementPropertyGetter(Pointer, uint32)
 {
-	bool forwardFlag = true;
-	return PointerGetTmpl<UInt32>(GetValueThis(valueTarget), attr, forwardFlag);
+	return PointerGetTmpl<UInt32>(GetValueThis(valueTarget), attr);
 }
 
 Gurax_ImplementPropertySetter(Pointer, uint32)
 {
-	bool forwardFlag = true;
-	PointerPutTmpl<UInt32>(GetValueThis(valueTarget), attr, value, forwardFlag);
+	PointerPutTmpl<UInt32>(GetValueThis(valueTarget), attr, value);
 }
 
-// Pointer#uint64:[be,stay]
+// Pointer#uint64:[be,fwd]
 Gurax_DeclareProperty_RW(Pointer, uint64)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
-	DeclareAttrOpt(Gurax_Symbol(stay));
+	DeclareAttrOpt(Gurax_Symbol(fwd));
 	AddHelp(Gurax_Symbol(en), u8R"""(
 read or write a number stored in a format of unsigned 64-bit integer.
 )""");
@@ -674,22 +660,20 @@ read or write a number stored in a format of unsigned 64-bit integer.
 
 Gurax_ImplementPropertyGetter(Pointer, uint64)
 {
-	bool forwardFlag = true;
-	return PointerGetTmpl<UInt64>(GetValueThis(valueTarget), attr, forwardFlag);
+	return PointerGetTmpl<UInt64>(GetValueThis(valueTarget), attr);
 }
 
 Gurax_ImplementPropertySetter(Pointer, uint64)
 {
-	bool forwardFlag = true;
-	PointerPutTmpl<UInt64>(GetValueThis(valueTarget), attr, value, forwardFlag);
+	PointerPutTmpl<UInt64>(GetValueThis(valueTarget), attr, value);
 }
 
-// Pointer#float:[be,stay]
+// Pointer#float:[be,fwd]
 Gurax_DeclarePropertyAlias_RW(Pointer, float_, "float")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
-	DeclareAttrOpt(Gurax_Symbol(stay));
+	DeclareAttrOpt(Gurax_Symbol(fwd));
 	AddHelp(Gurax_Symbol(en), u8R"""(
 read or write a number stored in a format of unsigned 64-bit integer.
 )""");
@@ -697,22 +681,20 @@ read or write a number stored in a format of unsigned 64-bit integer.
 
 Gurax_ImplementPropertyGetter(Pointer, float_)
 {
-	bool forwardFlag = true;
-	return PointerGetTmpl<Float>(GetValueThis(valueTarget), attr, forwardFlag);
+	return PointerGetTmpl<Float>(GetValueThis(valueTarget), attr);
 }
 
 Gurax_ImplementPropertySetter(Pointer, float_)
 {
-	bool forwardFlag = true;
-	PointerPutTmpl<Float>(GetValueThis(valueTarget), attr, value, forwardFlag);
+	PointerPutTmpl<Float>(GetValueThis(valueTarget), attr, value);
 }
 
-// Pointer#double:[be,stay]
+// Pointer#double:[be,fwd]
 Gurax_DeclarePropertyAlias_RW(Pointer, double_, "double")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
-	DeclareAttrOpt(Gurax_Symbol(stay));
+	DeclareAttrOpt(Gurax_Symbol(fwd));
 	AddHelp(Gurax_Symbol(en), u8R"""(
 read or write a number stored in a format of unsigned 64-bit integer.
 )""");
@@ -720,14 +702,12 @@ read or write a number stored in a format of unsigned 64-bit integer.
 
 Gurax_ImplementPropertyGetter(Pointer, double_)
 {
-	bool forwardFlag = true;
-	return PointerGetTmpl<Double>(GetValueThis(valueTarget), attr, forwardFlag);
+	return PointerGetTmpl<Double>(GetValueThis(valueTarget), attr);
 }
 
 Gurax_ImplementPropertySetter(Pointer, double_)
 {
-	bool forwardFlag = true;
-	PointerPutTmpl<Double>(GetValueThis(valueTarget), attr, value, forwardFlag);
+	PointerPutTmpl<Double>(GetValueThis(valueTarget), attr, value);
 }
 
 //------------------------------------------------------------------------------

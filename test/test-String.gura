@@ -479,13 +479,13 @@ TestCase('String#p') {
 	str = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\x7f'
 	p = str.p
 	p.Dump()
-	Printf('offset=%d, bytesAvail=%d, bytesEntire=%d, %s\n', p.offset, p.bytesAvail, p.bytesEntire, p.int8:stay || 'nil')
+	Printf('offset=%d, bytesAvail=%d, bytesEntire=%d, %s\n', p.offset, p.bytesAvail, p.bytesEntire, p.int8 || 'nil')
 	p += 6
-	Printf('offset=%d, bytesAvail=%d, bytesEntire=%d, %s\n', p.offset, p.bytesAvail, p.bytesEntire, p.int8:stay || 'nil')
+	Printf('offset=%d, bytesAvail=%d, bytesEntire=%d, %s\n', p.offset, p.bytesAvail, p.bytesEntire, p.int8 || 'nil')
 	p += 90
-	Printf('offset=%d, bytesAvail=%d, bytesEntire=%d, %s\n', p.offset, p.bytesAvail, p.bytesEntire, p.int8:stay || 'nil')
+	Printf('offset=%d, bytesAvail=%d, bytesEntire=%d, %s\n', p.offset, p.bytesAvail, p.bytesEntire, p.int8 || 'nil')
 	p += 1
-	Printf('offset=%d, bytesAvail=%d, bytesEntire=%d, %s\n', p.offset, p.bytesAvail, p.bytesEntire, p.int8:stay || 'nil')
+	Printf('offset=%d, bytesAvail=%d, bytesEntire=%d, %s\n', p.offset, p.bytesAvail, p.bytesEntire, p.int8 || 'nil')
 }
 
 TestCase('String#len, String#width') {

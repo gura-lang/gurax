@@ -179,7 +179,7 @@ TestCase('Array#p') {
 		Println('[int8]')
 		arr = Array(`int8, 0x100)
 		p = arr.p
-		repeat(0x100) {|i| p.int8 = i - 0x80}
+		repeat(0x100) {|i| p.int8:fwd = i - 0x80}
 		arr.p.Dump()
 		Println(arr.EachElem().Join(', '))
 	}
@@ -187,7 +187,7 @@ TestCase('Array#p') {
 		Println('[uint8]')
 		arr = Array(`uint8, 0x100)
 		p = arr.p
-		repeat(0x100) {|i| p.uint8 = i }
+		repeat(0x100) {|i| p.uint8:fwd = i }
 		arr.p.Dump()
 		Println(arr.EachElem().Join(', '))
 	}
@@ -195,10 +195,10 @@ TestCase('Array#p') {
 		Println('[int16]')
 		arr = Array(`int16, 512)
 		p = arr.p
-		repeat(0x80) {|i| p.int16 = i - 0x8000 }
-		repeat(0x80) {|i| p.int16 = i - 0x80 }
-		repeat(0x80) {|i| p.int16 = i }
-		repeat(0x80) {|i| p.int16 = i + 0x8000 - 0x80 }
+		repeat(0x80) {|i| p.int16:fwd = i - 0x8000 }
+		repeat(0x80) {|i| p.int16:fwd = i - 0x80 }
+		repeat(0x80) {|i| p.int16:fwd = i }
+		repeat(0x80) {|i| p.int16:fwd = i + 0x8000 - 0x80 }
 		arr.p.Dump()
 		Println(arr.EachElem().Join(', '))
 	}
@@ -206,8 +206,8 @@ TestCase('Array#p') {
 		Println('[uint16]')
 		arr = Array(`uint16, 512)
 		p = arr.p
-		repeat(0x100) {|i| p.uint16 = i }
-		repeat(0x100) {|i| p.uint16 = i + 0x10000 - 0x100 }
+		repeat(0x100) {|i| p.uint16:fwd = i }
+		repeat(0x100) {|i| p.uint16:fwd = i + 0x10000 - 0x100 }
 		arr.p.Dump()
 		Println(arr.EachElem().Join(', '))
 	}
@@ -215,10 +215,10 @@ TestCase('Array#p') {
 		Println('[int32]')
 		arr = Array(`int32, 512)
 		p = arr.p
-		repeat(0x80) {|i| p.int32 = i - 0x80000000 }
-		repeat(0x80) {|i| p.int32 = i - 0x80 }
-		repeat(0x80) {|i| p.int32 = i }
-		repeat(0x80) {|i| p.int32 = i + 0x80000000 - 0x80 }
+		repeat(0x80) {|i| p.int32:fwd = i - 0x80000000 }
+		repeat(0x80) {|i| p.int32:fwd = i - 0x80 }
+		repeat(0x80) {|i| p.int32:fwd = i }
+		repeat(0x80) {|i| p.int32:fwd = i + 0x80000000 - 0x80 }
 		arr.p.Dump()
 		Println(arr.EachElem().Join(', '))
 	}
@@ -226,8 +226,8 @@ TestCase('Array#p') {
 		Println('[uint32]')
 		arr = Array(`uint32, 512)
 		p = arr.p
-		repeat(0x100) {|i| p.uint32 = i }
-		repeat(0x100) {|i| p.uint32 = i + 0x100000000 - 256 }
+		repeat(0x100) {|i| p.uint32:fwd = i }
+		repeat(0x100) {|i| p.uint32:fwd = i + 0x100000000 - 256 }
 		arr.p.Dump()
 		Println(arr.EachElem().Join(', '))
 	}
@@ -235,10 +235,10 @@ TestCase('Array#p') {
 		Println('[int64]')
 		arr = Array(`int64, 512)
 		p = arr.p
-		repeat(0x80) {|i| p.int64 = i - 0x0010_0000_0000_0000 }
-		repeat(0x80) {|i| p.int64 = i - 0x80 }
-		repeat(0x80) {|i| p.int64 = i }
-		repeat(0x80) {|i| p.int64 = i + 0x0010_0000_0000_0000 - 0x80 }
+		repeat(0x80) {|i| p.int64:fwd = i - 0x0010_0000_0000_0000 }
+		repeat(0x80) {|i| p.int64:fwd = i - 0x80 }
+		repeat(0x80) {|i| p.int64:fwd = i }
+		repeat(0x80) {|i| p.int64:fwd = i + 0x0010_0000_0000_0000 - 0x80 }
 		arr.p.Dump()
 		Println(arr.EachElem().Join(', '))
 	}
@@ -246,8 +246,8 @@ TestCase('Array#p') {
 		Println('[uint64]')
 		arr = Array(`uint64, 512)
 		p = arr.p
-		repeat(0x100) {|i| p.uint64 = i }
-		repeat(0x100) {|i| p.uint64 = i + 0x0010_0000_0000_0000 - 256 }
+		repeat(0x100) {|i| p.uint64:fwd = i }
+		repeat(0x100) {|i| p.uint64:fwd = i + 0x0010_0000_0000_0000 - 256 }
 		arr.p.Dump()
 		Println(arr.EachElem().Join(', '))
 	}
