@@ -339,8 +339,8 @@ Gurax_ImplementMethod(Pointer, Put)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	const Pointer::ElemType elemType = Pointer::SymbolToElemType(args.PickSymbol());
-	if (elemType == Pointer::ElemType::None) {
+	const Pointer::ElemType& elemType = Pointer::SymbolToElemType(args.PickSymbol());
+	if (elemType.IsNone()) {
 		Error::Issue(ErrorType::ValueError, "invalid symbol for elemType");
 		return Value::nil();
 	}
