@@ -22,7 +22,7 @@ const UInt8* Pointer_String::ExtractPrepare(size_t bytes, bool forwardFlag)
 	const String& String = GetStringSTL();
 	if (_offset + bytes <= String.size()) {
 		const UInt8* p = reinterpret_cast<const UInt8*>(String.data() + _offset);
-		_offset += bytes;
+		if (forwardFlag) _offset += bytes;
 		return p;
 	}
 	return nullptr;
@@ -67,7 +67,6 @@ bool Pointer_Binary::StorePrepare(size_t bytes)
 
 void Pointer_Binary::StoreBuffer(const void* buff, size_t bytes, bool forwardFlag)
 {
-	size_t offsetNext = _offset + bytes;
 	if (buff) {
 		Binary& binary = GetBinary();
 		const UInt8* buffp = reinterpret_cast<const UInt8*>(buff);
@@ -79,7 +78,7 @@ void Pointer_Binary::StoreBuffer(const void* buff, size_t bytes, bool forwardFla
 			binary.append(buffp, buffp + bytes);
 		}
 	}
-	_offset = offsetNext;
+	if (forwardFlag) _offset += bytes;
 }
 
 const UInt8* Pointer_Binary::ExtractPrepare(size_t bytes, bool forwardFlag)
@@ -87,7 +86,7 @@ const UInt8* Pointer_Binary::ExtractPrepare(size_t bytes, bool forwardFlag)
 	Binary& binary = GetBinary();
 	if (_offset + bytes <= binary.size()) {
 		const UInt8* p = reinterpret_cast<const UInt8*>(binary.data() + _offset);
-		_offset += bytes;
+		if (forwardFlag) _offset += bytes;
 		return p;
 	}
 	return nullptr;
@@ -132,16 +131,15 @@ bool Pointer_Memory::StorePrepare(size_t bytes)
 
 void Pointer_Memory::StoreBuffer(const void* buff, size_t bytes, bool forwardFlag)
 {
-	size_t offsetNext = _offset + bytes;
 	if (buff) ::memcpy(GetMemory().GetPointerC<char>(_offset), buff, bytes);
-	_offset = offsetNext;
+	if (forwardFlag) _offset += bytes;
 }
 
 const UInt8* Pointer_Memory::ExtractPrepare(size_t bytes, bool forwardFlag)
 {
 	if (_offset + bytes > GetMemory().GetBytes()) return nullptr;
 	const UInt8* p = GetMemory().GetPointerC<UInt8>(_offset);
-	_offset += bytes;
+	if (forwardFlag) _offset += bytes;
 	return p;
 }
 
