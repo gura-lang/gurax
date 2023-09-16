@@ -123,12 +123,8 @@ public:
 	}
 	static Int32 CalcUSecPacked(Int16 msec, Int16 usec) { return static_cast<Int32>(msec) * 1000 + usec; }
 	static Int Compare(const DateTime& dt1, const DateTime& dt2);
-	static bool IsLeapYear(Int16 year) {
-		return (year % 4 == 0) && ((year % 100 != 0) || (year % 400 == 0));
-	}
-	static Int16 GetDaysOfYear(Int16 year) {
-		return IsLeapYear(year)? 366 : 365;
-	}
+	static bool IsLeapYear(Int16 year) { return (year % 4 == 0) && ((year % 100 != 0) || (year % 400 == 0)); }
+	static Int16 GetDaysOfYear(Int16 year) { return IsLeapYear(year)? 366 : 365; }
 	static bool IsValidDate(int year, int month, int day);
 	static bool IsValidTime(int hour, int min, int sec);
 	static void DayOfYearToMonthDay(Int16 year, Int16 dayOfYear, Int8* pMonth, Int8* pDay);

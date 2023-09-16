@@ -271,6 +271,8 @@ TestCase('String parser') {
 	Tester(`DateTime('2010-12-32'))
 	Tester(`DateTime('2010-0-1'))
 	Tester(`DateTime('2010-13-1'))
+	Tester(`DateTime('2010.9.15'))
+	Tester(`DateTime('2010/9/15'))
 	Tester(`DateTime('2010-1-1T00:00:00Z'))
 	Tester(`DateTime('2010-1-1T23:59:59Z'))
 	Tester(`DateTime('2010-1-1T24:00:00Z'))
