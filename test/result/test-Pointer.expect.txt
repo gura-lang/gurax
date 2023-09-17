@@ -1,5 +1,6 @@
 ======== Property ========
 Pointer
+  #@                Number       R/W
   #bytesAvail       Number       R
   #bytesEntire      Number       R
   #double           Number       R/W
@@ -579,12 +580,12 @@ buff.Pointer {|p| while (tbl = p.Unpack('>H')):list {Format('%04x', tbl[0])}.Joi
 buff.Pointer {|p| while (tbl = p.Unpack('>I')):list {Format('%08x', tbl[0])}.Join(',')} .. 00010203,04050607,08090a0b
 buff.Pointer {|p| while (tbl = p.Unpack('4s')):list {tbl[0]}.Join(',')} .. abcd,efgh,ijkl,mnop,qrst,uvwx
 ======== Operators ========
-p1 .. <Pointer:Binary:10/26>
-p2 .. <Pointer:Binary:23/26>
-p1 + 7 .. <Pointer:Binary:17/26>
-7 + p1 .. <Pointer:Binary:17/26>
-p1 - 7 .. <Pointer:Binary:3/26>
-p1 - 10 .. <Pointer:Binary:0/26>
+p1 .. <Pointer:Binary:uint8:10/26byte>
+p2 .. <Pointer:Binary:uint8:23/26byte>
+p1 + 7 .. <Pointer:Binary:uint8:17/26byte>
+7 + p1 .. <Pointer:Binary:uint8:17/26byte>
+p1 - 7 .. <Pointer:Binary:uint8:3/26byte>
+p1 - 10 .. <Pointer:Binary:uint8:0/26byte>
 p1 - 11 .. pointer offset is out of range
 p1 - p2 .. -13
 p2 - p1 .. 13

@@ -24,6 +24,19 @@ Packer::ElemType Packer::ElemType::Double;
 
 void Packer::Bootup()
 {
+	ElemType::None.pSymbol		= Gurax_Symbol(none);
+	ElemType::Int8.pSymbol		= Gurax_Symbol(int8);
+	ElemType::UInt8.pSymbol		= Gurax_Symbol(uint8);
+	ElemType::Int16.pSymbol		= Gurax_Symbol(int16);
+	ElemType::UInt16.pSymbol	= Gurax_Symbol(uint16);
+	ElemType::Int32.pSymbol		= Gurax_Symbol(int32);
+	ElemType::UInt32.pSymbol	= Gurax_Symbol(uint32);
+	ElemType::Int64.pSymbol		= Gurax_Symbol(int64);
+	ElemType::UInt64.pSymbol	= Gurax_Symbol(uint64);
+	ElemType::Float.pSymbol		= Gurax_Symbol(float_);
+	ElemType::Double.pSymbol	= Gurax_Symbol(double_);
+	ElemType::None.putFunc		= PutFunc_T<Int8>;
+	ElemType::None.getFunc		= GetFunc_T<Int8>;
 	ElemType::Int8.putFunc		= PutFunc_T<Int8>;
 	ElemType::Int8.getFunc		= GetFunc_T<Int8>;
 	ElemType::UInt8.putFunc		= PutFunc_T<UInt8>;

@@ -31,11 +31,12 @@ public:
 		static ElemType Float;
 		static ElemType Double;
 	public:
+		const Symbol* pSymbol;
 		std::function<bool (Packer& packer, const Value& value, bool bigEndianFlag, bool forwardFlag)> putFunc;
 		std::function<bool (Packer& packer, RefPtr<Value>& pValue, bool exceedErrorFlag, bool bigEndianFlag, bool forwardFlag)> getFunc;
 	public:
 		// Constructor
-		ElemType() {}
+		ElemType() : pSymbol(nullptr) {}
 		// Copy constructor/operator
 		ElemType(const ElemType& src) = delete;
 		ElemType& operator=(const ElemType& src) = delete;

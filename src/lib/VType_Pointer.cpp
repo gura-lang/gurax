@@ -417,7 +417,7 @@ Gurax_ImplementMethod(Pointer, Unpack)
 // Implementation of property
 //-----------------------------------------------------------------------------
 // Pointer#@:[be,fwd]
-Gurax_DeclareProperty_RW(Pointer, at)
+Gurax_DeclarePropertyAlias_RW(Pointer, at, "@")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
@@ -787,6 +787,7 @@ void VType_Pointer::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Pointer, Put));
 	Assign(Gurax_CreateMethod(Pointer, Unpack));
 	// Assignment of property
+	Assign(Gurax_CreateProperty(Pointer, at));
 	Assign(Gurax_CreateProperty(Pointer, bytesAvail));
 	Assign(Gurax_CreateProperty(Pointer, bytesEntire));
 	Assign(Gurax_CreateProperty(Pointer, offset));

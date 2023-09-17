@@ -882,9 +882,7 @@ A `Pointer` instance that points at the first address of the `Array`'s buffer.
 Gurax_ImplementPropertyGetter(Array, p)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const Memory& memory = valueThis.GetArray().GetMemory();
-	const Pointer::ElemType& elemType = Pointer::ElemType::UInt8;
-	return new Value_Pointer(new Pointer_Memory(memory.Reference(), elemType));
+	return new Value_Pointer(valueThis.GetArray().CreatePointer());
 }
 
 // Array#shape
