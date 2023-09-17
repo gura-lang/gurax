@@ -7,6 +7,7 @@
 #include "Symbols.h"
 #include "Memory.h"
 #include "Number.h"
+#include "Pointer.h"
 #include "Half.h"
 
 namespace Gurax {
@@ -73,9 +74,10 @@ public:
 		size_t id;
 		size_t bytes;
 		const Symbol* pSymbol;
+		const Pointer::ElemType* pElemTypePointer;
 	public:
+		ElemTypeT(size_t id) : id(id), bytes(0), pSymbol(nullptr), pElemTypePointer(nullptr) {}
 		ElemTypeT(const ElemTypeT& elemType) = delete;
-		ElemTypeT(size_t id) : id(id), bytes(0), pSymbol(nullptr) {}
 		bool IsNone() const;
 		bool IsIdentical(const ElemTypeT& elemType) const { return this == &elemType; }
 		void* FwdPointer(void* pv, int n) const { return reinterpret_cast<char*>(pv) + n * bytes; }
@@ -210,6 +212,7 @@ public:
 	void Reshape(RefPtr<Array>& pArrayRtn, const DimSizes& dimSizes) const;
 	bool Reshape(RefPtr<Array>& pArrayRtn, const ValueList& values) const;
 	bool Flatten(RefPtr<Array>& pArrayRtn, const ValueList& values) const;
+	Pointer* CreatePointer() const;
 	const ElemTypeT& GetElemType() const { return _elemType; }
 	bool IsElemType(const ElemTypeT& elemType) const { return _elemType.IsIdentical(elemType); }
 	const char* GetElemTypeName() const { return _elemType.GetName(); }

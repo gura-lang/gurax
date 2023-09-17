@@ -121,7 +121,7 @@ Gurax_ImplementPropertyGetter(Content, rawImage)
 	auto& valueThis = GetValueThis(valueTarget);
 	const Memory* pMemory = valueThis.GetContent().GetMemory();
 	if (!pMemory) return Value::nil();
-	return new Value_Pointer(new Pointer_Memory(pMemory->Reference()));
+	return new Value_Pointer(new Pointer_Memory(pMemory->Reference(), Pointer::ElemType::UInt8));
 }
 
 //------------------------------------------------------------------------------

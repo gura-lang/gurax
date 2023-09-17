@@ -72,6 +72,7 @@ protected:
 	RefPtr<Memory> _pMemory;
 public:
 	Pointer_Memory(Memory* pMemory, size_t offset = 0);
+	Pointer_Memory(Memory* pMemory, const ElemType& elemType, size_t offset = 0);
 	Pointer_Memory(const Pointer_Memory& src);
 public:
 	Memory& GetMemory() { return *_pMemory; }

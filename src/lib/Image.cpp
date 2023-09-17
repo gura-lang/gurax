@@ -346,6 +346,13 @@ bool Image::Write(Stream& stream, const char* imgTypeName) const
 	return pImageMgr->Write(stream, *this);
 }
 
+Pointer* Image::CreatePointer() const
+{
+	if (HasMemory()) return new Pointer_Memory(GetMemory()->Reference(), Pointer::ElemType::UInt8);
+	Error::Issue(ErrorType::MemoryError, "the image buffer is not allocated");
+	return nullptr;
+}
+
 template<typename T_PixelDst, typename T_PixelSrc>
 Image* Image::RotateT(const Format& format, double angleDeg, const Color& colorBg) const
 {

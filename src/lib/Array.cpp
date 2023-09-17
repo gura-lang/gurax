@@ -87,6 +87,11 @@ bool Array::Flatten(RefPtr<Array>& pArrayRtn, const ValueList& values) const
 	return true;
 }
 
+Pointer* Array::CreatePointer() const
+{
+	return new Pointer_Memory(GetMemory().Reference(), *_elemType.pElemTypePointer);
+}
+
 template<typename T_Elem> void FillOne_T(Array& array)
 {
 	T_Elem* pElem = array.GetPointerC<T_Elem>();
@@ -1315,6 +1320,20 @@ void Array::Bootup()
 	ElemType::Float.pSymbol				= Gurax_Symbol(float_);
 	ElemType::Double.pSymbol			= Gurax_Symbol(double_);
 	ElemType::Complex.pSymbol			= Gurax_Symbol(complex);
+	ElemType::None.pElemTypePointer		= &Pointer::ElemType::None;
+	ElemType::Bool.pElemTypePointer		= &Pointer::ElemType::Int8;
+	ElemType::Int8.pElemTypePointer		= &Pointer::ElemType::Int8;
+	ElemType::UInt8.pElemTypePointer	= &Pointer::ElemType::UInt8;
+	ElemType::Int16.pElemTypePointer	= &Pointer::ElemType::Int16;
+	ElemType::UInt16.pElemTypePointer	= &Pointer::ElemType::UInt16;
+	ElemType::Int32.pElemTypePointer	= &Pointer::ElemType::Int32;
+	ElemType::UInt32.pElemTypePointer	= &Pointer::ElemType::UInt32;
+	ElemType::Int64.pElemTypePointer	= &Pointer::ElemType::Int64;
+	ElemType::UInt64.pElemTypePointer	= &Pointer::ElemType::UInt64;
+	ElemType::Half.pElemTypePointer		= &Pointer::ElemType::UInt32;
+	ElemType::Float.pElemTypePointer	= &Pointer::ElemType::Float;
+	ElemType::Double.pElemTypePointer	= &Pointer::ElemType::Double;
+	ElemType::Complex.pElemTypePointer	= &Pointer::ElemType::UInt8;
 	Gurax_SetArrayFuncSingle(funcs.FillOne,				FillOne_T);
 	Gurax_SetArrayFuncSingle(funcs.FillRandomNormal,	FillRandomNormal_T);
 	Gurax_SetArrayFuncSingle(funcs.HasZero,				HasZero_T);

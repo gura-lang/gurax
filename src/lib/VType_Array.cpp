@@ -883,7 +883,8 @@ Gurax_ImplementPropertyGetter(Array, p)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	const Memory& memory = valueThis.GetArray().GetMemory();
-	return new Value_Pointer(new Pointer_Memory(memory.Reference()));
+	const Pointer::ElemType& elemType = Pointer::ElemType::UInt8;
+	return new Value_Pointer(new Pointer_Memory(memory.Reference(), elemType));
 }
 
 // Array#shape

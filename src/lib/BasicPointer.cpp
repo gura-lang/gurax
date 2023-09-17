@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Pointer_String
 //------------------------------------------------------------------------------
-Pointer_String::Pointer_String(StringReferable* pString, size_t offset) : Pointer(offset), _pString(pString)
+Pointer_String::Pointer_String(StringReferable* pString, size_t offset) : Pointer(ElemType::Int8, offset), _pString(pString)
 {
 }
 
@@ -51,7 +51,7 @@ bool Pointer_String::IsWritable() const
 //------------------------------------------------------------------------------
 // Pointer_Binary
 //------------------------------------------------------------------------------
-Pointer_Binary::Pointer_Binary(BinaryReferable* pBinary, size_t offset) : Pointer(offset), _pBinary(pBinary)
+Pointer_Binary::Pointer_Binary(BinaryReferable* pBinary, size_t offset) : Pointer(ElemType::UInt8, offset), _pBinary(pBinary)
 {
 }
 
@@ -115,12 +115,16 @@ bool Pointer_Binary::IsWritable() const
 //------------------------------------------------------------------------------
 // Pointer_Memory
 //------------------------------------------------------------------------------
-Pointer_Memory::Pointer_Memory(Memory* pMemory, size_t offset) : Pointer(offset), _pMemory(pMemory)
+Pointer_Memory::Pointer_Memory(Memory* pMemory, size_t offset) : Pointer(ElemType::UInt8, offset), _pMemory(pMemory)
+{
+}
+
+Pointer_Memory::Pointer_Memory(Memory* pMemory, const ElemType& elemType, size_t offset) : Pointer(elemType, offset), _pMemory(pMemory)
 {
 }
 
 Pointer_Memory::Pointer_Memory(const Pointer_Memory& src) :
-	Pointer_Memory(src._pMemory->Reference(), src._offset)
+	Pointer_Memory(src._pMemory->Reference(), src._elemType, src._offset)
 {
 }
 

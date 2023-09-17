@@ -7,6 +7,8 @@
 
 namespace Gurax {
 
+class Iterator;
+
 //------------------------------------------------------------------------------
 // Pointer
 //------------------------------------------------------------------------------
@@ -18,7 +20,7 @@ public:
 	//enum class ElemTypeId {
 	//	None, Int8, UInt8, Int16, UInt16, Int32, UInt32, Int64, UInt64, Float, Double,
 	//};
-	class ElemType {
+	class GURAX_DLLDECLARE ElemType {
 	public:
 		static ElemType None;
 		static ElemType Int8;
@@ -50,12 +52,13 @@ public:
 		bool IsNone() const { return IsIdentical(None); }
 	};
 protected:
+	const ElemType& _elemType;
 	size_t _offset;
 public:
 	// Constructor
-	Pointer(size_t offset) : _offset(offset) {}
+	Pointer(const ElemType& elemType, size_t offset) : _elemType(elemType), _offset(offset) {}
 	// Copy constructor/operator
-	Pointer(const Pointer& src) : _offset(src._offset) {}
+	Pointer(const Pointer& src) : _elemType(src._elemType), _offset(src._offset) {}
 	Pointer& operator=(const Pointer& src) = delete;
 	// Move constructor/operator
 	Pointer(Pointer&& src) = delete;
@@ -65,6 +68,7 @@ protected:
 public:
 	static void Bootup();
 public:
+	const ElemType& GetElemType() const { return _elemType; }
 	void SetOffset(size_t offset) { _offset = offset; }
 	size_t GetOffset() const { return _offset; }
 	size_t GetBytesAvailable() const {

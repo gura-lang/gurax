@@ -902,12 +902,9 @@ A `Pointer` instance that points at the first address of the image buffer.
 Gurax_ImplementPropertyGetter(Image, p)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const Memory* pMemory = valueThis.GetImage().GetMemory();
-	if (!pMemory) {
-		Error::Issue(ErrorType::MemoryError, "the image buffer is not allocated");
-		return Value::nil();
-	}
-	return new Value_Pointer(new Pointer_Memory(pMemory->Reference()));
+	RefPtr<Pointer> pPointer = valueThis.GetImage().CreatePointer();
+	if (!pPointer) return Value::nil();
+	return new Value_Pointer(pPointer.release());
 }
 
 // Image#palette:nil

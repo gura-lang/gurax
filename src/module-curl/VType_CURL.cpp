@@ -215,7 +215,7 @@ size_t Value_CURL::Callback_WRITE(char* ptr, size_t size, size_t nitems, void* u
 	if (!pThis->GetOpt().pFunc_WRITE) {
 		return (!pThis->IsValidStreamWrite() || pThis->GetStreamWrite().Write(ptr, size * nitems))? size * nitems : 0;
 	}
-	RefPtr<Pointer> pPointer(new Pointer_Memory(new MemorySloth(size * nitems, ptr)));
+	RefPtr<Pointer> pPointer(new Pointer_Memory(new MemorySloth(size * nitems, ptr), Pointer::ElemType::UInt8));
 	RefPtr<Value> pValueRtn(pThis->GetOpt().pFunc_WRITE->EvalEasy(
 		pThis->GetProcessor(), new Value_Pointer(pPointer.release()), new Value_Number(size), new Value_Number(nitems),
 		pThis->GetOpt().pValue_WRITE.Reference()));

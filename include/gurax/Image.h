@@ -492,6 +492,7 @@ public:
 	}
 	bool Read(Stream& stream, const char* imgTypeName = nullptr);
 	bool Write(Stream& stream, const char* imgTypeName) const;
+	Pointer* CreatePointer() const;
 	void Fill(UInt8 data) { GetMemory()->Fill(data); }
 	void Fill(const Color& color);
 	void FillRect(size_t x, size_t y, size_t width, size_t height, const Color& color);
