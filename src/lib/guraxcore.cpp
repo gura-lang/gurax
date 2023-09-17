@@ -26,6 +26,7 @@ bool Initialize(int& argc, char** argv)
 	Memory::Bootup();
 	NumberBase::Bootup();
 	Operator::Bootup();
+	Packer::Bootup();
 	Palette::Bootup();
 	Pointer::Bootup();
 	Random::Bootup();

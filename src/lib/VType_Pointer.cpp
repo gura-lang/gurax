@@ -46,36 +46,6 @@ ${help.ComposeMethodHelp(Pointer, `en)}
 )""";
 
 //------------------------------------------------------------------------------
-// Template function
-//------------------------------------------------------------------------------
-template<typename T_Num>
-Value* PointerGetTmpl(Value_Pointer& valueTarget, const Attribute& attr)
-{
-	bool bigEndianFlag = attr.IsSet(Gurax_Symbol(be));
-	bool forwardFlag = attr.IsSet(Gurax_Symbol(fwd));
-	bool exceedErrorFlag = false;
-	Pointer& pointer = valueTarget.GetPointer();
-	T_Num num;
-	bool rtn = bigEndianFlag?
-		pointer.Get<T_Num, true>(&num, exceedErrorFlag, forwardFlag) :
-		pointer.Get<T_Num, false>(&num, exceedErrorFlag, forwardFlag);
-	return rtn? new Value_Number(num) : Value::nil();
-}
-
-template<typename T_Num>
-void PointerPutTmpl(Value_Pointer& valueTarget, const Attribute& attr, const Value& value)
-{
-	bool bigEndianFlag = attr.IsSet(Gurax_Symbol(be));
-	bool forwardFlag = attr.IsSet(Gurax_Symbol(fwd));
-	Pointer& pointer = valueTarget.GetPointer();
-	if (bigEndianFlag) {
-		pointer.Put<T_Num, true>(value, forwardFlag);
-	} else {
-		pointer.Put<T_Num, false>(value, forwardFlag);
-	}
-}
-
-//------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // Pointer() {block?}
@@ -446,6 +416,30 @@ Gurax_ImplementMethod(Pointer, Unpack)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
+// Pointer#@:[be,fwd]
+Gurax_DeclareProperty_RW(Pointer, at)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareAttrOpt(Gurax_Symbol(be));
+	DeclareAttrOpt(Gurax_Symbol(fwd));
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
+}
+
+Gurax_ImplementPropertyGetter(Pointer, at)
+{
+	Pointer& pointer = GetValueThis(valueTarget).GetPointer();
+	RefPtr<Value> pValue;
+	pointer.Get(pointer.GetElemType(), pValue, attr);
+	return pValue.release();
+}
+
+Gurax_ImplementPropertySetter(Pointer, at)
+{
+	Pointer& pointer = GetValueThis(valueTarget).GetPointer();
+	pointer.Put(pointer.GetElemType(), value, attr);
+}
+
 // Pointer#bytesAvail
 Gurax_DeclareProperty_R(Pointer, bytesAvail)
 {
@@ -512,12 +506,14 @@ read or write a number stored in a format of signed 8-bit integer.
 
 Gurax_ImplementPropertyGetter(Pointer, int8)
 {
-	return PointerGetTmpl<Int8>(GetValueThis(valueTarget), attr);
+	RefPtr<Value> pValue;
+	GetValueThis(valueTarget).GetPointer().Get(Pointer::ElemType::Int8, pValue, attr);
+	return pValue.release();
 }
 
 Gurax_ImplementPropertySetter(Pointer, int8)
 {
-	PointerPutTmpl<Int8>(GetValueThis(valueTarget), attr, value);
+	GetValueThis(valueTarget).GetPointer().Put(Pointer::ElemType::Int8, value, attr);
 }
 
 // Pointer#int16:[be,fwd]
@@ -533,12 +529,14 @@ read or write a number stored in a format of signed 16-bit integer.
 
 Gurax_ImplementPropertyGetter(Pointer, int16)
 {
-	return PointerGetTmpl<Int16>(GetValueThis(valueTarget), attr);
+	RefPtr<Value> pValue;
+	GetValueThis(valueTarget).GetPointer().Get(Pointer::ElemType::Int16, pValue, attr);
+	return pValue.release();
 }
 
 Gurax_ImplementPropertySetter(Pointer, int16)
 {
-	PointerPutTmpl<Int16>(GetValueThis(valueTarget), attr, value);
+	GetValueThis(valueTarget).GetPointer().Put(Pointer::ElemType::Int16, value, attr);
 }
 
 // Pointer#int32:[be,fwd]
@@ -554,12 +552,14 @@ read or write a number stored in a format of signed 32-bit integer.
 
 Gurax_ImplementPropertyGetter(Pointer, int32)
 {
-	return PointerGetTmpl<Int32>(GetValueThis(valueTarget), attr);
+	RefPtr<Value> pValue;
+	GetValueThis(valueTarget).GetPointer().Get(Pointer::ElemType::Int32, pValue, attr);
+	return pValue.release();
 }
 
 Gurax_ImplementPropertySetter(Pointer, int32)
 {
-	PointerPutTmpl<Int32>(GetValueThis(valueTarget), attr, value);
+	GetValueThis(valueTarget).GetPointer().Put(Pointer::ElemType::Int32, value, attr);
 }
 
 // Pointer#int64:[be,fwd]
@@ -575,12 +575,14 @@ read or write a number stored in a format of signed 64-bit integer.
 
 Gurax_ImplementPropertyGetter(Pointer, int64)
 {
-	return PointerGetTmpl<Int64>(GetValueThis(valueTarget), attr);
+	RefPtr<Value> pValue;
+	GetValueThis(valueTarget).GetPointer().Get(Pointer::ElemType::Int64, pValue, attr);
+	return pValue.release();
 }
 
 Gurax_ImplementPropertySetter(Pointer, int64)
 {
-	PointerPutTmpl<Int64>(GetValueThis(valueTarget), attr, value);
+	GetValueThis(valueTarget).GetPointer().Put(Pointer::ElemType::Int64, value, attr);
 }
 
 // Pointer#uint8:[be,fwd]
@@ -596,12 +598,14 @@ read or write a number stored in a format of unsigned 8-bit integer.
 
 Gurax_ImplementPropertyGetter(Pointer, uint8)
 {
-	return PointerGetTmpl<UInt8>(GetValueThis(valueTarget), attr);
+	RefPtr<Value> pValue;
+	GetValueThis(valueTarget).GetPointer().Get(Pointer::ElemType::UInt8, pValue, attr);
+	return pValue.release();
 }
 
 Gurax_ImplementPropertySetter(Pointer, uint8)
 {
-	PointerPutTmpl<UInt8>(GetValueThis(valueTarget), attr, value);
+	GetValueThis(valueTarget).GetPointer().Put(Pointer::ElemType::UInt8, value, attr);
 }
 
 // Pointer#uint16:[be,fwd]
@@ -617,12 +621,14 @@ read or write a number stored in a format of unsigned 16-bit integer.
 
 Gurax_ImplementPropertyGetter(Pointer, uint16)
 {
-	return PointerGetTmpl<UInt16>(GetValueThis(valueTarget), attr);
+	RefPtr<Value> pValue;
+	GetValueThis(valueTarget).GetPointer().Get(Pointer::ElemType::UInt16, pValue, attr);
+	return pValue.release();
 }
 
 Gurax_ImplementPropertySetter(Pointer, uint16)
 {
-	PointerPutTmpl<UInt16>(GetValueThis(valueTarget), attr, value);
+	GetValueThis(valueTarget).GetPointer().Put(Pointer::ElemType::UInt16, value, attr);
 }
 
 // Pointer#uint32:[be,fwd]
@@ -638,12 +644,14 @@ read or write a number stored in a format of unsigned 32-bit integer.
 
 Gurax_ImplementPropertyGetter(Pointer, uint32)
 {
-	return PointerGetTmpl<UInt32>(GetValueThis(valueTarget), attr);
+	RefPtr<Value> pValue;
+	GetValueThis(valueTarget).GetPointer().Get(Pointer::ElemType::UInt32, pValue, attr);
+	return pValue.release();
 }
 
 Gurax_ImplementPropertySetter(Pointer, uint32)
 {
-	PointerPutTmpl<UInt32>(GetValueThis(valueTarget), attr, value);
+	GetValueThis(valueTarget).GetPointer().Put(Pointer::ElemType::UInt32, value, attr);
 }
 
 // Pointer#uint64:[be,fwd]
@@ -659,12 +667,14 @@ read or write a number stored in a format of unsigned 64-bit integer.
 
 Gurax_ImplementPropertyGetter(Pointer, uint64)
 {
-	return PointerGetTmpl<UInt64>(GetValueThis(valueTarget), attr);
+	RefPtr<Value> pValue;
+	GetValueThis(valueTarget).GetPointer().Get(Pointer::ElemType::UInt64, pValue, attr);
+	return pValue.release();
 }
 
 Gurax_ImplementPropertySetter(Pointer, uint64)
 {
-	PointerPutTmpl<UInt64>(GetValueThis(valueTarget), attr, value);
+	GetValueThis(valueTarget).GetPointer().Put(Pointer::ElemType::UInt64, value, attr);
 }
 
 // Pointer#float:[be,fwd]
@@ -680,12 +690,14 @@ read or write a number stored in a format of unsigned 64-bit integer.
 
 Gurax_ImplementPropertyGetter(Pointer, float_)
 {
-	return PointerGetTmpl<Float>(GetValueThis(valueTarget), attr);
+	RefPtr<Value> pValue;
+	GetValueThis(valueTarget).GetPointer().Get(Pointer::ElemType::Float, pValue, attr);
+	return pValue.release();
 }
 
 Gurax_ImplementPropertySetter(Pointer, float_)
 {
-	PointerPutTmpl<Float>(GetValueThis(valueTarget), attr, value);
+	GetValueThis(valueTarget).GetPointer().Put(Pointer::ElemType::Float, value, attr);
 }
 
 // Pointer#double:[be,fwd]
@@ -701,12 +713,14 @@ read or write a number stored in a format of unsigned 64-bit integer.
 
 Gurax_ImplementPropertyGetter(Pointer, double_)
 {
-	return PointerGetTmpl<Double>(GetValueThis(valueTarget), attr);
+	RefPtr<Value> pValue;
+	GetValueThis(valueTarget).GetPointer().Get(Pointer::ElemType::Double, pValue, attr);
+	return pValue.release();
 }
 
 Gurax_ImplementPropertySetter(Pointer, double_)
 {
-	PointerPutTmpl<Double>(GetValueThis(valueTarget), attr, value);
+	GetValueThis(valueTarget).GetPointer().Put(Pointer::ElemType::Double, value, attr);
 }
 
 //------------------------------------------------------------------------------

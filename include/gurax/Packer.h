@@ -7,6 +7,7 @@
 
 namespace Gurax {
 
+class Attribute;
 class Pointer;
 
 //------------------------------------------------------------------------------
@@ -16,17 +17,62 @@ class GURAX_DLLDECLARE Packer : public Referable {
 public:
 	Gurax_DeclareReferable(Packer)
 public:
+	class GURAX_DLLDECLARE ElemType {
+	public:
+		static ElemType None;
+		static ElemType Int8;
+		static ElemType UInt8;
+		static ElemType Int16;
+		static ElemType UInt16;
+		static ElemType Int32;
+		static ElemType UInt32;
+		static ElemType Int64;
+		static ElemType UInt64;
+		static ElemType Float;
+		static ElemType Double;
+	public:
+		std::function<bool (Packer& packer, const Value& value, bool bigEndianFlag, bool forwardFlag)> putFunc;
+		std::function<bool (Packer& packer, RefPtr<Value>& pValue, bool exceedErrorFlag, bool bigEndianFlag, bool forwardFlag)> getFunc;
+	public:
+		// Constructor
+		ElemType() {}
+		// Copy constructor/operator
+		ElemType(const ElemType& src) = delete;
+		ElemType& operator=(const ElemType& src) = delete;
+		// Move constructor/operator
+		ElemType(ElemType&& src) = delete;
+		ElemType& operator=(ElemType&& src) noexcept = delete;
+	protected:
+		~ElemType() = default;
+	public:
+		bool IsIdentical(const ElemType& elemType) const { return this == &elemType; }
+		bool IsNone() const { return IsIdentical(None); }
+	};
+public:
 	Packer() {}
 protected:
 	virtual ~Packer() = default;
 public:
+	static void Bootup();
+public:
 	bool Pack(const char* format, const ValueList& valListArg);
 	Value* Unpack(const char* format, const ValueList& valListArg, bool exceedErrorFlag);
-	template<typename T, bool bigEndianFlag> bool Put(const Value& value, bool forwardFlag);
-	template<typename T, bool bigEndianFlag> bool Get(T* pNum, bool exceedErrorFlag, bool forwardFlag);
+	//template<typename T, bool bigEndianFlag> bool Put(const Value& value, bool forwardFlag);
+	//template<typename T, bool bigEndianFlag> bool Get(T* pNum, bool exceedErrorFlag, bool forwardFlag);
+	bool Put(const ElemType& elemType, const Value& value, bool bigEndianFlag, bool forwardFlag) {
+		return elemType.putFunc(*this, value, bigEndianFlag, forwardFlag);
+	}
+	bool Put(const ElemType& elemType, const Value& value, const Attribute& attr);
+	bool Get(const ElemType& elemType, RefPtr<Value>& pValue, bool exceedErrorFlag, bool bigEndianFlag, bool forwardFlag) {
+		return elemType.getFunc(*this, pValue, exceedErrorFlag, bigEndianFlag, forwardFlag);
+	}
+	bool Get(const ElemType& elemType, RefPtr<Value>& pValue, const Attribute& attr);
 	bool PutBuffer(const void* buff, size_t bytes);
 	bool PutPointer(const Pointer& pointer);
 	bool PutPointer(const Pointer& pointer, size_t bytes);
+public:
+	template<typename T> static bool PutFunc_T(Packer& packer, const Value& value, bool bigEndianFlag, bool forwardFlag);
+	template<typename T> static bool GetFunc_T(Packer& packer, RefPtr<Value>& pValue, bool exceedErrorFlag, bool bigEndianFlag, bool forwardFlag);
 public:
 	virtual bool StorePrepare(size_t bytes) = 0;
 	virtual void StoreBuffer(const void* buff, size_t bytes, bool forwardFlag) = 0;
@@ -34,8 +80,34 @@ public:
 public:
 	template<typename T, bool bigEndianFlag> void Store(T num, bool forwardFlag);
 	template<typename T, bool bigEndianFlag> T Extract(const UInt8* pByte);
+public:
+	static const ElemType& SymbolToElemType(const Symbol* pSymbol);
 };
 
+template<typename T> bool Packer::PutFunc_T(Packer& packer, const Value& value, bool bigEndianFlag, bool forwardFlag)
+{
+	if (!packer.StorePrepare(sizeof(T))) return false;
+	if (bigEndianFlag) {
+		packer.Store<T, true>(Value_Number::GetNumber<T>(value), forwardFlag);
+	} else {
+		packer.Store<T, false>(Value_Number::GetNumber<T>(value), forwardFlag);
+	}
+	return true;
+}
+
+template<typename T> bool Packer::GetFunc_T(Packer& packer, RefPtr<Value>& pValue, bool exceedErrorFlag, bool bigEndianFlag, bool forwardFlag)
+{
+	const UInt8* pByte = packer.ExtractPrepare(sizeof(T), forwardFlag);
+	if (!pByte) {
+		if (exceedErrorFlag) Error::Issue(ErrorType::RangeError, "exceeds the range");
+		pValue.reset(Value::nil());
+		return false;
+	}
+	pValue.reset(new Value_Number(bigEndianFlag? packer.Extract<T, true>(pByte) : packer.Extract<T, false>(pByte)));
+	return true;
+}
+
+#if 0
 template<typename T, bool bigEndianFlag> bool Packer::Put(const Value& value, bool forwardFlag)
 {
 	if (!StorePrepare(sizeof(T))) return false;
@@ -53,6 +125,7 @@ template<typename T, bool bigEndianFlag> bool Packer::Get(T* pNum, bool exceedEr
 	*pNum = Extract<T, bigEndianFlag>(pByte);
 	return true;
 }
+#endif
 
 template<> inline void Packer::Store<UInt8, true>(UInt8 num, bool forwardFlag)
 {

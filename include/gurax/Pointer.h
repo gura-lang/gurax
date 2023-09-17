@@ -16,41 +16,6 @@ class GURAX_DLLDECLARE Pointer : public Packer {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Pointer);
-public:
-	//enum class ElemTypeId {
-	//	None, Int8, UInt8, Int16, UInt16, Int32, UInt32, Int64, UInt64, Float, Double,
-	//};
-	class GURAX_DLLDECLARE ElemType {
-	public:
-		static ElemType None;
-		static ElemType Int8;
-		static ElemType UInt8;
-		static ElemType Int16;
-		static ElemType UInt16;
-		static ElemType Int32;
-		static ElemType UInt32;
-		static ElemType Int64;
-		static ElemType UInt64;
-		static ElemType Float;
-		static ElemType Double;
-	public:
-		std::function<bool (Packer& packer, const Value& value, bool bigEndianFlag, bool forwardFlag)> putFunc;
-		std::function<bool (Packer& packer, RefPtr<Value>& pValue, bool exceedErrorFlag, bool bigEndianFlag, bool forwardFlag)> getFunc;
-	public:
-		// Constructor
-		ElemType() {}
-		// Copy constructor/operator
-		ElemType(const ElemType& src) = delete;
-		ElemType& operator=(const ElemType& src) = delete;
-		// Move constructor/operator
-		ElemType(ElemType&& src) = delete;
-		ElemType& operator=(ElemType&& src) noexcept = delete;
-	protected:
-		~ElemType() = default;
-	public:
-		bool IsIdentical(const ElemType& elemType) const { return this == &elemType; }
-		bool IsNone() const { return IsIdentical(None); }
-	};
 protected:
 	const ElemType& _elemType;
 	size_t _offset;
@@ -104,8 +69,6 @@ public:
 	bool IsEqualTo(const Pointer& other) const { return IsIdentical(other); }
 	bool IsLessThan(const Pointer& other) const { return this < &other; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
-public:
-	static const ElemType& SymbolToElemType(const Symbol* pSymbol);
 };
 
 }

@@ -10,6 +10,57 @@ bool IsBigEndian() { return false; }
 //------------------------------------------------------------------------------
 // Packer
 //------------------------------------------------------------------------------
+Packer::ElemType Packer::ElemType::None;
+Packer::ElemType Packer::ElemType::Int8;
+Packer::ElemType Packer::ElemType::UInt8;
+Packer::ElemType Packer::ElemType::Int16;
+Packer::ElemType Packer::ElemType::UInt16;
+Packer::ElemType Packer::ElemType::Int32;
+Packer::ElemType Packer::ElemType::UInt32;
+Packer::ElemType Packer::ElemType::Int64;
+Packer::ElemType Packer::ElemType::UInt64;
+Packer::ElemType Packer::ElemType::Float;
+Packer::ElemType Packer::ElemType::Double;
+
+void Packer::Bootup()
+{
+	ElemType::Int8.putFunc		= PutFunc_T<Int8>;
+	ElemType::Int8.getFunc		= GetFunc_T<Int8>;
+	ElemType::UInt8.putFunc		= PutFunc_T<UInt8>;
+	ElemType::UInt8.getFunc		= GetFunc_T<UInt8>;
+	ElemType::Int16.putFunc		= PutFunc_T<Int16>;
+	ElemType::Int16.getFunc		= GetFunc_T<Int16>;
+	ElemType::UInt16.putFunc	= PutFunc_T<UInt16>;
+	ElemType::UInt16.getFunc	= GetFunc_T<UInt16>;
+	ElemType::Int32.putFunc		= PutFunc_T<Int32>;
+	ElemType::Int32.getFunc		= GetFunc_T<Int32>;
+	ElemType::UInt32.putFunc	= PutFunc_T<UInt32>;
+	ElemType::UInt32.getFunc	= GetFunc_T<UInt32>;
+	ElemType::Int64.putFunc		= PutFunc_T<Int64>;
+	ElemType::Int64.getFunc		= GetFunc_T<Int64>;
+	ElemType::UInt64.putFunc	= PutFunc_T<UInt64>;
+	ElemType::UInt64.getFunc	= GetFunc_T<UInt64>;
+	ElemType::Float.putFunc		= PutFunc_T<Float>;
+	ElemType::Float.getFunc		= GetFunc_T<Float>;
+	ElemType::Double.putFunc	= PutFunc_T<Double>;
+	ElemType::Double.getFunc	= GetFunc_T<Double>;
+}
+
+bool Packer::Put(const ElemType& elemType, const Value& value, const Attribute& attr)
+{
+	bool bigEndianFlag = attr.IsSet(Gurax_Symbol(be));
+	bool forwardFlag = attr.IsSet(Gurax_Symbol(fwd));
+	return Put(elemType, value, bigEndianFlag, forwardFlag);
+}
+
+bool Packer::Get(const ElemType& elemType, RefPtr<Value>& pValue, const Attribute& attr)
+{
+	bool bigEndianFlag = attr.IsSet(Gurax_Symbol(be));
+	bool forwardFlag = attr.IsSet(Gurax_Symbol(fwd));
+	bool exceedErrorFlag = false;
+	return Get(elemType, pValue, exceedErrorFlag, bigEndianFlag, forwardFlag);
+}
+
 bool Packer::Pack(const char* format, const ValueList& valListArg)
 {
 	auto GetString = [](const ValueList& valListArg, ValueList::const_iterator ppValueArg) -> const char* {
@@ -583,6 +634,22 @@ bool Packer::PutPointer(const Pointer& pointer)
 bool Packer::PutPointer(const Pointer& pointer, size_t bytes)
 {
 	return PutBuffer(pointer.GetPointerC<void>(), bytes);
+}
+
+const Packer::ElemType& Packer::SymbolToElemType(const Symbol* pSymbol)
+{
+	return
+		pSymbol->IsIdentical(Gurax_Symbol(int8))? 		ElemType::Int8 :
+		pSymbol->IsIdentical(Gurax_Symbol(uint8))? 		ElemType::UInt8 :
+		pSymbol->IsIdentical(Gurax_Symbol(int16))? 		ElemType::Int16 :
+		pSymbol->IsIdentical(Gurax_Symbol(uint16))? 	ElemType::UInt16 :
+		pSymbol->IsIdentical(Gurax_Symbol(int32))? 		ElemType::Int32 :
+		pSymbol->IsIdentical(Gurax_Symbol(uint32))? 	ElemType::UInt32 :
+		pSymbol->IsIdentical(Gurax_Symbol(int64))? 		ElemType::Int64 :
+		pSymbol->IsIdentical(Gurax_Symbol(uint64))? 	ElemType::UInt64 :
+		pSymbol->IsIdentical(Gurax_Symbol(float_))? 	ElemType::Float :
+		pSymbol->IsIdentical(Gurax_Symbol(double_))?	ElemType::Double :
+		ElemType::None;
 }
 
 }
