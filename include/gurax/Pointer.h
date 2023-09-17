@@ -15,27 +15,28 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Pointer);
 public:
-	enum class ElemTypeId {
-		None, Int8, UInt8, Int16, UInt16, Int32, UInt32, Int64, UInt64, Float, Double,
-	};
+	//enum class ElemTypeId {
+	//	None, Int8, UInt8, Int16, UInt16, Int32, UInt32, Int64, UInt64, Float, Double,
+	//};
 	class ElemType {
 	public:
-		ElemTypeId id;
+		static ElemType None;
+		static ElemType Int8;
+		static ElemType UInt8;
+		static ElemType Int16;
+		static ElemType UInt16;
+		static ElemType Int32;
+		static ElemType UInt32;
+		static ElemType Int64;
+		static ElemType UInt64;
+		static ElemType Float;
+		static ElemType Double;
 	public:
-		static const ElemType None;
-		static const ElemType Int8;
-		static const ElemType UInt8;
-		static const ElemType Int16;
-		static const ElemType UInt16;
-		static const ElemType Int32;
-		static const ElemType UInt32;
-		static const ElemType Int64;
-		static const ElemType UInt64;
-		static const ElemType Float;
-		static const ElemType Double;
+		std::function<bool (Packer& packer, const Value& value, bool bigEndianFlag, bool forwardFlag)> putFunc;
+		std::function<bool (Packer& packer, RefPtr<Value>& pValue, bool exceedErrorFlag, bool bigEndianFlag, bool forwardFlag)> getFunc;
 	public:
 		// Constructor
-		ElemType(ElemTypeId id) : id(id) {}
+		ElemType() {}
 		// Copy constructor/operator
 		ElemType(const ElemType& src) = delete;
 		ElemType& operator=(const ElemType& src) = delete;
@@ -61,6 +62,8 @@ public:
 	Pointer& operator=(Pointer&& src) noexcept = delete;
 protected:
 	~Pointer() = default;
+public:
+	static void Bootup();
 public:
 	void SetOffset(size_t offset) { _offset = offset; }
 	size_t GetOffset() const { return _offset; }

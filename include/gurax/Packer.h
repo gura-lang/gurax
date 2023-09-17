@@ -31,7 +31,7 @@ public:
 	virtual bool StorePrepare(size_t bytes) = 0;
 	virtual void StoreBuffer(const void* buff, size_t bytes, bool forwardFlag) = 0;
 	virtual const UInt8* ExtractPrepare(size_t bytes, bool forwardFlag) = 0;
-private:
+public:
 	template<typename T, bool bigEndianFlag> void Store(T num, bool forwardFlag);
 	template<typename T, bool bigEndianFlag> T Extract(const UInt8* pByte);
 };
