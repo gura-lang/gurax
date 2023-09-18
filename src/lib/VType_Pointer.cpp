@@ -470,6 +470,20 @@ Gurax_ImplementPropertyGetter(Pointer, bytesEntire)
 	return new Value_Number(valueThis.GetPointer().GetBytesEntire());
 }
 
+// Pointer#elemType
+Gurax_DeclareProperty_R(Pointer, elemType)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
+}
+
+Gurax_ImplementPropertyGetter(Pointer, elemType)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Symbol(valueThis.GetPointer().GetElemType().pSymbol);
+}
+
 // Pointer#offset
 Gurax_DeclareProperty_RW(Pointer, offset)
 {
@@ -790,6 +804,7 @@ void VType_Pointer::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Pointer, at));
 	Assign(Gurax_CreateProperty(Pointer, bytesAvail));
 	Assign(Gurax_CreateProperty(Pointer, bytesEntire));
+	Assign(Gurax_CreateProperty(Pointer, elemType));
 	Assign(Gurax_CreateProperty(Pointer, offset));
 	Assign(Gurax_CreateProperty(Pointer, int8));
 	Assign(Gurax_CreateProperty(Pointer, int16));

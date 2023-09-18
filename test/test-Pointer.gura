@@ -5,6 +5,21 @@ TestCase('Property') {
 	Pointer.PrintPropSlots()
 }
 
+TestCase('Pointer#elemType') {
+	Tester(`@bool(3, 4).p.elemType)
+	Tester(`@int8(3, 4).p.elemType)
+	Tester(`@uint8(3, 4).p.elemType)
+	Tester(`@int16(3, 4).p.elemType)
+	Tester(`@uint16(3, 4).p.elemType)
+	Tester(`@int32(3, 4).p.elemType)
+	Tester(`@uint32(3, 4).p.elemType)
+	Tester(`@int64(3, 4).p.elemType)
+	Tester(`@uint64(3, 4).p.elemType)
+	Tester(`@float(3, 4).p.elemType)
+	Tester(`@double(3, 4).p.elemType)
+	Tester(`@complex(3, 4).p.elemType)
+}
+
 TestCase('Basic test of pack/unpack') {
 	PackTester(buff as Binary, format as String, args*) = {
 		Printf('buff.p.Pack(%s, %s)', format.Enquote(), args.Join(', ')) 

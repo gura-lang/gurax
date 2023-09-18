@@ -4,6 +4,7 @@ Pointer
   #bytesAvail       Number       R
   #bytesEntire      Number       R
   #double           Number       R/W
+  #elemType         Number       R
   #float            Number       R/W
   #int16            Number       R/W
   #int32            Number       R/W
@@ -14,6 +15,19 @@ Pointer
   #uint32           Number       R/W
   #uint64           Number       R/W
   #uint8            Number       R/W
+======== Pointer#elemType ========
+@bool(3, 4).p.elemType .. `int8
+@int8(3, 4).p.elemType .. `int8
+@uint8(3, 4).p.elemType .. `uint8
+@int16(3, 4).p.elemType .. `int16
+@uint16(3, 4).p.elemType .. `uint16
+@int32(3, 4).p.elemType .. `int32
+@uint32(3, 4).p.elemType .. `uint32
+@int64(3, 4).p.elemType .. `int64
+@uint64(3, 4).p.elemType .. `uint64
+@float(3, 4).p.elemType .. `float
+@double(3, 4).p.elemType .. `double
+@complex(3, 4).p.elemType .. `uint8
 ======== Basic test of pack/unpack ========
 ---
 buff.p.Pack('bbbb', 0, -128, 127, 18)
@@ -580,12 +594,12 @@ buff.Pointer {|p| while (tbl = p.Unpack('>H')):list {Format('%04x', tbl[0])}.Joi
 buff.Pointer {|p| while (tbl = p.Unpack('>I')):list {Format('%08x', tbl[0])}.Join(',')} .. 00010203,04050607,08090a0b
 buff.Pointer {|p| while (tbl = p.Unpack('4s')):list {tbl[0]}.Join(',')} .. abcd,efgh,ijkl,mnop,qrst,uvwx
 ======== Operators ========
-p1 .. <Pointer:Binary:uint8:10/26byte>
-p2 .. <Pointer:Binary:uint8:23/26byte>
-p1 + 7 .. <Pointer:Binary:uint8:17/26byte>
-7 + p1 .. <Pointer:Binary:uint8:17/26byte>
-p1 - 7 .. <Pointer:Binary:uint8:3/26byte>
-p1 - 10 .. <Pointer:Binary:uint8:0/26byte>
+p1 .. <Pointer:Binary:uint8:10/26bytes>
+p2 .. <Pointer:Binary:uint8:23/26bytes>
+p1 + 7 .. <Pointer:Binary:uint8:17/26bytes>
+7 + p1 .. <Pointer:Binary:uint8:17/26bytes>
+p1 - 7 .. <Pointer:Binary:uint8:3/26bytes>
+p1 - 10 .. <Pointer:Binary:uint8:0/26bytes>
 p1 - 11 .. pointer offset is out of range
 p1 - p2 .. -13
 p2 - p1 .. 13

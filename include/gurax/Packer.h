@@ -9,6 +9,8 @@ namespace Gurax {
 
 class Attribute;
 class Pointer;
+class Value;
+class ValueList;
 
 //------------------------------------------------------------------------------
 // Packer
@@ -20,6 +22,7 @@ public:
 	class GURAX_DLLDECLARE ElemType {
 	public:
 		static ElemType None;
+		static ElemType Bool;
 		static ElemType Int8;
 		static ElemType UInt8;
 		static ElemType Int16;
@@ -58,8 +61,6 @@ public:
 public:
 	bool Pack(const char* format, const ValueList& valListArg);
 	Value* Unpack(const char* format, const ValueList& valListArg, bool exceedErrorFlag);
-	//template<typename T, bool bigEndianFlag> bool Put(const Value& value, bool forwardFlag);
-	//template<typename T, bool bigEndianFlag> bool Get(T* pNum, bool exceedErrorFlag, bool forwardFlag);
 	bool Put(const ElemType& elemType, const Value& value, bool bigEndianFlag, bool forwardFlag) {
 		return elemType.putFunc(*this, value, bigEndianFlag, forwardFlag);
 	}
@@ -108,26 +109,6 @@ template<typename T> bool Packer::GetFunc_T(Packer& packer, RefPtr<Value>& pValu
 	return true;
 }
 
-#if 0
-template<typename T, bool bigEndianFlag> bool Packer::Put(const Value& value, bool forwardFlag)
-{
-	if (!StorePrepare(sizeof(T))) return false;
-	Store<T, bigEndianFlag>(Value_Number::GetNumber<T>(value), forwardFlag);
-	return true;
-}
-
-template<typename T, bool bigEndianFlag> bool Packer::Get(T* pNum, bool exceedErrorFlag, bool forwardFlag)
-{
-	const UInt8* pByte = ExtractPrepare(sizeof(T), forwardFlag);
-	if (!pByte) {
-		if (exceedErrorFlag) Error::Issue(ErrorType::RangeError, "exceeds the range");
-		return false;
-	}
-	*pNum = Extract<T, bigEndianFlag>(pByte);
-	return true;
-}
-#endif
-
 template<> inline void Packer::Store<UInt8, true>(UInt8 num, bool forwardFlag)
 {
 	StoreBuffer(&num, sizeof(UInt8), forwardFlag);
@@ -144,6 +125,16 @@ template<> inline void Packer::Store<Int8, true>(Int8 num, bool forwardFlag)
 }
 
 template<> inline void Packer::Store<Int8, false>(Int8 num, bool forwardFlag)
+{
+	Store<UInt8, false>(static_cast<UInt8>(num), forwardFlag);
+}
+
+template<> inline void Packer::Store<Bool, true>(Bool num, bool forwardFlag)
+{
+	Store<UInt8, true>(static_cast<UInt8>(num), forwardFlag);
+}
+
+template<> inline void Packer::Store<Bool, false>(Bool num, bool forwardFlag)
 {
 	Store<UInt8, false>(static_cast<UInt8>(num), forwardFlag);
 }
@@ -286,6 +277,16 @@ template<> inline Int8 Packer::Extract<Int8, true>(const UInt8* pByte)
 template<> inline Int8 Packer::Extract<Int8, false>(const UInt8* pByte)
 {
 	return static_cast<Int8>(Extract<UInt8, false>(pByte));
+}
+
+template<> inline Bool Packer::Extract<Bool, true>(const UInt8* pByte)
+{
+	return static_cast<Bool>(Extract<UInt8, true>(pByte));
+}
+
+template<> inline Bool Packer::Extract<Bool, false>(const UInt8* pByte)
+{
+	return static_cast<Bool>(Extract<UInt8, false>(pByte));
 }
 
 template<> inline UInt16 Packer::Extract<UInt16, true>(const UInt8* pByte)

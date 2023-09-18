@@ -11,6 +11,7 @@ bool IsBigEndian() { return false; }
 // Packer
 //------------------------------------------------------------------------------
 Packer::ElemType Packer::ElemType::None;
+Packer::ElemType Packer::ElemType::Bool;
 Packer::ElemType Packer::ElemType::Int8;
 Packer::ElemType Packer::ElemType::UInt8;
 Packer::ElemType Packer::ElemType::Int16;
@@ -25,6 +26,7 @@ Packer::ElemType Packer::ElemType::Double;
 void Packer::Bootup()
 {
 	ElemType::None.pSymbol		= Gurax_Symbol(none);
+	ElemType::Bool.pSymbol		= Gurax_Symbol(bool_);
 	ElemType::Int8.pSymbol		= Gurax_Symbol(int8);
 	ElemType::UInt8.pSymbol		= Gurax_Symbol(uint8);
 	ElemType::Int16.pSymbol		= Gurax_Symbol(int16);
@@ -37,6 +39,8 @@ void Packer::Bootup()
 	ElemType::Double.pSymbol	= Gurax_Symbol(double_);
 	ElemType::None.putFunc		= PutFunc_T<Int8>;
 	ElemType::None.getFunc		= GetFunc_T<Int8>;
+	ElemType::Bool.putFunc		= PutFunc_T<Bool>;
+	ElemType::Bool.getFunc		= GetFunc_T<Bool>;
 	ElemType::Int8.putFunc		= PutFunc_T<Int8>;
 	ElemType::Int8.getFunc		= GetFunc_T<Int8>;
 	ElemType::UInt8.putFunc		= PutFunc_T<UInt8>;
@@ -652,6 +656,7 @@ bool Packer::PutPointer(const Pointer& pointer, size_t bytes)
 const Packer::ElemType& Packer::SymbolToElemType(const Symbol* pSymbol)
 {
 	return
+		pSymbol->IsIdentical(Gurax_Symbol(bool_))? 		ElemType::Bool :
 		pSymbol->IsIdentical(Gurax_Symbol(int8))? 		ElemType::Int8 :
 		pSymbol->IsIdentical(Gurax_Symbol(uint8))? 		ElemType::UInt8 :
 		pSymbol->IsIdentical(Gurax_Symbol(int16))? 		ElemType::Int16 :
