@@ -28,17 +28,13 @@ bool Pointer::Advance(int distance)
 
 bool Pointer::PutValue(const ElemType& elemType, bool bigEndianFlag, const Value& value)
 {
-	bool forwardFlag = true;
-	if (value.IsType(VTYPE_Number)) {
-		return elemType.putFunc(*this, value, bigEndianFlag, forwardFlag);
-	} else if (value.IsType(VTYPE_Iterator)) {
+	if (value.IsType(VTYPE_Iterator)) {
 		return PutValues(elemType, bigEndianFlag, Value_Iterator::GetIterator(value));
 	} else if (value.IsType(VTYPE_List)) {
 		return PutValues(elemType, bigEndianFlag, Value_List::GetValueOwner(value));
-	} else {
-		Error::Issue(ErrorType::TypeError, "invalid value type");
-		return false;
 	}
+	bool forwardFlag = true;
+	return elemType.putFunc(*this, value, bigEndianFlag, forwardFlag);
 }
 
 bool Pointer::PutValues(const ElemType& elemType, bool bigEndianFlag, const ValueList& valList)

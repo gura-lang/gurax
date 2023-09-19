@@ -1321,7 +1321,7 @@ void Array::Bootup()
 	ElemType::Double.pSymbol			= Gurax_Symbol(double_);
 	ElemType::Complex.pSymbol			= Gurax_Symbol(complex);
 	ElemType::None.pElemTypePointer		= &Pointer::ElemType::None;
-	ElemType::Bool.pElemTypePointer		= &Pointer::ElemType::Int8;
+	ElemType::Bool.pElemTypePointer		= &Pointer::ElemType::Bool;
 	ElemType::Int8.pElemTypePointer		= &Pointer::ElemType::Int8;
 	ElemType::UInt8.pElemTypePointer	= &Pointer::ElemType::UInt8;
 	ElemType::Int16.pElemTypePointer	= &Pointer::ElemType::Int16;

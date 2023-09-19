@@ -1,22 +1,22 @@
 ======== Property ========
 Pointer
-  #@                Number       R/W
+  #@                Any          R/W
   #bytesAvail       Number       R
   #bytesEntire      Number       R
-  #double           Number       R/W
+  #double           Any          R/W
   #elemType         Number       R
-  #float            Number       R/W
-  #int16            Number       R/W
-  #int32            Number       R/W
-  #int64            Number       R/W
-  #int8             Number       R/W
+  #float            Any          R/W
+  #int16            Any          R/W
+  #int32            Any          R/W
+  #int64            Any          R/W
+  #int8             Any          R/W
   #offset           Number       R/W
-  #uint16           Number       R/W
-  #uint32           Number       R/W
-  #uint64           Number       R/W
-  #uint8            Number       R/W
+  #uint16           Any          R/W
+  #uint32           Any          R/W
+  #uint64           Any          R/W
+  #uint8            Any          R/W
 ======== Pointer#elemType ========
-@bool(3, 4).p.elemType .. `int8
+@bool(3, 4).p.elemType .. `bool
 @int8(3, 4).p.elemType .. `int8
 @uint8(3, 4).p.elemType .. `uint8
 @int16(3, 4).p.elemType .. `int16
@@ -28,6 +28,67 @@ Pointer
 @float(3, 4).p.elemType .. `float
 @double(3, 4).p.elemType .. `double
 @complex(3, 4).p.elemType .. `uint8
+======== Pointer#elemType ========
+elemType: bool
+p.@ = true .. true
+p.@ = 10 .. Bool value must be specified
+p.@ = 'xx' .. Bool value must be specified
+p.@ = 2 + 5j .. Bool value must be specified
+elemType: int8
+p.@ = true .. Number value must be specified
+p.@ = 10 .. 10
+p.@ = 'xx' .. Number value must be specified
+p.@ = 2 + 5j .. Number value must be specified
+elemType: uint8
+p.@ = true .. Number value must be specified
+p.@ = 10 .. 10
+p.@ = 'xx' .. Number value must be specified
+p.@ = 2 + 5j .. Number value must be specified
+elemType: int16
+p.@ = true .. Number value must be specified
+p.@ = 10 .. 10
+p.@ = 'xx' .. Number value must be specified
+p.@ = 2 + 5j .. Number value must be specified
+elemType: uint16
+p.@ = true .. Number value must be specified
+p.@ = 10 .. 10
+p.@ = 'xx' .. Number value must be specified
+p.@ = 2 + 5j .. Number value must be specified
+elemType: int32
+p.@ = true .. Number value must be specified
+p.@ = 10 .. 10
+p.@ = 'xx' .. Number value must be specified
+p.@ = 2 + 5j .. Number value must be specified
+elemType: uint32
+p.@ = true .. Number value must be specified
+p.@ = 10 .. 10
+p.@ = 'xx' .. Number value must be specified
+p.@ = 2 + 5j .. Number value must be specified
+elemType: int64
+p.@ = true .. Number value must be specified
+p.@ = 10 .. 10
+p.@ = 'xx' .. Number value must be specified
+p.@ = 2 + 5j .. Number value must be specified
+elemType: uint64
+p.@ = true .. Number value must be specified
+p.@ = 10 .. 10
+p.@ = 'xx' .. Number value must be specified
+p.@ = 2 + 5j .. Number value must be specified
+elemType: float
+p.@ = true .. Number value must be specified
+p.@ = 10 .. 10
+p.@ = 'xx' .. Number value must be specified
+p.@ = 2 + 5j .. Number value must be specified
+elemType: double
+p.@ = true .. Number value must be specified
+p.@ = 10 .. 10
+p.@ = 'xx' .. Number value must be specified
+p.@ = 2 + 5j .. Number value must be specified
+elemType: complex
+p.@ = true .. Number value must be specified
+p.@ = 10 .. 10
+p.@ = 'xx' .. Number value must be specified
+p.@ = 2 + 5j .. Number value must be specified
 ======== Basic test of pack/unpack ========
 ---
 buff.p.Pack('bbbb', 0, -128, 127, 18)

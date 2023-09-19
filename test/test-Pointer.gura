@@ -20,6 +20,18 @@ TestCase('Pointer#elemType') {
 	Tester(`@complex(3, 4).p.elemType)
 }
 
+TestCase('Pointer#elemType') {
+	[`bool, `int8, `uint8, `int16, `uint16, `int32, `uint32, `int64, `uint64, `float, `double, `complex].Each {|elemType|
+		Printf('elemType: %s\n', elemType)
+		array = Array(elemType, 3, 4)
+		p = array.p
+		Tester(`(p.@ = true))
+		Tester(`(p.@ = 10))
+		Tester(`(p.@ = 'xx'))
+		Tester(`(p.@ = 2 + 5j))
+	}
+}
+
 TestCase('Basic test of pack/unpack') {
 	PackTester(buff as Binary, format as String, args*) = {
 		Printf('buff.p.Pack(%s, %s)', format.Enquote(), args.Join(', ')) 

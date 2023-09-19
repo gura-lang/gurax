@@ -10,6 +10,100 @@ bool IsBigEndian() { return false; }
 //------------------------------------------------------------------------------
 // Packer
 //------------------------------------------------------------------------------
+template<typename T> bool PutFunc_T(Packer& packer, const Value& value, bool bigEndianFlag, bool forwardFlag)
+{
+	if (!value.IsType(VTYPE_Number)) {
+		Error::Issue(ErrorType::TypeError, "Number value must be specified");
+		return false;
+	}
+	if (!packer.StorePrepare(sizeof(T))) return false;
+	if (bigEndianFlag) {
+		packer.Store<T, true>(Value_Number::GetNumber<T>(value), forwardFlag);
+	} else {
+		packer.Store<T, false>(Value_Number::GetNumber<T>(value), forwardFlag);
+	}
+	return true;
+}
+
+template<> bool PutFunc_T<Bool>(Packer& packer, const Value& value, bool bigEndianFlag, bool forwardFlag)
+{
+	using T = Bool;
+	if (!value.IsType(VTYPE_Bool)) {
+		Error::Issue(ErrorType::TypeError, "Bool value must be specified");
+		return false;
+	}
+	if (!packer.StorePrepare(sizeof(T))) return false;
+	if (bigEndianFlag) {
+		packer.Store<T, true>(Value_Bool::GetBool(value), forwardFlag);
+	} else {
+		packer.Store<T, false>(Value_Bool::GetBool(value), forwardFlag);
+	}
+	return true;
+}
+
+#if 0
+template<> bool PutFunc_T<Complex>(Packer& packer, const Value& value, bool bigEndianFlag, bool forwardFlag)
+{
+	using T = Complex;
+	T num;
+	if (value.IsType(VTYPE_Complex)) {
+		num = Value_Complex::GetComplex(value);
+	} else if (value.IsType(VTYPE_Number)) {
+		num = Value_Number::GetNumber<Double>(value);
+	} else {
+		Error::Issue(ErrorType::TypeError, "Complex or Number value must be specified");
+		return false;
+	}
+	if (!packer.StorePrepare(sizeof(T))) return false;
+	if (bigEndianFlag) {
+		packer.Store<T, true>(num, forwardFlag);
+	} else {
+		packer.Store<T, false>(num, forwardFlag);
+	}
+	return true;
+}
+#endif
+
+template<typename T> bool GetFunc_T(Packer& packer, RefPtr<Value>& pValue, bool exceedErrorFlag, bool bigEndianFlag, bool forwardFlag)
+{
+	const UInt8* pByte = packer.ExtractPrepare(sizeof(T), forwardFlag);
+	if (!pByte) {
+		if (exceedErrorFlag) Error::Issue(ErrorType::RangeError, "exceeds the range");
+		pValue.reset(Value::nil());
+		return false;
+	}
+	pValue.reset(new Value_Number(bigEndianFlag? packer.Extract<T, true>(pByte) : packer.Extract<T, false>(pByte)));
+	return true;
+}
+
+template<> bool GetFunc_T<Bool>(Packer& packer, RefPtr<Value>& pValue, bool exceedErrorFlag, bool bigEndianFlag, bool forwardFlag)
+{
+	using T = Bool;
+	const UInt8* pByte = packer.ExtractPrepare(sizeof(T), forwardFlag);
+	if (!pByte) {
+		if (exceedErrorFlag) Error::Issue(ErrorType::RangeError, "exceeds the range");
+		pValue.reset(Value::nil());
+		return false;
+	}
+	pValue.reset(new Value_Bool(bigEndianFlag? packer.Extract<T, true>(pByte) : packer.Extract<T, false>(pByte)));
+	return true;
+}
+
+#if 0
+template<> bool GetFunc_T<Complex>(Packer& packer, RefPtr<Value>& pValue, bool exceedErrorFlag, bool bigEndianFlag, bool forwardFlag)
+{
+	using T = Complex;
+	const UInt8* pByte = packer.ExtractPrepare(sizeof(T), forwardFlag);
+	if (!pByte) {
+		if (exceedErrorFlag) Error::Issue(ErrorType::RangeError, "exceeds the range");
+		pValue.reset(Value::nil());
+		return false;
+	}
+	pValue.reset(new Value_Complex(bigEndianFlag? packer.Extract<T, true>(pByte) : packer.Extract<T, false>(pByte)));
+	return true;
+}
+#endif
+
 Packer::ElemType Packer::ElemType::None;
 Packer::ElemType Packer::ElemType::Bool;
 Packer::ElemType Packer::ElemType::Int8;

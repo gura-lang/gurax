@@ -73,9 +73,6 @@ public:
 	bool PutPointer(const Pointer& pointer);
 	bool PutPointer(const Pointer& pointer, size_t bytes);
 public:
-	template<typename T> static bool PutFunc_T(Packer& packer, const Value& value, bool bigEndianFlag, bool forwardFlag);
-	template<typename T> static bool GetFunc_T(Packer& packer, RefPtr<Value>& pValue, bool exceedErrorFlag, bool bigEndianFlag, bool forwardFlag);
-public:
 	virtual bool StorePrepare(size_t bytes) = 0;
 	virtual void StoreBuffer(const void* buff, size_t bytes, bool forwardFlag) = 0;
 	virtual const UInt8* ExtractPrepare(size_t bytes, bool forwardFlag) = 0;
@@ -85,29 +82,6 @@ public:
 public:
 	static const ElemType& SymbolToElemType(const Symbol* pSymbol);
 };
-
-template<typename T> bool Packer::PutFunc_T(Packer& packer, const Value& value, bool bigEndianFlag, bool forwardFlag)
-{
-	if (!packer.StorePrepare(sizeof(T))) return false;
-	if (bigEndianFlag) {
-		packer.Store<T, true>(Value_Number::GetNumber<T>(value), forwardFlag);
-	} else {
-		packer.Store<T, false>(Value_Number::GetNumber<T>(value), forwardFlag);
-	}
-	return true;
-}
-
-template<typename T> bool Packer::GetFunc_T(Packer& packer, RefPtr<Value>& pValue, bool exceedErrorFlag, bool bigEndianFlag, bool forwardFlag)
-{
-	const UInt8* pByte = packer.ExtractPrepare(sizeof(T), forwardFlag);
-	if (!pByte) {
-		if (exceedErrorFlag) Error::Issue(ErrorType::RangeError, "exceeds the range");
-		pValue.reset(Value::nil());
-		return false;
-	}
-	pValue.reset(new Value_Number(bigEndianFlag? packer.Extract<T, true>(pByte) : packer.Extract<T, false>(pByte)));
-	return true;
-}
 
 template<> inline void Packer::Store<UInt8, true>(UInt8 num, bool forwardFlag)
 {
@@ -257,6 +231,56 @@ template<> inline void Packer::Store<Double, true>(Double num, bool forwardFlag)
 template<> inline void Packer::Store<Double, false>(Double num, bool forwardFlag)
 {
 	Store<UInt64, false>(*reinterpret_cast<UInt64*>(&num), forwardFlag);
+}
+
+template<> inline void Packer::Store<Complex, true>(Complex num, bool forwardFlag)
+{
+	UInt8 buff[sizeof(UInt64) * 2];
+	UInt8* pByte = buff + sizeof(UInt64) * 2 - 1;
+	UInt64 numWk = static_cast<UInt64>(num.imag());
+	*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
+	*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
+	*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
+	*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
+	*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
+	*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
+	*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
+	*pByte   = static_cast<UInt8>(numWk);
+	numWk = static_cast<UInt64>(num.real());
+	*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
+	*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
+	*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
+	*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
+	*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
+	*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
+	*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
+	*pByte   = static_cast<UInt8>(numWk);
+	StoreBuffer(buff, sizeof(UInt64) * 2, forwardFlag);
+}
+
+template<> inline void Packer::Store<Complex, false>(Complex num, bool forwardFlag)
+{
+	UInt8 buff[sizeof(UInt64) * 2];
+	UInt8* pByte = buff;
+	UInt64 numWk = static_cast<UInt64>(num.real());
+	*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
+	*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
+	*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
+	*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
+	*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
+	*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
+	*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
+	*pByte   = static_cast<UInt8>(numWk);
+	numWk = static_cast<UInt64>(num.imag());
+	*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
+	*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
+	*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
+	*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
+	*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
+	*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
+	*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
+	*pByte   = static_cast<UInt8>(numWk);
+	StoreBuffer(buff, sizeof(UInt64) * 2, forwardFlag);
 }
 
 template<> inline UInt8 Packer::Extract<UInt8, true>(const UInt8* pByte)
@@ -409,6 +433,18 @@ template<> inline Double Packer::Extract<Double, false>(const UInt8* pByte)
 	UInt64 num = Extract<UInt64, false>(pByte);
 	return *reinterpret_cast<Double*>(&num);
 }
+
+#if 0
+template<> inline Double Packer::Extract<Complex, true>(const UInt8* pByte)
+{
+	return Complex(Extract<Double, true>(pByte), Extract<Double, true>(pByte + sizeof(Double)));
+}
+
+template<> inline Complex Packer::Extract<Complex, false>(const UInt8* pByte)
+{
+	return Complex(Extract<Double, false>(pByte), Extract<Double, false>(pByte + sizeof(Double)));
+}
+#endif
 
 }
 

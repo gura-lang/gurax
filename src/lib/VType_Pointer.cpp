@@ -419,7 +419,7 @@ Gurax_ImplementMethod(Pointer, Unpack)
 // Pointer#@:[be,fwd]
 Gurax_DeclarePropertyAlias_RW(Pointer, at, "@")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(fwd));
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -510,7 +510,7 @@ Gurax_ImplementPropertySetter(Pointer, offset)
 // Pointer#int8:[be,fwd]
 Gurax_DeclareProperty_RW(Pointer, int8)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(fwd));
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -533,7 +533,7 @@ Gurax_ImplementPropertySetter(Pointer, int8)
 // Pointer#int16:[be,fwd]
 Gurax_DeclareProperty_RW(Pointer, int16)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(fwd));
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -556,7 +556,7 @@ Gurax_ImplementPropertySetter(Pointer, int16)
 // Pointer#int32:[be,fwd]
 Gurax_DeclareProperty_RW(Pointer, int32)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(fwd));
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -579,7 +579,7 @@ Gurax_ImplementPropertySetter(Pointer, int32)
 // Pointer#int64:[be,fwd]
 Gurax_DeclareProperty_RW(Pointer, int64)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(fwd));
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -602,7 +602,7 @@ Gurax_ImplementPropertySetter(Pointer, int64)
 // Pointer#uint8:[be,fwd]
 Gurax_DeclareProperty_RW(Pointer, uint8)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(fwd));
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -625,7 +625,7 @@ Gurax_ImplementPropertySetter(Pointer, uint8)
 // Pointer#uint16:[be,fwd]
 Gurax_DeclareProperty_RW(Pointer, uint16)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(fwd));
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -648,7 +648,7 @@ Gurax_ImplementPropertySetter(Pointer, uint16)
 // Pointer#uint32:[be,fwd]
 Gurax_DeclareProperty_RW(Pointer, uint32)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(fwd));
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -671,7 +671,7 @@ Gurax_ImplementPropertySetter(Pointer, uint32)
 // Pointer#uint64:[be,fwd]
 Gurax_DeclareProperty_RW(Pointer, uint64)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(fwd));
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -694,7 +694,7 @@ Gurax_ImplementPropertySetter(Pointer, uint64)
 // Pointer#float:[be,fwd]
 Gurax_DeclarePropertyAlias_RW(Pointer, float_, "float")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(fwd));
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -717,7 +717,7 @@ Gurax_ImplementPropertySetter(Pointer, float_)
 // Pointer#double:[be,fwd]
 Gurax_DeclarePropertyAlias_RW(Pointer, double_, "double")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(fwd));
 	AddHelp(Gurax_Symbol(en), u8R"""(
