@@ -33,6 +33,7 @@ public:
 		static ElemType UInt64;
 		static ElemType Float;
 		static ElemType Double;
+		static ElemType Complex;
 	public:
 		const Symbol* pSymbol;
 		std::function<bool (Packer& packer, const Value& value, bool bigEndianFlag, bool forwardFlag)> putFunc;
@@ -434,8 +435,7 @@ template<> inline Double Packer::Extract<Double, false>(const UInt8* pByte)
 	return *reinterpret_cast<Double*>(&num);
 }
 
-#if 0
-template<> inline Double Packer::Extract<Complex, true>(const UInt8* pByte)
+template<> inline Complex Packer::Extract<Complex, true>(const UInt8* pByte)
 {
 	return Complex(Extract<Double, true>(pByte), Extract<Double, true>(pByte + sizeof(Double)));
 }
@@ -444,7 +444,6 @@ template<> inline Complex Packer::Extract<Complex, false>(const UInt8* pByte)
 {
 	return Complex(Extract<Double, false>(pByte), Extract<Double, false>(pByte + sizeof(Double)));
 }
-#endif
 
 }
 

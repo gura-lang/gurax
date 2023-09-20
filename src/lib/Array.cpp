@@ -1333,7 +1333,7 @@ void Array::Bootup()
 	ElemType::Half.pElemTypePointer		= &Pointer::ElemType::UInt32;
 	ElemType::Float.pElemTypePointer	= &Pointer::ElemType::Float;
 	ElemType::Double.pElemTypePointer	= &Pointer::ElemType::Double;
-	ElemType::Complex.pElemTypePointer	= &Pointer::ElemType::UInt8;
+	ElemType::Complex.pElemTypePointer	= &Pointer::ElemType::Complex;
 	Gurax_SetArrayFuncSingle(funcs.FillOne,				FillOne_T);
 	Gurax_SetArrayFuncSingle(funcs.FillRandomNormal,	FillRandomNormal_T);
 	Gurax_SetArrayFuncSingle(funcs.HasZero,				HasZero_T);

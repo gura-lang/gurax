@@ -27,7 +27,7 @@ Pointer
 @uint64(3, 4).p.elemType .. `uint64
 @float(3, 4).p.elemType .. `float
 @double(3, 4).p.elemType .. `double
-@complex(3, 4).p.elemType .. `uint8
+@complex(3, 4).p.elemType .. `complex
 ======== Pointer#elemType ========
 elemType: bool
 p.@ = true .. true
@@ -85,10 +85,10 @@ p.@ = 10 .. 10
 p.@ = 'xx' .. Number value must be specified
 p.@ = 2 + 5j .. Number value must be specified
 elemType: complex
-p.@ = true .. Number value must be specified
+p.@ = true .. Complex or Number value must be specified
 p.@ = 10 .. 10
-p.@ = 'xx' .. Number value must be specified
-p.@ = 2 + 5j .. Number value must be specified
+p.@ = 'xx' .. Complex or Number value must be specified
+p.@ = 2 + 5j .. 2+5j
 ======== Basic test of pack/unpack ========
 ---
 buff.p.Pack('bbbb', 0, -128, 127, 18)

@@ -41,7 +41,6 @@ template<> bool PutFunc_T<Bool>(Packer& packer, const Value& value, bool bigEndi
 	return true;
 }
 
-#if 0
 template<> bool PutFunc_T<Complex>(Packer& packer, const Value& value, bool bigEndianFlag, bool forwardFlag)
 {
 	using T = Complex;
@@ -62,7 +61,6 @@ template<> bool PutFunc_T<Complex>(Packer& packer, const Value& value, bool bigE
 	}
 	return true;
 }
-#endif
 
 template<typename T> bool GetFunc_T(Packer& packer, RefPtr<Value>& pValue, bool exceedErrorFlag, bool bigEndianFlag, bool forwardFlag)
 {
@@ -89,7 +87,6 @@ template<> bool GetFunc_T<Bool>(Packer& packer, RefPtr<Value>& pValue, bool exce
 	return true;
 }
 
-#if 0
 template<> bool GetFunc_T<Complex>(Packer& packer, RefPtr<Value>& pValue, bool exceedErrorFlag, bool bigEndianFlag, bool forwardFlag)
 {
 	using T = Complex;
@@ -102,7 +99,6 @@ template<> bool GetFunc_T<Complex>(Packer& packer, RefPtr<Value>& pValue, bool e
 	pValue.reset(new Value_Complex(bigEndianFlag? packer.Extract<T, true>(pByte) : packer.Extract<T, false>(pByte)));
 	return true;
 }
-#endif
 
 Packer::ElemType Packer::ElemType::None;
 Packer::ElemType Packer::ElemType::Bool;
@@ -116,6 +112,7 @@ Packer::ElemType Packer::ElemType::Int64;
 Packer::ElemType Packer::ElemType::UInt64;
 Packer::ElemType Packer::ElemType::Float;
 Packer::ElemType Packer::ElemType::Double;
+Packer::ElemType Packer::ElemType::Complex;
 
 void Packer::Bootup()
 {
@@ -131,6 +128,7 @@ void Packer::Bootup()
 	ElemType::UInt64.pSymbol	= Gurax_Symbol(uint64);
 	ElemType::Float.pSymbol		= Gurax_Symbol(float_);
 	ElemType::Double.pSymbol	= Gurax_Symbol(double_);
+	ElemType::Complex.pSymbol	= Gurax_Symbol(complex);
 	ElemType::None.putFunc		= PutFunc_T<Int8>;
 	ElemType::None.getFunc		= GetFunc_T<Int8>;
 	ElemType::Bool.putFunc		= PutFunc_T<Bool>;
@@ -155,6 +153,8 @@ void Packer::Bootup()
 	ElemType::Float.getFunc		= GetFunc_T<Float>;
 	ElemType::Double.putFunc	= PutFunc_T<Double>;
 	ElemType::Double.getFunc	= GetFunc_T<Double>;
+	ElemType::Complex.putFunc	= PutFunc_T<Complex>;
+	ElemType::Complex.getFunc	= GetFunc_T<Complex>;
 }
 
 bool Packer::Put(const ElemType& elemType, const Value& value, const Attribute& attr)
