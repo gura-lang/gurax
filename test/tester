@@ -71,6 +71,7 @@ cases="$cases while"
 cases="$cases xml"
 cases="$cases yaml"
 
+echo -e "\033[0m"
 if [ $# -eq 0 ]; then
 	echo "usage: tester all/casename [update]"
 	exit
@@ -95,3 +96,4 @@ elif [ "$2" = "update" ]; then
 		gurax -I../module test-$case.gura > result/test-$case.expect.txt
 	done
 fi
+echo -e "\033[0m"

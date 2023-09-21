@@ -238,24 +238,30 @@ template<> inline void Packer::Store<Complex, true>(Complex num, bool forwardFla
 {
 	UInt8 buff[sizeof(UInt64) * 2];
 	UInt8* pByte = buff + sizeof(UInt64) * 2 - 1;
-	UInt64 numWk = static_cast<UInt64>(num.imag());
-	*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
-	*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
-	*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
-	*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
-	*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
-	*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
-	*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
-	*pByte   = static_cast<UInt8>(numWk);
-	numWk = static_cast<UInt64>(num.real());
-	*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
-	*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
-	*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
-	*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
-	*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
-	*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
-	*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
-	*pByte   = static_cast<UInt8>(numWk);
+	do {
+		Double numPart = num.imag();
+		UInt64 numWk = *reinterpret_cast<UInt64*>(&numPart);
+		*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
+		*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
+		*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
+		*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
+		*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
+		*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
+		*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
+		*pByte-- = static_cast<UInt8>(numWk);
+	} while (0);
+	do {
+		Double numPart = num.real();
+		UInt64 numWk = *reinterpret_cast<UInt64*>(&numPart);
+		*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
+		*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
+		*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
+		*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
+		*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
+		*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
+		*pByte-- = static_cast<UInt8>(numWk); numWk >>= 8;
+		*pByte   = static_cast<UInt8>(numWk);
+	} while (0);
 	StoreBuffer(buff, sizeof(UInt64) * 2, forwardFlag);
 }
 
@@ -263,24 +269,30 @@ template<> inline void Packer::Store<Complex, false>(Complex num, bool forwardFl
 {
 	UInt8 buff[sizeof(UInt64) * 2];
 	UInt8* pByte = buff;
-	UInt64 numWk = static_cast<UInt64>(num.real());
-	*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
-	*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
-	*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
-	*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
-	*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
-	*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
-	*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
-	*pByte   = static_cast<UInt8>(numWk);
-	numWk = static_cast<UInt64>(num.imag());
-	*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
-	*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
-	*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
-	*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
-	*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
-	*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
-	*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
-	*pByte   = static_cast<UInt8>(numWk);
+	do {
+		Double numPart = num.real();
+		UInt64 numWk = *reinterpret_cast<UInt64*>(&numPart);
+		*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
+		*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
+		*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
+		*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
+		*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
+		*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
+		*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
+		*pByte++ = static_cast<UInt8>(numWk);
+	} while (0);
+	do {
+		Double numPart = num.imag();
+		UInt64 numWk = *reinterpret_cast<UInt64*>(&numPart);
+		*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
+		*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
+		*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
+		*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
+		*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
+		*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
+		*pByte++ = static_cast<UInt8>(numWk); numWk >>= 8;
+		*pByte   = static_cast<UInt8>(numWk);
+	} while (0);
 	StoreBuffer(buff, sizeof(UInt64) * 2, forwardFlag);
 }
 

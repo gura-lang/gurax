@@ -32,6 +32,26 @@ TestCase('Pointer#elemType') {
 	}
 }
 
+TestCase('Pointer Read/Write') {
+	[`bool, `int8, `uint8, `int16, `uint16, `int32, `uint32, `int64, `uint64, `float, `double, `complex].Each {|elemType|
+		Printf('elemType: %s\n', elemType)
+		array = Array(elemType, 3, 4)
+		p = array.p
+		if (elemType == `bool) {
+			repeat (array.len) {|i| p.@:fwd = cond((i % 2) == 0, true, false)}
+		} elsif (elemType == `complex) {
+			repeat (array.len) {|i| p.@:fwd = i * ((i % 2) * 2 - 1) + i * 1j}
+		} elsif (elemType in [`uint8, `uint16, `uint32, `uint64]) {
+			repeat (array.len) {|i| p.@:fwd = i}
+		} else {
+			repeat (array.len) {|i| p.@:fwd = i * ((i % 2) * 2 - 1)}
+		}
+		array.p.Dump()
+		p = array.p
+		Println(repeat (array.len):iter {|i| p.@:fwd}.Join(','))
+	}
+}
+
 TestCase('Basic test of pack/unpack') {
 	PackTester(buff as Binary, format as String, args*) = {
 		Printf('buff.p.Pack(%s, %s)', format.Enquote(), args.Join(', ')) 
