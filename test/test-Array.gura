@@ -2,8 +2,6 @@
 import(util.tester) {*}
 
 Number.format@float = '%.3f'
-Complex.formatImag = '%.3f'
-Complex.formatReal = '%.3f'
 
 elemTypes = [
 	`int8,  `uint8,  `int16,  `uint16,  `int32,  `uint32,  `int64,  `uint64,  `half,  `float,  `double,  `complex
