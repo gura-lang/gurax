@@ -158,6 +158,7 @@ Gurax_ImplementMethod(Rational, Canonicalize)
 //-----------------------------------------------------------------------------
 // Implementation of class property
 //-----------------------------------------------------------------------------
+#if 0
 // Rational.format as String
 Gurax_DeclareClassProperty_RW(Rational, format)
 {
@@ -202,6 +203,7 @@ Gurax_ImplementClassPropertySetter(Rational, formatInt)
 			Formatter::VaType::Int64, Formatter::VaType::None)) return;
 	Rational::formatterFormat_Int = format;
 }
+#endif
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -567,8 +569,8 @@ void VType_Rational::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Rational, IsNonNeg));
 	Assign(Gurax_CreateMethod(Rational, Canonicalize));
 	// Assignment of class property
-	Assign(Gurax_CreateProperty(Rational, format));
-	Assign(Gurax_CreateProperty(Rational, formatInt));
+	//Assign(Gurax_CreateProperty(Rational, format));
+	//Assign(Gurax_CreateProperty(Rational, formatInt));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Rational, denom));
 	Assign(Gurax_CreateProperty(Rational, numer));

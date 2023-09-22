@@ -77,6 +77,7 @@ Gurax_ImplementConstructor(Complex)
 //-----------------------------------------------------------------------------
 // Implementation of class property
 //-----------------------------------------------------------------------------
+#if 0
 // Complex.format:String
 Gurax_DeclareClassProperty_RW(Complex, format)
 {
@@ -99,7 +100,9 @@ Gurax_ImplementClassPropertySetter(Complex, format)
 			Formatter::VaType::None)) return;
 	Complex::formatterFormat = format;
 }
+#endif
 
+#if 0
 // Complex.formatImag:String
 Gurax_DeclareClassProperty_RW(Complex, formatImag)
 {
@@ -143,6 +146,7 @@ Gurax_ImplementClassPropertySetter(Complex, formatReal)
 			Formatter::VaType::Float, Formatter::VaType::None)) return;
 	Complex::formatterFormat_Real = format;
 }
+#endif
 
 //------------------------------------------------------------------------------
 // Implementation of property
@@ -420,9 +424,9 @@ void VType_Complex::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Complex));
 	// Assignment of class property
-	Assign(Gurax_CreateProperty(Complex, format));
-	Assign(Gurax_CreateProperty(Complex, formatImag));
-	Assign(Gurax_CreateProperty(Complex, formatReal));
+	//Assign(Gurax_CreateProperty(Complex, format));
+	//Assign(Gurax_CreateProperty(Complex, formatImag));
+	//Assign(Gurax_CreateProperty(Complex, formatReal));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Complex, abs));
 	Assign(Gurax_CreateProperty(Complex, arg));

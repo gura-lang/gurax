@@ -2,9 +2,6 @@
 Complex
   #abs              Number       R
   #arg              Number       R
-  .format           String       R/W
-  .formatImag       String       R/W
-  .formatReal       String       R/W
   #imag             Number       R
   #norm             Number       R
   #real             Number       R
@@ -63,21 +60,3 @@ a.real .. 1
 3 + 2j - (5 + 4j) .. -2-2j
 3 + 2j - 5 .. -2+2j
 3 - (5 + 4j) .. -2-4j
-======== Complex.format / formatReal / formatImag ========
-Complex.format = 'Complex(%g,%g)' .. Complex(%g,%g)
-1234 + 5679j .. Complex(1234,5679)
-Complex.formatReal = 'Complex(%g)' .. Complex(%g)
-1234 + 5679j - 5679j .. Complex(1234)
-Complex.formatImag = 'Complex(0,%g)' .. Complex(0,%g)
-5679j .. Complex(0,5679)
-Complex.format = '%d%+d' .. invalid format specifier
-Complex.format = '' .. too few format specifiers
-Complex.format = '%g' .. too few format specifiers
-Complex.format = '%g%+gj' .. %g%+gj
-Complex.format = '%g%+gj%+gj' .. too many format specifiers
-Complex.formatReal = '' .. too few format specifiers
-Complex.formatReal = '%g' .. %g
-Complex.formatReal = '%g%+gj' .. too many format specifiers
-Complex.formatImag = '' .. too few format specifiers
-Complex.formatImag = '%g' .. %g
-Complex.formatImag = '%g%+gj' .. too many format specifiers

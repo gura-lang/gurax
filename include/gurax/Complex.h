@@ -12,9 +12,9 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Complex : public std::complex<Double> {
 public:
-	static String formatterFormat;
-	static String formatterFormat_Real;
-	static String formatterFormat_Imag;
+	//static String formatterFormat;
+	//static String formatterFormat_Real;
+	//static String formatterFormat_Imag;
 public:
 	static const Complex Zero;
 public:

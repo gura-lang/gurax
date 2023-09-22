@@ -20,8 +20,8 @@ protected:
 	ElemType _numer;
 	ElemType _denom;
 public:
-	static String formatterFormat;
-	static String formatterFormat_Int;
+	//static String formatterFormat;
+	//static String formatterFormat_Int;
 public:
 	static const Rational Zero;
 public:

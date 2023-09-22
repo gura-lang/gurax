@@ -531,7 +531,18 @@ TestCase('Array / Array') {
 }
 
 TestCase('Array + Number') {
-	Tester(`(@float([[1, 2, 3], [4, 5, 6]]) + 4)[])
+	Tester(`(@int8([[4, 2, 1], [6, 3, 9]]) + 3))
+	Tester(`(@uint8([[4, 2, 1], [6, 3, 9]]) + 3))
+	Tester(`(@int16([[4, 2, 1], [6, 3, 9]]) + 3))
+	Tester(`(@uint16([[4, 2, 1], [6, 3, 9]]) + 3))
+	Tester(`(@int32([[4, 2, 1], [6, 3, 9]]) + 3))
+	Tester(`(@uint32([[4, 2, 1], [6, 3, 9]]) + 3))
+	Tester(`(@int64([[4, 2, 1], [6, 3, 9]]) + 3))
+	Tester(`(@uint64([[4, 2, 1], [6, 3, 9]]) + 3))
+	Tester(`(@half([[4, 2, 1], [6, 3, 9]]) + 3))
+	Tester(`(@float([[4, 2, 1], [6, 3, 9]]) + 3))
+	Tester(`(@double([[4, 2, 1], [6, 3, 9]]) + 3))
+	Tester(`(@complex([[4, 2, 1], [6, 3, 9]]) + 3))
 }
 
 TestCase('Number + Array') {

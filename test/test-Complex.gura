@@ -42,6 +42,7 @@ TestCase('Operator') {
 	Tester(`(3 - (5 + 4j)))
 }
 
+/*
 TestCase('Complex.format / formatReal / formatImag') {
 	format = Complex.format
 	formatReal = Complex.formatReal
@@ -67,3 +68,4 @@ TestCase('Complex.format / formatReal / formatImag') {
 	Complex.formatReal = formatReal
 	Complex.formatImag = formatImag
 }
+*/

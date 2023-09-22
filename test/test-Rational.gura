@@ -227,6 +227,7 @@ TestCase('Operator a >= b') {
 	Tester(`(3 >= (7 / 2r)))
 }
 
+/*
 TestCase('Rational.format') {
 	format = Rational.format
 	formatInt = Rational.formatInt
@@ -256,6 +257,7 @@ TestCase('Rational.format') {
 	Rational.format = format
 	Rational.formatInt = formatInt
 }
+*/
 
 TestCase('Rational#sign') {
 	Tester(`(0r).sign)
