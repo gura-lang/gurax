@@ -53,7 +53,7 @@ public:
 	void AppendInfoToString(String& str, const StringStyle& ss) const;
 	void Print(const StringStyle& ss = StringStyle::Empty, int seqIdOffset = 0) const;
 	static void Print(const PUnit* pPUnit, const PUnit* pPUnitSentinel,
-					  const StringStyle& ss = StringStyle::Empty, int seqIdOffset = 0);
+					const StringStyle& ss = StringStyle::Empty, int seqIdOffset = 0);
 public:
 	// Virtual functions
 	virtual bool IsBridge() const { return false; }
@@ -2367,7 +2367,7 @@ private:
 	RefPtr<Expr> _pExprAssigned;
 public:
 	PUnitFactory_NamedArgSlotBegin(const Symbol* pSymbol,
-								   Expr* pExprAssigned, const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
+								Expr* pExprAssigned, const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
 		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc), _pSymbol(pSymbol), _pExprAssigned(pExprAssigned) {}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_NamedArgSlotBegin<false>);

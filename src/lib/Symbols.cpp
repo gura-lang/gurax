@@ -14,6 +14,7 @@ Gurax_RealizeSymbol(__file__);
 Gurax_RealizeSymbol(__init__);
 Gurax_RealizeSymbol(__line__);
 Gurax_RealizeSymbol(__name__);
+Gurax_RealizeSymbol(__outer__);
 Gurax_RealizeSymbol(__root__);
 Gurax_RealizeSymbol(__tmpl__);
 Gurax_RealizeSymbol(a);

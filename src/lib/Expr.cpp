@@ -529,24 +529,27 @@ void Expr_Identifier::Compose(Composer& composer)
 	const Symbol* pSymbol = GetSymbol();
 	if (pSymbol->IsIdentical(Gurax_Symbol(__file__))) {
 		composer.Add_Value(new Value_String(GetPathNameSrc()), *this);			// [Value]
+		return;
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(__line__))) {
 		composer.Add_Value(new Value_Number(GetLineNoTop()), *this);			// [Value]
-	} else {
-		RefPtr<Value> pValue(Basement::Inst.GetFrame().Retrieve(pSymbol));
-		if (pValue && pValue->IsType(VTYPE_Function)) {
-			const Function& func = dynamic_cast<Value_Function&>(*pValue).GetFunction();
-			if (func.IsTypeStatement()) {
-				RefPtr<Expr> pExprParent(LockExprParent());
-				if (!pExprParent || pExprParent->IsShortCircuitOperator() || pExprParent->IsCollector()) {
-					RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
-					pExprCaller->SetExprCar(new Expr_Identifier(pSymbol));
-					func.Compose(composer, *pExprCaller);
-					return;
-				}
+		return;
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(__outer__))) {
+		
+	}
+	RefPtr<Value> pValue(Basement::Inst.GetFrame().Retrieve(pSymbol));
+	if (pValue && pValue->IsType(VTYPE_Function)) {
+		const Function& func = dynamic_cast<Value_Function&>(*pValue).GetFunction();
+		if (func.IsTypeStatement()) {
+			RefPtr<Expr> pExprParent(LockExprParent());
+			if (!pExprParent || pExprParent->IsShortCircuitOperator() || pExprParent->IsCollector()) {
+				RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
+				pExprCaller->SetExprCar(new Expr_Identifier(pSymbol));
+				func.Compose(composer, *pExprCaller);
+				return;
 			}
 		}
-		composer.Add_Lookup(pSymbol, *this);									// [Value]
 	}
+	composer.Add_Lookup(pSymbol, *this);										// [Value]
 }
 
 void Expr_Identifier::ComposeWithinValueAssignment(Composer& composer, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol)
