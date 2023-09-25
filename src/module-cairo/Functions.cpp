@@ -3014,12 +3014,12 @@ Gurax_ImplementFunctionEx(cairo_get_dash_count_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_get_dash(cr as cairo_t, &dashes:nilRef as List, &offset:nilRef as Number)
+// cairo.cairo_get_dash(cr as cairo_t, &dashes:nilRef as Tuple, &offset:nilRef as Number)
 Gurax_DeclareFunctionAlias(cairo_get_dash_gurax, "cairo_get_dash")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("dashes", VTYPE_List, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("dashes", VTYPE_Tuple, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
@@ -3036,7 +3036,7 @@ Gurax_ImplementFunctionEx(cairo_get_dash_gurax, processor_gurax, argument_gurax)
 	int dash_count_ = cairo_get_dash_count(cr);
 	std::unique_ptr<double []> dashes_(new double [dash_count_]);
 	cairo_get_dash(cr, dashes_.get(), &offset_);
-	dashes->SetValue(Value_List::Create(dashes_.get(), dash_count_));
+	dashes->SetValue(Value_Tuple::Create(dashes_.get(), dash_count_));
 	offset->SetValue(new Value_Number(offset_));
 	return Value::nil();
 }
@@ -5851,11 +5851,11 @@ Gurax_ImplementFunctionEx(cairo_pdf_surface_restrict_to_version_gurax, processor
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_pdf_get_versions(&versions:nilRef as List)
+// cairo.cairo_pdf_get_versions(&versions:nilRef as Tuple)
 Gurax_DeclareFunctionAlias(cairo_pdf_get_versions_gurax, "cairo_pdf_get_versions")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("versions", VTYPE_List, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("versions", VTYPE_Tuple, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(cairo_pdf_get_versions_gurax, processor_gurax, argument_gurax)
@@ -5867,7 +5867,7 @@ Gurax_ImplementFunctionEx(cairo_pdf_get_versions_gurax, processor_gurax, argumen
 	const cairo_pdf_version_t* versions_;
 	int num_version_;
 	cairo_pdf_get_versions(&versions_, &num_version_);
-	versions->SetValue(Value_List::Create(reinterpret_cast<const int*>(versions_), num_version_));
+	versions->SetValue(Value_Tuple::Create(reinterpret_cast<const int*>(versions_), num_version_));
 	return Value::nil();
 }
 
@@ -6061,6 +6061,26 @@ Gurax_ImplementFunctionEx(cairo_ps_surface_restrict_to_level_gurax, processor_gu
 	// Function body
 	cairo_ps_surface_restrict_to_level(surface, level);
 	return Gurax::Value::nil();
+}
+
+// cairo.cairo_ps_get_levels(&levels:nilRef as Tuple)
+Gurax_DeclareFunctionAlias(cairo_ps_get_levels_gurax, "cairo_ps_get_levels")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("levels", VTYPE_Tuple, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+}
+
+Gurax_ImplementFunctionEx(cairo_ps_get_levels_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Referencer> levels(args_gurax.PickReferencer().Reference());
+	// Function body
+	const cairo_ps_level_t* levels_;
+	int num_levels_;
+	cairo_ps_get_levels(&levels_, &num_levels_);
+	levels->SetValue(Value_Tuple::Create(reinterpret_cast<const int*>(levels_), num_levels_));
+	return Value::nil();
 }
 
 // cairo.cairo_ps_level_to_string(level as Number)
@@ -6422,11 +6442,11 @@ Gurax_ImplementFunctionEx(cairo_svg_surface_restrict_to_version_gurax, processor
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_svg_get_versions(&versions:nilRef as List)
+// cairo.cairo_svg_get_versions(&versions:nilRef as Tuple)
 Gurax_DeclareFunctionAlias(cairo_svg_get_versions_gurax, "cairo_svg_get_versions")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("versions", VTYPE_List, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("versions", VTYPE_Tuple, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(cairo_svg_get_versions_gurax, processor_gurax, argument_gurax)
@@ -6438,7 +6458,7 @@ Gurax_ImplementFunctionEx(cairo_svg_get_versions_gurax, processor_gurax, argumen
 	const cairo_svg_version_t* versions_;
 	int num_version_;
 	cairo_svg_get_versions(&versions_, &num_version_);
-	versions->SetValue(Value_List::Create(reinterpret_cast<const int*>(versions_), num_version_));
+	versions->SetValue(Value_Tuple::Create(reinterpret_cast<const int*>(versions_), num_version_));
 	return Value::nil();
 }
 
@@ -6792,6 +6812,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(cairo_ps_surface_create_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_ps_surface_create_for_stream_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_ps_surface_restrict_to_level_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_ps_get_levels_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_ps_level_to_string_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_ps_surface_set_eps_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_ps_surface_get_eps_gurax));

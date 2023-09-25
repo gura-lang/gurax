@@ -536,13 +536,13 @@ cairo_get_miter_limit(cr as cairo_t_p) as double
 cairo_get_dash_count(cr as cairo_t_p) as int
 
 //cairo_get_dash(cr as cairo_t_p, dashes as double_p, offset as double_p):void
-cairo_get_dash(cr as cairo_t_p, &dashes:nilRef as List@gurax, &offset:nilRef as double) as void = \
+cairo_get_dash(cr as cairo_t_p, &dashes:nilRef as Tuple@gurax, &offset:nilRef as double) as void = \
 	R'''
 	double offset_;
 	int dash_count_ = cairo_get_dash_count(cr);
 	std::unique_ptr<double []> dashes_(new double [dash_count_]);
 	cairo_get_dash(cr, dashes_.get(), &offset_);
-	dashes->SetValue(Value_List::Create(dashes_.get(), dash_count_));
+	dashes->SetValue(Value_Tuple::Create(dashes_.get(), dash_count_));
 	offset->SetValue(new Value_Number(offset_));
 	return Value::nil();
 	'''
@@ -992,12 +992,12 @@ cairo_pdf_surface_create_for_stream(stream:w as Stream@gurax, width_in_points as
 cairo_pdf_surface_restrict_to_version(surface as cairo_surface_t_p, version as cairo_pdf_version_t):void
 
 //cairo_pdf_get_versions(versions as cairo_pdf_version_t_const_pp, num_versions as int_p):void
-cairo_pdf_get_versions(&versions:nilRef as List@gurax):void = \
+cairo_pdf_get_versions(&versions:nilRef as Tuple@gurax):void = \
 	R'''
 	const cairo_pdf_version_t* versions_;
 	int num_version_;
 	cairo_pdf_get_versions(&versions_, &num_version_);
-	versions->SetValue(Value_List::Create(reinterpret_cast<const int*>(versions_), num_version_));
+	versions->SetValue(Value_Tuple::Create(reinterpret_cast<const int*>(versions_), num_version_));
 	return Value::nil();
 	'''
 
@@ -1027,6 +1027,14 @@ cairo_ps_surface_create_for_stream(stream:w as Stream@gurax, width_in_points as 
 cairo_ps_surface_restrict_to_level(surface as cairo_surface_t_p, level as cairo_ps_level_t):void
 
 //cairo_ps_get_levels(levels as cairo_ps_level_t_const_pp, num_levels as int_p):void
+cairo_ps_get_levels(&levels:nilRef as Tuple@gurax):void = \
+	R'''
+	const cairo_ps_level_t* levels_;
+	int num_levels_;
+	cairo_ps_get_levels(&levels_, &num_levels_);
+	levels->SetValue(Value_Tuple::Create(reinterpret_cast<const int*>(levels_), num_levels_));
+	return Value::nil();
+	'''
 
 cairo_ps_level_to_string(level as cairo_ps_level_t) as const_char_p
 
@@ -1079,12 +1087,12 @@ cairo_svg_surface_create_for_stream(stream:w as Stream@gurax, width_in_points as
 cairo_svg_surface_restrict_to_version(surface as cairo_surface_t_p, version as cairo_svg_version_t):void
 
 //cairo_svg_get_versions(versions as cairo_svg_version_t_const_pp, num_versions as int_p):void
-cairo_svg_get_versions(&versions:nilRef as List@gurax):void = \
+cairo_svg_get_versions(&versions:nilRef as Tuple@gurax):void = \
 	R'''
 	const cairo_svg_version_t* versions_;
 	int num_version_;
 	cairo_svg_get_versions(&versions_, &num_version_);
-	versions->SetValue(Value_List::Create(reinterpret_cast<const int*>(versions_), num_version_));
+	versions->SetValue(Value_Tuple::Create(reinterpret_cast<const int*>(versions_), num_version_));
 	return Value::nil();
 	'''
 

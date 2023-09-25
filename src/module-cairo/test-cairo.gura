@@ -6,5 +6,12 @@ import(util.tester) {*}
 import(cairo)
 
 TestCase('Basic test') {
-	cairo.Test()
+	versions = nil
+	cairo.cairo_pdf_get_versions(&versions)
+	Println(versions):noMap
+	cairo.cairo_svg_get_versions(&versions)
+	Println(versions):noMap
+	levels = nil
+	cairo.cairo_ps_get_levels(&levels)
+	Println(levels):noMap
 }
