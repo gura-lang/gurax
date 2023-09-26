@@ -48,6 +48,29 @@ ${help.ComposeMethodHelp(wx.DropFilesEvent, `ja)}
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.DropFilesEvent#GetFiles()
+Gurax_DeclareMethodAlias(wxDropFilesEvent, GetFiles_gurax, "GetFiles")
+{
+	Declare(VTYPE_List, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxDropFilesEvent, GetFiles_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxString* files = pEntity_gurax->GetFiles();
+	int nFiles = pEntity_gurax->GetNumberOfFiles();
+	RefPtr<ValueOwner> pValues(new ValueOwner());
+	for (int i = 0; i < nFiles; i++) {
+		pValues->push_back(new Value_String(files[i].utf8_str().data()));
+	}
+	//delete files;
+	return new Value_List(VTYPE_String, pValues.release());
+}
+
 // wx.DropFilesEvent#GetNumberOfFiles()
 Gurax_DeclareMethodAlias(wxDropFilesEvent, GetNumberOfFiles_gurax, "GetNumberOfFiles")
 {
@@ -100,6 +123,7 @@ void VType_wxDropFilesEvent::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxDropFilesEvent, GetFiles_gurax));
 	Assign(Gurax_CreateMethod(wxDropFilesEvent, GetNumberOfFiles_gurax));
 	Assign(Gurax_CreateMethod(wxDropFilesEvent, GetPosition_gurax));
 }

@@ -3,6 +3,21 @@
 //==============================================================================
 AffineMatrix2D = Class {
 	@include['wx/affinematrix2d.h']
+	__init__()
+	//Get(mat2D as Matrix2D_p, tr as Point2DDouble_p) as void
+	//Set(mat2D as const_Matrix2D_r, tr as const_Point2DDouble_r) as void
+	//Concat(t as const_AffineMatrix2DBase_r) as void
+	Invert() as bool
+	IsIdentity() as bool
+	Translate(dx as Double, dy as Double) as void
+	Scale(xScale as Double, yScale as Double) as void
+	Mirror(direction as int = wxHORIZONTAL) as void
+	Rotate(cRadians as Double) as void
+	TransformPoint(p as const_Point2DDouble_r) as Point2DDouble
+	//TransformPoint(x as Double_p, y as Double_p) as void
+	TransformDistance(p as const_Point2DDouble_r) as Point2DDouble
+	//TransformDistance(dx as Double_p, dy as Double_p) as void
+	//IsEqual(t as const_AffineMatrix2DBase_r) as void
 } %% R'''
 # Overview
 

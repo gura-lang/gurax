@@ -4,6 +4,17 @@
 DropFilesEvent = Class(Event) {
 	//__init__(id as EventType = 0, noFiles as int = 0, files as String_p = NULL)
 	//GetFiles() as String_p
+	GetFiles() as List@gurax = \
+		R'''
+		wxString* files = pEntity_gurax->GetFiles();
+		int nFiles = pEntity_gurax->GetNumberOfFiles();
+		RefPtr<ValueOwner> pValues(new ValueOwner());
+		for (int i = 0; i < nFiles; i++) {
+			pValues->push_back(new Value_String(files[i].utf8_str().data()));
+		}
+		delete files;
+		return new Value_List(VTYPE_String, pValues.release());
+		'''
 	GetNumberOfFiles() as int
 	GetPosition() as Point
 } %% R'''

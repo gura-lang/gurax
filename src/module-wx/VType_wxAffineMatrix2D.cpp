@@ -44,10 +44,191 @@ ${help.ComposeMethodHelp(wx.AffineMatrix2D, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.AffineMatrix2D() {block?}
+Gurax_DeclareConstructorAlias(AffineMatrix2D_gurax, "AffineMatrix2D")
+{
+	Declare(VTYPE_wxAffineMatrix2D, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementConstructorEx(AffineMatrix2D_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxAffineMatrix2D(
+		wxAffineMatrix2D()));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.AffineMatrix2D#Invert()
+Gurax_DeclareMethodAlias(wxAffineMatrix2D, Invert_gurax, "Invert")
+{
+	Declare(VTYPE_Bool, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxAffineMatrix2D, Invert_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->Invert();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.AffineMatrix2D#IsIdentity()
+Gurax_DeclareMethodAlias(wxAffineMatrix2D, IsIdentity_gurax, "IsIdentity")
+{
+	Declare(VTYPE_Bool, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxAffineMatrix2D, IsIdentity_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsIdentity();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.AffineMatrix2D#Translate(dx as Number, dy as Number)
+Gurax_DeclareMethodAlias(wxAffineMatrix2D, Translate_gurax, "Translate")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("dx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dy", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxAffineMatrix2D, Translate_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Double dx = args_gurax.PickNumber<Double>();
+	Double dy = args_gurax.PickNumber<Double>();
+	// Function body
+	pEntity_gurax->Translate(dx, dy);
+	return Gurax::Value::nil();
+}
+
+// wx.AffineMatrix2D#Scale(xScale as Number, yScale as Number)
+Gurax_DeclareMethodAlias(wxAffineMatrix2D, Scale_gurax, "Scale")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("xScale", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("yScale", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxAffineMatrix2D, Scale_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Double xScale = args_gurax.PickNumber<Double>();
+	Double yScale = args_gurax.PickNumber<Double>();
+	// Function body
+	pEntity_gurax->Scale(xScale, yScale);
+	return Gurax::Value::nil();
+}
+
+// wx.AffineMatrix2D#Mirror(direction? as Number)
+Gurax_DeclareMethodAlias(wxAffineMatrix2D, Mirror_gurax, "Mirror")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("direction", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxAffineMatrix2D, Mirror_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool direction_validFlag = args_gurax.IsValid();
+	int direction = direction_validFlag? args_gurax.PickNumber<int>() : wxHORIZONTAL;
+	// Function body
+	pEntity_gurax->Mirror(direction);
+	return Gurax::Value::nil();
+}
+
+// wx.AffineMatrix2D#Rotate(cRadians as Number)
+Gurax_DeclareMethodAlias(wxAffineMatrix2D, Rotate_gurax, "Rotate")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("cRadians", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxAffineMatrix2D, Rotate_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Double cRadians = args_gurax.PickNumber<Double>();
+	// Function body
+	pEntity_gurax->Rotate(cRadians);
+	return Gurax::Value::nil();
+}
+
+// wx.AffineMatrix2D#TransformPoint(p as wx.Point2DDouble) {block?}
+Gurax_DeclareMethodAlias(wxAffineMatrix2D, TransformPoint_gurax, "TransformPoint")
+{
+	Declare(VTYPE_wxPoint2DDouble, Flag::None);
+	DeclareArg("p", VTYPE_wxPoint2DDouble, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxAffineMatrix2D, TransformPoint_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPoint2DDouble& value_p = args_gurax.Pick<Value_wxPoint2DDouble>();
+	const wxPoint2DDouble& p = value_p.GetEntity();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint2DDouble(
+		pEntity_gurax->TransformPoint(p)));
+}
+
+// wx.AffineMatrix2D#TransformDistance(p as wx.Point2DDouble) {block?}
+Gurax_DeclareMethodAlias(wxAffineMatrix2D, TransformDistance_gurax, "TransformDistance")
+{
+	Declare(VTYPE_wxPoint2DDouble, Flag::None);
+	DeclareArg("p", VTYPE_wxPoint2DDouble, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxAffineMatrix2D, TransformDistance_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPoint2DDouble& value_p = args_gurax.Pick<Value_wxPoint2DDouble>();
+	const wxPoint2DDouble& p = value_p.GetEntity();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint2DDouble(
+		pEntity_gurax->TransformDistance(p)));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -64,8 +245,16 @@ void VType_wxAffineMatrix2D::DoPrepare(Frame& frameOuter)
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(AffineMatrix2D_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxAffineMatrix2D, Invert_gurax));
+	Assign(Gurax_CreateMethod(wxAffineMatrix2D, IsIdentity_gurax));
+	Assign(Gurax_CreateMethod(wxAffineMatrix2D, Translate_gurax));
+	Assign(Gurax_CreateMethod(wxAffineMatrix2D, Scale_gurax));
+	Assign(Gurax_CreateMethod(wxAffineMatrix2D, Mirror_gurax));
+	Assign(Gurax_CreateMethod(wxAffineMatrix2D, Rotate_gurax));
+	Assign(Gurax_CreateMethod(wxAffineMatrix2D, TransformPoint_gurax));
+	Assign(Gurax_CreateMethod(wxAffineMatrix2D, TransformDistance_gurax));
 }
 
 //------------------------------------------------------------------------------
