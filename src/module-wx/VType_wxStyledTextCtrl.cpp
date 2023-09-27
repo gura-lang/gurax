@@ -614,6 +614,29 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, SetAnchor_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
+// wx.StyledTextCtrl#GetCurLine(&linePos? as Number)
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, GetCurLine_gurax, "GetCurLine")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("linePos", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::Referencer);
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, GetCurLine_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Referencer> linePos(args_gurax.IsValid()? args_gurax.PickReferencer().Reference() : nullptr);
+	// Function body
+	int linePos_;
+	wxString rtn = pEntity_gurax->GetCurLine(&linePos_);
+	if (linePos) linePos->SetValue(new Value_Number(linePos_));
+	return new Value_String(rtn.utf8_str().data());
+}
+
 // wx.StyledTextCtrl#GetEndStyled()
 Gurax_DeclareMethodAlias(wxStyledTextCtrl, GetEndStyled_gurax, "GetEndStyled")
 {
@@ -12501,6 +12524,32 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, SelectNone_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
+// wx.StyledTextCtrl#GetSelection(&from:nil as Number, &to:nil as Number)
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, GetSelection_gurax, "GetSelection")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("from", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil | ArgFlag::Referencer);
+	DeclareArg("to", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil | ArgFlag::Referencer);
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, GetSelection_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Referencer> from(args_gurax.IsValid()? args_gurax.PickReferencer().Reference() : nullptr);
+	RefPtr<Referencer> to(args_gurax.IsValid()? args_gurax.PickReferencer().Reference() : nullptr);
+	// Function body
+	long from_, to_;
+	pEntity_gurax->GetSelection(&from_, &to_);
+	from->SetValue(new Value_Number(from_));
+	to->SetValue(new Value_Number(to_));
+	return Value::nil();
+}
+
 // wx.StyledTextCtrl#IsEditable()
 Gurax_DeclareMethodAlias(wxStyledTextCtrl, IsEditable_gurax, "IsEditable")
 {
@@ -12745,6 +12794,34 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, XYToPosition_gurax, processor_gurax, a
 	return new Gurax::Value_Number(rtn);
 }
 
+// wx.StyledTextCtrl#PositionToXY(pos as Number, &x:nil as Number, &y:nil as Number)
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, PositionToXY_gurax, "PositionToXY")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil | ArgFlag::Referencer);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil | ArgFlag::Referencer);
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, PositionToXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long pos = args_gurax.PickNumber<long>();
+	RefPtr<Referencer> x(args_gurax.IsValid()? args_gurax.PickReferencer().Reference() : nullptr);
+	RefPtr<Referencer> y(args_gurax.IsValid()? args_gurax.PickReferencer().Reference() : nullptr);
+	// Function body
+	long x_, y_;
+	bool rtn = pEntity_gurax->PositionToXY(pos, &x_, &y_);
+	x->SetValue(new Value_Number(x_));
+	y->SetValue(new Value_Number(y_));
+	return new Value_Bool(rtn);
+}
+
 // wx.StyledTextCtrl#ShowPosition(pos as Number)
 Gurax_DeclareMethodAlias(wxStyledTextCtrl, ShowPosition_gurax, "ShowPosition")
 {
@@ -12898,32 +12975,6 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetRange_gurax, processor_gurax, argum
 	wxString rtn = pEntity_gurax->GetRange(from, to);
 	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
-}
-
-// wx.StyledTextCtrl#GetSelection(&from:nilRef as Number, &to:nilRef as Number)
-Gurax_DeclareMethodAlias(wxStyledTextCtrl, GetSelection_gurax, "GetSelection")
-{
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("from", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
-	DeclareArg("to", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
-}
-
-Gurax_ImplementMethodEx(wxStyledTextCtrl, GetSelection_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	RefPtr<Referencer> from(args_gurax.PickReferencer().Reference());
-	RefPtr<Referencer> to(args_gurax.PickReferencer().Reference());
-	// Function body
-	long from_, to_;
-	pEntity_gurax->GetSelection(&from_, &to_);
-	from->SetValue(new Value_Number(from_));
-	to->SetValue(new Value_Number(to_));
-	return Value::nil();
 }
 
 // wx.StyledTextCtrl#GetStringSelection()
@@ -13139,6 +13190,7 @@ void VType_wxStyledTextCtrl::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxStyledTextCtrl, GotoLine_gurax));
 	Assign(Gurax_CreateMethod(wxStyledTextCtrl, GotoPos_gurax));
 	Assign(Gurax_CreateMethod(wxStyledTextCtrl, SetAnchor_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, GetCurLine_gurax));
 	Assign(Gurax_CreateMethod(wxStyledTextCtrl, GetEndStyled_gurax));
 	Assign(Gurax_CreateMethod(wxStyledTextCtrl, ConvertEOLs_gurax));
 	Assign(Gurax_CreateMethod(wxStyledTextCtrl, GetEOLMode_gurax));
@@ -13737,6 +13789,7 @@ void VType_wxStyledTextCtrl::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxStyledTextCtrl, GetLastPosition_gurax));
 	Assign(Gurax_CreateMethod(wxStyledTextCtrl, SetSelection_gurax));
 	Assign(Gurax_CreateMethod(wxStyledTextCtrl, SelectNone_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, GetSelection_gurax));
 	Assign(Gurax_CreateMethod(wxStyledTextCtrl, IsEditable_gurax));
 	Assign(Gurax_CreateMethod(wxStyledTextCtrl, SetEditable_gurax));
 	Assign(Gurax_CreateMethod(wxStyledTextCtrl, GetLineLength_gurax));
@@ -13749,6 +13802,7 @@ void VType_wxStyledTextCtrl::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxStyledTextCtrl, GetStyle_gurax));
 	Assign(Gurax_CreateMethod(wxStyledTextCtrl, SetDefaultStyle_gurax));
 	Assign(Gurax_CreateMethod(wxStyledTextCtrl, XYToPosition_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, PositionToXY_gurax));
 	Assign(Gurax_CreateMethod(wxStyledTextCtrl, ShowPosition_gurax));
 	Assign(Gurax_CreateMethod(wxStyledTextCtrl, AutoComplete_gurax));
 	Assign(Gurax_CreateMethod(wxStyledTextCtrl, AutoCompleteFileNames_gurax));
@@ -13757,7 +13811,6 @@ void VType_wxStyledTextCtrl::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxStyledTextCtrl, CanCut_gurax));
 	Assign(Gurax_CreateMethod(wxStyledTextCtrl, ChangeValue_gurax));
 	Assign(Gurax_CreateMethod(wxStyledTextCtrl, GetRange_gurax));
-	Assign(Gurax_CreateMethod(wxStyledTextCtrl, GetSelection_gurax));
 	Assign(Gurax_CreateMethod(wxStyledTextCtrl, GetStringSelection_gurax));
 	Assign(Gurax_CreateMethod(wxStyledTextCtrl, GetValue_gurax));
 	Assign(Gurax_CreateMethod(wxStyledTextCtrl, IsEmpty_gurax));

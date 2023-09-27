@@ -3,6 +3,12 @@
 //==============================================================================
 SplitterEvent = Class(NotifyEvent) {
 	@include['wx/splitter.h']
+	//__init__(eventType as EventType = wxEVT_NULL, splitter as SplitterWindow_p = NULL)
+	GetSashPosition() as int
+	GetWindowBeingRemoved() as Window_p
+	GetX() as int
+	GetY() as int
+	SetSashPosition(pos as int) as void
 } %% R'''
 # Overview
 

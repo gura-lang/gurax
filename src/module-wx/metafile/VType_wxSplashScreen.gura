@@ -3,6 +3,11 @@
 //==============================================================================
 SplashScreen = Class(Frame) {
 	@include['wx/splash.h']
+	__init__(bitmap as const_Bitmap_r, splashStyle as long, milliseconds as int, parent as Window_p, id as WindowID, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxBORDER_SIMPLE|wxFRAME_NO_TASKBAR|wxSTAY_ON_TOP)
+	GetSplashStyle() as long
+	//GetSplashWindow() as SplashScreenWindow_p
+	GetTimeout() as int
+	//OnCloseWindow(event as CloseEvent_r):virtual as void
 } %% R'''
 # Overview
 

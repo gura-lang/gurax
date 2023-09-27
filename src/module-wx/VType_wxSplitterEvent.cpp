@@ -48,6 +48,95 @@ ${help.ComposeMethodHelp(wx.SplitterEvent, `ja)}
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.SplitterEvent#GetSashPosition()
+Gurax_DeclareMethodAlias(wxSplitterEvent, GetSashPosition_gurax, "GetSashPosition")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxSplitterEvent, GetSashPosition_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetSashPosition();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.SplitterEvent#GetWindowBeingRemoved() {block?}
+Gurax_DeclareMethodAlias(wxSplitterEvent, GetWindowBeingRemoved_gurax, "GetWindowBeingRemoved")
+{
+	Declare(VTYPE_wxWindow, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxSplitterEvent, GetWindowBeingRemoved_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
+		pEntity_gurax->GetWindowBeingRemoved()));
+}
+
+// wx.SplitterEvent#GetX()
+Gurax_DeclareMethodAlias(wxSplitterEvent, GetX_gurax, "GetX")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxSplitterEvent, GetX_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetX();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.SplitterEvent#GetY()
+Gurax_DeclareMethodAlias(wxSplitterEvent, GetY_gurax, "GetY")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxSplitterEvent, GetY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetY();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.SplitterEvent#SetSashPosition(pos as Number)
+Gurax_DeclareMethodAlias(wxSplitterEvent, SetSashPosition_gurax, "SetSashPosition")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxSplitterEvent, SetSashPosition_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int pos = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetSashPosition(pos);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -66,6 +155,11 @@ void VType_wxSplitterEvent::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxNotifyEvent, Flag::Mutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxSplitterEvent, GetSashPosition_gurax));
+	Assign(Gurax_CreateMethod(wxSplitterEvent, GetWindowBeingRemoved_gurax));
+	Assign(Gurax_CreateMethod(wxSplitterEvent, GetX_gurax));
+	Assign(Gurax_CreateMethod(wxSplitterEvent, GetY_gurax));
+	Assign(Gurax_CreateMethod(wxSplitterEvent, SetSashPosition_gurax));
 }
 
 //------------------------------------------------------------------------------

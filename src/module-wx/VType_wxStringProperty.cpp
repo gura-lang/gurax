@@ -44,6 +44,27 @@ ${help.ComposeMethodHelp(wx.StringProperty, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.StringProperty(label? as String, name? as String, value? as String) {block?}
+Gurax_DeclareConstructorAlias(StringProperty_gurax, "StringProperty")
+{
+	Declare(VTYPE_wxStringProperty, Flag::None);
+	DeclareArg("label", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("value", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementConstructorEx(StringProperty_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* label = args_gurax.IsValid()? args_gurax.PickString() : wxPG_LABEL;
+	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxPG_LABEL;
+	const char* value = args_gurax.IsValid()? args_gurax.PickString() : "";
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxStringProperty(
+		wxStringProperty(label, name, value)));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -64,7 +85,7 @@ void VType_wxStringProperty::DoPrepare(Frame& frameOuter)
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
-	Declare(VTYPE_wxPGProperty, Flag::Mutable);
+	Declare(VTYPE_wxPGProperty, Flag::Mutable, Gurax_CreateConstructor(StringProperty_gurax));
 	// Assignment of method
 }
 

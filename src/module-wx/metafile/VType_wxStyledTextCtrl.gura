@@ -34,6 +34,13 @@ StyledTextCtrl = Class(Control) {
 	GotoPos(pos as int) as void
 	SetAnchor(posAnchor as int) as void
 	//GetCurLine(linePos as int_p = NULL) as String
+	GetCurLine(&linePos? as int) as String = \
+		R'''
+		int linePos_;
+		wxString rtn = pEntity_gurax->GetCurLine(&linePos_);
+		if (linePos) linePos->SetValue(new Value_Number(linePos_));
+		return new Value_String(rtn.utf8_str().data());
+		'''
 	GetEndStyled() as int
 	ConvertEOLs(eolMode as int) as void
 	GetEOLMode() as int
@@ -645,7 +652,14 @@ StyledTextCtrl = Class(Control) {
 	GetLastPosition() as long
 	SetSelection(from as long, to as long) as void
 	SelectNone() as void
-	//GetSelection(from as long_p, to as long_p) as void
+	GetSelection(&from:nil as long, &to:nil as long) as void = \
+		R'''
+		long from_, to_;
+		pEntity_gurax->GetSelection(&from_, &to_);
+		from->SetValue(new Value_Number(from_));
+		to->SetValue(new Value_Number(to_));
+		return Value::nil();
+		'''
 	IsEditable() as bool
 	SetEditable(editable as bool) as void
 	GetLineLength(n as long) as int
@@ -658,7 +672,14 @@ StyledTextCtrl = Class(Control) {
 	GetStyle(position as long, style as TextAttr_r) as bool
 	SetDefaultStyle(style as const_TextAttr_r) as bool
 	XYToPosition(x as long, y as long) as long
-	//PositionToXY(pos as long, x as long_p, y as long_p) as bool
+	PositionToXY(pos as long, &x:nil as long, &y:nil as long) as bool = \
+		R'''
+		long x_, y_;
+		bool rtn = pEntity_gurax->PositionToXY(pos, &x_, &y_);
+		x->SetValue(new Value_Number(x_));
+		y->SetValue(new Value_Number(y_));
+		return new Value_Bool(rtn);
+		'''
 	ShowPosition(pos as long) as void
 	//HitTest(pt as const_Point_r, pos as long_p) as TextCtrlHitTestResult
 	//HitTest(pt as const_Point_r, col as TextCoord_p, row as TextCoord_p) as TextCtrlHitTestResult

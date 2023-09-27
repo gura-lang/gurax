@@ -67,7 +67,7 @@ Gurax_ImplementMethodEx(wxDropFilesEvent, GetFiles_gurax, processor_gurax, argum
 	for (int i = 0; i < nFiles; i++) {
 		pValues->push_back(new Value_String(files[i].utf8_str().data()));
 	}
-	//delete files;
+	delete files;
 	return new Value_List(VTYPE_String, pValues.release());
 }
 
