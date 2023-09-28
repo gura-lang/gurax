@@ -652,7 +652,7 @@ StyledTextCtrl = Class(Control) {
 	GetLastPosition() as long
 	SetSelection(from as long, to as long) as void
 	SelectNone() as void
-	GetSelection(&from:nil as long, &to:nil as long) as void = \
+	GetSelection(&from:nilRef as long, &to:nilRef as long) as void = \
 		R'''
 		long from_, to_;
 		pEntity_gurax->GetSelection(&from_, &to_);
@@ -672,7 +672,7 @@ StyledTextCtrl = Class(Control) {
 	GetStyle(position as long, style as TextAttr_r) as bool
 	SetDefaultStyle(style as const_TextAttr_r) as bool
 	XYToPosition(x as long, y as long) as long
-	PositionToXY(pos as long, &x:nil as long, &y:nil as long) as bool = \
+	PositionToXY(pos as long, &x:nilRef as long, &y:nilRef as long) as bool = \
 		R'''
 		long x_, y_;
 		bool rtn = pEntity_gurax->PositionToXY(pos, &x_, &y_);

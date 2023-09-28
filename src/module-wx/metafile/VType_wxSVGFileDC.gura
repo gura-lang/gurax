@@ -3,6 +3,110 @@
 //==============================================================================
 SVGFileDC = Class(DC) {
 	@include['wx/dcsvg.h']
+	__init__(filename as const_String_r, width as int = 320, height as int = 240, dpi as double = 72)
+	EndDoc() as void
+	EndPage() as void
+	Clear() as void
+	SetLogicalFunction(function as RasterOperationMode) as void
+	SetClippingRegion(args* as any) as void = \
+		R'''
+		//SetClippingRegion(x as Coord, y as Coord, width as Coord, height as Coord) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("x", VTYPE_Number);
+				pDeclCallable->DeclareArg("y", VTYPE_Number);
+				pDeclCallable->DeclareArg("width", VTYPE_Number);
+				pDeclCallable->DeclareArg("height", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxCoord x = args.PickNumber<wxCoord>();
+			wxCoord y = args.PickNumber<wxCoord>();
+			wxCoord width = args.PickNumber<wxCoord>();
+			wxCoord height = args.PickNumber<wxCoord>();
+			pEntity_gurax->SetClippingRegion(x, y, width, height);
+			return Value::nil();
+		} while (0);
+		Error::ClearIssuedFlag();
+		//SetClippingRegion(pt as const_Point_r, sz as const_Size_r) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+				pDeclCallable->DeclareArg("sz", VTYPE_wxSize);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+			const wxSize& sz = args.Pick<Value_wxSize>().GetEntity();
+			pEntity_gurax->SetClippingRegion(pt, sz);
+			return Value::nil();
+		} while (0);
+		Error::ClearIssuedFlag();
+		//SetClippingRegion(rect as const_Rect_r) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("rect", VTYPE_wxRect);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxRect& rect = args.Pick<Value_wxRect>().GetEntity();
+			pEntity_gurax->SetClippingRegion(rect);
+			return Value::nil();
+		} while (0);
+		Error::ClearIssuedFlag();
+		//SetClippingRegion(region as const_Region_r) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("region", VTYPE_wxRegion);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxRegion& region = args.Pick<Value_wxRegion>().GetEntity();
+			pEntity_gurax->SetClippingRegion(region);
+			return Value::nil();
+		} while (0);
+		return Value::nil();
+		'''
+	DestroyClippingRegion() as void
+	CrossHair(x as Coord, y as Coord) as void
+	FloodFill(x as Coord, y as Coord, colour as const_Colour_r, style as FloodFillStyle = wxFLOOD_SURFACE) as bool
+	//GetClippingBox(x as Coord_p, y as Coord_p, width as Coord_p, height as Coord_p) as void
+	GetClippingBox(&x:nilRef as Coord, &y:nilRef as Coord, &width:nilRef as Coord, &height:nilRef as Coord) as void = \
+		R'''
+		wxCoord x_, y_, width_, height_;
+		pEntity_gurax->GetClippingBox(&x_, &y_, &width_, &height_);
+		x->SetValue(new Value_Number(x_));
+		y->SetValue(new Value_Number(y_));
+		width->SetValue(new Value_Number(width_));
+		height->SetValue(new Value_Number(height_));
+		return Value::nil();
+		'''
+	//GetPixel(x as Coord, y as Coord, colour as Colour_p) as bool
+	GetPixel(x as Coord, y as Coord, &colour:nilRef as Colour) as bool = \
+		R'''
+		wxColour colour_;
+		bool rtn = pEntity_gurax->GetPixel(x, y, &colour_);
+		colour->SetValue(new Value_wxColour(colour_));
+		return new Value_Bool(rtn);
+		'''
+	SetPalette(palette as const_Palette_r) as void
+	StartDoc(message as const_String_r) as bool
 } %% R'''
 # Overview
 

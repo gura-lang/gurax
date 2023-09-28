@@ -44,10 +44,370 @@ ${help.ComposeMethodHelp(wx.SVGFileDC, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.SVGFileDC(filename as String, width? as Number, height? as Number, dpi? as Number) {block?}
+Gurax_DeclareConstructorAlias(SVGFileDC_gurax, "SVGFileDC")
+{
+	Declare(VTYPE_wxSVGFileDC, Flag::None);
+	DeclareArg("filename", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("dpi", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementConstructorEx(SVGFileDC_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* filename = args_gurax.PickString();
+	bool width_validFlag = args_gurax.IsValid();
+	int width = width_validFlag? args_gurax.PickNumber<int>() : 320;
+	bool height_validFlag = args_gurax.IsValid();
+	int height = height_validFlag? args_gurax.PickNumber<int>() : 240;
+	bool dpi_validFlag = args_gurax.IsValid();
+	double dpi = dpi_validFlag? args_gurax.PickNumber<double>() : 72;
+	// Function body
+	auto pEntity_gurax = new wxSVGFileDC(filename, width, height, dpi);
+	RefPtr<Value_wxSVGFileDC> pValue_gurax(new Value_wxSVGFileDC(pEntity_gurax));
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.SVGFileDC#EndDoc()
+Gurax_DeclareMethodAlias(wxSVGFileDC, EndDoc_gurax, "EndDoc")
+{
+	Declare(VTYPE_Nil, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxSVGFileDC, EndDoc_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->EndDoc();
+	return Gurax::Value::nil();
+}
+
+// wx.SVGFileDC#EndPage()
+Gurax_DeclareMethodAlias(wxSVGFileDC, EndPage_gurax, "EndPage")
+{
+	Declare(VTYPE_Nil, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxSVGFileDC, EndPage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->EndPage();
+	return Gurax::Value::nil();
+}
+
+// wx.SVGFileDC#Clear()
+Gurax_DeclareMethodAlias(wxSVGFileDC, Clear_gurax, "Clear")
+{
+	Declare(VTYPE_Nil, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxSVGFileDC, Clear_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->Clear();
+	return Gurax::Value::nil();
+}
+
+// wx.SVGFileDC#SetLogicalFunction(function as Number)
+Gurax_DeclareMethodAlias(wxSVGFileDC, SetLogicalFunction_gurax, "SetLogicalFunction")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("function", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxSVGFileDC, SetLogicalFunction_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxRasterOperationMode function = args_gurax.PickNumber<wxRasterOperationMode>();
+	// Function body
+	pEntity_gurax->SetLogicalFunction(function);
+	return Gurax::Value::nil();
+}
+
+// wx.SVGFileDC#SetClippingRegion(args* as Any)
+Gurax_DeclareMethodAlias(wxSVGFileDC, SetClippingRegion_gurax, "SetClippingRegion")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxSVGFileDC, SetClippingRegion_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const Gurax::ValueList& args = args_gurax.PickList();
+	// Function body
+	//SetClippingRegion(x as Coord, y as Coord, width as Coord, height as Coord) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("x", VTYPE_Number);
+			pDeclCallable->DeclareArg("y", VTYPE_Number);
+			pDeclCallable->DeclareArg("width", VTYPE_Number);
+			pDeclCallable->DeclareArg("height", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxCoord x = args.PickNumber<wxCoord>();
+		wxCoord y = args.PickNumber<wxCoord>();
+		wxCoord width = args.PickNumber<wxCoord>();
+		wxCoord height = args.PickNumber<wxCoord>();
+		pEntity_gurax->SetClippingRegion(x, y, width, height);
+		return Value::nil();
+	} while (0);
+	Error::ClearIssuedFlag();
+	//SetClippingRegion(pt as const_Point_r, sz as const_Size_r) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+			pDeclCallable->DeclareArg("sz", VTYPE_wxSize);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+		const wxSize& sz = args.Pick<Value_wxSize>().GetEntity();
+		pEntity_gurax->SetClippingRegion(pt, sz);
+		return Value::nil();
+	} while (0);
+	Error::ClearIssuedFlag();
+	//SetClippingRegion(rect as const_Rect_r) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("rect", VTYPE_wxRect);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxRect& rect = args.Pick<Value_wxRect>().GetEntity();
+		pEntity_gurax->SetClippingRegion(rect);
+		return Value::nil();
+	} while (0);
+	Error::ClearIssuedFlag();
+	//SetClippingRegion(region as const_Region_r) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("region", VTYPE_wxRegion);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxRegion& region = args.Pick<Value_wxRegion>().GetEntity();
+		pEntity_gurax->SetClippingRegion(region);
+		return Value::nil();
+	} while (0);
+	return Value::nil();
+}
+
+// wx.SVGFileDC#DestroyClippingRegion()
+Gurax_DeclareMethodAlias(wxSVGFileDC, DestroyClippingRegion_gurax, "DestroyClippingRegion")
+{
+	Declare(VTYPE_Nil, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxSVGFileDC, DestroyClippingRegion_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->DestroyClippingRegion();
+	return Gurax::Value::nil();
+}
+
+// wx.SVGFileDC#CrossHair(x as Number, y as Number)
+Gurax_DeclareMethodAlias(wxSVGFileDC, CrossHair_gurax, "CrossHair")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxSVGFileDC, CrossHair_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord x = args_gurax.PickNumber<wxCoord>();
+	wxCoord y = args_gurax.PickNumber<wxCoord>();
+	// Function body
+	pEntity_gurax->CrossHair(x, y);
+	return Gurax::Value::nil();
+}
+
+// wx.SVGFileDC#FloodFill(x as Number, y as Number, colour as wx.Colour, style? as Number)
+Gurax_DeclareMethodAlias(wxSVGFileDC, FloodFill_gurax, "FloodFill")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxSVGFileDC, FloodFill_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord x = args_gurax.PickNumber<wxCoord>();
+	wxCoord y = args_gurax.PickNumber<wxCoord>();
+	Value_wxColour& value_colour = args_gurax.Pick<Value_wxColour>();
+	const wxColour& colour = value_colour.GetEntity();
+	bool style_validFlag = args_gurax.IsValid();
+	wxFloodFillStyle style = style_validFlag? args_gurax.PickNumber<wxFloodFillStyle>() : wxFLOOD_SURFACE;
+	// Function body
+	bool rtn = pEntity_gurax->FloodFill(x, y, colour, style);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.SVGFileDC#GetClippingBox(&x:nilRef as Number, &y:nilRef as Number, &width:nilRef as Number, &height:nilRef as Number)
+Gurax_DeclareMethodAlias(wxSVGFileDC, GetClippingBox_gurax, "GetClippingBox")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+}
+
+Gurax_ImplementMethodEx(wxSVGFileDC, GetClippingBox_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Referencer> x(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> width(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> height(args_gurax.PickReferencer().Reference());
+	// Function body
+	wxCoord x_, y_, width_, height_;
+	pEntity_gurax->GetClippingBox(&x_, &y_, &width_, &height_);
+	x->SetValue(new Value_Number(x_));
+	y->SetValue(new Value_Number(y_));
+	width->SetValue(new Value_Number(width_));
+	height->SetValue(new Value_Number(height_));
+	return Value::nil();
+}
+
+// wx.SVGFileDC#GetPixel(x as Number, y as Number, &colour:nilRef as wx.Colour)
+Gurax_DeclareMethodAlias(wxSVGFileDC, GetPixel_gurax, "GetPixel")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+}
+
+Gurax_ImplementMethodEx(wxSVGFileDC, GetPixel_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord x = args_gurax.PickNumber<wxCoord>();
+	wxCoord y = args_gurax.PickNumber<wxCoord>();
+	RefPtr<Referencer> colour(args_gurax.PickReferencer().Reference());
+	// Function body
+	wxColour colour_;
+	bool rtn = pEntity_gurax->GetPixel(x, y, &colour_);
+	colour->SetValue(new Value_wxColour(colour_));
+	return new Value_Bool(rtn);
+}
+
+// wx.SVGFileDC#SetPalette(palette as wx.Palette)
+Gurax_DeclareMethodAlias(wxSVGFileDC, SetPalette_gurax, "SetPalette")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("palette", VTYPE_wxPalette, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxSVGFileDC, SetPalette_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPalette& value_palette = args_gurax.Pick<Value_wxPalette>();
+	const wxPalette& palette = value_palette.GetEntity();
+	// Function body
+	pEntity_gurax->SetPalette(palette);
+	return Gurax::Value::nil();
+}
+
+// wx.SVGFileDC#StartDoc(message as String)
+Gurax_DeclareMethodAlias(wxSVGFileDC, StartDoc_gurax, "StartDoc")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("message", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxSVGFileDC, StartDoc_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* message = args_gurax.PickString();
+	// Function body
+	bool rtn = pEntity_gurax->StartDoc(message);
+	return new Gurax::Value_Bool(rtn);
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -64,8 +424,20 @@ void VType_wxSVGFileDC::DoPrepare(Frame& frameOuter)
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
-	Declare(VTYPE_wxDC, Flag::Mutable);
+	Declare(VTYPE_wxDC, Flag::Mutable, Gurax_CreateConstructor(SVGFileDC_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxSVGFileDC, EndDoc_gurax));
+	Assign(Gurax_CreateMethod(wxSVGFileDC, EndPage_gurax));
+	Assign(Gurax_CreateMethod(wxSVGFileDC, Clear_gurax));
+	Assign(Gurax_CreateMethod(wxSVGFileDC, SetLogicalFunction_gurax));
+	Assign(Gurax_CreateMethod(wxSVGFileDC, SetClippingRegion_gurax));
+	Assign(Gurax_CreateMethod(wxSVGFileDC, DestroyClippingRegion_gurax));
+	Assign(Gurax_CreateMethod(wxSVGFileDC, CrossHair_gurax));
+	Assign(Gurax_CreateMethod(wxSVGFileDC, FloodFill_gurax));
+	Assign(Gurax_CreateMethod(wxSVGFileDC, GetClippingBox_gurax));
+	Assign(Gurax_CreateMethod(wxSVGFileDC, GetPixel_gurax));
+	Assign(Gurax_CreateMethod(wxSVGFileDC, SetPalette_gurax));
+	Assign(Gurax_CreateMethod(wxSVGFileDC, StartDoc_gurax));
 }
 
 //------------------------------------------------------------------------------

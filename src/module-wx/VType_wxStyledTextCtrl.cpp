@@ -12524,12 +12524,12 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, SelectNone_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// wx.StyledTextCtrl#GetSelection(&from:nil as Number, &to:nil as Number)
+// wx.StyledTextCtrl#GetSelection(&from:nilRef as Number, &to:nilRef as Number)
 Gurax_DeclareMethodAlias(wxStyledTextCtrl, GetSelection_gurax, "GetSelection")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("from", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil | ArgFlag::Referencer);
-	DeclareArg("to", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil | ArgFlag::Referencer);
+	DeclareArg("from", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("to", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxStyledTextCtrl, GetSelection_gurax, processor_gurax, argument_gurax)
@@ -12540,8 +12540,8 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetSelection_gurax, processor_gurax, a
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	RefPtr<Referencer> from(args_gurax.IsValid()? args_gurax.PickReferencer().Reference() : nullptr);
-	RefPtr<Referencer> to(args_gurax.IsValid()? args_gurax.PickReferencer().Reference() : nullptr);
+	RefPtr<Referencer> from(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> to(args_gurax.PickReferencer().Reference());
 	// Function body
 	long from_, to_;
 	pEntity_gurax->GetSelection(&from_, &to_);
@@ -12794,13 +12794,13 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, XYToPosition_gurax, processor_gurax, a
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.StyledTextCtrl#PositionToXY(pos as Number, &x:nil as Number, &y:nil as Number)
+// wx.StyledTextCtrl#PositionToXY(pos as Number, &x:nilRef as Number, &y:nilRef as Number)
 Gurax_DeclareMethodAlias(wxStyledTextCtrl, PositionToXY_gurax, "PositionToXY")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil | ArgFlag::Referencer);
-	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil | ArgFlag::Referencer);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxStyledTextCtrl, PositionToXY_gurax, processor_gurax, argument_gurax)
@@ -12812,8 +12812,8 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, PositionToXY_gurax, processor_gurax, a
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	long pos = args_gurax.PickNumber<long>();
-	RefPtr<Referencer> x(args_gurax.IsValid()? args_gurax.PickReferencer().Reference() : nullptr);
-	RefPtr<Referencer> y(args_gurax.IsValid()? args_gurax.PickReferencer().Reference() : nullptr);
+	RefPtr<Referencer> x(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y(args_gurax.PickReferencer().Reference());
 	// Function body
 	long x_, y_;
 	bool rtn = pEntity_gurax->PositionToXY(pos, &x_, &y_);

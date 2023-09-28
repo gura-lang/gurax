@@ -3,6 +3,57 @@
 //==============================================================================
 StyledTextEvent = Class(CommandEvent) {
 	@include['wx/stc/stc.h']
+	//wxStyledTextEvent(commandType as EventType = 0, id as int = 0)
+	//wxStyledTextEvent(event as const_StyledTextEvent_r)
+	SetPosition(pos as int) as void
+	SetKey(k as int) as void
+	SetModifiers(m as int) as void
+	SetModificationType(t as int) as void
+	SetText(t as const_String_r) as void
+	SetLength(len as int) as void
+	SetLinesAdded(num as int) as void
+	SetLine(val as int) as void
+	SetFoldLevelNow(val as int) as void
+	SetFoldLevelPrev(val as int) as void
+	SetMargin(val as int) as void
+	SetMessage(val as int) as void
+	SetWParam(val as int) as void
+	SetLParam(val as int) as void
+	SetListType(val as int) as void
+	SetX(val as int) as void
+	SetY(val as int) as void
+	SetToken(val as int) as void
+	SetAnnotationLinesAdded(val as int) as void
+	SetUpdated(val as int) as void
+	SetDragText(val as const_String_r) as void
+	SetDragFlags(flags as int) as void
+	SetDragResult(val as DragResult) as void
+	GetPosition() as int
+	GetKey() as int
+	GetModifiers() as int
+	GetModificationType() as int
+	GetText() as String
+	GetLength() as int
+	GetLinesAdded() as int
+	GetLine() as int
+	GetFoldLevelNow() as int
+	GetFoldLevelPrev() as int
+	GetMargin() as int
+	GetMessage() as int
+	GetWParam() as int
+	GetLParam() as int
+	GetListType() as int
+	GetX() as int
+	GetY() as int
+	GetToken() as int
+	GetAnnotationsLinesAdded() as int
+	GetUpdated() as int
+	GetDragText() as String
+	GetDragFlags() as int
+	GetDragResult() as DragResult
+	GetShift() as bool
+	GetControl() as bool
+	GetAlt() as bool
 } %% R'''
 # Overview
 

@@ -3,6 +3,7 @@
 //==============================================================================
 SysColourChangedEvent = Class(Event) {
 	@include['wx/event.h']
+	// (no member functions)
 } %% R'''
 # Overview
 

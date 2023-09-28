@@ -3,6 +3,20 @@
 //==============================================================================
 SystemColourProperty = Class(EnumProperty) {
 	@include['wx/propgrid/advprops.h']
+	//__init__(label as const_String_r = PG_LABEL, name as const_String_r = PG_LABEL, value as ColourPropertyValue = wxColourPropertyValue())
+	//OnSetValue():virtual as void
+	//IntToValue(variant as Variant_r, number as int, argFlags as int = 0):virtual as bool
+	//ColourToString(col as const_Colour_r, index as int, argFlags as int = 0):virtual as String
+	//GetCustomColourIndex():virtual as int
+	//ValueToString(value as Variant_r, argFlags as int = 0):virtual as String
+	//StringToValue(variant as Variant_r, text as const_String_r, argFlags as int = 0):virtual as bool
+	//OnEvent(propgrid as PropertyGrid_p, primary as Window_p, event as Event_r):virtual as bool
+	//DoSetAttribute(name as const_String_r, value as Variant_r):virtual as bool
+	//OnMeasureImage(item as int):virtual as Size
+	//OnCustomPaint(dc as DC_r, rect as const_Rect_r, paintdata as PGPaintData_r):virtual as void
+	//QueryColourFromUser(variant as Variant_r) as bool
+	//GetColour(index as int):virtual as Colour
+	//GetVal(pVariant as const_Variant_p = NULL) as ColourPropertyValue
 } %% R'''
 # Overview
 
