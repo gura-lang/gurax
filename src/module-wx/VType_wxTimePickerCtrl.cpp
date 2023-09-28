@@ -44,10 +44,135 @@ ${help.ComposeMethodHelp(wx.TimePickerCtrl, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.TimePickerCtrl(parent as wx.Window, id as Number, dt? as wx.DateTime, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?}
+Gurax_DeclareConstructorAlias(TimePickerCtrl_gurax, "TimePickerCtrl")
+{
+	Declare(VTYPE_wxTimePickerCtrl, Flag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dt", VTYPE_wxDateTime, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementConstructorEx(TimePickerCtrl_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* parent = value_parent.GetEntityPtr();
+	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
+	const wxDateTime& dt = args_gurax.IsValid()? args_gurax.Pick<Value_wxDateTime>().GetEntity() : wxDefaultDateTime;
+	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : wxTP_DEFAULT;
+	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
+	const char* name = args_gurax.IsValid()? args_gurax.PickString() : "timectrl";
+	// Function body
+	auto pEntity_gurax = new Value_wxTimePickerCtrl::EntityT(parent, id, dt, pos, size, style, validator, name);
+	RefPtr<Value_wxTimePickerCtrl> pValue_gurax(new Value_wxTimePickerCtrl(pEntity_gurax));
+	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.TimePickerCtrl#Create(parent as wx.Window, id as Number, dt? as wx.DateTime, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String)
+Gurax_DeclareMethodAlias(wxTimePickerCtrl, Create_gurax, "Create")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dt", VTYPE_wxDateTime, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTimePickerCtrl, Create_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* parent = value_parent.GetEntityPtr();
+	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
+	const wxDateTime& dt = args_gurax.IsValid()? args_gurax.Pick<Value_wxDateTime>().GetEntity() : wxDefaultDateTime;
+	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : (wxDP_DEFAULT | wxDP_SHOWCENTURY);
+	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
+	const char* name = args_gurax.IsValid()? args_gurax.PickString() : "timectrl";
+	// Function body
+	bool rtn = pEntity_gurax->Create(parent, id, dt, pos, size, style, validator, name);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TimePickerCtrl#GetTime(&hour:nilRef as Number, &min:nilRef as Number, &sec:nilRef as Number)
+Gurax_DeclareMethodAlias(wxTimePickerCtrl, GetTime_gurax, "GetTime")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("hour", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("min", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("sec", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+}
+
+Gurax_ImplementMethodEx(wxTimePickerCtrl, GetTime_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Referencer> hour(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> min(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> sec(args_gurax.PickReferencer().Reference());
+	// Function body
+	int hour_, min_, sec_;
+	bool rtn = pEntity_gurax->GetTime(&hour_, &min_, &sec_);
+	hour->SetValue(new Value_Number(hour_));
+	min->SetValue(new Value_Number(min_));
+	sec->SetValue(new Value_Number(sec_));
+	return new Value_Bool(rtn);
+}
+
+// wx.TimePickerCtrl#SetTime(hour as Number, min as Number, sec as Number)
+Gurax_DeclareMethodAlias(wxTimePickerCtrl, SetTime_gurax, "SetTime")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("hour", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("min", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("sec", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTimePickerCtrl, SetTime_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int hour = args_gurax.PickNumber<int>();
+	int min = args_gurax.PickNumber<int>();
+	int sec = args_gurax.PickNumber<int>();
+	// Function body
+	bool rtn = pEntity_gurax->SetTime(hour, min, sec);
+	return new Gurax::Value_Bool(rtn);
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -64,8 +189,11 @@ void VType_wxTimePickerCtrl::DoPrepare(Frame& frameOuter)
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
-	Declare(VTYPE_wxControl, Flag::Mutable);
+	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(TimePickerCtrl_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxTimePickerCtrl, Create_gurax));
+	Assign(Gurax_CreateMethod(wxTimePickerCtrl, GetTime_gurax));
+	Assign(Gurax_CreateMethod(wxTimePickerCtrl, SetTime_gurax));
 }
 
 //------------------------------------------------------------------------------

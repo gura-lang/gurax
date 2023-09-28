@@ -281,6 +281,7 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_TEXT_ENTER,							wxCommandEvent);
 	Gurax_AssignEvent(EVT_TEXT_MAXLEN,							wxCommandEvent);
 	Gurax_AssignEvent(EVT_TIMER,								wxTimerEvent);
+	Gurax_AssignEvent(EVT_TIME_CHANGED,							wxDateEvent);
 	Gurax_AssignEvent(EVT_TOOL,									wxCommandEvent);
 	Gurax_AssignEvent(EVT_TOOLBOOK_PAGE_CHANGED,				wxBookCtrlEvent);
 	Gurax_AssignEvent(EVT_TOOLBOOK_PAGE_CHANGING,				wxBookCtrlEvent);

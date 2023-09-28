@@ -2,6 +2,44 @@
 // VType_wxTimeSpan.gura
 //==============================================================================
 TimeSpan = Class {
+	//__init__(hours as long, min as long = 0, sec as LongLong = 0, msec as LongLong = 0)
+	__init__()
+	Abs() as TimeSpan
+	Add(diff as const_TimeSpan_r) as TimeSpan
+	//Add(diff as const_TimeSpan_r) as TimeSpan
+	Format(format as const_String_r = wxDefaultTimeSpanFormat) as String
+	GetDays() as int
+	GetHours() as int
+	GetMilliseconds() as LongLong
+	GetMinutes() as int
+	GetSeconds() as LongLong
+	GetValue() as LongLong
+	GetWeeks() as int
+	IsEqualTo(ts as const_TimeSpan_r) as bool
+	IsLongerThan(ts as const_TimeSpan_r) as bool
+	IsNegative() as bool
+	IsNull() as bool
+	IsPositive() as bool
+	IsShorterThan(ts as const_TimeSpan_r) as bool
+	Multiply(n as int) as TimeSpan
+	//Multiply(n as int) as TimeSpan
+	Neg() as TimeSpan
+	Negate() as TimeSpan
+	Subtract(diff as const_TimeSpan_r) as TimeSpan
+	//Subtract(diff as const_TimeSpan_r) as TimeSpan
+	// class methods
+	Day():static as TimeSpan
+	Days(days as long):static as TimeSpan
+	Hour():static as TimeSpan
+	Hours(hours as long):static as TimeSpan
+	Millisecond():static as TimeSpan
+	Milliseconds(ms as LongLong):static as TimeSpan
+	Minute():static as TimeSpan
+	Minutes(min as long):static as TimeSpan
+	Second():static as TimeSpan
+	Seconds(sec as LongLong):static as TimeSpan
+	Week():static as TimeSpan
+	Weeks(weeks as long):static as TimeSpan
 } %% R'''
 # Overview
 

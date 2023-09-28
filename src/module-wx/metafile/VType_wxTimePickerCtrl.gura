@@ -3,6 +3,21 @@
 //==============================================================================
 TimePickerCtrl = Class(Control) {
 	@include['wx/timectrl.h']
+	__init__(parent as Window_p, id as WindowID, dt as const_DateTime_r = wxDefaultDateTime, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxTP_DEFAULT, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = "timectrl")
+	Create(parent as Window_p, id as WindowID, dt as const_DateTime_r = wxDefaultDateTime, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxDP_DEFAULT|wxDP_SHOWCENTURY, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = "timectrl") as bool
+	//GetTime(hour as int_p, min as int_p, sec as int_p) as bool
+	GetTime(&hour:nilRef as int, &min:nilRef as int, &sec:nilRef as int) as bool = \
+		R'''
+		int hour_, min_, sec_;
+		bool rtn = pEntity_gurax->GetTime(&hour_, &min_, &sec_);
+		hour->SetValue(new Value_Number(hour_));
+		min->SetValue(new Value_Number(min_));
+		sec->SetValue(new Value_Number(sec_));
+		return new Value_Bool(rtn);
+		'''
+	//GetValue():virtual as DateTime
+	SetTime(hour as int, min as int, sec as int) as bool
+	//SetValue(dt as const_DateTime_r):virtual as void
 } %% R'''
 # Overview
 
@@ -32,3 +47,7 @@ ${help.ComposeConstructorHelp(wx.TimePickerCtrl, `ja)}
 
 ${help.ComposeMethodHelp(wx.TimePickerCtrl, `ja)}
 '''ja
+
+@event {
+	EVT_TIME_CHANGED >> DateEvent
+}

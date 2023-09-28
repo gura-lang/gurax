@@ -44,10 +44,582 @@ ${help.ComposeMethodHelp(wx.TimeSpan, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.TimeSpan() {block?}
+Gurax_DeclareConstructorAlias(TimeSpan_gurax, "TimeSpan")
+{
+	Declare(VTYPE_wxTimeSpan, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementConstructorEx(TimeSpan_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTimeSpan(
+		wxTimeSpan()));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.TimeSpan#Abs() {block?}
+Gurax_DeclareMethodAlias(wxTimeSpan, Abs_gurax, "Abs")
+{
+	Declare(VTYPE_wxTimeSpan, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxTimeSpan, Abs_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTimeSpan(
+		pEntity_gurax->Abs()));
+}
+
+// wx.TimeSpan#Add(diff as wx.TimeSpan) {block?}
+Gurax_DeclareMethodAlias(wxTimeSpan, Add_gurax, "Add")
+{
+	Declare(VTYPE_wxTimeSpan, Flag::None);
+	DeclareArg("diff", VTYPE_wxTimeSpan, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxTimeSpan, Add_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTimeSpan& value_diff = args_gurax.Pick<Value_wxTimeSpan>();
+	const wxTimeSpan& diff = value_diff.GetEntity();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTimeSpan(
+		pEntity_gurax->Add(diff)));
+}
+
+// wx.TimeSpan#Format(format? as String)
+Gurax_DeclareMethodAlias(wxTimeSpan, Format_gurax, "Format")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("format", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTimeSpan, Format_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* format = args_gurax.IsValid()? args_gurax.PickString() : wxDefaultTimeSpanFormat;
+	// Function body
+	wxString rtn = pEntity_gurax->Format(format);
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
+}
+
+// wx.TimeSpan#GetDays()
+Gurax_DeclareMethodAlias(wxTimeSpan, GetDays_gurax, "GetDays")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxTimeSpan, GetDays_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetDays();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.TimeSpan#GetHours()
+Gurax_DeclareMethodAlias(wxTimeSpan, GetHours_gurax, "GetHours")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxTimeSpan, GetHours_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetHours();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.TimeSpan#GetMilliseconds()
+Gurax_DeclareMethodAlias(wxTimeSpan, GetMilliseconds_gurax, "GetMilliseconds")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxTimeSpan, GetMilliseconds_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxLongLong rtn = pEntity_gurax->GetMilliseconds();
+	return new Gurax::Value_Number(rtn.GetValue());
+}
+
+// wx.TimeSpan#GetMinutes()
+Gurax_DeclareMethodAlias(wxTimeSpan, GetMinutes_gurax, "GetMinutes")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxTimeSpan, GetMinutes_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetMinutes();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.TimeSpan#GetSeconds()
+Gurax_DeclareMethodAlias(wxTimeSpan, GetSeconds_gurax, "GetSeconds")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxTimeSpan, GetSeconds_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxLongLong rtn = pEntity_gurax->GetSeconds();
+	return new Gurax::Value_Number(rtn.GetValue());
+}
+
+// wx.TimeSpan#GetValue()
+Gurax_DeclareMethodAlias(wxTimeSpan, GetValue_gurax, "GetValue")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxTimeSpan, GetValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxLongLong rtn = pEntity_gurax->GetValue();
+	return new Gurax::Value_Number(rtn.GetValue());
+}
+
+// wx.TimeSpan#GetWeeks()
+Gurax_DeclareMethodAlias(wxTimeSpan, GetWeeks_gurax, "GetWeeks")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxTimeSpan, GetWeeks_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetWeeks();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.TimeSpan#IsEqualTo(ts as wx.TimeSpan)
+Gurax_DeclareMethodAlias(wxTimeSpan, IsEqualTo_gurax, "IsEqualTo")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("ts", VTYPE_wxTimeSpan, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTimeSpan, IsEqualTo_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTimeSpan& value_ts = args_gurax.Pick<Value_wxTimeSpan>();
+	const wxTimeSpan& ts = value_ts.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->IsEqualTo(ts);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TimeSpan#IsLongerThan(ts as wx.TimeSpan)
+Gurax_DeclareMethodAlias(wxTimeSpan, IsLongerThan_gurax, "IsLongerThan")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("ts", VTYPE_wxTimeSpan, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTimeSpan, IsLongerThan_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTimeSpan& value_ts = args_gurax.Pick<Value_wxTimeSpan>();
+	const wxTimeSpan& ts = value_ts.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->IsLongerThan(ts);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TimeSpan#IsNegative()
+Gurax_DeclareMethodAlias(wxTimeSpan, IsNegative_gurax, "IsNegative")
+{
+	Declare(VTYPE_Bool, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxTimeSpan, IsNegative_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsNegative();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TimeSpan#IsNull()
+Gurax_DeclareMethodAlias(wxTimeSpan, IsNull_gurax, "IsNull")
+{
+	Declare(VTYPE_Bool, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxTimeSpan, IsNull_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsNull();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TimeSpan#IsPositive()
+Gurax_DeclareMethodAlias(wxTimeSpan, IsPositive_gurax, "IsPositive")
+{
+	Declare(VTYPE_Bool, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxTimeSpan, IsPositive_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsPositive();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TimeSpan#IsShorterThan(ts as wx.TimeSpan)
+Gurax_DeclareMethodAlias(wxTimeSpan, IsShorterThan_gurax, "IsShorterThan")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("ts", VTYPE_wxTimeSpan, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTimeSpan, IsShorterThan_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTimeSpan& value_ts = args_gurax.Pick<Value_wxTimeSpan>();
+	const wxTimeSpan& ts = value_ts.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->IsShorterThan(ts);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TimeSpan#Multiply(n as Number) {block?}
+Gurax_DeclareMethodAlias(wxTimeSpan, Multiply_gurax, "Multiply")
+{
+	Declare(VTYPE_wxTimeSpan, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxTimeSpan, Multiply_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int n = args_gurax.PickNumber<int>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTimeSpan(
+		pEntity_gurax->Multiply(n)));
+}
+
+// wx.TimeSpan#Neg() {block?}
+Gurax_DeclareMethodAlias(wxTimeSpan, Neg_gurax, "Neg")
+{
+	Declare(VTYPE_wxTimeSpan, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxTimeSpan, Neg_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTimeSpan(
+		pEntity_gurax->Neg()));
+}
+
+// wx.TimeSpan#Negate() {block?}
+Gurax_DeclareMethodAlias(wxTimeSpan, Negate_gurax, "Negate")
+{
+	Declare(VTYPE_wxTimeSpan, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxTimeSpan, Negate_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTimeSpan(
+		pEntity_gurax->Negate()));
+}
+
+// wx.TimeSpan#Subtract(diff as wx.TimeSpan) {block?}
+Gurax_DeclareMethodAlias(wxTimeSpan, Subtract_gurax, "Subtract")
+{
+	Declare(VTYPE_wxTimeSpan, Flag::None);
+	DeclareArg("diff", VTYPE_wxTimeSpan, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxTimeSpan, Subtract_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTimeSpan& value_diff = args_gurax.Pick<Value_wxTimeSpan>();
+	const wxTimeSpan& diff = value_diff.GetEntity();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTimeSpan(
+		pEntity_gurax->Subtract(diff)));
+}
+
+// wx.TimeSpan.Day() {block?}
+Gurax_DeclareClassMethodAlias(wxTimeSpan, Day_gurax, "Day")
+{
+	Declare(VTYPE_wxTimeSpan, Flag::None);
+}
+
+Gurax_ImplementClassMethodEx(wxTimeSpan, Day_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTimeSpan(
+		wxTimeSpan::Day()));
+}
+
+// wx.TimeSpan.Days(days as Number) {block?}
+Gurax_DeclareClassMethodAlias(wxTimeSpan, Days_gurax, "Days")
+{
+	Declare(VTYPE_wxTimeSpan, Flag::None);
+	DeclareArg("days", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementClassMethodEx(wxTimeSpan, Days_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long days = args_gurax.PickNumber<long>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTimeSpan(
+		wxTimeSpan::Days(days)));
+}
+
+// wx.TimeSpan.Hour() {block?}
+Gurax_DeclareClassMethodAlias(wxTimeSpan, Hour_gurax, "Hour")
+{
+	Declare(VTYPE_wxTimeSpan, Flag::None);
+}
+
+Gurax_ImplementClassMethodEx(wxTimeSpan, Hour_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTimeSpan(
+		wxTimeSpan::Hour()));
+}
+
+// wx.TimeSpan.Hours(hours as Number) {block?}
+Gurax_DeclareClassMethodAlias(wxTimeSpan, Hours_gurax, "Hours")
+{
+	Declare(VTYPE_wxTimeSpan, Flag::None);
+	DeclareArg("hours", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementClassMethodEx(wxTimeSpan, Hours_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long hours = args_gurax.PickNumber<long>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTimeSpan(
+		wxTimeSpan::Hours(hours)));
+}
+
+// wx.TimeSpan.Millisecond() {block?}
+Gurax_DeclareClassMethodAlias(wxTimeSpan, Millisecond_gurax, "Millisecond")
+{
+	Declare(VTYPE_wxTimeSpan, Flag::None);
+}
+
+Gurax_ImplementClassMethodEx(wxTimeSpan, Millisecond_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTimeSpan(
+		wxTimeSpan::Millisecond()));
+}
+
+// wx.TimeSpan.Milliseconds(ms as Number) {block?}
+Gurax_DeclareClassMethodAlias(wxTimeSpan, Milliseconds_gurax, "Milliseconds")
+{
+	Declare(VTYPE_wxTimeSpan, Flag::None);
+	DeclareArg("ms", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementClassMethodEx(wxTimeSpan, Milliseconds_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxLongLong ms(args_gurax.PickNumber<wxLongLong_t>());
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTimeSpan(
+		wxTimeSpan::Milliseconds(ms)));
+}
+
+// wx.TimeSpan.Minute() {block?}
+Gurax_DeclareClassMethodAlias(wxTimeSpan, Minute_gurax, "Minute")
+{
+	Declare(VTYPE_wxTimeSpan, Flag::None);
+}
+
+Gurax_ImplementClassMethodEx(wxTimeSpan, Minute_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTimeSpan(
+		wxTimeSpan::Minute()));
+}
+
+// wx.TimeSpan.Minutes(min as Number) {block?}
+Gurax_DeclareClassMethodAlias(wxTimeSpan, Minutes_gurax, "Minutes")
+{
+	Declare(VTYPE_wxTimeSpan, Flag::None);
+	DeclareArg("min", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementClassMethodEx(wxTimeSpan, Minutes_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long min = args_gurax.PickNumber<long>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTimeSpan(
+		wxTimeSpan::Minutes(min)));
+}
+
+// wx.TimeSpan.Second() {block?}
+Gurax_DeclareClassMethodAlias(wxTimeSpan, Second_gurax, "Second")
+{
+	Declare(VTYPE_wxTimeSpan, Flag::None);
+}
+
+Gurax_ImplementClassMethodEx(wxTimeSpan, Second_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTimeSpan(
+		wxTimeSpan::Second()));
+}
+
+// wx.TimeSpan.Seconds(sec as Number) {block?}
+Gurax_DeclareClassMethodAlias(wxTimeSpan, Seconds_gurax, "Seconds")
+{
+	Declare(VTYPE_wxTimeSpan, Flag::None);
+	DeclareArg("sec", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementClassMethodEx(wxTimeSpan, Seconds_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxLongLong sec(args_gurax.PickNumber<wxLongLong_t>());
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTimeSpan(
+		wxTimeSpan::Seconds(sec)));
+}
+
+// wx.TimeSpan.Week() {block?}
+Gurax_DeclareClassMethodAlias(wxTimeSpan, Week_gurax, "Week")
+{
+	Declare(VTYPE_wxTimeSpan, Flag::None);
+}
+
+Gurax_ImplementClassMethodEx(wxTimeSpan, Week_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTimeSpan(
+		wxTimeSpan::Week()));
+}
+
+// wx.TimeSpan.Weeks(weeks as Number) {block?}
+Gurax_DeclareClassMethodAlias(wxTimeSpan, Weeks_gurax, "Weeks")
+{
+	Declare(VTYPE_wxTimeSpan, Flag::None);
+	DeclareArg("weeks", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementClassMethodEx(wxTimeSpan, Weeks_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long weeks = args_gurax.PickNumber<long>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTimeSpan(
+		wxTimeSpan::Weeks(weeks)));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -64,8 +636,40 @@ void VType_wxTimeSpan::DoPrepare(Frame& frameOuter)
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(TimeSpan_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxTimeSpan, Abs_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, Add_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, Format_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, GetDays_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, GetHours_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, GetMilliseconds_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, GetMinutes_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, GetSeconds_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, GetValue_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, GetWeeks_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, IsEqualTo_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, IsLongerThan_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, IsNegative_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, IsNull_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, IsPositive_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, IsShorterThan_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, Multiply_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, Neg_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, Negate_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, Subtract_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, Day_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, Days_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, Hour_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, Hours_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, Millisecond_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, Milliseconds_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, Minute_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, Minutes_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, Second_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, Seconds_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, Week_gurax));
+	Assign(Gurax_CreateMethod(wxTimeSpan, Weeks_gurax));
 }
 
 //------------------------------------------------------------------------------
