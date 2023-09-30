@@ -1024,18 +1024,11 @@ Gurax_ImplementMethodEx(wxToolBar, ToggleTool_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// wx.ToolBar#CreateTool(toolId as Number, label as String, bmpNormal as wx.Bitmap, bmpDisabled? as wx.Bitmap, kind? as Number, clientData? as wx.Object, shortHelp? as String, longHelp? as String) {block?}
+// wx.ToolBar#CreateTool(args* as Any) {block?}
 Gurax_DeclareMethodAlias(wxToolBar, CreateTool_gurax, "CreateTool")
 {
 	Declare(VTYPE_wxToolBarToolBase, Flag::None);
-	DeclareArg("toolId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("label", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("bmpNormal", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("bmpDisabled", VTYPE_wxBitmap, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("kind", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("clientData", VTYPE_wxObject, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("shortHelp", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("longHelp", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 }
 
@@ -1047,19 +1040,55 @@ Gurax_ImplementMethodEx(wxToolBar, CreateTool_gurax, processor_gurax, argument_g
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	int toolId = args_gurax.PickNumber<int>();
-	const char* label = args_gurax.PickString();
-	Value_wxBitmap& value_bmpNormal = args_gurax.Pick<Value_wxBitmap>();
-	const wxBitmap& bmpNormal = value_bmpNormal.GetEntity();
-	const wxBitmap& bmpDisabled = args_gurax.IsValid()? args_gurax.Pick<Value_wxBitmap>().GetEntity() : wxNullBitmap;
-	bool kind_validFlag = args_gurax.IsValid();
-	wxItemKind kind = kind_validFlag? args_gurax.PickNumber<wxItemKind>() : wxITEM_NORMAL;
-	wxObject* clientData = args_gurax.IsValid()? args_gurax.Pick<Value_wxObject>().GetEntityPtr() : nullptr;
-	const char* shortHelp = args_gurax.IsValid()? args_gurax.PickString() : "";
-	const char* longHelp = args_gurax.IsValid()? args_gurax.PickString() : "";
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(
-		*pEntity_gurax->CreateTool(toolId, label, bmpNormal, bmpDisabled, kind, clientData, shortHelp, longHelp)));
+	//CreateTool(toolId as int, label as const_String_r, bmpNormal as const_Bitmap_r, bmpDisabled as const_Bitmap_r = wxNullBitmap, kind as ItemKind = wxITEM_NORMAL, clientData as Object_p = NULL, shortHelp as const_String_r = '', longHelp as const_String_r = '') as ToolBarToolBase_p
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("toolId", VTYPE_Number);
+			pDeclCallable->DeclareArg("label", VTYPE_String);
+			pDeclCallable->DeclareArg("bmpNormal", VTYPE_wxBitmap);
+			pDeclCallable->DeclareArg("bmpDisabled", VTYPE_wxBitmap, ArgOccur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("kind", VTYPE_Number, ArgOccur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("clientData", VTYPE_Any, ArgOccur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("shortHelp", VTYPE_String, ArgOccur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("longHelp", VTYPE_String, ArgOccur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		int toolId = args.PickNumber<int>();
+		const char* label = args.PickString();
+		const wxBitmap& bmpNormal = args.Pick<Value_wxBitmap>().GetEntity();
+		const wxBitmap& bmpDisabled = args.IsValid()? args.Pick<Value_wxBitmap>().GetEntity() : wxNullBitmap;
+		wxItemKind kind = args.IsValid()? args.PickNumber<wxItemKind>() : wxITEM_NORMAL;
+		wxObject* clientData = args.IsValid()? args.Pick<Value_wxObject>().GetEntityPtr() : nullptr;
+		const char* shortHelp = args.IsValid()? args.PickString() : "";
+		const char* longHelp = args.IsValid()? args.PickString() : "";
+		return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(
+			*pEntity_gurax->CreateTool(toolId, label, bmpNormal, bmpDisabled, kind, clientData, shortHelp, longHelp)));
+	} while (0);
+	Error::ClearIssuedFlag();
+	//CreateTool(control as Control_p, label as const_String_r) as ToolBarToolBase_p
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("control", VTYPE_wxControl);
+			pDeclCallable->DeclareArg("label", VTYPE_String);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxControl* control = args.Pick<Value_wxControl>().GetEntityPtr();
+		const char* label = args.PickString();
+		return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(*pEntity_gurax->CreateTool(control, label)));
+	} while (0);
+	return Value::nil();
 }
 
 // wx.ToolBar#AddTool(tool as wx.ToolBarToolBase) {block?}
@@ -1085,19 +1114,11 @@ Gurax_ImplementMethodEx(wxToolBar, AddTool_gurax, processor_gurax, argument_gura
 		*pEntity_gurax->AddTool(tool)));
 }
 
-// wx.ToolBar#InsertTool(pos as Number, toolId as Number, label as String, bitmap as wx.Bitmap, bmpDisabled? as wx.Bitmap, kind? as Number, shortHelp? as String, longHelp? as String, clientData? as wx.Object) {block?}
+// wx.ToolBar#InsertTool(args* as Any) {block?}
 Gurax_DeclareMethodAlias(wxToolBar, InsertTool_gurax, "InsertTool")
 {
 	Declare(VTYPE_wxToolBarToolBase, Flag::None);
-	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("toolId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("label", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("bmpDisabled", VTYPE_wxBitmap, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("kind", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("shortHelp", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("longHelp", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("clientData", VTYPE_wxObject, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 }
 
@@ -1109,20 +1130,57 @@ Gurax_ImplementMethodEx(wxToolBar, InsertTool_gurax, processor_gurax, argument_g
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	size_t pos = args_gurax.PickNumber<size_t>();
-	int toolId = args_gurax.PickNumber<int>();
-	const char* label = args_gurax.PickString();
-	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
-	const wxBitmap& bitmap = value_bitmap.GetEntity();
-	const wxBitmap& bmpDisabled = args_gurax.IsValid()? args_gurax.Pick<Value_wxBitmap>().GetEntity() : wxNullBitmap;
-	bool kind_validFlag = args_gurax.IsValid();
-	wxItemKind kind = kind_validFlag? args_gurax.PickNumber<wxItemKind>() : wxITEM_NORMAL;
-	const char* shortHelp = args_gurax.IsValid()? args_gurax.PickString() : "";
-	const char* longHelp = args_gurax.IsValid()? args_gurax.PickString() : "";
-	wxObject* clientData = args_gurax.IsValid()? args_gurax.Pick<Value_wxObject>().GetEntityPtr() : nullptr;
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(
-		*pEntity_gurax->InsertTool(pos, toolId, label, bitmap, bmpDisabled, kind, shortHelp, longHelp, clientData)));
+	//InsertTool(pos as size_t, toolId as int, label as const_String_r, bitmap as const_Bitmap_r, bmpDisabled as const_Bitmap_r = wxNullBitmap, kind as ItemKind = wxITEM_NORMAL, shortHelp as const_String_r = '', longHelp as const_String_r = '', clientData as Object_p = NULL) as ToolBarToolBase_p
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("pos", VTYPE_Number);
+			pDeclCallable->DeclareArg("toolId", VTYPE_Number);
+			pDeclCallable->DeclareArg("label", VTYPE_String);
+			pDeclCallable->DeclareArg("bmpNormal", VTYPE_wxBitmap);
+			pDeclCallable->DeclareArg("bmpDisabled", VTYPE_wxBitmap, ArgOccur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("kind", VTYPE_Number, ArgOccur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("shortHelp", VTYPE_String, ArgOccur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("longHelp", VTYPE_String, ArgOccur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("clientData", VTYPE_Any, ArgOccur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		size_t pos = args.PickNumber<size_t>();
+		int toolId = args.PickNumber<int>();
+		const char* label = args.PickString();
+		const wxBitmap& bmpNormal = args.Pick<Value_wxBitmap>().GetEntity();
+		const wxBitmap& bmpDisabled = args.IsValid()? args.Pick<Value_wxBitmap>().GetEntity() : wxNullBitmap;
+		wxItemKind kind = args.IsValid()? args.PickNumber<wxItemKind>() : wxITEM_NORMAL;
+		const char* shortHelp = args.IsValid()? args.PickString() : "";
+		const char* longHelp = args.IsValid()? args.PickString() : "";
+		wxObject* clientData = args.IsValid()? args.Pick<Value_wxObject>().GetEntityPtr() : nullptr;
+		return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(
+			*pEntity_gurax->InsertTool(pos, toolId, label, bmpNormal, bmpDisabled, kind, shortHelp, longHelp, clientData)));
+	} while (0);
+	Error::ClearIssuedFlag();
+	//InsertTool(pos as size_t, tool as ToolBarToolBase_p) as ToolBarToolBase_p
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("pos", VTYPE_Number);
+			pDeclCallable->DeclareArg("tool", VTYPE_wxToolBarToolBase);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		size_t pos = args.PickNumber<size_t>();
+		wxToolBarToolBase* tool = args.Pick<Value_wxToolBarToolBase>().GetEntityPtr();
+		return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(*pEntity_gurax->InsertTool(pos, tool)));
+	} while (0);
+	return Value::nil();
 }
 
 // wx.ToolBar#SetMargins(x as Number, y as Number)
