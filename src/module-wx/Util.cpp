@@ -34,6 +34,17 @@ std::vector<wxClientData*> ClientData::Create(const ValueList& values)
 }
 
 //-----------------------------------------------------------------------------
+// ClientObject
+//-----------------------------------------------------------------------------
+std::vector<wxObject*> ClientObject::Create(const ValueList& values)
+{
+	std::vector<wxObject*> rtn;
+	rtn.reserve(values.size());
+	for (const Value* pValue : values) rtn.push_back(new ClientObject(pValue->Reference()));
+	return rtn;
+}
+
+//-----------------------------------------------------------------------------
 // EventUserData
 //-----------------------------------------------------------------------------
 void EventUserData::Eval(wxEvent& event)

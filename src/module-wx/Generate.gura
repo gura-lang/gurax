@@ -165,6 +165,21 @@ r.DeclareType('TreeItemData_p', 'const Value&', 'Any',
 	'''
 	)
 
+r.DeclareType('Object_p', 'const Value&', 'Any',
+	codePicker = R'''
+	${this.cType} ${varName} = args_gurax.PickValue();
+	'''
+	codePickerValidation = R'''
+	${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
+	'''
+	codeArgRef = 'ClientObject::Create(${varName})'
+	codeFunctionBody = R'''
+	ClientObject* rtn = dynamic_cast<ClientObject*>(${caller});
+	if (!rtn) return Value::nil();
+	return rtn->GetValue().Reference();
+	'''
+	)
+
 tmplVTypesCMake = tR'''
 #===============================================================================
 # VTypes.cmake

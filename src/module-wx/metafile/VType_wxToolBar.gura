@@ -50,7 +50,7 @@ ToolBar = Class(Control) {
 	ToggleTool(toolId as int, toggle as bool) as void
 	CreateTool(args* as any) as ToolBarToolBase_p = \
 		R'''
-		//CreateTool(toolId as int, label as const_String_r, bmpNormal as const_Bitmap_r, bmpDisabled as const_Bitmap_r = wxNullBitmap, kind as ItemKind = wxITEM_NORMAL, clientData as Object_p = NULL, shortHelp as const_String_r = '', longHelp as const_String_r = '') as ToolBarToolBase_p
+		//CreateTool(toolId as int, label as const_String_r, bmpNormal as const_Bitmap_r, bmpDisabled as const_Bitmap_r = wxNullBitmap, kind as ItemKind = wxITEM_NORMAL, clientData as any = NULL, shortHelp as const_String_r = '', longHelp as const_String_r = '') as ToolBarToolBase_p
 		do {
 			static DeclCallable* pDeclCallable = nullptr;
 			if (!pDeclCallable) {
@@ -73,11 +73,11 @@ ToolBar = Class(Control) {
 			const wxBitmap& bmpNormal = args.Pick<Value_wxBitmap>().GetEntity();
 			const wxBitmap& bmpDisabled = args.IsValid()? args.Pick<Value_wxBitmap>().GetEntity() : wxNullBitmap;
 			wxItemKind kind = args.IsValid()? args.PickNumber<wxItemKind>() : wxITEM_NORMAL;
-			wxObject* clientData = args.IsValid()? args.Pick<Value_wxObject>().GetEntityPtr() : nullptr;
+			const Value& clientData = args.IsValid()? args.PickValue() : Value::C_nil();
 			const char* shortHelp = args.IsValid()? args.PickString() : "";
 			const char* longHelp = args.IsValid()? args.PickString() : "";
 			return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(
-				*pEntity_gurax->CreateTool(toolId, label, bmpNormal, bmpDisabled, kind, clientData, shortHelp, longHelp)));
+				*pEntity_gurax->CreateTool(toolId, label, bmpNormal, bmpDisabled, kind, ClientObject::Create(clientData), shortHelp, longHelp)));
 		} while (0);
 		Error::ClearIssuedFlag();
 		//CreateTool(control as Control_p, label as const_String_r) as ToolBarToolBase_p
@@ -98,12 +98,80 @@ ToolBar = Class(Control) {
 		} while (0);
 		return Value::nil();
 		'''
-	AddTool(tool as ToolBarToolBase_p) as ToolBarToolBase_p
-	//AddTool(toolId as int, label as const_String_r, bitmap as const_Bitmap_r, shortHelp as const_String_r = '', kind as ItemKind = wxITEM_NORMAL) as ToolBarToolBase_p
-	//AddTool(toolId as int, label as const_String_r, bitmap as const_Bitmap_r, bmpDisabled as const_Bitmap_r, kind as ItemKind = wxITEM_NORMAL, shortHelpString as const_String_r = '', longHelpString as const_String_r = '', clientData as Object_p = NULL) as ToolBarToolBase_p
+	AddTool(args* as any) as ToolBarToolBase_p = \
+		R'''
+		//AddTool(tool as ToolBarToolBase_p) as ToolBarToolBase_p
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("tool", VTYPE_wxToolBarToolBase);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxToolBarToolBase* tool = args.Pick<Value_wxToolBarToolBase>().GetEntityPtr();
+			return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(*pEntity_gurax->AddTool(tool)));
+		} while (0);
+		Error::ClearIssuedFlag();
+		//AddTool(toolId as int, label as const_String_r, bitmap as const_Bitmap_r, shortHelp as const_String_r = '', kind as ItemKind = wxITEM_NORMAL) as ToolBarToolBase_p
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("toolId", VTYPE_Number);
+				pDeclCallable->DeclareArg("label", VTYPE_String);
+				pDeclCallable->DeclareArg("bitmap", VTYPE_wxBitmap);
+				pDeclCallable->DeclareArg("shortHelp", VTYPE_String, ArgOccur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("kind", VTYPE_Number, ArgOccur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			int toolId = args.PickNumber<int>();
+			const char* label = args.PickString();
+			const wxBitmap& bitmap = args.Pick<Value_wxBitmap>().GetEntity();
+			const char* shortHelp = args.IsValid()? args.PickString() : "";
+			wxItemKind kind = args.IsValid()? args.PickNumber<wxItemKind>() : wxITEM_NORMAL;
+			return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(*pEntity_gurax->AddTool(toolId, label, bitmap, shortHelp, kind)));
+		} while (0);
+		Error::ClearIssuedFlag();
+		//AddTool(toolId as int, label as const_String_r, bmpNormal as const_Bitmap_r, bmpDisabled as const_Bitmap_r, kind as ItemKind = wxITEM_NORMAL, shortHelpString as const_String_r = '', longHelpString as const_String_r = '', clientData as any = NULL) as ToolBarToolBase_p
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("toolId", VTYPE_Number);
+				pDeclCallable->DeclareArg("label", VTYPE_String);
+				pDeclCallable->DeclareArg("bmpNormal", VTYPE_wxBitmap);
+				pDeclCallable->DeclareArg("bmpDisabled", VTYPE_wxBitmap);
+				pDeclCallable->DeclareArg("kind", VTYPE_Number, ArgOccur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("shortHelp", VTYPE_String, ArgOccur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("longHelp", VTYPE_String, ArgOccur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("clientData", VTYPE_Any, ArgOccur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			int toolId = args.PickNumber<int>();
+			const char* label = args.PickString();
+			const wxBitmap& bmpNormal = args.Pick<Value_wxBitmap>().GetEntity();
+			const wxBitmap& bmpDisabled = args.Pick<Value_wxBitmap>().GetEntity();
+			wxItemKind kind = args.IsValid()? args.PickNumber<wxItemKind>() : wxITEM_NORMAL;
+			const char* shortHelp = args.IsValid()? args.PickString() : "";
+			const char* longHelp = args.IsValid()? args.PickString() : "";
+			const Value& clientData = args.IsValid()? args.PickValue() : Value::C_nil();
+			return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(*pEntity_gurax->AddTool(
+					toolId, label, bmpNormal, bmpDisabled, kind, shortHelp, longHelp, ClientObject::Create(clientData))));
+		} while (0);
+		return Value::nil();
+		'''
 	InsertTool(args* as any) as ToolBarToolBase_p = \
 		R'''
-		//InsertTool(pos as size_t, toolId as int, label as const_String_r, bitmap as const_Bitmap_r, bmpDisabled as const_Bitmap_r = wxNullBitmap, kind as ItemKind = wxITEM_NORMAL, shortHelp as const_String_r = '', longHelp as const_String_r = '', clientData as Object_p = NULL) as ToolBarToolBase_p
+		//InsertTool(pos as size_t, toolId as int, label as const_String_r, bitmap as const_Bitmap_r, bmpDisabled as const_Bitmap_r = wxNullBitmap, kind as ItemKind = wxITEM_NORMAL, shortHelp as const_String_r = '', longHelp as const_String_r = '', clientData as any = NULL) as ToolBarToolBase_p
 		do {
 			static DeclCallable* pDeclCallable = nullptr;
 			if (!pDeclCallable) {
@@ -130,9 +198,9 @@ ToolBar = Class(Control) {
 			wxItemKind kind = args.IsValid()? args.PickNumber<wxItemKind>() : wxITEM_NORMAL;
 			const char* shortHelp = args.IsValid()? args.PickString() : "";
 			const char* longHelp = args.IsValid()? args.PickString() : "";
-			wxObject* clientData = args.IsValid()? args.Pick<Value_wxObject>().GetEntityPtr() : nullptr;
+			const Value& clientData = args.IsValid()? args.PickValue() : Value::C_nil();
 			return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(
-				*pEntity_gurax->InsertTool(pos, toolId, label, bmpNormal, bmpDisabled, kind, shortHelp, longHelp, clientData)));
+				*pEntity_gurax->InsertTool(pos, toolId, label, bmpNormal, bmpDisabled, kind, shortHelp, longHelp, ClientObject::Create(clientData))));
 		} while (0);
 		Error::ClearIssuedFlag();
 		//InsertTool(pos as size_t, tool as ToolBarToolBase_p) as ToolBarToolBase_p
@@ -153,8 +221,43 @@ ToolBar = Class(Control) {
 		} while (0);
 		return Value::nil();
 		'''
-	SetMargins(x as int, y as int) as void
-	//SetMargins(size as const_Size_r) as void
+	SetMargins(args* as any) as void = \
+		R'''
+		//SetMargins(x as int, y as int) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("x", VTYPE_Number);
+				pDeclCallable->DeclareArg("y", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			int x = args.PickNumber<int>();
+			int y = args.PickNumber<int>();
+			pEntity_gurax->SetMargins(x, y);
+			return Value::nil();
+		} while (0);
+		Error::ClearIssuedFlag();
+		//SetMargins(size as const_Size_r) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("size", VTYPE_wxSize);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxSize& size = args.Pick<Value_wxSize>().GetEntity();
+			pEntity_gurax->SetMargins(size);
+			return Value::nil();
+		} while (0);
+		return Value::nil();
+		'''
 } %% R'''
 # Overview
 

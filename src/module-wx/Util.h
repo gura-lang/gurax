@@ -70,6 +70,21 @@ public:
 };
 
 //-----------------------------------------------------------------------------
+// ClientObject
+//-----------------------------------------------------------------------------
+class ClientObject : public wxObject {
+private:
+	RefPtr<Value> _pValue;
+public:
+	ClientObject(Value* pValue) : _pValue(pValue) {}
+	Value& GetValue() { return *_pValue; }
+	const Value& GetValue() const { return *_pValue; }
+public:
+	static wxObject* Create(const Value& value) { return new ClientObject(value.Reference()); }
+	static std::vector<wxObject*> Create(const ValueList& values);
+};
+
+//-----------------------------------------------------------------------------
 // TreeItemData
 //-----------------------------------------------------------------------------
 class TreeItemData : public wxTreeItemData {
