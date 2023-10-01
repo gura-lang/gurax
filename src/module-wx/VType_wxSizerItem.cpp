@@ -382,11 +382,10 @@ Gurax_ImplementMethodEx(wxSizerItem, GetSpacer_gurax, processor_gurax, argument_
 		pEntity_gurax->GetSpacer()));
 }
 
-// wx.SizerItem#GetUserData() {block?}
+// wx.SizerItem#GetUserData()
 Gurax_DeclareMethodAlias(wxSizerItem, GetUserData_gurax, "GetUserData")
 {
-	Declare(VTYPE_wxObject, Flag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
+	Declare(VTYPE_Any, Flag::None);
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, GetUserData_gurax, processor_gurax, argument_gurax)
@@ -396,8 +395,9 @@ Gurax_ImplementMethodEx(wxSizerItem, GetUserData_gurax, processor_gurax, argumen
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxObject(
-		*pEntity_gurax->GetUserData()));
+	ClientObject* rtn = dynamic_cast<ClientObject*>(pEntity_gurax->GetUserData());
+	if (!rtn) return Value::nil();
+	return rtn->GetValue().Reference();
 }
 
 // wx.SizerItem#GetWindow() {block?}
@@ -618,11 +618,11 @@ Gurax_ImplementMethodEx(wxSizerItem, SetProportion_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// wx.SizerItem#SetUserData(userData as wx.Object)
+// wx.SizerItem#SetUserData(userData as Any)
 Gurax_DeclareMethodAlias(wxSizerItem, SetUserData_gurax, "SetUserData")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("userData", VTYPE_wxObject, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("userData", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, SetUserData_gurax, processor_gurax, argument_gurax)
@@ -633,10 +633,9 @@ Gurax_ImplementMethodEx(wxSizerItem, SetUserData_gurax, processor_gurax, argumen
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxObject& value_userData = args_gurax.Pick<Value_wxObject>();
-	wxObject* userData = value_userData.GetEntityPtr();
+	const Value& userData = args_gurax.PickValue();
 	// Function body
-	pEntity_gurax->SetUserData(userData);
+	pEntity_gurax->SetUserData(ClientObject::Create(userData));
 	return Gurax::Value::nil();
 }
 

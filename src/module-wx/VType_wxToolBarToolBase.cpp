@@ -378,11 +378,10 @@ Gurax_ImplementMethodEx(wxToolBarToolBase, GetLongHelp_gurax, processor_gurax, a
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
-// wx.ToolBarToolBase#GetClientData() {block?}
+// wx.ToolBarToolBase#GetClientData()
 Gurax_DeclareMethodAlias(wxToolBarToolBase, GetClientData_gurax, "GetClientData")
 {
-	Declare(VTYPE_wxObject, Flag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
+	Declare(VTYPE_Any, Flag::None);
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, GetClientData_gurax, processor_gurax, argument_gurax)
@@ -392,8 +391,9 @@ Gurax_ImplementMethodEx(wxToolBarToolBase, GetClientData_gurax, processor_gurax,
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxObject(
-		*pEntity_gurax->GetClientData()));
+	ClientObject* rtn = dynamic_cast<ClientObject*>(pEntity_gurax->GetClientData());
+	if (!rtn) return Value::nil();
+	return rtn->GetValue().Reference();
 }
 
 // wx.ToolBarToolBase#Enable(enable as Bool)
@@ -566,11 +566,11 @@ Gurax_ImplementMethodEx(wxToolBarToolBase, SetLabel_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// wx.ToolBarToolBase#SetClientData(clientData as wx.Object)
+// wx.ToolBarToolBase#SetClientData(clientData as Any)
 Gurax_DeclareMethodAlias(wxToolBarToolBase, SetClientData_gurax, "SetClientData")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("clientData", VTYPE_wxObject, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("clientData", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, SetClientData_gurax, processor_gurax, argument_gurax)
@@ -581,10 +581,9 @@ Gurax_ImplementMethodEx(wxToolBarToolBase, SetClientData_gurax, processor_gurax,
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxObject& value_clientData = args_gurax.Pick<Value_wxObject>();
-	wxObject* clientData = value_clientData.GetEntityPtr();
+	const Value& clientData = args_gurax.PickValue();
 	// Function body
-	pEntity_gurax->SetClientData(clientData);
+	pEntity_gurax->SetClientData(ClientObject::Create(clientData));
 	return Gurax::Value::nil();
 }
 

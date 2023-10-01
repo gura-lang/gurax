@@ -216,7 +216,7 @@ Gurax_ImplementMethodEx(wxGridBagSizer, SetEmptyCellSize_gurax, processor_gurax,
 	return Gurax::Value::nil();
 }
 
-// wx.GridBagSizer#Add(window as wx.Window, pos as wx.GBPosition, span? as wx.GBSpan, flag? as Number, border? as Number, userData? as wx.Object) {block?}
+// wx.GridBagSizer#Add(window as wx.Window, pos as wx.GBPosition, span? as wx.GBSpan, flag? as Number, border? as Number, userData? as Any) {block?}
 Gurax_DeclareMethodAlias(wxGridBagSizer, Add_gurax, "Add")
 {
 	Declare(VTYPE_wxSizerItem, Flag::None);
@@ -225,7 +225,7 @@ Gurax_DeclareMethodAlias(wxGridBagSizer, Add_gurax, "Add")
 	DeclareArg("span", VTYPE_wxGBSpan, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("flag", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("border", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("userData", VTYPE_wxObject, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("userData", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 }
 
@@ -246,10 +246,10 @@ Gurax_ImplementMethodEx(wxGridBagSizer, Add_gurax, processor_gurax, argument_gur
 	int flag = flag_validFlag? args_gurax.PickNumber<int>() : 0;
 	bool border_validFlag = args_gurax.IsValid();
 	int border = border_validFlag? args_gurax.PickNumber<int>() : 0;
-	wxObject* userData = args_gurax.IsValid()? args_gurax.Pick<Value_wxObject>().GetEntityPtr() : nullptr;
+	const Value& userData = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(
-		*pEntity_gurax->Add(window, pos, span, flag, border, userData)));
+		*pEntity_gurax->Add(window, pos, span, flag, border, ClientObject::Create(userData))));
 }
 
 // wx.GridBagSizer#CheckForIntersection(item as wx.GBSizerItem, excludeItem? as wx.GBSizerItem)

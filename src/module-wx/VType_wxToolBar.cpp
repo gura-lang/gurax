@@ -79,7 +79,7 @@ Gurax_ImplementConstructorEx(ToolBar_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.ToolBar#AddCheckTool(toolId as Number, label as String, bitmap1 as wx.Bitmap, bmpDisabled? as wx.Bitmap, shortHelp? as String, longHelp? as String, clientData? as wx.Object) {block?}
+// wx.ToolBar#AddCheckTool(toolId as Number, label as String, bitmap1 as wx.Bitmap, bmpDisabled? as wx.Bitmap, shortHelp? as String, longHelp? as String, clientData? as Any) {block?}
 Gurax_DeclareMethodAlias(wxToolBar, AddCheckTool_gurax, "AddCheckTool")
 {
 	Declare(VTYPE_wxToolBarToolBase, Flag::None);
@@ -89,7 +89,7 @@ Gurax_DeclareMethodAlias(wxToolBar, AddCheckTool_gurax, "AddCheckTool")
 	DeclareArg("bmpDisabled", VTYPE_wxBitmap, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("shortHelp", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("longHelp", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("clientData", VTYPE_wxObject, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("clientData", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 }
 
@@ -108,10 +108,10 @@ Gurax_ImplementMethodEx(wxToolBar, AddCheckTool_gurax, processor_gurax, argument
 	const wxBitmap& bmpDisabled = args_gurax.IsValid()? args_gurax.Pick<Value_wxBitmap>().GetEntity() : wxNullBitmap;
 	const char* shortHelp = args_gurax.IsValid()? args_gurax.PickString() : "";
 	const char* longHelp = args_gurax.IsValid()? args_gurax.PickString() : "";
-	wxObject* clientData = args_gurax.IsValid()? args_gurax.Pick<Value_wxObject>().GetEntityPtr() : nullptr;
+	const Value& clientData = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(
-		*pEntity_gurax->AddCheckTool(toolId, label, bitmap1, bmpDisabled, shortHelp, longHelp, clientData)));
+		*pEntity_gurax->AddCheckTool(toolId, label, bitmap1, bmpDisabled, shortHelp, longHelp, ClientObject::Create(clientData))));
 }
 
 // wx.ToolBar#AddControl(control as wx.Control, label? as String) {block?}
@@ -139,7 +139,7 @@ Gurax_ImplementMethodEx(wxToolBar, AddControl_gurax, processor_gurax, argument_g
 		*pEntity_gurax->AddControl(control, label)));
 }
 
-// wx.ToolBar#AddRadioTool(toolId as Number, label as String, bitmap1 as wx.Bitmap, bmpDisabled? as wx.Bitmap, shortHelp? as String, longHelp? as String, clientData? as wx.Object) {block?}
+// wx.ToolBar#AddRadioTool(toolId as Number, label as String, bitmap1 as wx.Bitmap, bmpDisabled? as wx.Bitmap, shortHelp? as String, longHelp? as String, clientData? as Any) {block?}
 Gurax_DeclareMethodAlias(wxToolBar, AddRadioTool_gurax, "AddRadioTool")
 {
 	Declare(VTYPE_wxToolBarToolBase, Flag::None);
@@ -149,7 +149,7 @@ Gurax_DeclareMethodAlias(wxToolBar, AddRadioTool_gurax, "AddRadioTool")
 	DeclareArg("bmpDisabled", VTYPE_wxBitmap, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("shortHelp", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("longHelp", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("clientData", VTYPE_wxObject, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("clientData", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 }
 
@@ -168,10 +168,10 @@ Gurax_ImplementMethodEx(wxToolBar, AddRadioTool_gurax, processor_gurax, argument
 	const wxBitmap& bmpDisabled = args_gurax.IsValid()? args_gurax.Pick<Value_wxBitmap>().GetEntity() : wxNullBitmap;
 	const char* shortHelp = args_gurax.IsValid()? args_gurax.PickString() : "";
 	const char* longHelp = args_gurax.IsValid()? args_gurax.PickString() : "";
-	wxObject* clientData = args_gurax.IsValid()? args_gurax.Pick<Value_wxObject>().GetEntityPtr() : nullptr;
+	const Value& clientData = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(
-		*pEntity_gurax->AddRadioTool(toolId, label, bitmap1, bmpDisabled, shortHelp, longHelp, clientData)));
+		*pEntity_gurax->AddRadioTool(toolId, label, bitmap1, bmpDisabled, shortHelp, longHelp, ClientObject::Create(clientData))));
 }
 
 // wx.ToolBar#AddSeparator() {block?}
@@ -418,12 +418,11 @@ Gurax_ImplementMethodEx(wxToolBar, GetToolByPos_gurax, processor_gurax, argument
 		*pEntity_gurax->GetToolByPos(pos)));
 }
 
-// wx.ToolBar#GetToolClientData(toolId as Number) {block?}
+// wx.ToolBar#GetToolClientData(toolId as Number)
 Gurax_DeclareMethodAlias(wxToolBar, GetToolClientData_gurax, "GetToolClientData")
 {
-	Declare(VTYPE_wxObject, Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("toolId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
 }
 
 Gurax_ImplementMethodEx(wxToolBar, GetToolClientData_gurax, processor_gurax, argument_gurax)
@@ -436,8 +435,9 @@ Gurax_ImplementMethodEx(wxToolBar, GetToolClientData_gurax, processor_gurax, arg
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int toolId = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxObject(
-		*pEntity_gurax->GetToolClientData(toolId)));
+	ClientObject* rtn = dynamic_cast<ClientObject*>(pEntity_gurax->GetToolClientData(toolId));
+	if (!rtn) return Value::nil();
+	return rtn->GetValue().Reference();
 }
 
 // wx.ToolBar#GetToolEnabled(toolId as Number)
@@ -841,12 +841,12 @@ Gurax_ImplementMethodEx(wxToolBar, SetToolBitmapSize_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// wx.ToolBar#SetToolClientData(id as Number, clientData as wx.Object)
+// wx.ToolBar#SetToolClientData(id as Number, clientData as Any)
 Gurax_DeclareMethodAlias(wxToolBar, SetToolClientData_gurax, "SetToolClientData")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("clientData", VTYPE_wxObject, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("clientData", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 }
 
 Gurax_ImplementMethodEx(wxToolBar, SetToolClientData_gurax, processor_gurax, argument_gurax)
@@ -858,10 +858,9 @@ Gurax_ImplementMethodEx(wxToolBar, SetToolClientData_gurax, processor_gurax, arg
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int id = args_gurax.PickNumber<int>();
-	Value_wxObject& value_clientData = args_gurax.Pick<Value_wxObject>();
-	wxObject* clientData = value_clientData.GetEntityPtr();
+	const Value& clientData = args_gurax.PickValue();
 	// Function body
-	pEntity_gurax->SetToolClientData(id, clientData);
+	pEntity_gurax->SetToolClientData(id, ClientObject::Create(clientData));
 	return Gurax::Value::nil();
 }
 
