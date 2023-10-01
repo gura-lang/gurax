@@ -44,10 +44,1116 @@ ${help.ComposeMethodHelp(wx.TreeListCtrl, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.TreeListCtrl(parent as wx.Window, id as Number, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
+Gurax_DeclareConstructorAlias(TreeListCtrl_gurax, "TreeListCtrl")
+{
+	Declare(VTYPE_wxTreeListCtrl, Flag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementConstructorEx(TreeListCtrl_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* parent = value_parent.GetEntityPtr();
+	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
+	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : wxTL_DEFAULT_STYLE;
+	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxTreeListCtrlNameStr;
+	// Function body
+	auto pEntity_gurax = new Value_wxTreeListCtrl::EntityT(parent, id, pos, size, style, name);
+	RefPtr<Value_wxTreeListCtrl> pValue_gurax(new Value_wxTreeListCtrl(pEntity_gurax));
+	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.TreeListCtrl#AssignImageList(imageList as wx.ImageList)
+Gurax_DeclareMethodAlias(wxTreeListCtrl, AssignImageList_gurax, "AssignImageList")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("imageList", VTYPE_wxImageList, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, AssignImageList_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxImageList& value_imageList = args_gurax.Pick<Value_wxImageList>();
+	wxImageList* imageList = value_imageList.GetEntityPtr();
+	// Function body
+	pEntity_gurax->AssignImageList(imageList);
+	return Gurax::Value::nil();
+}
+
+// wx.TreeListCtrl#SetImageList(imageList as wx.ImageList)
+Gurax_DeclareMethodAlias(wxTreeListCtrl, SetImageList_gurax, "SetImageList")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("imageList", VTYPE_wxImageList, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, SetImageList_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxImageList& value_imageList = args_gurax.Pick<Value_wxImageList>();
+	wxImageList* imageList = value_imageList.GetEntityPtr();
+	// Function body
+	pEntity_gurax->SetImageList(imageList);
+	return Gurax::Value::nil();
+}
+
+// wx.TreeListCtrl#Create(parent as wx.Window, id as Number, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String)
+Gurax_DeclareMethodAlias(wxTreeListCtrl, Create_gurax, "Create")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, Create_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* parent = value_parent.GetEntityPtr();
+	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
+	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : wxTL_DEFAULT_STYLE;
+	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxTreeListCtrlNameStr;
+	// Function body
+	bool rtn = pEntity_gurax->Create(parent, id, pos, size, style, name);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TreeListCtrl#AppendColumn(title as String, width? as Number, align? as Number, flags? as Number)
+Gurax_DeclareMethodAlias(wxTreeListCtrl, AppendColumn_gurax, "AppendColumn")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("title", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("align", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, AppendColumn_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* title = args_gurax.PickString();
+	bool width_validFlag = args_gurax.IsValid();
+	int width = width_validFlag? args_gurax.PickNumber<int>() : wxCOL_WIDTH_AUTOSIZE;
+	bool align_validFlag = args_gurax.IsValid();
+	wxAlignment align = align_validFlag? args_gurax.PickNumber<wxAlignment>() : wxALIGN_LEFT;
+	bool flags_validFlag = args_gurax.IsValid();
+	int flags = flags_validFlag? args_gurax.PickNumber<int>() : wxCOL_RESIZABLE;
+	// Function body
+	int rtn = pEntity_gurax->AppendColumn(title, width, align, flags);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.TreeListCtrl#GetColumnCount()
+Gurax_DeclareMethodAlias(wxTreeListCtrl, GetColumnCount_gurax, "GetColumnCount")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, GetColumnCount_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	unsigned rtn = pEntity_gurax->GetColumnCount();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.TreeListCtrl#DeleteColumn(col as Number)
+Gurax_DeclareMethodAlias(wxTreeListCtrl, DeleteColumn_gurax, "DeleteColumn")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, DeleteColumn_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned col = args_gurax.PickNumber<unsigned>();
+	// Function body
+	bool rtn = pEntity_gurax->DeleteColumn(col);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TreeListCtrl#ClearColumns()
+Gurax_DeclareMethodAlias(wxTreeListCtrl, ClearColumns_gurax, "ClearColumns")
+{
+	Declare(VTYPE_Nil, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, ClearColumns_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->ClearColumns();
+	return Gurax::Value::nil();
+}
+
+// wx.TreeListCtrl#SetColumnWidth(col as Number, width as Number)
+Gurax_DeclareMethodAlias(wxTreeListCtrl, SetColumnWidth_gurax, "SetColumnWidth")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, SetColumnWidth_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned col = args_gurax.PickNumber<unsigned>();
+	int width = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetColumnWidth(col, width);
+	return Gurax::Value::nil();
+}
+
+// wx.TreeListCtrl#GetColumnWidth(col as Number)
+Gurax_DeclareMethodAlias(wxTreeListCtrl, GetColumnWidth_gurax, "GetColumnWidth")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, GetColumnWidth_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned col = args_gurax.PickNumber<unsigned>();
+	// Function body
+	int rtn = pEntity_gurax->GetColumnWidth(col);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.TreeListCtrl#WidthFor(text as String)
+Gurax_DeclareMethodAlias(wxTreeListCtrl, WidthFor_gurax, "WidthFor")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, WidthFor_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* text = args_gurax.PickString();
+	// Function body
+	int rtn = pEntity_gurax->WidthFor(text);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.TreeListCtrl#AppendItem(parent as wx.TreeListItem, text as String, imageClosed? as Number, imageOpened? as Number, data? as Any) {block?}
+Gurax_DeclareMethodAlias(wxTreeListCtrl, AppendItem_gurax, "AppendItem")
+{
+	Declare(VTYPE_wxTreeListItem, Flag::None);
+	DeclareArg("parent", VTYPE_wxTreeListItem, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("imageClosed", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("imageOpened", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("data", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, AppendItem_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTreeListItem& value_parent = args_gurax.Pick<Value_wxTreeListItem>();
+	const wxTreeListItem& parent = value_parent.GetEntity();
+	const char* text = args_gurax.PickString();
+	bool imageClosed_validFlag = args_gurax.IsValid();
+	int imageClosed = imageClosed_validFlag? args_gurax.PickNumber<int>() : -1;
+	bool imageOpened_validFlag = args_gurax.IsValid();
+	int imageOpened = imageOpened_validFlag? args_gurax.PickNumber<int>() : -1;
+	const Value& data = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeListItem(
+		pEntity_gurax->AppendItem(parent, text, imageClosed, imageOpened, ClientData::Create(data))));
+}
+
+// wx.TreeListCtrl#InsertItem(parent as wx.TreeListItem, previous as wx.TreeListItem, text as String, imageClosed? as Number, imageOpened? as Number, data? as Any) {block?}
+Gurax_DeclareMethodAlias(wxTreeListCtrl, InsertItem_gurax, "InsertItem")
+{
+	Declare(VTYPE_wxTreeListItem, Flag::None);
+	DeclareArg("parent", VTYPE_wxTreeListItem, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("previous", VTYPE_wxTreeListItem, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("imageClosed", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("imageOpened", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("data", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, InsertItem_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTreeListItem& value_parent = args_gurax.Pick<Value_wxTreeListItem>();
+	const wxTreeListItem& parent = value_parent.GetEntity();
+	Value_wxTreeListItem& value_previous = args_gurax.Pick<Value_wxTreeListItem>();
+	const wxTreeListItem& previous = value_previous.GetEntity();
+	const char* text = args_gurax.PickString();
+	bool imageClosed_validFlag = args_gurax.IsValid();
+	int imageClosed = imageClosed_validFlag? args_gurax.PickNumber<int>() : -1;
+	bool imageOpened_validFlag = args_gurax.IsValid();
+	int imageOpened = imageOpened_validFlag? args_gurax.PickNumber<int>() : -1;
+	const Value& data = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeListItem(
+		pEntity_gurax->InsertItem(parent, previous, text, imageClosed, imageOpened, ClientData::Create(data))));
+}
+
+// wx.TreeListCtrl#PrependItem(parent as wx.TreeListItem, text as String, imageClosed? as Number, imageOpened? as Number, data? as Any) {block?}
+Gurax_DeclareMethodAlias(wxTreeListCtrl, PrependItem_gurax, "PrependItem")
+{
+	Declare(VTYPE_wxTreeListItem, Flag::None);
+	DeclareArg("parent", VTYPE_wxTreeListItem, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("imageClosed", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("imageOpened", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("data", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, PrependItem_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTreeListItem& value_parent = args_gurax.Pick<Value_wxTreeListItem>();
+	const wxTreeListItem& parent = value_parent.GetEntity();
+	const char* text = args_gurax.PickString();
+	bool imageClosed_validFlag = args_gurax.IsValid();
+	int imageClosed = imageClosed_validFlag? args_gurax.PickNumber<int>() : -1;
+	bool imageOpened_validFlag = args_gurax.IsValid();
+	int imageOpened = imageOpened_validFlag? args_gurax.PickNumber<int>() : -1;
+	const Value& data = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeListItem(
+		pEntity_gurax->PrependItem(parent, text, imageClosed, imageOpened, ClientData::Create(data))));
+}
+
+// wx.TreeListCtrl#DeleteItem(item as wx.TreeListItem)
+Gurax_DeclareMethodAlias(wxTreeListCtrl, DeleteItem_gurax, "DeleteItem")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("item", VTYPE_wxTreeListItem, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, DeleteItem_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTreeListItem& value_item = args_gurax.Pick<Value_wxTreeListItem>();
+	const wxTreeListItem& item = value_item.GetEntity();
+	// Function body
+	pEntity_gurax->DeleteItem(item);
+	return Gurax::Value::nil();
+}
+
+// wx.TreeListCtrl#DeleteAllItems()
+Gurax_DeclareMethodAlias(wxTreeListCtrl, DeleteAllItems_gurax, "DeleteAllItems")
+{
+	Declare(VTYPE_Nil, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, DeleteAllItems_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->DeleteAllItems();
+	return Gurax::Value::nil();
+}
+
+// wx.TreeListCtrl#GetRootItem() {block?}
+Gurax_DeclareMethodAlias(wxTreeListCtrl, GetRootItem_gurax, "GetRootItem")
+{
+	Declare(VTYPE_wxTreeListItem, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, GetRootItem_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeListItem(
+		pEntity_gurax->GetRootItem()));
+}
+
+// wx.TreeListCtrl#GetItemParent(item as wx.TreeListItem) {block?}
+Gurax_DeclareMethodAlias(wxTreeListCtrl, GetItemParent_gurax, "GetItemParent")
+{
+	Declare(VTYPE_wxTreeListItem, Flag::None);
+	DeclareArg("item", VTYPE_wxTreeListItem, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, GetItemParent_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTreeListItem& value_item = args_gurax.Pick<Value_wxTreeListItem>();
+	const wxTreeListItem& item = value_item.GetEntity();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeListItem(
+		pEntity_gurax->GetItemParent(item)));
+}
+
+// wx.TreeListCtrl#GetFirstChild(item as wx.TreeListItem) {block?}
+Gurax_DeclareMethodAlias(wxTreeListCtrl, GetFirstChild_gurax, "GetFirstChild")
+{
+	Declare(VTYPE_wxTreeListItem, Flag::None);
+	DeclareArg("item", VTYPE_wxTreeListItem, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, GetFirstChild_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTreeListItem& value_item = args_gurax.Pick<Value_wxTreeListItem>();
+	const wxTreeListItem& item = value_item.GetEntity();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeListItem(
+		pEntity_gurax->GetFirstChild(item)));
+}
+
+// wx.TreeListCtrl#GetNextSibling(item as wx.TreeListItem) {block?}
+Gurax_DeclareMethodAlias(wxTreeListCtrl, GetNextSibling_gurax, "GetNextSibling")
+{
+	Declare(VTYPE_wxTreeListItem, Flag::None);
+	DeclareArg("item", VTYPE_wxTreeListItem, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, GetNextSibling_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTreeListItem& value_item = args_gurax.Pick<Value_wxTreeListItem>();
+	const wxTreeListItem& item = value_item.GetEntity();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeListItem(
+		pEntity_gurax->GetNextSibling(item)));
+}
+
+// wx.TreeListCtrl#GetFirstItem() {block?}
+Gurax_DeclareMethodAlias(wxTreeListCtrl, GetFirstItem_gurax, "GetFirstItem")
+{
+	Declare(VTYPE_wxTreeListItem, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, GetFirstItem_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeListItem(
+		pEntity_gurax->GetFirstItem()));
+}
+
+// wx.TreeListCtrl#GetNextItem(item as wx.TreeListItem) {block?}
+Gurax_DeclareMethodAlias(wxTreeListCtrl, GetNextItem_gurax, "GetNextItem")
+{
+	Declare(VTYPE_wxTreeListItem, Flag::None);
+	DeclareArg("item", VTYPE_wxTreeListItem, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, GetNextItem_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTreeListItem& value_item = args_gurax.Pick<Value_wxTreeListItem>();
+	const wxTreeListItem& item = value_item.GetEntity();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeListItem(
+		pEntity_gurax->GetNextItem(item)));
+}
+
+// wx.TreeListCtrl#GetItemText(item as wx.TreeListItem, col? as Number)
+Gurax_DeclareMethodAlias(wxTreeListCtrl, GetItemText_gurax, "GetItemText")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("item", VTYPE_wxTreeListItem, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("col", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, GetItemText_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTreeListItem& value_item = args_gurax.Pick<Value_wxTreeListItem>();
+	const wxTreeListItem& item = value_item.GetEntity();
+	bool col_validFlag = args_gurax.IsValid();
+	unsigned col = col_validFlag? args_gurax.PickNumber<unsigned>() : 0;
+	// Function body
+	wxString rtn = pEntity_gurax->GetItemText(item, col);
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
+}
+
+// wx.TreeListCtrl#SetItemText(item as wx.TreeListItem, col as Number, text as String)
+Gurax_DeclareMethodAlias(wxTreeListCtrl, SetItemText_gurax, "SetItemText")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("item", VTYPE_wxTreeListItem, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, SetItemText_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTreeListItem& value_item = args_gurax.Pick<Value_wxTreeListItem>();
+	const wxTreeListItem& item = value_item.GetEntity();
+	unsigned col = args_gurax.PickNumber<unsigned>();
+	const char* text = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetItemText(item, col, text);
+	return Gurax::Value::nil();
+}
+
+// wx.TreeListCtrl#SetItemImage(item as wx.TreeListItem, closed as Number, opened? as Number)
+Gurax_DeclareMethodAlias(wxTreeListCtrl, SetItemImage_gurax, "SetItemImage")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("item", VTYPE_wxTreeListItem, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("closed", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("opened", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, SetItemImage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTreeListItem& value_item = args_gurax.Pick<Value_wxTreeListItem>();
+	const wxTreeListItem& item = value_item.GetEntity();
+	int closed = args_gurax.PickNumber<int>();
+	bool opened_validFlag = args_gurax.IsValid();
+	int opened = opened_validFlag? args_gurax.PickNumber<int>() : -1;
+	// Function body
+	pEntity_gurax->SetItemImage(item, closed, opened);
+	return Gurax::Value::nil();
+}
+
+// wx.TreeListCtrl#GetItemData(item as wx.TreeListItem)
+Gurax_DeclareMethodAlias(wxTreeListCtrl, GetItemData_gurax, "GetItemData")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("item", VTYPE_wxTreeListItem, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, GetItemData_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTreeListItem& value_item = args_gurax.Pick<Value_wxTreeListItem>();
+	const wxTreeListItem& item = value_item.GetEntity();
+	// Function body
+	ClientData* rtn = dynamic_cast<ClientData*>(pEntity_gurax->GetItemData(item));
+	if (!rtn) return Value::nil();
+	return rtn->GetValue().Reference();
+}
+
+// wx.TreeListCtrl#SetItemData(item as wx.TreeListItem, data as Any)
+Gurax_DeclareMethodAlias(wxTreeListCtrl, SetItemData_gurax, "SetItemData")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("item", VTYPE_wxTreeListItem, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, SetItemData_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTreeListItem& value_item = args_gurax.Pick<Value_wxTreeListItem>();
+	const wxTreeListItem& item = value_item.GetEntity();
+	const Value& data = args_gurax.PickValue();
+	// Function body
+	pEntity_gurax->SetItemData(item, ClientData::Create(data));
+	return Gurax::Value::nil();
+}
+
+// wx.TreeListCtrl#Expand(item as wx.TreeListItem)
+Gurax_DeclareMethodAlias(wxTreeListCtrl, Expand_gurax, "Expand")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("item", VTYPE_wxTreeListItem, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, Expand_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTreeListItem& value_item = args_gurax.Pick<Value_wxTreeListItem>();
+	const wxTreeListItem& item = value_item.GetEntity();
+	// Function body
+	pEntity_gurax->Expand(item);
+	return Gurax::Value::nil();
+}
+
+// wx.TreeListCtrl#Collapse(item as wx.TreeListItem)
+Gurax_DeclareMethodAlias(wxTreeListCtrl, Collapse_gurax, "Collapse")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("item", VTYPE_wxTreeListItem, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, Collapse_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTreeListItem& value_item = args_gurax.Pick<Value_wxTreeListItem>();
+	const wxTreeListItem& item = value_item.GetEntity();
+	// Function body
+	pEntity_gurax->Collapse(item);
+	return Gurax::Value::nil();
+}
+
+// wx.TreeListCtrl#IsExpanded(item as wx.TreeListItem)
+Gurax_DeclareMethodAlias(wxTreeListCtrl, IsExpanded_gurax, "IsExpanded")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("item", VTYPE_wxTreeListItem, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, IsExpanded_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTreeListItem& value_item = args_gurax.Pick<Value_wxTreeListItem>();
+	const wxTreeListItem& item = value_item.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->IsExpanded(item);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TreeListCtrl#GetSelection() {block?}
+Gurax_DeclareMethodAlias(wxTreeListCtrl, GetSelection_gurax, "GetSelection")
+{
+	Declare(VTYPE_wxTreeListItem, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, GetSelection_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeListItem(
+		pEntity_gurax->GetSelection()));
+}
+
+// wx.TreeListCtrl#GetSelections(selections as wx.TreeListItems)
+Gurax_DeclareMethodAlias(wxTreeListCtrl, GetSelections_gurax, "GetSelections")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("selections", VTYPE_wxTreeListItems, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, GetSelections_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTreeListItems& value_selections = args_gurax.Pick<Value_wxTreeListItems>();
+	wxTreeListItems& selections = value_selections.GetEntity();
+	// Function body
+	unsigned rtn = pEntity_gurax->GetSelections(selections);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.TreeListCtrl#Select(item as wx.TreeListItem)
+Gurax_DeclareMethodAlias(wxTreeListCtrl, Select_gurax, "Select")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("item", VTYPE_wxTreeListItem, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, Select_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTreeListItem& value_item = args_gurax.Pick<Value_wxTreeListItem>();
+	const wxTreeListItem& item = value_item.GetEntity();
+	// Function body
+	pEntity_gurax->Select(item);
+	return Gurax::Value::nil();
+}
+
+// wx.TreeListCtrl#Unselect(item as wx.TreeListItem)
+Gurax_DeclareMethodAlias(wxTreeListCtrl, Unselect_gurax, "Unselect")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("item", VTYPE_wxTreeListItem, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, Unselect_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTreeListItem& value_item = args_gurax.Pick<Value_wxTreeListItem>();
+	const wxTreeListItem& item = value_item.GetEntity();
+	// Function body
+	pEntity_gurax->Unselect(item);
+	return Gurax::Value::nil();
+}
+
+// wx.TreeListCtrl#IsSelected(item as wx.TreeListItem)
+Gurax_DeclareMethodAlias(wxTreeListCtrl, IsSelected_gurax, "IsSelected")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("item", VTYPE_wxTreeListItem, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, IsSelected_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTreeListItem& value_item = args_gurax.Pick<Value_wxTreeListItem>();
+	const wxTreeListItem& item = value_item.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->IsSelected(item);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TreeListCtrl#SelectAll()
+Gurax_DeclareMethodAlias(wxTreeListCtrl, SelectAll_gurax, "SelectAll")
+{
+	Declare(VTYPE_Nil, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, SelectAll_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->SelectAll();
+	return Gurax::Value::nil();
+}
+
+// wx.TreeListCtrl#UnselectAll()
+Gurax_DeclareMethodAlias(wxTreeListCtrl, UnselectAll_gurax, "UnselectAll")
+{
+	Declare(VTYPE_Nil, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, UnselectAll_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->UnselectAll();
+	return Gurax::Value::nil();
+}
+
+// wx.TreeListCtrl#CheckItem(item as wx.TreeListItem, state? as Number)
+Gurax_DeclareMethodAlias(wxTreeListCtrl, CheckItem_gurax, "CheckItem")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("item", VTYPE_wxTreeListItem, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("state", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, CheckItem_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTreeListItem& value_item = args_gurax.Pick<Value_wxTreeListItem>();
+	const wxTreeListItem& item = value_item.GetEntity();
+	bool state_validFlag = args_gurax.IsValid();
+	wxCheckBoxState state = state_validFlag? args_gurax.PickNumber<wxCheckBoxState>() : wxCHK_CHECKED;
+	// Function body
+	pEntity_gurax->CheckItem(item, state);
+	return Gurax::Value::nil();
+}
+
+// wx.TreeListCtrl#CheckItemRecursively(item as wx.TreeListItem, state? as Number)
+Gurax_DeclareMethodAlias(wxTreeListCtrl, CheckItemRecursively_gurax, "CheckItemRecursively")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("item", VTYPE_wxTreeListItem, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("state", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, CheckItemRecursively_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTreeListItem& value_item = args_gurax.Pick<Value_wxTreeListItem>();
+	const wxTreeListItem& item = value_item.GetEntity();
+	bool state_validFlag = args_gurax.IsValid();
+	wxCheckBoxState state = state_validFlag? args_gurax.PickNumber<wxCheckBoxState>() : wxCHK_CHECKED;
+	// Function body
+	pEntity_gurax->CheckItemRecursively(item, state);
+	return Gurax::Value::nil();
+}
+
+// wx.TreeListCtrl#UncheckItem(item as wx.TreeListItem)
+Gurax_DeclareMethodAlias(wxTreeListCtrl, UncheckItem_gurax, "UncheckItem")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("item", VTYPE_wxTreeListItem, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, UncheckItem_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTreeListItem& value_item = args_gurax.Pick<Value_wxTreeListItem>();
+	const wxTreeListItem& item = value_item.GetEntity();
+	// Function body
+	pEntity_gurax->UncheckItem(item);
+	return Gurax::Value::nil();
+}
+
+// wx.TreeListCtrl#UpdateItemParentStateRecursively(item as wx.TreeListItem)
+Gurax_DeclareMethodAlias(wxTreeListCtrl, UpdateItemParentStateRecursively_gurax, "UpdateItemParentStateRecursively")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("item", VTYPE_wxTreeListItem, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, UpdateItemParentStateRecursively_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTreeListItem& value_item = args_gurax.Pick<Value_wxTreeListItem>();
+	const wxTreeListItem& item = value_item.GetEntity();
+	// Function body
+	pEntity_gurax->UpdateItemParentStateRecursively(item);
+	return Gurax::Value::nil();
+}
+
+// wx.TreeListCtrl#GetCheckedState(item as wx.TreeListItem)
+Gurax_DeclareMethodAlias(wxTreeListCtrl, GetCheckedState_gurax, "GetCheckedState")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("item", VTYPE_wxTreeListItem, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, GetCheckedState_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTreeListItem& value_item = args_gurax.Pick<Value_wxTreeListItem>();
+	const wxTreeListItem& item = value_item.GetEntity();
+	// Function body
+	wxCheckBoxState rtn = pEntity_gurax->GetCheckedState(item);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.TreeListCtrl#AreAllChildrenInState(item as wx.TreeListItem, state as Number)
+Gurax_DeclareMethodAlias(wxTreeListCtrl, AreAllChildrenInState_gurax, "AreAllChildrenInState")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("item", VTYPE_wxTreeListItem, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("state", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, AreAllChildrenInState_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTreeListItem& value_item = args_gurax.Pick<Value_wxTreeListItem>();
+	const wxTreeListItem& item = value_item.GetEntity();
+	wxCheckBoxState state = args_gurax.PickNumber<wxCheckBoxState>();
+	// Function body
+	bool rtn = pEntity_gurax->AreAllChildrenInState(item, state);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TreeListCtrl#SetSortColumn(col as Number, ascendingOrder? as Bool)
+Gurax_DeclareMethodAlias(wxTreeListCtrl, SetSortColumn_gurax, "SetSortColumn")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ascendingOrder", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, SetSortColumn_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned col = args_gurax.PickNumber<unsigned>();
+	bool ascendingOrder = args_gurax.IsValid()? args_gurax.PickBool() : true;
+	// Function body
+	pEntity_gurax->SetSortColumn(col, ascendingOrder);
+	return Gurax::Value::nil();
+}
+
+// wx.TreeListCtrl#GetSortColumn(&col:nilRef as Number, &ascendingOrder?:nilRef as Bool)
+Gurax_DeclareMethodAlias(wxTreeListCtrl, GetSortColumn_gurax, "GetSortColumn")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("ascendingOrder", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::NilRef | ArgFlag::Referencer);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, GetSortColumn_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Referencer> col(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> ascendingOrder(args_gurax.IsValid()? args_gurax.PickReferencer().Reference() : nullptr);
+	// Function body
+	unsigned col_;
+	bool ascendingOrder_;
+	bool rtn = pEntity_gurax->GetSortColumn(&col_, &ascendingOrder_);
+	col->SetValue(new Value_Number(col_));
+	ascendingOrder->SetValue(new Value_Bool(ascendingOrder_));
+	return new Value_Bool(rtn);
+}
+
+// wx.TreeListCtrl#SetItemComparator(comparator as wx.TreeListItemComparator)
+Gurax_DeclareMethodAlias(wxTreeListCtrl, SetItemComparator_gurax, "SetItemComparator")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("comparator", VTYPE_wxTreeListItemComparator, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, SetItemComparator_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTreeListItemComparator& value_comparator = args_gurax.Pick<Value_wxTreeListItemComparator>();
+	wxTreeListItemComparator* comparator = value_comparator.GetEntityPtr();
+	// Function body
+	pEntity_gurax->SetItemComparator(comparator);
+	return Gurax::Value::nil();
+}
+
+// wx.TreeListCtrl#GetView() {block?}
+Gurax_DeclareMethodAlias(wxTreeListCtrl, GetView_gurax, "GetView")
+{
+	Declare(VTYPE_wxWindow, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, GetView_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
+		pEntity_gurax->GetView()));
+}
+
+// wx.TreeListCtrl#GetDataView() {block?}
+Gurax_DeclareMethodAlias(wxTreeListCtrl, GetDataView_gurax, "GetDataView")
+{
+	Declare(VTYPE_wxDataViewCtrl, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxTreeListCtrl, GetDataView_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDataViewCtrl(
+		pEntity_gurax->GetDataView()));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -64,8 +1170,55 @@ void VType_wxTreeListCtrl::DoPrepare(Frame& frameOuter)
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
-	Declare(VTYPE_wxWindow, Flag::Mutable);
+	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(TreeListCtrl_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, AssignImageList_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, SetImageList_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, Create_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, AppendColumn_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, GetColumnCount_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, DeleteColumn_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, ClearColumns_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, SetColumnWidth_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, GetColumnWidth_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, WidthFor_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, AppendItem_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, InsertItem_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, PrependItem_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, DeleteItem_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, DeleteAllItems_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, GetRootItem_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, GetItemParent_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, GetFirstChild_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, GetNextSibling_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, GetFirstItem_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, GetNextItem_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, GetItemText_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, SetItemText_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, SetItemImage_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, GetItemData_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, SetItemData_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, Expand_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, Collapse_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, IsExpanded_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, GetSelection_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, GetSelections_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, Select_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, Unselect_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, IsSelected_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, SelectAll_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, UnselectAll_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, CheckItem_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, CheckItemRecursively_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, UncheckItem_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, UpdateItemParentStateRecursively_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, GetCheckedState_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, AreAllChildrenInState_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, SetSortColumn_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, GetSortColumn_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, SetItemComparator_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, GetView_gurax));
+	Assign(Gurax_CreateMethod(wxTreeListCtrl, GetDataView_gurax));
 }
 
 //------------------------------------------------------------------------------

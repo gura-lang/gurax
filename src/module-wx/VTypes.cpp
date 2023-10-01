@@ -454,6 +454,10 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxTreeEvent);
 	frame.Assign(VTYPE_wxTreeItemId);
 	frame.Assign(VTYPE_wxTreeListCtrl);
+	frame.Assign(VTYPE_wxTreeListEvent);
+	frame.Assign(VTYPE_wxTreeListItem);
+	frame.Assign(VTYPE_wxTreeListItemComparator);
+	frame.Assign(VTYPE_wxTreeListItems);
 	frame.Assign(VTYPE_wxUIntProperty);
 	frame.Assign(VTYPE_wxUpdateUIEvent);
 	frame.Assign(VTYPE_wxURI);

@@ -1,0 +1,37 @@
+//==============================================================================
+// VType_wxTreeListEvent.gura
+//==============================================================================
+TreeListEvent = Class(NotifyEvent) {
+	@include['wx/treectrl.h']	
+	//GetItem() as TreeItemId
+	GetOldCheckedState() as CheckBoxState
+	GetColumn() as unsigned
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.TreeListEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.TreeListEvent, `en)}
+
+${help.ComposeMethodHelp(wx.TreeListEvent, `en)}
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.TreeListEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.TreeListEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.TreeListEvent, `ja)}
+'''ja

@@ -1,0 +1,37 @@
+//==============================================================================
+// VType_wxTreeListItems.gura
+//==============================================================================
+TreeListItems = Class {
+	@include['wx/treebase.h']	
+	//IsOk() as bool
+	//GetID() as void_p
+	//Unset() as void
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.TreeListItems, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.TreeListItems, `en)}
+
+${help.ComposeMethodHelp(wx.TreeListItems, `en)}
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.TreeListItems, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.TreeListItems, `ja)}
+
+${help.ComposeMethodHelp(wx.TreeListItems, `ja)}
+'''ja

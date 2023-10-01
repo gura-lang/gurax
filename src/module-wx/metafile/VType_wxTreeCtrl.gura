@@ -167,25 +167,25 @@ ${help.ComposeMethodHelp(wx.TreeCtrl, `ja)}
 }
 
 @event {
-    EVT_TREE_BEGIN_DRAG			>> TreeEvent
-    EVT_TREE_BEGIN_RDRAG		>> TreeEvent
-    EVT_TREE_END_DRAG			>> TreeEvent
-    EVT_TREE_BEGIN_LABEL_EDIT	>> TreeEvent
-    EVT_TREE_END_LABEL_EDIT		>> TreeEvent
-    EVT_TREE_DELETE_ITEM		>> TreeEvent
-    EVT_TREE_GET_INFO			>> TreeEvent
-    EVT_TREE_SET_INFO			>> TreeEvent
-    EVT_TREE_ITEM_ACTIVATED		>> TreeEvent
-    EVT_TREE_ITEM_COLLAPSED		>> TreeEvent
-    EVT_TREE_ITEM_COLLAPSING	>> TreeEvent
-    EVT_TREE_ITEM_EXPANDED		>> TreeEvent
-    EVT_TREE_ITEM_EXPANDING		>> TreeEvent
-    EVT_TREE_ITEM_RIGHT_CLICK	>> TreeEvent
-    EVT_TREE_ITEM_MIDDLE_CLICK	>> TreeEvent
-    EVT_TREE_SEL_CHANGED		>> TreeEvent
-    EVT_TREE_SEL_CHANGING		>> TreeEvent
-    EVT_TREE_KEY_DOWN			>> TreeEvent
-    EVT_TREE_ITEM_GETTOOLTIP	>> TreeEvent
-    EVT_TREE_ITEM_MENU			>> TreeEvent
-    EVT_TREE_STATE_IMAGE_CLICK	>> TreeEvent
+	EVT_TREE_BEGIN_DRAG			>> TreeEvent
+	EVT_TREE_BEGIN_RDRAG		>> TreeEvent
+	EVT_TREE_END_DRAG			>> TreeEvent
+	EVT_TREE_BEGIN_LABEL_EDIT	>> TreeEvent
+	EVT_TREE_END_LABEL_EDIT		>> TreeEvent
+	EVT_TREE_DELETE_ITEM		>> TreeEvent
+	EVT_TREE_GET_INFO			>> TreeEvent
+	EVT_TREE_SET_INFO			>> TreeEvent
+	EVT_TREE_ITEM_ACTIVATED		>> TreeEvent
+	EVT_TREE_ITEM_COLLAPSED		>> TreeEvent
+	EVT_TREE_ITEM_COLLAPSING	>> TreeEvent
+	EVT_TREE_ITEM_EXPANDED		>> TreeEvent
+	EVT_TREE_ITEM_EXPANDING		>> TreeEvent
+	EVT_TREE_ITEM_RIGHT_CLICK	>> TreeEvent
+	EVT_TREE_ITEM_MIDDLE_CLICK	>> TreeEvent
+	EVT_TREE_SEL_CHANGED		>> TreeEvent
+	EVT_TREE_SEL_CHANGING		>> TreeEvent
+	EVT_TREE_KEY_DOWN			>> TreeEvent
+	EVT_TREE_ITEM_GETTOOLTIP	>> TreeEvent
+	EVT_TREE_ITEM_MENU			>> TreeEvent
+	EVT_TREE_STATE_IMAGE_CLICK	>> TreeEvent
 }

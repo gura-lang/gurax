@@ -3,6 +3,75 @@
 //==============================================================================
 TreeListCtrl = Class(Window) {
 	@include['wx/treelist.h']
+	// Image list methods
+	AssignImageList(imageList as ImageList_p) as void
+	SetImageList(imageList as ImageList_p) as void
+	// Constructors
+	__init__(parent as Window_p, id as WindowID, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxTL_DEFAULT_STYLE, name as const_String_r = wxTreeListCtrlNameStr)
+	Create(parent as Window_p, id as WindowID, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxTL_DEFAULT_STYLE, name as const_String_r = wxTreeListCtrlNameStr) as bool
+	// Column methods
+	AppendColumn(title as const_String_r, width as int = wxCOL_WIDTH_AUTOSIZE, align as Alignment = wxALIGN_LEFT, flags as int = wxCOL_RESIZABLE) as int
+	GetColumnCount() as unsigned
+	DeleteColumn(col as unsigned) as bool
+	ClearColumns() as void
+	SetColumnWidth(col as unsigned, width as int) as void
+	GetColumnWidth(col as unsigned) as int
+	WidthFor(text as const_String_r) as int
+	// Adding and removing items
+	AppendItem(parent as TreeListItem, text as const_String_r, imageClosed as int = -1, imageOpened as int = -1, data as ClientData_p = NULL) as TreeListItem
+	InsertItem(parent as TreeListItem, previous as TreeListItem, text as const_String_r, imageClosed as int = -1, imageOpened as int = -1, data as ClientData_p = NULL) as TreeListItem
+	PrependItem(parent as TreeListItem, text as const_String_r, imageClosed as int = -1, imageOpened as int = -1, data as ClientData_p = NULL) as TreeListItem
+	DeleteItem(item as TreeListItem) as void
+	DeleteAllItems() as void
+	// Methods for the tree navigation
+	GetRootItem() as TreeListItem
+	GetItemParent(item as TreeListItem) as TreeListItem
+	GetFirstChild(item as TreeListItem) as TreeListItem
+	GetNextSibling(item as TreeListItem) as TreeListItem
+	GetFirstItem() as TreeListItem
+	GetNextItem(item as TreeListItem) as TreeListItem
+	// Item attributes
+	GetItemText(item as TreeListItem, col as unsigned = 0) as String
+	SetItemText(item as TreeListItem, col as unsigned, text as const_String_r) as void
+	//SetItemText(item as TreeListItem, text as const_String_r) as void
+	SetItemImage(item as TreeListItem, closed as int, opened as int = -1) as void
+	GetItemData(item as TreeListItem) as ClientData_p
+	SetItemData(item as TreeListItem, data as ClientData_p) as void
+	// Expanding and collapsing tree branches
+	Expand(item as TreeListItem) as void
+	Collapse(item as TreeListItem) as void
+	IsExpanded(item as TreeListItem) as bool
+	// Selection methods
+	GetSelection() as TreeListItem
+	GetSelections(selections as TreeListItems_r) as unsigned
+	Select(item as TreeListItem) as void
+	Unselect(item as TreeListItem) as void
+	IsSelected(item as TreeListItem) as bool
+	SelectAll() as void
+	UnselectAll() as void
+	// Checkbox handling
+	CheckItem(item as TreeListItem, state as CheckBoxState = wxCHK_CHECKED) as void
+	CheckItemRecursively(item as TreeListItem, state as CheckBoxState = wxCHK_CHECKED) as void
+	UncheckItem(item as TreeListItem) as void
+	UpdateItemParentStateRecursively(item as TreeListItem) as void
+	GetCheckedState(item as TreeListItem) as CheckBoxState
+	AreAllChildrenInState(item as TreeListItem, state as CheckBoxState) as bool
+	// Sorting
+	SetSortColumn(col as unsigned, ascendingOrder as bool = true) as void
+	//GetSortColumn(col as unsigned_p, ascendingOrder as bool_p = NULL) as bool
+	GetSortColumn(&col:nilRef as unsigned, &ascendingOrder:nilRef? as bool) as bool = \
+		R'''
+		unsigned col_;
+		bool ascendingOrder_;
+		bool rtn = pEntity_gurax->GetSortColumn(&col_, &ascendingOrder_);
+		col->SetValue(new Value_Number(col_));
+		ascendingOrder->SetValue(new Value_Bool(ascendingOrder_));
+		return new Value_Bool(rtn);
+		'''
+	SetItemComparator(comparator as TreeListItemComparator_p) as void
+	// View window
+	GetView() as Window_p
+	GetDataView() as DataViewCtrl_p
 } %% R'''
 # Overview
 
@@ -40,4 +109,14 @@ ${help.ComposeMethodHelp(wx.TreeListCtrl, `ja)}
 	TL_3STATE
 	TL_USER_3STATE
 	TL_DEFAULT_STYLE
+}
+
+@event {
+	EVT_TREELIST_SELECTION_CHANGED	>> TreeListEvent
+	EVT_TREELIST_ITEM_EXPANDING		>> TreeListEvent
+	EVT_TREELIST_ITEM_EXPANDED		>> TreeListEvent
+	EVT_TREELIST_ITEM_CHECKED		>> TreeListEvent
+	EVT_TREELIST_ITEM_ACTIVATED		>> TreeListEvent
+	EVT_TREELIST_ITEM_CONTEXT_MENU	>> TreeListEvent
+	EVT_TREELIST_COLUMN_SORTED		>> TreeListEvent
 }

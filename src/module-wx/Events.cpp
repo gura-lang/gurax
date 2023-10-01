@@ -49,8 +49,8 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_COMMAND_RIGHT_CLICK,					wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_RIGHT_DCLICK,					wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_SET_FOCUS,					wxCommandEvent);
-	Gurax_AssignEvent(EVT_CONTEXT_MENU,							wxCommandEvent);
 	Gurax_AssignEvent(EVT_CONTEXT_MENU,							wxContextMenuEvent);
+	Gurax_AssignEvent(EVT_CONTEXT_MENU,							wxCommandEvent);
 	Gurax_AssignEvent(EVT_DATAVIEW_CACHE_HINT,					wxDataViewEvent);
 	Gurax_AssignEvent(EVT_DATAVIEW_COLUMN_HEADER_CLICK,			wxDataViewEvent);
 	Gurax_AssignEvent(EVT_DATAVIEW_COLUMN_HEADER_RIGHT_CLICK,	wxDataViewEvent);
@@ -291,6 +291,13 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_TREEBOOK_NODE_EXPANDED,				wxBookCtrlEvent);
 	Gurax_AssignEvent(EVT_TREEBOOK_PAGE_CHANGED,				wxBookCtrlEvent);
 	Gurax_AssignEvent(EVT_TREEBOOK_PAGE_CHANGING,				wxBookCtrlEvent);
+	Gurax_AssignEvent(EVT_TREELIST_COLUMN_SORTED,				wxTreeListEvent);
+	Gurax_AssignEvent(EVT_TREELIST_ITEM_ACTIVATED,				wxTreeListEvent);
+	Gurax_AssignEvent(EVT_TREELIST_ITEM_CHECKED,				wxTreeListEvent);
+	Gurax_AssignEvent(EVT_TREELIST_ITEM_CONTEXT_MENU,			wxTreeListEvent);
+	Gurax_AssignEvent(EVT_TREELIST_ITEM_EXPANDED,				wxTreeListEvent);
+	Gurax_AssignEvent(EVT_TREELIST_ITEM_EXPANDING,				wxTreeListEvent);
+	Gurax_AssignEvent(EVT_TREELIST_SELECTION_CHANGED,			wxTreeListEvent);
 	Gurax_AssignEvent(EVT_TREE_BEGIN_DRAG,						wxTreeEvent);
 	Gurax_AssignEvent(EVT_TREE_BEGIN_LABEL_EDIT,				wxTreeEvent);
 	Gurax_AssignEvent(EVT_TREE_BEGIN_RDRAG,						wxTreeEvent);

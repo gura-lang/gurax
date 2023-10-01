@@ -446,6 +446,10 @@ set(SRCFILES_VTYPE
 	VType_wxTreeEvent.cpp
 	VType_wxTreeItemId.cpp
 	VType_wxTreeListCtrl.cpp
+	VType_wxTreeListEvent.cpp
+	VType_wxTreeListItem.cpp
+	VType_wxTreeListItemComparator.cpp
+	VType_wxTreeListItems.cpp
 	VType_wxUIntProperty.cpp
 	VType_wxUpdateUIEvent.cpp
 	VType_wxURI.cpp

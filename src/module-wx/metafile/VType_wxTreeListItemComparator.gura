@@ -1,0 +1,37 @@
+//==============================================================================
+// VType_wxTreeListItemComparator.gura
+//==============================================================================
+TreeListItemComparator = Class():loosePointer {
+	@include['wx/treebase.h']	
+	//IsOk() as bool
+	//GetID() as void_p
+	//Unset() as void
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.TreeListItemComparator, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.TreeListItemComparator, `en)}
+
+${help.ComposeMethodHelp(wx.TreeListItemComparator, `en)}
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.TreeListItemComparator, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.TreeListItemComparator, `ja)}
+
+${help.ComposeMethodHelp(wx.TreeListItemComparator, `ja)}
+'''ja
