@@ -40,6 +40,10 @@ public:
 		using wxVListBox::wxVListBox;
 	public:
 		EntityCore core_gurax;
+		virtual void OnDrawBackground(wxDC& dc, const wxRect& rect, size_t n) const override;
+		virtual void OnDrawSeparator(wxDC& dc, wxRect& rect, size_t n) const override;
+		void public_OnDrawBackground(wxDC& dc, const wxRect& rect, size_t n) const { wxVListBox::OnDrawBackground(dc, rect, n); }
+		void public_OnDrawSeparator(wxDC& dc, wxRect& rect, size_t n) const { wxVListBox::OnDrawSeparator(dc, rect, n); }
 	};
 public:
 	static VType& vtype;

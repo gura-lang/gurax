@@ -3,11 +3,10 @@
 //==============================================================================
 VListBox = Class(VScrolledWindow) {
 	@include['wx/vlbox.h']
-	//__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0, name as const_String_r = wxVListBoxNameStr) as a
+	//__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0, name as const_String_r = wxVListBoxNameStr)
 	Clear() as void
 	//Create(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0, name as const_String_r = wxVListBoxNameStr) as bool
 	DeselectAll() as bool
-	//GetFirstSelected(cookie as unsigned_long_r) as int
 	GetFirstSelected(&cookie:nilRef as unsigned_long) as int = \
 		R'''
 		unsigned long cookie_ = cookie->Get<Value_Number>().GetNumber<unsigned long>();
@@ -18,7 +17,6 @@ VListBox = Class(VScrolledWindow) {
 	GetItemCount() as size_t
 	GetMargins() as Point
 	GetItemRect(item as size_t) as Rect
-	//GetNextSelected(cookie as unsigned_long_r) as int = \
 	GetNextSelected(&cookie:nilRef as unsigned_long) as int = \
 		R'''
 		unsigned long cookie_ = cookie->Get<Value_Number>().GetNumber<unsigned long>();
@@ -39,8 +37,47 @@ VListBox = Class(VScrolledWindow) {
 	SetSelection(selection as int) as void
 	SetSelectionBackground(col as const_Colour_r) as void
 	Toggle(item as size_t) as void
-	SetMargins(pt as const_Point_r) as void
-	SetMarginsXY(x as Coord, y as Coord) as void = SetMargins
+	SetMargins(args* as any) as void = \
+		R'''
+		//SetMargins(pt as const_Point_r) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+			pEntity_gurax->SetMargins(pt);
+			return Value::nil();
+		} while (0);
+		Error::ClearIssuedFlag();
+		//SetMargins(x as Coord, y as Coord) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("x", VTYPE_Number);
+				pDeclCallable->DeclareArg("y", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxCoord x = args.PickNumber<wxCoord>();
+			wxCoord y = args.PickNumber<wxCoord>();
+			pEntity_gurax->SetMargins(x, y);
+			return Value::nil();
+		} while (0);
+		return Value::nil();
+		'''
+	//OnDrawItem(dc as DC_r, rect as const_Rect_r, n as size_t):virtual:const as void
+	OnDrawBackground(dc as DC_r, rect as const_Rect_r, n as size_t):virtual:const as void
+	OnDrawSeparator(dc as DC_r, rect as Rect_r, n as size_t):virtual:const as void
+	//OnMeasureItem(n as size_t):virtual:const as Coord
 } %% R'''
 # Overview
 

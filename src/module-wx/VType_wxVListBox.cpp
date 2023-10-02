@@ -444,11 +444,11 @@ Gurax_ImplementMethodEx(wxVListBox, Toggle_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// wx.VListBox#SetMargins(pt as wx.Point)
+// wx.VListBox#SetMargins(args* as Any)
 Gurax_DeclareMethodAlias(wxVListBox, SetMargins_gurax, "SetMargins")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 }
 
 Gurax_ImplementMethodEx(wxVListBox, SetMargins_gurax, processor_gurax, argument_gurax)
@@ -459,33 +459,95 @@ Gurax_ImplementMethodEx(wxVListBox, SetMargins_gurax, processor_gurax, argument_
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
-	const wxPoint& pt = value_pt.GetEntity();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	pEntity_gurax->SetMargins(pt);
-	return Gurax::Value::nil();
+	//SetMargins(pt as const_Point_r) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+		pEntity_gurax->SetMargins(pt);
+		return Value::nil();
+	} while (0);
+	Error::ClearIssuedFlag();
+	//SetMargins(x as Coord, y as Coord) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("x", VTYPE_Number);
+			pDeclCallable->DeclareArg("y", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxCoord x = args.PickNumber<wxCoord>();
+		wxCoord y = args.PickNumber<wxCoord>();
+		pEntity_gurax->SetMargins(x, y);
+		return Value::nil();
+	} while (0);
+	return Value::nil();
 }
 
-// wx.VListBox#SetMarginsXY(x as Number, y as Number)
-Gurax_DeclareMethodAlias(wxVListBox, SetMarginsXY_gurax, "SetMarginsXY")
+// wx.VListBox#OnDrawBackground(dc as wx.DC, rect as wx.Rect, n as Number)
+Gurax_DeclareMethodAlias(wxVListBox, OnDrawBackground_gurax, "OnDrawBackground")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dc", VTYPE_wxDC, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 }
 
-Gurax_ImplementMethodEx(wxVListBox, SetMarginsXY_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementMethodEx(wxVListBox, OnDrawBackground_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	auto pEntity_gurax = dynamic_cast<Value_wxVListBox::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	wxCoord x = args_gurax.PickNumber<wxCoord>();
-	wxCoord y = args_gurax.PickNumber<wxCoord>();
+	Value_wxDC& value_dc = args_gurax.Pick<Value_wxDC>();
+	wxDC& dc = value_dc.GetEntity();
+	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
+	const wxRect& rect = value_rect.GetEntity();
+	size_t n = args_gurax.PickNumber<size_t>();
 	// Function body
-	pEntity_gurax->SetMargins(x, y);
+	pEntity_gurax->OnDrawBackground(dc, rect, n);
+	return Gurax::Value::nil();
+}
+
+// wx.VListBox#OnDrawSeparator(dc as wx.DC, rect as wx.Rect, n as Number)
+Gurax_DeclareMethodAlias(wxVListBox, OnDrawSeparator_gurax, "OnDrawSeparator")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("dc", VTYPE_wxDC, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxVListBox, OnDrawSeparator_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = dynamic_cast<Value_wxVListBox::EntityT*>(valueThis_gurax.GetEntityPtr());
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxDC& value_dc = args_gurax.Pick<Value_wxDC>();
+	wxDC& dc = value_dc.GetEntity();
+	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
+	wxRect& rect = value_rect.GetEntity();
+	size_t n = args_gurax.PickNumber<size_t>();
+	// Function body
+	pEntity_gurax->OnDrawSeparator(dc, rect, n);
 	return Gurax::Value::nil();
 }
 
@@ -527,7 +589,8 @@ void VType_wxVListBox::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxVListBox, SetSelectionBackground_gurax));
 	Assign(Gurax_CreateMethod(wxVListBox, Toggle_gurax));
 	Assign(Gurax_CreateMethod(wxVListBox, SetMargins_gurax));
-	Assign(Gurax_CreateMethod(wxVListBox, SetMarginsXY_gurax));
+	Assign(Gurax_CreateMethod(wxVListBox, OnDrawBackground_gurax));
+	Assign(Gurax_CreateMethod(wxVListBox, OnDrawSeparator_gurax));
 }
 
 //------------------------------------------------------------------------------
@@ -543,5 +606,70 @@ String Value_wxVListBox::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Value_wxVListBox::EntityT
 //------------------------------------------------------------------------------
+void Value_wxVListBox::EntityT::OnDrawBackground(wxDC& dc, const wxRect& rect, size_t n) const
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnDrawBackground");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
+		if (!args_gurax.FeedValue(new Value_wxDC(dc))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		if (!args_gurax.FeedValue(new Value_wxRect(rect))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(n))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		return;
+	} while (0);
+	public_OnDrawBackground(dc, rect, n);
+}
+
+void Value_wxVListBox::EntityT::OnDrawSeparator(wxDC& dc, wxRect& rect, size_t n) const
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnDrawSeparator");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
+		if (!args_gurax.FeedValue(new Value_wxDC(dc))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		if (!args_gurax.FeedValue(new Value_wxRect(rect))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(n))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		return;
+	} while (0);
+	public_OnDrawSeparator(dc, rect, n);
+}
 
 Gurax_EndModuleScope(wx)
