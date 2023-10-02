@@ -1,0 +1,34 @@
+//==============================================================================
+// VType_wxRibbonButtonBarButtonBase.gura
+//==============================================================================
+RibbonButtonBarButtonBase = Class(RibbonControl) {
+	@include['wx/ribbon/buttonbar.h']
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RibbonButtonBarButtonBase, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RibbonButtonBarButtonBase, `en)}
+
+${help.ComposeMethodHelp(wx.RibbonButtonBarButtonBase, `en)}
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RibbonButtonBarButtonBase, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RibbonButtonBarButtonBase, `ja)}
+
+${help.ComposeMethodHelp(wx.RibbonButtonBarButtonBase, `ja)}
+'''ja

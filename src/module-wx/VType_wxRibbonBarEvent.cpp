@@ -48,6 +48,45 @@ ${help.ComposeMethodHelp(wx.RibbonBarEvent, `ja)}
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.RibbonBarEvent#GetPage() {block?}
+Gurax_DeclareMethodAlias(wxRibbonBarEvent, GetPage_gurax, "GetPage")
+{
+	Declare(VTYPE_wxRibbonPage, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxRibbonBarEvent, GetPage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonPage(
+		pEntity_gurax->GetPage()));
+}
+
+// wx.RibbonBarEvent#SetPage(page as wx.RibbonPage)
+Gurax_DeclareMethodAlias(wxRibbonBarEvent, SetPage_gurax, "SetPage")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("page", VTYPE_wxRibbonPage, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxRibbonBarEvent, SetPage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRibbonPage& value_page = args_gurax.Pick<Value_wxRibbonPage>();
+	wxRibbonPage* page = value_page.GetEntityPtr();
+	// Function body
+	pEntity_gurax->SetPage(page);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -66,6 +105,8 @@ void VType_wxRibbonBarEvent::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxNotifyEvent, Flag::Mutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxRibbonBarEvent, GetPage_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonBarEvent, SetPage_gurax));
 }
 
 //------------------------------------------------------------------------------

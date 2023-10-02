@@ -353,6 +353,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxRibbonBar);
 	frame.Assign(VTYPE_wxRibbonBarEvent);
 	frame.Assign(VTYPE_wxRibbonButtonBar);
+	frame.Assign(VTYPE_wxRibbonButtonBarEvent);
 	frame.Assign(VTYPE_wxRibbonControl);
 	frame.Assign(VTYPE_wxRibbonGallery);
 	frame.Assign(VTYPE_wxRibbonPage);

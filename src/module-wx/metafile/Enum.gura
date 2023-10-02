@@ -791,6 +791,7 @@
 		OR
 		SET
 	}
+	RibbonButtonKind
 	//RichTextStyleType {
 	//	RICHTEXT_STYLE_ALL,
 	//	RICHTEXT_STYLE_PARAGRAPH,

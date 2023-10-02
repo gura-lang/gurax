@@ -3,6 +3,35 @@
 //==============================================================================
 RibbonButtonBar = Class(RibbonControl) {
 	@include['wx/ribbon/buttonbar.h']
+	__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0)
+	//Create(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0) as bool
+	//AddButton(button_id as int, label as const_String_r, bitmap as const_Bitmap_r, help_string as const_String_r, kind as RibbonButtonKind = wxRIBBON_BUTTON_NORMAL) as RibbonButtonBarButtonBase_p
+	//AddDropdownButton(button_id as int, label as const_String_r, bitmap as const_Bitmap_r, help_string as const_String_r = wxEmptyString) as RibbonButtonBarButtonBase_p
+	//AddHybridButton(button_id as int, label as const_String_r, bitmap as const_Bitmap_r, help_string as const_String_r = wxEmptyString) as RibbonButtonBarButtonBase_p
+	//AddToggleButton(button_id as int, label as const_String_r, bitmap as const_Bitmap_r, help_string as const_String_r = wxEmptyString) as RibbonButtonBarButtonBase_p
+	//AddButton(button_id as int, label as const_String_r, bitmap as const_Bitmap_r, bitmap_small as const_Bitmap_r = wxNullBitmap, bitmap_disabled as const_Bitmap_r = wxNullBitmap, bitmap_small_disabled as const_Bitmap_r = wxNullBitmap, kind as RibbonButtonKind = wxRIBBON_BUTTON_NORMAL, help_string as const_String_r = wxEmptyString) as RibbonButtonBarButtonBase_p
+	//InsertButton(pos as size_t, button_id as int, label as const_String_r, bitmap as const_Bitmap_r, help_string as const_String_r, kind as RibbonButtonKind = wxRIBBON_BUTTON_NORMAL) as RibbonButtonBarButtonBase_p
+	//InsertDropdownButton(pos as size_t, button_id as int, label as const_String_r, bitmap as const_Bitmap_r, help_string as const_String_r = wxEmptyString) as RibbonButtonBarButtonBase_p
+	//InsertHybridButton(pos as size_t, button_id as int, label as const_String_r, bitmap as const_Bitmap_r, help_string as const_String_r = wxEmptyString) as RibbonButtonBarButtonBase_p
+	//InsertToggleButton(pos as size_t, button_id as int, label as const_String_r, bitmap as const_Bitmap_r, help_string as const_String_r = wxEmptyString) as RibbonButtonBarButtonBase_p
+	//InsertButton(pos as size_t, button_id as int, label as const_String_r, bitmap as const_Bitmap_r, bitmap_small as const_Bitmap_r = wxNullBitmap, bitmap_disabled as const_Bitmap_r = wxNullBitmap, bitmap_small_disabled as const_Bitmap_r = wxNullBitmap, kind as RibbonButtonKind = wxRIBBON_BUTTON_NORMAL, help_string as const_String_r = wxEmptyString) as RibbonButtonBarButtonBase_p
+	GetButtonCount():virtual:const as size_t
+	//SetItemClientObject(item as RibbonButtonBarButtonBase_p, data as ClientData_p) as void
+	//GetItemClientObject(item as const_RibbonButtonBarButtonBase_p) as ClientData_p
+	//SetItemClientData(item as RibbonButtonBarButtonBase_p, data as void_p) as void
+	//GetItemClientData(item as const_RibbonButtonBarButtonBase_p) as void_p
+	//GetItem(n as size_t) as RibbonButtonBarButtonBase_p
+	//GetItemById(id as int) as RibbonButtonBarButtonBase_p
+	//GetItemId(item as RibbonButtonBarButtonBase_p):virtual:const as int
+	Realize():virtual as bool
+	ClearButtons():virtual as void
+	DeleteButton(button_id as int):virtual as bool
+	EnableButton(button_id as int, enable as bool = true):virtual as void
+	ToggleButton(button_id as int, checked as bool):virtual as void
+	//GetActiveItem() as RibbonButtonBarButtonBase_p
+	//GetHoveredItem() as RibbonButtonBarButtonBase_p
+	SetShowToolTipsForDisabled(show as bool) as void
+	GetShowToolTipsForDisabled() as bool
 } %% R'''
 # Overview
 
@@ -32,3 +61,8 @@ ${help.ComposeConstructorHelp(wx.RibbonButtonBar, `ja)}
 
 ${help.ComposeMethodHelp(wx.RibbonButtonBar, `ja)}
 '''ja
+
+@event {
+	EVT_RIBBONBUTTONBAR_CLICKED				>> RibbonButtonBarEvent
+	EVT_RIBBONBUTTONBAR_DROPDOWN_CLICKED	>> RibbonButtonBarEvent
+}

@@ -348,6 +348,7 @@
 #include "VType_wxRibbonBar.h"
 #include "VType_wxRibbonBarEvent.h"
 #include "VType_wxRibbonButtonBar.h"
+#include "VType_wxRibbonButtonBarEvent.h"
 #include "VType_wxRibbonControl.h"
 #include "VType_wxRibbonGallery.h"
 #include "VType_wxRibbonPage.h"

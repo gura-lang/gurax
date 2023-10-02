@@ -3,6 +3,9 @@
 //==============================================================================
 RibbonBarEvent = Class(NotifyEvent) {
 	@include['wx/ribbon/bar.h']
+	//__init__(command_type as EventType = wxEVT_NULL, win_id as int = 0, page as RibbonPage_p = NULL)
+	GetPage() as RibbonPage_p
+	SetPage(page as RibbonPage_p) as void
 } %% R'''
 # Overview
 

@@ -1,0 +1,40 @@
+//==============================================================================
+// VType_wxRibbonButtonBarEvent.gura
+//==============================================================================
+RibbonButtonBarEvent = Class(NotifyEvent) {
+	@include['wx/ribbon/bar.h']
+	//__init__(command_type as EventType = wxEVT_NULL, win_id as int = 0, bar as RibbonButtonBar_p = NULL, button as RibbonButtonBarButtonBase_p = NULL)
+	GetBar() as RibbonButtonBar_p
+	SetBar(bar as RibbonButtonBar_p) as void
+	//GetButton() as RibbonButtonBarButtonBase_p
+	//SetButton(bar as RibbonButtonBarButtonBase_p) as void
+	PopupMenu(menu as Menu_p) as bool
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RibbonButtonBarEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RibbonButtonBarEvent, `en)}
+
+${help.ComposeMethodHelp(wx.RibbonButtonBarEvent, `en)}
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RibbonButtonBarEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RibbonButtonBarEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.RibbonButtonBarEvent, `ja)}
+'''ja
