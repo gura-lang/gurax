@@ -1,7 +1,9 @@
 //==============================================================================
 // VType_wxRibbonButtonBarButtonBase.gura
+// No one can see the implementation of this class as it is a hidden class
+// implemented in buttonbar.cpp.
 //==============================================================================
-RibbonButtonBarButtonBase = Class(RibbonControl) {
+RibbonButtonBarButtonBase = Class():loosePointer {
 	@include['wx/ribbon/buttonbar.h']
 } %% R'''
 # Overview

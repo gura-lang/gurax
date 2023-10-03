@@ -41,12 +41,14 @@ public:
 	public:
 		EntityCore core_gurax;
 		virtual size_t GetButtonCount() const override;
+		virtual int GetItemId(wxRibbonButtonBarButtonBase* item) const override;
 		virtual bool Realize() override;
 		virtual void ClearButtons() override;
 		virtual bool DeleteButton(int button_id) override;
 		virtual void EnableButton(int button_id, bool enable) override;
 		virtual void ToggleButton(int button_id, bool checked) override;
 		size_t public_GetButtonCount() const { return wxRibbonButtonBar::GetButtonCount(); }
+		int public_GetItemId(wxRibbonButtonBarButtonBase* item) const { return wxRibbonButtonBar::GetItemId(item); }
 		bool public_Realize() { return wxRibbonButtonBar::Realize(); }
 		void public_ClearButtons() { wxRibbonButtonBar::ClearButtons(); }
 		bool public_DeleteButton(int button_id) { return wxRibbonButtonBar::DeleteButton(button_id); }

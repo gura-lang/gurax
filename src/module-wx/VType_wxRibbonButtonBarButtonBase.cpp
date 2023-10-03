@@ -64,7 +64,7 @@ void VType_wxRibbonButtonBarButtonBase::DoPrepare(Frame& frameOuter)
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
-	Declare(VTYPE_wxRibbonControl, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method
 }
 
@@ -77,9 +77,5 @@ String Value_wxRibbonButtonBarButtonBase::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "wx.RibbonButtonBarButtonBase");
 }
-
-//------------------------------------------------------------------------------
-// Value_wxRibbonButtonBarButtonBase::EntityT
-//------------------------------------------------------------------------------
 
 Gurax_EndModuleScope(wx)

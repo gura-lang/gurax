@@ -345,6 +345,7 @@ set(SRCFILES_VTYPE
 	VType_wxRibbonBar.cpp
 	VType_wxRibbonBarEvent.cpp
 	VType_wxRibbonButtonBar.cpp
+	VType_wxRibbonButtonBarButtonBase.cpp
 	VType_wxRibbonButtonBarEvent.cpp
 	VType_wxRibbonControl.cpp
 	VType_wxRibbonGallery.cpp

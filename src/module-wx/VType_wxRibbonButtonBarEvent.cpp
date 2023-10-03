@@ -88,6 +88,46 @@ Gurax_ImplementMethodEx(wxRibbonButtonBarEvent, SetBar_gurax, processor_gurax, a
 	return Gurax::Value::nil();
 }
 
+// wx.RibbonButtonBarEvent#GetButton() {block?}
+Gurax_DeclareMethodAlias(wxRibbonButtonBarEvent, GetButton_gurax, "GetButton")
+{
+	Declare(VTYPE_wxRibbonButtonBarButtonBase, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxRibbonButtonBarEvent, GetButton_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(
+		pEntity_gurax->GetButton()));
+}
+
+// wx.RibbonButtonBarEvent#SetButton(bar as wx.RibbonButtonBarButtonBase)
+Gurax_DeclareMethodAlias(wxRibbonButtonBarEvent, SetButton_gurax, "SetButton")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("bar", VTYPE_wxRibbonButtonBarButtonBase, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxRibbonButtonBarEvent, SetButton_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRibbonButtonBarButtonBase& value_bar = args_gurax.Pick<Value_wxRibbonButtonBarButtonBase>();
+	wxRibbonButtonBarButtonBase* bar = value_bar.GetEntityPtr();
+	// Function body
+	pEntity_gurax->SetButton(bar);
+	return Gurax::Value::nil();
+}
+
 // wx.RibbonButtonBarEvent#PopupMenu(menu as wx.Menu)
 Gurax_DeclareMethodAlias(wxRibbonButtonBarEvent, PopupMenu_gurax, "PopupMenu")
 {
@@ -129,6 +169,8 @@ void VType_wxRibbonButtonBarEvent::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxRibbonButtonBarEvent, GetBar_gurax));
 	Assign(Gurax_CreateMethod(wxRibbonButtonBarEvent, SetBar_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonButtonBarEvent, GetButton_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonButtonBarEvent, SetButton_gurax));
 	Assign(Gurax_CreateMethod(wxRibbonButtonBarEvent, PopupMenu_gurax));
 }
 

@@ -6,8 +6,8 @@ RibbonButtonBarEvent = Class(NotifyEvent) {
 	//__init__(command_type as EventType = wxEVT_NULL, win_id as int = 0, bar as RibbonButtonBar_p = NULL, button as RibbonButtonBarButtonBase_p = NULL)
 	GetBar() as RibbonButtonBar_p
 	SetBar(bar as RibbonButtonBar_p) as void
-	//GetButton() as RibbonButtonBarButtonBase_p
-	//SetButton(bar as RibbonButtonBarButtonBase_p) as void
+	GetButton() as RibbonButtonBarButtonBase_p
+	SetButton(bar as RibbonButtonBarButtonBase_p) as void
 	PopupMenu(menu as Menu_p) as bool
 } %% R'''
 # Overview

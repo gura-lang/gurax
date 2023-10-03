@@ -8,7 +8,6 @@
 #include <wx/wx.h>
 #include <wx/ribbon/buttonbar.h>
 #include "Util.h"
-#include "VType_wxRibbonControl.h"
 
 Gurax_BeginModuleScope(wx)
 
@@ -26,28 +25,23 @@ extern GURAX_DLLDECLARE VType_wxRibbonButtonBarButtonBase VTYPE_wxRibbonButtonBa
 //------------------------------------------------------------------------------
 // Value_wxRibbonButtonBarButtonBase
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_wxRibbonButtonBarButtonBase : public Value_wxRibbonControl {
+class GURAX_DLLDECLARE Value_wxRibbonButtonBarButtonBase : public Value_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_wxRibbonButtonBarButtonBase);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxRibbonButtonBarButtonBase");
 protected:
-	wxWeakRef<wxRibbonButtonBarButtonBase> _pEntity;
-public:
-	class EntityT : public wxRibbonButtonBarButtonBase {
-	public:
-		using wxRibbonButtonBarButtonBase::wxRibbonButtonBarButtonBase;
-	public:
-		EntityCore core_gurax;
-	};
+	wxRibbonButtonBarButtonBase* _pEntity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxRibbonButtonBarButtonBase() = delete;
 	explicit Value_wxRibbonButtonBarButtonBase(wxRibbonButtonBarButtonBase* pEntity, VType& vtype = VTYPE_wxRibbonButtonBarButtonBase) :
-		Value_wxRibbonControl(pEntity, vtype), _pEntity(pEntity) {}
+		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_wxRibbonButtonBarButtonBase(const wxRibbonButtonBarButtonBase& entity, VType& vtype = VTYPE_wxRibbonButtonBarButtonBase) :
+		Value_Object(vtype), _pEntity(const_cast<wxRibbonButtonBarButtonBase*>(&entity)) {}
 	// Copy constructor/operator
 	Value_wxRibbonButtonBarButtonBase(const Value_wxRibbonButtonBarButtonBase& src) = delete;
 	Value_wxRibbonButtonBarButtonBase& operator=(const Value_wxRibbonButtonBarButtonBase& src) = delete;
@@ -60,8 +54,8 @@ protected:
 public:
 	wxRibbonButtonBarButtonBase& GetEntity() { return *_pEntity; }
 	const wxRibbonButtonBarButtonBase& GetEntity() const { return *_pEntity; }
-	wxRibbonButtonBarButtonBase* GetEntityPtr() { return _pEntity.get(); }
-	const wxRibbonButtonBarButtonBase* GetEntityPtr() const { return _pEntity.get(); }
+	wxRibbonButtonBarButtonBase* GetEntityPtr() { return _pEntity; }
+	const wxRibbonButtonBarButtonBase* GetEntityPtr() const { return _pEntity; }
 public:
 	static wxRibbonButtonBarButtonBase& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxRibbonButtonBarButtonBase&>(value).GetEntity();
