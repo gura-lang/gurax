@@ -357,6 +357,7 @@
 #include "VType_wxRibbonPage.h"
 #include "VType_wxRibbonPanel.h"
 #include "VType_wxRibbonToolBar.h"
+#include "VType_wxRibbonToolBarToolBase.h"
 #include "VType_wxRichTextAttr.h"
 #include "VType_wxRichTextBox.h"
 #include "VType_wxRichTextBuffer.h"

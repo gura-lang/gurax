@@ -44,10 +44,770 @@ ${help.ComposeMethodHelp(wx.RibbonToolBar, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.RibbonToolBar(parent as wx.Window, id? as Number, pos? as wx.Point, size? as wx.Size, style? as Number) {block?}
+Gurax_DeclareConstructorAlias(RibbonToolBar_gurax, "RibbonToolBar")
+{
+	Declare(VTYPE_wxRibbonToolBar, Flag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementConstructorEx(RibbonToolBar_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* parent = value_parent.GetEntityPtr();
+	bool id_validFlag = args_gurax.IsValid();
+	wxWindowID id = id_validFlag? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
+	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
+	// Function body
+	auto pEntity_gurax = new Value_wxRibbonToolBar::EntityT(parent, id, pos, size, style);
+	RefPtr<Value_wxRibbonToolBar> pValue_gurax(new Value_wxRibbonToolBar(pEntity_gurax));
+	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.RibbonToolBar#Create(parent as wx.Window, id? as Number, pos? as wx.Point, size? as wx.Size, style? as Number)
+Gurax_DeclareMethodAlias(wxRibbonToolBar, Create_gurax, "Create")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, Create_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* parent = value_parent.GetEntityPtr();
+	bool id_validFlag = args_gurax.IsValid();
+	wxWindowID id = id_validFlag? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
+	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
+	// Function body
+	bool rtn = pEntity_gurax->Create(parent, id, pos, size, style);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.RibbonToolBar#AddTool(tool_id as Number, bitmap as wx.Bitmap, help_string as String, kind? as Number) {block?}
+Gurax_DeclareMethodAlias(wxRibbonToolBar, AddTool_gurax, "AddTool")
+{
+	Declare(VTYPE_wxRibbonToolBarToolBase, Flag::None);
+	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("help_string", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("kind", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, AddTool_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int tool_id = args_gurax.PickNumber<int>();
+	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
+	const wxBitmap& bitmap = value_bitmap.GetEntity();
+	const char* help_string = args_gurax.PickString();
+	bool kind_validFlag = args_gurax.IsValid();
+	wxRibbonButtonKind kind = kind_validFlag? args_gurax.PickNumber<wxRibbonButtonKind>() : wxRIBBON_BUTTON_NORMAL;
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonToolBarToolBase(
+		pEntity_gurax->AddTool(tool_id, bitmap, help_string, kind)));
+}
+
+// wx.RibbonToolBar#AddDropdownTool(tool_id as Number, bitmap as wx.Bitmap, help_string? as String) {block?}
+Gurax_DeclareMethodAlias(wxRibbonToolBar, AddDropdownTool_gurax, "AddDropdownTool")
+{
+	Declare(VTYPE_wxRibbonToolBarToolBase, Flag::None);
+	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("help_string", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, AddDropdownTool_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int tool_id = args_gurax.PickNumber<int>();
+	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
+	const wxBitmap& bitmap = value_bitmap.GetEntity();
+	const char* help_string = args_gurax.IsValid()? args_gurax.PickString() : "";
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonToolBarToolBase(
+		pEntity_gurax->AddDropdownTool(tool_id, bitmap, help_string)));
+}
+
+// wx.RibbonToolBar#AddHybridTool(tool_id as Number, bitmap as wx.Bitmap, help_string? as String) {block?}
+Gurax_DeclareMethodAlias(wxRibbonToolBar, AddHybridTool_gurax, "AddHybridTool")
+{
+	Declare(VTYPE_wxRibbonToolBarToolBase, Flag::None);
+	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("help_string", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, AddHybridTool_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int tool_id = args_gurax.PickNumber<int>();
+	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
+	const wxBitmap& bitmap = value_bitmap.GetEntity();
+	const char* help_string = args_gurax.IsValid()? args_gurax.PickString() : "";
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonToolBarToolBase(
+		pEntity_gurax->AddHybridTool(tool_id, bitmap, help_string)));
+}
+
+// wx.RibbonToolBar#AddToggleTool(tool_id as Number, bitmap as wx.Bitmap, help_string as String) {block?}
+Gurax_DeclareMethodAlias(wxRibbonToolBar, AddToggleTool_gurax, "AddToggleTool")
+{
+	Declare(VTYPE_wxRibbonToolBarToolBase, Flag::None);
+	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("help_string", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, AddToggleTool_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int tool_id = args_gurax.PickNumber<int>();
+	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
+	const wxBitmap& bitmap = value_bitmap.GetEntity();
+	const char* help_string = args_gurax.PickString();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonToolBarToolBase(
+		pEntity_gurax->AddToggleTool(tool_id, bitmap, help_string)));
+}
+
+// wx.RibbonToolBar#AddSeparator() {block?}
+Gurax_DeclareMethodAlias(wxRibbonToolBar, AddSeparator_gurax, "AddSeparator")
+{
+	Declare(VTYPE_wxRibbonToolBarToolBase, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, AddSeparator_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonToolBarToolBase(
+		pEntity_gurax->AddSeparator()));
+}
+
+// wx.RibbonToolBar#InsertTool(pos as Number, tool_id as Number, bitmap as wx.Bitmap, help_string as String, kind? as Number) {block?}
+Gurax_DeclareMethodAlias(wxRibbonToolBar, InsertTool_gurax, "InsertTool")
+{
+	Declare(VTYPE_wxRibbonToolBarToolBase, Flag::None);
+	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("help_string", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("kind", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, InsertTool_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t pos = args_gurax.PickNumber<size_t>();
+	int tool_id = args_gurax.PickNumber<int>();
+	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
+	const wxBitmap& bitmap = value_bitmap.GetEntity();
+	const char* help_string = args_gurax.PickString();
+	bool kind_validFlag = args_gurax.IsValid();
+	wxRibbonButtonKind kind = kind_validFlag? args_gurax.PickNumber<wxRibbonButtonKind>() : wxRIBBON_BUTTON_NORMAL;
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonToolBarToolBase(
+		pEntity_gurax->InsertTool(pos, tool_id, bitmap, help_string, kind)));
+}
+
+// wx.RibbonToolBar#InsertDropdownTool(pos as Number, tool_id as Number, bitmap as wx.Bitmap, help_string? as String) {block?}
+Gurax_DeclareMethodAlias(wxRibbonToolBar, InsertDropdownTool_gurax, "InsertDropdownTool")
+{
+	Declare(VTYPE_wxRibbonToolBarToolBase, Flag::None);
+	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("help_string", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, InsertDropdownTool_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t pos = args_gurax.PickNumber<size_t>();
+	int tool_id = args_gurax.PickNumber<int>();
+	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
+	const wxBitmap& bitmap = value_bitmap.GetEntity();
+	const char* help_string = args_gurax.IsValid()? args_gurax.PickString() : "";
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonToolBarToolBase(
+		pEntity_gurax->InsertDropdownTool(pos, tool_id, bitmap, help_string)));
+}
+
+// wx.RibbonToolBar#InsertHybridTool(pos as Number, tool_id as Number, bitmap as wx.Bitmap, help_string? as String) {block?}
+Gurax_DeclareMethodAlias(wxRibbonToolBar, InsertHybridTool_gurax, "InsertHybridTool")
+{
+	Declare(VTYPE_wxRibbonToolBarToolBase, Flag::None);
+	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("help_string", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, InsertHybridTool_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t pos = args_gurax.PickNumber<size_t>();
+	int tool_id = args_gurax.PickNumber<int>();
+	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
+	const wxBitmap& bitmap = value_bitmap.GetEntity();
+	const char* help_string = args_gurax.IsValid()? args_gurax.PickString() : "";
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonToolBarToolBase(
+		pEntity_gurax->InsertHybridTool(pos, tool_id, bitmap, help_string)));
+}
+
+// wx.RibbonToolBar#InsertToggleTool(pos as Number, tool_id as Number, bitmap as wx.Bitmap, help_string? as String) {block?}
+Gurax_DeclareMethodAlias(wxRibbonToolBar, InsertToggleTool_gurax, "InsertToggleTool")
+{
+	Declare(VTYPE_wxRibbonToolBarToolBase, Flag::None);
+	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("help_string", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, InsertToggleTool_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t pos = args_gurax.PickNumber<size_t>();
+	int tool_id = args_gurax.PickNumber<int>();
+	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
+	const wxBitmap& bitmap = value_bitmap.GetEntity();
+	const char* help_string = args_gurax.IsValid()? args_gurax.PickString() : "";
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonToolBarToolBase(
+		pEntity_gurax->InsertToggleTool(pos, tool_id, bitmap, help_string)));
+}
+
+// wx.RibbonToolBar#InsertSeparator(pos as Number) {block?}
+Gurax_DeclareMethodAlias(wxRibbonToolBar, InsertSeparator_gurax, "InsertSeparator")
+{
+	Declare(VTYPE_wxRibbonToolBarToolBase, Flag::None);
+	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, InsertSeparator_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t pos = args_gurax.PickNumber<size_t>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonToolBarToolBase(
+		pEntity_gurax->InsertSeparator(pos)));
+}
+
+// wx.RibbonToolBar#ClearTools()
+Gurax_DeclareMethodAlias(wxRibbonToolBar, ClearTools_gurax, "ClearTools")
+{
+	Declare(VTYPE_Nil, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, ClearTools_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->ClearTools();
+	return Gurax::Value::nil();
+}
+
+// wx.RibbonToolBar#DeleteTool(tool_id as Number)
+Gurax_DeclareMethodAlias(wxRibbonToolBar, DeleteTool_gurax, "DeleteTool")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, DeleteTool_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int tool_id = args_gurax.PickNumber<int>();
+	// Function body
+	bool rtn = pEntity_gurax->DeleteTool(tool_id);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.RibbonToolBar#DeleteToolByPos(pos as Number)
+Gurax_DeclareMethodAlias(wxRibbonToolBar, DeleteToolByPos_gurax, "DeleteToolByPos")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, DeleteToolByPos_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t pos = args_gurax.PickNumber<size_t>();
+	// Function body
+	bool rtn = pEntity_gurax->DeleteToolByPos(pos);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.RibbonToolBar#FindById(tool_id as Number) {block?}
+Gurax_DeclareMethodAlias(wxRibbonToolBar, FindById_gurax, "FindById")
+{
+	Declare(VTYPE_wxRibbonToolBarToolBase, Flag::None);
+	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, FindById_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int tool_id = args_gurax.PickNumber<int>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonToolBarToolBase(
+		pEntity_gurax->FindById(tool_id)));
+}
+
+// wx.RibbonToolBar#GetToolCount()
+Gurax_DeclareMethodAlias(wxRibbonToolBar, GetToolCount_gurax, "GetToolCount")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, GetToolCount_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	size_t rtn = pEntity_gurax->GetToolCount();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.RibbonToolBar#GetToolId(tool as wx.RibbonToolBarToolBase)
+Gurax_DeclareMethodAlias(wxRibbonToolBar, GetToolId_gurax, "GetToolId")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("tool", VTYPE_wxRibbonToolBarToolBase, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, GetToolId_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRibbonToolBarToolBase& value_tool = args_gurax.Pick<Value_wxRibbonToolBarToolBase>();
+	const wxRibbonToolBarToolBase* tool = value_tool.GetEntityPtr();
+	// Function body
+	int rtn = pEntity_gurax->GetToolId(tool);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.RibbonToolBar#GetToolClientData(tool_id as Number)
+Gurax_DeclareMethodAlias(wxRibbonToolBar, GetToolClientData_gurax, "GetToolClientData")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, GetToolClientData_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int tool_id = args_gurax.PickNumber<int>();
+	// Function body
+	ClientObject* rtn = dynamic_cast<ClientObject*>(pEntity_gurax->GetToolClientData(tool_id));
+	if (!rtn) return Value::nil();
+	return rtn->GetValue().Reference();
+}
+
+// wx.RibbonToolBar#GetToolEnabled(tool_id as Number)
+Gurax_DeclareMethodAlias(wxRibbonToolBar, GetToolEnabled_gurax, "GetToolEnabled")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, GetToolEnabled_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int tool_id = args_gurax.PickNumber<int>();
+	// Function body
+	bool rtn = pEntity_gurax->GetToolEnabled(tool_id);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.RibbonToolBar#GetToolHelpString(tool_id as Number)
+Gurax_DeclareMethodAlias(wxRibbonToolBar, GetToolHelpString_gurax, "GetToolHelpString")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, GetToolHelpString_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int tool_id = args_gurax.PickNumber<int>();
+	// Function body
+	wxString rtn = pEntity_gurax->GetToolHelpString(tool_id);
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
+}
+
+// wx.RibbonToolBar#GetToolKind(tool_id as Number)
+Gurax_DeclareMethodAlias(wxRibbonToolBar, GetToolKind_gurax, "GetToolKind")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, GetToolKind_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int tool_id = args_gurax.PickNumber<int>();
+	// Function body
+	wxRibbonButtonKind rtn = pEntity_gurax->GetToolKind(tool_id);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.RibbonToolBar#GetToolPos(tool_id as Number)
+Gurax_DeclareMethodAlias(wxRibbonToolBar, GetToolPos_gurax, "GetToolPos")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, GetToolPos_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int tool_id = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = pEntity_gurax->GetToolPos(tool_id);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.RibbonToolBar#GetToolState(tool_id as Number)
+Gurax_DeclareMethodAlias(wxRibbonToolBar, GetToolState_gurax, "GetToolState")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, GetToolState_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int tool_id = args_gurax.PickNumber<int>();
+	// Function body
+	bool rtn = pEntity_gurax->GetToolState(tool_id);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.RibbonToolBar#Realize()
+Gurax_DeclareMethodAlias(wxRibbonToolBar, Realize_gurax, "Realize")
+{
+	Declare(VTYPE_Bool, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, Realize_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->Realize();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.RibbonToolBar#SetRows(nMin as Number, nMax? as Number)
+Gurax_DeclareMethodAlias(wxRibbonToolBar, SetRows_gurax, "SetRows")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("nMin", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("nMax", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, SetRows_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int nMin = args_gurax.PickNumber<int>();
+	bool nMax_validFlag = args_gurax.IsValid();
+	int nMax = nMax_validFlag? args_gurax.PickNumber<int>() : -1;
+	// Function body
+	pEntity_gurax->SetRows(nMin, nMax);
+	return Gurax::Value::nil();
+}
+
+// wx.RibbonToolBar#SetToolClientData(tool_id as Number, clientData as Any)
+Gurax_DeclareMethodAlias(wxRibbonToolBar, SetToolClientData_gurax, "SetToolClientData")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("clientData", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, SetToolClientData_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int tool_id = args_gurax.PickNumber<int>();
+	const Value& clientData = args_gurax.PickValue();
+	// Function body
+	pEntity_gurax->SetToolClientData(tool_id, ClientObject::Create(clientData));
+	return Gurax::Value::nil();
+}
+
+// wx.RibbonToolBar#SetToolDisabledBitmap(tool_id as Number, bitmap as wx.Bitmap)
+Gurax_DeclareMethodAlias(wxRibbonToolBar, SetToolDisabledBitmap_gurax, "SetToolDisabledBitmap")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, SetToolDisabledBitmap_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int tool_id = args_gurax.PickNumber<int>();
+	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
+	const wxBitmap& bitmap = value_bitmap.GetEntity();
+	// Function body
+	pEntity_gurax->SetToolDisabledBitmap(tool_id, bitmap);
+	return Gurax::Value::nil();
+}
+
+// wx.RibbonToolBar#SetToolHelpString(tool_id as Number, helpString as String)
+Gurax_DeclareMethodAlias(wxRibbonToolBar, SetToolHelpString_gurax, "SetToolHelpString")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("helpString", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, SetToolHelpString_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int tool_id = args_gurax.PickNumber<int>();
+	const char* helpString = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetToolHelpString(tool_id, helpString);
+	return Gurax::Value::nil();
+}
+
+// wx.RibbonToolBar#SetToolNormalBitmap(tool_id as Number, bitmap as wx.Bitmap)
+Gurax_DeclareMethodAlias(wxRibbonToolBar, SetToolNormalBitmap_gurax, "SetToolNormalBitmap")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, SetToolNormalBitmap_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int tool_id = args_gurax.PickNumber<int>();
+	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
+	const wxBitmap& bitmap = value_bitmap.GetEntity();
+	// Function body
+	pEntity_gurax->SetToolNormalBitmap(tool_id, bitmap);
+	return Gurax::Value::nil();
+}
+
+// wx.RibbonToolBar#EnableTool(tool_id as Number, enable? as Bool)
+Gurax_DeclareMethodAlias(wxRibbonToolBar, EnableTool_gurax, "EnableTool")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("enable", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, EnableTool_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int tool_id = args_gurax.PickNumber<int>();
+	bool enable = args_gurax.IsValid()? args_gurax.PickBool() : true;
+	// Function body
+	pEntity_gurax->EnableTool(tool_id, enable);
+	return Gurax::Value::nil();
+}
+
+// wx.RibbonToolBar#ToggleTool(tool_id as Number, checked as Bool)
+Gurax_DeclareMethodAlias(wxRibbonToolBar, ToggleTool_gurax, "ToggleTool")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("checked", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxRibbonToolBar, ToggleTool_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int tool_id = args_gurax.PickNumber<int>();
+	bool checked = args_gurax.PickBool();
+	// Function body
+	pEntity_gurax->ToggleTool(tool_id, checked);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -64,8 +824,39 @@ void VType_wxRibbonToolBar::DoPrepare(Frame& frameOuter)
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
-	Declare(VTYPE_wxRibbonControl, Flag::Mutable);
+	Declare(VTYPE_wxRibbonControl, Flag::Mutable, Gurax_CreateConstructor(RibbonToolBar_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, Create_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, AddTool_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, AddDropdownTool_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, AddHybridTool_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, AddToggleTool_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, AddSeparator_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, InsertTool_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, InsertDropdownTool_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, InsertHybridTool_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, InsertToggleTool_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, InsertSeparator_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, ClearTools_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, DeleteTool_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, DeleteToolByPos_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, FindById_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, GetToolCount_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, GetToolId_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, GetToolClientData_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, GetToolEnabled_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, GetToolHelpString_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, GetToolKind_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, GetToolPos_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, GetToolState_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, Realize_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, SetRows_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, SetToolClientData_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, SetToolDisabledBitmap_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, SetToolHelpString_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, SetToolNormalBitmap_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, EnableTool_gurax));
+	Assign(Gurax_CreateMethod(wxRibbonToolBar, ToggleTool_gurax));
 }
 
 //------------------------------------------------------------------------------

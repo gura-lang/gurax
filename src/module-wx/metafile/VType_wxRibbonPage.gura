@@ -3,6 +3,18 @@
 //==============================================================================
 RibbonPage = Class(RibbonControl) {
 	@include['wx/ribbon/page.h']
+	__init__(parent as RibbonBar_p, id as WindowID = wxID_ANY, label as const_String_r = wxEmptyString, icon as const_Bitmap_r = wxNullBitmap, style as long = 0)
+	Create(parent as RibbonBar_p, id as WindowID = wxID_ANY, label as const_String_r = wxEmptyString, icon as const_Bitmap_r = wxNullBitmap, style as long = 0) as bool
+	SetArtProvider(art as RibbonArtProvider_p) as void
+	GetIcon() as Bitmap
+	SetSizeWithScrollButtonAdjustment(x as int, y as int, width as int, height as int) as void
+	AdjustRectToIncludeScrollButtons(rect as Rect_p) as void
+	DismissExpandedPanel() as bool
+	Realize():virtual as bool
+	ScrollLines(lines as int):virtual as bool
+	ScrollPixels(pixels as int) as bool
+	ScrollSections(sections as int) as bool
+	GetMajorAxis() as Orientation
 } %% R'''
 # Overview
 

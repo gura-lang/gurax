@@ -32,3 +32,12 @@ ${help.ComposeConstructorHelp(wx.RibbonPanel, `ja)}
 
 ${help.ComposeMethodHelp(wx.RibbonPanel, `ja)}
 '''ja
+
+@const { // Styles
+	RIBBON_PANEL_DEFAULT_STYLE
+	//RIBBON_PANEL_NO_AUTO_MINIMIZE
+	RIBBON_PANEL_EXT_BUTTON
+	//RIBBON_PANEL_MINIMIZE_BUTTON
+	RIBBON_PANEL_STRETCH
+	RIBBON_PANEL_FLEXIBLE
+}

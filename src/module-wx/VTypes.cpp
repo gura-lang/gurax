@@ -362,6 +362,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxRibbonPage);
 	frame.Assign(VTYPE_wxRibbonPanel);
 	frame.Assign(VTYPE_wxRibbonToolBar);
+	frame.Assign(VTYPE_wxRibbonToolBarToolBase);
 	frame.Assign(VTYPE_wxRichTextAttr);
 	frame.Assign(VTYPE_wxRichTextBox);
 	frame.Assign(VTYPE_wxRichTextBuffer);

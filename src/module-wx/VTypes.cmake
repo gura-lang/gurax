@@ -354,6 +354,7 @@ set(SRCFILES_VTYPE
 	VType_wxRibbonPage.cpp
 	VType_wxRibbonPanel.cpp
 	VType_wxRibbonToolBar.cpp
+	VType_wxRibbonToolBarToolBase.cpp
 	VType_wxRichTextAttr.cpp
 	VType_wxRichTextBox.cpp
 	VType_wxRichTextBuffer.cpp

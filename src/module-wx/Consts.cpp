@@ -980,6 +980,10 @@ void AssignConsts(Frame& frame)
 	frame.Assign("RIBBON_GALLERY_BUTTON_DISABLED", new Value_Number(wxRIBBON_GALLERY_BUTTON_DISABLED));
 	frame.Assign("RIBBON_GALLERY_BUTTON_HOVERED", new Value_Number(wxRIBBON_GALLERY_BUTTON_HOVERED));
 	frame.Assign("RIBBON_GALLERY_BUTTON_NORMAL", new Value_Number(wxRIBBON_GALLERY_BUTTON_NORMAL));
+	frame.Assign("RIBBON_PANEL_DEFAULT_STYLE", new Value_Number(wxRIBBON_PANEL_DEFAULT_STYLE));
+	frame.Assign("RIBBON_PANEL_EXT_BUTTON", new Value_Number(wxRIBBON_PANEL_EXT_BUTTON));
+	frame.Assign("RIBBON_PANEL_FLEXIBLE", new Value_Number(wxRIBBON_PANEL_FLEXIBLE));
+	frame.Assign("RIBBON_PANEL_STRETCH", new Value_Number(wxRIBBON_PANEL_STRETCH));
 	frame.Assign("RICHTEXTSTYLELIST_HIDE_TYPE_SELECTOR", new Value_Number(wxRICHTEXTSTYLELIST_HIDE_TYPE_SELECTOR));
 	frame.Assign("RIGHT", new Value_Number(wxRIGHT));
 	frame.Assign("ROLE_NONE", new Value_Number(wxROLE_NONE));

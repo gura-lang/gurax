@@ -3,6 +3,41 @@
 //==============================================================================
 RibbonToolBar = Class(RibbonControl) {
 	@include['wx/ribbon/toolbar.h']
+	__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0)
+	Create(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0) as bool
+	AddTool(tool_id as int, bitmap as const_Bitmap_r, help_string as const_String_r, kind as RibbonButtonKind = wxRIBBON_BUTTON_NORMAL) as RibbonToolBarToolBase_p
+	//AddTool(tool_id as int, bitmap as const_Bitmap_r, bitmap_disabled as const_Bitmap_r = wxNullBitmap, help_string as const_String_r = wxEmptyString, kind as RibbonButtonKind = wxRIBBON_BUTTON_NORMAL, clientData as Object_p = NULL) as RibbonToolBarToolBase_p
+	AddDropdownTool(tool_id as int, bitmap as const_Bitmap_r, help_string as const_String_r = wxEmptyString) as RibbonToolBarToolBase_p
+	AddHybridTool(tool_id as int, bitmap as const_Bitmap_r, help_string as const_String_r = wxEmptyString) as RibbonToolBarToolBase_p
+	AddToggleTool(tool_id as int, bitmap as const_Bitmap_r, help_string as const_String_r) as RibbonToolBarToolBase_p
+	AddSeparator() as RibbonToolBarToolBase_p
+	InsertTool(pos as size_t, tool_id as int, bitmap as const_Bitmap_r, help_string as const_String_r, kind as RibbonButtonKind = wxRIBBON_BUTTON_NORMAL) as RibbonToolBarToolBase_p
+	//InsertTool(pos as size_t, tool_id as int, bitmap as const_Bitmap_r, bitmap_disabled as const_Bitmap_r = wxNullBitmap, help_string as const_String_r = wxEmptyString, kind as RibbonButtonKind = wxRIBBON_BUTTON_NORMAL, clientData as Object_p = NULL) as RibbonToolBarToolBase_p
+	InsertDropdownTool(pos as size_t, tool_id as int, bitmap as const_Bitmap_r, help_string as const_String_r = wxEmptyString) as RibbonToolBarToolBase_p
+	InsertHybridTool(pos as size_t, tool_id as int, bitmap as const_Bitmap_r, help_string as const_String_r = wxEmptyString) as RibbonToolBarToolBase_p
+	InsertToggleTool(pos as size_t, tool_id as int, bitmap as const_Bitmap_r, help_string as const_String_r = wxEmptyString) as RibbonToolBarToolBase_p
+	InsertSeparator(pos as size_t) as RibbonToolBarToolBase_p
+	ClearTools() as void
+	DeleteTool(tool_id as int) as bool
+	DeleteToolByPos(pos as size_t) as bool
+	FindById(tool_id as int) as RibbonToolBarToolBase_p
+	GetToolCount() as size_t
+	//GetToolByPos(size_t_pos) as RibbonToolBarToolBase_p
+	GetToolId(tool as const_RibbonToolBarToolBase_p) as int
+	GetToolClientData(tool_id as int) as Object_p
+	GetToolEnabled(tool_id as int) as bool
+	GetToolHelpString(tool_id as int) as String
+	GetToolKind(tool_id as int) as RibbonButtonKind
+	GetToolPos(tool_id as int) as int
+	GetToolState(tool_id as int) as bool
+	Realize() as bool
+	SetRows(nMin as int, nMax as int = -1) as void
+	SetToolClientData(tool_id as int, clientData as Object_p) as void
+	SetToolDisabledBitmap(tool_id as int, bitmap as const_Bitmap_r) as void
+	SetToolHelpString(tool_id as int, helpString as const_String_r) as void
+	SetToolNormalBitmap(tool_id as int, bitmap as const_Bitmap_r) as void
+	EnableTool(tool_id as int, enable as bool = true) as void
+	ToggleTool(tool_id as int, checked as bool) as void
 } %% R'''
 # Overview
 

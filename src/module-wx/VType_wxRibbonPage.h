@@ -40,6 +40,10 @@ public:
 		using wxRibbonPage::wxRibbonPage;
 	public:
 		EntityCore core_gurax;
+		virtual bool Realize() override;
+		virtual bool ScrollLines(int lines) override;
+		bool public_Realize() { return wxRibbonPage::Realize(); }
+		bool public_ScrollLines(int lines) { return wxRibbonPage::ScrollLines(lines); }
 	};
 public:
 	static VType& vtype;
