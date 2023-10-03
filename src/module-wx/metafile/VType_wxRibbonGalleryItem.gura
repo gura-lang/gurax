@@ -1,0 +1,34 @@
+//==============================================================================
+// VType_wxRibbonGalleryItem.gura
+//==============================================================================
+RibbonGalleryItem = Class():loosePointer {
+	@include['wx/ribbon/gallery.h']
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RibbonGalleryItem, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RibbonGalleryItem, `en)}
+
+${help.ComposeMethodHelp(wx.RibbonGalleryItem, `en)}
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RibbonGalleryItem, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RibbonGalleryItem, `ja)}
+
+${help.ComposeMethodHelp(wx.RibbonGalleryItem, `ja)}
+'''ja

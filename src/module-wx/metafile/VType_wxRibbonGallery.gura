@@ -3,6 +3,30 @@
 //==============================================================================
 RibbonGallery = Class(RibbonControl) {
 	@include['wx/ribbon/gallery.h']
+	__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0)
+	Create(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0) as bool
+	Clear() as void
+	IsEmpty() as bool
+	GetCount() as unsigned_int
+	GetItem(n as unsigned_int) as RibbonGalleryItem_p
+	Append(bitmap as const_Bitmap_r, id as int) as RibbonGalleryItem_p
+	//Append(bitmap as const_Bitmap_r, id as int, clientData as void_p) as RibbonGalleryItem_p
+	//Append(bitmap as const_Bitmap_r, id as int, clientData as ClientData_p) as RibbonGalleryItem_p
+	SetItemClientObject(item as RibbonGalleryItem_p, data as ClientData_p) as void
+	GetItemClientObject(item as const_RibbonGalleryItem_p) as ClientData_p
+	SetItemClientData(item as RibbonGalleryItem_p, data as void_p) as void
+	GetItemClientData(item as const_RibbonGalleryItem_p) as void_p
+	SetSelection(item as RibbonGalleryItem_p) as void
+	GetSelection() as RibbonGalleryItem_p
+	GetHoveredItem() as RibbonGalleryItem_p
+	GetActiveItem() as RibbonGalleryItem_p
+	GetUpButtonState() as RibbonGalleryButtonState
+	GetDownButtonState() as RibbonGalleryButtonState
+	GetExtensionButtonState() as RibbonGalleryButtonState
+	IsHovered() as bool
+	ScrollLines(lines as int):virtual as bool
+	ScrollPixels(pixels as int) as bool
+	EnsureVisible(item as const_RibbonGalleryItem_p) as void
 } %% R'''
 # Overview
 
@@ -32,3 +56,9 @@ ${help.ComposeConstructorHelp(wx.RibbonGallery, `ja)}
 
 ${help.ComposeMethodHelp(wx.RibbonGallery, `ja)}
 '''ja
+
+@event {
+	EVT_RIBBONGALLERY_SELECTED		>> RibbonGalleryEvent
+	EVT_RIBBONGALLERY_CLICKED		>> RibbonGalleryEvent
+	EVT_RIBBONGALLERY_HOVER_CHANGED	>> RibbonGalleryEvent
+}

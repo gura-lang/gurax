@@ -49,8 +49,8 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_COMMAND_RIGHT_CLICK,					wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_RIGHT_DCLICK,					wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_SET_FOCUS,					wxCommandEvent);
-	Gurax_AssignEvent(EVT_CONTEXT_MENU,							wxContextMenuEvent);
 	Gurax_AssignEvent(EVT_CONTEXT_MENU,							wxCommandEvent);
+	Gurax_AssignEvent(EVT_CONTEXT_MENU,							wxContextMenuEvent);
 	Gurax_AssignEvent(EVT_DATAVIEW_CACHE_HINT,					wxDataViewEvent);
 	Gurax_AssignEvent(EVT_DATAVIEW_COLUMN_HEADER_CLICK,			wxDataViewEvent);
 	Gurax_AssignEvent(EVT_DATAVIEW_COLUMN_HEADER_RIGHT_CLICK,	wxDataViewEvent);
@@ -209,6 +209,9 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_RIBBONBAR_TOGGLED,					wxRibbonBarEvent);
 	Gurax_AssignEvent(EVT_RIBBONBUTTONBAR_CLICKED,				wxRibbonButtonBarEvent);
 	Gurax_AssignEvent(EVT_RIBBONBUTTONBAR_DROPDOWN_CLICKED,		wxRibbonButtonBarEvent);
+	Gurax_AssignEvent(EVT_RIBBONGALLERY_CLICKED,				wxRibbonGalleryEvent);
+	Gurax_AssignEvent(EVT_RIBBONGALLERY_HOVER_CHANGED,			wxRibbonGalleryEvent);
+	Gurax_AssignEvent(EVT_RIBBONGALLERY_SELECTED,				wxRibbonGalleryEvent);
 	Gurax_AssignEvent(EVT_RIGHT_DCLICK,							wxMouseEvent);
 	Gurax_AssignEvent(EVT_RIGHT_DOWN,							wxMouseEvent);
 	Gurax_AssignEvent(EVT_RIGHT_UP,								wxMouseEvent);

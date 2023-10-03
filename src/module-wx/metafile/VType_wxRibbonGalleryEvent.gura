@@ -1,0 +1,39 @@
+//==============================================================================
+// VType_wxRibbonGalleryEvent.gura
+//==============================================================================
+RibbonGalleryEvent = Class(CommandEvent) {
+	@include['wx/ribbon/gallery.h']
+	//__init__(command_type as EventType = wxEVT_NULL, win_id as int = 0, gallery as RibbonGallery_p = NULL, item as RibbonGalleryItem_p = NULL)
+	GetGallery() as RibbonGallery_p
+	GetGalleryItem() as RibbonGalleryItem_p
+	SetGallery(gallery as RibbonGallery_p) as void
+	SetGalleryItem(item as RibbonGalleryItem_p) as void
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RibbonGalleryEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RibbonGalleryEvent, `en)}
+
+${help.ComposeMethodHelp(wx.RibbonGalleryEvent, `en)}
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RibbonGalleryEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RibbonGalleryEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.RibbonGalleryEvent, `ja)}
+'''ja

@@ -40,6 +40,8 @@ public:
 		using wxRibbonGallery::wxRibbonGallery;
 	public:
 		EntityCore core_gurax;
+		virtual bool ScrollLines(int lines) override;
+		bool public_ScrollLines(int lines) { return wxRibbonGallery::ScrollLines(lines); }
 	};
 public:
 	static VType& vtype;
