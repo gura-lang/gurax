@@ -1,0 +1,33 @@
+//==============================================================================
+// VType_wxRibbonToolBarToolBase.gura
+//==============================================================================
+RibbonToolBarToolBase = Class():loosePointer {
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RibbonToolBarToolBase, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RibbonToolBarToolBase, `en)}
+
+${help.ComposeMethodHelp(wx.RibbonToolBarToolBase, `en)}
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RibbonToolBarToolBase, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RibbonToolBarToolBase, `ja)}
+
+${help.ComposeMethodHelp(wx.RibbonToolBarToolBase, `ja)}
+'''ja
