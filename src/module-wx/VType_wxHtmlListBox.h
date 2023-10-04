@@ -40,6 +40,12 @@ public:
 		using wxHtmlListBox::wxHtmlListBox;
 	public:
 		EntityCore core_gurax;
+		virtual void OnLinkClicked(size_t n, const wxHtmlLinkInfo& link) override;
+		virtual wxColour GetSelectedTextBgColour(const wxColour& colBg) const override;
+		virtual wxColour GetSelectedTextColour(const wxColour& colFg) const override;
+		void public_OnLinkClicked(size_t n, const wxHtmlLinkInfo& link) { wxHtmlListBox::OnLinkClicked(n, link); }
+		wxColour public_GetSelectedTextBgColour(const wxColour& colBg) const { return wxHtmlListBox::GetSelectedTextBgColour(colBg); }
+		wxColour public_GetSelectedTextColour(const wxColour& colFg) const { return wxHtmlListBox::GetSelectedTextColour(colFg); }
 	};
 public:
 	static VType& vtype;

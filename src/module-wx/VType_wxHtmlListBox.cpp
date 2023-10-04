@@ -66,6 +66,76 @@ Gurax_ImplementMethodEx(wxHtmlListBox, GetFileSystem_gurax, processor_gurax, arg
 		pEntity_gurax->GetFileSystem()));
 }
 
+// wx.HtmlListBox#OnLinkClicked(n as Number, link as wx.HtmlLinkInfo)
+Gurax_DeclareMethodAlias(wxHtmlListBox, OnLinkClicked_gurax, "OnLinkClicked")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("link", VTYPE_wxHtmlLinkInfo, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlListBox, OnLinkClicked_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = dynamic_cast<Value_wxHtmlListBox::EntityT*>(valueThis_gurax.GetEntityPtr());
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t n = args_gurax.PickNumber<size_t>();
+	Value_wxHtmlLinkInfo& value_link = args_gurax.Pick<Value_wxHtmlLinkInfo>();
+	const wxHtmlLinkInfo& link = value_link.GetEntity();
+	// Function body
+	pEntity_gurax->OnLinkClicked(n, link);
+	return Gurax::Value::nil();
+}
+
+// wx.HtmlListBox#GetSelectedTextBgColour(colBg as wx.Colour) {block?}
+Gurax_DeclareMethodAlias(wxHtmlListBox, GetSelectedTextBgColour_gurax, "GetSelectedTextBgColour")
+{
+	Declare(VTYPE_wxColour, Flag::None);
+	DeclareArg("colBg", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxHtmlListBox, GetSelectedTextBgColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = dynamic_cast<Value_wxHtmlListBox::EntityT*>(valueThis_gurax.GetEntityPtr());
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxColour& value_colBg = args_gurax.Pick<Value_wxColour>();
+	const wxColour& colBg = value_colBg.GetEntity();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
+		pEntity_gurax->GetSelectedTextBgColour(colBg)));
+}
+
+// wx.HtmlListBox#GetSelectedTextColour(colFg as wx.Colour) {block?}
+Gurax_DeclareMethodAlias(wxHtmlListBox, GetSelectedTextColour_gurax, "GetSelectedTextColour")
+{
+	Declare(VTYPE_wxColour, Flag::None);
+	DeclareArg("colFg", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxHtmlListBox, GetSelectedTextColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = dynamic_cast<Value_wxHtmlListBox::EntityT*>(valueThis_gurax.GetEntityPtr());
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxColour& value_colFg = args_gurax.Pick<Value_wxColour>();
+	const wxColour& colFg = value_colFg.GetEntity();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
+		pEntity_gurax->GetSelectedTextColour(colFg)));
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -84,6 +154,9 @@ void VType_wxHtmlListBox::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_wxVListBox, Flag::Mutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxHtmlListBox, GetFileSystem_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlListBox, OnLinkClicked_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlListBox, GetSelectedTextBgColour_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlListBox, GetSelectedTextColour_gurax));
 }
 
 //------------------------------------------------------------------------------
@@ -99,5 +172,97 @@ String Value_wxHtmlListBox::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Value_wxHtmlListBox::EntityT
 //------------------------------------------------------------------------------
+void Value_wxHtmlListBox::EntityT::OnLinkClicked(size_t n, const wxHtmlLinkInfo& link)
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnLinkClicked");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(n))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		if (!args_gurax.FeedValue(new Value_wxHtmlLinkInfo(link))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		return;
+	} while (0);
+	public_OnLinkClicked(n, link);
+}
+
+wxColour Value_wxHtmlListBox::EntityT::GetSelectedTextBgColour(const wxColour& colBg) const
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("GetSelectedTextBgColour");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
+		if (!args_gurax.FeedValue(new Value_wxColour(colBg))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Return Value
+		if (!pValueRtn->IsType(VTYPE_wxColour)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_wxColour.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
+		return Value_wxColour::GetEntity(*pValueRtn);
+	} while (0);
+	return public_GetSelectedTextBgColour(colBg);
+}
+
+wxColour Value_wxHtmlListBox::EntityT::GetSelectedTextColour(const wxColour& colFg) const
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("GetSelectedTextColour");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
+		if (!args_gurax.FeedValue(new Value_wxColour(colFg))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Return Value
+		if (!pValueRtn->IsType(VTYPE_wxColour)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_wxColour.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
+		return Value_wxColour::GetEntity(*pValueRtn);
+	} while (0);
+	return public_GetSelectedTextColour(colFg);
+}
 
 Gurax_EndModuleScope(wx)

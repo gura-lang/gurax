@@ -44,6 +44,38 @@ ${help.ComposeMethodHelp(wx.VListBox, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.VListBox(parent as wx.Window, id? as Number, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
+Gurax_DeclareConstructorAlias(VListBox_gurax, "VListBox")
+{
+	Declare(VTYPE_wxVListBox, Flag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementConstructorEx(VListBox_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* parent = value_parent.GetEntityPtr();
+	bool id_validFlag = args_gurax.IsValid();
+	wxWindowID id = id_validFlag? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
+	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
+	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxVListBoxNameStr;
+	// Function body
+	auto pEntity_gurax = new Value_wxVListBox::EntityT(parent, id, pos, size, style, name);
+	RefPtr<Value_wxVListBox> pValue_gurax(new Value_wxVListBox(pEntity_gurax));
+	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -63,6 +95,40 @@ Gurax_ImplementMethodEx(wxVListBox, Clear_gurax, processor_gurax, argument_gurax
 	// Function body
 	pEntity_gurax->Clear();
 	return Gurax::Value::nil();
+}
+
+// wx.VListBox#Create(parent as wx.Window, id? as Number, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String)
+Gurax_DeclareMethodAlias(wxVListBox, Create_gurax, "Create")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxVListBox, Create_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* parent = value_parent.GetEntityPtr();
+	bool id_validFlag = args_gurax.IsValid();
+	wxWindowID id = id_validFlag? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
+	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
+	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxVListBoxNameStr;
+	// Function body
+	bool rtn = pEntity_gurax->Create(parent, id, pos, size, style, name);
+	return new Gurax::Value_Bool(rtn);
 }
 
 // wx.VListBox#DeselectAll()
@@ -613,9 +679,10 @@ void VType_wxVListBox::DoPrepare(Frame& frameOuter)
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
-	Declare(VTYPE_wxVScrolledWindow, Flag::Mutable);
+	Declare(VTYPE_wxVScrolledWindow, Flag::Mutable, Gurax_CreateConstructor(VListBox_gurax));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxVListBox, Clear_gurax));
+	Assign(Gurax_CreateMethod(wxVListBox, Create_gurax));
 	Assign(Gurax_CreateMethod(wxVListBox, DeselectAll_gurax));
 	Assign(Gurax_CreateMethod(wxVListBox, GetFirstSelected_gurax));
 	Assign(Gurax_CreateMethod(wxVListBox, GetItemCount_gurax));
