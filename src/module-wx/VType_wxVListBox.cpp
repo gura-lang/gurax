@@ -497,6 +497,33 @@ Gurax_ImplementMethodEx(wxVListBox, SetMargins_gurax, processor_gurax, argument_
 	return Value::nil();
 }
 
+// wx.VListBox#OnDrawItem(dc as wx.DC, rect as wx.Rect, n as Number)
+Gurax_DeclareMethodAlias(wxVListBox, OnDrawItem_gurax, "OnDrawItem")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("dc", VTYPE_wxDC, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxVListBox, OnDrawItem_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = dynamic_cast<Value_wxVListBox::EntityT*>(valueThis_gurax.GetEntityPtr());
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxDC& value_dc = args_gurax.Pick<Value_wxDC>();
+	wxDC& dc = value_dc.GetEntity();
+	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
+	const wxRect& rect = value_rect.GetEntity();
+	size_t n = args_gurax.PickNumber<size_t>();
+	// Function body
+	pEntity_gurax->OnDrawItem(dc, rect, n);
+	return Gurax::Value::nil();
+}
+
 // wx.VListBox#OnDrawBackground(dc as wx.DC, rect as wx.Rect, n as Number)
 Gurax_DeclareMethodAlias(wxVListBox, OnDrawBackground_gurax, "OnDrawBackground")
 {
@@ -551,6 +578,26 @@ Gurax_ImplementMethodEx(wxVListBox, OnDrawSeparator_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
+// wx.VListBox#OnMeasureItem(n as Number)
+Gurax_DeclareMethodAlias(wxVListBox, OnMeasureItem_gurax, "OnMeasureItem")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxVListBox, OnMeasureItem_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = dynamic_cast<Value_wxVListBox::EntityT*>(valueThis_gurax.GetEntityPtr());
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t n = args_gurax.PickNumber<size_t>();
+	// Function body
+	return 0;
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -589,8 +636,10 @@ void VType_wxVListBox::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxVListBox, SetSelectionBackground_gurax));
 	Assign(Gurax_CreateMethod(wxVListBox, Toggle_gurax));
 	Assign(Gurax_CreateMethod(wxVListBox, SetMargins_gurax));
+	Assign(Gurax_CreateMethod(wxVListBox, OnDrawItem_gurax));
 	Assign(Gurax_CreateMethod(wxVListBox, OnDrawBackground_gurax));
 	Assign(Gurax_CreateMethod(wxVListBox, OnDrawSeparator_gurax));
+	Assign(Gurax_CreateMethod(wxVListBox, OnMeasureItem_gurax));
 }
 
 //------------------------------------------------------------------------------
@@ -606,6 +655,39 @@ String Value_wxVListBox::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Value_wxVListBox::EntityT
 //------------------------------------------------------------------------------
+void Value_wxVListBox::EntityT::OnDrawItem(wxDC& dc, const wxRect& rect, size_t n) const
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnDrawItem");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
+		if (!args_gurax.FeedValue(new Value_wxDC(dc))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		if (!args_gurax.FeedValue(new Value_wxRect(rect))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(n))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		return;
+	} while (0);
+	public_OnDrawItem(dc, rect, n);
+}
+
 void Value_wxVListBox::EntityT::OnDrawBackground(wxDC& dc, const wxRect& rect, size_t n) const
 {
 	static const Symbol* pSymbolFunc = nullptr;
@@ -670,6 +752,38 @@ void Value_wxVListBox::EntityT::OnDrawSeparator(wxDC& dc, wxRect& rect, size_t n
 		return;
 	} while (0);
 	public_OnDrawSeparator(dc, rect, n);
+}
+
+wxCoord Value_wxVListBox::EntityT::OnMeasureItem(size_t n) const
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnMeasureItem");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(n))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Return Value
+		if (!pValueRtn->IsType(VTYPE_Number)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_Number.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
+		return Value_Number::GetNumber<wxCoord>(*pValueRtn);
+	} while (0);
+	return public_OnMeasureItem(n);
 }
 
 Gurax_EndModuleScope(wx)

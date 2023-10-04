@@ -324,9 +324,9 @@ public:
 		${end}
 		${funcInfoVirtualTbl.Each {|funcInfo|}}
 		${if (funcInfo.IsVoid())}
-		${funcInfo.ComposeCDecl('public_')} { wx${className}::${funcInfo.ComposeCaller()}; }
+		${funcInfo.ComposeCDecl('public_')} {${if (!funcInfo.pureFlag)} wx${className}::${funcInfo.ComposeCaller()}; ${end}}
 		${else}
-		${funcInfo.ComposeCDecl('public_')} { return wx${className}::${funcInfo.ComposeCaller()}; }
+		${funcInfo.ComposeCDecl('public_')} {${if (funcInfo.pureFlag)} ${funcInfo.tmplFunctionBody.Eval()} ${else} return wx${className}::${funcInfo.ComposeCaller()}; ${end}}
 		${end}
 		${end}
 	};

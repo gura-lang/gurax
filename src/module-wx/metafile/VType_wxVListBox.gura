@@ -3,9 +3,9 @@
 //==============================================================================
 VListBox = Class(VScrolledWindow) {
 	@include['wx/vlbox.h']
-	//__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0, name as const_String_r = wxVListBoxNameStr)
+	__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0, name as const_String_r = wxVListBoxNameStr)
 	Clear() as void
-	//Create(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0, name as const_String_r = wxVListBoxNameStr) as bool
+	Create(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0, name as const_String_r = wxVListBoxNameStr) as bool
 	DeselectAll() as bool
 	GetFirstSelected(&cookie:nilRef as unsigned_long) as int = \
 		R'''
@@ -74,10 +74,10 @@ VListBox = Class(VScrolledWindow) {
 		} while (0);
 		return Value::nil();
 		'''
-	//OnDrawItem(dc as DC_r, rect as const_Rect_r, n as size_t):virtual:const as void
+	OnDrawItem(dc as DC_r, rect as const_Rect_r, n as size_t):virtual:const:pure as void
 	OnDrawBackground(dc as DC_r, rect as const_Rect_r, n as size_t):virtual:const as void
 	OnDrawSeparator(dc as DC_r, rect as Rect_r, n as size_t):virtual:const as void
-	//OnMeasureItem(n as size_t):virtual:const as Coord
+	OnMeasureItem(n as size_t):virtual:const:pure as Coord = 'return 0;'
 } %% R'''
 # Overview
 
