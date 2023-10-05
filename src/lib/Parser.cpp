@@ -321,6 +321,9 @@ bool Parser::ReduceTwoTokens()
 		} else if (pToken1->IsType(TokenType::Mul)) {
 			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '*' Expr\n"));
 			pExprGen.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::PreMul));
+		} else if (pToken1->IsType(TokenType::Xor)) {
+			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '^' Expr\n"));
+			pExprGen.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::PreXor));
 		} else if (pToken1->IsType(TokenType::Quote)) {
 			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '`' Expr\n"));
 			pExprGen.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::Quote));

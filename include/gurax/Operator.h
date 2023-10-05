@@ -66,6 +66,7 @@ enum class OpType {
 	PreMod,
 	PreModMod,
 	PreMul,
+	PreXor,
 	Quote,
 	// Post-unary operators
 	PostMod,
@@ -296,6 +297,7 @@ public:
 	static Operator* PreMod;
 	static Operator* PreModMod;
 	static Operator* PreMul;
+	static Operator* PreXor;
 	static Operator* Quote;
 	// Post-unary operators
 	static Operator* PostMod;

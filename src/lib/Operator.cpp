@@ -24,6 +24,7 @@ Operator* Operator::PreAnd			= new Operator_PreAnd();
 Operator* Operator::PreMod			= new Operator(OpStyle::Unary,			"PreMod",		"%",			OpType::PreMod);
 Operator* Operator::PreModMod		= new Operator(OpStyle::Unary,			"PreModMod",	"%%",			OpType::PreModMod);
 Operator* Operator::PreMul			= new Operator(OpStyle::Unary,			"PreMul",		"*",			OpType::PreMul);
+Operator* Operator::PreXor			= new Operator(OpStyle::Unary,			"PreXor",		"^",			OpType::PreXor);
 Operator* Operator::Quote			= new Operator_Quote();
 // Post-unary operators
 Operator* Operator::PostMod			= new Operator(OpStyle::UnaryPost,		"PostMod",		"%",			OpType::PostMod);
