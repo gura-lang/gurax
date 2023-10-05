@@ -82,7 +82,6 @@ Gurax_ImplementMethodEx(wxHtmlLinkInfo, GetHref_gurax, processor_gurax, argument
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetHref();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -118,7 +117,6 @@ Gurax_ImplementMethodEx(wxHtmlLinkInfo, GetTarget_gurax, processor_gurax, argume
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetTarget();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 

@@ -613,7 +613,6 @@ Gurax_ImplementMethodEx(wxStyledTextEvent, GetText_gurax, processor_gurax, argum
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetText();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -886,7 +885,6 @@ Gurax_ImplementMethodEx(wxStyledTextEvent, GetDragText_gurax, processor_gurax, a
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetDragText();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 

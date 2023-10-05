@@ -154,7 +154,6 @@ Gurax_ImplementMethodEx(wxHtmlListBox, OnGetItem_gurax, processor_gurax, argumen
 	size_t n = args_gurax.PickNumber<size_t>();
 	// Function body
 	wxString rtn = pEntity_gurax->OnGetItem(n);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 

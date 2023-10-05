@@ -205,7 +205,6 @@ Gurax_ImplementMethodEx(wxTextAttr, GetBulletFont_gurax, processor_gurax, argume
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetBulletFont();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -223,7 +222,6 @@ Gurax_ImplementMethodEx(wxTextAttr, GetBulletName_gurax, processor_gurax, argume
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetBulletName();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -275,7 +273,6 @@ Gurax_ImplementMethodEx(wxTextAttr, GetBulletText_gurax, processor_gurax, argume
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetBulletText();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -293,7 +290,6 @@ Gurax_ImplementMethodEx(wxTextAttr, GetCharacterStyleName_gurax, processor_gurax
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetCharacterStyleName();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -388,7 +384,6 @@ Gurax_ImplementMethodEx(wxTextAttr, GetFontFaceName_gurax, processor_gurax, argu
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetFontFaceName();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -542,7 +537,6 @@ Gurax_ImplementMethodEx(wxTextAttr, GetListStyleName_gurax, processor_gurax, arg
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetListStyleName();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -611,7 +605,6 @@ Gurax_ImplementMethodEx(wxTextAttr, GetParagraphStyleName_gurax, processor_gurax
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetParagraphStyleName();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -715,7 +708,6 @@ Gurax_ImplementMethodEx(wxTextAttr, GetURL_gurax, processor_gurax, argument_gura
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetURL();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 

@@ -3881,7 +3881,6 @@ Gurax_ImplementMethodEx(wxWindow, GetHelpText_gurax, processor_gurax, argument_g
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetHelpText();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -3938,7 +3937,6 @@ Gurax_ImplementMethodEx(wxWindow, GetToolTipText_gurax, processor_gurax, argumen
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetToolTipText();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -4241,7 +4239,6 @@ Gurax_ImplementMethodEx(wxWindow, GetLabel_gurax, processor_gurax, argument_gura
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetLabel();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -4301,7 +4298,6 @@ Gurax_ImplementMethodEx(wxWindow, GetName_gurax, processor_gurax, argument_gurax
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetName();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 

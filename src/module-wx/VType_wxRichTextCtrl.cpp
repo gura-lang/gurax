@@ -159,7 +159,6 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetRange_gurax, processor_gurax, argumen
 	long to = args_gurax.PickNumber<long>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetRange(from, to);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -202,7 +201,6 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetLineText_gurax, processor_gurax, argu
 	long lineNo = args_gurax.PickNumber<long>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetLineText(lineNo);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -305,7 +303,6 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetStringSelection_gurax, processor_gura
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetStringSelection();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -323,7 +320,6 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetFilename_gurax, processor_gurax, argu
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetFilename();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -3773,7 +3769,6 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetPropertiesMenuLabel_gurax, processor_
 	wxRichTextObject* obj = value_obj.GetEntityPtr();
 	// Function body
 	wxString rtn = pEntity_gurax->GetPropertiesMenuLabel(obj);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -5563,7 +5558,6 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetValue_gurax, processor_gurax, argumen
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetValue();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -5684,7 +5678,6 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, DoGetValue_gurax, processor_gurax, argum
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->DoGetValue();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 

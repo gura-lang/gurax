@@ -120,7 +120,6 @@ Gurax_ImplementMethodEx(wxTimeSpan, Format_gurax, processor_gurax, argument_gura
 	const char* format = args_gurax.IsValid()? args_gurax.PickString() : wxDefaultTimeSpanFormat;
 	// Function body
 	wxString rtn = pEntity_gurax->Format(format);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 

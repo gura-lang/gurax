@@ -561,7 +561,6 @@ Gurax_ImplementMethodEx(wxRibbonToolBar, GetToolHelpString_gurax, processor_gura
 	int tool_id = args_gurax.PickNumber<int>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetToolHelpString(tool_id);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 

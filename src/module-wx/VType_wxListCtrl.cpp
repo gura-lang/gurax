@@ -800,7 +800,6 @@ Gurax_ImplementMethodEx(wxListCtrl, GetItemText_gurax, processor_gurax, argument
 	int col = col_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body
 	wxString rtn = pEntity_gurax->GetItemText(item, col);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -1865,7 +1864,6 @@ Gurax_ImplementMethodEx(wxListCtrl, OnGetItemText_gurax, processor_gurax, argume
 	long column = args_gurax.PickNumber<long>();
 	// Function body
 	wxString rtn = pEntity_gurax->OnGetItemText(item, column);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 

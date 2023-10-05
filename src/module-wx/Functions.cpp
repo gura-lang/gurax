@@ -80,7 +80,6 @@ Gurax_ImplementFunctionEx(DirSelector_gurax, processor_gurax, argument_gurax)
 	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
 	// Function body
 	wxString rtn = wxDirSelector(message, default_path, style, pos, parent);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -130,7 +129,6 @@ Gurax_ImplementFunctionEx(FileSelector_gurax, processor_gurax, argument_gurax)
 	int y = y_validFlag? args_gurax.PickNumber<int>() : wxDefaultCoord;
 	// Function body
 	wxString rtn = wxFileSelector(message, default_path, default_filename, default_extension, wildcard, flags, parent, x, y);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -287,7 +285,6 @@ Gurax_ImplementFunctionEx(GetPasswordFromUser_gurax, processor_gurax, argument_g
 	bool centre = args_gurax.IsValid()? args_gurax.PickBool() : true;
 	// Function body
 	wxString rtn = wxGetPasswordFromUser(message, caption, default_value, parent, x, y, centre);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -328,7 +325,6 @@ Gurax_ImplementFunctionEx(GetSingleChoice_gurax, processor_gurax, argument_gurax
 	int initialSelection = initialSelection_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body
 	wxString rtn = wxGetSingleChoice(message, caption, aChoices, parent, x, y, centre, width, height, initialSelection);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -400,7 +396,6 @@ Gurax_ImplementFunctionEx(GetTextFromUser_gurax, processor_gurax, argument_gurax
 	bool centre = args_gurax.IsValid()? args_gurax.PickBool() : true;
 	// Function body
 	wxString rtn = wxGetTextFromUser(message, caption, default_value, parent, x, y, centre);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -541,7 +536,6 @@ Gurax_ImplementFunctionEx(LoadFileSelector_gurax, processor_gurax, argument_gura
 	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
 	// Function body
 	wxString rtn = wxLoadFileSelector(what, extension, default_name, parent);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -619,7 +613,6 @@ Gurax_ImplementFunctionEx(Now_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	wxString rtn = wxNow();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -643,7 +636,6 @@ Gurax_ImplementFunctionEx(SaveFileSelector_gurax, processor_gurax, argument_gura
 	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
 	// Function body
 	wxString rtn = wxSaveFileSelector(what, extension, default_name, parent);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 

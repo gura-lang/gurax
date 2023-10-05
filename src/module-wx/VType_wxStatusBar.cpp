@@ -206,7 +206,6 @@ Gurax_ImplementMethodEx(wxStatusBar, GetStatusText_gurax, processor_gurax, argum
 	int i = i_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body
 	wxString rtn = pEntity_gurax->GetStatusText(i);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 

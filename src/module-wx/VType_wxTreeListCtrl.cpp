@@ -597,7 +597,6 @@ Gurax_ImplementMethodEx(wxTreeListCtrl, GetItemText_gurax, processor_gurax, argu
 	unsigned col = col_validFlag? args_gurax.PickNumber<unsigned>() : 0;
 	// Function body
 	wxString rtn = pEntity_gurax->GetItemText(item, col);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 

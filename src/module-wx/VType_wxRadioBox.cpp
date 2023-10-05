@@ -191,7 +191,6 @@ Gurax_ImplementMethodEx(wxRadioBox, GetItemHelpText_gurax, processor_gurax, argu
 	unsigned int item = args_gurax.PickNumber<unsigned int>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetItemHelpText(item);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -401,7 +400,6 @@ Gurax_ImplementMethodEx(wxRadioBox, GetString_gurax, processor_gurax, argument_g
 	unsigned int n = args_gurax.PickNumber<unsigned int>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetString(n);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 

@@ -94,7 +94,6 @@ Gurax_ImplementMethodEx(wxDirDialog, GetMessage_gurax, processor_gurax, argument
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetMessage();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -112,7 +111,6 @@ Gurax_ImplementMethodEx(wxDirDialog, GetPath_gurax, processor_gurax, argument_gu
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetPath();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 

@@ -355,7 +355,6 @@ Gurax_ImplementMethodEx(wxMenu, GetHelpString_gurax, processor_gurax, argument_g
 	int id = args_gurax.PickNumber<int>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetHelpString(id);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -377,7 +376,6 @@ Gurax_ImplementMethodEx(wxMenu, GetLabel_gurax, processor_gurax, argument_gurax)
 	int id = args_gurax.PickNumber<int>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetLabel(id);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -399,7 +397,6 @@ Gurax_ImplementMethodEx(wxMenu, GetLabelText_gurax, processor_gurax, argument_gu
 	int id = args_gurax.PickNumber<int>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetLabelText(id);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -434,7 +431,6 @@ Gurax_ImplementMethodEx(wxMenu, GetTitle_gurax, processor_gurax, argument_gurax)
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetTitle();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 

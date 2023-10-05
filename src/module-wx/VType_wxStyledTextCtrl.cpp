@@ -1745,7 +1745,6 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, StyleGetFaceName_gurax, processor_gura
 	int style = args_gurax.PickNumber<int>();
 	// Function body
 	wxString rtn = pEntity_gurax->StyleGetFaceName(style);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -2337,7 +2336,6 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetWordChars_gurax, processor_gurax, a
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetWordChars();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -4021,7 +4019,6 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetLine_gurax, processor_gurax, argume
 	int line = args_gurax.PickNumber<int>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetLine(line);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -4149,7 +4146,6 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetSelectedText_gurax, processor_gurax
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetSelectedText();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -4173,7 +4169,6 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetTextRange_gurax, processor_gurax, a
 	int endPos = args_gurax.PickNumber<int>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetTextRange(startPos, endPos);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -4493,7 +4488,6 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetText_gurax, processor_gurax, argume
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetText();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -6055,7 +6049,6 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetTag_gurax, processor_gurax, argumen
 	int tagNumber = args_gurax.PickNumber<int>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetTag(tagNumber);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -8894,7 +8887,6 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetWhitespaceChars_gurax, processor_gu
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetWhitespaceChars();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -8933,7 +8925,6 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetPunctuationChars_gurax, processor_g
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetPunctuationChars();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -9749,7 +9740,6 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, MarginGetText_gurax, processor_gurax, 
 	int line = args_gurax.PickNumber<int>();
 	// Function body
 	wxString rtn = pEntity_gurax->MarginGetText(line);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -9838,7 +9828,6 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, MarginGetStyles_gurax, processor_gurax
 	int line = args_gurax.PickNumber<int>();
 	// Function body
 	wxString rtn = pEntity_gurax->MarginGetStyles(line);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -9976,7 +9965,6 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, AnnotationGetText_gurax, processor_gur
 	int line = args_gurax.PickNumber<int>();
 	// Function body
 	wxString rtn = pEntity_gurax->AnnotationGetText(line);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -10065,7 +10053,6 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, AnnotationGetStyles_gurax, processor_g
 	int line = args_gurax.PickNumber<int>();
 	// Function body
 	wxString rtn = pEntity_gurax->AnnotationGetStyles(line);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -11574,7 +11561,6 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetProperty_gurax, processor_gurax, ar
 	const char* key = args_gurax.PickString();
 	// Function body
 	wxString rtn = pEntity_gurax->GetProperty(key);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -11596,7 +11582,6 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetPropertyExpanded_gurax, processor_g
 	const char* key = args_gurax.PickString();
 	// Function body
 	wxString rtn = pEntity_gurax->GetPropertyExpanded(key);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -11652,7 +11637,6 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, PropertyNames_gurax, processor_gurax, 
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->PropertyNames();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -11695,7 +11679,6 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, DescribeProperty_gurax, processor_gura
 	const char* name = args_gurax.PickString();
 	// Function body
 	wxString rtn = pEntity_gurax->DescribeProperty(name);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -11713,7 +11696,6 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, DescribeKeyWordSets_gurax, processor_g
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->DescribeKeyWordSets();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -12627,7 +12609,6 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetLineText_gurax, processor_gurax, ar
 	long n = args_gurax.PickNumber<long>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetLineText(n);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -12973,7 +12954,6 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetRange_gurax, processor_gurax, argum
 	long to = args_gurax.PickNumber<long>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetRange(from, to);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -12991,7 +12971,6 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetStringSelection_gurax, processor_gu
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetStringSelection();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -13009,7 +12988,6 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetValue_gurax, processor_gurax, argum
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetValue();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -13103,7 +13081,6 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetHint_gurax, processor_gurax, argume
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetHint();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 

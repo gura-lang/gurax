@@ -404,7 +404,6 @@ Gurax_ImplementMethodEx(wxListBox, GetString_gurax, processor_gurax, argument_gu
 	unsigned int n = args_gurax.PickNumber<unsigned int>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetString(n);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 

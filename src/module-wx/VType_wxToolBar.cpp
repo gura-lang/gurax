@@ -479,7 +479,6 @@ Gurax_ImplementMethodEx(wxToolBar, GetToolLongHelp_gurax, processor_gurax, argum
 	int toolId = args_gurax.PickNumber<int>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetToolLongHelp(toolId);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -556,7 +555,6 @@ Gurax_ImplementMethodEx(wxToolBar, GetToolShortHelp_gurax, processor_gurax, argu
 	int toolId = args_gurax.PickNumber<int>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetToolShortHelp(toolId);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 

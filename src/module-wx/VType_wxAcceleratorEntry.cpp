@@ -201,7 +201,6 @@ Gurax_ImplementMethodEx(wxAcceleratorEntry, ToString_gurax, processor_gurax, arg
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->ToString();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -219,7 +218,6 @@ Gurax_ImplementMethodEx(wxAcceleratorEntry, ToRawString_gurax, processor_gurax, 
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->ToRawString();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 

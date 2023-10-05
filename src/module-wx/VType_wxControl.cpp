@@ -116,7 +116,6 @@ Gurax_ImplementMethodEx(wxControl, GetLabel_gurax, processor_gurax, argument_gur
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetLabel();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -134,7 +133,6 @@ Gurax_ImplementMethodEx(wxControl, GetLabelText_gurax, processor_gurax, argument
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetLabelText();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 

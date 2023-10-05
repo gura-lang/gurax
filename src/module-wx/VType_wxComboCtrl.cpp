@@ -343,7 +343,6 @@ Gurax_ImplementMethodEx(wxComboCtrl, GetHint_gurax, processor_gurax, argument_gu
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetHint();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -485,7 +484,6 @@ Gurax_ImplementMethodEx(wxComboCtrl, GetValue_gurax, processor_gurax, argument_g
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetValue();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -1301,7 +1299,6 @@ Gurax_ImplementMethodEx(wxComboCtrl, GetRange_gurax, processor_gurax, argument_g
 	long to = args_gurax.PickNumber<long>();
 	// Function body
 	wxString rtn = pEntity_gurax->GetRange(from, to);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -1345,7 +1342,6 @@ Gurax_ImplementMethodEx(wxComboCtrl, GetStringSelection_gurax, processor_gurax, 
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetStringSelection();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 

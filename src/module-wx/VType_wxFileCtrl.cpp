@@ -138,7 +138,6 @@ Gurax_ImplementMethodEx(wxFileCtrl, GetDirectory_gurax, processor_gurax, argumen
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetDirectory();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -156,7 +155,6 @@ Gurax_ImplementMethodEx(wxFileCtrl, GetFilename_gurax, processor_gurax, argument
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetFilename();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -191,7 +189,6 @@ Gurax_ImplementMethodEx(wxFileCtrl, GetPath_gurax, processor_gurax, argument_gur
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetPath();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
@@ -209,7 +206,6 @@ Gurax_ImplementMethodEx(wxFileCtrl, GetWildcard_gurax, processor_gurax, argument
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	wxString rtn = pEntity_gurax->GetWildcard();
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 

@@ -152,7 +152,6 @@ Gurax_ImplementMethodEx(wxColour, GetAsString_gurax, processor_gurax, argument_g
 	long flags = flags_validFlag? args_gurax.PickNumber<long>() : wxC2S_CSS_SYNTAX;
 	// Function body
 	wxString rtn = pEntity_gurax->GetAsString(flags);
-	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
