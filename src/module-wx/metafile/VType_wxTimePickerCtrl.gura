@@ -15,9 +15,9 @@ TimePickerCtrl = Class(Control) {
 		sec->SetValue(new Value_Number(sec_));
 		return new Value_Bool(rtn);
 		'''
-	//GetValue():virtual as DateTime
+	GetValue():const:virtual as DateTime
 	SetTime(hour as int, min as int, sec as int) as bool
-	//SetValue(dt as const_DateTime_r):virtual as void
+	SetValue(dt as const_DateTime_r):virtual as void
 } %% R'''
 # Overview
 

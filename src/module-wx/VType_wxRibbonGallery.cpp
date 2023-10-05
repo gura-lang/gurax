@@ -283,27 +283,6 @@ Gurax_ImplementMethodEx(wxRibbonGallery, SetItemClientData_gurax, processor_gura
 	return Gurax::Value::nil();
 }
 
-// wx.RibbonGallery#GetItemClientData(item as wx.RibbonGalleryItem)
-Gurax_DeclareMethodAlias(wxRibbonGallery, GetItemClientData_gurax, "GetItemClientData")
-{
-	Declare(VTYPE_Pointer, Flag::None);
-	DeclareArg("item", VTYPE_wxRibbonGalleryItem, ArgOccur::Once, ArgFlag::None);
-}
-
-Gurax_ImplementMethodEx(wxRibbonGallery, GetItemClientData_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxRibbonGalleryItem& value_item = args_gurax.Pick<Value_wxRibbonGalleryItem>();
-	const wxRibbonGalleryItem* item = value_item.GetEntityPtr();
-	// Function body
-	
-}
-
 // wx.RibbonGallery#SetSelection(item as wx.RibbonGalleryItem)
 Gurax_DeclareMethodAlias(wxRibbonGallery, SetSelection_gurax, "SetSelection")
 {
@@ -538,7 +517,6 @@ void VType_wxRibbonGallery::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxRibbonGallery, SetItemClientObject_gurax));
 	Assign(Gurax_CreateMethod(wxRibbonGallery, GetItemClientObject_gurax));
 	Assign(Gurax_CreateMethod(wxRibbonGallery, SetItemClientData_gurax));
-	Assign(Gurax_CreateMethod(wxRibbonGallery, GetItemClientData_gurax));
 	Assign(Gurax_CreateMethod(wxRibbonGallery, SetSelection_gurax));
 	Assign(Gurax_CreateMethod(wxRibbonGallery, GetSelection_gurax));
 	Assign(Gurax_CreateMethod(wxRibbonGallery, GetHoveredItem_gurax));

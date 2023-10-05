@@ -40,6 +40,10 @@ public:
 		using wxTimePickerCtrl::wxTimePickerCtrl;
 	public:
 		EntityCore core_gurax;
+		virtual wxDateTime GetValue() const override;
+		virtual void SetValue(const wxDateTime& dt) override;
+		wxDateTime public_GetValue() const { return wxTimePickerCtrl::GetValue(); }
+		void public_SetValue(const wxDateTime& dt) { wxTimePickerCtrl::SetValue(dt); }
 	};
 public:
 	static VType& vtype;

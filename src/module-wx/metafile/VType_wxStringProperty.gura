@@ -4,8 +4,8 @@
 StringProperty = Class(PGProperty) {
 	@include['wx/propgrid/props.h']
 	__init__(label as const_String_r = wxPG_LABEL, name as const_String_r = wxPG_LABEL, value as const_String_r = wxEmptyString)
-	//ValueToString(value as Variant_r, argFlags as int = 0):virtual as String
-	//StringToValue(variant as Variant_r, text as const_String_r, argFlags as int = 0):virtual as bool
+	//ValueToString(value as Variant_r, argFlags as int = 0):virtual as wxString
+	//StringToValue(variant as Variant_r, text as const_String_r, argFlags as int = 0):const:virtual as bool
 	//DoSetAttribute(name as const_String_r, value as Variant_r):virtual as bool
 	//OnSetValue():virtual as void
 } %% R'''

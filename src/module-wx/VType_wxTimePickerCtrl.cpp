@@ -149,6 +149,24 @@ Gurax_ImplementMethodEx(wxTimePickerCtrl, GetTime_gurax, processor_gurax, argume
 	return new Value_Bool(rtn);
 }
 
+// wx.TimePickerCtrl#GetValue() {block?}
+Gurax_DeclareMethodAlias(wxTimePickerCtrl, GetValue_gurax, "GetValue")
+{
+	Declare(VTYPE_wxDateTime, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxTimePickerCtrl, GetValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = dynamic_cast<Value_wxTimePickerCtrl::EntityT*>(valueThis_gurax.GetEntityPtr());
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateTime(
+		pEntity_gurax->GetValue()));
+}
+
 // wx.TimePickerCtrl#SetTime(hour as Number, min as Number, sec as Number)
 Gurax_DeclareMethodAlias(wxTimePickerCtrl, SetTime_gurax, "SetTime")
 {
@@ -174,6 +192,28 @@ Gurax_ImplementMethodEx(wxTimePickerCtrl, SetTime_gurax, processor_gurax, argume
 	return new Gurax::Value_Bool(rtn);
 }
 
+// wx.TimePickerCtrl#SetValue(dt as wx.DateTime)
+Gurax_DeclareMethodAlias(wxTimePickerCtrl, SetValue_gurax, "SetValue")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("dt", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxTimePickerCtrl, SetValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = dynamic_cast<Value_wxTimePickerCtrl::EntityT*>(valueThis_gurax.GetEntityPtr());
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxDateTime& value_dt = args_gurax.Pick<Value_wxDateTime>();
+	const wxDateTime& dt = value_dt.GetEntity();
+	// Function body
+	pEntity_gurax->SetValue(dt);
+	return Gurax::Value::nil();
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -193,7 +233,9 @@ void VType_wxTimePickerCtrl::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxTimePickerCtrl, Create_gurax));
 	Assign(Gurax_CreateMethod(wxTimePickerCtrl, GetTime_gurax));
+	Assign(Gurax_CreateMethod(wxTimePickerCtrl, GetValue_gurax));
 	Assign(Gurax_CreateMethod(wxTimePickerCtrl, SetTime_gurax));
+	Assign(Gurax_CreateMethod(wxTimePickerCtrl, SetValue_gurax));
 }
 
 //------------------------------------------------------------------------------
@@ -209,5 +251,57 @@ String Value_wxTimePickerCtrl::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Value_wxTimePickerCtrl::EntityT
 //------------------------------------------------------------------------------
+wxDateTime Value_wxTimePickerCtrl::EntityT::GetValue() const
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("GetValue");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		// (none)
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Return Value
+		if (!pValueRtn->IsType(VTYPE_wxDateTime)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_wxDateTime.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
+		return Value_wxDateTime::GetEntity(*pValueRtn);
+	} while (0);
+	return public_GetValue();
+}
+
+void Value_wxTimePickerCtrl::EntityT::SetValue(const wxDateTime& dt)
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("SetValue");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
+		if (!args_gurax.FeedValue(new Value_wxDateTime(dt))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		return;
+	} while (0);
+	public_SetValue(dt);
+}
 
 Gurax_EndModuleScope(wx)
