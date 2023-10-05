@@ -661,7 +661,8 @@ Gurax_ImplementMethodEx(wxVListBox, OnMeasureItem_gurax, processor_gurax, argume
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	size_t n = args_gurax.PickNumber<size_t>();
 	// Function body
-	return 0;
+	wxCoord rtn = pEntity_gurax->OnMeasureItem(n);
+	return new Gurax::Value_Number(rtn);
 }
 
 //-----------------------------------------------------------------------------

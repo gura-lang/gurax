@@ -653,7 +653,7 @@ Gurax_ImplementMethodEx(wx${className}, ${funcInfo.name}_gurax, processor_gurax,
 	${funcInfo.argInfoTbl::ComposeImplementation()}
 	${end}
 	// Function body
-	${if (funcInfo.tmplFunctionBody)}
+	${if (funcInfo.tmplFunctionBody && !funcInfo.pureFlag)}
 	${funcInfo.tmplFunctionBody.Eval()}
 	${elsif (funcInfo.returnThisFlag)}
 	pEntity_gurax->${funcInfo.ComposeCaller()};

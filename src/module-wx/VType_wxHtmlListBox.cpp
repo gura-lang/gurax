@@ -136,6 +136,28 @@ Gurax_ImplementMethodEx(wxHtmlListBox, GetSelectedTextColour_gurax, processor_gu
 		pEntity_gurax->GetSelectedTextColour(colFg)));
 }
 
+// wx.HtmlListBox#OnGetItem(n as Number)
+Gurax_DeclareMethodAlias(wxHtmlListBox, OnGetItem_gurax, "OnGetItem")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlListBox, OnGetItem_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = dynamic_cast<Value_wxHtmlListBox::EntityT*>(valueThis_gurax.GetEntityPtr());
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t n = args_gurax.PickNumber<size_t>();
+	// Function body
+	wxString rtn = pEntity_gurax->OnGetItem(n);
+	//return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+	return new Gurax::Value_String(rtn.utf8_str().data());
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -157,6 +179,7 @@ void VType_wxHtmlListBox::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxHtmlListBox, OnLinkClicked_gurax));
 	Assign(Gurax_CreateMethod(wxHtmlListBox, GetSelectedTextBgColour_gurax));
 	Assign(Gurax_CreateMethod(wxHtmlListBox, GetSelectedTextColour_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlListBox, OnGetItem_gurax));
 }
 
 //------------------------------------------------------------------------------
@@ -263,6 +286,38 @@ wxColour Value_wxHtmlListBox::EntityT::GetSelectedTextColour(const wxColour& col
 		return Value_wxColour::GetEntity(*pValueRtn);
 	} while (0);
 	return public_GetSelectedTextColour(colFg);
+}
+
+wxString Value_wxHtmlListBox::EntityT::OnGetItem(size_t n) const
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnGetItem");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(n))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Return Value
+		if (!pValueRtn->IsType(VTYPE_String)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_String.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
+		return Value_String::GetString(*pValueRtn);
+	} while (0);
+	return public_OnGetItem(n);
 }
 
 Gurax_EndModuleScope(wx)
