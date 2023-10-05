@@ -725,14 +725,6 @@ const Expr::TypeInfo Expr_UnaryOp::typeInfo(TypeId::UnaryOp, "UnaryOp");
 void Expr_UnaryOp::Compose(Composer& composer)
 {
 	GetOperator()->ComposeUnary(composer, *this);								// [Result]
-#if 0
-	if (GetOperator()->GetRawFlag()) {
-		GetOperator()->ComposeUnary(composer, *this);							// [Result]
-	} else {
-		GetExprChild().ComposeOrNil(composer);									// [Any]
-		composer.Add_UnaryOp(GetOperator(), *this);								// [Result]
-	}
-#endif
 }
 
 void Expr_UnaryOp::ComposeWithinLister(Composer& composer)
@@ -820,15 +812,6 @@ const Expr::TypeInfo Expr_BinaryOp::typeInfo(TypeId::BinaryOp, "BinaryOp");
 void Expr_BinaryOp::Compose(Composer& composer)
 {
 	GetOperator()->ComposeBinary(composer, *this);								// [Result]
-#if 0
-	if (GetOperator()->GetRawFlag()) {
-		GetOperator()->ComposeBinary(composer, *this);
-	} else {
-		GetExprLeft().ComposeOrNil(composer);									// [Left]
-		GetExprRight().ComposeOrNil(composer);									// [Left Right]
-		composer.Add_BinaryOp(GetOperator(), *this);							// [Result]
-	}
-#endif
 }
 
 void Expr_BinaryOp::ComposeWithinLister(Composer& composer)
