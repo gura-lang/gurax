@@ -101,11 +101,15 @@ PUnit* PUnitFactory_Value::Create(bool discardValueFlag)
 // Stack View: [] -> [Any] (continue)
 //                -> []    (discard)
 //------------------------------------------------------------------------------
-template<bool discardValueFlag>
-void PUnit_Lookup<discardValueFlag>::Exec(Processor& processor) const
+template<bool discardValueFlag, bool outerFlag>
+void PUnit_Lookup<discardValueFlag, outerFlag>::Exec(Processor& processor) const
 {
-	Frame& frame = processor.GetFrameCur();
-	RefPtr<Value> pValue(frame.Retrieve(GetSymbol()));
+	Frame* pFrame = &processor.GetFrameCur();
+	if constexpr (outerFlag) {
+		Frame* pFrameTmp = pFrame->GetFrameOuter();
+		if (pFrameTmp) pFrame = pFrameTmp;
+	}
+	RefPtr<Value> pValue(pFrame->Retrieve(GetSymbol()));
 	if (!pValue) {
 		Error::Issue(ErrorType::ValueError, "symbol '%s' is not found", GetSymbol()->GetName());
 		processor.ErrorDone();
@@ -115,11 +119,11 @@ void PUnit_Lookup<discardValueFlag>::Exec(Processor& processor) const
 	processor.SetPUnitCur(_GetPUnitCont());
 }
 
-template<bool discardValueFlag>
-String PUnit_Lookup<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+template<bool discardValueFlag, bool outerFlag>
+String PUnit_Lookup<discardValueFlag, outerFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("Lookup(`%s)", GetSymbol()->GetName());
+	str.Format("Lookup(`%s%s)", GetSymbol()->GetName(), outerFlag? ",outerFlag" : "");
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -127,9 +131,17 @@ String PUnit_Lookup<discardValueFlag>::ToString(const StringStyle& ss, int seqId
 PUnit* PUnitFactory_Lookup::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_Lookup<true>(_pSymbol, _pExprSrc.Reference());
+		if (_outerFlag) {
+			_pPUnitCreated = new PUnit_Lookup<true, true>(_pSymbol, _pExprSrc.Reference());
+		} else {
+			_pPUnitCreated = new PUnit_Lookup<true, false>(_pSymbol, _pExprSrc.Reference());
+		}
 	} else {
-		_pPUnitCreated = new PUnit_Lookup<false>(_pSymbol, _pExprSrc.Reference());
+		if (_outerFlag) {
+			_pPUnitCreated = new PUnit_Lookup<false, true>(_pSymbol, _pExprSrc.Reference());
+		} else {
+			_pPUnitCreated = new PUnit_Lookup<false, false>(_pSymbol, _pExprSrc.Reference());
+		}
 	}
 	return _pPUnitCreated;
 }
@@ -264,7 +276,7 @@ template<bool discardValueFlag, bool externFlag>
 String PUnit_AssignToSymbol<discardValueFlag, externFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("AssignToSymbol(`%s)", GetSymbol()->GetName());
+	str.Format("AssignToSymbol(`%s%s)", GetSymbol()->GetName(), externFlag? ",externFlag" : "");
 	AppendInfoToString(str, ss);
 	return str;
 }

@@ -533,8 +533,6 @@ void Expr_Identifier::Compose(Composer& composer)
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(__line__))) {
 		composer.Add_Value(new Value_Number(GetLineNoTop()), *this);			// [Value]
 		return;
-	} else if (pSymbol->IsIdentical(Gurax_Symbol(__outer__))) {
-		
 	}
 	RefPtr<Value> pValue(Basement::Inst.GetFrame().Retrieve(pSymbol));
 	if (pValue && pValue->IsType(VTYPE_Function)) {
@@ -549,7 +547,7 @@ void Expr_Identifier::Compose(Composer& composer)
 			}
 		}
 	}
-	composer.Add_Lookup(pSymbol, *this);										// [Value]
+	composer.Add_Lookup(pSymbol, false, *this);									// [Value]
 }
 
 void Expr_Identifier::ComposeWithinValueAssignment(Composer& composer, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol)
@@ -571,7 +569,7 @@ void Expr_Identifier::ComposeWithinAssignment(
 	bool externFlag = false;
 	if (!ParseAttr(&externFlag)) return;
 	if (pOp) {
-		composer.Add_Lookup(GetSymbol(), *this);								// [Any]
+		composer.Add_Lookup(GetSymbol(), false, *this);							// [Any]
 		exprAssigned.ComposeOrNil(composer);									// [Any Right]
 		composer.Add_BinaryOp(pOp, *this);										// [Assigned]
 	} else {

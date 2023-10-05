@@ -135,8 +135,8 @@ public:
 	void Add_Value(Value* pValue, const Expr& exprSrc) {
 		SetFactory(new PUnitFactory_Value(pValue, exprSrc.Reference()));
 	}
-	void Add_Lookup(const Symbol* pSymbol, const Expr& exprSrc) {
-		SetFactory(new PUnitFactory_Lookup(pSymbol, exprSrc.Reference()));
+	void Add_Lookup(const Symbol* pSymbol, bool outerFlag, const Expr& exprSrc) {
+		SetFactory(new PUnitFactory_Lookup(pSymbol, outerFlag, exprSrc.Reference()));
 	}
 	void Add_Referencer_Lookup(const Symbol* pSymbol, const Expr& exprSrc) {
 		SetFactory(new PUnitFactory_Referencer_Lookup(pSymbol, exprSrc.Reference()));

@@ -15,7 +15,7 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(DateTime);
 	using PUnit_Value_ = PUnit_Value<false>;
 	PrintSizeOf(PUnit_Value_);
-	using PUnit_Lookup_ = PUnit_Lookup<false>;
+	using PUnit_Lookup_ = PUnit_Lookup<false, false>;
 	PrintSizeOf(PUnit_Lookup_);
 	using PUnit_AssignToSymbol_ = PUnit_AssignToSymbol<false, false>;
 	PrintSizeOf(PUnit_AssignToSymbol_);

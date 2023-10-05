@@ -186,7 +186,7 @@ public://_pExprSrc\ ? (sizeof\([^ \)] + \)). +
 //------------------------------------------------------------------------------
 // PUnit_Lookup
 //------------------------------------------------------------------------------
-template<bool discardValueFlag>
+template<bool discardValueFlag, bool outerFlag>
 class GURAX_DLLDECLARE PUnit_Lookup : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -215,11 +215,12 @@ public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_Lookup");
 private:
 	const Symbol* _pSymbol;
+	bool _outerFlag;
 public:
-	PUnitFactory_Lookup(const Symbol* pSymbol, Expr* pExprSrc) :
-		PUnitFactory(pExprSrc), _pSymbol(pSymbol) {}
+	PUnitFactory_Lookup(const Symbol* pSymbol, bool outerFlag, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _outerFlag(outerFlag) {}
 	virtual size_t GetPUnitSize() const override {
-		return sizeof(PUnit_Lookup<false>);
+		return sizeof(PUnit_Lookup<false, false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
