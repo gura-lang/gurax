@@ -44,10 +44,76 @@ ${help.ComposeMethodHelp(wx.HtmlListBox, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.HtmlListBox(parent as wx.Window, id? as Number, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
+Gurax_DeclareConstructorAlias(HtmlListBox_gurax, "HtmlListBox")
+{
+	Declare(VTYPE_wxHtmlListBox, Flag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementConstructorEx(HtmlListBox_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* parent = value_parent.GetEntityPtr();
+	bool id_validFlag = args_gurax.IsValid();
+	wxWindowID id = id_validFlag? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
+	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
+	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxHtmlListBoxNameStr;
+	// Function body
+	auto pEntity_gurax = new Value_wxHtmlListBox::EntityT(parent, id, pos, size, style, name);
+	RefPtr<Value_wxHtmlListBox> pValue_gurax(new Value_wxHtmlListBox(pEntity_gurax));
+	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.HtmlListBox#Create(parent as wx.Window, id? as Number, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String)
+Gurax_DeclareMethodAlias(wxHtmlListBox, Create_gurax, "Create")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlListBox, Create_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* parent = value_parent.GetEntityPtr();
+	bool id_validFlag = args_gurax.IsValid();
+	wxWindowID id = id_validFlag? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
+	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
+	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxHtmlListBoxNameStr;
+	// Function body
+	bool rtn = pEntity_gurax->Create(parent, id, pos, size, style, name);
+	return new Gurax::Value_Bool(rtn);
+}
+
 // wx.HtmlListBox#GetFileSystem() {block?}
 Gurax_DeclareMethodAlias(wxHtmlListBox, GetFileSystem_gurax, "GetFileSystem")
 {
@@ -136,6 +202,27 @@ Gurax_ImplementMethodEx(wxHtmlListBox, GetSelectedTextColour_gurax, processor_gu
 		pEntity_gurax->GetSelectedTextColour(colFg)));
 }
 
+// wx.HtmlListBox#OnGetItemMarkup(n as Number)
+Gurax_DeclareMethodAlias(wxHtmlListBox, OnGetItemMarkup_gurax, "OnGetItemMarkup")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlListBox, OnGetItemMarkup_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = dynamic_cast<Value_wxHtmlListBox::EntityT*>(valueThis_gurax.GetEntityPtr());
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t n = args_gurax.PickNumber<size_t>();
+	// Function body
+	wxString rtn = pEntity_gurax->OnGetItemMarkup(n);
+	return new Gurax::Value_String(rtn.utf8_str().data());
+}
+
 // wx.HtmlListBox#OnGetItem(n as Number)
 Gurax_DeclareMethodAlias(wxHtmlListBox, OnGetItem_gurax, "OnGetItem")
 {
@@ -172,12 +259,14 @@ void VType_wxHtmlListBox::DoPrepare(Frame& frameOuter)
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
-	Declare(VTYPE_wxVListBox, Flag::Mutable);
+	Declare(VTYPE_wxVListBox, Flag::Mutable, Gurax_CreateConstructor(HtmlListBox_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxHtmlListBox, Create_gurax));
 	Assign(Gurax_CreateMethod(wxHtmlListBox, GetFileSystem_gurax));
 	Assign(Gurax_CreateMethod(wxHtmlListBox, OnLinkClicked_gurax));
 	Assign(Gurax_CreateMethod(wxHtmlListBox, GetSelectedTextBgColour_gurax));
 	Assign(Gurax_CreateMethod(wxHtmlListBox, GetSelectedTextColour_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlListBox, OnGetItemMarkup_gurax));
 	Assign(Gurax_CreateMethod(wxHtmlListBox, OnGetItem_gurax));
 }
 
@@ -285,6 +374,38 @@ wxColour Value_wxHtmlListBox::EntityT::GetSelectedTextColour(const wxColour& col
 		return Value_wxColour::GetEntity(*pValueRtn);
 	} while (0);
 	return public_GetSelectedTextColour(colFg);
+}
+
+wxString Value_wxHtmlListBox::EntityT::OnGetItemMarkup(size_t n) const
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnGetItemMarkup");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(n))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Return Value
+		if (!pValueRtn->IsType(VTYPE_String)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_String.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
+		return Value_String::GetString(*pValueRtn);
+	} while (0);
+	return public_OnGetItemMarkup(n);
 }
 
 wxString Value_wxHtmlListBox::EntityT::OnGetItem(size_t n) const

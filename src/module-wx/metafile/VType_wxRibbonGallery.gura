@@ -15,7 +15,7 @@ RibbonGallery = Class(RibbonControl) {
 	SetItemClientObject(item as RibbonGalleryItem_p, data as ClientData_p) as void
 	GetItemClientObject(item as const_RibbonGalleryItem_p) as ClientData_p
 	SetItemClientData(item as RibbonGalleryItem_p, data as void_p) as void
-	GetItemClientData(item as const_RibbonGalleryItem_p) as void_p
+	//GetItemClientData(item as const_RibbonGalleryItem_p) as void_p
 	SetSelection(item as RibbonGalleryItem_p) as void
 	GetSelection() as RibbonGalleryItem_p
 	GetHoveredItem() as RibbonGalleryItem_p

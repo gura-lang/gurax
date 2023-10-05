@@ -43,10 +43,12 @@ public:
 		virtual void OnLinkClicked(size_t n, const wxHtmlLinkInfo& link) override;
 		virtual wxColour GetSelectedTextBgColour(const wxColour& colBg) const override;
 		virtual wxColour GetSelectedTextColour(const wxColour& colFg) const override;
+		virtual wxString OnGetItemMarkup(size_t n) const override;
 		virtual wxString OnGetItem(size_t n) const override;
 		void public_OnLinkClicked(size_t n, const wxHtmlLinkInfo& link) { wxHtmlListBox::OnLinkClicked(n, link); }
 		wxColour public_GetSelectedTextBgColour(const wxColour& colBg) const { return wxHtmlListBox::GetSelectedTextBgColour(colBg); }
 		wxColour public_GetSelectedTextColour(const wxColour& colFg) const { return wxHtmlListBox::GetSelectedTextColour(colFg); }
+		wxString public_OnGetItemMarkup(size_t n) const { return wxHtmlListBox::OnGetItemMarkup(n); }
 		wxString public_OnGetItem(size_t n) const { return wxEmptyString; }
 	};
 public:
