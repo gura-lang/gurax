@@ -24,36 +24,18 @@ MyFrame = class(wx.Frame) {
 					(^sizer).Add(sizer, wx.SizerFlags(1).Expand())
 					sizer.AddGrowableCol(1, 1)
 					sizer.AddGrowableRow(1, 1)
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello1'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello2'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello3'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello4'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello5'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello6'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello7'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello8'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello9'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello10'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello11'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello12'), wx.SizerFlags().Expand())
+					repeat (12) {|i|
+						sizer.Add(wx.Button(panel, wx.ID_ANY, Format('hello%d', i + 1)), wx.SizerFlags().Expand())
+					}
 				}
 				sizer.Add(wx.StaticText(panel, wx.ID_ANY, 'FlexGridSizer(3, wx.Size(8, 2))'), wx.SizerFlags().Border(wx.TOP, 12))
 				wx.FlexGridSizer(3, wx.Size(8, 2)) {|sizer|
 					(^sizer).Add(sizer, wx.SizerFlags(1).Expand())
 					sizer.AddGrowableCol(1, 1)
 					sizer.AddGrowableRow(1, 1)
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello1'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello2'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello3'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello4'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello5'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello6'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello7'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello8'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello9'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello10'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello11'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello12'), wx.SizerFlags().Expand())
+					repeat (12) {|i|
+						sizer.Add(wx.Button(panel, wx.ID_ANY, Format('hello%d', i + 1)), wx.SizerFlags().Expand())
+					}
 				}
 			}
 			wx.BoxSizer(wx.VERTICAL) {|sizer|
@@ -63,36 +45,18 @@ MyFrame = class(wx.Frame) {
 					(^sizer).Add(sizer, wx.SizerFlags(1).Expand())
 					sizer.AddGrowableCol(1, 1)
 					sizer.AddGrowableRow(1, 1)
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello1'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello2'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello3'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello4'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello5'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello6'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello7'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello8'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello9'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello10'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello11'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello12'), wx.SizerFlags().Expand())
+					repeat (12) {|i|
+						sizer.Add(wx.Button(panel, wx.ID_ANY, Format('hello%d', i + 1)), wx.SizerFlags().Expand())
+					}
 				}
 				sizer.Add(wx.StaticText(panel, wx.ID_ANY, 'FlexGridSizer(3, 4, wx.Size(8, 2))'), wx.SizerFlags().Border(wx.TOP, 12))
 				wx.FlexGridSizer(3, 4, wx.Size(8, 2)) {|sizer|
 					(^sizer).Add(sizer, wx.SizerFlags(1).Expand())
 					sizer.AddGrowableCol(1, 1)
 					sizer.AddGrowableRow(1, 1)
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello1'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello2'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello3'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello4'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello5'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello6'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello7'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello8'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello9'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello10'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello11'), wx.SizerFlags().Expand())
-					sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello12'), wx.SizerFlags().Expand())
+					repeat (12) {|i|
+						sizer.Add(wx.Button(panel, wx.ID_ANY, Format('hello%d', i + 1)), wx.SizerFlags().Expand())
+					}
 				}
 			}
 		}
