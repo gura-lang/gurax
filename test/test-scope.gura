@@ -41,3 +41,14 @@ TestCase('extern attribute') {
 	var = 'original', Tester(`f3()), Println('var = ', var)
 	var = 'original', Tester(`f4()), Println('var = ', var)
 }
+
+TestCase('Outer Scope') {
+	a = [1, 2, 3, 4]
+	scope {
+		a = [5, 6, 7, 8, 9, 10]
+		Printf('a=%s, a.len=%d\n', a, a.len):noMap
+		Printf('^a=%s, (^a).len=%d\n', ^a, (^a).len):noMap
+		(^a)[0] = 9
+	}
+	Printf('a=%s, a.len=%d\n', a, a.len):noMap
+}

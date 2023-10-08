@@ -443,6 +443,16 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// Operator_PreXor
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Operator_PreXor : public Operator {
+public:
+	Operator_PreXor() : Operator(OpStyle::Unary, "PreXor", "^", OpType::PreXor, Flag::Raw) {}
+public:
+	virtual void ComposeUnary(Composer& composer, Expr_UnaryOp& expr) const override;
+};
+
+//------------------------------------------------------------------------------
 // Operator_Quote
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Operator_Quote : public Operator {

@@ -24,7 +24,7 @@ Operator* Operator::PreAnd			= new Operator_PreAnd();
 Operator* Operator::PreMod			= new Operator(OpStyle::Unary,			"PreMod",		"%",			OpType::PreMod);
 Operator* Operator::PreModMod		= new Operator(OpStyle::Unary,			"PreModMod",	"%%",			OpType::PreModMod);
 Operator* Operator::PreMul			= new Operator(OpStyle::Unary,			"PreMul",		"*",			OpType::PreMul);
-Operator* Operator::PreXor			= new Operator(OpStyle::Unary,			"PreXor",		"^",			OpType::PreXor);
+Operator* Operator::PreXor			= new Operator_PreXor();
 Operator* Operator::Quote			= new Operator_Quote();
 // Post-unary operators
 Operator* Operator::PostMod			= new Operator(OpStyle::UnaryPost,		"PostMod",		"%",			OpType::PostMod);
@@ -333,6 +333,20 @@ void Operator_PreAnd::ComposeUnary(Composer& composer, Expr_UnaryOp& expr) const
 {
 	Expr& exprChild = expr.GetExprChild();
 	exprChild.ComposeReferencer(composer);										// [Result]
+}
+
+//------------------------------------------------------------------------------
+// Operator_PreXor
+//------------------------------------------------------------------------------
+void Operator_PreXor::ComposeUnary(Composer& composer, Expr_UnaryOp& expr) const
+{
+	Expr& exprChild = expr.GetExprChild();
+	if (!exprChild.IsType<Expr_Identifier>()) {
+		Error::IssueWith(ErrorType::SyntaxError, expr, "identifier is expected");
+		return;
+	}
+	const Symbol* pSymbol = dynamic_cast<Expr_Identifier&>(exprChild).GetSymbol();
+	composer.Add_Lookup(pSymbol, true, exprChild);
 }
 
 //------------------------------------------------------------------------------

@@ -58,13 +58,13 @@ private:
 	template<typename T_TokenP, typename... Args>
 	void IssueError(const ErrorType& errorType, T_TokenP& pToken, const char* format, const Args&... args) {
 		Error::IssueAt(errorType, _pTokenizer->GetPathNameSrcReferable().Reference(),
-					   pToken->GetLineNoTop(), pToken->GetLineNoBtm(), format, args...);
+					pToken->GetLineNoTop(), pToken->GetLineNoBtm(), format, args...);
 	}
 	template<typename T_TokenP, typename... Args>
 	void IssueError(const ErrorType& errorType, T_TokenP& pTokenTop, T_TokenP& pTokenBtm,
 					const char* format, const Args&... args) {
 		Error::IssueAt(errorType, _pTokenizer->GetPathNameSrcReferable().Reference(),
-					   pTokenTop->GetLineNoTop(), pTokenBtm->GetLineNoBtm(), format, args...);
+					pTokenTop->GetLineNoTop(), pTokenBtm->GetLineNoBtm(), format, args...);
 	}
 public:
 	virtual void FeedToken(RefPtr<Token> pToken) override;
