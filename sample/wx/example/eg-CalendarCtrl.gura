@@ -17,9 +17,8 @@ MyFrame = class(wx.Frame) {
 PanelTop = class(wx.Panel) {
 	__init__(parent as wx.Window) = {|parent|
 		sizerTop = wx.BoxSizer(wx.HORIZONTAL)
-		wx.GenericCalendarCtrl(this, wx.ID_ANY) {|ctrl|
-		//wx.Button(this, wx.ID_ANY, 'aaaa') {|ctrl|
-			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
+		wx.CalendarCtrl(this, wx.ID_ANY) {|ctrl|
+			sizerTop.Add(ctrl, wx.SizerFlags().Expand())
 		}
 		this.SetSizer(sizerTop)
 	}
