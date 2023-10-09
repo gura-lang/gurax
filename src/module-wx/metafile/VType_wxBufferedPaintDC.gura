@@ -3,6 +3,45 @@
 //==============================================================================
 BufferedPaintDC = Class(DC) {
 	@include['wx/dcbuffer.h']
+	__init__(args* as any) = \
+		R'''
+		// wx.BufferedPaintDC(window as Window_p, buffer as Bitmap_r, style as int = wxBUFFER_CLIENT_AREA)
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("window", VTYPE_wxWindow);
+				pDeclCallable->DeclareArg("buffer", VTYPE_wxBitmap);
+				pDeclCallable->DeclareArg("style", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxWindow* window = args.Pick<Value_wxWindow>().GetEntityPtr();
+			wxBitmap& buffer = args.Pick<Value_wxBitmap>().GetEntity();
+			int style = args.IsValid()? args.PickNumber<int>() : wxBUFFER_CLIENT_AREA;
+			return new Value_wxBufferedPaintDC(new wxBufferedPaintDC(window, buffer, style));
+		} while (0);
+		Error::ClearIssuedFlag();
+		// wx.BufferedPaintDC(window as Window_p, style as int = wxBUFFER_CLIENT_AREA)
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("window", VTYPE_wxWindow);
+				pDeclCallable->DeclareArg("style", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxWindow* window = args.Pick<Value_wxWindow>().GetEntityPtr();
+			int style = args.IsValid()? args.PickNumber<int>() : wxBUFFER_CLIENT_AREA;
+			return new Value_wxBufferedPaintDC(new wxBufferedPaintDC(window, style));
+		} while (0);
+		return Value::nil();
+		'''
 } %% R'''
 # Overview
 

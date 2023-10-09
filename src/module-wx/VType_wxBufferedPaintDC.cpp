@@ -44,6 +44,57 @@ ${help.ComposeMethodHelp(wx.BufferedPaintDC, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.BufferedPaintDC(args* as Any) {block?}
+Gurax_DeclareConstructorAlias(BufferedPaintDC_gurax, "BufferedPaintDC")
+{
+	Declare(VTYPE_wxBufferedPaintDC, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementConstructorEx(BufferedPaintDC_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const Gurax::ValueList& args = args_gurax.PickList();
+	// Function body
+	// wx.BufferedPaintDC(window as Window_p, buffer as Bitmap_r, style as int = wxBUFFER_CLIENT_AREA)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("window", VTYPE_wxWindow);
+			pDeclCallable->DeclareArg("buffer", VTYPE_wxBitmap);
+			pDeclCallable->DeclareArg("style", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxWindow* window = args.Pick<Value_wxWindow>().GetEntityPtr();
+		wxBitmap& buffer = args.Pick<Value_wxBitmap>().GetEntity();
+		int style = args.IsValid()? args.PickNumber<int>() : wxBUFFER_CLIENT_AREA;
+		return new Value_wxBufferedPaintDC(new wxBufferedPaintDC(window, buffer, style));
+	} while (0);
+	Error::ClearIssuedFlag();
+	// wx.BufferedPaintDC(window as Window_p, style as int = wxBUFFER_CLIENT_AREA)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("window", VTYPE_wxWindow);
+			pDeclCallable->DeclareArg("style", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxWindow* window = args.Pick<Value_wxWindow>().GetEntityPtr();
+		int style = args.IsValid()? args.PickNumber<int>() : wxBUFFER_CLIENT_AREA;
+		return new Value_wxBufferedPaintDC(new wxBufferedPaintDC(window, style));
+	} while (0);
+	return Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -64,7 +115,7 @@ void VType_wxBufferedPaintDC::DoPrepare(Frame& frameOuter)
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
-	Declare(VTYPE_wxDC, Flag::Mutable);
+	Declare(VTYPE_wxDC, Flag::Mutable, Gurax_CreateConstructor(BufferedPaintDC_gurax));
 	// Assignment of method
 }
 
