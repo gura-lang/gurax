@@ -34,6 +34,37 @@ public:
 protected:
 	wxComboPopup* _pEntity;
 public:
+	class EntityT : public wxComboPopup {
+	public:
+		using wxComboPopup::wxComboPopup;
+	public:
+		EntityCore core_gurax;
+		virtual bool Create(wxWindow* parent) override;
+		virtual void DestroyPopup() override;
+		virtual wxSize GetAdjustedSize(int minWidth, int prefHeight, int maxHeight) override;
+		virtual wxWindow* GetControl() override;
+		virtual wxString GetStringValue() const override;
+		virtual void Init() override;
+		virtual bool LazyCreate() override;
+		virtual void OnComboDoubleClick() override;
+		virtual void OnDismiss() override;
+		virtual void OnPopup() override;
+		virtual void PaintComboControl(wxDC& dc, const wxRect& rect) override;
+		virtual void SetStringValue(const wxString& value) override;
+		bool public_Create(wxWindow* parent) { return false; }
+		void public_DestroyPopup() { wxComboPopup::DestroyPopup(); }
+		wxSize public_GetAdjustedSize(int minWidth, int prefHeight, int maxHeight) { return wxComboPopup::GetAdjustedSize(minWidth, prefHeight, maxHeight); }
+		wxWindow* public_GetControl() { return nullptr; }
+		wxString public_GetStringValue() const { return ""; }
+		void public_Init() { wxComboPopup::Init(); }
+		bool public_LazyCreate() { return wxComboPopup::LazyCreate(); }
+		void public_OnComboDoubleClick() { wxComboPopup::OnComboDoubleClick(); }
+		void public_OnDismiss() { wxComboPopup::OnDismiss(); }
+		void public_OnPopup() { wxComboPopup::OnPopup(); }
+		void public_PaintComboControl(wxDC& dc, const wxRect& rect) { wxComboPopup::PaintComboControl(dc, rect); }
+		void public_SetStringValue(const wxString& value) { wxComboPopup::SetStringValue(value); }
+	};
+public:
 	static VType& vtype;
 public:
 	// Constructor

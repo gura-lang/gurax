@@ -3,8 +3,9 @@
 //==============================================================================
 ComboPopup = Class():loosePointer {
 	@include['wx/combo.h']
-	Create(parent as Window_p) as bool
-	DestroyPopup() as void
+	__init__()
+	Create(parent as Window_p):virtual:pure as bool = 'return false;'
+	DestroyPopup():virtual as void
 	Dismiss() as void
 	//FindItem(item as const_String_r, trueItem as String_p = NULL) as bool
 	FindItem(item as const_String_r, &trueItem?:nilRef as String) as bool = \
@@ -19,19 +20,19 @@ ComboPopup = Class():loosePointer {
 		}
 		return new Value_Bool(rtn);
 		'''
-	GetAdjustedSize(minWidth as int, prefHeight as int, maxHeight as int) as Size
+	GetAdjustedSize(minWidth as int, prefHeight as int, maxHeight as int):virtual as Size
 	GetComboCtrl() as ComboCtrl_p
-	GetControl() as Window_p
-	GetStringValue() as String
-	Init() as void
+	GetControl():virtual:pure as Window_p = 'return nullptr;'
+	GetStringValue():const:virtual:pure as wxString = 'return "";'
+	Init():virtual as void
 	IsCreated() as bool
-	LazyCreate() as bool
-	OnComboDoubleClick() as void
-	OnComboKeyEvent(event as KeyEvent_r) as void
-	OnDismiss() as void
-	OnPopup() as void
-	PaintComboControl(dc as DC_r, rect as const_Rect_r) as void
-	SetStringValue(value as const_String_r) as void
+	LazyCreate():virtual as bool
+	OnComboDoubleClick():virtual as void
+	//OnComboKeyEvent(event as KeyEvent_r):virtual as void
+	OnDismiss():virtual as void
+	OnPopup():virtual as void
+	PaintComboControl(dc as DC_r, rect as const_Rect_r):virtual as void
+	SetStringValue(value as const_wxString_r):virtual as void
 } %% R'''
 # Overview
 

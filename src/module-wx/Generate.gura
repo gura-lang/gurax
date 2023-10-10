@@ -57,6 +57,12 @@ r.DeclareType('wxString', 'wxString', 'String',
 	return new Gurax::Value_${this.vtype}(rtn.utf8_str().data());
 	''')
 
+r.DeclareType('const_wxString_r', 'const wxString&', 'String',
+	codePicker = R'''
+	const char* ${varName} = args_gurax.PickString();
+	'''
+	codeConvToGurax = 'new Gurax::Value_${this.vtype}(${varName}.utf8_str().data())')
+
 r.DeclareType('const_String_r', 'const char*', 'String',
 	codePicker = R'''
 	${this.cType} ${varName} = args_gurax.PickString();
@@ -940,6 +946,7 @@ ClassInfo = class {
 		classInfo && classInfo.loosePointerFlag
 	}
 	EvalTmplConstructorImplementation(className as String, funcInfo as cbridge.FuncInfo):map = {
+		hasVirtualFlag = this.funcInfoTbl:*virtualFlag.Or()
 		this.tmplConstructorImplementation.Eval()
 	}
 	PrepareClassInfoParent() = {
@@ -1220,8 +1227,14 @@ Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_g
 	${if (funcInfo.tmplFunctionBody)}
 	${funcInfo.tmplFunctionBody.Eval()}
 	${else}
+	${if (hasVirtualFlag)}
+	auto pEntity_gurax = new Value_${funcInfo.GetTypeInfo().vtype}::EntityT(${funcInfo.ComposeArgs()});
+	RefPtr<Value_${funcInfo.GetTypeInfo().vtype}> pValue_gurax(new Value_${funcInfo.GetTypeInfo().vtype}(pEntity_gurax));
+	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	${else}
 	auto pEntity_gurax = new ${funcInfo.GetTypeInfo().vtype}(${funcInfo.ComposeArgs()});
 	RefPtr<Value_${funcInfo.GetTypeInfo().vtype}> pValue_gurax(new Value_${funcInfo.GetTypeInfo().vtype}(pEntity_gurax));
+	${end}
 	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 	${end}
 }
