@@ -7,7 +7,7 @@ ColourPickerCtrl = Class(PickerBase) {
 	Create(parent as Window_p, id as WindowID, colour as const_Colour_r = *wxBLACK, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxCLRP_DEFAULT_STYLE, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = wxColourPickerCtrlNameStr) as bool
 	GetColour() as Colour
 	SetColour(col as const_Colour_r) as void
-	//7SetColour(colname as const_String_r) as void
+	//SetColour(colname as const_String_r) as void
 } %% R'''
 # Overview
 

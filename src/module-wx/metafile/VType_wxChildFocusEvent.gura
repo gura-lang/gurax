@@ -3,6 +3,8 @@
 //==============================================================================
 ChildFocusEvent = Class(CommandEvent) {
 	@include['wx/event.h']
+	//__init__(win as Window_p = NULL)
+	GetWindow() as Window_p
 } %% R'''
 # Overview
 

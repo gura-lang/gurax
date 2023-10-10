@@ -3,6 +3,40 @@
 //==============================================================================
 CmdLineParser = Class {
 	@include['wx/cmdline.h']
+	__init__()
+	//wxCmdLineParser(argc as int, argv as char_p_p)
+	//wxCmdLineParser(argc as int, argv as wchar_t_p_p)
+	//wxCmdLineParser(cmdline as const_String_r)
+	//wxCmdLineParser(desc as const_CmdLineEntryDesc_p)
+	//wxCmdLineParser(desc as const_CmdLineEntryDesc_p, argc as int, argv as char_p_p)
+	//wxCmdLineParser(desc as const_CmdLineEntryDesc_p, cmdline as const_String_r)
+	AddLongOption(lng as const_String_r, desc as const_String_r = wxEmptyString, type as CmdLineParamType = wxCMD_LINE_VAL_STRING, flags as int = 0) as void
+	AddLongSwitch(lng as const_String_r, desc as const_String_r = wxEmptyString, flags as int = 0) as void
+	AddOption(name as const_String_r, lng as const_String_r = wxEmptyString, desc as const_String_r = wxEmptyString, type as CmdLineParamType = wxCMD_LINE_VAL_STRING, flags as int = 0) as void
+	AddParam(desc as const_String_r = wxEmptyString, type as CmdLineParamType = wxCMD_LINE_VAL_STRING, flags as int = 0) as void
+	AddSwitch(name as const_String_r, lng as const_String_r = wxEmptyString, desc as const_String_r = wxEmptyString, flags as int = 0) as void
+	AddUsageText(text as const_String_r) as void
+	AreLongOptionsEnabled() as bool
+	DisableLongOptions() as void
+	EnableLongOptions(enable as bool = true) as void
+	Found(name as const_String_r) as bool
+	FoundSwitch(name as const_String_r) as CmdLineSwitchState
+	//Found(name as const_String_r, value as String_p) as bool
+	//Found(name as const_String_r, value as long_p) as bool
+	//Found(name as const_String_r, value as double_p) as bool
+	//Found(name as const_String_r, value as DateTime_p) as bool
+	GetParam(n as size_t = 0) as String
+	GetParamCount() as size_t
+	Parse(giveUsage as bool = true) as int
+	//SetDesc(desc as const_CmdLineEntryDesc_p) as void
+	SetLogo(logo as const_String_r) as void
+	SetSwitchChars(switchChars as const_String_r) as void
+	Usage() as void
+	GetUsageString() as String
+	//SetCmdLine(argc as int, argv as char_p_p) as void
+	//SetCmdLine(argc as int, argv as wchar_t_p_p) as void
+	//SetCmdLine(cmdline as const_String_r) as void
+	ConvertStringToArgs(cmdline as const_String_r, flags as CmdLineSplitType = wxCMD_LINE_SPLIT_DOS):static as ArrayString
 } %% R'''
 # Overview
 

@@ -44,10 +44,61 @@ ${help.ComposeMethodHelp(wx.ClientDataContainer, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.ClientDataContainer() {block?}
+Gurax_DeclareConstructorAlias(ClientDataContainer_gurax, "ClientDataContainer")
+{
+	Declare(VTYPE_wxClientDataContainer, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementConstructorEx(ClientDataContainer_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxClientDataContainer(
+		wxClientDataContainer()));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.ClientDataContainer#GetClientObject()
+Gurax_DeclareMethodAlias(wxClientDataContainer, GetClientObject_gurax, "GetClientObject")
+{
+	Declare(VTYPE_Any, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxClientDataContainer, GetClientObject_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	ClientData* rtn = dynamic_cast<ClientData*>(pEntity_gurax->GetClientObject());
+	if (!rtn) return Value::nil();
+	return rtn->GetValue().Reference();
+}
+
+// wx.ClientDataContainer#SetClientObject(data as Any)
+Gurax_DeclareMethodAlias(wxClientDataContainer, SetClientObject_gurax, "SetClientObject")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("data", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxClientDataContainer, SetClientObject_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const Value& data = args_gurax.PickValue();
+	// Function body
+	pEntity_gurax->SetClientObject(ClientData::Create(data));
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -64,8 +115,10 @@ void VType_wxClientDataContainer::DoPrepare(Frame& frameOuter)
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(ClientDataContainer_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxClientDataContainer, GetClientObject_gurax));
+	Assign(Gurax_CreateMethod(wxClientDataContainer, SetClientObject_gurax));
 }
 
 //------------------------------------------------------------------------------

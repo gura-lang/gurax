@@ -3,6 +3,11 @@
 //==============================================================================
 ClientDataContainer = Class {
 	@include['wx/grid.h']
+	__init__()
+	//GetClientData() as void_p
+	GetClientObject() as ClientData_p
+	//SetClientData(data as void_p) as void
+	SetClientObject(data as ClientData_p) as void
 } %% R'''
 # Overview
 

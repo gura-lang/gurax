@@ -48,6 +48,23 @@ ${help.ComposeMethodHelp(wx.ChildFocusEvent, `ja)}
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.ChildFocusEvent#GetWindow() {block?}
+Gurax_DeclareMethodAlias(wxChildFocusEvent, GetWindow_gurax, "GetWindow")
+{
+	Declare(VTYPE_wxWindow, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxChildFocusEvent, GetWindow_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
+		pEntity_gurax->GetWindow()));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -66,6 +83,7 @@ void VType_wxChildFocusEvent::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxCommandEvent, Flag::Mutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxChildFocusEvent, GetWindow_gurax));
 }
 
 //------------------------------------------------------------------------------

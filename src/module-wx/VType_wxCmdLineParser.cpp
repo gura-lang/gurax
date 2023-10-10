@@ -44,10 +44,437 @@ ${help.ComposeMethodHelp(wx.CmdLineParser, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.CmdLineParser() {block?}
+Gurax_DeclareConstructorAlias(CmdLineParser_gurax, "CmdLineParser")
+{
+	Declare(VTYPE_wxCmdLineParser, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementConstructorEx(CmdLineParser_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxCmdLineParser(
+		wxCmdLineParser()));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.CmdLineParser#AddLongOption(lng as String, desc? as String, type? as Number, flags? as Number)
+Gurax_DeclareMethodAlias(wxCmdLineParser, AddLongOption_gurax, "AddLongOption")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("lng", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("desc", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxCmdLineParser, AddLongOption_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* lng = args_gurax.PickString();
+	const char* desc = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool type_validFlag = args_gurax.IsValid();
+	wxCmdLineParamType type = type_validFlag? args_gurax.PickNumber<wxCmdLineParamType>() : wxCMD_LINE_VAL_STRING;
+	bool flags_validFlag = args_gurax.IsValid();
+	int flags = flags_validFlag? args_gurax.PickNumber<int>() : 0;
+	// Function body
+	pEntity_gurax->AddLongOption(lng, desc, type, flags);
+	return Gurax::Value::nil();
+}
+
+// wx.CmdLineParser#AddLongSwitch(lng as String, desc? as String, flags? as Number)
+Gurax_DeclareMethodAlias(wxCmdLineParser, AddLongSwitch_gurax, "AddLongSwitch")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("lng", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("desc", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxCmdLineParser, AddLongSwitch_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* lng = args_gurax.PickString();
+	const char* desc = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool flags_validFlag = args_gurax.IsValid();
+	int flags = flags_validFlag? args_gurax.PickNumber<int>() : 0;
+	// Function body
+	pEntity_gurax->AddLongSwitch(lng, desc, flags);
+	return Gurax::Value::nil();
+}
+
+// wx.CmdLineParser#AddOption(name as String, lng? as String, desc? as String, type? as Number, flags? as Number)
+Gurax_DeclareMethodAlias(wxCmdLineParser, AddOption_gurax, "AddOption")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("lng", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("desc", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxCmdLineParser, AddOption_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
+	const char* lng = args_gurax.IsValid()? args_gurax.PickString() : "";
+	const char* desc = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool type_validFlag = args_gurax.IsValid();
+	wxCmdLineParamType type = type_validFlag? args_gurax.PickNumber<wxCmdLineParamType>() : wxCMD_LINE_VAL_STRING;
+	bool flags_validFlag = args_gurax.IsValid();
+	int flags = flags_validFlag? args_gurax.PickNumber<int>() : 0;
+	// Function body
+	pEntity_gurax->AddOption(name, lng, desc, type, flags);
+	return Gurax::Value::nil();
+}
+
+// wx.CmdLineParser#AddParam(desc? as String, type? as Number, flags? as Number)
+Gurax_DeclareMethodAlias(wxCmdLineParser, AddParam_gurax, "AddParam")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("desc", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxCmdLineParser, AddParam_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* desc = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool type_validFlag = args_gurax.IsValid();
+	wxCmdLineParamType type = type_validFlag? args_gurax.PickNumber<wxCmdLineParamType>() : wxCMD_LINE_VAL_STRING;
+	bool flags_validFlag = args_gurax.IsValid();
+	int flags = flags_validFlag? args_gurax.PickNumber<int>() : 0;
+	// Function body
+	pEntity_gurax->AddParam(desc, type, flags);
+	return Gurax::Value::nil();
+}
+
+// wx.CmdLineParser#AddSwitch(name as String, lng? as String, desc? as String, flags? as Number)
+Gurax_DeclareMethodAlias(wxCmdLineParser, AddSwitch_gurax, "AddSwitch")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("lng", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("desc", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxCmdLineParser, AddSwitch_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
+	const char* lng = args_gurax.IsValid()? args_gurax.PickString() : "";
+	const char* desc = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool flags_validFlag = args_gurax.IsValid();
+	int flags = flags_validFlag? args_gurax.PickNumber<int>() : 0;
+	// Function body
+	pEntity_gurax->AddSwitch(name, lng, desc, flags);
+	return Gurax::Value::nil();
+}
+
+// wx.CmdLineParser#AddUsageText(text as String)
+Gurax_DeclareMethodAlias(wxCmdLineParser, AddUsageText_gurax, "AddUsageText")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxCmdLineParser, AddUsageText_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* text = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->AddUsageText(text);
+	return Gurax::Value::nil();
+}
+
+// wx.CmdLineParser#AreLongOptionsEnabled()
+Gurax_DeclareMethodAlias(wxCmdLineParser, AreLongOptionsEnabled_gurax, "AreLongOptionsEnabled")
+{
+	Declare(VTYPE_Bool, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxCmdLineParser, AreLongOptionsEnabled_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->AreLongOptionsEnabled();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.CmdLineParser#DisableLongOptions()
+Gurax_DeclareMethodAlias(wxCmdLineParser, DisableLongOptions_gurax, "DisableLongOptions")
+{
+	Declare(VTYPE_Nil, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxCmdLineParser, DisableLongOptions_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->DisableLongOptions();
+	return Gurax::Value::nil();
+}
+
+// wx.CmdLineParser#EnableLongOptions(enable? as Bool)
+Gurax_DeclareMethodAlias(wxCmdLineParser, EnableLongOptions_gurax, "EnableLongOptions")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("enable", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxCmdLineParser, EnableLongOptions_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool enable = args_gurax.IsValid()? args_gurax.PickBool() : true;
+	// Function body
+	pEntity_gurax->EnableLongOptions(enable);
+	return Gurax::Value::nil();
+}
+
+// wx.CmdLineParser#Found(name as String)
+Gurax_DeclareMethodAlias(wxCmdLineParser, Found_gurax, "Found")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxCmdLineParser, Found_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
+	// Function body
+	bool rtn = pEntity_gurax->Found(name);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.CmdLineParser#FoundSwitch(name as String)
+Gurax_DeclareMethodAlias(wxCmdLineParser, FoundSwitch_gurax, "FoundSwitch")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxCmdLineParser, FoundSwitch_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
+	// Function body
+	wxCmdLineSwitchState rtn = pEntity_gurax->FoundSwitch(name);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.CmdLineParser#GetParam(n? as Number)
+Gurax_DeclareMethodAlias(wxCmdLineParser, GetParam_gurax, "GetParam")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxCmdLineParser, GetParam_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool n_validFlag = args_gurax.IsValid();
+	size_t n = n_validFlag? args_gurax.PickNumber<size_t>() : 0;
+	// Function body
+	wxString rtn = pEntity_gurax->GetParam(n);
+	return new Gurax::Value_String(rtn.utf8_str().data());
+}
+
+// wx.CmdLineParser#GetParamCount()
+Gurax_DeclareMethodAlias(wxCmdLineParser, GetParamCount_gurax, "GetParamCount")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxCmdLineParser, GetParamCount_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	size_t rtn = pEntity_gurax->GetParamCount();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.CmdLineParser#Parse(giveUsage? as Bool)
+Gurax_DeclareMethodAlias(wxCmdLineParser, Parse_gurax, "Parse")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("giveUsage", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxCmdLineParser, Parse_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool giveUsage = args_gurax.IsValid()? args_gurax.PickBool() : true;
+	// Function body
+	int rtn = pEntity_gurax->Parse(giveUsage);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.CmdLineParser#SetLogo(logo as String)
+Gurax_DeclareMethodAlias(wxCmdLineParser, SetLogo_gurax, "SetLogo")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("logo", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxCmdLineParser, SetLogo_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* logo = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetLogo(logo);
+	return Gurax::Value::nil();
+}
+
+// wx.CmdLineParser#SetSwitchChars(switchChars as String)
+Gurax_DeclareMethodAlias(wxCmdLineParser, SetSwitchChars_gurax, "SetSwitchChars")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("switchChars", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxCmdLineParser, SetSwitchChars_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* switchChars = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetSwitchChars(switchChars);
+	return Gurax::Value::nil();
+}
+
+// wx.CmdLineParser#Usage()
+Gurax_DeclareMethodAlias(wxCmdLineParser, Usage_gurax, "Usage")
+{
+	Declare(VTYPE_Nil, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxCmdLineParser, Usage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->Usage();
+	return Gurax::Value::nil();
+}
+
+// wx.CmdLineParser#GetUsageString()
+Gurax_DeclareMethodAlias(wxCmdLineParser, GetUsageString_gurax, "GetUsageString")
+{
+	Declare(VTYPE_String, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxCmdLineParser, GetUsageString_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxString rtn = pEntity_gurax->GetUsageString();
+	return new Gurax::Value_String(rtn.utf8_str().data());
+}
+
+// wx.CmdLineParser.ConvertStringToArgs(cmdline as String, flags? as Number)
+Gurax_DeclareClassMethodAlias(wxCmdLineParser, ConvertStringToArgs_gurax, "ConvertStringToArgs")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("cmdline", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementClassMethodEx(wxCmdLineParser, ConvertStringToArgs_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* cmdline = args_gurax.PickString();
+	bool flags_validFlag = args_gurax.IsValid();
+	wxCmdLineSplitType flags = flags_validFlag? args_gurax.PickNumber<wxCmdLineSplitType>() : wxCMD_LINE_SPLIT_DOS;
+	// Function body
+	wxArrayString rtn = wxCmdLineParser::ConvertStringToArgs(cmdline, flags);
+	return Util::CreateList(rtn);
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -64,8 +491,27 @@ void VType_wxCmdLineParser::DoPrepare(Frame& frameOuter)
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(CmdLineParser_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxCmdLineParser, AddLongOption_gurax));
+	Assign(Gurax_CreateMethod(wxCmdLineParser, AddLongSwitch_gurax));
+	Assign(Gurax_CreateMethod(wxCmdLineParser, AddOption_gurax));
+	Assign(Gurax_CreateMethod(wxCmdLineParser, AddParam_gurax));
+	Assign(Gurax_CreateMethod(wxCmdLineParser, AddSwitch_gurax));
+	Assign(Gurax_CreateMethod(wxCmdLineParser, AddUsageText_gurax));
+	Assign(Gurax_CreateMethod(wxCmdLineParser, AreLongOptionsEnabled_gurax));
+	Assign(Gurax_CreateMethod(wxCmdLineParser, DisableLongOptions_gurax));
+	Assign(Gurax_CreateMethod(wxCmdLineParser, EnableLongOptions_gurax));
+	Assign(Gurax_CreateMethod(wxCmdLineParser, Found_gurax));
+	Assign(Gurax_CreateMethod(wxCmdLineParser, FoundSwitch_gurax));
+	Assign(Gurax_CreateMethod(wxCmdLineParser, GetParam_gurax));
+	Assign(Gurax_CreateMethod(wxCmdLineParser, GetParamCount_gurax));
+	Assign(Gurax_CreateMethod(wxCmdLineParser, Parse_gurax));
+	Assign(Gurax_CreateMethod(wxCmdLineParser, SetLogo_gurax));
+	Assign(Gurax_CreateMethod(wxCmdLineParser, SetSwitchChars_gurax));
+	Assign(Gurax_CreateMethod(wxCmdLineParser, Usage_gurax));
+	Assign(Gurax_CreateMethod(wxCmdLineParser, GetUsageString_gurax));
+	Assign(Gurax_CreateMethod(wxCmdLineParser, ConvertStringToArgs_gurax));
 }
 
 //------------------------------------------------------------------------------
