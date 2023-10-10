@@ -10,11 +10,11 @@ AppMain = class(wx.App) {
 
 FrameMain = class(wx.Frame) {
 	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
-		PanelTop(this)
+		PanelMain(this)
 	}
 }
 
-PanelTop = class(wx.Panel) {
+PanelMain = class(wx.Panel) {
 	__init__(parent as wx.Window) = {|parent|
 		sizer = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizer)
