@@ -310,7 +310,7 @@ ${elsif (!classNameParent || classInfo.holdEntityFlag)}
 protected:
 	wx${className} _entity;
 ${end}
-${if (evtHandlerOrDerivFlag)}
+${if (hasVirtualFlag)}
 public:
 	class EntityT : public wx${className} {
 	public:
@@ -556,7 +556,7 @@ ${else}
 	return ToStringGeneric(ss, "wx.${className}");
 ${end}
 }
-${if (evtHandlerOrDerivFlag)}
+${if (hasVirtualFlag)}
 
 //------------------------------------------------------------------------------
 // Value_wx${className}::EntityT
@@ -1153,7 +1153,7 @@ Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_g
 	${funcInfo.argInfoTbl::ComposeImplementation()}
 	${end}
 	// Function body
-	${if (	funcInfo.tmplFunctionBody)}
+	${if (funcInfo.tmplFunctionBody)}
 	${funcInfo.tmplFunctionBody.Eval()}
 	${else}
 	return argument_gurax.ReturnValue(processor_gurax, new Value_${funcInfo.GetTypeInfo().vtype}(
@@ -1461,6 +1461,7 @@ GenerateVType(classInfoTbl[] as ClassInfo) = {
 		dcDerivFlag = classInfo.IsDCDeriv()
 		evtHandlerOrDerivFlag = classInfo.IsEvtHandlerOrDeriv()
 		refCounterOrDerivFlag = classInfo.IsRefCounterOrDeriv()
+		hasVirtualFlag = evtHandlerOrDerivFlag || funcInfoTbl:*virtualFlag.Or()
 		Println(className)
 		tmplHeader.Render(Stream(fileNameHeader, 'w').Write(Codec.bom@utf8))
 		tmplSource.Render(Stream(fileNameSource, 'w').Write(Codec.bom@utf8))
