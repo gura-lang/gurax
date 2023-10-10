@@ -104,11 +104,12 @@ Gurax_ImplementMethodEx(wxComboPopup, Dismiss_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// wx.ComboPopup#FindItem(item as String)
+// wx.ComboPopup#FindItem(item as String, &trueItem?:nilRef as String)
 Gurax_DeclareMethodAlias(wxComboPopup, FindItem_gurax, "FindItem")
 {
-	Declare(VTYPE_String, Flag::None);
+	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("item", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("trueItem", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxComboPopup, FindItem_gurax, processor_gurax, argument_gurax)
@@ -120,10 +121,17 @@ Gurax_ImplementMethodEx(wxComboPopup, FindItem_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	const char* item = args_gurax.PickString();
+	RefPtr<Referencer> trueItem(args_gurax.IsValid()? args_gurax.PickReferencer().Reference() : nullptr);
 	// Function body
-	wxString trueItem;
-	bool rtn = pEntity_gurax->FindItem(item, &trueItem);
-	return rtn? new Value_String(trueItem.ToUTF8().data()) : Value::nil();
+	bool rtn;
+	if (trueItem) {
+		wxString trueItem_;
+		rtn = pEntity_gurax->FindItem(item, &trueItem_);
+		trueItem->SetValue(new Value_String(trueItem_.ToUTF8().data()));
+	} else {
+		rtn = pEntity_gurax->FindItem(item);
+	}
+	return new Value_Bool(rtn);
 }
 
 // wx.ComboPopup#GetAdjustedSize(minWidth as Number, prefHeight as Number, maxHeight as Number) {block?}

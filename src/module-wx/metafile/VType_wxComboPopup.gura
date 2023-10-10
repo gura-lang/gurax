@@ -7,11 +7,17 @@ ComboPopup = Class():loosePointer {
 	DestroyPopup() as void
 	Dismiss() as void
 	//FindItem(item as const_String_r, trueItem as String_p = NULL) as bool
-	FindItem(item as const_String_r) as String = \
+	FindItem(item as const_String_r, &trueItem?:nilRef as String) as bool = \
 		R'''
-		wxString trueItem;
-		bool rtn = pEntity_gurax->FindItem(item, &trueItem);
-		return rtn? new Value_String(trueItem.ToUTF8().data()) : Value::nil();
+		bool rtn;
+		if (trueItem) {
+			wxString trueItem_;
+			rtn = pEntity_gurax->FindItem(item, &trueItem_);
+			trueItem->SetValue(new Value_String(trueItem_.ToUTF8().data()));
+		} else {
+			rtn = pEntity_gurax->FindItem(item);
+		}
+		return new Value_Bool(rtn);
 		'''
 	GetAdjustedSize(minWidth as int, prefHeight as int, maxHeight as int) as Size
 	GetComboCtrl() as ComboCtrl_p
