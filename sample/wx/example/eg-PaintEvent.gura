@@ -20,14 +20,14 @@ PanelTop = class(wx.Panel) {
 	}
 	OnPaint(event) = {
 		dc = wx.PaintDC(this)
-		dc.DrawLineXY(0, 0, 100, 100)
-		dc.DrawArcXY(100, 100, 200, 200, 50, 50)
-		dc.DrawCircleXY(200, 200, 100)
-		dc.DrawEllipseXY(300, 200, 100, 50)
+		dc.DrawLine(0, 0, 100, 100)
+		dc.DrawArc(100, 100, 200, 200, 50, 50)
+		dc.DrawCircle(200, 200, 100)
+		dc.DrawEllipse(300, 200, 100, 50)
 		dc.DrawLines(@(wx.Point) {{0, 0}, {30, 100}, {50, 50}}, 300, 50)
-		dc.DrawTextXY('Hello World', 30, 200)
+		dc.DrawText('Hello World', 30, 200)
 		dc.SetFont(wx.Font(30, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
-		dc.DrawTextXY('Hello World', 30, 240)
+		dc.DrawText('Hello World', 30, 240)
 		dc = nil
 	}
 }
