@@ -68,7 +68,8 @@ Gurax_ImplementConstructorEx(SashLayoutWindow_gurax, processor_gurax, argument_g
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : (wxCLIP_CHILDREN | wxSW_3D);
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : "layoutWindow";
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : "layoutWindow";
 	// Function body
 	auto pEntity_gurax = new Value_wxSashLayoutWindow::EntityT(parent, id, pos, size, style, name);
 	RefPtr<Value_wxSashLayoutWindow> pValue_gurax(new Value_wxSashLayoutWindow(pEntity_gurax));
@@ -107,7 +108,8 @@ Gurax_ImplementMethodEx(wxSashLayoutWindow, Create_gurax, processor_gurax, argum
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : (wxCLIP_CHILDREN | wxSW_3D);
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : "layoutWindow";
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : "layoutWindow";
 	// Function body
 	bool rtn = pEntity_gurax->Create(parent, id, pos, size, style, name);
 	return new Gurax::Value_Bool(rtn);

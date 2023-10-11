@@ -57,8 +57,9 @@ Gurax_ImplementConstructorEx(HtmlLinkInfo_gurax, processor_gurax, argument_gurax
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* href = args_gurax.PickString();
-	const char* target = args_gurax.IsValid()? args_gurax.PickString() : "";
+	wxString href(args_gurax.PickString());
+	bool target_validFlag = args_gurax.IsValid();
+	wxString target = target_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	auto pEntity_gurax = new wxHtmlLinkInfo(href, target);
 	RefPtr<Value_wxHtmlLinkInfo> pValue_gurax(new Value_wxHtmlLinkInfo(pEntity_gurax));

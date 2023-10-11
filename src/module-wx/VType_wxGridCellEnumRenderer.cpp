@@ -56,7 +56,8 @@ Gurax_ImplementConstructorEx(GridCellEnumRenderer_gurax, processor_gurax, argume
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* choices = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool choices_validFlag = args_gurax.IsValid();
+	wxString choices = choices_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	wxGridCellEnumRenderer* pEntity_gurax = new wxGridCellEnumRenderer(choices);
 	RefPtr<Value_wxGridCellEnumRenderer> pValue_gurax(new Value_wxGridCellEnumRenderer(pEntity_gurax));
@@ -81,7 +82,7 @@ Gurax_ImplementMethodEx(wxGridCellEnumRenderer, SetParameters_gurax, processor_g
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* params = args_gurax.PickString();
+	wxString params(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetParameters(params);
 	return Gurax::Value::nil();

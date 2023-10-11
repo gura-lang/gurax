@@ -143,7 +143,7 @@ Gurax_ImplementMethodEx(wxDirFilterListCtrl, FillFilterList_gurax, processor_gur
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* filter = args_gurax.PickString();
+	wxString filter(args_gurax.PickString());
 	int defaultFilter = args_gurax.PickNumber<int>();
 	// Function body
 	pEntity_gurax->FillFilterList(filter, defaultFilter);

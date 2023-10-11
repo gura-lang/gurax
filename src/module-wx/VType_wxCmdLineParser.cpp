@@ -79,8 +79,9 @@ Gurax_ImplementMethodEx(wxCmdLineParser, AddLongOption_gurax, processor_gurax, a
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* lng = args_gurax.PickString();
-	const char* desc = args_gurax.IsValid()? args_gurax.PickString() : "";
+	wxString lng(args_gurax.PickString());
+	bool desc_validFlag = args_gurax.IsValid();
+	wxString desc = desc_validFlag? wxString(args_gurax.PickString()) : "";
 	bool type_validFlag = args_gurax.IsValid();
 	wxCmdLineParamType type = type_validFlag? args_gurax.PickNumber<wxCmdLineParamType>() : wxCMD_LINE_VAL_STRING;
 	bool flags_validFlag = args_gurax.IsValid();
@@ -107,8 +108,9 @@ Gurax_ImplementMethodEx(wxCmdLineParser, AddLongSwitch_gurax, processor_gurax, a
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* lng = args_gurax.PickString();
-	const char* desc = args_gurax.IsValid()? args_gurax.PickString() : "";
+	wxString lng(args_gurax.PickString());
+	bool desc_validFlag = args_gurax.IsValid();
+	wxString desc = desc_validFlag? wxString(args_gurax.PickString()) : "";
 	bool flags_validFlag = args_gurax.IsValid();
 	int flags = flags_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body
@@ -135,9 +137,11 @@ Gurax_ImplementMethodEx(wxCmdLineParser, AddOption_gurax, processor_gurax, argum
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
-	const char* lng = args_gurax.IsValid()? args_gurax.PickString() : "";
-	const char* desc = args_gurax.IsValid()? args_gurax.PickString() : "";
+	wxString name(args_gurax.PickString());
+	bool lng_validFlag = args_gurax.IsValid();
+	wxString lng = lng_validFlag? wxString(args_gurax.PickString()) : "";
+	bool desc_validFlag = args_gurax.IsValid();
+	wxString desc = desc_validFlag? wxString(args_gurax.PickString()) : "";
 	bool type_validFlag = args_gurax.IsValid();
 	wxCmdLineParamType type = type_validFlag? args_gurax.PickNumber<wxCmdLineParamType>() : wxCMD_LINE_VAL_STRING;
 	bool flags_validFlag = args_gurax.IsValid();
@@ -164,7 +168,8 @@ Gurax_ImplementMethodEx(wxCmdLineParser, AddParam_gurax, processor_gurax, argume
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* desc = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool desc_validFlag = args_gurax.IsValid();
+	wxString desc = desc_validFlag? wxString(args_gurax.PickString()) : "";
 	bool type_validFlag = args_gurax.IsValid();
 	wxCmdLineParamType type = type_validFlag? args_gurax.PickNumber<wxCmdLineParamType>() : wxCMD_LINE_VAL_STRING;
 	bool flags_validFlag = args_gurax.IsValid();
@@ -192,9 +197,11 @@ Gurax_ImplementMethodEx(wxCmdLineParser, AddSwitch_gurax, processor_gurax, argum
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
-	const char* lng = args_gurax.IsValid()? args_gurax.PickString() : "";
-	const char* desc = args_gurax.IsValid()? args_gurax.PickString() : "";
+	wxString name(args_gurax.PickString());
+	bool lng_validFlag = args_gurax.IsValid();
+	wxString lng = lng_validFlag? wxString(args_gurax.PickString()) : "";
+	bool desc_validFlag = args_gurax.IsValid();
+	wxString desc = desc_validFlag? wxString(args_gurax.PickString()) : "";
 	bool flags_validFlag = args_gurax.IsValid();
 	int flags = flags_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body
@@ -217,7 +224,7 @@ Gurax_ImplementMethodEx(wxCmdLineParser, AddUsageText_gurax, processor_gurax, ar
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* text = args_gurax.PickString();
+	wxString text(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->AddUsageText(text);
 	return Gurax::Value::nil();
@@ -293,7 +300,7 @@ Gurax_ImplementMethodEx(wxCmdLineParser, Found_gurax, processor_gurax, argument_
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	// Function body
 	bool rtn = pEntity_gurax->Found(name);
 	return new Gurax::Value_Bool(rtn);
@@ -314,7 +321,7 @@ Gurax_ImplementMethodEx(wxCmdLineParser, FoundSwitch_gurax, processor_gurax, arg
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	// Function body
 	wxCmdLineSwitchState rtn = pEntity_gurax->FoundSwitch(name);
 	return new Gurax::Value_Number(rtn);
@@ -395,7 +402,7 @@ Gurax_ImplementMethodEx(wxCmdLineParser, SetLogo_gurax, processor_gurax, argumen
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* logo = args_gurax.PickString();
+	wxString logo(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetLogo(logo);
 	return Gurax::Value::nil();
@@ -416,7 +423,7 @@ Gurax_ImplementMethodEx(wxCmdLineParser, SetSwitchChars_gurax, processor_gurax, 
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* switchChars = args_gurax.PickString();
+	wxString switchChars(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetSwitchChars(switchChars);
 	return Gurax::Value::nil();
@@ -468,7 +475,7 @@ Gurax_ImplementClassMethodEx(wxCmdLineParser, ConvertStringToArgs_gurax, process
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* cmdline = args_gurax.PickString();
+	wxString cmdline(args_gurax.PickString());
 	bool flags_validFlag = args_gurax.IsValid();
 	wxCmdLineSplitType flags = flags_validFlag? args_gurax.PickNumber<wxCmdLineSplitType>() : wxCMD_LINE_SPLIT_DOS;
 	// Function body

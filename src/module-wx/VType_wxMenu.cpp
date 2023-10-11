@@ -83,8 +83,10 @@ Gurax_ImplementMethodEx(wxMenu, Append_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int id = args_gurax.PickNumber<int>();
-	const char* item = args_gurax.IsValid()? args_gurax.PickString() : "";
-	const char* helpString = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool item_validFlag = args_gurax.IsValid();
+	wxString item = item_validFlag? wxString(args_gurax.PickString()) : "";
+	bool helpString_validFlag = args_gurax.IsValid();
+	wxString helpString = helpString_validFlag? wxString(args_gurax.PickString()) : "";
 	bool kind_validFlag = args_gurax.IsValid();
 	wxItemKind kind = kind_validFlag? args_gurax.PickNumber<wxItemKind>() : wxITEM_NORMAL;
 	// Function body
@@ -111,8 +113,9 @@ Gurax_ImplementMethodEx(wxMenu, AppendCheckItem_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int id = args_gurax.PickNumber<int>();
-	const char* item = args_gurax.PickString();
-	const char* help = args_gurax.IsValid()? args_gurax.PickString() : "";
+	wxString item(args_gurax.PickString());
+	bool help_validFlag = args_gurax.IsValid();
+	wxString help = help_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenuItem(
 		*pEntity_gurax->AppendCheckItem(id, item, help)));
@@ -137,8 +140,9 @@ Gurax_ImplementMethodEx(wxMenu, AppendRadioItem_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int id = args_gurax.PickNumber<int>();
-	const char* item = args_gurax.PickString();
-	const char* help = args_gurax.IsValid()? args_gurax.PickString() : "";
+	wxString item(args_gurax.PickString());
+	bool help_validFlag = args_gurax.IsValid();
+	wxString help = help_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenuItem(
 		*pEntity_gurax->AppendRadioItem(id, item, help)));
@@ -182,8 +186,9 @@ Gurax_ImplementMethodEx(wxMenu, AppendSubMenu_gurax, processor_gurax, argument_g
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxMenu& value_submenu = args_gurax.Pick<Value_wxMenu>();
 	wxMenu* submenu = value_submenu.GetEntityPtr();
-	const char* text = args_gurax.PickString();
-	const char* help = args_gurax.IsValid()? args_gurax.PickString() : "";
+	wxString text(args_gurax.PickString());
+	bool help_validFlag = args_gurax.IsValid();
+	wxString help = help_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenuItem(
 		*pEntity_gurax->AppendSubMenu(submenu, text, help)));
@@ -309,7 +314,7 @@ Gurax_ImplementMethodEx(wxMenu, FindItem_gurax, processor_gurax, argument_gurax)
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* itemString = args_gurax.PickString();
+	wxString itemString(args_gurax.PickString());
 	// Function body
 	int rtn = pEntity_gurax->FindItem(itemString);
 	return new Gurax::Value_Number(rtn);
@@ -480,8 +485,9 @@ Gurax_ImplementMethodEx(wxMenu, InsertCheckItem_gurax, processor_gurax, argument
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	size_t pos = args_gurax.PickNumber<size_t>();
 	int id = args_gurax.PickNumber<int>();
-	const char* item = args_gurax.PickString();
-	const char* helpString = args_gurax.IsValid()? args_gurax.PickString() : "";
+	wxString item(args_gurax.PickString());
+	bool helpString_validFlag = args_gurax.IsValid();
+	wxString helpString = helpString_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenuItem(
 		*pEntity_gurax->InsertCheckItem(pos, id, item, helpString)));
@@ -508,8 +514,9 @@ Gurax_ImplementMethodEx(wxMenu, InsertRadioItem_gurax, processor_gurax, argument
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	size_t pos = args_gurax.PickNumber<size_t>();
 	int id = args_gurax.PickNumber<int>();
-	const char* item = args_gurax.PickString();
-	const char* helpString = args_gurax.IsValid()? args_gurax.PickString() : "";
+	wxString item(args_gurax.PickString());
+	bool helpString_validFlag = args_gurax.IsValid();
+	wxString helpString = helpString_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenuItem(
 		*pEntity_gurax->InsertRadioItem(pos, id, item, helpString)));
@@ -621,8 +628,9 @@ Gurax_ImplementMethodEx(wxMenu, PrependCheckItem_gurax, processor_gurax, argumen
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int id = args_gurax.PickNumber<int>();
-	const char* item = args_gurax.PickString();
-	const char* helpString = args_gurax.IsValid()? args_gurax.PickString() : "";
+	wxString item(args_gurax.PickString());
+	bool helpString_validFlag = args_gurax.IsValid();
+	wxString helpString = helpString_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenuItem(
 		*pEntity_gurax->PrependCheckItem(id, item, helpString)));
@@ -647,8 +655,9 @@ Gurax_ImplementMethodEx(wxMenu, PrependRadioItem_gurax, processor_gurax, argumen
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int id = args_gurax.PickNumber<int>();
-	const char* item = args_gurax.PickString();
-	const char* helpString = args_gurax.IsValid()? args_gurax.PickString() : "";
+	wxString item(args_gurax.PickString());
+	bool helpString_validFlag = args_gurax.IsValid();
+	wxString helpString = helpString_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenuItem(
 		*pEntity_gurax->PrependRadioItem(id, item, helpString)));
@@ -711,7 +720,7 @@ Gurax_ImplementMethodEx(wxMenu, SetHelpString_gurax, processor_gurax, argument_g
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int id = args_gurax.PickNumber<int>();
-	const char* helpString = args_gurax.PickString();
+	wxString helpString(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetHelpString(id, helpString);
 	return Gurax::Value::nil();
@@ -734,7 +743,7 @@ Gurax_ImplementMethodEx(wxMenu, SetLabel_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int id = args_gurax.PickNumber<int>();
-	const char* label = args_gurax.PickString();
+	wxString label(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetLabel(id, label);
 	return Gurax::Value::nil();
@@ -755,7 +764,7 @@ Gurax_ImplementMethodEx(wxMenu, SetTitle_gurax, processor_gurax, argument_gurax)
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* title = args_gurax.PickString();
+	wxString title(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetTitle(title);
 	return Gurax::Value::nil();

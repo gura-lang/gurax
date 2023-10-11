@@ -63,9 +63,11 @@ Gurax_ImplementConstructorEx(PasswordEntryDialog_gurax, processor_gurax, argumen
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* parent = value_parent.GetEntityPtr();
-	const char* message = args_gurax.PickString();
-	const char* caption = args_gurax.IsValid()? args_gurax.PickString() : wxGetPasswordFromUserPromptStr;
-	const char* defaultValue = args_gurax.IsValid()? args_gurax.PickString() : "";
+	wxString message(args_gurax.PickString());
+	bool caption_validFlag = args_gurax.IsValid();
+	wxString caption = caption_validFlag? wxString(args_gurax.PickString()) : wxGetPasswordFromUserPromptStr;
+	bool defaultValue_validFlag = args_gurax.IsValid();
+	wxString defaultValue = defaultValue_validFlag? wxString(args_gurax.PickString()) : "";
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxTextEntryDialogStyle;
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;

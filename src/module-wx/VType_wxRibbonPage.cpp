@@ -64,7 +64,8 @@ Gurax_ImplementConstructorEx(RibbonPage_gurax, processor_gurax, argument_gurax)
 	wxRibbonBar* parent = value_parent.GetEntityPtr();
 	bool id_validFlag = args_gurax.IsValid();
 	wxWindowID id = id_validFlag? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
-	const char* label = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool label_validFlag = args_gurax.IsValid();
+	wxString label = label_validFlag? wxString(args_gurax.PickString()) : "";
 	const wxBitmap& icon = args_gurax.IsValid()? args_gurax.Pick<Value_wxBitmap>().GetEntity() : wxNullBitmap;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
@@ -101,7 +102,8 @@ Gurax_ImplementMethodEx(wxRibbonPage, Create_gurax, processor_gurax, argument_gu
 	wxRibbonBar* parent = value_parent.GetEntityPtr();
 	bool id_validFlag = args_gurax.IsValid();
 	wxWindowID id = id_validFlag? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
-	const char* label = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool label_validFlag = args_gurax.IsValid();
+	wxString label = label_validFlag? wxString(args_gurax.PickString()) : "";
 	const wxBitmap& icon = args_gurax.IsValid()? args_gurax.Pick<Value_wxBitmap>().GetEntity() : wxNullBitmap;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;

@@ -60,8 +60,8 @@ Gurax_ImplementConstructorEx(GenericProgressDialog_gurax, processor_gurax, argum
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* title = args_gurax.PickString();
-	const char* message = args_gurax.PickString();
+	wxString title(args_gurax.PickString());
+	wxString message(args_gurax.PickString());
 	bool maximum_validFlag = args_gurax.IsValid();
 	int maximum = maximum_validFlag? args_gurax.PickNumber<int>() : 100;
 	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
@@ -144,7 +144,8 @@ Gurax_ImplementMethodEx(wxGenericProgressDialog, Pulse_gurax, processor_gurax, a
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* newmsg = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool newmsg_validFlag = args_gurax.IsValid();
+	wxString newmsg = newmsg_validFlag? wxString(args_gurax.PickString()) : "";
 	RefPtr<Referencer> skip(args_gurax.IsValid()? args_gurax.PickReferencer().Reference() : nullptr);
 	// Function body
 	bool skip_;
@@ -243,7 +244,8 @@ Gurax_ImplementMethodEx(wxGenericProgressDialog, Update_gurax, processor_gurax, 
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int value = args_gurax.PickNumber<int>();
-	const char* newmsg = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool newmsg_validFlag = args_gurax.IsValid();
+	wxString newmsg = newmsg_validFlag? wxString(args_gurax.PickString()) : "";
 	RefPtr<Referencer> skip(args_gurax.IsValid()? args_gurax.PickReferencer().Reference() : nullptr);
 	// Function body
 	bool skip_;

@@ -73,13 +73,15 @@ Gurax_ImplementMethodEx(wxPickerBase, CreateBase_gurax, processor_gurax, argumen
 	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* parent = value_parent.GetEntityPtr();
 	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
-	const char* text = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool text_validFlag = args_gurax.IsValid();
+	wxString text = text_validFlag? wxString(args_gurax.PickString()) : "";
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxButtonNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxButtonNameStr;
 	// Function body
 	bool rtn = pEntity_gurax->CreateBase(parent, id, text, pos, size, style, validator, name);
 	return new Gurax::Value_Bool(rtn);

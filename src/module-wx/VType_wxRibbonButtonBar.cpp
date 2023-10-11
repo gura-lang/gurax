@@ -131,10 +131,10 @@ Gurax_ImplementMethodEx(wxRibbonButtonBar, AddButton_gurax, processor_gurax, arg
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int button_id = args_gurax.PickNumber<int>();
-	const char* label = args_gurax.PickString();
+	wxString label(args_gurax.PickString());
 	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
 	const wxBitmap& bitmap = value_bitmap.GetEntity();
-	const char* help_string = args_gurax.PickString();
+	wxString help_string(args_gurax.PickString());
 	bool kind_validFlag = args_gurax.IsValid();
 	wxRibbonButtonKind kind = kind_validFlag? args_gurax.PickNumber<wxRibbonButtonKind>() : wxRIBBON_BUTTON_NORMAL;
 	// Function body
@@ -162,10 +162,11 @@ Gurax_ImplementMethodEx(wxRibbonButtonBar, AddDropdownButton_gurax, processor_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int button_id = args_gurax.PickNumber<int>();
-	const char* label = args_gurax.PickString();
+	wxString label(args_gurax.PickString());
 	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
 	const wxBitmap& bitmap = value_bitmap.GetEntity();
-	const char* help_string = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool help_string_validFlag = args_gurax.IsValid();
+	wxString help_string = help_string_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(
 		pEntity_gurax->AddDropdownButton(button_id, label, bitmap, help_string)));
@@ -191,10 +192,11 @@ Gurax_ImplementMethodEx(wxRibbonButtonBar, AddHybridButton_gurax, processor_gura
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int button_id = args_gurax.PickNumber<int>();
-	const char* label = args_gurax.PickString();
+	wxString label(args_gurax.PickString());
 	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
 	const wxBitmap& bitmap = value_bitmap.GetEntity();
-	const char* help_string = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool help_string_validFlag = args_gurax.IsValid();
+	wxString help_string = help_string_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(
 		pEntity_gurax->AddHybridButton(button_id, label, bitmap, help_string)));
@@ -220,10 +222,11 @@ Gurax_ImplementMethodEx(wxRibbonButtonBar, AddToggleButton_gurax, processor_gura
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int button_id = args_gurax.PickNumber<int>();
-	const char* label = args_gurax.PickString();
+	wxString label(args_gurax.PickString());
 	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
 	const wxBitmap& bitmap = value_bitmap.GetEntity();
-	const char* help_string = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool help_string_validFlag = args_gurax.IsValid();
+	wxString help_string = help_string_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(
 		pEntity_gurax->AddToggleButton(button_id, label, bitmap, help_string)));
@@ -252,10 +255,10 @@ Gurax_ImplementMethodEx(wxRibbonButtonBar, InsertButton_gurax, processor_gurax, 
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	size_t pos = args_gurax.PickNumber<size_t>();
 	int button_id = args_gurax.PickNumber<int>();
-	const char* label = args_gurax.PickString();
+	wxString label(args_gurax.PickString());
 	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
 	const wxBitmap& bitmap = value_bitmap.GetEntity();
-	const char* help_string = args_gurax.PickString();
+	wxString help_string(args_gurax.PickString());
 	bool kind_validFlag = args_gurax.IsValid();
 	wxRibbonButtonKind kind = kind_validFlag? args_gurax.PickNumber<wxRibbonButtonKind>() : wxRIBBON_BUTTON_NORMAL;
 	// Function body
@@ -285,10 +288,11 @@ Gurax_ImplementMethodEx(wxRibbonButtonBar, InsertDropdownButton_gurax, processor
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	size_t pos = args_gurax.PickNumber<size_t>();
 	int button_id = args_gurax.PickNumber<int>();
-	const char* label = args_gurax.PickString();
+	wxString label(args_gurax.PickString());
 	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
 	const wxBitmap& bitmap = value_bitmap.GetEntity();
-	const char* help_string = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool help_string_validFlag = args_gurax.IsValid();
+	wxString help_string = help_string_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(
 		pEntity_gurax->InsertDropdownButton(pos, button_id, label, bitmap, help_string)));
@@ -316,10 +320,11 @@ Gurax_ImplementMethodEx(wxRibbonButtonBar, InsertHybridButton_gurax, processor_g
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	size_t pos = args_gurax.PickNumber<size_t>();
 	int button_id = args_gurax.PickNumber<int>();
-	const char* label = args_gurax.PickString();
+	wxString label(args_gurax.PickString());
 	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
 	const wxBitmap& bitmap = value_bitmap.GetEntity();
-	const char* help_string = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool help_string_validFlag = args_gurax.IsValid();
+	wxString help_string = help_string_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(
 		pEntity_gurax->InsertHybridButton(pos, button_id, label, bitmap, help_string)));
@@ -347,10 +352,11 @@ Gurax_ImplementMethodEx(wxRibbonButtonBar, InsertToggleButton_gurax, processor_g
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	size_t pos = args_gurax.PickNumber<size_t>();
 	int button_id = args_gurax.PickNumber<int>();
-	const char* label = args_gurax.PickString();
+	wxString label(args_gurax.PickString());
 	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
 	const wxBitmap& bitmap = value_bitmap.GetEntity();
-	const char* help_string = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool help_string_validFlag = args_gurax.IsValid();
+	wxString help_string = help_string_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(
 		pEntity_gurax->InsertToggleButton(pos, button_id, label, bitmap, help_string)));

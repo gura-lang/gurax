@@ -68,7 +68,7 @@ Gurax_ImplementConstructorEx(RadioBox_gurax, processor_gurax, argument_gurax)
 	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* parent = value_parent.GetEntityPtr();
 	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
-	const char* label = args_gurax.PickString();
+	wxString label(args_gurax.PickString());
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	wxArrayString choices = Util::CreateArrayString(args_gurax.PickList());
@@ -77,7 +77,8 @@ Gurax_ImplementConstructorEx(RadioBox_gurax, processor_gurax, argument_gurax)
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxRA_SPECIFY_COLS;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxRadioBoxNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxRadioBoxNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxRadioBox::EntityT(parent, id, label, pos, size, choices, majorDimension, style, validator, name);
 	RefPtr<Value_wxRadioBox> pValue_gurax(new Value_wxRadioBox(pEntity_gurax));
@@ -127,7 +128,7 @@ Gurax_ImplementMethodEx(wxRadioBox, FindString_gurax, processor_gurax, argument_
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* string = args_gurax.PickString();
+	wxString string(args_gurax.PickString());
 	bool bCase = args_gurax.IsValid()? args_gurax.PickBool() : false;
 	// Function body
 	int rtn = pEntity_gurax->FindString(string, bCase);
@@ -292,7 +293,7 @@ Gurax_ImplementMethodEx(wxRadioBox, SetItemHelpText_gurax, processor_gurax, argu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	unsigned int item = args_gurax.PickNumber<unsigned int>();
-	const char* helptext = args_gurax.PickString();
+	wxString helptext(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetItemHelpText(item, helptext);
 	return Gurax::Value::nil();
@@ -315,7 +316,7 @@ Gurax_ImplementMethodEx(wxRadioBox, SetItemToolTip_gurax, processor_gurax, argum
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	unsigned int item = args_gurax.PickNumber<unsigned int>();
-	const char* text = args_gurax.PickString();
+	wxString text(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetItemToolTip(item, text);
 	return Gurax::Value::nil();
@@ -420,7 +421,7 @@ Gurax_ImplementMethodEx(wxRadioBox, SetString_gurax, processor_gurax, argument_g
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	unsigned int n = args_gurax.PickNumber<unsigned int>();
-	const char* string = args_gurax.PickString();
+	wxString string(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetString(n, string);
 	return Gurax::Value::nil();

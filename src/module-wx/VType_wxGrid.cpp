@@ -68,7 +68,8 @@ Gurax_ImplementConstructorEx(Grid_gurax, processor_gurax, argument_gurax)
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxWANTS_CHARS;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxGridNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxGridNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxGrid::EntityT(parent, id, pos, size, style, name);
 	RefPtr<Value_wxGrid> pValue_gurax(new Value_wxGrid(pEntity_gurax));
@@ -244,7 +245,7 @@ Gurax_ImplementMethodEx(wxGrid, DrawTextRectangle_gurax, processor_gurax, argume
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxDC& value_dc = args_gurax.Pick<Value_wxDC>();
 	wxDC& dc = value_dc.GetEntity();
-	const char* text = args_gurax.PickString();
+	wxString text(args_gurax.PickString());
 	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
 	const wxRect& rect = value_rect.GetEntity();
 	bool horizontalAlignment_validFlag = args_gurax.IsValid();
@@ -401,7 +402,8 @@ Gurax_ImplementMethodEx(wxGrid, Create_gurax, processor_gurax, argument_gurax)
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxWANTS_CHARS;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxGridNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxGridNameStr;
 	// Function body
 	bool rtn = pEntity_gurax->Create(parent, id, pos, size, style, name);
 	return new Gurax::Value_Bool(rtn);
@@ -830,7 +832,7 @@ Gurax_ImplementMethodEx(wxGrid, SetColLabelValue_gurax, processor_gurax, argumen
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int col = args_gurax.PickNumber<int>();
-	const char* value = args_gurax.PickString();
+	wxString value(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetColLabelValue(col, value);
 	return Gurax::Value::nil();
@@ -942,7 +944,7 @@ Gurax_ImplementMethodEx(wxGrid, SetRowLabelValue_gurax, processor_gurax, argumen
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int row = args_gurax.PickNumber<int>();
-	const char* value = args_gurax.PickString();
+	wxString value(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetRowLabelValue(row, value);
 	return Gurax::Value::nil();
@@ -1515,7 +1517,7 @@ Gurax_ImplementMethodEx(wxGrid, GetDefaultEditorForType_gurax, processor_gurax, 
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* typeName = args_gurax.PickString();
+	wxString typeName(args_gurax.PickString());
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGridCellEditor(
 		*pEntity_gurax->GetDefaultEditorForType(typeName)));
@@ -1579,7 +1581,7 @@ Gurax_ImplementMethodEx(wxGrid, GetDefaultRendererForType_gurax, processor_gurax
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* typeName = args_gurax.PickString();
+	wxString typeName(args_gurax.PickString());
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGridCellRenderer(
 		pEntity_gurax->GetDefaultRendererForType(typeName)));
@@ -1710,7 +1712,7 @@ Gurax_ImplementMethodEx(wxGrid, RegisterDataType_gurax, processor_gurax, argumen
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* typeName = args_gurax.PickString();
+	wxString typeName(args_gurax.PickString());
 	Value_wxGridCellRenderer& value_renderer = args_gurax.Pick<Value_wxGridCellRenderer>();
 	wxGridCellRenderer* renderer = value_renderer.GetEntityPtr();
 	Value_wxGridCellEditor& value_editor = args_gurax.Pick<Value_wxGridCellEditor>();
@@ -1808,7 +1810,7 @@ Gurax_ImplementMethodEx(wxGrid, SetCellValue_gurax, processor_gurax, argument_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int row = args_gurax.PickNumber<int>();
 	int col = args_gurax.PickNumber<int>();
-	const char* s = args_gurax.PickString();
+	wxString s(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetCellValue(row, col, s);
 	return Gurax::Value::nil();
@@ -1852,7 +1854,7 @@ Gurax_ImplementMethodEx(wxGrid, SetColFormatCustom_gurax, processor_gurax, argum
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int col = args_gurax.PickNumber<int>();
-	const char* typeName = args_gurax.PickString();
+	wxString typeName(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetColFormatCustom(col, typeName);
 	return Gurax::Value::nil();

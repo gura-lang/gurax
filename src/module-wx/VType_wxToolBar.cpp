@@ -68,7 +68,8 @@ Gurax_ImplementConstructorEx(ToolBar_gurax, processor_gurax, argument_gurax)
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxTB_HORIZONTAL;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxToolBarNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxToolBarNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxToolBar::EntityT(parent, id, pos, size, style, name);
 	RefPtr<Value_wxToolBar> pValue_gurax(new Value_wxToolBar(pEntity_gurax));
@@ -102,12 +103,14 @@ Gurax_ImplementMethodEx(wxToolBar, AddCheckTool_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int toolId = args_gurax.PickNumber<int>();
-	const char* label = args_gurax.PickString();
+	wxString label(args_gurax.PickString());
 	Value_wxBitmap& value_bitmap1 = args_gurax.Pick<Value_wxBitmap>();
 	const wxBitmap& bitmap1 = value_bitmap1.GetEntity();
 	const wxBitmap& bmpDisabled = args_gurax.IsValid()? args_gurax.Pick<Value_wxBitmap>().GetEntity() : wxNullBitmap;
-	const char* shortHelp = args_gurax.IsValid()? args_gurax.PickString() : "";
-	const char* longHelp = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool shortHelp_validFlag = args_gurax.IsValid();
+	wxString shortHelp = shortHelp_validFlag? wxString(args_gurax.PickString()) : "";
+	bool longHelp_validFlag = args_gurax.IsValid();
+	wxString longHelp = longHelp_validFlag? wxString(args_gurax.PickString()) : "";
 	const Value& clientData = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(
@@ -133,7 +136,8 @@ Gurax_ImplementMethodEx(wxToolBar, AddControl_gurax, processor_gurax, argument_g
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxControl& value_control = args_gurax.Pick<Value_wxControl>();
 	wxControl* control = value_control.GetEntityPtr();
-	const char* label = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool label_validFlag = args_gurax.IsValid();
+	wxString label = label_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(
 		*pEntity_gurax->AddControl(control, label)));
@@ -162,12 +166,14 @@ Gurax_ImplementMethodEx(wxToolBar, AddRadioTool_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int toolId = args_gurax.PickNumber<int>();
-	const char* label = args_gurax.PickString();
+	wxString label(args_gurax.PickString());
 	Value_wxBitmap& value_bitmap1 = args_gurax.Pick<Value_wxBitmap>();
 	const wxBitmap& bitmap1 = value_bitmap1.GetEntity();
 	const wxBitmap& bmpDisabled = args_gurax.IsValid()? args_gurax.Pick<Value_wxBitmap>().GetEntity() : wxNullBitmap;
-	const char* shortHelp = args_gurax.IsValid()? args_gurax.PickString() : "";
-	const char* longHelp = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool shortHelp_validFlag = args_gurax.IsValid();
+	wxString shortHelp = shortHelp_validFlag? wxString(args_gurax.PickString()) : "";
+	bool longHelp_validFlag = args_gurax.IsValid();
+	wxString longHelp = longHelp_validFlag? wxString(args_gurax.PickString()) : "";
 	const Value& clientData = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(
@@ -635,7 +641,8 @@ Gurax_ImplementMethodEx(wxToolBar, InsertControl_gurax, processor_gurax, argumen
 	size_t pos = args_gurax.PickNumber<size_t>();
 	Value_wxControl& value_control = args_gurax.Pick<Value_wxControl>();
 	wxControl* control = value_control.GetEntityPtr();
-	const char* label = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool label_validFlag = args_gurax.IsValid();
+	wxString label = label_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(
 		*pEntity_gurax->InsertControl(pos, control, label)));
@@ -903,7 +910,7 @@ Gurax_ImplementMethodEx(wxToolBar, SetToolLongHelp_gurax, processor_gurax, argum
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int toolId = args_gurax.PickNumber<int>();
-	const char* helpString = args_gurax.PickString();
+	wxString helpString(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetToolLongHelp(toolId, helpString);
 	return Gurax::Value::nil();
@@ -992,7 +999,7 @@ Gurax_ImplementMethodEx(wxToolBar, SetToolShortHelp_gurax, processor_gurax, argu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int toolId = args_gurax.PickNumber<int>();
-	const char* helpString = args_gurax.PickString();
+	wxString helpString(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetToolShortHelp(toolId, helpString);
 	return Gurax::Value::nil();

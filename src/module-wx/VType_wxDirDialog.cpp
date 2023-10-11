@@ -63,13 +63,16 @@ Gurax_ImplementConstructorEx(DirDialog_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
-	const char* message = args_gurax.IsValid()? args_gurax.PickString() : wxDirSelectorPromptStr;
-	const char* defaultPath = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool message_validFlag = args_gurax.IsValid();
+	wxString message = message_validFlag? wxString(args_gurax.PickString()) : wxDirSelectorPromptStr;
+	bool defaultPath_validFlag = args_gurax.IsValid();
+	wxString defaultPath = defaultPath_validFlag? wxString(args_gurax.PickString()) : "";
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxDD_DEFAULT_STYLE;
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxDirDialogNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxDirDialogNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxDirDialog::EntityT(parent, message, defaultPath, style, pos, size, name);
 	RefPtr<Value_wxDirDialog> pValue_gurax(new Value_wxDirDialog(pEntity_gurax));
@@ -129,7 +132,7 @@ Gurax_ImplementMethodEx(wxDirDialog, SetMessage_gurax, processor_gurax, argument
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* message = args_gurax.PickString();
+	wxString message(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetMessage(message);
 	return Gurax::Value::nil();
@@ -150,7 +153,7 @@ Gurax_ImplementMethodEx(wxDirDialog, SetPath_gurax, processor_gurax, argument_gu
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* path = args_gurax.PickString();
+	wxString path(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetPath(path);
 	return Gurax::Value::nil();

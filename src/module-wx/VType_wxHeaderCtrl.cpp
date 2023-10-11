@@ -76,7 +76,8 @@ Gurax_ImplementMethodEx(wxHeaderCtrl, Create_gurax, processor_gurax, argument_gu
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxHD_DEFAULT_STYLE;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxHeaderCtrlNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxHeaderCtrlNameStr;
 	// Function body
 	bool rtn = pEntity_gurax->Create(parent, winid, pos, size, style, name);
 	return new Gurax::Value_Bool(rtn);
@@ -273,7 +274,8 @@ Gurax_ImplementMethodEx(wxHeaderCtrl, ShowColumnsMenu_gurax, processor_gurax, ar
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
 	const wxPoint& pt = value_pt.GetEntity();
-	const char* title = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool title_validFlag = args_gurax.IsValid();
+	wxString title = title_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	bool rtn = pEntity_gurax->ShowColumnsMenu(pt, title);
 	return new Gurax::Value_Bool(rtn);

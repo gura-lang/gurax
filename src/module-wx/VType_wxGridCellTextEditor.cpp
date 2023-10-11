@@ -81,7 +81,7 @@ Gurax_ImplementMethodEx(wxGridCellTextEditor, SetParameters_gurax, processor_gur
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* params = args_gurax.PickString();
+	wxString params(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetParameters(params);
 	return Gurax::Value::nil();

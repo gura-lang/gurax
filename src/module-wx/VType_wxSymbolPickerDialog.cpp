@@ -64,14 +64,15 @@ Gurax_ImplementConstructorEx(SymbolPickerDialog_gurax, processor_gurax, argument
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* symbol = args_gurax.PickString();
-	const char* initialFont = args_gurax.PickString();
-	const char* normalTextFont = args_gurax.PickString();
+	wxString symbol(args_gurax.PickString());
+	wxString initialFont(args_gurax.PickString());
+	wxString normalTextFont(args_gurax.PickString());
 	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* parent = value_parent.GetEntityPtr();
 	bool id_validFlag = args_gurax.IsValid();
 	wxWindowID id = id_validFlag? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
-	const char* title = args_gurax.IsValid()? args_gurax.PickString() : "Symbols";
+	bool title_validFlag = args_gurax.IsValid();
+	wxString title = title_validFlag? wxString(args_gurax.PickString()) : "Symbols";
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
@@ -109,14 +110,15 @@ Gurax_ImplementMethodEx(wxSymbolPickerDialog, Create_gurax, processor_gurax, arg
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* symbol = args_gurax.PickString();
-	const char* initialFont = args_gurax.PickString();
-	const char* normalTextFont = args_gurax.PickString();
+	wxString symbol(args_gurax.PickString());
+	wxString initialFont(args_gurax.PickString());
+	wxString normalTextFont(args_gurax.PickString());
 	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* parent = value_parent.GetEntityPtr();
 	bool id_validFlag = args_gurax.IsValid();
 	wxWindowID id = id_validFlag? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
-	const char* caption = args_gurax.IsValid()? args_gurax.PickString() : "Symbols";
+	bool caption_validFlag = args_gurax.IsValid();
+	wxString caption = caption_validFlag? wxString(args_gurax.PickString()) : "Symbols";
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxSize(400, 300);
 	bool style_validFlag = args_gurax.IsValid();
@@ -243,7 +245,7 @@ Gurax_ImplementMethodEx(wxSymbolPickerDialog, SetFontName_gurax, processor_gurax
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* value = args_gurax.PickString();
+	wxString value(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetFontName(value);
 	return Gurax::Value::nil();
@@ -285,7 +287,7 @@ Gurax_ImplementMethodEx(wxSymbolPickerDialog, SetNormalTextFontName_gurax, proce
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* value = args_gurax.PickString();
+	wxString value(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetNormalTextFontName(value);
 	return Gurax::Value::nil();
@@ -306,7 +308,7 @@ Gurax_ImplementMethodEx(wxSymbolPickerDialog, SetSymbol_gurax, processor_gurax, 
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* value = args_gurax.PickString();
+	wxString value(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetSymbol(value);
 	return Gurax::Value::nil();

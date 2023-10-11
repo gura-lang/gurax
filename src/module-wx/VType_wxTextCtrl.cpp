@@ -66,13 +66,15 @@ Gurax_ImplementConstructorEx(TextCtrl_gurax, processor_gurax, argument_gurax)
 	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* parent = value_parent.GetEntityPtr();
 	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
-	const char* value = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool value_validFlag = args_gurax.IsValid();
+	wxString value = value_validFlag? wxString(args_gurax.PickString()) : "";
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxTextCtrlNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxTextCtrlNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxTextCtrl::EntityT(parent, id, value, pos, size, style, validator, name);
 	RefPtr<Value_wxTextCtrl> pValue_gurax(new Value_wxTextCtrl(pEntity_gurax));
@@ -345,7 +347,7 @@ Gurax_ImplementMethodEx(wxTextCtrl, LoadFile_gurax, processor_gurax, argument_gu
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* filename = args_gurax.PickString();
+	wxString filename(args_gurax.PickString());
 	bool fileType_validFlag = args_gurax.IsValid();
 	int fileType = fileType_validFlag? args_gurax.PickNumber<int>() : wxTEXT_TYPE_ANY;
 	// Function body
@@ -458,7 +460,8 @@ Gurax_ImplementMethodEx(wxTextCtrl, SaveFile_gurax, processor_gurax, argument_gu
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* filename = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool filename_validFlag = args_gurax.IsValid();
+	wxString filename = filename_validFlag? wxString(args_gurax.PickString()) : "";
 	bool fileType_validFlag = args_gurax.IsValid();
 	int fileType = fileType_validFlag? args_gurax.PickNumber<int>() : wxTEXT_TYPE_ANY;
 	// Function body
@@ -594,7 +597,7 @@ Gurax_ImplementMethodEx(wxTextCtrl, AppendText_gurax, processor_gurax, argument_
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* text = args_gurax.PickString();
+	wxString text(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->AppendText(text);
 	return Gurax::Value::nil();
@@ -755,7 +758,7 @@ Gurax_ImplementMethodEx(wxTextCtrl, ChangeValue_gurax, processor_gurax, argument
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* value = args_gurax.PickString();
+	wxString value(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->ChangeValue(value);
 	return Gurax::Value::nil();
@@ -1039,7 +1042,7 @@ Gurax_ImplementMethodEx(wxTextCtrl, Replace_gurax, processor_gurax, argument_gur
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	long from = args_gurax.PickNumber<long>();
 	long to = args_gurax.PickNumber<long>();
-	const char* value = args_gurax.PickString();
+	wxString value(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->Replace(from, to, value);
 	return Gurax::Value::nil();
@@ -1197,7 +1200,7 @@ Gurax_ImplementMethodEx(wxTextCtrl, SetHint_gurax, processor_gurax, argument_gur
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* hint = args_gurax.PickString();
+	wxString hint(args_gurax.PickString());
 	// Function body
 	bool rtn = pEntity_gurax->SetHint(hint);
 	return new Gurax::Value_Bool(rtn);
@@ -1253,7 +1256,7 @@ Gurax_ImplementMethodEx(wxTextCtrl, SetValue_gurax, processor_gurax, argument_gu
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* value = args_gurax.PickString();
+	wxString value(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetValue(value);
 	return Gurax::Value::nil();
@@ -1291,7 +1294,7 @@ Gurax_ImplementMethodEx(wxTextCtrl, WriteText_gurax, processor_gurax, argument_g
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* text = args_gurax.PickString();
+	wxString text(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->WriteText(text);
 	return Gurax::Value::nil();

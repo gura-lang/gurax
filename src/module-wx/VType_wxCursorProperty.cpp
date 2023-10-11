@@ -58,8 +58,10 @@ Gurax_ImplementConstructorEx(CursorProperty_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* label = args_gurax.IsValid()? args_gurax.PickString() : wxPG_LABEL;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxPG_LABEL;
+	bool label_validFlag = args_gurax.IsValid();
+	wxString label = label_validFlag? wxString(args_gurax.PickString()) : wxPG_LABEL;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxPG_LABEL;
 	bool value_validFlag = args_gurax.IsValid();
 	int value = value_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body

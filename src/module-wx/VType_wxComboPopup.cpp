@@ -135,7 +135,7 @@ Gurax_ImplementMethodEx(wxComboPopup, FindItem_gurax, processor_gurax, argument_
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* item = args_gurax.PickString();
+	wxString item(args_gurax.PickString());
 	RefPtr<Referencer> trueItem(args_gurax.IsValid()? args_gurax.PickReferencer().Reference() : nullptr);
 	// Function body
 	bool rtn;
@@ -370,7 +370,7 @@ Gurax_ImplementMethodEx(wxComboPopup, SetStringValue_gurax, processor_gurax, arg
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* value = args_gurax.PickString();
+	wxString value(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetStringValue(value);
 	return Gurax::Value::nil();
@@ -568,7 +568,7 @@ wxString Value_wxComboPopup::EntityT::GetStringValue() const
 			Util::ExitMainLoop();
 			break;
 		}
-		return Value_String::GetString(*pValueRtn);
+		return wxString(Value_String::GetString(*pValueRtn));
 	} while (0);
 	return public_GetStringValue();
 }

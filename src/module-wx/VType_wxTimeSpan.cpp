@@ -117,7 +117,8 @@ Gurax_ImplementMethodEx(wxTimeSpan, Format_gurax, processor_gurax, argument_gura
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* format = args_gurax.IsValid()? args_gurax.PickString() : wxDefaultTimeSpanFormat;
+	bool format_validFlag = args_gurax.IsValid();
+	wxString format = format_validFlag? wxString(args_gurax.PickString()) : wxDefaultTimeSpanFormat;
 	// Function body
 	wxString rtn = pEntity_gurax->Format(format);
 	return new Gurax::Value_String(rtn.utf8_str().data());

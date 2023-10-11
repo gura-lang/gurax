@@ -62,8 +62,8 @@ Gurax_ImplementConstructorEx(MultiChoiceDialog_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
-	const char* message = args_gurax.PickString();
-	const char* caption = args_gurax.PickString();
+	wxString message(args_gurax.PickString());
+	wxString caption(args_gurax.PickString());
 	wxArrayString choices = Util::CreateArrayString(args_gurax.PickList());
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxCHOICEDLG_STYLE;

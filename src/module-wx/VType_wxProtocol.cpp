@@ -115,7 +115,7 @@ Gurax_ImplementMethodEx(wxProtocol, GetInputStream_gurax, processor_gurax, argum
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* path = args_gurax.PickString();
+	wxString path(args_gurax.PickString());
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxInputStream(
 		pEntity_gurax->GetInputStream(path)));
@@ -153,7 +153,7 @@ Gurax_ImplementMethodEx(wxProtocol, SetPassword_gurax, processor_gurax, argument
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* user = args_gurax.PickString();
+	wxString user(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetPassword(user);
 	return Gurax::Value::nil();
@@ -174,7 +174,7 @@ Gurax_ImplementMethodEx(wxProtocol, SetUser_gurax, processor_gurax, argument_gur
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* user = args_gurax.PickString();
+	wxString user(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetUser(user);
 	return Gurax::Value::nil();
@@ -274,7 +274,7 @@ Gurax_ImplementMethodEx(wxProtocol, LogRequest_gurax, processor_gurax, argument_
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* str = args_gurax.PickString();
+	wxString str(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->LogRequest(str);
 	return Gurax::Value::nil();
@@ -295,7 +295,7 @@ Gurax_ImplementMethodEx(wxProtocol, LogResponse_gurax, processor_gurax, argument
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* str = args_gurax.PickString();
+	wxString str(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->LogResponse(str);
 	return Gurax::Value::nil();

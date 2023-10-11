@@ -61,8 +61,9 @@ Gurax_ImplementConstructorEx(MessageDialog_gurax, processor_gurax, argument_gura
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
-	const char* message = args_gurax.PickString();
-	const char* caption = args_gurax.IsValid()? args_gurax.PickString() : wxMessageBoxCaptionStr;
+	wxString message(args_gurax.PickString());
+	bool caption_validFlag = args_gurax.IsValid();
+	wxString caption = caption_validFlag? wxString(args_gurax.PickString()) : wxMessageBoxCaptionStr;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : (wxOK | wxCENTRE);
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
@@ -91,7 +92,7 @@ Gurax_ImplementMethodEx(wxMessageDialog, SetExtendedMessage_gurax, processor_gur
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* extendedMessage = args_gurax.PickString();
+	wxString extendedMessage(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetExtendedMessage(extendedMessage);
 	return Gurax::Value::nil();
@@ -112,7 +113,7 @@ Gurax_ImplementMethodEx(wxMessageDialog, SetMessage_gurax, processor_gurax, argu
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* message = args_gurax.PickString();
+	wxString message(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetMessage(message);
 	return Gurax::Value::nil();

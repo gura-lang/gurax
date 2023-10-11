@@ -64,7 +64,8 @@ Gurax_ImplementConstructorEx(Wizard_gurax, processor_gurax, argument_gurax)
 	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
 	bool id_validFlag = args_gurax.IsValid();
 	int id = id_validFlag? args_gurax.PickNumber<int>() : wxID_ANY;
-	const char* title = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool title_validFlag = args_gurax.IsValid();
+	wxString title = title_validFlag? wxString(args_gurax.PickString()) : "";
 	const wxBitmap& bitmap = args_gurax.IsValid()? args_gurax.Pick<Value_wxBitmap>().GetEntity() : wxNullBitmap;
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	bool style_validFlag = args_gurax.IsValid();
@@ -103,7 +104,8 @@ Gurax_ImplementMethodEx(wxWizard, Create_gurax, processor_gurax, argument_gurax)
 	wxWindow* parent = value_parent.GetEntityPtr();
 	bool id_validFlag = args_gurax.IsValid();
 	int id = id_validFlag? args_gurax.PickNumber<int>() : wxID_ANY;
-	const char* title = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool title_validFlag = args_gurax.IsValid();
+	wxString title = title_validFlag? wxString(args_gurax.PickString()) : "";
 	const wxBitmap& bitmap = args_gurax.IsValid()? args_gurax.Pick<Value_wxBitmap>().GetEntity() : wxNullBitmap;
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	bool style_validFlag = args_gurax.IsValid();

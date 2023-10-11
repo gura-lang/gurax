@@ -69,7 +69,8 @@ Gurax_ImplementConstructorEx(PropertyGrid_gurax, processor_gurax, argument_gurax
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxPG_DEFAULT_STYLE;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxPropertyGridNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxPropertyGridNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxPropertyGrid::EntityT(parent, id, pos, size, style, name);
 	RefPtr<Value_wxPropertyGrid> pValue_gurax(new Value_wxPropertyGrid(pEntity_gurax));
@@ -237,7 +238,8 @@ Gurax_ImplementMethodEx(wxPropertyGrid, Create_gurax, processor_gurax, argument_
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxPG_DEFAULT_STYLE;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxPropertyGridNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxPropertyGridNameStr;
 	// Function body
 	bool rtn = pEntity_gurax->Create(parent, id, pos, size, style, name);
 	return new Gurax::Value_Bool(rtn);

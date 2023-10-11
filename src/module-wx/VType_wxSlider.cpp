@@ -76,7 +76,8 @@ Gurax_ImplementConstructorEx(Slider_gurax, processor_gurax, argument_gurax)
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxSL_HORIZONTAL;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxSliderNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxSliderNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxSlider::EntityT(parent, id, value, minValue, maxValue, pos, size, style, validator, name);
 	RefPtr<Value_wxSlider> pValue_gurax(new Value_wxSlider(pEntity_gurax));
@@ -156,7 +157,8 @@ Gurax_ImplementMethodEx(wxSlider, Create_gurax, processor_gurax, argument_gurax)
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxSL_HORIZONTAL;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxSliderNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxSliderNameStr;
 	// Function body
 	bool rtn = pEntity_gurax->Create(parent, id, value, minValue, maxValue, point, size, style, validator, name);
 	return new Gurax::Value_Bool(rtn);

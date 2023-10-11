@@ -69,7 +69,8 @@ Gurax_ImplementConstructorEx(Control_gurax, processor_gurax, argument_gurax)
 	bool style_validFlag = args_gurax.IsValid();
 	int style = style_validFlag? args_gurax.PickNumber<int>() : 0;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxControlNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxControlNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxControl::EntityT(parent, id, pos, size, style, validator, name);
 	RefPtr<Value_wxControl> pValue_gurax(new Value_wxControl(pEntity_gurax));
@@ -199,7 +200,7 @@ Gurax_ImplementMethodEx(wxControl, SetLabel_gurax, processor_gurax, argument_gur
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* label = args_gurax.PickString();
+	wxString label(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetLabel(label);
 	return Gurax::Value::nil();
@@ -220,7 +221,7 @@ Gurax_ImplementMethodEx(wxControl, SetLabelText_gurax, processor_gurax, argument
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* text = args_gurax.PickString();
+	wxString text(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetLabelText(text);
 	return Gurax::Value::nil();
@@ -241,7 +242,7 @@ Gurax_ImplementMethodEx(wxControl, SetLabelMarkup_gurax, processor_gurax, argume
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* markup = args_gurax.PickString();
+	wxString markup(args_gurax.PickString());
 	// Function body
 	bool rtn = pEntity_gurax->SetLabelMarkup(markup);
 	return new Gurax::Value_Bool(rtn);

@@ -194,7 +194,7 @@ Gurax_ImplementMethodEx(wxIcon, LoadFile_gurax, processor_gurax, argument_gurax)
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	bool type_validFlag = args_gurax.IsValid();
 	wxBitmapType type = type_validFlag? args_gurax.PickNumber<wxBitmapType>() : wxICON_DEFAULT_TYPE;
 	bool desiredWidth_validFlag = args_gurax.IsValid();

@@ -178,7 +178,7 @@ Gurax_ImplementMethodEx(wxAuiManager, LoadPerspective_gurax, processor_gurax, ar
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* perspective = args_gurax.PickString();
+	wxString perspective(args_gurax.PickString());
 	bool update = args_gurax.IsValid()? args_gurax.PickBool() : true;
 	// Function body
 	bool rtn = pEntity_gurax->LoadPerspective(perspective, update);

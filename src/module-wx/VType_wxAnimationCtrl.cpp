@@ -70,7 +70,8 @@ Gurax_ImplementConstructorEx(AnimationCtrl_gurax, processor_gurax, argument_gura
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxAC_DEFAULT_STYLE;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxAnimationCtrlNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxAnimationCtrlNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxAnimationCtrl::EntityT(parent, id, anim, pos, size, style, name);
 	RefPtr<Value_wxAnimationCtrl> pValue_gurax(new Value_wxAnimationCtrl(pEntity_gurax));
@@ -110,7 +111,8 @@ Gurax_ImplementMethodEx(wxAnimationCtrl, Create_gurax, processor_gurax, argument
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxAC_DEFAULT_STYLE;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxAnimationCtrlNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxAnimationCtrlNameStr;
 	// Function body
 	bool rtn = pEntity_gurax->Create(parent, id, anim, pos, size, style, name);
 	return new Gurax::Value_Bool(rtn);
@@ -185,7 +187,7 @@ Gurax_ImplementMethodEx(wxAnimationCtrl, LoadFile_gurax, processor_gurax, argume
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* file = args_gurax.PickString();
+	wxString file(args_gurax.PickString());
 	bool animType_validFlag = args_gurax.IsValid();
 	wxAnimationType animType = animType_validFlag? args_gurax.PickNumber<wxAnimationType>() : wxANIMATION_TYPE_ANY;
 	// Function body

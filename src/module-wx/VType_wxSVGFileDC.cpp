@@ -59,7 +59,7 @@ Gurax_ImplementConstructorEx(SVGFileDC_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* filename = args_gurax.PickString();
+	wxString filename(args_gurax.PickString());
 	bool width_validFlag = args_gurax.IsValid();
 	int width = width_validFlag? args_gurax.PickNumber<int>() : 320;
 	bool height_validFlag = args_gurax.IsValid();
@@ -403,7 +403,7 @@ Gurax_ImplementMethodEx(wxSVGFileDC, StartDoc_gurax, processor_gurax, argument_g
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* message = args_gurax.PickString();
+	wxString message(args_gurax.PickString());
 	// Function body
 	bool rtn = pEntity_gurax->StartDoc(message);
 	return new Gurax::Value_Bool(rtn);

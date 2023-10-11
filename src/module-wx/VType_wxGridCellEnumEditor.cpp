@@ -56,7 +56,8 @@ Gurax_ImplementConstructorEx(GridCellEnumEditor_gurax, processor_gurax, argument
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* choices = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool choices_validFlag = args_gurax.IsValid();
+	wxString choices = choices_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGridCellEnumEditor(
 		wxGridCellEnumEditor(choices)));

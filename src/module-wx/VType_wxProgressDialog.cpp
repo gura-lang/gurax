@@ -60,8 +60,8 @@ Gurax_ImplementConstructorEx(ProgressDialog_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* title = args_gurax.PickString();
-	const char* message = args_gurax.PickString();
+	wxString title(args_gurax.PickString());
+	wxString message(args_gurax.PickString());
 	bool maximum_validFlag = args_gurax.IsValid();
 	int maximum = maximum_validFlag? args_gurax.PickNumber<int>() : 100;
 	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;

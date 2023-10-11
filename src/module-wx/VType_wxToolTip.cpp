@@ -56,7 +56,7 @@ Gurax_ImplementConstructorEx(ToolTip_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* tip = args_gurax.PickString();
+	wxString tip(args_gurax.PickString());
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolTip(
 		wxToolTip(tip)));
@@ -115,7 +115,7 @@ Gurax_ImplementMethodEx(wxToolTip, SetTip_gurax, processor_gurax, argument_gurax
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* tip = args_gurax.PickString();
+	wxString tip(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetTip(tip);
 	return Gurax::Value::nil();

@@ -67,13 +67,15 @@ Gurax_ImplementConstructorEx(ComboCtrl_gurax, processor_gurax, argument_gurax)
 	wxWindow* parent = value_parent.GetEntityPtr();
 	bool id_validFlag = args_gurax.IsValid();
 	wxWindowID id = id_validFlag? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
-	const char* value = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool value_validFlag = args_gurax.IsValid();
+	wxString value = value_validFlag? wxString(args_gurax.PickString()) : "";
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxComboBoxNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxComboBoxNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxComboCtrl::EntityT(parent, id, value, pos, size, style, validator, name);
 	RefPtr<Value_wxComboCtrl> pValue_gurax(new Value_wxComboCtrl(pEntity_gurax));
@@ -639,7 +641,7 @@ Gurax_ImplementMethodEx(wxComboCtrl, Replace_gurax, processor_gurax, argument_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	long from = args_gurax.PickNumber<long>();
 	long to = args_gurax.PickNumber<long>();
-	const char* text = args_gurax.PickString();
+	wxString text(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->Replace(from, to, text);
 	return Gurax::Value::nil();
@@ -742,7 +744,7 @@ Gurax_ImplementMethodEx(wxComboCtrl, SetHint_gurax, processor_gurax, argument_gu
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* hint = args_gurax.PickString();
+	wxString hint(args_gurax.PickString());
 	// Function body
 	bool rtn = pEntity_gurax->SetHint(hint);
 	return new Gurax::Value_Bool(rtn);
@@ -932,7 +934,7 @@ Gurax_ImplementMethodEx(wxComboCtrl, SetText_gurax, processor_gurax, argument_gu
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* value = args_gurax.PickString();
+	wxString value(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetText(value);
 	return Gurax::Value::nil();
@@ -974,7 +976,7 @@ Gurax_ImplementMethodEx(wxComboCtrl, SetValue_gurax, processor_gurax, argument_g
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* value = args_gurax.PickString();
+	wxString value(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetValue(value);
 	return Gurax::Value::nil();
@@ -995,7 +997,7 @@ Gurax_ImplementMethodEx(wxComboCtrl, SetValueByUser_gurax, processor_gurax, argu
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* value = args_gurax.PickString();
+	wxString value(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetValueByUser(value);
 	return Gurax::Value::nil();
@@ -1095,7 +1097,7 @@ Gurax_ImplementMethodEx(wxComboCtrl, AppendText_gurax, processor_gurax, argument
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* text = args_gurax.PickString();
+	wxString text(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->AppendText(text);
 	return Gurax::Value::nil();
@@ -1256,7 +1258,7 @@ Gurax_ImplementMethodEx(wxComboCtrl, ChangeValue_gurax, processor_gurax, argumen
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* value = args_gurax.PickString();
+	wxString value(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->ChangeValue(value);
 	return Gurax::Value::nil();
@@ -1487,7 +1489,7 @@ Gurax_ImplementMethodEx(wxComboCtrl, WriteText_gurax, processor_gurax, argument_
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* text = args_gurax.PickString();
+	wxString text(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->WriteText(text);
 	return Gurax::Value::nil();

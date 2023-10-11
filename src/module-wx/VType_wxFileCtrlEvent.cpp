@@ -152,7 +152,7 @@ Gurax_ImplementMethodEx(wxFileCtrlEvent, SetDirectory_gurax, processor_gurax, ar
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* directory = args_gurax.PickString();
+	wxString directory(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetDirectory(directory);
 	return Gurax::Value::nil();

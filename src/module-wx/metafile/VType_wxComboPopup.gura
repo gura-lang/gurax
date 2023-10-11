@@ -23,7 +23,7 @@ ComboPopup = Class():loosePointer {
 	GetAdjustedSize(minWidth as int, prefHeight as int, maxHeight as int):virtual as Size
 	GetComboCtrl() as ComboCtrl_p
 	GetControl():virtual:pure as Window_p = 'return nullptr;'
-	GetStringValue():const:virtual:pure as wxString = 'return "";'
+	GetStringValue():const:virtual:pure as String = 'return "";'
 	Init():virtual as void
 	IsCreated() as bool
 	LazyCreate():virtual as bool
@@ -32,7 +32,7 @@ ComboPopup = Class():loosePointer {
 	OnDismiss():virtual as void
 	OnPopup():virtual as void
 	PaintComboControl(dc as DC_r, rect as const_Rect_r):virtual as void
-	SetStringValue(value as const_wxString_r):virtual as void
+	SetStringValue(value as const_String_r):virtual as void
 } %% R'''
 # Overview
 

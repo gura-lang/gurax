@@ -65,15 +65,20 @@ Gurax_ImplementConstructorEx(FileDialog_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
-	const char* message = args_gurax.IsValid()? args_gurax.PickString() : wxFileSelectorPromptStr;
-	const char* defaultDir = args_gurax.IsValid()? args_gurax.PickString() : "";
-	const char* defaultFile = args_gurax.IsValid()? args_gurax.PickString() : "";
-	const char* wildcard = args_gurax.IsValid()? args_gurax.PickString() : wxFileSelectorDefaultWildcardStr;
+	bool message_validFlag = args_gurax.IsValid();
+	wxString message = message_validFlag? wxString(args_gurax.PickString()) : wxFileSelectorPromptStr;
+	bool defaultDir_validFlag = args_gurax.IsValid();
+	wxString defaultDir = defaultDir_validFlag? wxString(args_gurax.PickString()) : "";
+	bool defaultFile_validFlag = args_gurax.IsValid();
+	wxString defaultFile = defaultFile_validFlag? wxString(args_gurax.PickString()) : "";
+	bool wildcard_validFlag = args_gurax.IsValid();
+	wxString wildcard = wildcard_validFlag? wxString(args_gurax.PickString()) : wxFileSelectorDefaultWildcardStr;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxFD_DEFAULT_STYLE;
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxFileDialogNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxFileDialogNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxFileDialog::EntityT(parent, message, defaultDir, defaultFile, wildcard, style, pos, size, name);
 	RefPtr<Value_wxFileDialog> pValue_gurax(new Value_wxFileDialog(pEntity_gurax));
@@ -272,7 +277,7 @@ Gurax_ImplementMethodEx(wxFileDialog, SetDirectory_gurax, processor_gurax, argum
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* directory = args_gurax.PickString();
+	wxString directory(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetDirectory(directory);
 	return Gurax::Value::nil();
@@ -293,7 +298,7 @@ Gurax_ImplementMethodEx(wxFileDialog, SetFilename_gurax, processor_gurax, argume
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* setfilename = args_gurax.PickString();
+	wxString setfilename(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetFilename(setfilename);
 	return Gurax::Value::nil();
@@ -335,7 +340,7 @@ Gurax_ImplementMethodEx(wxFileDialog, SetMessage_gurax, processor_gurax, argumen
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* message = args_gurax.PickString();
+	wxString message(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetMessage(message);
 	return Gurax::Value::nil();
@@ -356,7 +361,7 @@ Gurax_ImplementMethodEx(wxFileDialog, SetPath_gurax, processor_gurax, argument_g
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* path = args_gurax.PickString();
+	wxString path(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetPath(path);
 	return Gurax::Value::nil();
@@ -377,7 +382,7 @@ Gurax_ImplementMethodEx(wxFileDialog, SetWildcard_gurax, processor_gurax, argume
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* wildCard = args_gurax.PickString();
+	wxString wildCard(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetWildcard(wildCard);
 	return Gurax::Value::nil();

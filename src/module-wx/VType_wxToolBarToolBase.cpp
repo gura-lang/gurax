@@ -471,7 +471,7 @@ Gurax_ImplementMethodEx(wxToolBarToolBase, SetShortHelp_gurax, processor_gurax, 
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* help = args_gurax.PickString();
+	wxString help(args_gurax.PickString());
 	// Function body
 	bool rtn = pEntity_gurax->SetShortHelp(help);
 	return new Gurax::Value_Bool(rtn);
@@ -492,7 +492,7 @@ Gurax_ImplementMethodEx(wxToolBarToolBase, SetLongHelp_gurax, processor_gurax, a
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* help = args_gurax.PickString();
+	wxString help(args_gurax.PickString());
 	// Function body
 	bool rtn = pEntity_gurax->SetLongHelp(help);
 	return new Gurax::Value_Bool(rtn);
@@ -557,7 +557,7 @@ Gurax_ImplementMethodEx(wxToolBarToolBase, SetLabel_gurax, processor_gurax, argu
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* label = args_gurax.PickString();
+	wxString label(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetLabel(label);
 	return Gurax::Value::nil();

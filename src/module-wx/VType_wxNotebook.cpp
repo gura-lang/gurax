@@ -68,7 +68,8 @@ Gurax_ImplementConstructorEx(Notebook_gurax, processor_gurax, argument_gurax)
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxNotebookNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxNotebookNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxNotebook::EntityT(parent, id, pos, size, style, name);
 	RefPtr<Value_wxNotebook> pValue_gurax(new Value_wxNotebook(pEntity_gurax));
@@ -218,7 +219,7 @@ Gurax_ImplementMethodEx(wxNotebook, SetPageText_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	size_t page = args_gurax.PickNumber<size_t>();
-	const char* text = args_gurax.PickString();
+	wxString text(args_gurax.PickString());
 	// Function body
 	bool rtn = pEntity_gurax->SetPageText(page, text);
 	return new Gurax::Value_Bool(rtn);
@@ -305,7 +306,7 @@ Gurax_ImplementMethodEx(wxNotebook, InsertPage_gurax, processor_gurax, argument_
 	size_t index = args_gurax.PickNumber<size_t>();
 	Value_wxWindow& value_page = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* page = value_page.GetEntityPtr();
-	const char* text = args_gurax.PickString();
+	wxString text(args_gurax.PickString());
 	bool select = args_gurax.IsValid()? args_gurax.PickBool() : false;
 	bool imageId_validFlag = args_gurax.IsValid();
 	int imageId = imageId_validFlag? args_gurax.PickNumber<int>() : wxNotebook::NO_IMAGE;

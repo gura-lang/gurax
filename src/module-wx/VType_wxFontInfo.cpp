@@ -112,7 +112,7 @@ Gurax_ImplementMethodEx(wxFontInfo, FaceName_gurax, processor_gurax, argument_gu
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* faceName = args_gurax.PickString();
+	wxString faceName(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->FaceName(faceName);
 	return valueThis_gurax.Reference();

@@ -58,8 +58,10 @@ Gurax_ImplementConstructorEx(BoolProperty_gurax, processor_gurax, argument_gurax
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* label = args_gurax.IsValid()? args_gurax.PickString() : wxPG_LABEL;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxPG_LABEL;
+	bool label_validFlag = args_gurax.IsValid();
+	wxString label = label_validFlag? wxString(args_gurax.PickString()) : wxPG_LABEL;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxPG_LABEL;
 	bool value = args_gurax.IsValid()? args_gurax.PickBool() : false;
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBoolProperty(
@@ -113,7 +115,7 @@ Gurax_ImplementMethodEx(wxBoolProperty, StringToValue_gurax, processor_gurax, ar
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxVariant& value_variant = args_gurax.Pick<Value_wxVariant>();
 	wxVariant& variant = value_variant.GetEntity();
-	const char* text = args_gurax.PickString();
+	wxString text(args_gurax.PickString());
 	bool argFlags_validFlag = args_gurax.IsValid();
 	int argFlags = argFlags_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body
@@ -164,7 +166,7 @@ Gurax_ImplementMethodEx(wxBoolProperty, DoSetAttribute_gurax, processor_gurax, a
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	Value_wxVariant& value_value = args_gurax.Pick<Value_wxVariant>();
 	wxVariant& value = value_value.GetEntity();
 	// Function body

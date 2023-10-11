@@ -69,7 +69,8 @@ Gurax_ImplementConstructorEx(ScrolledWindow_gurax, processor_gurax, argument_gur
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : (wxHSCROLL | wxVSCROLL);
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : "scrolledWindow";
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : "scrolledWindow";
 	// Function body
 	auto pEntity_gurax = new Value_wxScrolledWindow::EntityT(parent, id, pos, size, style, name);
 	RefPtr<Value_wxScrolledWindow> pValue_gurax(new Value_wxScrolledWindow(pEntity_gurax));

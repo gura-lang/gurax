@@ -72,7 +72,8 @@ Gurax_ImplementConstructorEx(GLCanvas_gurax, processor_gurax, argument_gurax)
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : "GLCanvas";
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : "GLCanvas";
 	const wxPalette& palette = args_gurax.IsValid()? args_gurax.Pick<Value_wxPalette>().GetEntity() : wxNullPalette;
 	// Function body
 	auto pEntity_gurax = new Value_wxGLCanvas::EntityT(parent, id, attribList, pos, size, style, name, palette);
@@ -99,7 +100,7 @@ Gurax_ImplementMethodEx(wxGLCanvas, SetColour_gurax, processor_gurax, argument_g
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* colour = args_gurax.PickString();
+	wxString colour(args_gurax.PickString());
 	// Function body
 	bool rtn = pEntity_gurax->SetColour(colour);
 	return new Gurax::Value_Bool(rtn);

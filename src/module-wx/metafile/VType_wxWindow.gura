@@ -606,12 +606,13 @@ Window = Class(EvtHandler) {
 	Update() as void
 	SetBackgroundColour(colour as const_Colour_r) as bool
 	SetBackgroundStyle(style as BackgroundStyle) as bool
-	IsTransparentBackgroundSupported(reason? as String) as bool = \
+	IsTransparentBackgroundSupported(&reason:nilRef?) as bool = \
 		R'''
 		bool rtn;
 		if (reason) {
-			wxString reason_(reason);
+			wxString reason_;
 			rtn = pEntity_gurax->IsTransparentBackgroundSupported(&reason_);
+			reason->SetValue(new Value_String(reason_.utf8_str().data()));
 		} else {
 			rtn = pEntity_gurax->IsTransparentBackgroundSupported();
 		}

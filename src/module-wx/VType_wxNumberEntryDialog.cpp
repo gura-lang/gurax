@@ -64,9 +64,9 @@ Gurax_ImplementConstructorEx(NumberEntryDialog_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
-	const char* message = args_gurax.PickString();
-	const char* prompt = args_gurax.PickString();
-	const char* caption = args_gurax.PickString();
+	wxString message(args_gurax.PickString());
+	wxString prompt(args_gurax.PickString());
+	wxString caption(args_gurax.PickString());
 	long value = args_gurax.PickNumber<long>();
 	long min = args_gurax.PickNumber<long>();
 	long max = args_gurax.PickNumber<long>();

@@ -76,7 +76,8 @@ Gurax_ImplementConstructorEx(RearrangeCtrl_gurax, processor_gurax, argument_gura
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxRearrangeListNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxRearrangeListNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxRearrangeCtrl::EntityT(parent, id, pos, size, order, items, style, validator, name);
 	RefPtr<Value_wxRearrangeCtrl> pValue_gurax(new Value_wxRearrangeCtrl(pEntity_gurax));
@@ -122,7 +123,8 @@ Gurax_ImplementMethodEx(wxRearrangeCtrl, Create_gurax, processor_gurax, argument
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxRearrangeListNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxRearrangeListNameStr;
 	// Function body
 	bool rtn = pEntity_gurax->Create(parent, id, pos, size, order, items, style, validator, name);
 	return new Gurax::Value_Bool(rtn);

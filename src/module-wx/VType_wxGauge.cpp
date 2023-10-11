@@ -72,7 +72,8 @@ Gurax_ImplementConstructorEx(Gauge_gurax, processor_gurax, argument_gurax)
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxGA_HORIZONTAL;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxGaugeNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxGaugeNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxGauge::EntityT(parent, id, range, pos, size, style, validator, name);
 	RefPtr<Value_wxGauge> pValue_gurax(new Value_wxGauge(pEntity_gurax));

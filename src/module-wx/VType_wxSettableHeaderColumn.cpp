@@ -63,7 +63,7 @@ Gurax_ImplementMethodEx(wxSettableHeaderColumn, SetTitle_gurax, processor_gurax,
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* title = args_gurax.PickString();
+	wxString title(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetTitle(title);
 	return Gurax::Value::nil();

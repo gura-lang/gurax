@@ -56,7 +56,8 @@ Gurax_ImplementConstructorEx(GridCellDateRenderer_gurax, processor_gurax, argume
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* outformat = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool outformat_validFlag = args_gurax.IsValid();
+	wxString outformat = outformat_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	wxGridCellDateRenderer* pEntity_gurax = new wxGridCellDateRenderer(outformat);
 	RefPtr<Value_wxGridCellDateRenderer> pValue_gurax(new Value_wxGridCellDateRenderer(pEntity_gurax));
@@ -81,7 +82,7 @@ Gurax_ImplementMethodEx(wxGridCellDateRenderer, SetParameters_gurax, processor_g
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* params = args_gurax.PickString();
+	wxString params(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetParameters(params);
 	return Gurax::Value::nil();

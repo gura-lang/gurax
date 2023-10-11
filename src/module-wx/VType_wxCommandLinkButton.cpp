@@ -67,14 +67,17 @@ Gurax_ImplementConstructorEx(CommandLinkButton_gurax, processor_gurax, argument_
 	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* parent = value_parent.GetEntityPtr();
 	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
-	const char* mainLabel = args_gurax.IsValid()? args_gurax.PickString() : "";
-	const char* note = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool mainLabel_validFlag = args_gurax.IsValid();
+	wxString mainLabel = mainLabel_validFlag? wxString(args_gurax.PickString()) : "";
+	bool note_validFlag = args_gurax.IsValid();
+	wxString note = note_validFlag? wxString(args_gurax.PickString()) : "";
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxButtonNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxButtonNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxCommandLinkButton::EntityT(parent, id, mainLabel, note, pos, size, style, validator, name);
 	RefPtr<Value_wxCommandLinkButton> pValue_gurax(new Value_wxCommandLinkButton(pEntity_gurax));

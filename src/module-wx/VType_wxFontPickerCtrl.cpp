@@ -72,7 +72,8 @@ Gurax_ImplementConstructorEx(FontPickerCtrl_gurax, processor_gurax, argument_gur
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxFNTP_DEFAULT_STYLE;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxFontPickerCtrlNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxFontPickerCtrlNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxFontPickerCtrl::EntityT(parent, id, font, pos, size, style, validator, name);
 	RefPtr<Value_wxFontPickerCtrl> pValue_gurax(new Value_wxFontPickerCtrl(pEntity_gurax));
@@ -114,7 +115,8 @@ Gurax_ImplementMethodEx(wxFontPickerCtrl, Create_gurax, processor_gurax, argumen
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxFNTP_DEFAULT_STYLE;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxFontPickerCtrlNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxFontPickerCtrlNameStr;
 	// Function body
 	bool rtn = pEntity_gurax->Create(parent, id, font, pos, size, style, validator, name);
 	return new Gurax::Value_Bool(rtn);

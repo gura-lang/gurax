@@ -69,7 +69,8 @@ Gurax_ImplementConstructorEx(StaticLine_gurax, processor_gurax, argument_gurax)
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxLI_HORIZONTAL;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxStaticLineNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxStaticLineNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxStaticLine::EntityT(parent, id, pos, size, style, name);
 	RefPtr<Value_wxStaticLine> pValue_gurax(new Value_wxStaticLine(pEntity_gurax));

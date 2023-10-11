@@ -62,9 +62,11 @@ Gurax_ImplementConstructorEx(TextEntryDialog_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
-	const char* message = args_gurax.PickString();
-	const char* caption = args_gurax.IsValid()? args_gurax.PickString() : wxGetTextFromUserPromptStr;
-	const char* value = args_gurax.IsValid()? args_gurax.PickString() : "";
+	wxString message(args_gurax.PickString());
+	bool caption_validFlag = args_gurax.IsValid();
+	wxString caption = caption_validFlag? wxString(args_gurax.PickString()) : wxGetTextFromUserPromptStr;
+	bool value_validFlag = args_gurax.IsValid();
+	wxString value = value_validFlag? wxString(args_gurax.PickString()) : "";
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxTextEntryDialogStyle;
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
@@ -100,9 +102,11 @@ Gurax_ImplementMethodEx(wxTextEntryDialog, Create_gurax, processor_gurax, argume
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* parent = value_parent.GetEntityPtr();
-	const char* message = args_gurax.PickString();
-	const char* caption = args_gurax.IsValid()? args_gurax.PickString() : wxGetTextFromUserPromptStr;
-	const char* value = args_gurax.IsValid()? args_gurax.PickString() : "";
+	wxString message(args_gurax.PickString());
+	bool caption_validFlag = args_gurax.IsValid();
+	wxString caption = caption_validFlag? wxString(args_gurax.PickString()) : wxGetTextFromUserPromptStr;
+	bool value_validFlag = args_gurax.IsValid();
+	wxString value = value_validFlag? wxString(args_gurax.PickString()) : "";
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxTextEntryDialogStyle;
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
@@ -164,7 +168,7 @@ Gurax_ImplementMethodEx(wxTextEntryDialog, SetValue_gurax, processor_gurax, argu
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* value = args_gurax.PickString();
+	wxString value(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetValue(value);
 	return Gurax::Value::nil();

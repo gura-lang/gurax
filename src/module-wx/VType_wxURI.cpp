@@ -56,7 +56,8 @@ Gurax_ImplementConstructorEx(URI_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* uri = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool uri_validFlag = args_gurax.IsValid();
+	wxString uri = uri_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxURI(
 		wxURI(uri)));
@@ -114,7 +115,7 @@ Gurax_ImplementMethodEx(wxURI, Create_gurax, processor_gurax, argument_gurax)
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* uri = args_gurax.PickString();
+	wxString uri(args_gurax.PickString());
 	// Function body
 	bool rtn = pEntity_gurax->Create(uri);
 	return new Gurax::Value_Bool(rtn);

@@ -69,7 +69,8 @@ Gurax_ImplementConstructorEx(HtmlListBox_gurax, processor_gurax, argument_gurax)
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxHtmlListBoxNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxHtmlListBoxNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxHtmlListBox::EntityT(parent, id, pos, size, style, name);
 	RefPtr<Value_wxHtmlListBox> pValue_gurax(new Value_wxHtmlListBox(pEntity_gurax));
@@ -108,7 +109,8 @@ Gurax_ImplementMethodEx(wxHtmlListBox, Create_gurax, processor_gurax, argument_g
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxHtmlListBoxNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxHtmlListBoxNameStr;
 	// Function body
 	bool rtn = pEntity_gurax->Create(parent, id, pos, size, style, name);
 	return new Gurax::Value_Bool(rtn);
@@ -403,7 +405,7 @@ wxString Value_wxHtmlListBox::EntityT::OnGetItemMarkup(size_t n) const
 			Util::ExitMainLoop();
 			break;
 		}
-		return Value_String::GetString(*pValueRtn);
+		return wxString(Value_String::GetString(*pValueRtn));
 	} while (0);
 	return public_OnGetItemMarkup(n);
 }
@@ -435,7 +437,7 @@ wxString Value_wxHtmlListBox::EntityT::OnGetItem(size_t n) const
 			Util::ExitMainLoop();
 			break;
 		}
-		return Value_String::GetString(*pValueRtn);
+		return wxString(Value_String::GetString(*pValueRtn));
 	} while (0);
 	return public_OnGetItem(n);
 }

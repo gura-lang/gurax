@@ -72,7 +72,7 @@ Gurax_ImplementClassMethodEx(wxGridCellBoolEditor, IsTrueValue_gurax, processor_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* value = args_gurax.PickString();
+	wxString value(args_gurax.PickString());
 	// Function body
 	bool rtn = wxGridCellBoolEditor::IsTrueValue(value);
 	return new Gurax::Value_Bool(rtn);
@@ -90,8 +90,10 @@ Gurax_ImplementClassMethodEx(wxGridCellBoolEditor, UseStringValues_gurax, proces
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* valueTrue = args_gurax.IsValid()? args_gurax.PickString() : "1";
-	const char* valueFalse = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool valueTrue_validFlag = args_gurax.IsValid();
+	wxString valueTrue = valueTrue_validFlag? wxString(args_gurax.PickString()) : "1";
+	bool valueFalse_validFlag = args_gurax.IsValid();
+	wxString valueFalse = valueFalse_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	wxGridCellBoolEditor::UseStringValues(valueTrue, valueFalse);
 	return Gurax::Value::nil();

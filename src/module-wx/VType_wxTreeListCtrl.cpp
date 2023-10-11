@@ -68,7 +68,8 @@ Gurax_ImplementConstructorEx(TreeListCtrl_gurax, processor_gurax, argument_gurax
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxTL_DEFAULT_STYLE;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxTreeListCtrlNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxTreeListCtrlNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxTreeListCtrl::EntityT(parent, id, pos, size, style, name);
 	RefPtr<Value_wxTreeListCtrl> pValue_gurax(new Value_wxTreeListCtrl(pEntity_gurax));
@@ -150,7 +151,8 @@ Gurax_ImplementMethodEx(wxTreeListCtrl, Create_gurax, processor_gurax, argument_
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxTL_DEFAULT_STYLE;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxTreeListCtrlNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxTreeListCtrlNameStr;
 	// Function body
 	bool rtn = pEntity_gurax->Create(parent, id, pos, size, style, name);
 	return new Gurax::Value_Bool(rtn);
@@ -174,7 +176,7 @@ Gurax_ImplementMethodEx(wxTreeListCtrl, AppendColumn_gurax, processor_gurax, arg
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* title = args_gurax.PickString();
+	wxString title(args_gurax.PickString());
 	bool width_validFlag = args_gurax.IsValid();
 	int width = width_validFlag? args_gurax.PickNumber<int>() : wxCOL_WIDTH_AUTOSIZE;
 	bool align_validFlag = args_gurax.IsValid();
@@ -300,7 +302,7 @@ Gurax_ImplementMethodEx(wxTreeListCtrl, WidthFor_gurax, processor_gurax, argumen
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* text = args_gurax.PickString();
+	wxString text(args_gurax.PickString());
 	// Function body
 	int rtn = pEntity_gurax->WidthFor(text);
 	return new Gurax::Value_Number(rtn);
@@ -328,7 +330,7 @@ Gurax_ImplementMethodEx(wxTreeListCtrl, AppendItem_gurax, processor_gurax, argum
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxTreeListItem& value_parent = args_gurax.Pick<Value_wxTreeListItem>();
 	const wxTreeListItem& parent = value_parent.GetEntity();
-	const char* text = args_gurax.PickString();
+	wxString text(args_gurax.PickString());
 	bool imageClosed_validFlag = args_gurax.IsValid();
 	int imageClosed = imageClosed_validFlag? args_gurax.PickNumber<int>() : -1;
 	bool imageOpened_validFlag = args_gurax.IsValid();
@@ -364,7 +366,7 @@ Gurax_ImplementMethodEx(wxTreeListCtrl, InsertItem_gurax, processor_gurax, argum
 	const wxTreeListItem& parent = value_parent.GetEntity();
 	Value_wxTreeListItem& value_previous = args_gurax.Pick<Value_wxTreeListItem>();
 	const wxTreeListItem& previous = value_previous.GetEntity();
-	const char* text = args_gurax.PickString();
+	wxString text(args_gurax.PickString());
 	bool imageClosed_validFlag = args_gurax.IsValid();
 	int imageClosed = imageClosed_validFlag? args_gurax.PickNumber<int>() : -1;
 	bool imageOpened_validFlag = args_gurax.IsValid();
@@ -397,7 +399,7 @@ Gurax_ImplementMethodEx(wxTreeListCtrl, PrependItem_gurax, processor_gurax, argu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxTreeListItem& value_parent = args_gurax.Pick<Value_wxTreeListItem>();
 	const wxTreeListItem& parent = value_parent.GetEntity();
-	const char* text = args_gurax.PickString();
+	wxString text(args_gurax.PickString());
 	bool imageClosed_validFlag = args_gurax.IsValid();
 	int imageClosed = imageClosed_validFlag? args_gurax.PickNumber<int>() : -1;
 	bool imageOpened_validFlag = args_gurax.IsValid();
@@ -620,7 +622,7 @@ Gurax_ImplementMethodEx(wxTreeListCtrl, SetItemText_gurax, processor_gurax, argu
 	Value_wxTreeListItem& value_item = args_gurax.Pick<Value_wxTreeListItem>();
 	const wxTreeListItem& item = value_item.GetEntity();
 	unsigned col = args_gurax.PickNumber<unsigned>();
-	const char* text = args_gurax.PickString();
+	wxString text(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetItemText(item, col, text);
 	return Gurax::Value::nil();

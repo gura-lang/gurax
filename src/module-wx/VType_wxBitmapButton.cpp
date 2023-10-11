@@ -73,7 +73,8 @@ Gurax_ImplementConstructorEx(BitmapButton_gurax, processor_gurax, argument_gurax
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxBU_AUTODRAW;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxButtonNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxButtonNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxBitmapButton::EntityT(parent, id, bitmap, pos, size, style, validator, name);
 	RefPtr<Value_wxBitmapButton> pValue_gurax(new Value_wxBitmapButton(pEntity_gurax));

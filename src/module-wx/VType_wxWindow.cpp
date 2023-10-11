@@ -2584,7 +2584,7 @@ Gurax_ImplementMethodEx(wxWindow, GetTextExtentWH_gurax, processor_gurax, argume
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* string = args_gurax.PickString();
+	wxString string(args_gurax.PickString());
 	RefPtr<Referencer> w(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> h(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> descent(args_gurax.PickReferencer().Reference());
@@ -2616,7 +2616,7 @@ Gurax_ImplementMethodEx(wxWindow, GetTextExtent_gurax, processor_gurax, argument
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* string = args_gurax.PickString();
+	wxString string(args_gurax.PickString());
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
 		pEntity_gurax->GetTextExtent(string)));
@@ -2782,11 +2782,11 @@ Gurax_ImplementMethodEx(wxWindow, SetBackgroundStyle_gurax, processor_gurax, arg
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.Window#IsTransparentBackgroundSupported(reason? as String)
+// wx.Window#IsTransparentBackgroundSupported(&reason?:nilRef as Any)
 Gurax_DeclareMethodAlias(wxWindow, IsTransparentBackgroundSupported_gurax, "IsTransparentBackgroundSupported")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	DeclareArg("reason", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("reason", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementMethodEx(wxWindow, IsTransparentBackgroundSupported_gurax, processor_gurax, argument_gurax)
@@ -2797,12 +2797,13 @@ Gurax_ImplementMethodEx(wxWindow, IsTransparentBackgroundSupported_gurax, proces
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* reason = args_gurax.IsValid()? args_gurax.PickString() : nullptr;
+	RefPtr<Referencer> reason(args_gurax.IsValid()? args_gurax.PickReferencer().Reference() : nullptr);
 	// Function body
 	bool rtn;
 	if (reason) {
-		wxString reason_(reason);
+		wxString reason_;
 		rtn = pEntity_gurax->IsTransparentBackgroundSupported(&reason_);
+		reason->SetValue(new Value_String(reason_.utf8_str().data()));
 	} else {
 		rtn = pEntity_gurax->IsTransparentBackgroundSupported();
 	}
@@ -3899,7 +3900,7 @@ Gurax_ImplementMethodEx(wxWindow, SetHelpText_gurax, processor_gurax, argument_g
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* helpText = args_gurax.PickString();
+	wxString helpText(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetHelpText(helpText);
 	return Gurax::Value::nil();
@@ -4354,7 +4355,7 @@ Gurax_ImplementMethodEx(wxWindow, SetLabel_gurax, processor_gurax, argument_gura
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* label = args_gurax.PickString();
+	wxString label(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetLabel(label);
 	return Gurax::Value::nil();
@@ -4396,7 +4397,7 @@ Gurax_ImplementMethodEx(wxWindow, SetName_gurax, processor_gurax, argument_gurax
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetName(name);
 	return Gurax::Value::nil();

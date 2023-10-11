@@ -71,7 +71,8 @@ Gurax_ImplementConstructorEx(PreviewControlBar_gurax, processor_gurax, argument_
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : "panel";
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : "panel";
 	// Function body
 	auto pEntity_gurax = new Value_wxPreviewControlBar::EntityT(preview, buttons, parent, pos, size, style, name);
 	RefPtr<Value_wxPreviewControlBar> pValue_gurax(new Value_wxPreviewControlBar(pEntity_gurax));

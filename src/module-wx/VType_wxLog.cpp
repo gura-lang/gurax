@@ -59,7 +59,7 @@ Gurax_ImplementClassMethodEx(wxLog, AddTraceMask_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* mask = args_gurax.PickString();
+	wxString mask(args_gurax.PickString());
 	// Function body
 	wxLog::AddTraceMask(mask);
 	return Gurax::Value::nil();
@@ -102,7 +102,7 @@ Gurax_ImplementClassMethodEx(wxLog, IsAllowedTraceMask_gurax, processor_gurax, a
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* mask = args_gurax.PickString();
+	wxString mask(args_gurax.PickString());
 	// Function body
 	bool rtn = wxLog::IsAllowedTraceMask(mask);
 	return new Gurax::Value_Bool(rtn);
@@ -119,7 +119,7 @@ Gurax_ImplementClassMethodEx(wxLog, RemoveTraceMask_gurax, processor_gurax, argu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* mask = args_gurax.PickString();
+	wxString mask(args_gurax.PickString());
 	// Function body
 	wxLog::RemoveTraceMask(mask);
 	return Gurax::Value::nil();
@@ -252,7 +252,7 @@ Gurax_ImplementClassMethodEx(wxLog, IsLevelEnabled_gurax, processor_gurax, argum
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	wxLogLevel level = args_gurax.PickNumber<wxLogLevel>();
-	const char* component = args_gurax.PickString();
+	wxString component(args_gurax.PickString());
 	// Function body
 	bool rtn = wxLog::IsLevelEnabled(level, component);
 	return new Gurax::Value_Bool(rtn);
@@ -270,7 +270,7 @@ Gurax_ImplementClassMethodEx(wxLog, SetComponentLevel_gurax, processor_gurax, ar
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* component = args_gurax.PickString();
+	wxString component(args_gurax.PickString());
 	wxLogLevel level = args_gurax.PickNumber<wxLogLevel>();
 	// Function body
 	wxLog::SetComponentLevel(component, level);
@@ -378,7 +378,7 @@ Gurax_ImplementClassMethodEx(wxLog, SetTimestamp_gurax, processor_gurax, argumen
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* format = args_gurax.PickString();
+	wxString format(args_gurax.PickString());
 	// Function body
 	wxLog::SetTimestamp(format);
 	return Gurax::Value::nil();

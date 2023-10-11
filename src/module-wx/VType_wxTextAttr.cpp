@@ -1351,7 +1351,7 @@ Gurax_ImplementMethodEx(wxTextAttr, SetBulletFont_gurax, processor_gurax, argume
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* font = args_gurax.PickString();
+	wxString font(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetBulletFont(font);
 	return Gurax::Value::nil();
@@ -1372,7 +1372,7 @@ Gurax_ImplementMethodEx(wxTextAttr, SetBulletName_gurax, processor_gurax, argume
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetBulletName(name);
 	return Gurax::Value::nil();
@@ -1435,7 +1435,7 @@ Gurax_ImplementMethodEx(wxTextAttr, SetBulletText_gurax, processor_gurax, argume
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* text = args_gurax.PickString();
+	wxString text(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetBulletText(text);
 	return Gurax::Value::nil();
@@ -1456,7 +1456,7 @@ Gurax_ImplementMethodEx(wxTextAttr, SetCharacterStyleName_gurax, processor_gurax
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetCharacterStyleName(name);
 	return Gurax::Value::nil();
@@ -1544,7 +1544,7 @@ Gurax_ImplementMethodEx(wxTextAttr, SetFontFaceName_gurax, processor_gurax, argu
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* faceName = args_gurax.PickString();
+	wxString faceName(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetFontFaceName(faceName);
 	return Gurax::Value::nil();
@@ -1757,7 +1757,7 @@ Gurax_ImplementMethodEx(wxTextAttr, SetListStyleName_gurax, processor_gurax, arg
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetListStyleName(name);
 	return Gurax::Value::nil();
@@ -1862,7 +1862,7 @@ Gurax_ImplementMethodEx(wxTextAttr, SetParagraphStyleName_gurax, processor_gurax
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetParagraphStyleName(name);
 	return Gurax::Value::nil();
@@ -1989,7 +1989,7 @@ Gurax_ImplementMethodEx(wxTextAttr, SetURL_gurax, processor_gurax, argument_gura
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* url = args_gurax.PickString();
+	wxString url(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetURL(url);
 	return Gurax::Value::nil();

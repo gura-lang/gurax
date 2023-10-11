@@ -67,14 +67,17 @@ Gurax_ImplementConstructorEx(MediaCtrl_gurax, processor_gurax, argument_gurax)
 	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* parent = value_parent.GetEntityPtr();
 	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
-	const char* fileName = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool fileName_validFlag = args_gurax.IsValid();
+	wxString fileName = fileName_validFlag? wxString(args_gurax.PickString()) : "";
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
-	const char* szBackend = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool szBackend_validFlag = args_gurax.IsValid();
+	wxString szBackend = szBackend_validFlag? wxString(args_gurax.PickString()) : "";
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : "mediaCtrl";
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : "mediaCtrl";
 	// Function body
 	auto pEntity_gurax = new Value_wxMediaCtrl::EntityT(parent, id, fileName, pos, size, style, szBackend, validator, name);
 	RefPtr<Value_wxMediaCtrl> pValue_gurax(new Value_wxMediaCtrl(pEntity_gurax));
@@ -111,14 +114,17 @@ Gurax_ImplementMethodEx(wxMediaCtrl, Create_gurax, processor_gurax, argument_gur
 	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* parent = value_parent.GetEntityPtr();
 	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
-	const char* fileName = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool fileName_validFlag = args_gurax.IsValid();
+	wxString fileName = fileName_validFlag? wxString(args_gurax.PickString()) : "";
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
-	const char* szBackend = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool szBackend_validFlag = args_gurax.IsValid();
+	wxString szBackend = szBackend_validFlag? wxString(args_gurax.PickString()) : "";
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : "mediaCtrl";
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : "mediaCtrl";
 	// Function body
 	bool rtn = pEntity_gurax->Create(parent, id, fileName, pos, size, style, szBackend, validator, name);
 	return new Gurax::Value_Bool(rtn);
@@ -225,7 +231,7 @@ Gurax_ImplementMethodEx(wxMediaCtrl, Load_gurax, processor_gurax, argument_gurax
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* fileName = args_gurax.PickString();
+	wxString fileName(args_gurax.PickString());
 	// Function body
 	bool rtn = pEntity_gurax->Load(fileName);
 	return new Gurax::Value_Bool(rtn);
@@ -246,7 +252,7 @@ Gurax_ImplementMethodEx(wxMediaCtrl, LoadURI_gurax, processor_gurax, argument_gu
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* uri = args_gurax.PickString();
+	wxString uri(args_gurax.PickString());
 	// Function body
 	bool rtn = pEntity_gurax->LoadURI(uri);
 	return new Gurax::Value_Bool(rtn);
@@ -268,8 +274,8 @@ Gurax_ImplementMethodEx(wxMediaCtrl, LoadURIWithProxy_gurax, processor_gurax, ar
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* uri = args_gurax.PickString();
-	const char* proxy = args_gurax.PickString();
+	wxString uri(args_gurax.PickString());
+	wxString proxy(args_gurax.PickString());
 	// Function body
 	bool rtn = pEntity_gurax->LoadURIWithProxy(uri, proxy);
 	return new Gurax::Value_Bool(rtn);

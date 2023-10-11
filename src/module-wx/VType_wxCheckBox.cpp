@@ -66,13 +66,14 @@ Gurax_ImplementConstructorEx(CheckBox_gurax, processor_gurax, argument_gurax)
 	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* parent = value_parent.GetEntityPtr();
 	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
-	const char* label = args_gurax.PickString();
+	wxString label(args_gurax.PickString());
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxCheckBoxNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxCheckBoxNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxCheckBox::EntityT(parent, id, label, pos, size, style, validator, name);
 	RefPtr<Value_wxCheckBox> pValue_gurax(new Value_wxCheckBox(pEntity_gurax));

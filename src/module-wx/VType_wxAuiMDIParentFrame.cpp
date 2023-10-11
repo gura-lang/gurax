@@ -65,12 +65,13 @@ Gurax_ImplementConstructorEx(AuiMDIParentFrame_gurax, processor_gurax, argument_
 	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* parent = value_parent.GetEntityPtr();
 	wxWindowID winid = args_gurax.PickNumber<wxWindowID>();
-	const char* title = args_gurax.PickString();
+	wxString title(args_gurax.PickString());
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : ((wxDEFAULT_FRAME_STYLE | wxVSCROLL) | wxHSCROLL);
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxFrameNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxFrameNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxAuiMDIParentFrame::EntityT(parent, winid, title, pos, size, style, name);
 	RefPtr<Value_wxAuiMDIParentFrame> pValue_gurax(new Value_wxAuiMDIParentFrame(pEntity_gurax));
@@ -105,12 +106,13 @@ Gurax_ImplementMethodEx(wxAuiMDIParentFrame, Create_gurax, processor_gurax, argu
 	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* parent = value_parent.GetEntityPtr();
 	wxWindowID winid = args_gurax.PickNumber<wxWindowID>();
-	const char* title = args_gurax.PickString();
+	wxString title(args_gurax.PickString());
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : ((wxDEFAULT_FRAME_STYLE | wxVSCROLL) | wxHSCROLL);
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxFrameNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxFrameNameStr;
 	// Function body
 	bool rtn = pEntity_gurax->Create(parent, winid, title, pos, size, style, name);
 	return new Gurax::Value_Bool(rtn);

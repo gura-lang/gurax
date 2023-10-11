@@ -26,5 +26,5 @@ ImplementApp(app as App_p) = \
 InitAllImageHandlers() as void
 T(str as String) = \
 	R'''
-	return new Value_String(str);
+	return new Value_String(str.utf8_str().data());
 	'''

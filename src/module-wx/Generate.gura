@@ -29,6 +29,37 @@ r.DeclareType('const_wxChar_p', 'const wxChar*', 'String',
 	return new Gurax::Value_${this.vtype}(rtn);
 	''')
 
+r.DeclareType('String', 'wxString', 'String',
+	codePicker = R'''
+	wxString ${varName}(args_gurax.PickString());
+	'''
+	codePickerValidation = R'''
+	bool ${varName}_validFlag = args_gurax.IsValid();
+	wxString ${varName} = ${varName}_validFlag? wxString(args_gurax.PickString()) : ${defaultValue || 'wxEmptyString'};
+	'''
+	codeConvToC = 'wxString(Value_String::GetString(${src}))'
+	codeConvToGurax = 'new Gurax::Value_${this.vtype}(${varName}.utf8_str().data())'
+	codeFunctionBody = R'''
+	wxString rtn = ${caller};
+	return new Gurax::Value_${this.vtype}(rtn.utf8_str().data());
+	''')
+
+r.DeclareType('const_String_r', 'const wxString&', 'String',
+	codePicker = R'''
+	wxString ${varName}(args_gurax.PickString());
+	'''
+	codePickerValidation = R'''
+	bool ${varName}_validFlag = args_gurax.IsValid();
+	wxString ${varName} = ${varName}_validFlag? wxString(args_gurax.PickString()) : ${defaultValue || 'wxEmptyString'};
+	'''
+	//codeConvToC = 'wxString(Value_String::GetString(${src}))'
+	codeConvToGurax = 'new Gurax::Value_${this.vtype}(${varName}.utf8_str().data())'
+	codeFunctionBody = R'''
+	wxString rtn = ${caller};
+	return new Gurax::Value_${this.vtype}(rtn.utf8_str().data());
+	''')
+
+/*
 r.DeclareType('String', 'const char*', 'String',
 	codePicker = R'''
 	${this.cType} ${varName} = args_gurax.PickString();
@@ -73,10 +104,12 @@ r.DeclareType('const_String_r', 'const char*', 'String',
 	codePickerVec = R'''
 	auto ${varName} = args_gurax.PickListT<${this.cType}>(Gurax::Value_${this.vtype}::ValueForVector);
 	'''
+	codeConvToGurax = 'new Gurax::Value_${this.vtype}(${varName}.utf8_str().data())'
 	codeFunctionBody = R'''
 	${this.cType} rtn = ${caller};
 	return new Gurax::Value_${this.vtype}(rtn);
 	''')
+*/
 
 r.DeclareType('const_ArrayString_r', 'const wxArrayString&', 'String[]',
 	codePickerVec = R'''

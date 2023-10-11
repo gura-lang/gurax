@@ -70,7 +70,8 @@ Gurax_ImplementConstructorEx(ScrollBar_gurax, processor_gurax, argument_gurax)
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxSB_HORIZONTAL;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxScrollBarNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxScrollBarNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxScrollBar::EntityT(parent, id, pos, size, style, validator, name);
 	RefPtr<Value_wxScrollBar> pValue_gurax(new Value_wxScrollBar(pEntity_gurax));
@@ -110,7 +111,8 @@ Gurax_ImplementMethodEx(wxScrollBar, Create_gurax, processor_gurax, argument_gur
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxSB_HORIZONTAL;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxScrollBarNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxScrollBarNameStr;
 	// Function body
 	bool rtn = pEntity_gurax->Create(parent, id, pos, size, style, validator, name);
 	return new Gurax::Value_Bool(rtn);

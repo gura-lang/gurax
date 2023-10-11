@@ -72,7 +72,8 @@ Gurax_ImplementConstructorEx(DatePickerCtrl_gurax, processor_gurax, argument_gur
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : (wxDP_DEFAULT | wxDP_SHOWCENTURY);
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : "datectrl";
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : "datectrl";
 	// Function body
 	auto pEntity_gurax = new Value_wxDatePickerCtrl::EntityT(parent, id, dt, pos, size, style, validator, name);
 	RefPtr<Value_wxDatePickerCtrl> pValue_gurax(new Value_wxDatePickerCtrl(pEntity_gurax));
@@ -114,7 +115,8 @@ Gurax_ImplementMethodEx(wxDatePickerCtrl, Create_gurax, processor_gurax, argumen
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : (wxDP_DEFAULT | wxDP_SHOWCENTURY);
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : "datectrl";
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : "datectrl";
 	// Function body
 	bool rtn = pEntity_gurax->Create(parent, id, dt, pos, size, style, validator, name);
 	return new Gurax::Value_Bool(rtn);

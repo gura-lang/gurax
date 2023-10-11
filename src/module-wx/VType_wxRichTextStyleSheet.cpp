@@ -183,7 +183,7 @@ Gurax_ImplementMethodEx(wxRichTextStyleSheet, FindCharacterStyle_gurax, processo
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	bool recurse = args_gurax.IsValid()? args_gurax.PickBool() : true;
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextCharacterStyleDefinition(
@@ -207,7 +207,7 @@ Gurax_ImplementMethodEx(wxRichTextStyleSheet, FindListStyle_gurax, processor_gur
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	bool recurse = args_gurax.IsValid()? args_gurax.PickBool() : true;
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextListStyleDefinition(
@@ -231,7 +231,7 @@ Gurax_ImplementMethodEx(wxRichTextStyleSheet, FindParagraphStyle_gurax, processo
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	bool recurse = args_gurax.IsValid()? args_gurax.PickBool() : true;
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextParagraphStyleDefinition(
@@ -254,7 +254,7 @@ Gurax_ImplementMethodEx(wxRichTextStyleSheet, FindStyle_gurax, processor_gurax, 
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextStyleDefinition(
 		pEntity_gurax->FindStyle(name)));
@@ -522,7 +522,7 @@ Gurax_ImplementMethodEx(wxRichTextStyleSheet, SetDescription_gurax, processor_gu
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* descr = args_gurax.PickString();
+	wxString descr(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetDescription(descr);
 	return Gurax::Value::nil();
@@ -543,7 +543,7 @@ Gurax_ImplementMethodEx(wxRichTextStyleSheet, SetName_gurax, processor_gurax, ar
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetName(name);
 	return Gurax::Value::nil();

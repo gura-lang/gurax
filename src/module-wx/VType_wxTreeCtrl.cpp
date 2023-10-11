@@ -71,7 +71,8 @@ Gurax_ImplementConstructorEx(TreeCtrl_gurax, processor_gurax, argument_gurax)
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxTR_DEFAULT_STYLE;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxTreeCtrlNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxTreeCtrlNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxTreeCtrl::EntityT(parent, id, pos, size, style, validator, name);
 	RefPtr<Value_wxTreeCtrl> pValue_gurax(new Value_wxTreeCtrl(pEntity_gurax));
@@ -101,7 +102,7 @@ Gurax_ImplementMethodEx(wxTreeCtrl, AddRoot_gurax, processor_gurax, argument_gur
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* text = args_gurax.PickString();
+	wxString text(args_gurax.PickString());
 	bool image_validFlag = args_gurax.IsValid();
 	int image = image_validFlag? args_gurax.PickNumber<int>() : -1;
 	bool selImage_validFlag = args_gurax.IsValid();
@@ -134,7 +135,7 @@ Gurax_ImplementMethodEx(wxTreeCtrl, AppendItem_gurax, processor_gurax, argument_
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxTreeItemId& value_parent = args_gurax.Pick<Value_wxTreeItemId>();
 	const wxTreeItemId& parent = value_parent.GetEntity();
-	const char* text = args_gurax.PickString();
+	wxString text(args_gurax.PickString());
 	bool image_validFlag = args_gurax.IsValid();
 	int image = image_validFlag? args_gurax.PickNumber<int>() : -1;
 	bool selImage_validFlag = args_gurax.IsValid();
@@ -302,7 +303,8 @@ Gurax_ImplementMethodEx(wxTreeCtrl, Create_gurax, processor_gurax, argument_gura
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxTR_DEFAULT_STYLE;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxTreeCtrlNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxTreeCtrlNameStr;
 	// Function body
 	bool rtn = pEntity_gurax->Create(parent, id, pos, size, style, validator, name);
 	return new Gurax::Value_Bool(rtn);
@@ -1124,7 +1126,7 @@ Gurax_ImplementMethodEx(wxTreeCtrl, InsertItem_gurax, processor_gurax, argument_
 	Value_wxTreeItemId& value_parent = args_gurax.Pick<Value_wxTreeItemId>();
 	const wxTreeItemId& parent = value_parent.GetEntity();
 	const Gurax::Value& pos = args_gurax.PickValue();
-	const char* text = args_gurax.PickString();
+	wxString text(args_gurax.PickString());
 	bool image_validFlag = args_gurax.IsValid();
 	int image = image_validFlag? args_gurax.PickNumber<int>() : -1;
 	bool selImage_validFlag = args_gurax.IsValid();
@@ -1570,7 +1572,7 @@ Gurax_ImplementMethodEx(wxTreeCtrl, SetItemText_gurax, processor_gurax, argument
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxTreeItemId& value_item = args_gurax.Pick<Value_wxTreeItemId>();
 	const wxTreeItemId& item = value_item.GetEntity();
-	const char* text = args_gurax.PickString();
+	wxString text(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetItemText(item, text);
 	return Gurax::Value::nil();

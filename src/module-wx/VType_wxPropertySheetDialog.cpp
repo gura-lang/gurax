@@ -64,12 +64,13 @@ Gurax_ImplementConstructorEx(PropertySheetDialog_gurax, processor_gurax, argumen
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
 	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
-	const char* title = args_gurax.PickString();
+	wxString title(args_gurax.PickString());
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxDEFAULT_DIALOG_STYLE;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxDialogNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxDialogNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxPropertySheetDialog::EntityT(parent, id, title, pos, size, style, name);
 	RefPtr<Value_wxPropertySheetDialog> pValue_gurax(new Value_wxPropertySheetDialog(pEntity_gurax));
@@ -126,12 +127,13 @@ Gurax_ImplementMethodEx(wxPropertySheetDialog, Create_gurax, processor_gurax, ar
 	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* parent = value_parent.GetEntityPtr();
 	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
-	const char* title = args_gurax.PickString();
+	wxString title(args_gurax.PickString());
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxDEFAULT_DIALOG_STYLE;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxDialogNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxDialogNameStr;
 	// Function body
 	bool rtn = pEntity_gurax->Create(parent, id, title, pos, size, style, name);
 	return new Gurax::Value_Bool(rtn);

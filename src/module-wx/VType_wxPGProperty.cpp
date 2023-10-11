@@ -127,7 +127,7 @@ Gurax_ImplementMethodEx(wxPGProperty, StringToValue_gurax, processor_gurax, argu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxVariant& value_variant = args_gurax.Pick<Value_wxVariant>();
 	wxVariant& variant = value_variant.GetEntity();
-	const char* text = args_gurax.PickString();
+	wxString text(args_gurax.PickString());
 	bool argFlags_validFlag = args_gurax.IsValid();
 	int argFlags = argFlags_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body
@@ -203,7 +203,7 @@ Gurax_ImplementMethodEx(wxPGProperty, SetValueFromString_gurax, processor_gurax,
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* text = args_gurax.PickString();
+	wxString text(args_gurax.PickString());
 	bool flags_validFlag = args_gurax.IsValid();
 	int flags = flags_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body
@@ -432,7 +432,7 @@ Gurax_ImplementMethodEx(wxPGProperty, DoSetAttribute_gurax, processor_gurax, arg
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	Value_wxVariant& value_value = args_gurax.Pick<Value_wxVariant>();
 	wxVariant& value = value_value.GetEntity();
 	// Function body
@@ -496,7 +496,7 @@ Gurax_ImplementMethodEx(wxPGProperty, AddChoice_gurax, processor_gurax, argument
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* label = args_gurax.PickString();
+	wxString label(args_gurax.PickString());
 	bool value_validFlag = args_gurax.IsValid();
 	int value = value_validFlag? args_gurax.PickNumber<int>() : wxPG_INVALID_VALUE;
 	// Function body
@@ -749,7 +749,7 @@ Gurax_ImplementMethodEx(wxPGProperty, GetAttribute_gurax, processor_gurax, argum
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxVariant(
 		pEntity_gurax->GetAttribute(name)));
@@ -771,7 +771,7 @@ Gurax_ImplementMethodEx(wxPGProperty, GetAttributeAsLong_gurax, processor_gurax,
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	long defVal = args_gurax.PickNumber<long>();
 	// Function body
 	long rtn = pEntity_gurax->GetAttributeAsLong(name, defVal);
@@ -794,7 +794,7 @@ Gurax_ImplementMethodEx(wxPGProperty, GetAttributeAsDouble_gurax, processor_gura
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	double defVal = args_gurax.PickNumber<double>();
 	// Function body
 	double rtn = pEntity_gurax->GetAttributeAsDouble(name, defVal);
@@ -1183,7 +1183,7 @@ Gurax_ImplementMethodEx(wxPGProperty, GetPropertyByName_gurax, processor_gurax, 
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGProperty(
 		*pEntity_gurax->GetPropertyByName(name)));
@@ -1404,7 +1404,7 @@ Gurax_ImplementMethodEx(wxPGProperty, InsertChoice_gurax, processor_gurax, argum
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* label = args_gurax.PickString();
+	wxString label(args_gurax.PickString());
 	int index = args_gurax.PickNumber<int>();
 	bool value_validFlag = args_gurax.IsValid();
 	int value = value_validFlag? args_gurax.PickNumber<int>() : wxPG_INVALID_VALUE;
@@ -1626,7 +1626,7 @@ Gurax_ImplementMethodEx(wxPGProperty, SetAttribute_gurax, processor_gurax, argum
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	Value_wxVariant& value_value = args_gurax.Pick<Value_wxVariant>();
 	const wxVariant& value = value_value.GetEntity();
 	// Function body
@@ -1852,7 +1852,7 @@ Gurax_ImplementMethodEx(wxPGProperty, SetHelpString_gurax, processor_gurax, argu
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* helpString = args_gurax.PickString();
+	wxString helpString(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetHelpString(helpString);
 	return Gurax::Value::nil();
@@ -1873,7 +1873,7 @@ Gurax_ImplementMethodEx(wxPGProperty, SetLabel_gurax, processor_gurax, argument_
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* label = args_gurax.PickString();
+	wxString label(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetLabel(label);
 	return Gurax::Value::nil();
@@ -1936,7 +1936,7 @@ Gurax_ImplementMethodEx(wxPGProperty, SetName_gurax, processor_gurax, argument_g
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* newName = args_gurax.PickString();
+	wxString newName(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetName(newName);
 	return Gurax::Value::nil();

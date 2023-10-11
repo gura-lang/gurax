@@ -70,7 +70,8 @@ Gurax_ImplementConstructorEx(RibbonControl_gurax, processor_gurax, argument_gura
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxControlNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxControlNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxRibbonControl::EntityT(parent, id, pos, size, style, validator, name);
 	RefPtr<Value_wxRibbonControl> pValue_gurax(new Value_wxRibbonControl(pEntity_gurax));

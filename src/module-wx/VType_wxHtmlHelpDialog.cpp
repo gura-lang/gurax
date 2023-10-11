@@ -146,7 +146,8 @@ Gurax_ImplementMethodEx(wxHtmlHelpDialog, Create_gurax, processor_gurax, argumen
 	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* parent = value_parent.GetEntityPtr();
 	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
-	const char* title = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool title_validFlag = args_gurax.IsValid();
+	wxString title = title_validFlag? wxString(args_gurax.PickString()) : "";
 	bool style_validFlag = args_gurax.IsValid();
 	int style = style_validFlag? args_gurax.PickNumber<int>() : wxHF_DEFAULT_STYLE;
 	// Function body
@@ -209,7 +210,7 @@ Gurax_ImplementMethodEx(wxHtmlHelpDialog, SetTitleFormat_gurax, processor_gurax,
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* format = args_gurax.PickString();
+	wxString format(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetTitleFormat(format);
 	return Gurax::Value::nil();

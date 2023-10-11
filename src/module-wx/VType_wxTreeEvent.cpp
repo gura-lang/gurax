@@ -168,7 +168,7 @@ Gurax_ImplementMethodEx(wxTreeEvent, SetToolTip_gurax, processor_gurax, argument
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* tooltip = args_gurax.PickString();
+	wxString tooltip(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetToolTip(tooltip);
 	return Gurax::Value::nil();

@@ -69,7 +69,8 @@ Gurax_ImplementConstructorEx(PropertyGridManager_gurax, processor_gurax, argumen
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxPGMAN_DEFAULT_STYLE;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxPropertyGridManagerNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxPropertyGridManagerNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxPropertyGridManager::EntityT(parent, id, pos, size, style, name);
 	RefPtr<Value_wxPropertyGridManager> pValue_gurax(new Value_wxPropertyGridManager(pEntity_gurax));
@@ -98,7 +99,8 @@ Gurax_ImplementMethodEx(wxPropertyGridManager, AddPage_gurax, processor_gurax, a
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* label = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool label_validFlag = args_gurax.IsValid();
+	wxString label = label_validFlag? wxString(args_gurax.PickString()) : "";
 	const wxBitmap& bmp = args_gurax.IsValid()? args_gurax.Pick<Value_wxBitmap>().GetEntity() : wxPG_NULL_BITMAP;
 	wxPropertyGridPage* pageObj = args_gurax.IsValid()? args_gurax.Pick<Value_wxPropertyGridPage>().GetEntityPtr() : nullptr;
 	// Function body
@@ -194,7 +196,8 @@ Gurax_ImplementMethodEx(wxPropertyGridManager, Create_gurax, processor_gurax, ar
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxPGMAN_DEFAULT_STYLE;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxPropertyGridManagerNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxPropertyGridManagerNameStr;
 	// Function body
 	bool rtn = pEntity_gurax->Create(parent, id, pos, size, style, name);
 	return new Gurax::Value_Bool(rtn);
@@ -333,7 +336,7 @@ Gurax_ImplementMethodEx(wxPropertyGridManager, GetPageByName_gurax, processor_gu
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	// Function body
 	int rtn = pEntity_gurax->GetPageByName(name);
 	return new Gurax::Value_Number(rtn);
@@ -490,7 +493,7 @@ Gurax_ImplementMethodEx(wxPropertyGridManager, InsertPage_gurax, processor_gurax
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int index = args_gurax.PickNumber<int>();
-	const char* label = args_gurax.PickString();
+	wxString label(args_gurax.PickString());
 	const wxBitmap& bmp = args_gurax.IsValid()? args_gurax.Pick<Value_wxBitmap>().GetEntity() : wxNullBitmap;
 	wxPropertyGridPage* pageObj = args_gurax.IsValid()? args_gurax.Pick<Value_wxPropertyGridPage>().GetEntityPtr() : nullptr;
 	// Function body
@@ -636,7 +639,7 @@ Gurax_ImplementMethodEx(wxPropertyGridManager, SetColumnTitle_gurax, processor_g
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int idx = args_gurax.PickNumber<int>();
-	const char* title = args_gurax.PickString();
+	wxString title(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetColumnTitle(idx, title);
 	return Gurax::Value::nil();
@@ -658,8 +661,8 @@ Gurax_ImplementMethodEx(wxPropertyGridManager, SetDescription_gurax, processor_g
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* label = args_gurax.PickString();
-	const char* content = args_gurax.PickString();
+	wxString label(args_gurax.PickString());
+	wxString content(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetDescription(label, content);
 	return Gurax::Value::nil();

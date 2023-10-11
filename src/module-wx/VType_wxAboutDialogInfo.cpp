@@ -79,7 +79,7 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, AddArtist_gurax, processor_gurax, arg
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* artist = args_gurax.PickString();
+	wxString artist(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->AddArtist(artist);
 	return Gurax::Value::nil();
@@ -103,7 +103,7 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, AddDeveloper_gurax, processor_gurax, 
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* developer = args_gurax.PickString();
+	wxString developer(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->AddDeveloper(developer);
 	return Gurax::Value::nil();
@@ -127,7 +127,7 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, AddDocWriter_gurax, processor_gurax, 
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* docwriter = args_gurax.PickString();
+	wxString docwriter(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->AddDocWriter(docwriter);
 	return Gurax::Value::nil();
@@ -148,7 +148,7 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, AddTranslator_gurax, processor_gurax,
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* translator = args_gurax.PickString();
+	wxString translator(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->AddTranslator(translator);
 	return Gurax::Value::nil();
@@ -275,7 +275,7 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, SetCopyright_gurax, processor_gurax, 
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* copyright = args_gurax.PickString();
+	wxString copyright(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetCopyright(copyright);
 	return Gurax::Value::nil();
@@ -296,7 +296,7 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, SetDescription_gurax, processor_gurax
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* desc = args_gurax.PickString();
+	wxString desc(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetDescription(desc);
 	return Gurax::Value::nil();
@@ -450,7 +450,7 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, SetLicence_gurax, processor_gurax, ar
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* licence = args_gurax.PickString();
+	wxString licence(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetLicence(licence);
 	return Gurax::Value::nil();
@@ -471,7 +471,7 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, SetLicense_gurax, processor_gurax, ar
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* licence = args_gurax.PickString();
+	wxString licence(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetLicense(licence);
 	return Gurax::Value::nil();
@@ -492,7 +492,7 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, SetName_gurax, processor_gurax, argum
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetName(name);
 	return Gurax::Value::nil();
@@ -535,8 +535,9 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, SetVersion_gurax, processor_gurax, ar
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* version = args_gurax.PickString();
-	const char* longVersion = args_gurax.IsValid()? args_gurax.PickString() : "";
+	wxString version(args_gurax.PickString());
+	bool longVersion_validFlag = args_gurax.IsValid();
+	wxString longVersion = longVersion_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	pEntity_gurax->SetVersion(version, longVersion);
 	return Gurax::Value::nil();
@@ -643,8 +644,9 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, SetWebSite_gurax, processor_gurax, ar
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* url = args_gurax.PickString();
-	const char* desc = args_gurax.IsValid()? args_gurax.PickString() : "";
+	wxString url(args_gurax.PickString());
+	bool desc_validFlag = args_gurax.IsValid();
+	wxString desc = desc_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	pEntity_gurax->SetWebSite(url, desc);
 	return Gurax::Value::nil();

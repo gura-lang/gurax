@@ -72,8 +72,10 @@ Gurax_ImplementFunctionEx(DirSelector_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* message = args_gurax.IsValid()? args_gurax.PickString() : wxDirSelectorPromptStr;
-	const char* default_path = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool message_validFlag = args_gurax.IsValid();
+	wxString message = message_validFlag? wxString(args_gurax.PickString()) : wxDirSelectorPromptStr;
+	bool default_path_validFlag = args_gurax.IsValid();
+	wxString default_path = default_path_validFlag? wxString(args_gurax.PickString()) : "";
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
@@ -115,11 +117,15 @@ Gurax_ImplementFunctionEx(FileSelector_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* message = args_gurax.PickString();
-	const char* default_path = args_gurax.IsValid()? args_gurax.PickString() : "";
-	const char* default_filename = args_gurax.IsValid()? args_gurax.PickString() : "";
-	const char* default_extension = args_gurax.IsValid()? args_gurax.PickString() : "";
-	const char* wildcard = args_gurax.IsValid()? args_gurax.PickString() : wxFileSelectorDefaultWildcardStr;
+	wxString message(args_gurax.PickString());
+	bool default_path_validFlag = args_gurax.IsValid();
+	wxString default_path = default_path_validFlag? wxString(args_gurax.PickString()) : "";
+	bool default_filename_validFlag = args_gurax.IsValid();
+	wxString default_filename = default_filename_validFlag? wxString(args_gurax.PickString()) : "";
+	bool default_extension_validFlag = args_gurax.IsValid();
+	wxString default_extension = default_extension_validFlag? wxString(args_gurax.PickString()) : "";
+	bool wildcard_validFlag = args_gurax.IsValid();
+	wxString wildcard = wildcard_validFlag? wxString(args_gurax.PickString()) : wxFileSelectorDefaultWildcardStr;
 	bool flags_validFlag = args_gurax.IsValid();
 	int flags = flags_validFlag? args_gurax.PickNumber<int>() : 0;
 	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
@@ -151,7 +157,8 @@ Gurax_ImplementFunctionEx(GetColourFromUser_gurax, processor_gurax, argument_gur
 	wxWindow* parent = value_parent.GetEntityPtr();
 	Value_wxColour& value_colInit = args_gurax.Pick<Value_wxColour>();
 	const wxColour& colInit = value_colInit.GetEntity();
-	const char* caption = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool caption_validFlag = args_gurax.IsValid();
+	wxString caption = caption_validFlag? wxString(args_gurax.PickString()) : "";
 	wxColourData* data = args_gurax.IsValid()? args_gurax.Pick<Value_wxColourData>().GetEntityPtr() : nullptr;
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
@@ -176,7 +183,8 @@ Gurax_ImplementFunctionEx(GetFontFromUser_gurax, processor_gurax, argument_gurax
 	wxWindow* parent = value_parent.GetEntityPtr();
 	Value_wxFont& value_fontInit = args_gurax.Pick<Value_wxFont>();
 	const wxFont& fontInit = value_fontInit.GetEntity();
-	const char* caption = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool caption_validFlag = args_gurax.IsValid();
+	wxString caption = caption_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(
 		wxGetFontFromUser(parent, fontInit, caption)));
@@ -242,9 +250,9 @@ Gurax_ImplementFunctionEx(GetNumberFromUser_gurax, processor_gurax, argument_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* message = args_gurax.PickString();
-	const char* prompt = args_gurax.PickString();
-	const char* caption = args_gurax.PickString();
+	wxString message(args_gurax.PickString());
+	wxString prompt(args_gurax.PickString());
+	wxString caption(args_gurax.PickString());
 	long value = args_gurax.PickNumber<long>();
 	bool min_validFlag = args_gurax.IsValid();
 	long min = min_validFlag? args_gurax.PickNumber<long>() : 0;
@@ -274,9 +282,11 @@ Gurax_ImplementFunctionEx(GetPasswordFromUser_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* message = args_gurax.PickString();
-	const char* caption = args_gurax.IsValid()? args_gurax.PickString() : wxGetPasswordFromUserPromptStr;
-	const char* default_value = args_gurax.IsValid()? args_gurax.PickString() : "";
+	wxString message(args_gurax.PickString());
+	bool caption_validFlag = args_gurax.IsValid();
+	wxString caption = caption_validFlag? wxString(args_gurax.PickString()) : wxGetPasswordFromUserPromptStr;
+	bool default_value_validFlag = args_gurax.IsValid();
+	wxString default_value = default_value_validFlag? wxString(args_gurax.PickString()) : "";
 	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
 	bool x_validFlag = args_gurax.IsValid();
 	int x = x_validFlag? args_gurax.PickNumber<int>() : wxDefaultCoord;
@@ -308,8 +318,8 @@ Gurax_ImplementFunctionEx(GetSingleChoice_gurax, processor_gurax, argument_gurax
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* message = args_gurax.PickString();
-	const char* caption = args_gurax.PickString();
+	wxString message(args_gurax.PickString());
+	wxString caption(args_gurax.PickString());
 	wxArrayString aChoices = Util::CreateArrayString(args_gurax.PickList());
 	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
 	bool x_validFlag = args_gurax.IsValid();
@@ -348,8 +358,8 @@ Gurax_ImplementFunctionEx(GetSingleChoiceIndex_gurax, processor_gurax, argument_
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* message = args_gurax.PickString();
-	const char* caption = args_gurax.PickString();
+	wxString message(args_gurax.PickString());
+	wxString caption(args_gurax.PickString());
 	wxArrayString aChoices = Util::CreateArrayString(args_gurax.PickList());
 	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
 	bool x_validFlag = args_gurax.IsValid();
@@ -385,9 +395,11 @@ Gurax_ImplementFunctionEx(GetTextFromUser_gurax, processor_gurax, argument_gurax
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* message = args_gurax.PickString();
-	const char* caption = args_gurax.IsValid()? args_gurax.PickString() : wxGetTextFromUserPromptStr;
-	const char* default_value = args_gurax.IsValid()? args_gurax.PickString() : "";
+	wxString message(args_gurax.PickString());
+	bool caption_validFlag = args_gurax.IsValid();
+	wxString caption = caption_validFlag? wxString(args_gurax.PickString()) : wxGetTextFromUserPromptStr;
+	bool default_value_validFlag = args_gurax.IsValid();
+	wxString default_value = default_value_validFlag? wxString(args_gurax.PickString()) : "";
 	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
 	bool x_validFlag = args_gurax.IsValid();
 	int x = x_validFlag? args_gurax.PickNumber<int>() : wxDefaultCoord;
@@ -530,9 +542,10 @@ Gurax_ImplementFunctionEx(LoadFileSelector_gurax, processor_gurax, argument_gura
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* what = args_gurax.PickString();
-	const char* extension = args_gurax.PickString();
-	const char* default_name = args_gurax.IsValid()? args_gurax.PickString() : "";
+	wxString what(args_gurax.PickString());
+	wxString extension(args_gurax.PickString());
+	bool default_name_validFlag = args_gurax.IsValid();
+	wxString default_name = default_name_validFlag? wxString(args_gurax.PickString()) : "";
 	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
 	// Function body
 	wxString rtn = wxLoadFileSelector(what, extension, default_name, parent);
@@ -555,8 +568,9 @@ Gurax_ImplementFunctionEx(MessageBox_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* message = args_gurax.PickString();
-	const char* caption = args_gurax.IsValid()? args_gurax.PickString() : wxMessageBoxCaptionStr;
+	wxString message(args_gurax.PickString());
+	bool caption_validFlag = args_gurax.IsValid();
+	wxString caption = caption_validFlag? wxString(args_gurax.PickString()) : wxMessageBoxCaptionStr;
 	bool style_validFlag = args_gurax.IsValid();
 	int style = style_validFlag? args_gurax.PickNumber<int>() : (wxOK | wxCENTRE);
 	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
@@ -630,9 +644,10 @@ Gurax_ImplementFunctionEx(SaveFileSelector_gurax, processor_gurax, argument_gura
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* what = args_gurax.PickString();
-	const char* extension = args_gurax.PickString();
-	const char* default_name = args_gurax.IsValid()? args_gurax.PickString() : "";
+	wxString what(args_gurax.PickString());
+	wxString extension(args_gurax.PickString());
+	bool default_name_validFlag = args_gurax.IsValid();
+	wxString default_name = default_name_validFlag? wxString(args_gurax.PickString()) : "";
 	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
 	// Function body
 	wxString rtn = wxSaveFileSelector(what, extension, default_name, parent);
@@ -667,9 +682,9 @@ Gurax_ImplementFunctionEx(T_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* str = args_gurax.PickString();
+	wxString str(args_gurax.PickString());
 	// Function body
-	return new Value_String(str);
+	return new Value_String(str.utf8_str().data());
 }
 
 //------------------------------------------------------------------------------

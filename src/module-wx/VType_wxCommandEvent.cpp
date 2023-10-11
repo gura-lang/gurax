@@ -207,7 +207,7 @@ Gurax_ImplementMethodEx(wxCommandEvent, SetString_gurax, processor_gurax, argume
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* string = args_gurax.PickString();
+	wxString string(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetString(string);
 	return Gurax::Value::nil();

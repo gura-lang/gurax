@@ -167,7 +167,7 @@ Gurax_ImplementMethodEx(wxBitmapHandler, LoadFile_gurax, processor_gurax, argume
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
 	wxBitmap* bitmap = value_bitmap.GetEntityPtr();
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	wxBitmapType type = args_gurax.PickNumber<wxBitmapType>();
 	int desiredWidth = args_gurax.PickNumber<int>();
 	int desiredHeight = args_gurax.PickNumber<int>();
@@ -196,7 +196,7 @@ Gurax_ImplementMethodEx(wxBitmapHandler, SaveFile_gurax, processor_gurax, argume
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
 	const wxBitmap* bitmap = value_bitmap.GetEntityPtr();
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	wxBitmapType type = args_gurax.PickNumber<wxBitmapType>();
 	const wxPalette* palette = args_gurax.IsValid()? args_gurax.Pick<Value_wxPalette>().GetEntityPtr() : nullptr;
 	// Function body
@@ -219,7 +219,7 @@ Gurax_ImplementMethodEx(wxBitmapHandler, SetExtension_gurax, processor_gurax, ar
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* extension = args_gurax.PickString();
+	wxString extension(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetExtension(extension);
 	return Gurax::Value::nil();
@@ -240,7 +240,7 @@ Gurax_ImplementMethodEx(wxBitmapHandler, SetName_gurax, processor_gurax, argumen
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetName(name);
 	return Gurax::Value::nil();

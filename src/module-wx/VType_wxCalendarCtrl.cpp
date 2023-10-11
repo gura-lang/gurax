@@ -70,7 +70,8 @@ Gurax_ImplementConstructorEx(CalendarCtrl_gurax, processor_gurax, argument_gurax
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxCAL_SHOW_HOLIDAYS;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxCalendarNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxCalendarNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxCalendarCtrl::EntityT(parent, id, date, pos, size, style, name);
 	RefPtr<Value_wxCalendarCtrl> pValue_gurax(new Value_wxCalendarCtrl(pEntity_gurax));

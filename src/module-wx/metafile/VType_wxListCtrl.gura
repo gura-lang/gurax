@@ -295,7 +295,7 @@ ListCtrl = Class(Control) {
 	OnGetItemColumnAttr(item as long, column as long):virtual:const:returnNil as ListItemAttr_p
 	OnGetItemColumnImage(item as long, column as long):virtual:const as int
 	OnGetItemImage(item as long):virtual:const as int
-	OnGetItemText(item as long, column as long):virtual:const as wxString
+	OnGetItemText(item as long, column as long):virtual:const as String
 } %% R'''
 # Overview
 

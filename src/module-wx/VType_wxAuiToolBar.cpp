@@ -292,7 +292,8 @@ Gurax_ImplementMethodEx(wxAuiToolBar, AddLabel_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int tool_id = args_gurax.PickNumber<int>();
-	const char* label = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool label_validFlag = args_gurax.IsValid();
+	wxString label = label_validFlag? wxString(args_gurax.PickString()) : "";
 	bool width_validFlag = args_gurax.IsValid();
 	int width = width_validFlag? args_gurax.PickNumber<int>() : -1;
 	// Function body
@@ -1103,7 +1104,7 @@ Gurax_ImplementMethodEx(wxAuiToolBar, SetToolLabel_gurax, processor_gurax, argum
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int tool_id = args_gurax.PickNumber<int>();
-	const char* label = args_gurax.PickString();
+	wxString label(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetToolLabel(tool_id, label);
 	return Gurax::Value::nil();
@@ -1193,7 +1194,7 @@ Gurax_ImplementMethodEx(wxAuiToolBar, SetToolShortHelp_gurax, processor_gurax, a
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int tool_id = args_gurax.PickNumber<int>();
-	const char* help_string = args_gurax.PickString();
+	wxString help_string(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetToolShortHelp(tool_id, help_string);
 	return Gurax::Value::nil();
@@ -1237,7 +1238,7 @@ Gurax_ImplementMethodEx(wxAuiToolBar, SetToolLongHelp_gurax, processor_gurax, ar
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int tool_id = args_gurax.PickNumber<int>();
-	const char* help_string = args_gurax.PickString();
+	wxString help_string(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetToolLongHelp(tool_id, help_string);
 	return Gurax::Value::nil();

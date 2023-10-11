@@ -311,7 +311,7 @@ Gurax_ImplementMethodEx(wxBitmap, LoadFile_gurax, processor_gurax, argument_gura
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	bool type_validFlag = args_gurax.IsValid();
 	wxBitmapType type = type_validFlag? args_gurax.PickNumber<wxBitmapType>() : wxBITMAP_DEFAULT_TYPE;
 	// Function body
@@ -336,7 +336,7 @@ Gurax_ImplementMethodEx(wxBitmap, SaveFile_gurax, processor_gurax, argument_gura
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	wxBitmapType type = args_gurax.PickNumber<wxBitmapType>();
 	const wxPalette* palette = args_gurax.IsValid()? args_gurax.Pick<Value_wxPalette>().GetEntityPtr() : nullptr;
 	// Function body
@@ -493,7 +493,7 @@ Gurax_ImplementClassMethodEx(wxBitmap, FindHandler_gurax, processor_gurax, argum
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGDIImageHandler(
 		wxBitmap::FindHandler(name)));
@@ -577,7 +577,7 @@ Gurax_ImplementClassMethodEx(wxBitmap, RemoveHandler_gurax, processor_gurax, arg
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	// Function body
 	bool rtn = wxBitmap::RemoveHandler(name);
 	return new Gurax::Value_Bool(rtn);

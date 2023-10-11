@@ -69,7 +69,8 @@ Gurax_ImplementConstructorEx(SpinCtrl_gurax, processor_gurax, argument_gurax)
 	wxWindow* parent = value_parent.GetEntityPtr();
 	bool id_validFlag = args_gurax.IsValid();
 	wxWindowID id = id_validFlag? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
-	const char* value = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool value_validFlag = args_gurax.IsValid();
+	wxString value = value_validFlag? wxString(args_gurax.PickString()) : "";
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
@@ -80,7 +81,8 @@ Gurax_ImplementConstructorEx(SpinCtrl_gurax, processor_gurax, argument_gurax)
 	int max = max_validFlag? args_gurax.PickNumber<int>() : 100;
 	bool initial_validFlag = args_gurax.IsValid();
 	int initial = initial_validFlag? args_gurax.PickNumber<int>() : 0;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : "wxSpinCtrl";
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : "wxSpinCtrl";
 	// Function body
 	auto pEntity_gurax = new Value_wxSpinCtrl::EntityT(parent, id, value, pos, size, style, min, max, initial, name);
 	RefPtr<Value_wxSpinCtrl> pValue_gurax(new Value_wxSpinCtrl(pEntity_gurax));
@@ -119,7 +121,8 @@ Gurax_ImplementMethodEx(wxSpinCtrl, Create_gurax, processor_gurax, argument_gura
 	wxWindow* parent = value_parent.GetEntityPtr();
 	bool id_validFlag = args_gurax.IsValid();
 	wxWindowID id = id_validFlag? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
-	const char* value = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool value_validFlag = args_gurax.IsValid();
+	wxString value = value_validFlag? wxString(args_gurax.PickString()) : "";
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
@@ -130,7 +133,8 @@ Gurax_ImplementMethodEx(wxSpinCtrl, Create_gurax, processor_gurax, argument_gura
 	int max = max_validFlag? args_gurax.PickNumber<int>() : 100;
 	bool initial_validFlag = args_gurax.IsValid();
 	int initial = initial_validFlag? args_gurax.PickNumber<int>() : 0;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : "wxSpinCtrl";
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : "wxSpinCtrl";
 	// Function body
 	bool rtn = pEntity_gurax->Create(parent, id, value, pos, size, style, min, max, initial, name);
 	return new Gurax::Value_Bool(rtn);
@@ -286,7 +290,7 @@ Gurax_ImplementMethodEx(wxSpinCtrl, SetValue_gurax, processor_gurax, argument_gu
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* text = args_gurax.PickString();
+	wxString text(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetValue(text);
 	return Gurax::Value::nil();

@@ -87,8 +87,8 @@ Gurax_ImplementMethodEx(wxPGArrayEditorDialog, Create_gurax, processor_gurax, ar
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* parent = value_parent.GetEntityPtr();
-	const char* message = args_gurax.PickString();
-	const char* caption = args_gurax.PickString();
+	wxString message(args_gurax.PickString());
+	wxString caption(args_gurax.PickString());
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxAEDIALOG_STYLE;
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;

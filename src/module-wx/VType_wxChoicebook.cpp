@@ -68,7 +68,8 @@ Gurax_ImplementConstructorEx(Choicebook_gurax, processor_gurax, argument_gurax)
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	auto pEntity_gurax = new Value_wxChoicebook::EntityT(parent, id, pos, size, style, name);
 	RefPtr<Value_wxChoicebook> pValue_gurax(new Value_wxChoicebook(pEntity_gurax));

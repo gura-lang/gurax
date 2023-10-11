@@ -56,7 +56,8 @@ Gurax_ImplementConstructorEx(URL_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* url = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool url_validFlag = args_gurax.IsValid();
+	wxString url = url_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxURL(
 		wxURL(url)));
@@ -132,7 +133,7 @@ Gurax_ImplementMethodEx(wxURL, SetProxy_gurax, processor_gurax, argument_gurax)
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* url_proxy = args_gurax.PickString();
+	wxString url_proxy(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetProxy(url_proxy);
 	return Gurax::Value::nil();
@@ -153,7 +154,7 @@ Gurax_ImplementMethodEx(wxURL, SetURL_gurax, processor_gurax, argument_gurax)
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* url = args_gurax.PickString();
+	wxString url(args_gurax.PickString());
 	// Function body
 	wxURLError rtn = pEntity_gurax->SetURL(url);
 	return new Gurax::Value_Number(rtn);

@@ -59,7 +59,7 @@ Gurax_ImplementConstructorEx(HeaderColumnSimple_gurax, processor_gurax, argument
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* title = args_gurax.PickString();
+	wxString title(args_gurax.PickString());
 	bool width_validFlag = args_gurax.IsValid();
 	int width = width_validFlag? args_gurax.PickNumber<int>() : wxCOL_WIDTH_DEFAULT;
 	bool align_validFlag = args_gurax.IsValid();
@@ -90,7 +90,7 @@ Gurax_ImplementMethodEx(wxHeaderColumnSimple, SetTitle_gurax, processor_gurax, a
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* title = args_gurax.PickString();
+	wxString title(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetTitle(title);
 	return Gurax::Value::nil();

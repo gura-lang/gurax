@@ -113,7 +113,8 @@ Gurax_ImplementMethodEx(wxInfoBar, AddButton_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	wxWindowID btnid = args_gurax.PickNumber<wxWindowID>();
-	const char* label = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool label_validFlag = args_gurax.IsValid();
+	wxString label = label_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	pEntity_gurax->AddButton(btnid, label);
 	return Gurax::Value::nil();
@@ -173,7 +174,7 @@ Gurax_ImplementMethodEx(wxInfoBar, ShowMessage_gurax, processor_gurax, argument_
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* msg = args_gurax.PickString();
+	wxString msg(args_gurax.PickString());
 	bool flags_validFlag = args_gurax.IsValid();
 	int flags = flags_validFlag? args_gurax.PickNumber<int>() : wxICON_INFORMATION;
 	// Function body

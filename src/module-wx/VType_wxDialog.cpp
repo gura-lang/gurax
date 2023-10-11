@@ -64,12 +64,13 @@ Gurax_ImplementConstructorEx(Dialog_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
 	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
-	const char* title = args_gurax.PickString();
+	wxString title(args_gurax.PickString());
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxDEFAULT_DIALOG_STYLE;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxDialogNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxDialogNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxDialog::EntityT(parent, id, title, pos, size, style, name);
 	RefPtr<Value_wxDialog> pValue_gurax(new Value_wxDialog(pEntity_gurax));
@@ -245,7 +246,7 @@ Gurax_ImplementMethodEx(wxDialog, CreateTextSizer_gurax, processor_gurax, argume
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* message = args_gurax.PickString();
+	wxString message(args_gurax.PickString());
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizer(
 		pEntity_gurax->CreateTextSizer(message)));

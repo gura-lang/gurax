@@ -73,7 +73,8 @@ Gurax_ImplementConstructorEx(BitmapToggleButton_gurax, processor_gurax, argument
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxCheckBoxNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxCheckBoxNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxBitmapToggleButton::EntityT(parent, id, label, pos, size, style, validator, name);
 	RefPtr<Value_wxBitmapToggleButton> pValue_gurax(new Value_wxBitmapToggleButton(pEntity_gurax));

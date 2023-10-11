@@ -57,7 +57,7 @@ Gurax_ImplementConstructorEx(Animation_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	bool type_validFlag = args_gurax.IsValid();
 	wxAnimationType type = type_validFlag? args_gurax.PickNumber<wxAnimationType>() : wxANIMATION_TYPE_ANY;
 	// Function body
@@ -204,7 +204,7 @@ Gurax_ImplementMethodEx(wxAnimation, LoadFile_gurax, processor_gurax, argument_g
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	bool type_validFlag = args_gurax.IsValid();
 	wxAnimationType type = type_validFlag? args_gurax.PickNumber<wxAnimationType>() : wxANIMATION_TYPE_ANY;
 	// Function body

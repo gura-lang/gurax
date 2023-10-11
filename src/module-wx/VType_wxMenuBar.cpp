@@ -86,7 +86,7 @@ Gurax_ImplementMethodEx(wxMenuBar, Append_gurax, processor_gurax, argument_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxMenu& value_menu = args_gurax.Pick<Value_wxMenu>();
 	wxMenu* menu = value_menu.GetEntityPtr();
-	const char* title = args_gurax.PickString();
+	wxString title(args_gurax.PickString());
 	// Function body
 	bool rtn = pEntity_gurax->Append(menu, title);
 	return new Gurax::Value_Bool(rtn);
@@ -197,7 +197,7 @@ Gurax_ImplementMethodEx(wxMenuBar, FindMenu_gurax, processor_gurax, argument_gur
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* title = args_gurax.PickString();
+	wxString title(args_gurax.PickString());
 	// Function body
 	int rtn = pEntity_gurax->FindMenu(title);
 	return new Gurax::Value_Number(rtn);
@@ -219,8 +219,8 @@ Gurax_ImplementMethodEx(wxMenuBar, FindMenuItem_gurax, processor_gurax, argument
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* menuString = args_gurax.PickString();
-	const char* itemString = args_gurax.PickString();
+	wxString menuString(args_gurax.PickString());
+	wxString itemString(args_gurax.PickString());
 	// Function body
 	int rtn = pEntity_gurax->FindMenuItem(menuString, itemString);
 	return new Gurax::Value_Number(rtn);
@@ -369,7 +369,7 @@ Gurax_ImplementMethodEx(wxMenuBar, Insert_gurax, processor_gurax, argument_gurax
 	size_t pos = args_gurax.PickNumber<size_t>();
 	Value_wxMenu& value_menu = args_gurax.Pick<Value_wxMenu>();
 	wxMenu* menu = value_menu.GetEntityPtr();
-	const char* title = args_gurax.PickString();
+	wxString title(args_gurax.PickString());
 	// Function body
 	bool rtn = pEntity_gurax->Insert(pos, menu, title);
 	return new Gurax::Value_Bool(rtn);
@@ -483,7 +483,7 @@ Gurax_ImplementMethodEx(wxMenuBar, Replace_gurax, processor_gurax, argument_gura
 	size_t pos = args_gurax.PickNumber<size_t>();
 	Value_wxMenu& value_menu = args_gurax.Pick<Value_wxMenu>();
 	wxMenu* menu = value_menu.GetEntityPtr();
-	const char* title = args_gurax.PickString();
+	wxString title(args_gurax.PickString());
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenu(
 		pEntity_gurax->Replace(pos, menu, title)));
@@ -506,7 +506,7 @@ Gurax_ImplementMethodEx(wxMenuBar, SetHelpString_gurax, processor_gurax, argumen
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int id = args_gurax.PickNumber<int>();
-	const char* helpString = args_gurax.PickString();
+	wxString helpString(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetHelpString(id, helpString);
 	return Gurax::Value::nil();
@@ -529,7 +529,7 @@ Gurax_ImplementMethodEx(wxMenuBar, SetLabel_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int id = args_gurax.PickNumber<int>();
-	const char* label = args_gurax.PickString();
+	wxString label(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetLabel(id, label);
 	return Gurax::Value::nil();
@@ -552,7 +552,7 @@ Gurax_ImplementMethodEx(wxMenuBar, SetMenuLabel_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	size_t pos = args_gurax.PickNumber<size_t>();
-	const char* label = args_gurax.PickString();
+	wxString label(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetMenuLabel(pos, label);
 	return Gurax::Value::nil();

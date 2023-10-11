@@ -69,7 +69,8 @@ Gurax_ImplementConstructorEx(SplitterWindow_gurax, processor_gurax, argument_gur
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxSP_3D;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : "splitterWindow";
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : "splitterWindow";
 	// Function body
 	auto pEntity_gurax = new Value_wxSplitterWindow::EntityT(parent, id, pos, size, style, name);
 	RefPtr<Value_wxSplitterWindow> pValue_gurax(new Value_wxSplitterWindow(pEntity_gurax));
@@ -108,7 +109,8 @@ Gurax_ImplementMethodEx(wxSplitterWindow, Create_gurax, processor_gurax, argumen
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxSP_3D;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : "splitter";
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : "splitter";
 	// Function body
 	bool rtn = pEntity_gurax->Create(parent, id, point, size, style, name);
 	return new Gurax::Value_Bool(rtn);

@@ -69,7 +69,8 @@ Gurax_ImplementConstructorEx(Panel_gurax, processor_gurax, argument_gurax)
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxTAB_TRAVERSAL;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxPanelNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxPanelNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxPanel::EntityT(parent, id, pos, size, style, name);
 	RefPtr<Value_wxPanel> pValue_gurax(new Value_wxPanel(pEntity_gurax));
@@ -125,7 +126,8 @@ Gurax_ImplementMethodEx(wxPanel, Create_gurax, processor_gurax, argument_gurax)
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxTAB_TRAVERSAL;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxPanelNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxPanelNameStr;
 	// Function body
 	bool rtn = pEntity_gurax->Create(parent, id, pos, size, style, name);
 	return new Gurax::Value_Bool(rtn);

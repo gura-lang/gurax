@@ -65,7 +65,8 @@ Gurax_ImplementConstructorEx(RichTextFormattingDialog_gurax, processor_gurax, ar
 	long flags = args_gurax.PickNumber<long>();
 	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* parent = value_parent.GetEntityPtr();
-	const char* title = args_gurax.IsValid()? args_gurax.PickString() : "Formatting";
+	bool title_validFlag = args_gurax.IsValid();
+	wxString title = title_validFlag? wxString(args_gurax.PickString()) : "Formatting";
 	bool id_validFlag = args_gurax.IsValid();
 	wxWindowID id = id_validFlag? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
@@ -134,7 +135,8 @@ Gurax_ImplementMethodEx(wxRichTextFormattingDialog, Create_gurax, processor_gura
 	long flags = args_gurax.PickNumber<long>();
 	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* parent = value_parent.GetEntityPtr();
-	const char* title = args_gurax.IsValid()? args_gurax.PickString() : "Formatting";
+	bool title_validFlag = args_gurax.IsValid();
+	wxString title = title_validFlag? wxString(args_gurax.PickString()) : "Formatting";
 	bool id_validFlag = args_gurax.IsValid();
 	wxWindowID id = id_validFlag? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;

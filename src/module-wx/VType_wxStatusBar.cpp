@@ -65,7 +65,8 @@ Gurax_ImplementConstructorEx(StatusBar_gurax, processor_gurax, argument_gurax)
 	wxWindowID id = id_validFlag? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxSTB_DEFAULT_STYLE;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxStatusBarNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxStatusBarNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxStatusBar::EntityT(parent, id, style, name);
 	RefPtr<Value_wxStatusBar> pValue_gurax(new Value_wxStatusBar(pEntity_gurax));
@@ -100,7 +101,8 @@ Gurax_ImplementMethodEx(wxStatusBar, Create_gurax, processor_gurax, argument_gur
 	wxWindowID id = id_validFlag? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxSTB_DEFAULT_STYLE;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxStatusBarNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxStatusBarNameStr;
 	// Function body
 	bool rtn = pEntity_gurax->Create(parent, id, style, name);
 	return new Gurax::Value_Bool(rtn);
@@ -289,7 +291,7 @@ Gurax_ImplementMethodEx(wxStatusBar, PushStatusText_gurax, processor_gurax, argu
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* string = args_gurax.PickString();
+	wxString string(args_gurax.PickString());
 	bool field_validFlag = args_gurax.IsValid();
 	int field = field_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body
@@ -380,7 +382,7 @@ Gurax_ImplementMethodEx(wxStatusBar, SetStatusText_gurax, processor_gurax, argum
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* text = args_gurax.PickString();
+	wxString text(args_gurax.PickString());
 	bool i_validFlag = args_gurax.IsValid();
 	int i = i_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body

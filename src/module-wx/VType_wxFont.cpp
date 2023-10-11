@@ -665,7 +665,7 @@ Gurax_ImplementMethodEx(wxFont, SetFaceName_gurax, processor_gurax, argument_gur
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* faceName = args_gurax.PickString();
+	wxString faceName(args_gurax.PickString());
 	// Function body
 	bool rtn = pEntity_gurax->SetFaceName(faceName);
 	return new Gurax::Value_Bool(rtn);
@@ -707,7 +707,7 @@ Gurax_ImplementMethodEx(wxFont, SetNativeFontInfo_gurax, processor_gurax, argume
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* info = args_gurax.PickString();
+	wxString info(args_gurax.PickString());
 	// Function body
 	bool rtn = pEntity_gurax->SetNativeFontInfo(info);
 	return new Gurax::Value_Bool(rtn);
@@ -728,7 +728,7 @@ Gurax_ImplementMethodEx(wxFont, SetNativeFontInfoUserDesc_gurax, processor_gurax
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* info = args_gurax.PickString();
+	wxString info(args_gurax.PickString());
 	// Function body
 	bool rtn = pEntity_gurax->SetNativeFontInfoUserDesc(info);
 	return new Gurax::Value_Bool(rtn);

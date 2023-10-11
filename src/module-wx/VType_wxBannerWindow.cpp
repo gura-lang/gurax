@@ -137,7 +137,8 @@ Gurax_ImplementMethodEx(wxBannerWindow, Create_gurax, processor_gurax, argument_
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxBannerWindowNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxBannerWindowNameStr;
 	// Function body
 	bool rtn = pEntity_gurax->Create(parent, winid, dir, pos, size, style, name);
 	return new Gurax::Value_Bool(rtn);
@@ -181,8 +182,8 @@ Gurax_ImplementMethodEx(wxBannerWindow, SetText_gurax, processor_gurax, argument
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* title = args_gurax.PickString();
-	const char* message = args_gurax.PickString();
+	wxString title(args_gurax.PickString());
+	wxString message(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetText(title, message);
 	return Gurax::Value::nil();

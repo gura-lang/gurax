@@ -65,12 +65,13 @@ Gurax_ImplementConstructorEx(AuiMDIChildFrame_gurax, processor_gurax, argument_g
 	Value_wxAuiMDIParentFrame& value_parent = args_gurax.Pick<Value_wxAuiMDIParentFrame>();
 	wxAuiMDIParentFrame* parent = value_parent.GetEntityPtr();
 	wxWindowID winid = args_gurax.PickNumber<wxWindowID>();
-	const char* title = args_gurax.PickString();
+	wxString title(args_gurax.PickString());
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxDEFAULT_FRAME_STYLE;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxFrameNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxFrameNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxAuiMDIChildFrame::EntityT(parent, winid, title, pos, size, style, name);
 	RefPtr<Value_wxAuiMDIChildFrame> pValue_gurax(new Value_wxAuiMDIChildFrame(pEntity_gurax));
@@ -105,12 +106,13 @@ Gurax_ImplementMethodEx(wxAuiMDIChildFrame, Create_gurax, processor_gurax, argum
 	Value_wxAuiMDIParentFrame& value_parent = args_gurax.Pick<Value_wxAuiMDIParentFrame>();
 	wxAuiMDIParentFrame* parent = value_parent.GetEntityPtr();
 	wxWindowID winid = args_gurax.PickNumber<wxWindowID>();
-	const char* title = args_gurax.PickString();
+	wxString title(args_gurax.PickString());
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxDEFAULT_FRAME_STYLE;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxFrameNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxFrameNameStr;
 	// Function body
 	bool rtn = pEntity_gurax->Create(parent, winid, title, pos, size, style, name);
 	return new Gurax::Value_Bool(rtn);
@@ -171,7 +173,7 @@ Gurax_ImplementMethodEx(wxAuiMDIChildFrame, SetTitle_gurax, processor_gurax, arg
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* title = args_gurax.PickString();
+	wxString title(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetTitle(title);
 	return Gurax::Value::nil();
@@ -354,7 +356,8 @@ Gurax_ImplementMethodEx(wxAuiMDIChildFrame, CreateStatusBar_gurax, processor_gur
 	long style = style_validFlag? args_gurax.PickNumber<long>() : 1;
 	bool winid_validFlag = args_gurax.IsValid();
 	wxWindowID winid = winid_validFlag? args_gurax.PickNumber<wxWindowID>() : 1;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxStatusBar(
 		pEntity_gurax->CreateStatusBar(number, style, winid, name)));
@@ -394,7 +397,7 @@ Gurax_ImplementMethodEx(wxAuiMDIChildFrame, SetStatusText_gurax, processor_gurax
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* text = args_gurax.PickString();
+	wxString text(args_gurax.PickString());
 	bool number_validFlag = args_gurax.IsValid();
 	int number = number_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body
@@ -443,7 +446,7 @@ Gurax_ImplementMethodEx(wxAuiMDIChildFrame, CreateToolBar_gurax, processor_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	long style = args_gurax.PickNumber<long>();
 	wxWindowID winid = args_gurax.PickNumber<wxWindowID>();
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBar(
 		pEntity_gurax->CreateToolBar(style, winid, name)));

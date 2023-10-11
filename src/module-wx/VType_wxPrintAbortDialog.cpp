@@ -62,12 +62,13 @@ Gurax_ImplementConstructorEx(PrintAbortDialog_gurax, processor_gurax, argument_g
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
-	const char* documentTitle = args_gurax.PickString();
+	wxString documentTitle(args_gurax.PickString());
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxDEFAULT_DIALOG_STYLE;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : "dialog";
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : "dialog";
 	// Function body
 	auto pEntity_gurax = new Value_wxPrintAbortDialog::EntityT(parent, documentTitle, pos, size, style, name);
 	RefPtr<Value_wxPrintAbortDialog> pValue_gurax(new Value_wxPrintAbortDialog(pEntity_gurax));

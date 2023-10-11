@@ -9,8 +9,8 @@ HtmlListBox = Class(VListBox) {
 	OnLinkClicked(n as size_t, link as const_HtmlLinkInfo_r):virtual as void
 	GetSelectedTextBgColour(colBg as const_Colour_r):const:virtual as Colour
 	GetSelectedTextColour(colFg as const_Colour_r):const:virtual as Colour
-	OnGetItemMarkup(n as size_t):const:virtual as wxString
-	OnGetItem(n as size_t):const:virtual:pure as wxString = 'return wxEmptyString;'
+	OnGetItemMarkup(n as size_t):const:virtual as String
+	OnGetItem(n as size_t):const:virtual:pure as String = 'return wxEmptyString;'
 } %% R'''
 # Overview
 

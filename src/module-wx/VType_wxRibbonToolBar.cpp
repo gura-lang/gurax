@@ -132,7 +132,7 @@ Gurax_ImplementMethodEx(wxRibbonToolBar, AddTool_gurax, processor_gurax, argumen
 	int tool_id = args_gurax.PickNumber<int>();
 	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
 	const wxBitmap& bitmap = value_bitmap.GetEntity();
-	const char* help_string = args_gurax.PickString();
+	wxString help_string(args_gurax.PickString());
 	bool kind_validFlag = args_gurax.IsValid();
 	wxRibbonButtonKind kind = kind_validFlag? args_gurax.PickNumber<wxRibbonButtonKind>() : wxRIBBON_BUTTON_NORMAL;
 	// Function body
@@ -161,7 +161,8 @@ Gurax_ImplementMethodEx(wxRibbonToolBar, AddDropdownTool_gurax, processor_gurax,
 	int tool_id = args_gurax.PickNumber<int>();
 	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
 	const wxBitmap& bitmap = value_bitmap.GetEntity();
-	const char* help_string = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool help_string_validFlag = args_gurax.IsValid();
+	wxString help_string = help_string_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonToolBarToolBase(
 		pEntity_gurax->AddDropdownTool(tool_id, bitmap, help_string)));
@@ -188,7 +189,8 @@ Gurax_ImplementMethodEx(wxRibbonToolBar, AddHybridTool_gurax, processor_gurax, a
 	int tool_id = args_gurax.PickNumber<int>();
 	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
 	const wxBitmap& bitmap = value_bitmap.GetEntity();
-	const char* help_string = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool help_string_validFlag = args_gurax.IsValid();
+	wxString help_string = help_string_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonToolBarToolBase(
 		pEntity_gurax->AddHybridTool(tool_id, bitmap, help_string)));
@@ -215,7 +217,7 @@ Gurax_ImplementMethodEx(wxRibbonToolBar, AddToggleTool_gurax, processor_gurax, a
 	int tool_id = args_gurax.PickNumber<int>();
 	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
 	const wxBitmap& bitmap = value_bitmap.GetEntity();
-	const char* help_string = args_gurax.PickString();
+	wxString help_string(args_gurax.PickString());
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonToolBarToolBase(
 		pEntity_gurax->AddToggleTool(tool_id, bitmap, help_string)));
@@ -263,7 +265,7 @@ Gurax_ImplementMethodEx(wxRibbonToolBar, InsertTool_gurax, processor_gurax, argu
 	int tool_id = args_gurax.PickNumber<int>();
 	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
 	const wxBitmap& bitmap = value_bitmap.GetEntity();
-	const char* help_string = args_gurax.PickString();
+	wxString help_string(args_gurax.PickString());
 	bool kind_validFlag = args_gurax.IsValid();
 	wxRibbonButtonKind kind = kind_validFlag? args_gurax.PickNumber<wxRibbonButtonKind>() : wxRIBBON_BUTTON_NORMAL;
 	// Function body
@@ -294,7 +296,8 @@ Gurax_ImplementMethodEx(wxRibbonToolBar, InsertDropdownTool_gurax, processor_gur
 	int tool_id = args_gurax.PickNumber<int>();
 	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
 	const wxBitmap& bitmap = value_bitmap.GetEntity();
-	const char* help_string = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool help_string_validFlag = args_gurax.IsValid();
+	wxString help_string = help_string_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonToolBarToolBase(
 		pEntity_gurax->InsertDropdownTool(pos, tool_id, bitmap, help_string)));
@@ -323,7 +326,8 @@ Gurax_ImplementMethodEx(wxRibbonToolBar, InsertHybridTool_gurax, processor_gurax
 	int tool_id = args_gurax.PickNumber<int>();
 	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
 	const wxBitmap& bitmap = value_bitmap.GetEntity();
-	const char* help_string = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool help_string_validFlag = args_gurax.IsValid();
+	wxString help_string = help_string_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonToolBarToolBase(
 		pEntity_gurax->InsertHybridTool(pos, tool_id, bitmap, help_string)));
@@ -352,7 +356,8 @@ Gurax_ImplementMethodEx(wxRibbonToolBar, InsertToggleTool_gurax, processor_gurax
 	int tool_id = args_gurax.PickNumber<int>();
 	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
 	const wxBitmap& bitmap = value_bitmap.GetEntity();
-	const char* help_string = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool help_string_validFlag = args_gurax.IsValid();
+	wxString help_string = help_string_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonToolBarToolBase(
 		pEntity_gurax->InsertToggleTool(pos, tool_id, bitmap, help_string)));
@@ -732,7 +737,7 @@ Gurax_ImplementMethodEx(wxRibbonToolBar, SetToolHelpString_gurax, processor_gura
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int tool_id = args_gurax.PickNumber<int>();
-	const char* helpString = args_gurax.PickString();
+	wxString helpString(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetToolHelpString(tool_id, helpString);
 	return Gurax::Value::nil();

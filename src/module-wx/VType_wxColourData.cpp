@@ -217,7 +217,7 @@ Gurax_ImplementMethodEx(wxColourData, FromString_gurax, processor_gurax, argumen
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* str = args_gurax.PickString();
+	wxString str(args_gurax.PickString());
 	// Function body
 	bool rtn = pEntity_gurax->FromString(str);
 	return new Gurax::Value_Bool(rtn);

@@ -765,7 +765,7 @@ Gurax_ImplementMethodEx(wxImage, GetOption_gurax, processor_gurax, argument_gura
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	// Function body
 	wxString rtn = pEntity_gurax->GetOption(name);
 	return new Gurax::Value_String(rtn.utf8_str().data());
@@ -786,7 +786,7 @@ Gurax_ImplementMethodEx(wxImage, GetOptionInt_gurax, processor_gurax, argument_g
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	// Function body
 	int rtn = pEntity_gurax->GetOptionInt(name);
 	return new Gurax::Value_Number(rtn);
@@ -899,7 +899,7 @@ Gurax_ImplementMethodEx(wxImage, HasOption_gurax, processor_gurax, argument_gura
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	// Function body
 	bool rtn = pEntity_gurax->HasOption(name);
 	return new Gurax::Value_Bool(rtn);
@@ -994,7 +994,7 @@ Gurax_ImplementMethodEx(wxImage, SaveFile_gurax, processor_gurax, argument_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxOutputStream& value_stream = args_gurax.Pick<Value_wxOutputStream>();
 	wxOutputStream& stream = value_stream.GetEntity();
-	const char* mimetype = args_gurax.PickString();
+	wxString mimetype(args_gurax.PickString());
 	// Function body
 	bool rtn = pEntity_gurax->SaveFile(stream, mimetype);
 	return new Gurax::Value_Bool(rtn);
@@ -1107,8 +1107,8 @@ Gurax_ImplementMethodEx(wxImage, SetOption_gurax, processor_gurax, argument_gura
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
-	const char* value = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
+	wxString value(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetOption(name, value);
 	return Gurax::Value::nil();
@@ -1168,7 +1168,7 @@ Gurax_ImplementClassMethodEx(wxImage, CanRead_gurax, processor_gurax, argument_g
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* filename = args_gurax.PickString();
+	wxString filename(args_gurax.PickString());
 	// Function body
 	bool rtn = wxImage::CanRead(filename);
 	return new Gurax::Value_Bool(rtn);
@@ -1229,7 +1229,7 @@ Gurax_ImplementClassMethodEx(wxImage, FindHandler_gurax, processor_gurax, argume
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImageHandler(
 		*wxImage::FindHandler(name)));
@@ -1246,7 +1246,7 @@ Gurax_ImplementClassMethodEx(wxImage, FindHandlerMime_gurax, processor_gurax, ar
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* mimetype = args_gurax.PickString();
+	wxString mimetype(args_gurax.PickString());
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImageHandler(
 		*wxImage::FindHandlerMime(mimetype)));
@@ -1294,7 +1294,7 @@ Gurax_ImplementClassMethodEx(wxImage, RemoveHandler_gurax, processor_gurax, argu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
+	wxString name(args_gurax.PickString());
 	// Function body
 	bool rtn = wxImage::RemoveHandler(name);
 	return new Gurax::Value_Bool(rtn);
@@ -1312,7 +1312,7 @@ Gurax_ImplementClassMethodEx(wxImage, GetImageCount_gurax, processor_gurax, argu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* filename = args_gurax.PickString();
+	wxString filename(args_gurax.PickString());
 	bool type_validFlag = args_gurax.IsValid();
 	wxBitmapType type = type_validFlag? args_gurax.PickNumber<wxBitmapType>() : wxBITMAP_TYPE_ANY;
 	// Function body

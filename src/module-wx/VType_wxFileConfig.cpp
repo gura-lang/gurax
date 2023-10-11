@@ -84,7 +84,7 @@ Gurax_ImplementMethodEx(wxFileConfig, SetPath_gurax, processor_gurax, argument_g
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* strPath = args_gurax.PickString();
+	wxString strPath(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetPath(strPath);
 	return Gurax::Value::nil();
@@ -164,7 +164,7 @@ Gurax_ImplementMethodEx(wxFileConfig, HasGroup_gurax, processor_gurax, argument_
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* strName = args_gurax.PickString();
+	wxString strName(args_gurax.PickString());
 	// Function body
 	bool rtn = pEntity_gurax->HasGroup(strName);
 	return new Gurax::Value_Bool(rtn);
@@ -185,7 +185,7 @@ Gurax_ImplementMethodEx(wxFileConfig, HasEntry_gurax, processor_gurax, argument_
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* strName = args_gurax.PickString();
+	wxString strName(args_gurax.PickString());
 	// Function body
 	bool rtn = pEntity_gurax->HasEntry(strName);
 	return new Gurax::Value_Bool(rtn);
@@ -228,8 +228,8 @@ Gurax_ImplementMethodEx(wxFileConfig, RenameEntry_gurax, processor_gurax, argume
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* oldName = args_gurax.PickString();
-	const char* newName = args_gurax.PickString();
+	wxString oldName(args_gurax.PickString());
+	wxString newName(args_gurax.PickString());
 	// Function body
 	bool rtn = pEntity_gurax->RenameEntry(oldName, newName);
 	return new Gurax::Value_Bool(rtn);
@@ -251,8 +251,8 @@ Gurax_ImplementMethodEx(wxFileConfig, RenameGroup_gurax, processor_gurax, argume
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* oldName = args_gurax.PickString();
-	const char* newName = args_gurax.PickString();
+	wxString oldName(args_gurax.PickString());
+	wxString newName(args_gurax.PickString());
 	// Function body
 	bool rtn = pEntity_gurax->RenameGroup(oldName, newName);
 	return new Gurax::Value_Bool(rtn);
@@ -274,7 +274,7 @@ Gurax_ImplementMethodEx(wxFileConfig, DeleteEntry_gurax, processor_gurax, argume
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* key = args_gurax.PickString();
+	wxString key(args_gurax.PickString());
 	bool bGroupIfEmptyAlso = args_gurax.IsValid()? args_gurax.PickBool() : true;
 	// Function body
 	bool rtn = pEntity_gurax->DeleteEntry(key, bGroupIfEmptyAlso);
@@ -296,7 +296,7 @@ Gurax_ImplementMethodEx(wxFileConfig, DeleteGroup_gurax, processor_gurax, argume
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* szKey = args_gurax.PickString();
+	wxString szKey(args_gurax.PickString());
 	// Function body
 	bool rtn = pEntity_gurax->DeleteGroup(szKey);
 	return new Gurax::Value_Bool(rtn);
@@ -330,7 +330,7 @@ Gurax_ImplementClassMethodEx(wxFileConfig, GetGlobalFile_gurax, processor_gurax,
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* basename = args_gurax.PickString();
+	wxString basename(args_gurax.PickString());
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFileName(
 		wxFileConfig::GetGlobalFile(basename)));
@@ -348,7 +348,7 @@ Gurax_ImplementClassMethodEx(wxFileConfig, GetLocalFile_gurax, processor_gurax, 
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* basename = args_gurax.PickString();
+	wxString basename(args_gurax.PickString());
 	bool style_validFlag = args_gurax.IsValid();
 	int style = style_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body
@@ -367,7 +367,7 @@ Gurax_ImplementClassMethodEx(wxFileConfig, GetGlobalFileName_gurax, processor_gu
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* szFile = args_gurax.PickString();
+	wxString szFile(args_gurax.PickString());
 	// Function body
 	wxString rtn = wxFileConfig::GetGlobalFileName(szFile);
 	return new Gurax::Value_String(rtn.utf8_str().data());
@@ -385,7 +385,7 @@ Gurax_ImplementClassMethodEx(wxFileConfig, GetLocalFileName_gurax, processor_gur
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* szFile = args_gurax.PickString();
+	wxString szFile(args_gurax.PickString());
 	bool style_validFlag = args_gurax.IsValid();
 	int style = style_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body

@@ -72,7 +72,8 @@ Gurax_ImplementConstructorEx(ListBox_gurax, processor_gurax, argument_gurax)
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxListBoxNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxListBoxNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxListBox::EntityT(parent, id, pos, size, choices, style, validator, name);
 	RefPtr<Value_wxListBox> pValue_gurax(new Value_wxListBox(pEntity_gurax));
@@ -158,7 +159,7 @@ Gurax_ImplementMethodEx(wxListBox, SetStringSelection_gurax, processor_gurax, ar
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* s = args_gurax.PickString();
+	wxString s(args_gurax.PickString());
 	bool select = args_gurax.IsValid()? args_gurax.PickBool() : true;
 	// Function body
 	bool rtn = pEntity_gurax->SetStringSelection(s, select);
@@ -424,7 +425,7 @@ Gurax_ImplementMethodEx(wxListBox, SetString_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	unsigned int n = args_gurax.PickNumber<unsigned int>();
-	const char* s = args_gurax.PickString();
+	wxString s(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetString(n, s);
 	return Gurax::Value::nil();
@@ -446,7 +447,7 @@ Gurax_ImplementMethodEx(wxListBox, FindString_gurax, processor_gurax, argument_g
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* s = args_gurax.PickString();
+	wxString s(args_gurax.PickString());
 	bool bCase = args_gurax.IsValid()? args_gurax.PickBool() : false;
 	// Function body
 	int rtn = pEntity_gurax->FindString(s, bCase);
@@ -486,7 +487,8 @@ Gurax_ImplementMethodEx(wxListBox, Create_gurax, processor_gurax, argument_gurax
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxListBoxNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxListBoxNameStr;
 	// Function body
 	bool rtn = pEntity_gurax->Create(parent, id, pos, size, choices, style, validator, name);
 	return new Gurax::Value_Bool(rtn);

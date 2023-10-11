@@ -62,7 +62,7 @@ Gurax_ImplementConstructorEx(FindReplaceDialog_gurax, processor_gurax, argument_
 	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
 	Value_wxFindReplaceData& value_data = args_gurax.Pick<Value_wxFindReplaceData>();
 	wxFindReplaceData* data = value_data.GetEntityPtr();
-	const char* title = args_gurax.PickString();
+	wxString title(args_gurax.PickString());
 	bool style_validFlag = args_gurax.IsValid();
 	int style = style_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body
@@ -97,7 +97,7 @@ Gurax_ImplementMethodEx(wxFindReplaceDialog, Create_gurax, processor_gurax, argu
 	wxWindow* parent = value_parent.GetEntityPtr();
 	Value_wxFindReplaceData& value_data = args_gurax.Pick<Value_wxFindReplaceData>();
 	wxFindReplaceData* data = value_data.GetEntityPtr();
-	const char* title = args_gurax.PickString();
+	wxString title(args_gurax.PickString());
 	bool style_validFlag = args_gurax.IsValid();
 	int style = style_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body

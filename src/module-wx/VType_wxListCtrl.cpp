@@ -70,7 +70,8 @@ Gurax_ImplementConstructorEx(ListCtrl_gurax, processor_gurax, argument_gurax)
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxLC_ICON;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxListCtrlNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxListCtrlNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxListCtrl::EntityT(parent, id, pos, size, style, validator, name);
 	RefPtr<Value_wxListCtrl> pValue_gurax(new Value_wxListCtrl(pEntity_gurax));
@@ -98,7 +99,7 @@ Gurax_ImplementMethodEx(wxListCtrl, AppendColumn_gurax, processor_gurax, argumen
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* heading = args_gurax.PickString();
+	wxString heading(args_gurax.PickString());
 	bool format_validFlag = args_gurax.IsValid();
 	wxListColumnFormat format = format_validFlag? args_gurax.PickNumber<wxListColumnFormat>() : wxLIST_FORMAT_LEFT;
 	bool width_validFlag = args_gurax.IsValid();
@@ -200,7 +201,8 @@ Gurax_ImplementMethodEx(wxListCtrl, Create_gurax, processor_gurax, argument_gura
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxLC_ICON;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxListCtrlNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxListCtrlNameStr;
 	// Function body
 	bool rtn = pEntity_gurax->Create(parent, id, pos, size, style, validator, name);
 	return new Gurax::Value_Bool(rtn);
@@ -1634,7 +1636,7 @@ Gurax_ImplementMethodEx(wxListCtrl, SetItemText_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	long item = args_gurax.PickNumber<long>();
-	const char* text = args_gurax.PickString();
+	wxString text(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetItemText(item, text);
 	return Gurax::Value::nil();
@@ -2141,7 +2143,7 @@ wxString Value_wxListCtrl::EntityT::OnGetItemText(long item, long column) const
 			Util::ExitMainLoop();
 			break;
 		}
-		return Value_String::GetString(*pValueRtn);
+		return wxString(Value_String::GetString(*pValueRtn));
 	} while (0);
 	return public_OnGetItemText(item, column);
 }

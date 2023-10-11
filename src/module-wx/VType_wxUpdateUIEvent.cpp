@@ -241,7 +241,7 @@ Gurax_ImplementMethodEx(wxUpdateUIEvent, SetText_gurax, processor_gurax, argumen
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* text = args_gurax.PickString();
+	wxString text(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetText(text);
 	return Gurax::Value::nil();

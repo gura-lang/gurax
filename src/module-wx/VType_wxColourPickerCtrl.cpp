@@ -72,7 +72,8 @@ Gurax_ImplementConstructorEx(ColourPickerCtrl_gurax, processor_gurax, argument_g
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxCLRP_DEFAULT_STYLE;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxColourPickerCtrlNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxColourPickerCtrlNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxColourPickerCtrl::EntityT(parent, id, colour, pos, size, style, validator, name);
 	RefPtr<Value_wxColourPickerCtrl> pValue_gurax(new Value_wxColourPickerCtrl(pEntity_gurax));
@@ -114,7 +115,8 @@ Gurax_ImplementMethodEx(wxColourPickerCtrl, Create_gurax, processor_gurax, argum
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxCLRP_DEFAULT_STYLE;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxColourPickerCtrlNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxColourPickerCtrlNameStr;
 	// Function body
 	bool rtn = pEntity_gurax->Create(parent, id, colour, pos, size, style, validator, name);
 	return new Gurax::Value_Bool(rtn);

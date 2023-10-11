@@ -68,15 +68,18 @@ Gurax_ImplementConstructorEx(GenericDirCtrl_gurax, processor_gurax, argument_gur
 	wxWindow* parent = value_parent.GetEntityPtr();
 	bool id_validFlag = args_gurax.IsValid();
 	wxWindowID id = id_validFlag? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
-	const char* dir = args_gurax.IsValid()? args_gurax.PickString() : wxDirDialogDefaultFolderStr;
+	bool dir_validFlag = args_gurax.IsValid();
+	wxString dir = dir_validFlag? wxString(args_gurax.PickString()) : wxDirDialogDefaultFolderStr;
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxDIRCTRL_3D_INTERNAL;
-	const char* filter = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool filter_validFlag = args_gurax.IsValid();
+	wxString filter = filter_validFlag? wxString(args_gurax.PickString()) : "";
 	bool defaultFilter_validFlag = args_gurax.IsValid();
 	int defaultFilter = defaultFilter_validFlag? args_gurax.PickNumber<int>() : 0;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxTreeCtrlNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxTreeCtrlNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxGenericDirCtrl::EntityT(parent, id, dir, pos, size, style, filter, defaultFilter, name);
 	RefPtr<Value_wxGenericDirCtrl> pValue_gurax(new Value_wxGenericDirCtrl(pEntity_gurax));
@@ -102,7 +105,7 @@ Gurax_ImplementMethodEx(wxGenericDirCtrl, CollapsePath_gurax, processor_gurax, a
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* path = args_gurax.PickString();
+	wxString path(args_gurax.PickString());
 	// Function body
 	bool rtn = pEntity_gurax->CollapsePath(path);
 	return new Gurax::Value_Bool(rtn);
@@ -152,15 +155,18 @@ Gurax_ImplementMethodEx(wxGenericDirCtrl, Create_gurax, processor_gurax, argumen
 	wxWindow* parent = value_parent.GetEntityPtr();
 	bool id_validFlag = args_gurax.IsValid();
 	wxWindowID id = id_validFlag? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
-	const char* dir = args_gurax.IsValid()? args_gurax.PickString() : wxDirDialogDefaultFolderStr;
+	bool dir_validFlag = args_gurax.IsValid();
+	wxString dir = dir_validFlag? wxString(args_gurax.PickString()) : wxDirDialogDefaultFolderStr;
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxDIRCTRL_3D_INTERNAL;
-	const char* filter = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool filter_validFlag = args_gurax.IsValid();
+	wxString filter = filter_validFlag? wxString(args_gurax.PickString()) : "";
 	bool defaultFilter_validFlag = args_gurax.IsValid();
 	int defaultFilter = defaultFilter_validFlag? args_gurax.PickNumber<int>() : 0;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxTreeCtrlNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxTreeCtrlNameStr;
 	// Function body
 	bool rtn = pEntity_gurax->Create(parent, id, dir, pos, size, style, filter, defaultFilter, name);
 	return new Gurax::Value_Bool(rtn);
@@ -181,7 +187,7 @@ Gurax_ImplementMethodEx(wxGenericDirCtrl, ExpandPath_gurax, processor_gurax, arg
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* path = args_gurax.PickString();
+	wxString path(args_gurax.PickString());
 	// Function body
 	bool rtn = pEntity_gurax->ExpandPath(path);
 	return new Gurax::Value_Bool(rtn);
@@ -375,7 +381,7 @@ Gurax_ImplementMethodEx(wxGenericDirCtrl, SetDefaultPath_gurax, processor_gurax,
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* path = args_gurax.PickString();
+	wxString path(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetDefaultPath(path);
 	return Gurax::Value::nil();
@@ -396,7 +402,7 @@ Gurax_ImplementMethodEx(wxGenericDirCtrl, SetFilter_gurax, processor_gurax, argu
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* filter = args_gurax.PickString();
+	wxString filter(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetFilter(filter);
 	return Gurax::Value::nil();
@@ -438,7 +444,7 @@ Gurax_ImplementMethodEx(wxGenericDirCtrl, SetPath_gurax, processor_gurax, argume
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* path = args_gurax.PickString();
+	wxString path(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetPath(path);
 	return Gurax::Value::nil();
@@ -481,7 +487,7 @@ Gurax_ImplementMethodEx(wxGenericDirCtrl, SelectPath_gurax, processor_gurax, arg
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* path = args_gurax.PickString();
+	wxString path(args_gurax.PickString());
 	bool select = args_gurax.IsValid()? args_gurax.PickBool() : true;
 	// Function body
 	pEntity_gurax->SelectPath(path, select);

@@ -1131,7 +1131,7 @@ Gurax_ImplementMethodEx(wxDC, DrawLabel_gurax, processor_gurax, argument_gurax)
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* text = args_gurax.PickString();
+	wxString text(args_gurax.PickString());
 	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
 	const wxRect& rect = value_rect.GetEntity();
 	bool alignment_validFlag = args_gurax.IsValid();
@@ -2080,7 +2080,7 @@ Gurax_ImplementMethodEx(wxDC, GetMultiLineTextExtentWH_gurax, processor_gurax, a
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* string = args_gurax.PickString();
+	wxString string(args_gurax.PickString());
 	RefPtr<Referencer> w(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> h(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> heightLine(args_gurax.IsValid()? args_gurax.PickReferencer().Reference() : nullptr);
@@ -2110,7 +2110,7 @@ Gurax_ImplementMethodEx(wxDC, GetMultiLineTextExtent_gurax, processor_gurax, arg
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* string = args_gurax.PickString();
+	wxString string(args_gurax.PickString());
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
 		pEntity_gurax->GetMultiLineTextExtent(string)));
@@ -2136,7 +2136,7 @@ Gurax_ImplementMethodEx(wxDC, GetTextExtentWH_gurax, processor_gurax, argument_g
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* string = args_gurax.PickString();
+	wxString string(args_gurax.PickString());
 	RefPtr<Referencer> w(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> h(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> descent(args_gurax.IsValid()? args_gurax.PickReferencer().Reference() : nullptr);
@@ -2168,7 +2168,7 @@ Gurax_ImplementMethodEx(wxDC, GetTextExtent_gurax, processor_gurax, argument_gur
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* string = args_gurax.PickString();
+	wxString string(args_gurax.PickString());
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
 		pEntity_gurax->GetTextExtent(string)));
@@ -2493,7 +2493,7 @@ Gurax_ImplementMethodEx(wxDC, StartDoc_gurax, processor_gurax, argument_gurax)
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* message = args_gurax.PickString();
+	wxString message(args_gurax.PickString());
 	// Function body
 	bool rtn = pEntity_gurax->StartDoc(message);
 	return new Gurax::Value_Bool(rtn);

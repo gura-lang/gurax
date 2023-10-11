@@ -69,7 +69,8 @@ Gurax_ImplementConstructorEx(HeaderCtrlSimple_gurax, processor_gurax, argument_g
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxHD_DEFAULT_STYLE;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxHeaderCtrlNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxHeaderCtrlNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxHeaderCtrlSimple::EntityT(parent, winid, pos, size, style, name);
 	RefPtr<Value_wxHeaderCtrlSimple> pValue_gurax(new Value_wxHeaderCtrlSimple(pEntity_gurax));

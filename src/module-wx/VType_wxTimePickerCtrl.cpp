@@ -72,7 +72,8 @@ Gurax_ImplementConstructorEx(TimePickerCtrl_gurax, processor_gurax, argument_gur
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxTP_DEFAULT;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : "timectrl";
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : "timectrl";
 	// Function body
 	auto pEntity_gurax = new Value_wxTimePickerCtrl::EntityT(parent, id, dt, pos, size, style, validator, name);
 	RefPtr<Value_wxTimePickerCtrl> pValue_gurax(new Value_wxTimePickerCtrl(pEntity_gurax));
@@ -114,7 +115,8 @@ Gurax_ImplementMethodEx(wxTimePickerCtrl, Create_gurax, processor_gurax, argumen
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : (wxDP_DEFAULT | wxDP_SHOWCENTURY);
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : "timectrl";
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : "timectrl";
 	// Function body
 	bool rtn = pEntity_gurax->Create(parent, id, dt, pos, size, style, validator, name);
 	return new Gurax::Value_Bool(rtn);

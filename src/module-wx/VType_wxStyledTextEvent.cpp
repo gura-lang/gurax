@@ -147,7 +147,7 @@ Gurax_ImplementMethodEx(wxStyledTextEvent, SetText_gurax, processor_gurax, argum
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* t = args_gurax.PickString();
+	wxString t(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetText(t);
 	return Gurax::Value::nil();
@@ -483,7 +483,7 @@ Gurax_ImplementMethodEx(wxStyledTextEvent, SetDragText_gurax, processor_gurax, a
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* val = args_gurax.PickString();
+	wxString val(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetDragText(val);
 	return Gurax::Value::nil();

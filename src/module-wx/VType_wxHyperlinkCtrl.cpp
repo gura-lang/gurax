@@ -66,13 +66,14 @@ Gurax_ImplementConstructorEx(HyperlinkCtrl_gurax, processor_gurax, argument_gura
 	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* parent = value_parent.GetEntityPtr();
 	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
-	const char* label = args_gurax.PickString();
-	const char* url = args_gurax.PickString();
+	wxString label(args_gurax.PickString());
+	wxString url(args_gurax.PickString());
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxHL_DEFAULT_STYLE;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxHyperlinkCtrlNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxHyperlinkCtrlNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxHyperlinkCtrl::EntityT(parent, id, label, url, pos, size, style, name);
 	RefPtr<Value_wxHyperlinkCtrl> pValue_gurax(new Value_wxHyperlinkCtrl(pEntity_gurax));
@@ -108,13 +109,14 @@ Gurax_ImplementMethodEx(wxHyperlinkCtrl, Create_gurax, processor_gurax, argument
 	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* parent = value_parent.GetEntityPtr();
 	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
-	const char* label = args_gurax.PickString();
-	const char* url = args_gurax.PickString();
+	wxString label(args_gurax.PickString());
+	wxString url(args_gurax.PickString());
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxHL_DEFAULT_STYLE;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxHyperlinkCtrlNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxHyperlinkCtrlNameStr;
 	// Function body
 	bool rtn = pEntity_gurax->Create(parent, id, label, url, pos, size, style, name);
 	return new Gurax::Value_Bool(rtn);
@@ -267,7 +269,7 @@ Gurax_ImplementMethodEx(wxHyperlinkCtrl, SetURL_gurax, processor_gurax, argument
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* url = args_gurax.PickString();
+	wxString url(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->SetURL(url);
 	return Gurax::Value::nil();

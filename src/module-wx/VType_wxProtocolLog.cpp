@@ -56,7 +56,7 @@ Gurax_ImplementConstructorEx(ProtocolLog_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* traceMask = args_gurax.PickString();
+	wxString traceMask(args_gurax.PickString());
 	// Function body
 	auto pEntity_gurax = new wxProtocolLog(traceMask);
 	RefPtr<Value_wxProtocolLog> pValue_gurax(new Value_wxProtocolLog(pEntity_gurax));
@@ -81,7 +81,7 @@ Gurax_ImplementMethodEx(wxProtocolLog, LogRequest_gurax, processor_gurax, argume
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* str = args_gurax.PickString();
+	wxString str(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->LogRequest(str);
 	return Gurax::Value::nil();
@@ -102,7 +102,7 @@ Gurax_ImplementMethodEx(wxProtocolLog, LogResponse_gurax, processor_gurax, argum
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* str = args_gurax.PickString();
+	wxString str(args_gurax.PickString());
 	// Function body
 	pEntity_gurax->LogResponse(str);
 	return Gurax::Value::nil();

@@ -74,7 +74,8 @@ Gurax_ImplementConstructorEx(SimpleHtmlListBox_gurax, processor_gurax, argument_
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : wxHLB_DEFAULT_STYLE;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxSimpleHtmlListBoxNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxSimpleHtmlListBoxNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxSimpleHtmlListBox::EntityT(parent, id, pos, size, choices, style, validator, name);
 	RefPtr<Value_wxSimpleHtmlListBox> pValue_gurax(new Value_wxSimpleHtmlListBox(pEntity_gurax));

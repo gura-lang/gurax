@@ -58,7 +58,8 @@ Gurax_ImplementConstructorEx(Variant_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	const Gurax::Value& value = args_gurax.PickValue();
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	if (value.IsType(VTYPE_String)) {
 		return new Value_wxVariant(wxVariant(Value_String::GetString(value), name));

@@ -258,7 +258,7 @@ Gurax_ImplementMethodEx(wxHtmlHelpWindow, KeywordSearch_gurax, processor_gurax, 
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* keyword = args_gurax.PickString();
+	wxString keyword(args_gurax.PickString());
 	bool mode_validFlag = args_gurax.IsValid();
 	wxHelpSearchMode mode = mode_validFlag? args_gurax.PickNumber<wxHelpSearchMode>() : wxHELP_SEARCH_ALL;
 	// Function body
@@ -284,7 +284,8 @@ Gurax_ImplementMethodEx(wxHtmlHelpWindow, ReadCustomization_gurax, processor_gur
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxConfigBase& value_cfg = args_gurax.Pick<Value_wxConfigBase>();
 	wxConfigBase* cfg = value_cfg.GetEntityPtr();
-	const char* path = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool path_validFlag = args_gurax.IsValid();
+	wxString path = path_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	pEntity_gurax->ReadCustomization(cfg, path);
 	return Gurax::Value::nil();
@@ -308,7 +309,8 @@ Gurax_ImplementMethodEx(wxHtmlHelpWindow, UseConfig_gurax, processor_gurax, argu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxConfigBase& value_config = args_gurax.Pick<Value_wxConfigBase>();
 	wxConfigBase* config = value_config.GetEntityPtr();
-	const char* rootpath = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool rootpath_validFlag = args_gurax.IsValid();
+	wxString rootpath = rootpath_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	pEntity_gurax->UseConfig(config, rootpath);
 	return Gurax::Value::nil();
@@ -332,7 +334,8 @@ Gurax_ImplementMethodEx(wxHtmlHelpWindow, WriteCustomization_gurax, processor_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxConfigBase& value_cfg = args_gurax.Pick<Value_wxConfigBase>();
 	wxConfigBase* cfg = value_cfg.GetEntityPtr();
-	const char* path = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool path_validFlag = args_gurax.IsValid();
+	wxString path = path_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
 	pEntity_gurax->WriteCustomization(cfg, path);
 	return Gurax::Value::nil();

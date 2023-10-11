@@ -71,7 +71,8 @@ Gurax_ImplementConstructorEx(StaticBitmap_gurax, processor_gurax, argument_gurax
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxStaticBitmapNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxStaticBitmapNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxStaticBitmap::EntityT(parent, id, label, pos, size, style, name);
 	RefPtr<Value_wxStaticBitmap> pValue_gurax(new Value_wxStaticBitmap(pEntity_gurax));
@@ -112,7 +113,8 @@ Gurax_ImplementMethodEx(wxStaticBitmap, Create_gurax, processor_gurax, argument_
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
 	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxStaticBitmapNameStr;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxStaticBitmapNameStr;
 	// Function body
 	bool rtn = pEntity_gurax->Create(parent, id, label, pos, size, style, name);
 	return new Gurax::Value_Bool(rtn);
