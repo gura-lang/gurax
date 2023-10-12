@@ -18,12 +18,12 @@ PanelTop = class(wx.Panel) {
 	textCtrl as wx.TextCtrl
 	__init__(parent as wx.Window) = {|parent|
 		this.SetBackgroundColour(wx.Colour(0, 128, 0))
-		sizerTop = wx.BoxSizer(wx.VERTICAL)
-		this.SetSizer(sizerTop)
-		wx.GridSizer(2) {|sizerOuter|
-			sizerTop.Add(sizerOuter, wx.SizerFlags(3).Expand())
+		sizer = wx.BoxSizer(wx.VERTICAL)
+		this.SetSizer(sizer)
+		wx.GridSizer(2) {|sizer|
+			(^sizer).Add(sizer, wx.SizerFlags(3).Expand())
 			wx.GridSizer(4) {|sizer|
-				sizerOuter.Add(sizer, wx.SizerFlags(1).Expand())
+				(^sizer).Add(sizer, wx.SizerFlags(1).Expand())
 				sizerFlags = wx.SizerFlags().Expand().Border(wx.ALL, 4)
 				wx.Button(this, wx.ID_ANY, '(no flag)') {|ctrl|
 					sizer.Add(ctrl, sizerFlags)
@@ -75,7 +75,7 @@ PanelTop = class(wx.Panel) {
 				}
 			}
 			wx.GridSizer(4) {|sizer|
-				sizerOuter.Add(sizer, wx.SizerFlags(1).Expand())
+				(^sizer).Add(sizer, wx.SizerFlags(1).Expand())
 				sizerFlags = wx.SizerFlags().Expand().Border(wx.ALL, 4)
 				wx.RadioButton(this, wx.ID_ANY, '(no flag)') {|ctrl|
 					sizer.Add(ctrl, sizerFlags)
@@ -139,7 +139,7 @@ PanelTop = class(wx.Panel) {
 				}
 			}
 			wx.GridSizer(4) {|sizer|
-				sizerOuter.Add(sizer, wx.SizerFlags(1).Expand())
+				(^sizer).Add(sizer, wx.SizerFlags(1).Expand())
 				sizerFlags = wx.SizerFlags().Expand().Border(wx.ALL, 4)
 				wx.CheckBox(this, wx.ID_ANY, '(no flag)') {|ctrl|
 					sizer.Add(ctrl, sizerFlags)
@@ -204,7 +204,7 @@ PanelTop = class(wx.Panel) {
 			}
 		}
 		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
-			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
+			(^sizer).Add(ctrl, wx.SizerFlags(1).Expand())
 			this.textCtrl = ctrl
 		}
 	}
