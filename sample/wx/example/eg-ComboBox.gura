@@ -120,11 +120,11 @@ PanelTop = class(wx.Panel) {
 	}
 	OnText(event as wx.CommandEvent) = {
 		label = event.GetEventUserData()
-		this.Printf('EVT_TEXT(%s)\n', label)		
+		this.Printf('EVT_TEXT(%s) .. "%s"\n', label, event.GetString())		
 	}
 	OnTextEnter(event as wx.CommandEvent) = {
 		label = event.GetEventUserData()
-		this.Printf('EVT_TEXT_ENTER(%s)\n', label)		
+		this.Printf('EVT_TEXT_ENTER(%s) .. "%s"\n', label, event.GetString())		
 	}
 	OnComboBoxDropDown(event as wx.CommandEvent) = {
 		label = event.GetEventUserData()
