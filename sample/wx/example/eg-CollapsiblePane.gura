@@ -16,22 +16,22 @@ MyFrame = class(wx.Frame) {
 
 PanelTop = class(wx.Panel) {
 	__init__(parent as wx.Window) = {|parent|
-		sizerTop = wx.BoxSizer(wx.VERTICAL)
-		this.SetSizer(sizerTop)
+		sizer = wx.BoxSizer(wx.VERTICAL)
+		this.SetSizer(sizer)
 		wx.CollapsiblePane(this, wx.ID_ANY, "Details:") {|collpane|
 			// add the pane with a zero proportion value to the 'sz' sizer which contains it
-			sizerTop.Add(collpane, 0, wx.GROW | wx.ALL, 5)
+			sizer.Add(collpane, 0, wx.GROW | wx.ALL, 5)
 			// now add a test label in the collapsible pane using a sizer to layout it:
-			wx.BoxSizer(wx.VERTICAL) {|sizerPane|
+			wx.BoxSizer(wx.VERTICAL) {|sizer|
 				win = collpane.GetPane() 
-				sizerPane.Add(wx.StaticText(win, wx.ID_ANY, "test!"), 1, wx.GROW | wx.ALL, 2)
-				win.SetSizer(sizerPane)
-				sizerPane.SetSizeHints(win)
+				sizer.Add(wx.StaticText(win, wx.ID_ANY, "test!\ntest!"), 1, wx.GROW | wx.ALL, 2)
+				win.SetSizer(sizer)
+				sizer.SetSizeHints(win)
 			}
 		}
 		wx.Panel(this, wx.ID_ANY) {|panel|
-			sizerTop.Add(panel, wx.SizerFlags(1).Expand())
-			panel.SetBackgroundColour(wx.RED)
+			sizer.Add(panel, wx.SizerFlags(1).Expand())
+			panel.SetBackgroundColour(wx.WHITE)
 		}
 	}
 }
