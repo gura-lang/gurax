@@ -34,10 +34,10 @@ PanelTop = class(wx.Panel) {
 	textCtrl as wx.TextCtrl
 	rows = Dim(tbl.len) {Row()}
 	__init__(parent as wx.Window) = {|parent|
-		sizerTop = wx.BoxSizer(wx.VERTICAL)
-		this.SetSizer(sizerTop)
+		sizer = wx.BoxSizer(wx.VERTICAL)
+		this.SetSizer(sizer)
 		wx.FlexGridSizer(4, wx.Size(16, 8)) {|sizer|
-			sizerTop.Add(sizer, wx.SizerFlags().Expand().Border(wx.ALL, 12))
+			(^sizer).Add(sizer, wx.SizerFlags().Expand().Border(wx.ALL, 12))
 			for (tuple in tbl, row in this.rows) {
 				[label, style] = tuple
 				wx.CheckBox(this, wx.ID_ANY, label, style = style) {|ctrl|
@@ -64,7 +64,7 @@ PanelTop = class(wx.Panel) {
 			}
 		}
 		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
-			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
+			sizer.Add(ctrl, wx.SizerFlags(1).Expand())
 			this.textCtrl = ctrl
 		}
 	}
