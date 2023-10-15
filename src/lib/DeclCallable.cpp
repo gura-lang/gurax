@@ -112,25 +112,25 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkParam, const Attribute& attr,
 			if (pExprEx->GetOperator()->IsType(OpType::PostMod)) {
 				if (!_pSymbolOfDict->IsEmpty()) {
 					Error::IssueWith(ErrorType::DeclarationError, *pExpr,
-									 "duplicated declaration of dictionary argument");
+									"duplicated declaration of dictionary argument");
 					return false;
 				}
 				if (!pExprEx->GetExprChild().IsType<Expr_Identifier>()) {
 					Error::IssueWith(ErrorType::DeclarationError, *pExpr,
-									 "invalid format of dictionary argument");
+									"invalid format of dictionary argument");
 					return false;
 				}
 				const Expr_Identifier& exprIdentifier =
 					dynamic_cast<const Expr_Identifier&>(pExprEx->GetExprChild());
 				if (exprIdentifier.HasAttr()) {
 					Error::IssueWith(ErrorType::DeclarationError, *pExpr,
-									 "dictionary argument cannot have attributes");
+									"dictionary argument cannot have attributes");
 					return false;
 				}
 				const Symbol* pSymbol = exprIdentifier.GetSymbol();
 				if (IsDeclaredSymbol(pSymbol)) {
 					Error::IssueWith(ErrorType::DeclarationError, *pExpr,
-									 "duplicated symbol declaration: %s", pSymbol->GetName());
+									"duplicated symbol declaration: %s", pSymbol->GetName());
 					return false;
 				}
 				_pSymbolOfDict = pSymbol;
@@ -138,25 +138,25 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkParam, const Attribute& attr,
 			} else if (pExprEx->GetOperator()->IsType(OpType::PostModMod)) {
 				if (!_pSymbolOfAccessor->IsEmpty()) {
 					Error::IssueWith(ErrorType::DeclarationError, *pExpr,
-									 "duplicated declaration of argument accessor");
+									"duplicated declaration of argument accessor");
 					return false;
 				}
 				if (!pExprEx->GetExprChild().IsType<Expr_Identifier>()) {
 					Error::IssueWith(ErrorType::DeclarationError, *pExpr,
-									 "invalid format of argument accessor");
+									"invalid format of argument accessor");
 					return false;
 				}
 				const Expr_Identifier& exprIdentifier =
 					dynamic_cast<const Expr_Identifier&>(pExprEx->GetExprChild());
 				if (exprIdentifier.HasAttr()) {
 					Error::IssueWith(ErrorType::DeclarationError, *pExpr,
-									 "argument accessor cannot have attributes");
+									"argument accessor cannot have attributes");
 					return false;
 				}
 				const Symbol* pSymbol = exprIdentifier.GetSymbol();
 				if (IsDeclaredSymbol(pSymbol)) {
 					Error::IssueWith(ErrorType::DeclarationError, *pExpr,
-									 "duplicated symbol declaration: %s", pSymbol->GetName());
+									"duplicated symbol declaration: %s", pSymbol->GetName());
 					return false;
 				}
 				_pSymbolOfAccessor = pSymbol;
@@ -167,7 +167,7 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkParam, const Attribute& attr,
 		if (!pDeclArg) return false;
 		if (IsDeclaredSymbol(pDeclArg->GetSymbol())) {
 			Error::IssueWith(ErrorType::DeclarationError, *pExpr,
-							 "duplicated symbol declaration: %s", pDeclArg->GetSymbol()->GetName());
+							"duplicated symbol declaration: %s", pDeclArg->GetSymbol()->GetName());
 			return false;
 		}
 		if (!DeclArg::CheckFlagConfliction(pDeclArg->GetFlags())) return false;
@@ -220,7 +220,7 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkParam, const Attribute& attr,
 			const Symbol* pSymbol = pExprEx->GetSymbol();
 			if (IsDeclaredSymbol(pSymbol)) {
 				Error::IssueWith(ErrorType::DeclarationError, *pExpr,
-								 "duplicated symbol declaration: %s", pSymbol->GetName());
+								"duplicated symbol declaration: %s", pSymbol->GetName());
 				return false;
 			}
 			GetDeclBlock().SetSymbol(pSymbol);
@@ -255,18 +255,18 @@ bool DeclCallable::CheckFlagConfliction(Flags flags)
 {
 	if ((flags & Flag::Map) != 0 && (flags & Flag::NoMap) != 0) {
 		Error::Issue(ErrorType::ArgumentError,
-					 "attribute :map and :noMap can not be specified together");
+					"attribute :map and :noMap can not be specified together");
 		return false;
 	}
 	if ((flags & Flag::Public) != 0 && (flags & Flag::Private) != 0) {
 		Error::Issue(ErrorType::ArgumentError,
-					 "attribute :public and :private can not be specified together");
+					"attribute :public and :private can not be specified together");
 		return false;
 	}
 	if ((flags & Flag::List) != 0 && (flags & Flag::XList) != 0 &&
 		(flags & Flag::Iter) != 0 && (flags & Flag::XIter) != 0) {
 		Error::Issue(ErrorType::ArgumentError,
-					 "attribute :list, :xlist, :iter and :xiter can not be specified together");
+					"attribute :list, :xlist, :iter and :xiter can not be specified together");
 		return false;
 	}
 	return true;

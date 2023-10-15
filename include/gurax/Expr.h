@@ -223,6 +223,7 @@ public:
 	virtual Attribute* GetAttrToAppend() { return nullptr; }
 	virtual void ResetAttrToAppend() {}
 	virtual bool DoPrepare() { return true; }
+	virtual bool PrepareForAssigned();
 public:
 	// Virtual functions for structure inspecting
 	virtual const Expr* InspectChild() const { return nullptr; }
@@ -544,6 +545,7 @@ public:
 	virtual void ComposeWithinAssignment(
 		Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol) override;
 	virtual void ComposeReferencer(Composer& composer) override;
+	virtual bool PrepareForAssigned() override { return true; }
 	virtual String ToString(const StringStyle& ss, int indentLevel) const override;
 public:
 	// Virtual functions for structure inspecting
@@ -621,6 +623,7 @@ public:
 		Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag) override;
 	virtual void ComposeWithinArgSlot(Composer& composer) override;
 	virtual void ComposeReferencer(Composer& composer) override;
+	virtual bool PrepareForAssigned() override { return true; }
 	virtual String ToString(const StringStyle& ss, int indentLevel) const override { return ToString(ss, ""); }
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
 	virtual void ResetAttrToAppend() { _pAttr.reset(new Attribute()); }
@@ -758,6 +761,7 @@ public:
 	virtual void ComposeWithinAssignmentInClass(
 		Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag) override;
 	virtual String ToString(const StringStyle& ss, int indentLevel) const override;
+	virtual bool PrepareForAssigned() override;
 public:
 	// Virtual functions for structure inspecting
 	virtual Operator* InspectOperator() const { return GetOperator(); }
@@ -785,6 +789,7 @@ public:
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeWithinClass(Composer& composer, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag) override;
 	virtual void ComposeWithinArgSlot(Composer& composer) override;
+	virtual bool PrepareForAssigned() override { return true; }
 	virtual String ToString(const StringStyle& ss, int indentLevel) const override;
 public:
 	// Virtual functions for structure inspecting
@@ -837,13 +842,8 @@ public:
 		return _pExprLinkParam? _pExprLinkParam->GetExprFirst() : nullptr;
 	}
 	const DeclCallable& GetDeclCallable() const { return *_pDeclCallable; }
-	bool PrepareDeclCallable() {
-		if (!_pExprLinkParam) return true;
-		return _pDeclCallable->Prepare(GetExprLinkParam(), *Attribute::Empty, nullptr);
-	}
 	bool HasCallerAsParent() const;
 	bool IsDelegation() const {
-		//return !HasExprElem() && _pExprLinkParam && _pExprLinkParam->HasSingle();
 		return !HasExprParam() && HasSingleExprElem() && GetExprElemFirst()->IsType<Expr_Block>(); 
 	}
 	Value* EvalEasy(Processor& processor, RefPtr<Value> pValueArg) const;
@@ -882,6 +882,7 @@ public:
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeWithinAssignment(
 		Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol) override;
+	virtual bool PrepareForAssigned() override { return true; }
 	virtual String ToString(const StringStyle& ss, int indentLevel) const override;
 };
 
@@ -899,6 +900,7 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual void Compose(Composer& composer) override;
+	virtual bool PrepareForAssigned() override { return true; }
 	virtual String ToString(const StringStyle& ss, int indentLevel) const override;
 };
 
@@ -924,6 +926,7 @@ public:
 	virtual void ComposeWithinAssignmentInClass(
 		Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag) override;
 	virtual void ComposeReferencer(Composer& composer) override;
+	virtual bool PrepareForAssigned() override { return true; }
 	virtual String ToString(const StringStyle& ss, int indentLevel) const override { return ToString(ss, "", indentLevel); }
 	String ToString(const StringStyle& ss, const char* strInsert, int indentLevel = 0) const;
 };
@@ -945,9 +948,6 @@ public:
 	Expr_Caller() : Expr_Composite(typeInfo), _pDeclCallable(new DeclCallable()) {}
 	Expr_Caller(Attribute* pAttr) : Expr_Composite(typeInfo, pAttr), _pDeclCallable(new DeclCallable()) {}
 public:
-	bool PrepareDeclCallable() {
-		return _pDeclCallable->Prepare(GetExprLinkParam(), GetAttr(), GetExprOfBlock());
-	}
 	void SetExprOfBlock(Expr_Block* pExprOfBlock) {
 		_pExprOfBlock.reset(pExprOfBlock);
 		_pExprOfBlock->SetExprParent(this);
@@ -982,6 +982,9 @@ public:
 		Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol) override;
 	virtual void ComposeWithinAssignmentInClass(
 		Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag) override;
+	virtual bool PrepareForAssigned() override {
+		return _pDeclCallable->Prepare(GetExprLinkParam(), GetAttr(), GetExprOfBlock());
+	}
 	virtual Attribute* GetAttrToAppend() override { return &GetExprTrailerLast().GetAttr(); }
 	virtual void ResetAttrToAppend() { GetExprTrailerLast().ResetAttrToAppend(); }
 	virtual String ToString(const StringStyle& ss, int indentLevel) const override;

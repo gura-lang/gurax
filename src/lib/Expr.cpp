@@ -198,6 +198,12 @@ void Expr::ComposeReferencer(Composer& composer)
 	Error::IssueWith(ErrorType::InvalidOperation, *this, "%s can not create Referencer", GetTypeInfo().GetName());
 }
 
+bool Expr::PrepareForAssigned()
+{
+	Error::IssueWith(ErrorType::InvalidOperation, *this, "%s can not be assigned", GetTypeInfo().GetName());
+	return false;
+}
+
 bool Expr::IsPureAssign() const
 {
 	return IsType<Expr_Assign>() && !InspectOperator();
@@ -866,6 +872,11 @@ void Expr_BinaryOp::ComposeWithinAssignmentInClass(
 	}
 }
 
+bool Expr_BinaryOp::PrepareForAssigned()
+{
+	return GetOperator()->IsType(OpType::As)? GetExprLeft().PrepareForAssigned() : Expr::PrepareForAssigned();
+}
+
 String Expr_BinaryOp::ToString(const StringStyle& ss, int indentLevel) const
 {
 	String str;
@@ -931,11 +942,7 @@ const Expr::TypeInfo Expr_Assign::typeInfo(TypeId::Assign, "Assign");
 
 bool Expr_Assign::DoPrepare()
 {
-	if (GetExprLeft().IsType<Expr_Caller>()) {
-		Expr_Caller& exprEx = dynamic_cast<Expr_Caller&>(GetExprLeft());
-		return exprEx.PrepareDeclCallable();
-	}
-	return true;
+	return GetExprLeft().PrepareForAssigned();
 }
 
 bool Expr_Assign::IsDeclArgWithDefault(Expr_Binary** ppExpr) const
@@ -1036,7 +1043,8 @@ const Expr::TypeInfo Expr_Block::typeInfo(TypeId::Block, "Block");
 
 bool Expr_Block::DoPrepare()
 {
-	return HasCallerAsParent()? PrepareDeclCallable() : true;
+	return (HasCallerAsParent() && _pExprLinkParam)?
+		_pDeclCallable->Prepare(GetExprLinkParam(), *Attribute::Empty, nullptr) : true;
 }
 
 void Expr_Block::Compose(Composer& composer)

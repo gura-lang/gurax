@@ -1,17 +1,17 @@
-======== Concatenation ========
-Expr.Parse("'abcdefg' 'hijklmn' 'opqrstu' 'vwxyz'") .. `'abcdefghijklmnopqrstuvwxyz'
-Expr.Parse("b'abcdefg' b'hijklmn' b'opqrstu' b'vwxyz'") .. `b'abcdefghijklmnopqrstuvwxyz'
-Expr.Parse("t'abcdefg' t'hijklmn' t'opqrstu' t'vwxyz'") .. `t'abcdefghijklmnopqrstuvwxyz'
-Expr.Parse("e'abcdefg' e'hijklmn' e'opqrstu' e'vwxyz'") .. `e'abcdefghijklmnopqrstuvwxyz'
-Expr.Parse("b'abcdefg' 'hijklmn' b'opqrstu' b'vwxyz'") .. syntax error (361)
-======== String prefix ========
-Expr.Parse("b'abcdefg'") .. `b'abcdefg'
-Expr.Parse("e'${foo}abcdefg'") .. `e'${foo}abcdefg'
-Expr.Parse("t'${foo}abcdefg'") .. `t'${foo}abcdefg'
-Expr.Parse("be'${foo}abcdefg'") .. invalid format of prefix
-======== Under score in number literal ========
-Format('%d', 9999999999) .. 9999999999
-Format('%b', 0b1111111111) .. 1111111111
-Format('%o', 07777777777) .. 7777777777
-Format('%o', 07777777777) .. 7777777777
-Format('%x', 0xffffffffff) .. ffffffffff
+======== Concatenation ========
+Expr.Parse("'abcdefg' 'hijklmn' 'opqrstu' 'vwxyz'") .. `'abcdefghijklmnopqrstuvwxyz'
+Expr.Parse("b'abcdefg' b'hijklmn' b'opqrstu' b'vwxyz'") .. `b'abcdefghijklmnopqrstuvwxyz'
+Expr.Parse("t'abcdefg' t'hijklmn' t'opqrstu' t'vwxyz'") .. `t'abcdefghijklmnopqrstuvwxyz'
+Expr.Parse("e'abcdefg' e'hijklmn' e'opqrstu' e'vwxyz'") .. `e'abcdefghijklmnopqrstuvwxyz'
+Expr.Parse("b'abcdefg' 'hijklmn' b'opqrstu' b'vwxyz'") .. syntax error (364)
+======== String prefix ========
+Expr.Parse("b'abcdefg'") .. `b'abcdefg'
+Expr.Parse("e'${foo}abcdefg'") .. `e'${foo}abcdefg'
+Expr.Parse("t'${foo}abcdefg'") .. `t'${foo}abcdefg'
+Expr.Parse("be'${foo}abcdefg'") .. invalid format of prefix
+======== Under score in number literal ========
+Format('%d', 9999999999) .. 9999999999
+Format('%b', 0b1111111111) .. 1111111111
+Format('%o', 07777777777) .. 7777777777
+Format('%o', 07777777777) .. 7777777777
+Format('%x', 0xffffffffff) .. ffffffffff
