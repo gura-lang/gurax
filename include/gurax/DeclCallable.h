@@ -92,6 +92,7 @@ private:
 	DeclBlock _declBlock;
 	const Symbol* _pSymbolOfDict;
 	const Symbol* _pSymbolOfAccessor;
+	RefPtr<Expr> _pExprSrc;						// may be nullptr
 public:
 	static RefPtr<DeclCallable> Empty;
 	static RefPtr<DeclCallable> EmptyWithBlock;
@@ -134,6 +135,8 @@ public:
 	void SetFlags(Flags flags) { _flags = flags; }
 	Flags GetFlags() const { return _flags; }
 	void OrFlags(Flags flags) { _flags |= flags; }
+	void SetExprSrc(Expr* pExprSrc) { _pExprSrc.reset(pExprSrc); }
+	const Expr* GetExprSrc() const { return _pExprSrc.get(); }
 public:
 	void Declare(VType& vtype, Flags flags) { _pVTypeResult = &vtype; _flags |= flags; }
 	void DeclareArg(const Symbol* pSymbol, const VType& vtype,

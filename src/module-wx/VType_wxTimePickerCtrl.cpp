@@ -271,7 +271,8 @@ wxDateTime Value_wxTimePickerCtrl::EntityT::GetValue() const
 		}
 		// Return Value
 		if (!pValueRtn->IsInstanceOf(VTYPE_wxDateTime)) {
-			Error::Issue(ErrorType::TypeError, "the function GetValue is expected to return a value of %s or its derived class",
+			Error::IssueWith(ErrorType::TypeError, pFunc_gurax->GetDeclCallable().GetExprSrc(),
+				"the function GetValue is expected to return a value of %s or its derived class",
 				VTYPE_wxDateTime.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;

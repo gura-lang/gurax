@@ -104,7 +104,7 @@ public:
 	// Constructor
 	Error(const ErrorType& errorType, String text);
 	Error(const ErrorType& errorType, StringReferable* pFileName, int lineNoTop, int lineNoBtm, String text);
-	Error(const ErrorType& errorType, Expr *pExpr, String text);
+	Error(const ErrorType& errorType, Expr* pExpr, String text);
 	// Copy constructor/operator
 	Error(const Error& src) = delete;
 	Error& operator=(const Error& src) = delete;
@@ -165,6 +165,19 @@ public:
 		_pErrorOwnerGlobal->SetSuppressFlag(); // suppress error in String::Format()
 		_pErrorOwnerGlobal->push_back(
 			new Error(errorType, expr.Reference(), String().Format(format, args...)));
+		_pErrorOwnerGlobal->ClearSuppressFlag();
+		_errorIssuedFlag = true;
+	}
+	template<typename... Args>
+	static void IssueWith(const ErrorType& errorType, const Expr* pExpr, const char* format, const Args&... args) {
+		if (_pErrorOwnerGlobal->GetSuppressFlag()) return;
+		_pErrorOwnerGlobal->SetSuppressFlag(); // suppress error in String::Format()
+		if (pExpr) {
+			_pErrorOwnerGlobal->push_back(
+				new Error(errorType, pExpr->Reference(), String().Format(format, args...)));
+		} else {
+			_pErrorOwnerGlobal->push_back(new Error(errorType, String().Format(format, args...)));
+		}
 		_pErrorOwnerGlobal->ClearSuppressFlag();
 		_errorIssuedFlag = true;
 	}

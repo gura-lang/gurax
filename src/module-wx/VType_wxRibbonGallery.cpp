@@ -565,7 +565,8 @@ bool Value_wxRibbonGallery::EntityT::ScrollLines(int lines)
 		}
 		// Return Value
 		if (!pValueRtn->IsInstanceOf(VTYPE_Bool)) {
-			Error::Issue(ErrorType::TypeError, "the function ScrollLines is expected to return a value of %s or its derived class",
+			Error::IssueWith(ErrorType::TypeError, pFunc_gurax->GetDeclCallable().GetExprSrc(),
+				"the function ScrollLines is expected to return a value of %s or its derived class",
 				VTYPE_Bool.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;

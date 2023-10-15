@@ -1554,7 +1554,8 @@ wxStatusBar* Value_wxPropertyGrid::EntityT::GetStatusBar()
 		}
 		// Return Value
 		if (!pValueRtn->IsInstanceOf(VTYPE_wxStatusBar)) {
-			Error::Issue(ErrorType::TypeError, "the function GetStatusBar is expected to return a value of %s or its derived class",
+			Error::IssueWith(ErrorType::TypeError, pFunc_gurax->GetDeclCallable().GetExprSrc(),
+				"the function GetStatusBar is expected to return a value of %s or its derived class",
 				VTYPE_wxStatusBar.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;

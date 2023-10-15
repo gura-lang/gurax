@@ -376,7 +376,8 @@ bool Value_wxRibbonPage::EntityT::Realize()
 		}
 		// Return Value
 		if (!pValueRtn->IsInstanceOf(VTYPE_Bool)) {
-			Error::Issue(ErrorType::TypeError, "the function Realize is expected to return a value of %s or its derived class",
+			Error::IssueWith(ErrorType::TypeError, pFunc_gurax->GetDeclCallable().GetExprSrc(),
+				"the function Realize is expected to return a value of %s or its derived class",
 				VTYPE_Bool.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
@@ -408,7 +409,8 @@ bool Value_wxRibbonPage::EntityT::ScrollLines(int lines)
 		}
 		// Return Value
 		if (!pValueRtn->IsInstanceOf(VTYPE_Bool)) {
-			Error::Issue(ErrorType::TypeError, "the function ScrollLines is expected to return a value of %s or its derived class",
+			Error::IssueWith(ErrorType::TypeError, pFunc_gurax->GetDeclCallable().GetExprSrc(),
+				"the function ScrollLines is expected to return a value of %s or its derived class",
 				VTYPE_Bool.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;

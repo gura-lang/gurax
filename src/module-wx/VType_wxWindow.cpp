@@ -5556,7 +5556,8 @@ bool Value_wxWindow::EntityT::AcceptsFocus() const
 		}
 		// Return Value
 		if (!pValueRtn->IsInstanceOf(VTYPE_Bool)) {
-			Error::Issue(ErrorType::TypeError, "the function AcceptsFocus is expected to return a value of %s or its derived class",
+			Error::IssueWith(ErrorType::TypeError, pFunc_gurax->GetDeclCallable().GetExprSrc(),
+				"the function AcceptsFocus is expected to return a value of %s or its derived class",
 				VTYPE_Bool.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
@@ -5584,7 +5585,8 @@ bool Value_wxWindow::EntityT::AcceptsFocusFromKeyboard() const
 		}
 		// Return Value
 		if (!pValueRtn->IsInstanceOf(VTYPE_Bool)) {
-			Error::Issue(ErrorType::TypeError, "the function AcceptsFocusFromKeyboard is expected to return a value of %s or its derived class",
+			Error::IssueWith(ErrorType::TypeError, pFunc_gurax->GetDeclCallable().GetExprSrc(),
+				"the function AcceptsFocusFromKeyboard is expected to return a value of %s or its derived class",
 				VTYPE_Bool.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
@@ -5612,7 +5614,8 @@ bool Value_wxWindow::EntityT::AcceptsFocusRecursively() const
 		}
 		// Return Value
 		if (!pValueRtn->IsInstanceOf(VTYPE_Bool)) {
-			Error::Issue(ErrorType::TypeError, "the function AcceptsFocusRecursively is expected to return a value of %s or its derived class",
+			Error::IssueWith(ErrorType::TypeError, pFunc_gurax->GetDeclCallable().GetExprSrc(),
+				"the function AcceptsFocusRecursively is expected to return a value of %s or its derived class",
 				VTYPE_Bool.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
@@ -5640,7 +5643,8 @@ bool Value_wxWindow::EntityT::HasFocus() const
 		}
 		// Return Value
 		if (!pValueRtn->IsInstanceOf(VTYPE_Bool)) {
-			Error::Issue(ErrorType::TypeError, "the function HasFocus is expected to return a value of %s or its derived class",
+			Error::IssueWith(ErrorType::TypeError, pFunc_gurax->GetDeclCallable().GetExprSrc(),
+				"the function HasFocus is expected to return a value of %s or its derived class",
 				VTYPE_Bool.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
