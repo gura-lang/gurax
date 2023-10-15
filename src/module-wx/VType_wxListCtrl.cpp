@@ -1996,8 +1996,8 @@ wxListItemAttr* Value_wxListCtrl::EntityT::OnGetItemAttr(long item) const
 		}
 		// Return Value
 		if (pValueRtn->IsNil()) return nullptr;
-		if (!pValueRtn->IsType(VTYPE_wxListItemAttr)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_wxListItemAttr)) {
+			Error::Issue(ErrorType::TypeError, "the function OnGetItemAttr is expected to return a value of %s or its derived class",
 				VTYPE_wxListItemAttr.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
@@ -2033,8 +2033,8 @@ wxListItemAttr* Value_wxListCtrl::EntityT::OnGetItemColumnAttr(long item, long c
 		}
 		// Return Value
 		if (pValueRtn->IsNil()) return nullptr;
-		if (!pValueRtn->IsType(VTYPE_wxListItemAttr)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_wxListItemAttr)) {
+			Error::Issue(ErrorType::TypeError, "the function OnGetItemColumnAttr is expected to return a value of %s or its derived class",
 				VTYPE_wxListItemAttr.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
@@ -2069,8 +2069,8 @@ int Value_wxListCtrl::EntityT::OnGetItemColumnImage(long item, long column) cons
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Number)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_Number)) {
+			Error::Issue(ErrorType::TypeError, "the function OnGetItemColumnImage is expected to return a value of %s or its derived class",
 				VTYPE_Number.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
@@ -2101,8 +2101,8 @@ int Value_wxListCtrl::EntityT::OnGetItemImage(long item) const
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Number)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_Number)) {
+			Error::Issue(ErrorType::TypeError, "the function OnGetItemImage is expected to return a value of %s or its derived class",
 				VTYPE_Number.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
@@ -2137,8 +2137,8 @@ wxString Value_wxListCtrl::EntityT::OnGetItemText(long item, long column) const
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_String)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_String)) {
+			Error::Issue(ErrorType::TypeError, "the function OnGetItemText is expected to return a value of %s or its derived class",
 				VTYPE_String.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;

@@ -445,8 +445,8 @@ bool Value_wxComboPopup::EntityT::Create(wxWindow* parent)
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_Bool)) {
+			Error::Issue(ErrorType::TypeError, "the function Create is expected to return a value of %s or its derived class",
 				VTYPE_Bool.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
@@ -506,8 +506,8 @@ wxSize Value_wxComboPopup::EntityT::GetAdjustedSize(int minWidth, int prefHeight
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_wxSize)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_wxSize)) {
+			Error::Issue(ErrorType::TypeError, "the function GetAdjustedSize is expected to return a value of %s or its derived class",
 				VTYPE_wxSize.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
@@ -534,8 +534,8 @@ wxWindow* Value_wxComboPopup::EntityT::GetControl()
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_wxWindow)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_wxWindow)) {
+			Error::Issue(ErrorType::TypeError, "the function GetControl is expected to return a value of %s or its derived class",
 				VTYPE_wxWindow.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
@@ -562,8 +562,8 @@ wxString Value_wxComboPopup::EntityT::GetStringValue() const
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_String)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_String)) {
+			Error::Issue(ErrorType::TypeError, "the function GetStringValue is expected to return a value of %s or its derived class",
 				VTYPE_String.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
@@ -611,8 +611,8 @@ bool Value_wxComboPopup::EntityT::LazyCreate()
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_Bool)) {
+			Error::Issue(ErrorType::TypeError, "the function LazyCreate is expected to return a value of %s or its derived class",
 				VTYPE_Bool.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;

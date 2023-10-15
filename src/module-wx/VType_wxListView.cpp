@@ -44,10 +44,208 @@ ${help.ComposeMethodHelp(wx.ListView, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.ListView(parent as wx.Window, winid? as Number, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?}
+Gurax_DeclareConstructorAlias(ListView_gurax, "ListView")
+{
+	Declare(VTYPE_wxListView, Flag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("winid", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementConstructorEx(ListView_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* parent = value_parent.GetEntityPtr();
+	bool winid_validFlag = args_gurax.IsValid();
+	wxWindowID winid = winid_validFlag? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
+	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : wxLC_REPORT;
+	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
+	bool name_validFlag = args_gurax.IsValid();
+	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxListCtrlNameStr;
+	// Function body
+	auto pEntity_gurax = new Value_wxListView::EntityT(parent, winid, pos, size, style, validator, name);
+	RefPtr<Value_wxListView> pValue_gurax(new Value_wxListView(pEntity_gurax));
+	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.ListView#ClearColumnImage(col as Number)
+Gurax_DeclareMethodAlias(wxListView, ClearColumnImage_gurax, "ClearColumnImage")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxListView, ClearColumnImage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int col = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->ClearColumnImage(col);
+	return Gurax::Value::nil();
+}
+
+// wx.ListView#Focus(index as Number)
+Gurax_DeclareMethodAlias(wxListView, Focus_gurax, "Focus")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxListView, Focus_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long index = args_gurax.PickNumber<long>();
+	// Function body
+	pEntity_gurax->Focus(index);
+	return Gurax::Value::nil();
+}
+
+// wx.ListView#GetFirstSelected()
+Gurax_DeclareMethodAlias(wxListView, GetFirstSelected_gurax, "GetFirstSelected")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxListView, GetFirstSelected_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	long rtn = pEntity_gurax->GetFirstSelected();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.ListView#GetFocusedItem()
+Gurax_DeclareMethodAlias(wxListView, GetFocusedItem_gurax, "GetFocusedItem")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxListView, GetFocusedItem_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	long rtn = pEntity_gurax->GetFocusedItem();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.ListView#GetNextSelected(item as Number)
+Gurax_DeclareMethodAlias(wxListView, GetNextSelected_gurax, "GetNextSelected")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxListView, GetNextSelected_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long item = args_gurax.PickNumber<long>();
+	// Function body
+	long rtn = pEntity_gurax->GetNextSelected(item);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.ListView#IsSelected(index as Number)
+Gurax_DeclareMethodAlias(wxListView, IsSelected_gurax, "IsSelected")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxListView, IsSelected_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long index = args_gurax.PickNumber<long>();
+	// Function body
+	bool rtn = pEntity_gurax->IsSelected(index);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ListView#Select(n as Number, on? as Bool)
+Gurax_DeclareMethodAlias(wxListView, Select_gurax, "Select")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("on", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxListView, Select_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long n = args_gurax.PickNumber<long>();
+	bool on = args_gurax.IsValid()? args_gurax.PickBool() : true;
+	// Function body
+	pEntity_gurax->Select(n, on);
+	return Gurax::Value::nil();
+}
+
+// wx.ListView#SetColumnImage(col as Number, image as Number)
+Gurax_DeclareMethodAlias(wxListView, SetColumnImage_gurax, "SetColumnImage")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("image", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxListView, SetColumnImage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int col = args_gurax.PickNumber<int>();
+	int image = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetColumnImage(col, image);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -64,8 +262,16 @@ void VType_wxListView::DoPrepare(Frame& frameOuter)
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
-	Declare(VTYPE_wxListCtrl, Flag::Mutable);
+	Declare(VTYPE_wxListCtrl, Flag::Mutable, Gurax_CreateConstructor(ListView_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxListView, ClearColumnImage_gurax));
+	Assign(Gurax_CreateMethod(wxListView, Focus_gurax));
+	Assign(Gurax_CreateMethod(wxListView, GetFirstSelected_gurax));
+	Assign(Gurax_CreateMethod(wxListView, GetFocusedItem_gurax));
+	Assign(Gurax_CreateMethod(wxListView, GetNextSelected_gurax));
+	Assign(Gurax_CreateMethod(wxListView, IsSelected_gurax));
+	Assign(Gurax_CreateMethod(wxListView, Select_gurax));
+	Assign(Gurax_CreateMethod(wxListView, SetColumnImage_gurax));
 }
 
 //------------------------------------------------------------------------------

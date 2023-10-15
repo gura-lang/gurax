@@ -769,8 +769,8 @@ size_t Value_wxRibbonButtonBar::EntityT::GetButtonCount() const
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Number)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_Number)) {
+			Error::Issue(ErrorType::TypeError, "the function GetButtonCount is expected to return a value of %s or its derived class",
 				VTYPE_Number.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
@@ -801,8 +801,8 @@ int Value_wxRibbonButtonBar::EntityT::GetItemId(wxRibbonButtonBarButtonBase* ite
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Number)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_Number)) {
+			Error::Issue(ErrorType::TypeError, "the function GetItemId is expected to return a value of %s or its derived class",
 				VTYPE_Number.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
@@ -829,8 +829,8 @@ bool Value_wxRibbonButtonBar::EntityT::Realize()
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_Bool)) {
+			Error::Issue(ErrorType::TypeError, "the function Realize is expected to return a value of %s or its derived class",
 				VTYPE_Bool.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
@@ -882,8 +882,8 @@ bool Value_wxRibbonButtonBar::EntityT::DeleteButton(int button_id)
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_Bool)) {
+			Error::Issue(ErrorType::TypeError, "the function DeleteButton is expected to return a value of %s or its derived class",
 				VTYPE_Bool.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;

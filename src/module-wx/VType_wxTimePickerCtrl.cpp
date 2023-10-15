@@ -270,8 +270,8 @@ wxDateTime Value_wxTimePickerCtrl::EntityT::GetValue() const
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_wxDateTime)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_wxDateTime)) {
+			Error::Issue(ErrorType::TypeError, "the function GetValue is expected to return a value of %s or its derived class",
 				VTYPE_wxDateTime.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;

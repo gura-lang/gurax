@@ -294,8 +294,8 @@ bool Value_wxApp::EntityT::OnCmdLineError(wxCmdLineParser& parser)
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_Bool)) {
+			Error::Issue(ErrorType::TypeError, "the function OnCmdLineError is expected to return a value of %s or its derived class",
 				VTYPE_Bool.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
@@ -326,8 +326,8 @@ bool Value_wxApp::EntityT::OnCmdLineHelp(wxCmdLineParser& parser)
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_Bool)) {
+			Error::Issue(ErrorType::TypeError, "the function OnCmdLineHelp is expected to return a value of %s or its derived class",
 				VTYPE_Bool.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
@@ -358,8 +358,8 @@ bool Value_wxApp::EntityT::OnCmdLineParsed(wxCmdLineParser& parser)
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_Bool)) {
+			Error::Issue(ErrorType::TypeError, "the function OnCmdLineParsed is expected to return a value of %s or its derived class",
 				VTYPE_Bool.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
@@ -386,8 +386,8 @@ bool Value_wxApp::EntityT::OnExceptionInMainLoop()
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_Bool)) {
+			Error::Issue(ErrorType::TypeError, "the function OnExceptionInMainLoop is expected to return a value of %s or its derived class",
 				VTYPE_Bool.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
@@ -414,8 +414,8 @@ int Value_wxApp::EntityT::OnExit()
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Number)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_Number)) {
+			Error::Issue(ErrorType::TypeError, "the function OnExit is expected to return a value of %s or its derived class",
 				VTYPE_Number.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
@@ -463,8 +463,8 @@ bool Value_wxApp::EntityT::OnInit()
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_Bool)) {
+			Error::Issue(ErrorType::TypeError, "the function OnInit is expected to return a value of %s or its derived class",
 				VTYPE_Bool.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;

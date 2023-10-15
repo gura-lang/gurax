@@ -845,8 +845,8 @@ wxCoord Value_wxVListBox::EntityT::OnMeasureItem(size_t n) const
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Number)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_Number)) {
+			Error::Issue(ErrorType::TypeError, "the function OnMeasureItem is expected to return a value of %s or its derived class",
 				VTYPE_Number.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;

@@ -130,8 +130,8 @@ bool Value_wxAppConsole::EntityT::OnInit()
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_Bool)) {
+			Error::Issue(ErrorType::TypeError, "the function OnInit is expected to return a value of %s or its derived class",
 				VTYPE_Bool.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;

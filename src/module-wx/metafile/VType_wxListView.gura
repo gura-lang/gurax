@@ -3,6 +3,15 @@
 //==============================================================================
 ListView = Class(ListCtrl) {
 	@include['wx/listctrl.h']
+	__init__(parent as Window_p, winid as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxLC_REPORT, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = wxListCtrlNameStr)
+	ClearColumnImage(col as int) as void
+	Focus(index as long) as void
+	GetFirstSelected() as long
+	GetFocusedItem() as long
+	GetNextSelected(item as long) as long
+	IsSelected(index as long) as bool
+	Select(n as long, on as bool = true) as void
+	SetColumnImage(col as int, image as int) as void
 } %% R'''
 # Overview
 

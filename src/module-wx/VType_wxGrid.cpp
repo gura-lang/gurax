@@ -5390,8 +5390,8 @@ wxPen Value_wxGrid::EntityT::GetColGridLinePen(int col)
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_wxPen)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_wxPen)) {
+			Error::Issue(ErrorType::TypeError, "the function GetColGridLinePen is expected to return a value of %s or its derived class",
 				VTYPE_wxPen.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
@@ -5418,8 +5418,8 @@ wxPen Value_wxGrid::EntityT::GetDefaultGridLinePen()
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_wxPen)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_wxPen)) {
+			Error::Issue(ErrorType::TypeError, "the function GetDefaultGridLinePen is expected to return a value of %s or its derived class",
 				VTYPE_wxPen.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
@@ -5450,8 +5450,8 @@ wxPen Value_wxGrid::EntityT::GetRowGridLinePen(int row)
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_wxPen)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_wxPen)) {
+			Error::Issue(ErrorType::TypeError, "the function GetRowGridLinePen is expected to return a value of %s or its derived class",
 				VTYPE_wxPen.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;

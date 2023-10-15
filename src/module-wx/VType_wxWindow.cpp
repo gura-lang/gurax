@@ -5555,8 +5555,8 @@ bool Value_wxWindow::EntityT::AcceptsFocus() const
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_Bool)) {
+			Error::Issue(ErrorType::TypeError, "the function AcceptsFocus is expected to return a value of %s or its derived class",
 				VTYPE_Bool.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
@@ -5583,8 +5583,8 @@ bool Value_wxWindow::EntityT::AcceptsFocusFromKeyboard() const
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_Bool)) {
+			Error::Issue(ErrorType::TypeError, "the function AcceptsFocusFromKeyboard is expected to return a value of %s or its derived class",
 				VTYPE_Bool.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
@@ -5611,8 +5611,8 @@ bool Value_wxWindow::EntityT::AcceptsFocusRecursively() const
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_Bool)) {
+			Error::Issue(ErrorType::TypeError, "the function AcceptsFocusRecursively is expected to return a value of %s or its derived class",
 				VTYPE_Bool.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
@@ -5639,8 +5639,8 @@ bool Value_wxWindow::EntityT::HasFocus() const
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_Bool)) {
+			Error::Issue(ErrorType::TypeError, "the function HasFocus is expected to return a value of %s or its derived class",
 				VTYPE_Bool.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;

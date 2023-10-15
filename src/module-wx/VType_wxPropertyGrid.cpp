@@ -1553,8 +1553,8 @@ wxStatusBar* Value_wxPropertyGrid::EntityT::GetStatusBar()
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_wxStatusBar)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_wxStatusBar)) {
+			Error::Issue(ErrorType::TypeError, "the function GetStatusBar is expected to return a value of %s or its derived class",
 				VTYPE_wxStatusBar.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;

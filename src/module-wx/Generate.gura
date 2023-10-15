@@ -634,8 +634,8 @@ ${funcInfo.ComposeCDecl('Value_wx' + className + '::EntityT::')}
 		${if (funcInfo.returnNilFlag)}
 		if (pValueRtn->IsNil()) return nullptr;
 		${end}
-		if (!pValueRtn->IsType(VTYPE_${funcInfo.GetTypeInfo().vtype})) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_${funcInfo.GetTypeInfo().vtype})) {
+			Error::Issue(ErrorType::TypeError, "the function ${funcInfo.name} is expected to return a value of %s or its derived class",
 				VTYPE_${funcInfo.GetTypeInfo().vtype}.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;

@@ -1,0 +1,83 @@
+#!/usr/bin/env gurax
+import(wx)
+
+AppMain = class(wx.App) {
+	OnInit() = {
+		FrameMain(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		true
+	}
+}
+
+FrameMain = class(wx.Frame) {
+	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
+		PanelMain(this)
+	}
+}
+
+ComboPopup_ListView = class(wx.ComboPopup) {
+	m_value as Number
+	listView as wx.ListView
+	// Initialize member variables
+	Init() = {
+		this.m_value = -1
+	}
+	// Create popup control
+	Create(parent as wx.Window) = {
+		this.listView = wx.ListView(parent, 1, wx.Point(0,0), wx.DefaultSize)
+		true
+	}
+	// Return pointer to the created control
+	GetControl() = { this.listView }
+	// Translate string into a list selection
+	SetStringValue(s as String) = {
+		n = this.listView.FindItem(-1, s)
+		if (n >= 0 && n < this.listView.GetItemCount()) {
+			this.listView.Select(n)
+		}
+	}
+	// Get list selection as a string
+	GetStringValue() = {
+		if (this.m_value >= 0) {
+			return(this.listView.GetItemText(m_value))
+		}
+		''
+	}
+	// Do mouse hot-tracking (which is typical in list popups)
+	OnMouseMove(event as wx.MouseEvent) = {
+		// TODO: Move selection to cursor
+	}
+	// On mouse left up, set the value and close the popup
+	OnMouseClick(event as wx.MouseEvent) = {
+		//m_value = wxListView::GetFirstSelected();
+		// TODO: Send event as well
+		//Dismiss();
+	}
+};
+
+PanelMain = class(wx.Panel) {
+	__init__(parent as wx.Window) = {|parent|
+		sizer = wx.BoxSizer(wx.VERTICAL)
+		this.SetSizer(sizer)
+		wx.BoxSizer(wx.VERTICAL) {|sizer|
+			(^sizer).Add(sizer, wx.SizerFlags(1).Expand())
+			wx.ComboCtrl(this, wx.ID_ANY) {|ctrl|
+				sizer.Add(ctrl, wx.SizerFlags().Expand())
+				ComboPopup_ListView {|popup|
+					ctrl.SetPopupControl(popup)
+					ctrlPopup = popup.GetControl()
+					ctrlPopup.AppendColumn('Column1')
+					ctrlPopup.AppendColumn('Column2')
+					ctrlPopup.AppendColumn('Column3')
+					ctrlPopup.InsertItem(0, 'item1')
+					ctrlPopup.InsertItem(0, 'item2')
+					ctrlPopup.InsertItem(0, 'item3')
+				}
+			}
+		}
+	}
+	OnButton(event as wx.CommandEvent) = {
+		Println('Hello!')
+	}
+}
+
+wx.ImplementApp(AppMain())

@@ -335,8 +335,8 @@ wxColour Value_wxHtmlListBox::EntityT::GetSelectedTextBgColour(const wxColour& c
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_wxColour)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_wxColour)) {
+			Error::Issue(ErrorType::TypeError, "the function GetSelectedTextBgColour is expected to return a value of %s or its derived class",
 				VTYPE_wxColour.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
@@ -367,8 +367,8 @@ wxColour Value_wxHtmlListBox::EntityT::GetSelectedTextColour(const wxColour& col
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_wxColour)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_wxColour)) {
+			Error::Issue(ErrorType::TypeError, "the function GetSelectedTextColour is expected to return a value of %s or its derived class",
 				VTYPE_wxColour.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
@@ -399,8 +399,8 @@ wxString Value_wxHtmlListBox::EntityT::OnGetItemMarkup(size_t n) const
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_String)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_String)) {
+			Error::Issue(ErrorType::TypeError, "the function OnGetItemMarkup is expected to return a value of %s or its derived class",
 				VTYPE_String.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
@@ -431,8 +431,8 @@ wxString Value_wxHtmlListBox::EntityT::OnGetItem(size_t n) const
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_String)) {
-			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+		if (!pValueRtn->IsInstanceOf(VTYPE_String)) {
+			Error::Issue(ErrorType::TypeError, "the function OnGetItem is expected to return a value of %s or its derived class",
 				VTYPE_String.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
