@@ -22,7 +22,7 @@ NUM aaaaaa NUM
 ---
 hoge NUM foo
 NUM aaaaaa NUM
-'hoge(ABCD, EFGH, IJKL), foo(MNOP, QRST), bar(UVWX, 1234)'.Sub('(\\w+\\()(\\w+)', & {$m[1].Upper() + $m[2].Lower()}) .. HOGE(abcd, EFGH, IJKL), FOO(mnop, QRST), BAR(uvwx, 1234)
+'hoge(ABCD, EFGH, IJKL), foo(MNOP, QRST), bar(UVWX, 1234)'.Sub('(\\w+\\()(\\w+)', &{$m[1].Upper() + $m[2].Lower()}) .. HOGE(abcd, EFGH, IJKL), FOO(mnop, QRST), BAR(uvwx, 1234)
 ======== re.Match(), String#Match() ========
 re.Match('(\\d+)\\.(\\d*)', '3.14') .. <re.Match:0-4>
 m.source .. 3.14

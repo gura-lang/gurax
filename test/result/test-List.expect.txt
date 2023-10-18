@@ -68,7 +68,7 @@ List
 ======== Initializer ========
 [3, 1, 4, 1, 5, 9, 2, 6] .. [3, 1, 4, 1, 5, 9, 2, 6]
 [{1, 2}, {3, 4, {5, 6}}, {7, 8}] .. [[1, 2], [3, 4, [5, 6]], [7, 8]]
-@ {{1, 2}, {3, 4, {5, 6}}, {7, 8}} .. [[1, 2], [3, 4, [5, 6]], [7, 8]]
+@{{1, 2}, {3, 4, {5, 6}}, {7, 8}} .. [[1, 2], [3, 4, [5, 6]], [7, 8]]
 ['hayasaka hiroko, hayasaka_hiroko@example.com, 33', 'hannda takashi, hannda_takashi@example.com, 75', 'honma masahiko, honma_masahiko@example.com, 46', 'kawahata nana, kawahata_nana@example.com, 47']
 @(f) {{1, 2, 3, 4, 5, 6, 7}, {3, 1, 4, 1, 5, 9, 2}, {1, 4, 1, 4, 2, 1, 3}, {1, 7, [3, 2, 0]*, 5, 0}, [2, 2, 3, 6, 0, 6, 7]*, {[2, 2, 3, 6, 0, 6, 7]*}} .. [28, 25, 16, 18, 26, 26]
 @(f) {{1, 2, 3}} .. lacking value for argument 'd'
@@ -224,9 +224,9 @@ x.Shift():raise .. the list is empty
 ======== List#Shuffle() ========
 tbl = [0 .. 99].Shuffle(rnd) .. [75, 87, 58, 33, 81, 61, 73, 16, 13, 77, 50, 63, 3, 60, 26, 32, 51, 46, 12, 68, 43, 54, 25, 23, 37, 6, 19, 8, 2, 90, 21, 55, 49, 78, 44, 0, 93, 92, 69, 29, 14, 79, 24, 65, 11, 85, 45, 35, 18, 41, 5, 52, 9, 80, 70, 74, 59, 56, 84, 48, 72, 98, 67, 57, 64, 38, 88, 36, 83, 40, 22, 86, 10, 15, 39, 17, 47, 99, 94, 89, 71, 42, 27, 76, 62, 4, 96, 91, 1, 53, 20, 95, 28, 30, 97, 82, 66, 7, 34, 31]
 ======== List#After() ========
-x.After(& {$i < 0}):list .. [4, 4, 4, 0]
+x.After(&{$i < 0}):list .. [4, 4, 4, 0]
 x.After(x < 0):list .. [4, 4, 4, 0]
-x.After(& {$i < 0}).Offset(1):list .. [4, 4, 0]
+x.After(&{$i < 0}).Offset(1):list .. [4, 4, 0]
 x.After(x < 0).Offset(1):list .. [4, 4, 0]
 ======== List#Align() ========
 [0 .. 5].Align(10):list .. [0, 1, 2, 3, 4, 5, <Nil>, <Nil>, <Nil>, <Nil>]
@@ -259,9 +259,9 @@ x.After(x < 0).Offset(1):list .. [4, 4, 0]
 [1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7].ArgMin():lastIndex .. 28
 [1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7].ArgMin():indices .. [7, 10, 28]
 ======== List#Before() ========
-x.Before(& {$i < 0}):list .. [4, 3, 6, 1, 2, 3]
+x.Before(&{$i < 0}):list .. [4, 3, 6, 1, 2, 3]
 x.Before(x < 0):list .. [4, 3, 6, 1, 2, 3]
-x.Before(& {$i < 0}).Offset(1):list .. [3, 6, 1, 2, 3]
+x.Before(&{$i < 0}).Offset(1):list .. [3, 6, 1, 2, 3]
 x.Before(x < 0).Offset(1):list .. [3, 6, 1, 2, 3]
 ======== List#Combination() ========
 ----
@@ -283,7 +283,7 @@ x.Before(x < 0).Offset(1):list .. [3, 6, 1, 2, 3]
 ======== List#CountFalse() ========
 [6, 2, false, 3, 5, 2, false, 2, 9, 0, 3, false, 7, 0, 7, false, 4, false, 5, 6].CountFalse() .. 5
 ======== List#CountIf() ========
-[6, 2, 6, 3, 5, 2, 0, 2, 9, 3, 3, 0, 7, 3, 7, 0, 4, 0, 5, 6].CountIf(& {$x > 5}) .. 6
+[6, 2, 6, 3, 5, 2, 0, 2, 9, 3, 3, 0, 7, 3, 7, 0, 4, 0, 5, 6].CountIf(&{$x > 5}) .. 6
 ======== List#CountTrue() ========
 [6, 2, false, 3, 5, 2, false, 2, 9, 0, 3, false, 7, 0, 7, false, 4, false, 5, 6].CountTrue() .. 15
 ======== List#Cycle() ========
@@ -435,7 +435,7 @@ tbl.Each():xiter {continue}[] .. []
 tbl.Each():xiter {continue(nil)}[] .. []
 ======== List#Filter() ========
 x .. [52, 23, 62, 75, 46, 10, 86, 80, 19, 34]
-x.Filter(& {$i % 2 == 0}):list .. [52, 62, 46, 10, 86, 80, 34]
+x.Filter(&{$i % 2 == 0}):list .. [52, 62, 46, 10, 86, 80, 34]
 x.Filter(x % 2 == 0):list .. [52, 62, 46, 10, 86, 80, 34]
 names .. ['Burke', 'Connor', 'Frank', 'Everett', 'Albert', 'George', 'Harris', 'David']
 BURKE
@@ -577,11 +577,11 @@ tbl.Offset(-1)[] .. negative value is not acceptable
 ['A', 'B', 'C', 'D'].RunLength():list .. [(1, 'A'), (1, 'B'), (1, 'C'), (1, 'D')]
 ['A', 'A', 'A', 'B', 'B', 'C', 'D', 'D', 'D', 'D', 'D'].RunLength():list .. [(3, 'A'), (2, 'B'), (1, 'C'), (5, 'D')]
 ======== List#Since() ========
-x.Since(& {$i < 0}):list .. [-1, 4, 4, 4, 0]
+x.Since(&{$i < 0}):list .. [-1, 4, 4, 4, 0]
 x.Since(x < 0):list .. [-1, 4, 4, 4, 0]
-x.Since(& {$i < 0}).Offset(1):list .. [4, 4, 4, 0]
+x.Since(&{$i < 0}).Offset(1):list .. [4, 4, 4, 0]
 x.Since(x < 0).Offset(1):list .. [4, 4, 4, 0]
-x.Since(& {$i < 0}).Offset(1).While(& {$i >= 0}):list .. [3, 1, 2, 3, 4]
+x.Since(&{$i < 0}).Offset(1).While(&{$i >= 0}):list .. [3, 1, 2, 3, 4]
 ======== List#Skip() ========
 ======== List#SkipNil() ========
 x .. [false, 52, 23, 62, <Nil>, 75, 46, false, 10, <Nil>, 86, 80, 19, 34, false]
@@ -590,9 +590,9 @@ x.SkipNil():list .. [false, 52, 23, 62, 75, 46, false, 10, 86, 80, 19, 34, false
 words100.Sort() .. ['agreeable', 'beautiful', 'blow', 'boil', 'bore', 'boy', 'bruise', 'bubble', 'burst', 'bushes', 'cannon', 'cattle', 'cause', 'change', 'cheat', 'childlike', 'clap', 'complain', 'country', 'cover', 'cowardly', 'curve', 'dapper', 'deeply', 'demonic', 'detect', 'digestion', 'disgusting', 'dry', 'encourage', 'entertaining', 'equable', 'exotic', 'experience', 'flame', 'flat', 'flowery', 'force', 'foregoing', 'gaping', 'greasy', 'happen', 'hate', 'heal', 'horn', 'hydrant', 'ignore', 'impartial', 'inexpensive', 'iron', 'jump', 'living', 'loutish', 'mate', 'merciful', 'milk', 'miniature', 'mix', 'motionwhip', 'move', 'natural', 'nebulous', 'null', 'oceanic', 'part', 'person', 'pine', 'poor', 'possess', 'preach', 'prevent', 'private', 'property', 'purring', 'rampant', 'rat', 'ray', 'reading', 'religion', 'roasted', 'rob', 'roll', 'rural', 'sigh', 'smile', 'soap', 'steam', 'sudden', 'sulky', 'tasteful', 'thaw', 'tired', 'toy', 'try', 'unaccountable', 'unarmed', 'unusual', 'vest', 'volatile', 'yell']
 words100.Sort(`ascend) .. ['agreeable', 'beautiful', 'blow', 'boil', 'bore', 'boy', 'bruise', 'bubble', 'burst', 'bushes', 'cannon', 'cattle', 'cause', 'change', 'cheat', 'childlike', 'clap', 'complain', 'country', 'cover', 'cowardly', 'curve', 'dapper', 'deeply', 'demonic', 'detect', 'digestion', 'disgusting', 'dry', 'encourage', 'entertaining', 'equable', 'exotic', 'experience', 'flame', 'flat', 'flowery', 'force', 'foregoing', 'gaping', 'greasy', 'happen', 'hate', 'heal', 'horn', 'hydrant', 'ignore', 'impartial', 'inexpensive', 'iron', 'jump', 'living', 'loutish', 'mate', 'merciful', 'milk', 'miniature', 'mix', 'motionwhip', 'move', 'natural', 'nebulous', 'null', 'oceanic', 'part', 'person', 'pine', 'poor', 'possess', 'preach', 'prevent', 'private', 'property', 'purring', 'rampant', 'rat', 'ray', 'reading', 'religion', 'roasted', 'rob', 'roll', 'rural', 'sigh', 'smile', 'soap', 'steam', 'sudden', 'sulky', 'tasteful', 'thaw', 'tired', 'toy', 'try', 'unaccountable', 'unarmed', 'unusual', 'vest', 'volatile', 'yell']
 words100.Sort(`descend) .. ['yell', 'volatile', 'vest', 'unusual', 'unarmed', 'unaccountable', 'try', 'toy', 'tired', 'thaw', 'tasteful', 'sulky', 'sudden', 'steam', 'soap', 'smile', 'sigh', 'rural', 'roll', 'rob', 'roasted', 'religion', 'reading', 'ray', 'rat', 'rampant', 'purring', 'property', 'private', 'prevent', 'preach', 'possess', 'poor', 'pine', 'person', 'part', 'oceanic', 'null', 'nebulous', 'natural', 'move', 'motionwhip', 'mix', 'miniature', 'milk', 'merciful', 'mate', 'loutish', 'living', 'jump', 'iron', 'inexpensive', 'impartial', 'ignore', 'hydrant', 'horn', 'heal', 'hate', 'happen', 'greasy', 'gaping', 'foregoing', 'force', 'flowery', 'flat', 'flame', 'experience', 'exotic', 'equable', 'entertaining', 'encourage', 'dry', 'disgusting', 'digestion', 'detect', 'demonic', 'deeply', 'dapper', 'curve', 'cowardly', 'cover', 'country', 'complain', 'clap', 'childlike', 'cheat', 'change', 'cause', 'cattle', 'cannon', 'bushes', 'burst', 'bubble', 'bruise', 'boy', 'bore', 'boil', 'blow', 'beautiful', 'agreeable']
-words100.Sort(& {$a < $b}) .. ['agreeable', 'beautiful', 'blow', 'boil', 'bore', 'boy', 'bruise', 'bubble', 'burst', 'bushes', 'cannon', 'cattle', 'cause', 'change', 'cheat', 'childlike', 'clap', 'complain', 'country', 'cover', 'cowardly', 'curve', 'dapper', 'deeply', 'demonic', 'detect', 'digestion', 'disgusting', 'dry', 'encourage', 'entertaining', 'equable', 'exotic', 'experience', 'flame', 'flat', 'flowery', 'force', 'foregoing', 'gaping', 'greasy', 'happen', 'hate', 'heal', 'horn', 'hydrant', 'ignore', 'impartial', 'inexpensive', 'iron', 'jump', 'living', 'loutish', 'mate', 'merciful', 'milk', 'miniature', 'mix', 'motionwhip', 'move', 'natural', 'nebulous', 'null', 'oceanic', 'part', 'person', 'pine', 'poor', 'possess', 'preach', 'prevent', 'private', 'property', 'purring', 'rampant', 'rat', 'ray', 'reading', 'religion', 'roasted', 'rob', 'roll', 'rural', 'sigh', 'smile', 'soap', 'steam', 'sudden', 'sulky', 'tasteful', 'thaw', 'tired', 'toy', 'try', 'unaccountable', 'unarmed', 'unusual', 'vest', 'volatile', 'yell']
-words100.Sort(& {$a > $b}) .. ['yell', 'volatile', 'vest', 'unusual', 'unarmed', 'unaccountable', 'try', 'toy', 'tired', 'thaw', 'tasteful', 'sulky', 'sudden', 'steam', 'soap', 'smile', 'sigh', 'rural', 'roll', 'rob', 'roasted', 'religion', 'reading', 'ray', 'rat', 'rampant', 'purring', 'property', 'private', 'prevent', 'preach', 'possess', 'poor', 'pine', 'person', 'part', 'oceanic', 'null', 'nebulous', 'natural', 'move', 'motionwhip', 'mix', 'miniature', 'milk', 'merciful', 'mate', 'loutish', 'living', 'jump', 'iron', 'inexpensive', 'impartial', 'ignore', 'hydrant', 'horn', 'heal', 'hate', 'happen', 'greasy', 'gaping', 'foregoing', 'force', 'flowery', 'flat', 'flame', 'experience', 'exotic', 'equable', 'entertaining', 'encourage', 'dry', 'disgusting', 'digestion', 'detect', 'demonic', 'deeply', 'dapper', 'curve', 'cowardly', 'cover', 'country', 'complain', 'clap', 'childlike', 'cheat', 'change', 'cause', 'cattle', 'cannon', 'bushes', 'burst', 'bubble', 'bruise', 'boy', 'bore', 'boil', 'blow', 'beautiful', 'agreeable']
-words100.Sort(& {$a.last < $b.last}):stable .. ['rob', 'demonic', 'exotic', 'oceanic', 'unarmed', 'tired', 'roasted', 'bubble', 'private', 'bruise', 'ignore', 'equable', 'inexpensive', 'force', 'childlike', 'bore', 'agreeable', 'smile', 'mate', 'unaccountable', 'flame', 'volatile', 'encourage', 'experience', 'cause', 'curve', 'change', 'pine', 'hate', 'move', 'miniature', 'cattle', 'foregoing', 'gaping', 'disgusting', 'entertaining', 'purring', 'living', 'reading', 'loutish', 'sigh', 'preach', 'milk', 'tasteful', 'yell', 'roll', 'beautiful', 'impartial', 'merciful', 'rural', 'natural', 'unusual', 'null', 'boil', 'heal', 'steam', 'happen', 'horn', 'religion', 'iron', 'digestion', 'complain', 'sudden', 'person', 'cannon', 'motionwhip', 'soap', 'jump', 'clap', 'poor', 'dapper', 'cover', 'bushes', 'possess', 'nebulous', 'vest', 'rampant', 'hydrant', 'prevent', 'rat', 'burst', 'cheat', 'flat', 'part', 'detect', 'blow', 'thaw', 'mix', 'cowardly', 'boy', 'flowery', 'toy', 'country', 'property', 'dry', 'sulky', 'greasy', 'try', 'deeply', 'ray']
+words100.Sort(&{$a < $b}) .. ['agreeable', 'beautiful', 'blow', 'boil', 'bore', 'boy', 'bruise', 'bubble', 'burst', 'bushes', 'cannon', 'cattle', 'cause', 'change', 'cheat', 'childlike', 'clap', 'complain', 'country', 'cover', 'cowardly', 'curve', 'dapper', 'deeply', 'demonic', 'detect', 'digestion', 'disgusting', 'dry', 'encourage', 'entertaining', 'equable', 'exotic', 'experience', 'flame', 'flat', 'flowery', 'force', 'foregoing', 'gaping', 'greasy', 'happen', 'hate', 'heal', 'horn', 'hydrant', 'ignore', 'impartial', 'inexpensive', 'iron', 'jump', 'living', 'loutish', 'mate', 'merciful', 'milk', 'miniature', 'mix', 'motionwhip', 'move', 'natural', 'nebulous', 'null', 'oceanic', 'part', 'person', 'pine', 'poor', 'possess', 'preach', 'prevent', 'private', 'property', 'purring', 'rampant', 'rat', 'ray', 'reading', 'religion', 'roasted', 'rob', 'roll', 'rural', 'sigh', 'smile', 'soap', 'steam', 'sudden', 'sulky', 'tasteful', 'thaw', 'tired', 'toy', 'try', 'unaccountable', 'unarmed', 'unusual', 'vest', 'volatile', 'yell']
+words100.Sort(&{$a > $b}) .. ['yell', 'volatile', 'vest', 'unusual', 'unarmed', 'unaccountable', 'try', 'toy', 'tired', 'thaw', 'tasteful', 'sulky', 'sudden', 'steam', 'soap', 'smile', 'sigh', 'rural', 'roll', 'rob', 'roasted', 'religion', 'reading', 'ray', 'rat', 'rampant', 'purring', 'property', 'private', 'prevent', 'preach', 'possess', 'poor', 'pine', 'person', 'part', 'oceanic', 'null', 'nebulous', 'natural', 'move', 'motionwhip', 'mix', 'miniature', 'milk', 'merciful', 'mate', 'loutish', 'living', 'jump', 'iron', 'inexpensive', 'impartial', 'ignore', 'hydrant', 'horn', 'heal', 'hate', 'happen', 'greasy', 'gaping', 'foregoing', 'force', 'flowery', 'flat', 'flame', 'experience', 'exotic', 'equable', 'entertaining', 'encourage', 'dry', 'disgusting', 'digestion', 'detect', 'demonic', 'deeply', 'dapper', 'curve', 'cowardly', 'cover', 'country', 'complain', 'clap', 'childlike', 'cheat', 'change', 'cause', 'cattle', 'cannon', 'bushes', 'burst', 'bubble', 'bruise', 'boy', 'bore', 'boil', 'blow', 'beautiful', 'agreeable']
+words100.Sort(&{$a.last < $b.last}):stable .. ['rob', 'demonic', 'exotic', 'oceanic', 'unarmed', 'tired', 'roasted', 'bubble', 'private', 'bruise', 'ignore', 'equable', 'inexpensive', 'force', 'childlike', 'bore', 'agreeable', 'smile', 'mate', 'unaccountable', 'flame', 'volatile', 'encourage', 'experience', 'cause', 'curve', 'change', 'pine', 'hate', 'move', 'miniature', 'cattle', 'foregoing', 'gaping', 'disgusting', 'entertaining', 'purring', 'living', 'reading', 'loutish', 'sigh', 'preach', 'milk', 'tasteful', 'yell', 'roll', 'beautiful', 'impartial', 'merciful', 'rural', 'natural', 'unusual', 'null', 'boil', 'heal', 'steam', 'happen', 'horn', 'religion', 'iron', 'digestion', 'complain', 'sudden', 'person', 'cannon', 'motionwhip', 'soap', 'jump', 'clap', 'poor', 'dapper', 'cover', 'bushes', 'possess', 'nebulous', 'vest', 'rampant', 'hydrant', 'prevent', 'rat', 'burst', 'cheat', 'flat', 'part', 'detect', 'blow', 'thaw', 'mix', 'cowardly', 'boy', 'flowery', 'toy', 'country', 'property', 'dry', 'sulky', 'greasy', 'try', 'deeply', 'ray']
 boy
 toy
 dry
@@ -797,8 +797,8 @@ words10.Sort(`ascend, [0 .. 9]) .. ['bubble', 'tasteful', 'yell', 'unarmed', 've
 words10.Sort(`ascend, [9 .. 0]) .. ['entertaining', 'demonic', 'happen', 'cowardly', 'private', 'vest', 'unarmed', 'yell', 'tasteful', 'bubble']
 words10.Sort(`descend, [0 .. 9]) .. ['entertaining', 'demonic', 'happen', 'cowardly', 'private', 'vest', 'unarmed', 'yell', 'tasteful', 'bubble']
 words10.Sort(`descend, [9 .. 0]) .. ['bubble', 'tasteful', 'yell', 'unarmed', 'vest', 'private', 'cowardly', 'happen', 'demonic', 'entertaining']
-words10.Sort(& {$a < $b}, [9 .. 0]) .. ['entertaining', 'demonic', 'happen', 'cowardly', 'private', 'vest', 'unarmed', 'yell', 'tasteful', 'bubble']
-words10.Sort(& {$a > $b}, [9 .. 0]) .. ['bubble', 'tasteful', 'yell', 'unarmed', 'vest', 'private', 'cowardly', 'happen', 'demonic', 'entertaining']
+words10.Sort(&{$a < $b}, [9 .. 0]) .. ['entertaining', 'demonic', 'happen', 'cowardly', 'private', 'vest', 'unarmed', 'yell', 'tasteful', 'bubble']
+words10.Sort(&{$a > $b}, [9 .. 0]) .. ['bubble', 'tasteful', 'yell', 'unarmed', 'vest', 'private', 'cowardly', 'happen', 'demonic', 'entertaining']
 words100.Sort(`ascend, [0 .. 99]) .. ['bubble', 'tasteful', 'yell', 'unarmed', 'vest', 'private', 'cowardly', 'happen', 'demonic', 'horn', 'motionwhip', 'rampant', 'bruise', 'religion', 'ignore', 'roll', 'foregoing', 'equable', 'hydrant', 'inexpensive', 'boy', 'flowery', 'exotic', 'bushes', 'toy', 'soap', 'iron', 'force', 'beautiful', 'loutish', 'childlike', 'bore', 'country', 'property', 'blow', 'oceanic', 'agreeable', 'impartial', 'sigh', 'smile', 'dry', 'prevent', 'thaw', 'preach', 'mate', 'gaping', 'sulky', 'poor', 'greasy', 'rob', 'rat', 'merciful', 'burst', 'try', 'digestion', 'rural', 'dapper', 'unaccountable', 'flame', 'natural', 'unusual', 'volatile', 'jump', 'cheat', 'null', 'mix', 'deeply', 'cover', 'encourage', 'experience', 'disgusting', 'entertaining', 'purring', 'tired', 'clap', 'cause', 'complain', 'flat', 'curve', 'change', 'boil', 'part', 'living', 'steam', 'detect', 'milk', 'pine', 'ray', 'sudden', 'person', 'roasted', 'cannon', 'hate', 'heal', 'move', 'miniature', 'reading', 'possess', 'nebulous', 'cattle']
 words100.Sort(`ascend, [99 .. 0]) .. ['cattle', 'nebulous', 'possess', 'reading', 'miniature', 'move', 'heal', 'hate', 'cannon', 'roasted', 'person', 'sudden', 'ray', 'pine', 'milk', 'detect', 'steam', 'living', 'part', 'boil', 'change', 'curve', 'flat', 'complain', 'cause', 'clap', 'tired', 'purring', 'entertaining', 'disgusting', 'experience', 'encourage', 'cover', 'deeply', 'mix', 'null', 'cheat', 'jump', 'volatile', 'unusual', 'natural', 'flame', 'unaccountable', 'dapper', 'rural', 'digestion', 'try', 'burst', 'merciful', 'rat', 'rob', 'greasy', 'poor', 'sulky', 'gaping', 'mate', 'preach', 'thaw', 'prevent', 'dry', 'smile', 'sigh', 'impartial', 'agreeable', 'oceanic', 'blow', 'property', 'country', 'bore', 'childlike', 'loutish', 'beautiful', 'force', 'iron', 'soap', 'toy', 'bushes', 'exotic', 'flowery', 'boy', 'inexpensive', 'hydrant', 'equable', 'foregoing', 'roll', 'ignore', 'religion', 'bruise', 'rampant', 'motionwhip', 'horn', 'demonic', 'happen', 'cowardly', 'private', 'vest', 'unarmed', 'yell', 'tasteful', 'bubble']
 ======== List#Std() ========
@@ -823,20 +823,20 @@ words100.Sort(`ascend, [99 .. 0]) .. ['cattle', 'nebulous', 'possess', 'reading'
 ['orange', 'grape', 'apple', 'peach', 'melon', 'kiwi'].Uniq():list .. ['orange', 'grape', 'apple', 'peach', 'melon', 'kiwi']
 ['orange', 'grape', 'grape', 'apple', 'apple', 'apple', 'peach', 'melon', 'kiwi', 'kiwi', 'kiwi'].Uniq():list .. ['orange', 'grape', 'apple', 'peach', 'melon', 'kiwi']
 ======== List#Until() ========
-x.Until(& {$i < 0}):list .. [4, 3, 6, 1, 2, 3, -1]
+x.Until(&{$i < 0}):list .. [4, 3, 6, 1, 2, 3, -1]
 x.Until(x < 0):list .. [4, 3, 6, 1, 2, 3, -1]
-x.Until(& {$i < 0}).Offset(1):list .. [3, 6, 1, 2, 3, -1]
+x.Until(&{$i < 0}).Offset(1):list .. [3, 6, 1, 2, 3, -1]
 x.Until(x < 0).Offset(1):list .. [3, 6, 1, 2, 3, -1]
 x.IsInfinite() .. true
 x.Until(x == 100).IsInfinite() .. false
-x.Until(& {$i == 100}).IsInfinite() .. false
+x.Until(&{$i == 100}).IsInfinite() .. false
 ======== List#Var() ========
 ======== List#While() ========
-x.While(& {$i >= 0}):list .. [4, 3, 6, 1, 2, 3]
+x.While(&{$i >= 0}):list .. [4, 3, 6, 1, 2, 3]
 x.While(x >= 0):list .. [4, 3, 6, 1, 2, 3]
 x.IsInfinite() .. true
 x.While(x < 100).IsInfinite() .. false
-x.While(& {$i < 100}).IsInfinite() .. false
+x.While(&{$i < 100}).IsInfinite() .. false
 ======== Any in List ========
 1 in [1, 2, 3, 4, 5] .. true
 6 in [1, 2, 3, 4, 5] .. false

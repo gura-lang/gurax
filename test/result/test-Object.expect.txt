@@ -13,7 +13,7 @@ p1=v1-mod p2=44 p3=v3
 math.e.__str__() .. 2.71828
 true.__str__() .. true
 Printf.__str__() .. <Function:Printf(format as String,values* as Any):map>
-% {}.__str__() .. %{}
+%{}.__str__() .. %{}
 [].__str__() .. []
 [1, 2, 3, 4, `foo, 'bar'].__str__() .. [1, 2, 3, 4, `foo, 'bar']
 "say 'hello'".__str__() .. say 'hello'
@@ -28,7 +28,7 @@ Color.black.__str__():unbracket .. #000000,ff
 3.14.__str__():bracket .. <Number:3.14>
 'hello'.__str__():bracket .. <String:'hello'>
 [1, 2, 3, 4].__str__():bracket .. <List:4items>
-% {(`a) => 1, (`b) => 2, (`c) => 3}.__str__():bracket .. <Dict:3items>
+%{(`a) => 1, (`b) => 2, (`c) => 3}.__str__():bracket .. <Dict:3items>
 true.__str__():bracket .. <Bool:true>
 nil.__str__():bracket .. <Nil>
 (2 / 3r).__str__():bracket .. <Rational:2/3r>
@@ -40,13 +40,13 @@ true.__instanceOf__(Bool) .. true
 true.__instanceOf__(Number) .. false
 Printf.__instanceOf__(Function) .. true
 Printf.__instanceOf__(Number) .. false
-% {}.__instanceOf__(Dict) .. true
-% {}.__instanceOf__(Number) .. false
+%{}.__instanceOf__(Dict) .. true
+%{}.__instanceOf__(Number) .. false
 'hello'.__instanceOf__(String) .. true
 'hello'.__instanceOf__(Number) .. false
 ======== Object#__vtype__ ========
 math.e.__vtype__.__name__ .. Number
 true.__vtype__.__name__ .. Bool
 Printf.__vtype__.__name__ .. Function
-% {}.__vtype__.__name__ .. Dict
+%{}.__vtype__.__name__ .. Dict
 'hello'.__vtype__.__name__ .. String

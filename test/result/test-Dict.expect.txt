@@ -1,7 +1,7 @@
 ======== Initializer ========
-% {'key0', 'value0', 'key1', 'value1', 'key2', 'value2', 'key3', 'value3', 'key4', 'value4', 'key5', 'value5', 'key6', 'value6', 'key7', 'value7', 'key8', 'value8', 'key9', 'value9'} .. %{'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4', 'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'}
-% {{'key0', 'value0'}, {'key1', 'value1'}, {'key2', 'value2'}, {'key3', 'value3'}, {'key4', 'value4'}, {'key5', 'value5'}, {'key6', 'value6'}, {'key7', 'value7'}, {'key8', 'value8'}, {'key9', 'value9'}} .. %{'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4', 'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'}
-% {'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4', 'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'} .. %{'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4', 'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'}
+%{'key0', 'value0', 'key1', 'value1', 'key2', 'value2', 'key3', 'value3', 'key4', 'value4', 'key5', 'value5', 'key6', 'value6', 'key7', 'value7', 'key8', 'value8', 'key9', 'value9'} .. %{'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4', 'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'}
+%{{'key0', 'value0'}, {'key1', 'value1'}, {'key2', 'value2'}, {'key3', 'value3'}, {'key4', 'value4'}, {'key5', 'value5'}, {'key6', 'value6'}, {'key7', 'value7'}, {'key8', 'value8'}, {'key9', 'value9'}} .. %{'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4', 'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'}
+%{'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4', 'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'} .. %{'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4', 'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'}
 ======== Property ========
 Dict
   #len              Number       R
@@ -154,8 +154,8 @@ d.HasKey('key0') .. true
 d.HasKey('key4') .. true
 d.HasKey('keyA') .. false
 ======== Dict#IsEmpty() ========
-% {'a' => 'b'}.IsEmpty() .. false
-% {}.IsEmpty() .. true
+%{'a' => 'b'}.IsEmpty() .. false
+%{}.IsEmpty() .. true
 ======== Dict#Put() ========
 d .. %{'a' => 3, 'b' => 2, 'c' => 1}
 d.Put('a', 99):timid .. %{'a' => 3, 'b' => 2, 'c' => 1}

@@ -1565,8 +1565,7 @@ DeclCallable* Expr_Caller::RetrieveDeclCallable() const
 String Expr_Caller::ToString(const StringStyle& ss, int indentLevel) const
 {
 	bool argListFlag = HasExprParam() || !GetAttr().IsEmpty() || !HasExprOfBlock();
-	String str;
-	str += _pExprCar->ToString(ss, indentLevel);
+	String str = _pExprCar->ToString(ss, indentLevel);
 	if (argListFlag) {
 		if (!ss.IsCram() && _pExprCar->IsType<Expr_Identifier>() &&
 			dynamic_cast<Expr_Identifier*>(_pExprCar.get())->GetSymbol()->IsFlowControl()) {
@@ -1585,7 +1584,7 @@ String Expr_Caller::ToString(const StringStyle& ss, int indentLevel) const
 	}
 	str += GetAttr().ToString(ss);
 	if (HasExprOfBlock()) {
-		if (!ss.IsCram()) str += ' ';
+		if (!ss.IsCram() && str != "@" && str != "%" && str != "&") str += ' ';
 		str += GetExprOfBlock()->ToString(ss, indentLevel);
 	}
 	if (HasExprTrailer()) {
