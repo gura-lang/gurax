@@ -65,7 +65,7 @@ TypeInfo = class {
 	}
 	ComposeConvToC(src as String) = this.tmplConvToC.Eval()
 	ComposeConvToGurax(varName as String) = this.tmplConvToGurax.Eval()
-	ComposeFunctionBody(caller as String) = this.tmplFunctionBody.Eval()
+	ComposeFunctionBody(funcInfo, caller as String) = this.tmplFunctionBody.Eval()
 	ComposeArgRef(varName as String) = this.tmplArgRef.Eval()
 	ComposeArgCDecl(varName as String) = Format('%s %s', this.cType, varName)
 }
@@ -264,6 +264,7 @@ FuncInfo = class {
 		typeInfo = this.GetTypeInfo()
 		Format('%s %s%s(%s)%s', typeInfo.cType, prefix, this.nameOnCall || this.name, this.ComposeArgsCDecl(), cond(this.constFlag, ' const', ''))
 	}
+	ComposeReturn(code as String) = cond(this.HasBlock(), Format('argument_gurax.ReturnValue(processor_gurax, %s)', code), code)
 	HasBlock() = this.hasBlockFlag || this.GetTypeInfo().blockOccurFlag
 	ToString() = Format('%s.%s(%s)%s%s', this.moduleName, this.name, this.argInfoTbl:*ToString().Join(', '),
 		cond(this.mapFlag, ':map', ''), cond(this.HasBlock(), ' {block?}', ''))
@@ -420,7 +421,7 @@ Gurax_ImplementFunctionEx(${funcInfo.name}_gurax, processor_gurax, argument_gura
 	${if (funcInfo.tmplFunctionBody)}
 	${funcInfo.tmplFunctionBody.Eval()}
 	${else}
-	${funcInfo.GetTypeInfo().ComposeFunctionBody(funcInfo.ComposeCaller())}
+	${funcInfo.GetTypeInfo().ComposeFunctionBody(funcInfo, funcInfo.ComposeCaller())}
 	${end}
 }
 '''
@@ -504,7 +505,7 @@ Renderer = class {
 		codeConvToC = 'Value_Number::GetNumber<${this.cType}>(${src})'
 		codeFunctionBody = R'''
 		${this.cType} rtn = ${caller};
-		return new Gurax::Value_${this.vtype}(rtn);
+		return ${funcInfo.ComposeReturn('new Gurax::Value_' + this.vtype + '(rtn)')};
 		''')
 	DeclareType_Pointer(decl as String, cType as String) = this.DeclareType(decl, cType, 'Pointer',
 		codePicker = R'''
@@ -709,7 +710,7 @@ Renderer.__init__() = {
 		codeConvToC = 'Value_Bool::GetBool(${src})'
 		codeFunctionBody = R'''
 		${this.cType} rtn = ${caller};
-		return new Gurax::Value_${this.vtype}(rtn);
+		return ${funcInfo.ComposeReturn('new Gurax::Value_' + this.vtype + '(rtn)')};
 		''')
 	this.DeclareType('Bool@gurax', 'Bool', 'Bool',
 		codePicker = R'''
@@ -723,7 +724,7 @@ Renderer.__init__() = {
 		'''
 		codeFunctionBody = R'''
 		${this.cType} rtn = ${caller};
-		return new Gurax::Value_${this.vtype}(rtn);
+		return ${funcInfo.ComposeReturn('new Gurax::Value_' + this.vtype + '(rtn)')};
 		''')
 	this.DeclareType('const_char_p', 'const char*', 'String',
 		codePicker = R'''
@@ -738,12 +739,12 @@ Renderer.__init__() = {
 		codeConvToC = 'Value_String::GetString(${src})'
 		codeFunctionBody = R'''
 		${this.cType} rtn = ${caller};
-		return new Gurax::Value_${this.vtype}(rtn);
+		return ${funcInfo.ComposeReturn('new Gurax::Value_' + this.vtype + '(rtn)')};
 		''')
 	this.DeclareType('const_char_p_NilIfNull', 'const char*', 'String',
 		codeFunctionBody = R'''
 		if (${this.cType} rtn = ${caller}) {
-			return new Gurax::Value_${this.vtype}(rtn);
+			return ${funcInfo.ComposeReturn('new Gurax::Value_' + this.vtype + '(rtn)')};
 		}
 		return Gurax::Value::nil();
 		''')

@@ -1112,7 +1112,7 @@ Gurax_ImplementMethodEx(wxListCtrl, InsertItem_gurax, processor_gurax, argument_
 		ArgPicker args(*pArgument);
 		const wxListItem& info = args.Pick<Value_wxListItem>().GetEntity();
 		long rtn = pEntity_gurax->InsertItem(info);
-		return new Value_Number(rtn);
+		return pArgument->ReturnValue(processor_gurax, new Value_Number(rtn));
 	} while (0);
 	Error::ClearIssuedFlag();
 	// InsertItem(index as long, label as const_String_r) as long
@@ -1130,7 +1130,7 @@ Gurax_ImplementMethodEx(wxListCtrl, InsertItem_gurax, processor_gurax, argument_
 		long index = args.PickNumber<long>();
 		const char* label = args.PickString();
 		long rtn = pEntity_gurax->InsertItem(index, label);
-		return new Value_Number(rtn);
+		return pArgument->ReturnValue(processor_gurax, new Value_Number(rtn));
 	} while (0);
 	Error::ClearIssuedFlag();
 	// InsertItem(index as long, imageIndex as int) as long
@@ -1148,7 +1148,7 @@ Gurax_ImplementMethodEx(wxListCtrl, InsertItem_gurax, processor_gurax, argument_
 		long index = args.PickNumber<long>();
 		int imageIndex = args.PickNumber<int>();
 		long rtn = pEntity_gurax->InsertItem(index, imageIndex);
-		return new Value_Number(rtn);
+		return pArgument->ReturnValue(processor_gurax, new Value_Number(rtn));
 	} while (0);
 	Error::ClearIssuedFlag();
 	// InsertItem(index as long, label as const_String_r, imageIndex as int) as long
@@ -1168,7 +1168,7 @@ Gurax_ImplementMethodEx(wxListCtrl, InsertItem_gurax, processor_gurax, argument_
 		const char* label = args.PickString();
 		int imageIndex = args.PickNumber<int>();
 		long rtn = pEntity_gurax->InsertItem(index, label, imageIndex);
-		return new Value_Number(rtn);
+		return pArgument->ReturnValue(processor_gurax, new Value_Number(rtn));
 	} while (0);
 	return Value::nil();
 }

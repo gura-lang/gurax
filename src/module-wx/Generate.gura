@@ -9,7 +9,7 @@ r.DeclareType('LongLong', 'wxLongLong', 'Number',
 	'''
 	codeFunctionBody = R'''
 	${this.cType} rtn = ${caller};
-	return new Gurax::Value_${this.vtype}(rtn.GetValue());
+	return ${funcInfo.ComposeReturn('new Gurax::Value_' + this.vtype + '(rtn.GetValue())')};
 	''')
 
 r.DeclareType_Number('FileOffset', 'wxFileOffset')
@@ -26,7 +26,7 @@ r.DeclareType('const_wxChar_p', 'const wxChar*', 'String',
 	'''
 	codeFunctionBody = R'''
 	${this.cType} rtn = ${caller};
-	return new Gurax::Value_${this.vtype}(rtn);
+	return ${funcInfo.ComposeReturn('new Gurax::Value_' + this.vtype + '(rtn)')};
 	''')
 
 r.DeclareType('String', 'wxString', 'String',
@@ -41,7 +41,7 @@ r.DeclareType('String', 'wxString', 'String',
 	codeConvToGurax = 'new Gurax::Value_${this.vtype}(${varName}.utf8_str().data())'
 	codeFunctionBody = R'''
 	wxString rtn = ${caller};
-	return new Gurax::Value_${this.vtype}(rtn.utf8_str().data());
+	return ${funcInfo.ComposeReturn('new Gurax::Value_' + this.vtype + '(rtn.utf8_str().data())')};
 	''')
 
 r.DeclareType('const_String_r', 'const wxString&', 'String',
@@ -56,60 +56,8 @@ r.DeclareType('const_String_r', 'const wxString&', 'String',
 	codeConvToGurax = 'new Gurax::Value_${this.vtype}(${varName}.utf8_str().data())'
 	codeFunctionBody = R'''
 	wxString rtn = ${caller};
-	return new Gurax::Value_${this.vtype}(rtn.utf8_str().data());
+	return ${funcInfo.ComposeReturn('new Gurax::Value_' + this.vtype + '(rtn.utf8_str().data())')};
 	''')
-
-/*
-r.DeclareType('String', 'const char*', 'String',
-	codePicker = R'''
-	${this.cType} ${varName} = args_gurax.PickString();
-	'''
-	codePickerValidation = R'''
-	${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.PickString() : ${defaultValue || 'nullptr'};
-	'''
-	codePickerVec = R'''
-	auto ${varName} = args_gurax.PickListT<${this.cType}>(Gurax::Value_${this.vtype}::ValueForVector);
-	'''
-	codeFunctionBody = R'''
-	wxString rtn = ${caller};
-	return new Gurax::Value_${this.vtype}(rtn.utf8_str().data());
-	''')
-
-r.DeclareType('wxString', 'wxString', 'String',
-	codePicker = R'''
-	${this.cType} ${varName} = args_gurax.PickString();
-	'''
-	codePickerValidation = R'''
-	${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.PickString() : ${defaultValue || 'wxEmptyString'};
-	'''
-	codeConvToC = 'Value_String::GetString(${src})'
-	codeFunctionBody = R'''
-	wxString rtn = ${caller};
-	return new Gurax::Value_${this.vtype}(rtn.utf8_str().data());
-	''')
-
-r.DeclareType('const_wxString_r', 'const wxString&', 'String',
-	codePicker = R'''
-	const char* ${varName} = args_gurax.PickString();
-	'''
-	codeConvToGurax = 'new Gurax::Value_${this.vtype}(${varName}.utf8_str().data())')
-
-r.DeclareType('const_String_r', 'const char*', 'String',
-	codePicker = R'''
-	${this.cType} ${varName} = args_gurax.PickString();
-	'''
-	codePickerValidation = R'''
-	${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.PickString() : ${defaultValue || 'nullptr'};
-	'''
-	codePickerVec = R'''
-	auto ${varName} = args_gurax.PickListT<${this.cType}>(Gurax::Value_${this.vtype}::ValueForVector);
-	'''
-	codeConvToGurax = 'new Gurax::Value_${this.vtype}(${varName}.utf8_str().data())'
-	codeFunctionBody = R'''
-	${this.cType} rtn = ${caller};
-	return new Gurax::Value_${this.vtype}(rtn);
-	''')
-*/
 
 r.DeclareType('const_ArrayString_r', 'const wxArrayString&', 'String[]',
 	codePickerVec = R'''
@@ -142,7 +90,7 @@ r.DeclareType('ArrayString', 'wxArrayString', 'Number[]',
 	'''
 	codeFunctionBody = R'''
 	${this.cType} rtn = ${caller};
-	return Util::CreateList(rtn);
+	return ${funcInfo.ComposeReturn('Util::CreateList(rtn)')};
 	''')
 
 r.DeclareType('ArrayShort', 'wxArrayShort', 'Number[]',
@@ -151,7 +99,7 @@ r.DeclareType('ArrayShort', 'wxArrayShort', 'Number[]',
 	'''
 	codeFunctionBody = R'''
 	${this.cType} rtn = ${caller};
-	return Util::CreateList(rtn);
+	return ${funcInfo.ComposeReturn('Util::CreateList(rtn)')};
 	''')
 
 r.DeclareType('ArrayInt', 'wxArrayInt', 'Number[]',
@@ -160,7 +108,7 @@ r.DeclareType('ArrayInt', 'wxArrayInt', 'Number[]',
 	'''
 	codeFunctionBody = R'''
 	${this.cType} rtn = ${caller};
-	return Util::CreateList(rtn);
+	return ${funcInfo.ComposeReturn('Util::CreateList(rtn)')};
 	''')
 
 r.DeclareType('ArrayDouble', 'wxArrayDouble', 'Number[]',
@@ -169,7 +117,7 @@ r.DeclareType('ArrayDouble', 'wxArrayDouble', 'Number[]',
 	'''
 	codeFunctionBody = R'''
 	${this.cType} rtn = ${caller};
-	return Util::CreateList(rtn);
+	return ${funcInfo.ComposeReturn('Util::CreateList(rtn)')};
 	''')
 
 r.DeclareType('ArrayLong', 'wxArrayLong', 'Number[]',
@@ -178,7 +126,7 @@ r.DeclareType('ArrayLong', 'wxArrayLong', 'Number[]',
 	'''
 	codeFunctionBody = R'''
 	${this.cType} rtn = ${caller};
-	return Util::CreateList(rtn);
+	return ${funcInfo.ComposeReturn('Util::CreateList(rtn)')};
 	''')
 
 r.DeclareType('const_PointList_p', 'wxPointList', 'wxPoint[]', 'wx.Point',
@@ -198,7 +146,7 @@ r.DeclareType('TreeItemData_p', 'const Value&', 'Any',
 	codeFunctionBody = R'''
 	TreeItemData* rtn = dynamic_cast<TreeItemData*>(${caller});
 	if (!rtn) return Value::nil();
-	return rtn->GetValue().Reference();
+	return ${funcInfo.ComposeReturn('rtn->GetValue().Reference()')};
 	'''
 	)
 
@@ -213,7 +161,7 @@ r.DeclareType('ClientData_p', 'const Value&', 'Any',
 	codeFunctionBody = R'''
 	ClientData* rtn = dynamic_cast<ClientData*>(${caller});
 	if (!rtn) return Value::nil();
-	return rtn->GetValue().Reference();
+	return ${funcInfo.ComposeReturn('rtn->GetValue().Reference()')};
 	'''
 	)
 
@@ -697,7 +645,7 @@ Gurax_ImplementMethodEx(wx${className}, ${funcInfo.name}_gurax, processor_gurax,
 	pEntity_gurax->${funcInfo.ComposeCaller()};
 	return valueThis_gurax.Reference();
 	${else}
-	${funcInfo.GetTypeInfo().ComposeFunctionBody('pEntity_gurax->' + funcInfo.ComposeCaller())}
+	${funcInfo.GetTypeInfo().ComposeFunctionBody(funcInfo, 'pEntity_gurax->' + funcInfo.ComposeCaller())}
 	${end}
 }
 '''
@@ -731,7 +679,7 @@ Gurax_ImplementClassMethodEx(wx${className}, ${funcInfo.name}_gurax, processor_g
 	wx${className}::${funcInfo.ComposeCaller()};
 	return valueThis_gurax.Reference();
 	${else}
-	${funcInfo.GetTypeInfo().ComposeFunctionBody('wx' + className + '::' + funcInfo.ComposeCaller())}
+	${funcInfo.GetTypeInfo().ComposeFunctionBody(funcInfo, 'wx' + className + '::' + funcInfo.ComposeCaller())}
 	${end}
 }
 '''
@@ -848,7 +796,7 @@ Gurax_ImplementFunctionEx(${funcInfo.name}_gurax, processor_gurax, argument_gura
 	${if (funcInfo.tmplFunctionBody)}
 	${funcInfo.tmplFunctionBody.Eval()}
 	${else}
-	${funcInfo.GetTypeInfo().ComposeFunctionBody(funcInfo.ComposeCaller('wx'))}
+	${funcInfo.GetTypeInfo().ComposeFunctionBody(funcInfo, funcInfo.ComposeCaller('wx'))}
 	${end}
 }
 
@@ -1474,7 +1422,7 @@ r.DeclareType('Object_p', 'const Value&', 'Any',
 	codeFunctionBody = R'''
 	ClientObject* rtn = dynamic_cast<ClientObject*>(${caller});
 	if (!rtn) return Value::nil();
-	return rtn->GetValue().Reference();
+	return ${funcInfo.ComposeReturn('rtn->GetValue().Reference()')};
 	'''
 	)
 
