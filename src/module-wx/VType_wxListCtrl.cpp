@@ -1371,11 +1371,12 @@ Gurax_ImplementMethodEx(wxListCtrl, SetImageList_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// wx.ListCtrl#SetItem(args* as Any)
+// wx.ListCtrl#SetItem(args* as Any) {block?}
 Gurax_DeclareMethodAlias(wxListCtrl, SetItem_gurax, "SetItem")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 }
 
 Gurax_ImplementMethodEx(wxListCtrl, SetItem_gurax, processor_gurax, argument_gurax)
@@ -1401,7 +1402,7 @@ Gurax_ImplementMethodEx(wxListCtrl, SetItem_gurax, processor_gurax, argument_gur
 		ArgPicker args(*pArgument);
 		wxListItem& info = args.Pick<Value_wxListItem>().GetEntity();
 		bool rtn = pEntity_gurax->SetItem(info);
-		return new Value_Bool(rtn);
+		return pArgument->ReturnValue(processor_gurax, new Value_Bool(rtn));
 	} while (0);
 	Error::ClearIssuedFlag();
 	// SetItem(index as long, column as int, label as const_String_r, imageId as int = -1) as long
@@ -1423,7 +1424,7 @@ Gurax_ImplementMethodEx(wxListCtrl, SetItem_gurax, processor_gurax, argument_gur
 		const char* label = args.PickString();
 		int imageId = args.IsValid()? args.PickNumber<int>() : -1;
 		long rtn = pEntity_gurax->SetItem(index, column, label, imageId);
-		return new Value_Number(rtn);
+		return pArgument->ReturnValue(processor_gurax, new Value_Number(rtn));
 	} while (0);
 	return Value::nil();
 }

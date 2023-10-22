@@ -5,8 +5,8 @@ TreeCtrl = Class(Control) {
 	@include['wx/treectrl.h']	
 	__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize,
 		style as long = wxTR_DEFAULT_STYLE, validator as const_Validator_r = wxDefaultValidator, name as String = wxTreeCtrlNameStr)
-	AddRoot(text as const_String_r, image as int = -1, selImage as int = -1, data? as TreeItemData_p) as TreeItemId
-	AppendItem(parent as const_TreeItemId_r, text as const_String_r, image as int = -1, selImage as int = -1, data? as TreeItemData_p) as TreeItemId
+	AddRoot(text as const_String_r, image as int = -1, selImage as int = -1, data? as TreeItemData_p) {block?} as TreeItemId
+	AppendItem(parent as const_TreeItemId_r, text as const_String_r, image as int = -1, selImage as int = -1, data? as TreeItemData_p) {block?} as TreeItemId
 	//AssignButtonsImageList(imageList as ImageList_p) as void
 	AssignImageList(imageList as ImageList_p) as void
 	AssignStateImageList(imageList as ImageList_p) as void
@@ -72,16 +72,16 @@ TreeCtrl = Class(Control) {
 		wxTreeItemId rtn = pEntity_gurax->HitTest(point, flags);
 		return Value_Tuple::Create(new Value_wxTreeItemId(rtn), new Value_Number(flags));
 		'''
-	InsertItem(parent as const_TreeItemId_r, pos as any, text as const_String_r, image as int = -1, selImage as int = -1, data? as TreeItemData_p) as TreeItemId = \
+	InsertItem(parent as const_TreeItemId_r, pos as any, text as const_String_r, image as int = -1, selImage as int = -1, data? as TreeItemData_p) {block?} as TreeItemId = \
 		R'''
 		if (pos.IsType(VTYPE_wxTreeItemId)) {
 			//InsertItem(parent as const_TreeItemId_r, previous as const_TreeItemId_r, text as const_String_r, image as int = -1, selImage as int = -1, data as TreeItemData_p = NULL) as TreeItemId
 			wxTreeItemId rtn = pEntity_gurax->InsertItem(parent, Value_wxTreeItemId::GetEntity(pos), text, image, selImage, new TreeItemData(data.Reference()));
-			return new Value_wxTreeItemId(rtn);
+			return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(rtn));
 		} else if (pos.IsType(VTYPE_Number)) {
 			//InsertItem(parent as const_TreeItemId_r, pos as size_t, text as const_String_r, image as int = -1, selImage as int = -1, data as TreeItemData_p = NULL) as TreeItemId
 			wxTreeItemId rtn = pEntity_gurax->InsertItem(parent, Value_Number::GetNumber<size_t>(pos), text, image, selImage, new TreeItemData(data.Reference()));
-			return new Value_wxTreeItemId(rtn);
+			return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(rtn));
 		}
 		Error::Issue(ErrorType::TypeError, "");
 		return Value::nil();

@@ -1136,11 +1136,11 @@ Gurax_ImplementMethodEx(wxTreeCtrl, InsertItem_gurax, processor_gurax, argument_
 	if (pos.IsType(VTYPE_wxTreeItemId)) {
 		//InsertItem(parent as const_TreeItemId_r, previous as const_TreeItemId_r, text as const_String_r, image as int = -1, selImage as int = -1, data as TreeItemData_p = NULL) as TreeItemId
 		wxTreeItemId rtn = pEntity_gurax->InsertItem(parent, Value_wxTreeItemId::GetEntity(pos), text, image, selImage, new TreeItemData(data.Reference()));
-		return new Value_wxTreeItemId(rtn);
+		return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(rtn));
 	} else if (pos.IsType(VTYPE_Number)) {
 		//InsertItem(parent as const_TreeItemId_r, pos as size_t, text as const_String_r, image as int = -1, selImage as int = -1, data as TreeItemData_p = NULL) as TreeItemId
 		wxTreeItemId rtn = pEntity_gurax->InsertItem(parent, Value_Number::GetNumber<size_t>(pos), text, image, selImage, new TreeItemData(data.Reference()));
-		return new Value_wxTreeItemId(rtn);
+		return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(rtn));
 	}
 	Error::Issue(ErrorType::TypeError, "");
 	return Value::nil();
