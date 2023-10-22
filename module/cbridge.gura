@@ -240,13 +240,15 @@ FuncInfo = class {
 	type as Symbol
 	operator as Operator
 	helpInfoTbl[] as HelpInfo
+	hasBlockFlag as Bool
 	__init__(r as Renderer, moduleName as String, name as String, nameOnCall:nil as String, argInfoTbl[] as ArgInfo, typeName as String, codeFunctionBody:nil as String,
-			virtualFlag as Bool, pureFlag as Bool, returnThisFlag as Bool, returnNilFlag as Bool, constFlag as Bool, staticFlag as Bool, mapFlag as Bool, type as Symbol, operator? as Operator, helpInfoTbl[] as HelpInfo = []) = {
+			virtualFlag as Bool, pureFlag as Bool, returnThisFlag as Bool, returnNilFlag as Bool, constFlag as Bool, staticFlag as Bool, mapFlag as Bool, type as Symbol, operator? as Operator, helpInfoTbl[] as HelpInfo = [],
+			hasBlockFlag as Bool = false) = {
 		this.r = r, this.moduleName = moduleName, this.name = name, this.nameOnCall = nameOnCall
 		this.argInfoTbl = argInfoTbl, this.typeName = typeName
 		this.virtualFlag = virtualFlag, this.pureFlag = pureFlag, this.returnThisFlag = returnThisFlag, this.returnNilFlag = returnNilFlag, this.constFlag = constFlag
 		this.staticFlag = staticFlag, this.mapFlag = mapFlag
-		this.type = type, this.operator = operator, this.helpInfoTbl = helpInfoTbl
+		this.type = type, this.operator = operator, this.helpInfoTbl = helpInfoTbl, this.hasBlockFlag = hasBlockFlag
 		if (codeFunctionBody) { this.tmplFunctionBody = Template().Parse(codeFunctionBody) }
 	}
 	GetTypeInfo() = {
@@ -262,8 +264,9 @@ FuncInfo = class {
 		typeInfo = this.GetTypeInfo()
 		Format('%s %s%s(%s)%s', typeInfo.cType, prefix, this.nameOnCall || this.name, this.ComposeArgsCDecl(), cond(this.constFlag, ' const', ''))
 	}
+	HasBlock() = this.hasBlockFlag || this.GetTypeInfo().blockOccurFlag
 	ToString() = Format('%s.%s(%s)%s%s', this.moduleName, this.name, this.argInfoTbl:*ToString().Join(', '),
-		cond(this.mapFlag, ':map', ''), cond(this.GetTypeInfo().blockOccurFlag, ' {block?}', ''))
+		cond(this.mapFlag, ':map', ''), cond(this.HasBlock(), ' {block?}', ''))
 }
 
 CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
@@ -318,6 +321,7 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 	}
 	type = `function
 	operator = nil
+	hasBlockFlag = false
 	if (expr.IsCaller()) {
 		!expr.car.IsIdentifier() && ErrorDone(expr, 'Identifier is expected')
 		if (expr.attr.IsSet(`void)) { typeName = 'void' }
@@ -328,6 +332,19 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 		if (expr.attr.IsSet(`const)) { constFlag = true }
 		if (expr.attr.IsSet(`static)) { staticFlag = true }
 		if (expr.attr.IsSet(`map)) { mapFlag = true }
+		if (expr.block) {
+			exprBlockElems = expr.block.EachElem():list
+			if (exprBlockElems.len != 1) {
+				ErrorDone(expr, 'invalid block declarations')
+			}
+			exprBlockElem = exprBlockElems.first
+			if (exprBlockElem.IsUnaryOp(`?)) {
+				hasBlockFlag = true
+				exprBlockElem = exprBlockElem.child
+			} else {
+				ErrorDone(expr, 'invalid block declarations')
+			}
+		}
 		argInfoTbl = CreateArgInfoTbl(r, expr)
 		if (typeName.IsEmpty()) { typeName = 'any' }
 		symbolName = expr.car.symbolName
@@ -373,7 +390,7 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 		ErrorDone(expr, 'Caller is expected')
 	}
 	FuncInfo(r, moduleName, symbolName, symbolNameOnCall, argInfoTbl, typeName, codeFunctionBody, virtualFlag, pureFlag, returnThisFlag, returnNilFlag, constFlag,
-		staticFlag, mapFlag, type, operator, helpInfoTbl)
+		staticFlag, mapFlag, type, operator, helpInfoTbl, hasBlockFlag)
 }
 
 tmplFunctionImplementation = tR'''
@@ -382,7 +399,7 @@ Gurax_DeclareFunctionAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 {
 	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
-	${if (funcInfo.GetTypeInfo().blockOccurFlag)}
+	${if (funcInfo.HasBlock())}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	${end}
 	${funcInfo.helpInfoTbl.Each {|helpInfo|}}

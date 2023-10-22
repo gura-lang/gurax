@@ -1081,11 +1081,12 @@ Gurax_ImplementMethodEx(wxListCtrl, InsertColumn_gurax, processor_gurax, argumen
 	return Value::nil();
 }
 
-// wx.ListCtrl#InsertItem(args* as Any)
+// wx.ListCtrl#InsertItem(args* as Any) {block?}
 Gurax_DeclareMethodAlias(wxListCtrl, InsertItem_gurax, "InsertItem")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 }
 
 Gurax_ImplementMethodEx(wxListCtrl, InsertItem_gurax, processor_gurax, argument_gurax)

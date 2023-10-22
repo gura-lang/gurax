@@ -142,7 +142,7 @@ ListCtrl = Class(Control) {
 		} while (0);
 		return Value::nil();
 		'''
-	InsertItem(args* as any) = \
+	InsertItem(args* as any) {block?} = \
 		R'''
 		// InsertItem(info as ListItem_r) as long
 		do {

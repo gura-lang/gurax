@@ -660,12 +660,12 @@ Gurax_EndModuleScope(wx)
 tmplMethodImplementation = tR'''
 // ${Format('%s.%s#%s(%s)%s%s', funcInfo.moduleName, className, funcInfo.name,
 	funcInfo.argInfoTbl:*ToString().Join(', '), cond(funcInfo.mapFlag, ':map', ''),
-	cond(funcInfo.GetTypeInfo().blockOccurFlag, ' {block?}', ''))}
+	cond(funcInfo.HasBlock(), ' {block?}', ''))}
 Gurax_DeclareMethodAlias(wx${className}, ${funcInfo.name}_gurax, "${funcInfo.name}")
 {
 	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
-	${if (funcInfo.GetTypeInfo().blockOccurFlag)}
+	${if (funcInfo.HasBlock())}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	${end}
 	${funcInfo.helpInfoTbl.Each {|helpInfo|}}
@@ -705,7 +705,7 @@ Gurax_ImplementMethodEx(wx${className}, ${funcInfo.name}_gurax, processor_gurax,
 tmplClassMethodImplementation = tR'''
 // ${Format('%s.%s.%s(%s)%s%s', funcInfo.moduleName, className, funcInfo.name,
 	funcInfo.argInfoTbl:*ToString().Join(', '), cond(funcInfo.mapFlag, ':map', ''),
-	cond(funcInfo.GetTypeInfo().blockOccurFlag, ' {block?}', ''))}
+	cond(funcInfo.HasBlock(), ' {block?}', ''))}
 Gurax_DeclareClassMethodAlias(wx${className}, ${funcInfo.name}_gurax, "${funcInfo.name}")
 {
 	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
@@ -827,7 +827,7 @@ Gurax_DeclareFunctionAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 {
 	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
-	${if (funcInfo.GetTypeInfo().blockOccurFlag)}
+	${if (funcInfo.HasBlock())}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	${end}
 	${funcInfo.helpInfoTbl.Each {|helpInfo|}}

@@ -15,15 +15,16 @@ FrameMain = class(wx.Frame) {
 }
 
 ComboPopup_ListView = class(wx.ComboPopup) {
-	m_value as Number
+	idxSelected as Number
 	listView as wx.ListView
 	// Initialize member variables
 	Init() = {
-		this.m_value = -1
+		this.idxSelected = -1
 	}
 	// Create popup control
 	Create(parent as wx.Window) = {
 		this.listView = wx.ListView(parent, 1, wx.Point(0,0), wx.DefaultSize)
+		this.listView.Bind(wx.EVT_LEFT_UP, this.OnLeftUp)
 		true
 	}
 	// Return pointer to the created control
@@ -37,20 +38,16 @@ ComboPopup_ListView = class(wx.ComboPopup) {
 	}
 	// Get list selection as a string
 	GetStringValue() = {
-		if (this.m_value >= 0) {
-			return(this.listView.GetItemText(m_value))
-		}
-		''
+		cond(this.idxSelected >= 0, this.listView.GetItemText(this.idxSelected), '')
 	}
 	// Do mouse hot-tracking (which is typical in list popups)
 	OnMouseMove(event as wx.MouseEvent) = {
 		// TODO: Move selection to cursor
 	}
 	// On mouse left up, set the value and close the popup
-	OnMouseClick(event as wx.MouseEvent) = {
-		//m_value = wxListView::GetFirstSelected();
-		// TODO: Send event as well
-		//Dismiss();
+	OnLeftUp(event as wx.MouseEvent) = {
+		this.idxSelected = this.listView.GetFirstSelected()
+		this.Dismiss()
 	}
 };
 
@@ -68,9 +65,9 @@ PanelMain = class(wx.Panel) {
 					ctrlPopup.AppendColumn('Column1')
 					ctrlPopup.AppendColumn('Column2')
 					ctrlPopup.AppendColumn('Column3')
-					ctrlPopup.InsertItem(0, 'item1')
-					ctrlPopup.InsertItem(0, 'item2')
-					ctrlPopup.InsertItem(0, 'item3')
+					ctrlPopup.InsertItem(ctrlPopup.GetItemCount(), 'item1')
+					ctrlPopup.InsertItem(ctrlPopup.GetItemCount(), 'item2')
+					ctrlPopup.InsertItem(ctrlPopup.GetItemCount(), 'item3')
 				}
 			}
 		}
