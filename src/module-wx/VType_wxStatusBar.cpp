@@ -167,8 +167,7 @@ Gurax_ImplementMethodEx(wxStatusBar, GetField_gurax, processor_gurax, argument_g
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int n = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxStatusBarPane(
-		pEntity_gurax->GetField(n)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxStatusBarPane(pEntity_gurax->GetField(n)));
 }
 
 // wx.StatusBar#GetBorders() {block?}
@@ -185,8 +184,7 @@ Gurax_ImplementMethodEx(wxStatusBar, GetBorders_gurax, processor_gurax, argument
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->GetBorders()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->GetBorders()));
 }
 
 // wx.StatusBar#GetStatusText(i? as Number)

@@ -62,8 +62,7 @@ Gurax_ImplementMethodEx(wxSocketEvent, GetSocket_gurax, processor_gurax, argumen
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSocketBase(
-		pEntity_gurax->GetSocket()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSocketBase(pEntity_gurax->GetSocket()));
 }
 
 //-----------------------------------------------------------------------------

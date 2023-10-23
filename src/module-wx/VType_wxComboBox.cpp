@@ -1223,8 +1223,7 @@ Gurax_ImplementMethodEx(wxComboBox, GetMargins_gurax, processor_gurax, argument_
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->GetMargins()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(pEntity_gurax->GetMargins()));
 }
 
 // wx.ComboBox#Undo()

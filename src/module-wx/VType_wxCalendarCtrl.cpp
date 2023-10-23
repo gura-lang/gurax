@@ -142,8 +142,7 @@ Gurax_ImplementMethodEx(wxCalendarCtrl, GetAttr_gurax, processor_gurax, argument
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	size_t day = args_gurax.PickNumber<size_t>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxCalendarDateAttr(
-		*pEntity_gurax->GetAttr(day)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxCalendarDateAttr(*pEntity_gurax->GetAttr(day)));
 }
 
 // wx.CalendarCtrl#GetDate() {block?}
@@ -160,8 +159,7 @@ Gurax_ImplementMethodEx(wxCalendarCtrl, GetDate_gurax, processor_gurax, argument
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateTime(
-		pEntity_gurax->GetDate()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateTime(pEntity_gurax->GetDate()));
 }
 
 // wx.CalendarCtrl#GetHeaderColourBg() {block?}
@@ -178,8 +176,7 @@ Gurax_ImplementMethodEx(wxCalendarCtrl, GetHeaderColourBg_gurax, processor_gurax
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetHeaderColourBg()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetHeaderColourBg()));
 }
 
 // wx.CalendarCtrl#GetHeaderColourFg() {block?}
@@ -196,8 +193,7 @@ Gurax_ImplementMethodEx(wxCalendarCtrl, GetHeaderColourFg_gurax, processor_gurax
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetHeaderColourFg()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetHeaderColourFg()));
 }
 
 // wx.CalendarCtrl#GetHighlightColourBg() {block?}
@@ -214,8 +210,7 @@ Gurax_ImplementMethodEx(wxCalendarCtrl, GetHighlightColourBg_gurax, processor_gu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetHighlightColourBg()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetHighlightColourBg()));
 }
 
 // wx.CalendarCtrl#GetHighlightColourFg() {block?}
@@ -232,8 +227,7 @@ Gurax_ImplementMethodEx(wxCalendarCtrl, GetHighlightColourFg_gurax, processor_gu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetHighlightColourFg()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetHighlightColourFg()));
 }
 
 // wx.CalendarCtrl#GetHolidayColourBg() {block?}
@@ -250,8 +244,7 @@ Gurax_ImplementMethodEx(wxCalendarCtrl, GetHolidayColourBg_gurax, processor_gura
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetHolidayColourBg()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetHolidayColourBg()));
 }
 
 // wx.CalendarCtrl#GetHolidayColourFg() {block?}
@@ -268,8 +261,7 @@ Gurax_ImplementMethodEx(wxCalendarCtrl, GetHolidayColourFg_gurax, processor_gura
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetHolidayColourFg()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetHolidayColourFg()));
 }
 
 // wx.CalendarCtrl#ResetAttr(day as Number)

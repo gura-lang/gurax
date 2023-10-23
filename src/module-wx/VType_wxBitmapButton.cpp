@@ -101,8 +101,7 @@ Gurax_ImplementClassMethodEx(wxBitmapButton, NewCloseButton_gurax, processor_gur
 	wxWindow* parent = value_parent.GetEntityPtr();
 	wxWindowID winid = args_gurax.PickNumber<wxWindowID>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmapButton(
-		wxBitmapButton::NewCloseButton(parent, winid)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmapButton(wxBitmapButton::NewCloseButton(parent, winid)));
 }
 
 //-----------------------------------------------------------------------------

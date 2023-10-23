@@ -104,8 +104,7 @@ Gurax_ImplementMethodEx(wxPropertyGridManager, AddPage_gurax, processor_gurax, a
 	const wxBitmap& bmp = args_gurax.IsValid()? args_gurax.Pick<Value_wxBitmap>().GetEntity() : wxPG_NULL_BITMAP;
 	wxPropertyGridPage* pageObj = args_gurax.IsValid()? args_gurax.Pick<Value_wxPropertyGridPage>().GetEntityPtr() : nullptr;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPropertyGridPage(
-		pEntity_gurax->AddPage(label, bmp, pageObj)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPropertyGridPage(pEntity_gurax->AddPage(label, bmp, pageObj)));
 }
 
 // wx.PropertyGridManager#Clear()
@@ -277,8 +276,7 @@ Gurax_ImplementMethodEx(wxPropertyGridManager, GetGrid_gurax, processor_gurax, a
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPropertyGrid(
-		pEntity_gurax->GetGrid()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPropertyGrid(pEntity_gurax->GetGrid()));
 }
 
 // wx.PropertyGridManager#GetCurrentPage() {block?}
@@ -295,8 +293,7 @@ Gurax_ImplementMethodEx(wxPropertyGridManager, GetCurrentPage_gurax, processor_g
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPropertyGridPage(
-		pEntity_gurax->GetCurrentPage()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPropertyGridPage(pEntity_gurax->GetCurrentPage()));
 }
 
 // wx.PropertyGridManager#GetPage(ind as Number) {block?}
@@ -317,8 +314,7 @@ Gurax_ImplementMethodEx(wxPropertyGridManager, GetPage_gurax, processor_gurax, a
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	unsigned int ind = args_gurax.PickNumber<unsigned int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPropertyGridPage(
-		pEntity_gurax->GetPage(ind)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPropertyGridPage(pEntity_gurax->GetPage(ind)));
 }
 
 // wx.PropertyGridManager#GetPageByName(name as String)
@@ -398,8 +394,7 @@ Gurax_ImplementMethodEx(wxPropertyGridManager, GetPageRoot_gurax, processor_gura
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int index = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGProperty(
-		*pEntity_gurax->GetPageRoot(index)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGProperty(*pEntity_gurax->GetPageRoot(index)));
 }
 
 // wx.PropertyGridManager#GetSelectedPage()
@@ -433,8 +428,7 @@ Gurax_ImplementMethodEx(wxPropertyGridManager, GetSelectedProperty_gurax, proces
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGProperty(
-		*pEntity_gurax->GetSelectedProperty()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGProperty(*pEntity_gurax->GetSelectedProperty()));
 }
 
 // wx.PropertyGridManager#GetSelection() {block?}
@@ -451,8 +445,7 @@ Gurax_ImplementMethodEx(wxPropertyGridManager, GetSelection_gurax, processor_gur
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGProperty(
-		*pEntity_gurax->GetSelection()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGProperty(*pEntity_gurax->GetSelection()));
 }
 
 // wx.PropertyGridManager#GetToolBar() {block?}
@@ -469,8 +462,7 @@ Gurax_ImplementMethodEx(wxPropertyGridManager, GetToolBar_gurax, processor_gurax
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBar(
-		pEntity_gurax->GetToolBar()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBar(pEntity_gurax->GetToolBar()));
 }
 
 // wx.PropertyGridManager#InsertPage(index as Number, label as String, bmp? as wx.Bitmap, pageObj? as wx.PropertyGridPage) {block?}
@@ -497,8 +489,7 @@ Gurax_ImplementMethodEx(wxPropertyGridManager, InsertPage_gurax, processor_gurax
 	const wxBitmap& bmp = args_gurax.IsValid()? args_gurax.Pick<Value_wxBitmap>().GetEntity() : wxNullBitmap;
 	wxPropertyGridPage* pageObj = args_gurax.IsValid()? args_gurax.Pick<Value_wxPropertyGridPage>().GetEntityPtr() : nullptr;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPropertyGridPage(
-		pEntity_gurax->InsertPage(index, label, bmp, pageObj)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPropertyGridPage(pEntity_gurax->InsertPage(index, label, bmp, pageObj)));
 }
 
 // wx.PropertyGridManager#IsAnyModified()

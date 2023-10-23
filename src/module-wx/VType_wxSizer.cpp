@@ -204,8 +204,7 @@ Gurax_ImplementMethodEx(wxSizer, AddSpacer_gurax, processor_gurax, argument_gura
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int size = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(
-		*pEntity_gurax->AddSpacer(size)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*pEntity_gurax->AddSpacer(size)));
 }
 
 // wx.Sizer#AddStretchSpacer(prop? as Number) {block?}
@@ -227,8 +226,7 @@ Gurax_ImplementMethodEx(wxSizer, AddStretchSpacer_gurax, processor_gurax, argume
 	bool prop_validFlag = args_gurax.IsValid();
 	int prop = prop_validFlag? args_gurax.PickNumber<int>() : 1;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(
-		*pEntity_gurax->AddStretchSpacer(prop)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*pEntity_gurax->AddStretchSpacer(prop)));
 }
 
 // wx.Sizer#CalcMin() {block?}
@@ -245,8 +243,7 @@ Gurax_ImplementMethodEx(wxSizer, CalcMin_gurax, processor_gurax, argument_gurax)
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->CalcMin()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->CalcMin()));
 }
 
 // wx.Sizer#Clear(delete_windows? as Bool)
@@ -289,8 +286,7 @@ Gurax_ImplementMethodEx(wxSizer, ComputeFittingClientSize_gurax, processor_gurax
 	Value_wxWindow& value_window = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* window = value_window.GetEntityPtr();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->ComputeFittingClientSize(window)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->ComputeFittingClientSize(window)));
 }
 
 // wx.Sizer#ComputeFittingWindowSize(window as wx.Window) {block?}
@@ -312,8 +308,7 @@ Gurax_ImplementMethodEx(wxSizer, ComputeFittingWindowSize_gurax, processor_gurax
 	Value_wxWindow& value_window = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* window = value_window.GetEntityPtr();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->ComputeFittingWindowSize(window)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->ComputeFittingWindowSize(window)));
 }
 
 // wx.Sizer#Detach(window as wx.Window)
@@ -357,8 +352,7 @@ Gurax_ImplementMethodEx(wxSizer, Fit_gurax, processor_gurax, argument_gurax)
 	Value_wxWindow& value_window = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* window = value_window.GetEntityPtr();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->Fit(window)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->Fit(window)));
 }
 
 // wx.Sizer#FitInside(window as wx.Window)
@@ -422,8 +416,7 @@ Gurax_ImplementMethodEx(wxSizer, GetContainingWindow_gurax, processor_gurax, arg
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
-		pEntity_gurax->GetContainingWindow()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(pEntity_gurax->GetContainingWindow()));
 }
 
 // wx.Sizer#SetContainingWindow(window as wx.Window)
@@ -486,8 +479,7 @@ Gurax_ImplementMethodEx(wxSizer, GetItem_gurax, processor_gurax, argument_gurax)
 	wxWindow* window = value_window.GetEntityPtr();
 	bool recursive = args_gurax.IsValid()? args_gurax.PickBool() : false;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(
-		*pEntity_gurax->GetItem(window, recursive)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*pEntity_gurax->GetItem(window, recursive)));
 }
 
 // wx.Sizer#GetItemById(id as Number, recursive? as Bool) {block?}
@@ -510,8 +502,7 @@ Gurax_ImplementMethodEx(wxSizer, GetItemById_gurax, processor_gurax, argument_gu
 	int id = args_gurax.PickNumber<int>();
 	bool recursive = args_gurax.IsValid()? args_gurax.PickBool() : false;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(
-		*pEntity_gurax->GetItemById(id, recursive)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*pEntity_gurax->GetItemById(id, recursive)));
 }
 
 // wx.Sizer#GetMinSize() {block?}
@@ -528,8 +519,7 @@ Gurax_ImplementMethodEx(wxSizer, GetMinSize_gurax, processor_gurax, argument_gur
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->GetMinSize()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->GetMinSize()));
 }
 
 // wx.Sizer#GetPosition() {block?}
@@ -546,8 +536,7 @@ Gurax_ImplementMethodEx(wxSizer, GetPosition_gurax, processor_gurax, argument_gu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->GetPosition()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(pEntity_gurax->GetPosition()));
 }
 
 // wx.Sizer#GetSize() {block?}
@@ -564,8 +553,7 @@ Gurax_ImplementMethodEx(wxSizer, GetSize_gurax, processor_gurax, argument_gurax)
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->GetSize()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->GetSize()));
 }
 
 // wx.Sizer#Hide(window as wx.Window, recursive? as Bool)
@@ -684,8 +672,7 @@ Gurax_ImplementMethodEx(wxSizer, InsertSpacer_gurax, processor_gurax, argument_g
 	size_t index = args_gurax.PickNumber<size_t>();
 	int size = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(
-		*pEntity_gurax->InsertSpacer(index, size)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*pEntity_gurax->InsertSpacer(index, size)));
 }
 
 // wx.Sizer#InsertStretchSpacer(index as Number, prop? as Number) {block?}
@@ -709,8 +696,7 @@ Gurax_ImplementMethodEx(wxSizer, InsertStretchSpacer_gurax, processor_gurax, arg
 	bool prop_validFlag = args_gurax.IsValid();
 	int prop = prop_validFlag? args_gurax.PickNumber<int>() : 1;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(
-		*pEntity_gurax->InsertStretchSpacer(index, prop)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*pEntity_gurax->InsertStretchSpacer(index, prop)));
 }
 
 // wx.Sizer#IsEmpty()
@@ -791,8 +777,7 @@ Gurax_ImplementMethodEx(wxSizer, Prepend_gurax, processor_gurax, argument_gurax)
 	Value_wxSizerFlags& value_flags = args_gurax.Pick<Value_wxSizerFlags>();
 	const wxSizerFlags& flags = value_flags.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(
-		*pEntity_gurax->Prepend(window, flags)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*pEntity_gurax->Prepend(window, flags)));
 }
 
 // wx.Sizer#PrependSpacer(size as Number) {block?}
@@ -813,8 +798,7 @@ Gurax_ImplementMethodEx(wxSizer, PrependSpacer_gurax, processor_gurax, argument_
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int size = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(
-		*pEntity_gurax->PrependSpacer(size)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*pEntity_gurax->PrependSpacer(size)));
 }
 
 // wx.Sizer#PrependStretchSpacer(prop? as Number) {block?}
@@ -836,8 +820,7 @@ Gurax_ImplementMethodEx(wxSizer, PrependStretchSpacer_gurax, processor_gurax, ar
 	bool prop_validFlag = args_gurax.IsValid();
 	int prop = prop_validFlag? args_gurax.PickNumber<int>() : 1;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(
-		*pEntity_gurax->PrependStretchSpacer(prop)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*pEntity_gurax->PrependStretchSpacer(prop)));
 }
 
 // wx.Sizer#RecalcSizes()

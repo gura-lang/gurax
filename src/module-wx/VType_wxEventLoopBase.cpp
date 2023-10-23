@@ -355,8 +355,7 @@ Gurax_DeclareClassMethodAlias(wxEventLoopBase, GetActive_gurax, "GetActive")
 Gurax_ImplementClassMethodEx(wxEventLoopBase, GetActive_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxEventLoopBase(
-		wxEventLoopBase::GetActive()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxEventLoopBase(wxEventLoopBase::GetActive()));
 }
 
 // wx.EventLoopBase.SetActive(loop as wx.EventLoopBase)

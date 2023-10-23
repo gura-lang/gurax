@@ -153,8 +153,7 @@ Gurax_ImplementMethodEx(wxPropertySheetDialog, CreateBookCtrl_gurax, processor_g
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBookCtrlBase(
-		pEntity_gurax->CreateBookCtrl()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBookCtrlBase(pEntity_gurax->CreateBookCtrl()));
 }
 
 // wx.PropertySheetDialog#CreateButtons(flags? as Number)
@@ -193,8 +192,7 @@ Gurax_ImplementMethodEx(wxPropertySheetDialog, GetBookCtrl_gurax, processor_gura
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBookCtrlBase(
-		pEntity_gurax->GetBookCtrl()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBookCtrlBase(pEntity_gurax->GetBookCtrl()));
 }
 
 // wx.PropertySheetDialog#GetInnerSizer() {block?}
@@ -211,8 +209,7 @@ Gurax_ImplementMethodEx(wxPropertySheetDialog, GetInnerSizer_gurax, processor_gu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizer(
-		pEntity_gurax->GetInnerSizer()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizer(pEntity_gurax->GetInnerSizer()));
 }
 
 // wx.PropertySheetDialog#SetInnerSizer(sizer as wx.Sizer)
@@ -409,8 +406,7 @@ Gurax_ImplementMethodEx(wxPropertySheetDialog, GetContentWindow_gurax, processor
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
-		pEntity_gurax->GetContentWindow()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(pEntity_gurax->GetContentWindow()));
 }
 
 //-----------------------------------------------------------------------------

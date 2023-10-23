@@ -213,8 +213,7 @@ Gurax_ImplementMethodEx(wxRadioBox, GetItemToolTip_gurax, processor_gurax, argum
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	unsigned int item = args_gurax.PickNumber<unsigned int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolTip(
-		*pEntity_gurax->GetItemToolTip(item)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolTip(*pEntity_gurax->GetItemToolTip(item)));
 }
 
 // wx.RadioBox#GetRowCount()

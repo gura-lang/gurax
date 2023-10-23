@@ -269,8 +269,7 @@ Gurax_ImplementMethodEx(wxFont, GetPixelSize_gurax, processor_gurax, argument_gu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->GetPixelSize()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->GetPixelSize()));
 }
 
 // wx.Font#GetStyle()
@@ -389,8 +388,7 @@ Gurax_ImplementMethodEx(wxFont, Bold_gurax, processor_gurax, argument_gurax)
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(
-		pEntity_gurax->Bold()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(pEntity_gurax->Bold()));
 }
 
 // wx.Font#Italic() {block?}
@@ -407,8 +405,7 @@ Gurax_ImplementMethodEx(wxFont, Italic_gurax, processor_gurax, argument_gurax)
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(
-		pEntity_gurax->Italic()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(pEntity_gurax->Italic()));
 }
 
 // wx.Font#Larger() {block?}
@@ -425,8 +422,7 @@ Gurax_ImplementMethodEx(wxFont, Larger_gurax, processor_gurax, argument_gurax)
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(
-		pEntity_gurax->Larger()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(pEntity_gurax->Larger()));
 }
 
 // wx.Font#Smaller() {block?}
@@ -443,8 +439,7 @@ Gurax_ImplementMethodEx(wxFont, Smaller_gurax, processor_gurax, argument_gurax)
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(
-		pEntity_gurax->Smaller()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(pEntity_gurax->Smaller()));
 }
 
 // wx.Font#Underlined() {block?}
@@ -461,8 +456,7 @@ Gurax_ImplementMethodEx(wxFont, Underlined_gurax, processor_gurax, argument_gura
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(
-		pEntity_gurax->Underlined()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(pEntity_gurax->Underlined()));
 }
 
 // wx.Font#Strikethrough() {block?}
@@ -479,8 +473,7 @@ Gurax_ImplementMethodEx(wxFont, Strikethrough_gurax, processor_gurax, argument_g
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(
-		pEntity_gurax->Strikethrough()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(pEntity_gurax->Strikethrough()));
 }
 
 // wx.Font#MakeBold()
@@ -603,8 +596,7 @@ Gurax_ImplementMethodEx(wxFont, Scale_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	float x = args_gurax.PickNumber<float>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(
-		pEntity_gurax->Scale(x)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(pEntity_gurax->Scale(x)));
 }
 
 // wx.Font#Scaled(x as Number) {block?}
@@ -625,8 +617,7 @@ Gurax_ImplementMethodEx(wxFont, Scaled_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	float x = args_gurax.PickNumber<float>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(
-		pEntity_gurax->Scaled(x)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(pEntity_gurax->Scaled(x)));
 }
 
 // wx.Font#SetEncoding(encoding as Number)

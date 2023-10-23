@@ -275,8 +275,7 @@ Gurax_ImplementMethodEx(wxGenericDirCtrl, GetFilterListCtrl_gurax, processor_gur
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDirFilterListCtrl(
-		pEntity_gurax->GetFilterListCtrl()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDirFilterListCtrl(pEntity_gurax->GetFilterListCtrl()));
 }
 
 // wx.GenericDirCtrl#GetPath()
@@ -310,8 +309,7 @@ Gurax_ImplementMethodEx(wxGenericDirCtrl, GetRootId_gurax, processor_gurax, argu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(
-		pEntity_gurax->GetRootId()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(pEntity_gurax->GetRootId()));
 }
 
 // wx.GenericDirCtrl#GetTreeCtrl() {block?}
@@ -328,8 +326,7 @@ Gurax_ImplementMethodEx(wxGenericDirCtrl, GetTreeCtrl_gurax, processor_gurax, ar
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeCtrl(
-		pEntity_gurax->GetTreeCtrl()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeCtrl(pEntity_gurax->GetTreeCtrl()));
 }
 
 // wx.GenericDirCtrl#Init()

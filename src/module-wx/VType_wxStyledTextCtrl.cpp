@@ -389,8 +389,7 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetStyledText_gurax, processor_gurax, 
 	int startPos = args_gurax.PickNumber<int>();
 	int endPos = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMemoryBuffer(
-		pEntity_gurax->GetStyledText(startPos, endPos)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMemoryBuffer(pEntity_gurax->GetStyledText(startPos, endPos)));
 }
 
 // wx.StyledTextCtrl#CanRedo()
@@ -1639,8 +1638,7 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, StyleGetForeground_gurax, processor_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int style = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->StyleGetForeground(style)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->StyleGetForeground(style)));
 }
 
 // wx.StyledTextCtrl#StyleGetBackground(style as Number) {block?}
@@ -1661,8 +1659,7 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, StyleGetBackground_gurax, processor_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int style = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->StyleGetBackground(style)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->StyleGetBackground(style)));
 }
 
 // wx.StyledTextCtrl#StyleGetBold(style as Number)
@@ -2460,8 +2457,7 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, IndicatorGetForeground_gurax, processo
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int indic = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->IndicatorGetForeground(indic)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->IndicatorGetForeground(indic)));
 }
 
 // wx.StyledTextCtrl#IndicatorSetUnder(indic as Number, under as Bool)
@@ -2745,8 +2741,7 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetCaretLineBackground_gurax, processo
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetCaretLineBackground()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetCaretLineBackground()));
 }
 
 // wx.StyledTextCtrl#SetCaretLineBackground(back as wx.Colour)
@@ -3705,8 +3700,7 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetCaretForeground_gurax, processor_gu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetCaretForeground()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetCaretForeground()));
 }
 
 // wx.StyledTextCtrl#GetReadOnly()
@@ -7465,8 +7459,7 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetEdgeColour_gurax, processor_gurax, 
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetEdgeColour()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetEdgeColour()));
 }
 
 // wx.StyledTextCtrl#SetEdgeColour(edgeColour as wx.Colour)
@@ -8206,8 +8199,7 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetHotspotActiveForeground_gurax, proc
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetHotspotActiveForeground()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetHotspotActiveForeground()));
 }
 
 // wx.StyledTextCtrl#SetHotspotActiveBackground(useSetting as Bool, back as wx.Colour)
@@ -8248,8 +8240,7 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetHotspotActiveBackground_gurax, proc
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetHotspotActiveBackground()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetHotspotActiveBackground()));
 }
 
 // wx.StyledTextCtrl#SetHotspotActiveUnderline(underline as Bool)
@@ -11097,8 +11088,7 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetAdditionalCaretForeground_gurax, pr
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetAdditionalCaretForeground()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetAdditionalCaretForeground()));
 }
 
 // wx.StyledTextCtrl#RotateSelection()
@@ -11758,8 +11748,7 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, StyleGetFont_gurax, processor_gurax, a
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int style = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(
-		pEntity_gurax->StyleGetFont(style)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(pEntity_gurax->StyleGetFont(style)));
 }
 
 // wx.StyledTextCtrl#StyleSetFont(styleNum as Number, font as wx.Font)
@@ -11928,8 +11917,7 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, PointFromPosition_gurax, processor_gur
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int pos = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->PointFromPosition(pos)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(pEntity_gurax->PointFromPosition(pos)));
 }
 
 // wx.StyledTextCtrl#ScrollToLine(line as Number)
@@ -12234,8 +12222,7 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetLineRaw_gurax, processor_gurax, arg
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int line = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxCharBuffer(
-		pEntity_gurax->GetLineRaw(line)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxCharBuffer(pEntity_gurax->GetLineRaw(line)));
 }
 
 // wx.StyledTextCtrl#GetSelectedTextRaw() {block?}
@@ -12252,8 +12239,7 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetSelectedTextRaw_gurax, processor_gu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxCharBuffer(
-		pEntity_gurax->GetSelectedTextRaw()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxCharBuffer(pEntity_gurax->GetSelectedTextRaw()));
 }
 
 // wx.StyledTextCtrl#GetTextRangeRaw(startPos as Number, endPos as Number) {block?}
@@ -12276,8 +12262,7 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetTextRangeRaw_gurax, processor_gurax
 	int startPos = args_gurax.PickNumber<int>();
 	int endPos = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxCharBuffer(
-		pEntity_gurax->GetTextRangeRaw(startPos, endPos)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxCharBuffer(pEntity_gurax->GetTextRangeRaw(startPos, endPos)));
 }
 
 // wx.StyledTextCtrl#SetTextRaw(text as String)
@@ -12315,8 +12300,7 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetTextRaw_gurax, processor_gurax, arg
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxCharBuffer(
-		pEntity_gurax->GetTextRaw()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxCharBuffer(pEntity_gurax->GetTextRaw()));
 }
 
 // wx.StyledTextCtrl#AppendTextRaw(text as String, length? as Number)
@@ -13099,8 +13083,7 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetMargins_gurax, processor_gurax, arg
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->GetMargins()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(pEntity_gurax->GetMargins()));
 }
 
 // wx.StyledTextCtrl#SetValue(value as String)

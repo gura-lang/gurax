@@ -152,8 +152,7 @@ Gurax_ImplementMethodEx(wxAuiToolBar, GetArtProvider_gurax, processor_gurax, arg
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxAuiToolBarArt(
-		pEntity_gurax->GetArtProvider()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxAuiToolBarArt(pEntity_gurax->GetArtProvider()));
 }
 
 // wx.AuiToolBar#SetFont(font as wx.Font)
@@ -297,8 +296,7 @@ Gurax_ImplementMethodEx(wxAuiToolBar, AddLabel_gurax, processor_gurax, argument_
 	bool width_validFlag = args_gurax.IsValid();
 	int width = width_validFlag? args_gurax.PickNumber<int>() : -1;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxAuiToolBarItem(
-		*pEntity_gurax->AddLabel(tool_id, label, width)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxAuiToolBarItem(*pEntity_gurax->AddLabel(tool_id, label, width)));
 }
 
 // wx.AuiToolBar#Realize()
@@ -336,8 +334,7 @@ Gurax_ImplementMethodEx(wxAuiToolBar, FindControl_gurax, processor_gurax, argume
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int window_id = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxControl(
-		pEntity_gurax->FindControl(window_id)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxControl(pEntity_gurax->FindControl(window_id)));
 }
 
 // wx.AuiToolBar#ClearTools()
@@ -514,8 +511,7 @@ Gurax_ImplementMethodEx(wxAuiToolBar, GetToolRect_gurax, processor_gurax, argume
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int tool_id = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect(
-		pEntity_gurax->GetToolRect(tool_id)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect(pEntity_gurax->GetToolRect(tool_id)));
 }
 
 // wx.AuiToolBar#GetToolFitsByIndex(tool_id as Number)
@@ -614,8 +610,7 @@ Gurax_ImplementMethodEx(wxAuiToolBar, GetToolBitmapSize_gurax, processor_gurax, 
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->GetToolBitmapSize()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->GetToolBitmapSize()));
 }
 
 // wx.AuiToolBar#GetOverflowVisible()
@@ -1128,8 +1123,7 @@ Gurax_ImplementMethodEx(wxAuiToolBar, GetToolBitmap_gurax, processor_gurax, argu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int tool_id = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
-		pEntity_gurax->GetToolBitmap(tool_id)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(pEntity_gurax->GetToolBitmap(tool_id)));
 }
 
 // wx.AuiToolBar#SetToolBitmap(tool_id as Number, bitmap as wx.Bitmap)
@@ -1262,8 +1256,7 @@ Gurax_ImplementMethodEx(wxAuiToolBar, GetHintSize_gurax, processor_gurax, argume
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int dock_direction = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->GetHintSize(dock_direction)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->GetHintSize(dock_direction)));
 }
 
 //-----------------------------------------------------------------------------

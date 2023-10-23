@@ -147,8 +147,7 @@ Gurax_DeclareClassMethodAlias(wxLog, GetActiveTarget_gurax, "GetActiveTarget")
 Gurax_ImplementClassMethodEx(wxLog, GetActiveTarget_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxLog(
-		wxLog::GetActiveTarget()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxLog(wxLog::GetActiveTarget()));
 }
 
 // wx.Log.SetActiveTarget(logtarget as wx.Log) {block?}
@@ -165,8 +164,7 @@ Gurax_ImplementClassMethodEx(wxLog, SetActiveTarget_gurax, processor_gurax, argu
 	Value_wxLog& value_logtarget = args_gurax.Pick<Value_wxLog>();
 	wxLog* logtarget = value_logtarget.GetEntityPtr();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxLog(
-		wxLog::SetActiveTarget(logtarget)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxLog(wxLog::SetActiveTarget(logtarget)));
 }
 
 // wx.Log.SetThreadActiveTarget(logger as wx.Log) {block?}
@@ -183,8 +181,7 @@ Gurax_ImplementClassMethodEx(wxLog, SetThreadActiveTarget_gurax, processor_gurax
 	Value_wxLog& value_logger = args_gurax.Pick<Value_wxLog>();
 	wxLog* logger = value_logger.GetEntityPtr();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxLog(
-		wxLog::SetThreadActiveTarget(logger)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxLog(wxLog::SetThreadActiveTarget(logger)));
 }
 
 // wx.Log.FlushActive()

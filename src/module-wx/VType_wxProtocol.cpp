@@ -117,8 +117,7 @@ Gurax_ImplementMethodEx(wxProtocol, GetInputStream_gurax, processor_gurax, argum
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	wxString path(args_gurax.PickString());
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxInputStream(
-		pEntity_gurax->GetInputStream(path)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxInputStream(pEntity_gurax->GetInputStream(path)));
 }
 
 // wx.Protocol#Reconnect()
@@ -237,8 +236,7 @@ Gurax_ImplementMethodEx(wxProtocol, GetLog_gurax, processor_gurax, argument_gura
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxProtocolLog(
-		pEntity_gurax->GetLog()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxProtocolLog(pEntity_gurax->GetLog()));
 }
 
 // wx.Protocol#DetachLog() {block?}
@@ -255,8 +253,7 @@ Gurax_ImplementMethodEx(wxProtocol, DetachLog_gurax, processor_gurax, argument_g
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxProtocolLog(
-		pEntity_gurax->DetachLog()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxProtocolLog(pEntity_gurax->DetachLog()));
 }
 
 // wx.Protocol#LogRequest(str as String)

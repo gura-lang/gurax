@@ -79,8 +79,7 @@ Gurax_ImplementMethodEx(wxToolBarToolBase, GetControl_gurax, processor_gurax, ar
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxControl(
-		pEntity_gurax->GetControl()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxControl(pEntity_gurax->GetControl()));
 }
 
 // wx.ToolBarToolBase#IsStretchable()
@@ -284,8 +283,7 @@ Gurax_ImplementMethodEx(wxToolBarToolBase, GetNormalBitmap_gurax, processor_gura
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
-		pEntity_gurax->GetNormalBitmap()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(pEntity_gurax->GetNormalBitmap()));
 }
 
 // wx.ToolBarToolBase#GetDisabledBitmap() {block?}
@@ -302,8 +300,7 @@ Gurax_ImplementMethodEx(wxToolBarToolBase, GetDisabledBitmap_gurax, processor_gu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
-		pEntity_gurax->GetDisabledBitmap()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(pEntity_gurax->GetDisabledBitmap()));
 }
 
 // wx.ToolBarToolBase#GetBitmap() {block?}
@@ -320,8 +317,7 @@ Gurax_ImplementMethodEx(wxToolBarToolBase, GetBitmap_gurax, processor_gurax, arg
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
-		pEntity_gurax->GetBitmap()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(pEntity_gurax->GetBitmap()));
 }
 
 // wx.ToolBarToolBase#GetLabel()
@@ -659,8 +655,7 @@ Gurax_ImplementMethodEx(wxToolBarToolBase, GetDropdownMenu_gurax, processor_gura
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenu(
-		pEntity_gurax->GetDropdownMenu()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenu(pEntity_gurax->GetDropdownMenu()));
 }
 
 //-----------------------------------------------------------------------------

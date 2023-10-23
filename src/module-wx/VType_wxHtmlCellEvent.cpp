@@ -62,8 +62,7 @@ Gurax_ImplementMethodEx(wxHtmlCellEvent, GetCell_gurax, processor_gurax, argumen
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxHtmlCell(
-		*pEntity_gurax->GetCell()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxHtmlCell(*pEntity_gurax->GetCell()));
 }
 
 // wx.HtmlCellEvent#GetLinkClicked()
@@ -97,8 +96,7 @@ Gurax_ImplementMethodEx(wxHtmlCellEvent, GetPoint_gurax, processor_gurax, argume
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->GetPoint()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(pEntity_gurax->GetPoint()));
 }
 
 // wx.HtmlCellEvent#SetLinkClicked(linkclicked as Bool)

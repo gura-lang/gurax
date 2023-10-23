@@ -149,8 +149,7 @@ Gurax_ImplementMethodEx(wxHeaderColumnSimple, GetBitmap_gurax, processor_gurax, 
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
-		pEntity_gurax->GetBitmap()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(pEntity_gurax->GetBitmap()));
 }
 
 // wx.HeaderColumnSimple#SetWidth(width as Number)

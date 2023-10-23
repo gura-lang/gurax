@@ -148,8 +148,7 @@ Gurax_ImplementMethodEx(wxRibbonPage, GetIcon_gurax, processor_gurax, argument_g
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
-		pEntity_gurax->GetIcon()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(pEntity_gurax->GetIcon()));
 }
 
 // wx.RibbonPage#SetSizeWithScrollButtonAdjustment(x as Number, y as Number, width as Number, height as Number)

@@ -62,8 +62,7 @@ Gurax_ImplementMethodEx(wxSetCursorEvent, GetCursor_gurax, processor_gurax, argu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxCursor(
-		pEntity_gurax->GetCursor()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxCursor(pEntity_gurax->GetCursor()));
 }
 
 // wx.SetCursorEvent#GetX()

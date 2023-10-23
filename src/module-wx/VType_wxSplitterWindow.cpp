@@ -232,8 +232,7 @@ Gurax_ImplementMethodEx(wxSplitterWindow, GetWindow1_gurax, processor_gurax, arg
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
-		pEntity_gurax->GetWindow1()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(pEntity_gurax->GetWindow1()));
 }
 
 // wx.SplitterWindow#GetWindow2() {block?}
@@ -250,8 +249,7 @@ Gurax_ImplementMethodEx(wxSplitterWindow, GetWindow2_gurax, processor_gurax, arg
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
-		pEntity_gurax->GetWindow2()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(pEntity_gurax->GetWindow2()));
 }
 
 // wx.SplitterWindow#Initialize(window as wx.Window)

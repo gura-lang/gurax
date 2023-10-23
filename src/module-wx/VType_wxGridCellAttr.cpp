@@ -62,8 +62,7 @@ Gurax_ImplementMethodEx(wxGridCellAttr, Clone_gurax, processor_gurax, argument_g
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGridCellAttr(
-		*pEntity_gurax->Clone()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGridCellAttr(*pEntity_gurax->Clone()));
 }
 
 // wx.GridCellAttr#DecRef()
@@ -123,8 +122,7 @@ Gurax_ImplementMethodEx(wxGridCellAttr, GetBackgroundColour_gurax, processor_gur
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetBackgroundColour()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetBackgroundColour()));
 }
 
 // wx.GridCellAttr#GetEditor(grid as wx.Grid, row as Number, col as Number) {block?}
@@ -150,8 +148,7 @@ Gurax_ImplementMethodEx(wxGridCellAttr, GetEditor_gurax, processor_gurax, argume
 	int row = args_gurax.PickNumber<int>();
 	int col = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGridCellEditor(
-		*pEntity_gurax->GetEditor(grid, row, col)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGridCellEditor(*pEntity_gurax->GetEditor(grid, row, col)));
 }
 
 // wx.GridCellAttr#GetFont() {block?}
@@ -168,8 +165,7 @@ Gurax_ImplementMethodEx(wxGridCellAttr, GetFont_gurax, processor_gurax, argument
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(
-		pEntity_gurax->GetFont()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(pEntity_gurax->GetFont()));
 }
 
 // wx.GridCellAttr#GetNonDefaultAlignment(&hAlign:nilRef as Number, &vAlign:nilRef as Number)
@@ -221,8 +217,7 @@ Gurax_ImplementMethodEx(wxGridCellAttr, GetRenderer_gurax, processor_gurax, argu
 	int row = args_gurax.PickNumber<int>();
 	int col = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGridCellRenderer(
-		pEntity_gurax->GetRenderer(grid, row, col)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGridCellRenderer(pEntity_gurax->GetRenderer(grid, row, col)));
 }
 
 // wx.GridCellAttr#GetTextColour() {block?}
@@ -239,8 +234,7 @@ Gurax_ImplementMethodEx(wxGridCellAttr, GetTextColour_gurax, processor_gurax, ar
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetTextColour()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetTextColour()));
 }
 
 // wx.GridCellAttr#HasAlignment()

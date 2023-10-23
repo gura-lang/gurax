@@ -86,8 +86,7 @@ Gurax_ImplementMethodEx(wxWizardPage, GetBitmap_gurax, processor_gurax, argument
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
-		pEntity_gurax->GetBitmap()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(pEntity_gurax->GetBitmap()));
 }
 
 // wx.WizardPage#GetNext() {block?}
@@ -104,8 +103,7 @@ Gurax_ImplementMethodEx(wxWizardPage, GetNext_gurax, processor_gurax, argument_g
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWizardPage(
-		pEntity_gurax->GetNext()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWizardPage(pEntity_gurax->GetNext()));
 }
 
 // wx.WizardPage#GetPrev() {block?}
@@ -122,8 +120,7 @@ Gurax_ImplementMethodEx(wxWizardPage, GetPrev_gurax, processor_gurax, argument_g
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWizardPage(
-		pEntity_gurax->GetPrev()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWizardPage(pEntity_gurax->GetPrev()));
 }
 
 //-----------------------------------------------------------------------------

@@ -94,8 +94,7 @@ Gurax_ImplementMethodEx(wxDateSpan, Add_gurax, processor_gurax, argument_gurax)
 	Value_wxDateSpan& value_other = args_gurax.Pick<Value_wxDateSpan>();
 	const wxDateSpan& other = value_other.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(
-		pEntity_gurax->Add(other)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(pEntity_gurax->Add(other)));
 }
 
 // wx.DateSpan#GetDays()
@@ -218,8 +217,7 @@ Gurax_ImplementMethodEx(wxDateSpan, Multiply_gurax, processor_gurax, argument_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int factor = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(
-		pEntity_gurax->Multiply(factor)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(pEntity_gurax->Multiply(factor)));
 }
 
 // wx.DateSpan#Neg() {block?}
@@ -236,8 +234,7 @@ Gurax_ImplementMethodEx(wxDateSpan, Neg_gurax, processor_gurax, argument_gurax)
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(
-		pEntity_gurax->Neg()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(pEntity_gurax->Neg()));
 }
 
 // wx.DateSpan#Negate() {block?}
@@ -254,8 +251,7 @@ Gurax_ImplementMethodEx(wxDateSpan, Negate_gurax, processor_gurax, argument_gura
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(
-		pEntity_gurax->Negate()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(pEntity_gurax->Negate()));
 }
 
 // wx.DateSpan#SetDays(n as Number) {block?}
@@ -276,8 +272,7 @@ Gurax_ImplementMethodEx(wxDateSpan, SetDays_gurax, processor_gurax, argument_gur
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int n = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(
-		pEntity_gurax->SetDays(n)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(pEntity_gurax->SetDays(n)));
 }
 
 // wx.DateSpan#SetMonths(n as Number) {block?}
@@ -298,8 +293,7 @@ Gurax_ImplementMethodEx(wxDateSpan, SetMonths_gurax, processor_gurax, argument_g
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int n = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(
-		pEntity_gurax->SetMonths(n)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(pEntity_gurax->SetMonths(n)));
 }
 
 // wx.DateSpan#SetWeeks(n as Number) {block?}
@@ -320,8 +314,7 @@ Gurax_ImplementMethodEx(wxDateSpan, SetWeeks_gurax, processor_gurax, argument_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int n = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(
-		pEntity_gurax->SetWeeks(n)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(pEntity_gurax->SetWeeks(n)));
 }
 
 // wx.DateSpan#SetYears(n as Number) {block?}
@@ -342,8 +335,7 @@ Gurax_ImplementMethodEx(wxDateSpan, SetYears_gurax, processor_gurax, argument_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int n = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(
-		pEntity_gurax->SetYears(n)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(pEntity_gurax->SetYears(n)));
 }
 
 // wx.DateSpan#Subtract(other as wx.DateSpan) {block?}
@@ -365,8 +357,7 @@ Gurax_ImplementMethodEx(wxDateSpan, Subtract_gurax, processor_gurax, argument_gu
 	Value_wxDateSpan& value_other = args_gurax.Pick<Value_wxDateSpan>();
 	const wxDateSpan& other = value_other.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(
-		pEntity_gurax->Subtract(other)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(pEntity_gurax->Subtract(other)));
 }
 
 // wx.DateSpan.Day() {block?}
@@ -378,8 +369,7 @@ Gurax_DeclareClassMethodAlias(wxDateSpan, Day_gurax, "Day")
 Gurax_ImplementClassMethodEx(wxDateSpan, Day_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(
-		wxDateSpan::Day()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(wxDateSpan::Day()));
 }
 
 // wx.DateSpan.Days(days as Number) {block?}
@@ -395,8 +385,7 @@ Gurax_ImplementClassMethodEx(wxDateSpan, Days_gurax, processor_gurax, argument_g
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int days = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(
-		wxDateSpan::Days(days)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(wxDateSpan::Days(days)));
 }
 
 // wx.DateSpan.Month() {block?}
@@ -408,8 +397,7 @@ Gurax_DeclareClassMethodAlias(wxDateSpan, Month_gurax, "Month")
 Gurax_ImplementClassMethodEx(wxDateSpan, Month_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(
-		wxDateSpan::Month()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(wxDateSpan::Month()));
 }
 
 // wx.DateSpan.Months(mon as Number) {block?}
@@ -425,8 +413,7 @@ Gurax_ImplementClassMethodEx(wxDateSpan, Months_gurax, processor_gurax, argument
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int mon = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(
-		wxDateSpan::Months(mon)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(wxDateSpan::Months(mon)));
 }
 
 // wx.DateSpan.Week() {block?}
@@ -438,8 +425,7 @@ Gurax_DeclareClassMethodAlias(wxDateSpan, Week_gurax, "Week")
 Gurax_ImplementClassMethodEx(wxDateSpan, Week_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(
-		wxDateSpan::Week()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(wxDateSpan::Week()));
 }
 
 // wx.DateSpan.Weeks(weeks as Number) {block?}
@@ -455,8 +441,7 @@ Gurax_ImplementClassMethodEx(wxDateSpan, Weeks_gurax, processor_gurax, argument_
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int weeks = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(
-		wxDateSpan::Weeks(weeks)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(wxDateSpan::Weeks(weeks)));
 }
 
 // wx.DateSpan.Year() {block?}
@@ -468,8 +453,7 @@ Gurax_DeclareClassMethodAlias(wxDateSpan, Year_gurax, "Year")
 Gurax_ImplementClassMethodEx(wxDateSpan, Year_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(
-		wxDateSpan::Year()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(wxDateSpan::Year()));
 }
 
 // wx.DateSpan.Years(years as Number) {block?}
@@ -485,8 +469,7 @@ Gurax_ImplementClassMethodEx(wxDateSpan, Years_gurax, processor_gurax, argument_
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int years = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(
-		wxDateSpan::Years(years)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateSpan(wxDateSpan::Years(years)));
 }
 
 //-----------------------------------------------------------------------------

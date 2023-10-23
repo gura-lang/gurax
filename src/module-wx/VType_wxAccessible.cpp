@@ -124,8 +124,7 @@ Gurax_ImplementMethodEx(wxAccessible, GetWindow_gurax, processor_gurax, argument
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
-		pEntity_gurax->GetWindow()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(pEntity_gurax->GetWindow()));
 }
 
 // wx.Accessible#Select(childId as Number, selectFlags as Number)

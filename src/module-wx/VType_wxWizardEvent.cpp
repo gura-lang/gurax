@@ -79,8 +79,7 @@ Gurax_ImplementMethodEx(wxWizardEvent, GetPage_gurax, processor_gurax, argument_
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWizardPage(
-		pEntity_gurax->GetPage()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWizardPage(pEntity_gurax->GetPage()));
 }
 
 //-----------------------------------------------------------------------------

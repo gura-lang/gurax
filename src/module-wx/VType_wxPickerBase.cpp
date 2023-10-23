@@ -135,8 +135,7 @@ Gurax_ImplementMethodEx(wxPickerBase, GetTextCtrl_gurax, processor_gurax, argume
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTextCtrl(
-		pEntity_gurax->GetTextCtrl()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTextCtrl(pEntity_gurax->GetTextCtrl()));
 }
 
 // wx.PickerBase#GetPickerCtrl() {block?}
@@ -153,8 +152,7 @@ Gurax_ImplementMethodEx(wxPickerBase, GetPickerCtrl_gurax, processor_gurax, argu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxControl(
-		pEntity_gurax->GetPickerCtrl()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxControl(pEntity_gurax->GetPickerCtrl()));
 }
 
 // wx.PickerBase#GetTextCtrlProportion()

@@ -202,8 +202,7 @@ Gurax_ImplementMethodEx(wxKeyEvent, GetPosition_gurax, processor_gurax, argument
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->GetPosition()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(pEntity_gurax->GetPosition()));
 }
 
 // wx.KeyEvent#GetPositionXY(&x:nilRef as Number, &y:nilRef as Number)

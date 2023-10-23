@@ -204,8 +204,7 @@ Gurax_ImplementMethodEx(wxVListBox, GetMargins_gurax, processor_gurax, argument_
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->GetMargins()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(pEntity_gurax->GetMargins()));
 }
 
 // wx.VListBox#GetItemRect(item as Number) {block?}
@@ -226,8 +225,7 @@ Gurax_ImplementMethodEx(wxVListBox, GetItemRect_gurax, processor_gurax, argument
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	size_t item = args_gurax.PickNumber<size_t>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect(
-		pEntity_gurax->GetItemRect(item)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect(pEntity_gurax->GetItemRect(item)));
 }
 
 // wx.VListBox#GetNextSelected(&cookie:nilRef as Number)
@@ -301,8 +299,7 @@ Gurax_ImplementMethodEx(wxVListBox, GetSelectionBackground_gurax, processor_gura
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetSelectionBackground()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetSelectionBackground()));
 }
 
 // wx.VListBox#HasMultipleSelection()

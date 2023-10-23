@@ -215,8 +215,7 @@ Gurax_ImplementMethodEx(wxBookCtrlBase, GetCurrentPage_gurax, processor_gurax, a
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
-		pEntity_gurax->GetCurrentPage()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(pEntity_gurax->GetCurrentPage()));
 }
 
 // wx.BookCtrlBase#SetSelection(page as Number)
@@ -458,8 +457,7 @@ Gurax_ImplementMethodEx(wxBookCtrlBase, GetPage_gurax, processor_gurax, argument
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	size_t page = args_gurax.PickNumber<size_t>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
-		pEntity_gurax->GetPage(page)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(pEntity_gurax->GetPage(page)));
 }
 
 // wx.BookCtrlBase#AssignImageList(imageList as wx.ImageList)
@@ -520,8 +518,7 @@ Gurax_ImplementMethodEx(wxBookCtrlBase, GetImageList_gurax, processor_gurax, arg
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImageList(
-		pEntity_gurax->GetImageList()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImageList(pEntity_gurax->GetImageList()));
 }
 
 //-----------------------------------------------------------------------------

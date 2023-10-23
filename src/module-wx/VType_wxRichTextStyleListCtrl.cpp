@@ -124,8 +124,7 @@ Gurax_ImplementMethodEx(wxRichTextStyleListCtrl, GetRichTextCtrl_gurax, processo
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextCtrl(
-		pEntity_gurax->GetRichTextCtrl()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextCtrl(pEntity_gurax->GetRichTextCtrl()));
 }
 
 // wx.RichTextStyleListCtrl#GetStyleChoice() {block?}
@@ -142,8 +141,7 @@ Gurax_ImplementMethodEx(wxRichTextStyleListCtrl, GetStyleChoice_gurax, processor
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxChoice(
-		pEntity_gurax->GetStyleChoice()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxChoice(pEntity_gurax->GetStyleChoice()));
 }
 
 //-----------------------------------------------------------------------------

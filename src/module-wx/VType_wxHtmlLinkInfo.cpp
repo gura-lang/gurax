@@ -100,8 +100,7 @@ Gurax_ImplementMethodEx(wxHtmlLinkInfo, GetHtmlCell_gurax, processor_gurax, argu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxHtmlCell(
-		*pEntity_gurax->GetHtmlCell()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxHtmlCell(*pEntity_gurax->GetHtmlCell()));
 }
 
 // wx.HtmlLinkInfo#GetTarget()

@@ -167,8 +167,7 @@ Gurax_ImplementMethodEx(wxFrame, CreateStatusBar_gurax, processor_gurax, argumen
 	bool name_validFlag = args_gurax.IsValid();
 	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxStatusBarNameStr;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxStatusBar(
-		pEntity_gurax->CreateStatusBar(number, style, id, name)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxStatusBar(pEntity_gurax->CreateStatusBar(number, style, id, name)));
 }
 
 // wx.Frame#CreateToolBar(style? as Number, id? as Number, name? as String) {block?}
@@ -196,8 +195,7 @@ Gurax_ImplementMethodEx(wxFrame, CreateToolBar_gurax, processor_gurax, argument_
 	bool name_validFlag = args_gurax.IsValid();
 	wxString name = name_validFlag? wxString(args_gurax.PickString()) : wxToolBarNameStr;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBar(
-		pEntity_gurax->CreateToolBar(style, id, name)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBar(pEntity_gurax->CreateToolBar(style, id, name)));
 }
 
 // wx.Frame#GetClientAreaOrigin() {block?}
@@ -214,8 +212,7 @@ Gurax_ImplementMethodEx(wxFrame, GetClientAreaOrigin_gurax, processor_gurax, arg
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->GetClientAreaOrigin()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(pEntity_gurax->GetClientAreaOrigin()));
 }
 
 // wx.Frame#GetMenuBar() {block?}
@@ -232,8 +229,7 @@ Gurax_ImplementMethodEx(wxFrame, GetMenuBar_gurax, processor_gurax, argument_gur
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenuBar(
-		pEntity_gurax->GetMenuBar()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenuBar(pEntity_gurax->GetMenuBar()));
 }
 
 // wx.Frame#GetStatusBar() {block?}
@@ -250,8 +246,7 @@ Gurax_ImplementMethodEx(wxFrame, GetStatusBar_gurax, processor_gurax, argument_g
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxStatusBar(
-		pEntity_gurax->GetStatusBar()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxStatusBar(pEntity_gurax->GetStatusBar()));
 }
 
 // wx.Frame#GetStatusBarPane()
@@ -285,8 +280,7 @@ Gurax_ImplementMethodEx(wxFrame, GetToolBar_gurax, processor_gurax, argument_gur
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBar(
-		pEntity_gurax->GetToolBar()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBar(pEntity_gurax->GetToolBar()));
 }
 
 // wx.Frame#ProcessCommand(id as Number)

@@ -208,8 +208,7 @@ Gurax_ImplementMethodEx(wxRichTextStyleListBox, GetRichTextCtrl_gurax, processor
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextCtrl(
-		pEntity_gurax->GetRichTextCtrl()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextCtrl(pEntity_gurax->GetRichTextCtrl()));
 }
 
 // wx.RichTextStyleListBox#GetStyle(i as Number) {block?}
@@ -230,8 +229,7 @@ Gurax_ImplementMethodEx(wxRichTextStyleListBox, GetStyle_gurax, processor_gurax,
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	size_t i = args_gurax.PickNumber<size_t>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextStyleDefinition(
-		pEntity_gurax->GetStyle(i)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextStyleDefinition(pEntity_gurax->GetStyle(i)));
 }
 
 // wx.RichTextStyleListBox#GetStyleSheet() {block?}
@@ -248,8 +246,7 @@ Gurax_ImplementMethodEx(wxRichTextStyleListBox, GetStyleSheet_gurax, processor_g
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextStyleSheet(
-		*pEntity_gurax->GetStyleSheet()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextStyleSheet(*pEntity_gurax->GetStyleSheet()));
 }
 
 // wx.RichTextStyleListBox#OnLeftDown(event as wx.MouseEvent)

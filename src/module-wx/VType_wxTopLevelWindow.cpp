@@ -177,8 +177,7 @@ Gurax_ImplementMethodEx(wxTopLevelWindow, GetDefaultItem_gurax, processor_gurax,
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
-		pEntity_gurax->GetDefaultItem()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(pEntity_gurax->GetDefaultItem()));
 }
 
 // wx.TopLevelWindow#GetIcon() {block?}
@@ -195,8 +194,7 @@ Gurax_ImplementMethodEx(wxTopLevelWindow, GetIcon_gurax, processor_gurax, argume
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxIcon(
-		pEntity_gurax->GetIcon()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxIcon(pEntity_gurax->GetIcon()));
 }
 
 // wx.TopLevelWindow#GetIcons() {block?}
@@ -213,8 +211,7 @@ Gurax_ImplementMethodEx(wxTopLevelWindow, GetIcons_gurax, processor_gurax, argum
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxIconBundle(
-		pEntity_gurax->GetIcons()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxIconBundle(pEntity_gurax->GetIcons()));
 }
 
 // wx.TopLevelWindow#GetTitle()
@@ -392,8 +389,7 @@ Gurax_ImplementMethodEx(wxTopLevelWindow, MSWGetSystemMenu_gurax, processor_gura
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenu(
-		pEntity_gurax->MSWGetSystemMenu()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenu(pEntity_gurax->MSWGetSystemMenu()));
 }
 
 // wx.TopLevelWindow#RequestUserAttention(flags? as Number)
@@ -454,8 +450,7 @@ Gurax_ImplementMethodEx(wxTopLevelWindow, SetDefaultItem_gurax, processor_gurax,
 	Value_wxWindow& value_win = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* win = value_win.GetEntityPtr();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
-		pEntity_gurax->SetDefaultItem(win)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(pEntity_gurax->SetDefaultItem(win)));
 }
 
 // wx.TopLevelWindow#SetTmpDefaultItem(win as wx.Window) {block?}
@@ -477,8 +472,7 @@ Gurax_ImplementMethodEx(wxTopLevelWindow, SetTmpDefaultItem_gurax, processor_gur
 	Value_wxWindow& value_win = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* win = value_win.GetEntityPtr();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
-		pEntity_gurax->SetTmpDefaultItem(win)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(pEntity_gurax->SetTmpDefaultItem(win)));
 }
 
 // wx.TopLevelWindow#GetTmpDefaultItem() {block?}
@@ -495,8 +489,7 @@ Gurax_ImplementMethodEx(wxTopLevelWindow, GetTmpDefaultItem_gurax, processor_gur
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
-		pEntity_gurax->GetTmpDefaultItem()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(pEntity_gurax->GetTmpDefaultItem()));
 }
 
 // wx.TopLevelWindow#SetIcon(icon as wx.Icon)

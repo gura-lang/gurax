@@ -158,8 +158,7 @@ Gurax_ImplementMethodEx(wxControl, GetSizeFromTextSizeXY_gurax, processor_gurax,
 	bool ylen_validFlag = args_gurax.IsValid();
 	int ylen = ylen_validFlag? args_gurax.PickNumber<int>() : -1;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->GetSizeFromTextSize(xlen, ylen)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->GetSizeFromTextSize(xlen, ylen)));
 }
 
 // wx.Control#GetSizeFromTextSize(tsize as wx.Size) {block?}
@@ -181,8 +180,7 @@ Gurax_ImplementMethodEx(wxControl, GetSizeFromTextSize_gurax, processor_gurax, a
 	Value_wxSize& value_tsize = args_gurax.Pick<Value_wxSize>();
 	const wxSize& tsize = value_tsize.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->GetSizeFromTextSize(tsize)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->GetSizeFromTextSize(tsize)));
 }
 
 // wx.Control#SetLabel(label as String)

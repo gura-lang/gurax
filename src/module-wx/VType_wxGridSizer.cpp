@@ -339,8 +339,7 @@ Gurax_ImplementMethodEx(wxGridSizer, CalcMin_gurax, processor_gurax, argument_gu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->CalcMin()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->CalcMin()));
 }
 
 // wx.GridSizer#RecalcSizes()

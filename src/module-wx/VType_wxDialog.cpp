@@ -159,8 +159,7 @@ Gurax_ImplementMethodEx(wxDialog, CreateButtonSizer_gurax, processor_gurax, argu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	long flags = args_gurax.PickNumber<long>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizer(
-		pEntity_gurax->CreateButtonSizer(flags)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizer(pEntity_gurax->CreateButtonSizer(flags)));
 }
 
 // wx.Dialog#CreateSeparatedButtonSizer(flags as Number) {block?}
@@ -181,8 +180,7 @@ Gurax_ImplementMethodEx(wxDialog, CreateSeparatedButtonSizer_gurax, processor_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	long flags = args_gurax.PickNumber<long>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizer(
-		pEntity_gurax->CreateSeparatedButtonSizer(flags)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizer(pEntity_gurax->CreateSeparatedButtonSizer(flags)));
 }
 
 // wx.Dialog#CreateSeparatedSizer(sizer as wx.Sizer) {block?}
@@ -204,8 +202,7 @@ Gurax_ImplementMethodEx(wxDialog, CreateSeparatedSizer_gurax, processor_gurax, a
 	Value_wxSizer& value_sizer = args_gurax.Pick<Value_wxSizer>();
 	wxSizer* sizer = value_sizer.GetEntityPtr();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizer(
-		pEntity_gurax->CreateSeparatedSizer(sizer)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizer(pEntity_gurax->CreateSeparatedSizer(sizer)));
 }
 
 // wx.Dialog#CreateStdDialogButtonSizer(flags as Number) {block?}
@@ -226,8 +223,7 @@ Gurax_ImplementMethodEx(wxDialog, CreateStdDialogButtonSizer_gurax, processor_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	long flags = args_gurax.PickNumber<long>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxStdDialogButtonSizer(
-		pEntity_gurax->CreateStdDialogButtonSizer(flags)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxStdDialogButtonSizer(pEntity_gurax->CreateStdDialogButtonSizer(flags)));
 }
 
 // wx.Dialog#CreateTextSizer(message as String) {block?}
@@ -248,8 +244,7 @@ Gurax_ImplementMethodEx(wxDialog, CreateTextSizer_gurax, processor_gurax, argume
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	wxString message(args_gurax.PickString());
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizer(
-		pEntity_gurax->CreateTextSizer(message)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizer(pEntity_gurax->CreateTextSizer(message)));
 }
 
 // wx.Dialog#DoLayoutAdaptation()
@@ -321,8 +316,7 @@ Gurax_ImplementMethodEx(wxDialog, GetContentWindow_gurax, processor_gurax, argum
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
-		pEntity_gurax->GetContentWindow()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(pEntity_gurax->GetContentWindow()));
 }
 
 // wx.Dialog#GetEscapeId()

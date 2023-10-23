@@ -109,8 +109,7 @@ Gurax_ImplementMethodEx(wxTreeCtrl, AddRoot_gurax, processor_gurax, argument_gur
 	int selImage = selImage_validFlag? args_gurax.PickNumber<int>() : -1;
 	const Value& data = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(
-		pEntity_gurax->AddRoot(text, image, selImage, TreeItemData::Create(data))));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(pEntity_gurax->AddRoot(text, image, selImage, TreeItemData::Create(data))));
 }
 
 // wx.TreeCtrl#AppendItem(parent as wx.TreeItemId, text as String, image? as Number, selImage? as Number, data? as Any) {block?}
@@ -142,8 +141,7 @@ Gurax_ImplementMethodEx(wxTreeCtrl, AppendItem_gurax, processor_gurax, argument_
 	int selImage = selImage_validFlag? args_gurax.PickNumber<int>() : -1;
 	const Value& data = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(
-		pEntity_gurax->AppendItem(parent, text, image, selImage, TreeItemData::Create(data))));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(pEntity_gurax->AppendItem(parent, text, image, selImage, TreeItemData::Create(data))));
 }
 
 // wx.TreeCtrl#AssignImageList(imageList as wx.ImageList)
@@ -581,8 +579,7 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetEditControl_gurax, processor_gurax, argum
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTextCtrl(
-		pEntity_gurax->GetEditControl()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTextCtrl(pEntity_gurax->GetEditControl()));
 }
 
 // wx.TreeCtrl#GetFirstVisibleItem() {block?}
@@ -599,8 +596,7 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetFirstVisibleItem_gurax, processor_gurax, 
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(
-		pEntity_gurax->GetFirstVisibleItem()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(pEntity_gurax->GetFirstVisibleItem()));
 }
 
 // wx.TreeCtrl#GetFocusedItem() {block?}
@@ -617,8 +613,7 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetFocusedItem_gurax, processor_gurax, argum
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(
-		pEntity_gurax->GetFocusedItem()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(pEntity_gurax->GetFocusedItem()));
 }
 
 // wx.TreeCtrl#ClearFocusedItem()
@@ -674,8 +669,7 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetImageList_gurax, processor_gurax, argumen
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImageList(
-		pEntity_gurax->GetImageList()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImageList(pEntity_gurax->GetImageList()));
 }
 
 // wx.TreeCtrl#GetIndent()
@@ -731,8 +725,7 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetItemBackgroundColour_gurax, processor_gur
 	Value_wxTreeItemId& value_item = args_gurax.Pick<Value_wxTreeItemId>();
 	const wxTreeItemId& item = value_item.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetItemBackgroundColour(item)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetItemBackgroundColour(item)));
 }
 
 // wx.TreeCtrl#GetItemData(item as wx.TreeItemId)
@@ -777,8 +770,7 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetItemFont_gurax, processor_gurax, argument
 	Value_wxTreeItemId& value_item = args_gurax.Pick<Value_wxTreeItemId>();
 	const wxTreeItemId& item = value_item.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(
-		pEntity_gurax->GetItemFont(item)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(pEntity_gurax->GetItemFont(item)));
 }
 
 // wx.TreeCtrl#GetItemParent(item as wx.TreeItemId) {block?}
@@ -800,8 +792,7 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetItemParent_gurax, processor_gurax, argume
 	Value_wxTreeItemId& value_item = args_gurax.Pick<Value_wxTreeItemId>();
 	const wxTreeItemId& item = value_item.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(
-		pEntity_gurax->GetItemParent(item)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(pEntity_gurax->GetItemParent(item)));
 }
 
 // wx.TreeCtrl#GetItemState(item as wx.TreeItemId)
@@ -867,8 +858,7 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetItemTextColour_gurax, processor_gurax, ar
 	Value_wxTreeItemId& value_item = args_gurax.Pick<Value_wxTreeItemId>();
 	const wxTreeItemId& item = value_item.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetItemTextColour(item)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetItemTextColour(item)));
 }
 
 // wx.TreeCtrl#GetLastChild(item as wx.TreeItemId) {block?}
@@ -890,8 +880,7 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetLastChild_gurax, processor_gurax, argumen
 	Value_wxTreeItemId& value_item = args_gurax.Pick<Value_wxTreeItemId>();
 	const wxTreeItemId& item = value_item.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(
-		pEntity_gurax->GetLastChild(item)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(pEntity_gurax->GetLastChild(item)));
 }
 
 // wx.TreeCtrl#GetNextSibling(item as wx.TreeItemId) {block?}
@@ -913,8 +902,7 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetNextSibling_gurax, processor_gurax, argum
 	Value_wxTreeItemId& value_item = args_gurax.Pick<Value_wxTreeItemId>();
 	const wxTreeItemId& item = value_item.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(
-		pEntity_gurax->GetNextSibling(item)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(pEntity_gurax->GetNextSibling(item)));
 }
 
 // wx.TreeCtrl#GetNextVisible(item as wx.TreeItemId) {block?}
@@ -936,8 +924,7 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetNextVisible_gurax, processor_gurax, argum
 	Value_wxTreeItemId& value_item = args_gurax.Pick<Value_wxTreeItemId>();
 	const wxTreeItemId& item = value_item.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(
-		pEntity_gurax->GetNextVisible(item)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(pEntity_gurax->GetNextVisible(item)));
 }
 
 // wx.TreeCtrl#GetPrevSibling(item as wx.TreeItemId) {block?}
@@ -959,8 +946,7 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetPrevSibling_gurax, processor_gurax, argum
 	Value_wxTreeItemId& value_item = args_gurax.Pick<Value_wxTreeItemId>();
 	const wxTreeItemId& item = value_item.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(
-		pEntity_gurax->GetPrevSibling(item)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(pEntity_gurax->GetPrevSibling(item)));
 }
 
 // wx.TreeCtrl#GetPrevVisible(item as wx.TreeItemId) {block?}
@@ -982,8 +968,7 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetPrevVisible_gurax, processor_gurax, argum
 	Value_wxTreeItemId& value_item = args_gurax.Pick<Value_wxTreeItemId>();
 	const wxTreeItemId& item = value_item.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(
-		pEntity_gurax->GetPrevVisible(item)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(pEntity_gurax->GetPrevVisible(item)));
 }
 
 // wx.TreeCtrl#GetQuickBestSize()
@@ -1017,8 +1002,7 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetRootItem_gurax, processor_gurax, argument
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(
-		pEntity_gurax->GetRootItem()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(pEntity_gurax->GetRootItem()));
 }
 
 // wx.TreeCtrl#GetSelection() {block?}
@@ -1035,8 +1019,7 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetSelection_gurax, processor_gurax, argumen
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(
-		pEntity_gurax->GetSelection()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(pEntity_gurax->GetSelection()));
 }
 
 // wx.TreeCtrl#GetSelections()
@@ -1075,8 +1058,7 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetStateImageList_gurax, processor_gurax, ar
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImageList(
-		pEntity_gurax->GetStateImageList()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImageList(pEntity_gurax->GetStateImageList()));
 }
 
 // wx.TreeCtrl#HitTest(point as wx.Point)

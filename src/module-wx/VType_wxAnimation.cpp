@@ -107,8 +107,7 @@ Gurax_ImplementMethodEx(wxAnimation, GetFrame_gurax, processor_gurax, argument_g
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	unsigned int i = args_gurax.PickNumber<unsigned int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
-		pEntity_gurax->GetFrame(i)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(pEntity_gurax->GetFrame(i)));
 }
 
 // wx.Animation#GetFrameCount()
@@ -142,8 +141,7 @@ Gurax_ImplementMethodEx(wxAnimation, GetSize_gurax, processor_gurax, argument_gu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->GetSize()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->GetSize()));
 }
 
 // wx.Animation#IsOk()

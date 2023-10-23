@@ -62,8 +62,7 @@ Gurax_ImplementMethodEx(wxMenuEvent, GetMenu_gurax, processor_gurax, argument_gu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenu(
-		pEntity_gurax->GetMenu()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenu(pEntity_gurax->GetMenu()));
 }
 
 // wx.MenuEvent#GetMenuId()

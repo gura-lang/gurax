@@ -114,8 +114,7 @@ Gurax_ImplementMethodEx(wxColourProperty, GetColour_gurax, processor_gurax, argu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int index = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetColour(index)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetColour(index)));
 }
 
 //-----------------------------------------------------------------------------

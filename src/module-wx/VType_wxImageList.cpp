@@ -223,8 +223,7 @@ Gurax_ImplementMethodEx(wxImageList, GetBitmap_gurax, processor_gurax, argument_
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int index = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
-		pEntity_gurax->GetBitmap(index)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(pEntity_gurax->GetBitmap(index)));
 }
 
 // wx.ImageList#GetIcon(index as Number) {block?}
@@ -245,8 +244,7 @@ Gurax_ImplementMethodEx(wxImageList, GetIcon_gurax, processor_gurax, argument_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int index = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxIcon(
-		pEntity_gurax->GetIcon(index)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxIcon(pEntity_gurax->GetIcon(index)));
 }
 
 // wx.ImageList#GetImageCount()

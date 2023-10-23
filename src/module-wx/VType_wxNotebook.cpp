@@ -111,8 +111,7 @@ Gurax_ImplementMethodEx(wxNotebook, GetThemeBackgroundColour_gurax, processor_gu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetThemeBackgroundColour()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetThemeBackgroundColour()));
 }
 
 // wx.Notebook#SetPadding(padding as wx.Size)

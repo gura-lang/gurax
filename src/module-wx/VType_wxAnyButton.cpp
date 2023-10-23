@@ -77,8 +77,7 @@ Gurax_ImplementMethodEx(wxAnyButton, GetBitmap_gurax, processor_gurax, argument_
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
-		pEntity_gurax->GetBitmap()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(pEntity_gurax->GetBitmap()));
 }
 
 // wx.AnyButton#GetBitmapCurrent() {block?}
@@ -95,8 +94,7 @@ Gurax_ImplementMethodEx(wxAnyButton, GetBitmapCurrent_gurax, processor_gurax, ar
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
-		pEntity_gurax->GetBitmapCurrent()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(pEntity_gurax->GetBitmapCurrent()));
 }
 
 // wx.AnyButton#GetBitmapDisabled() {block?}
@@ -113,8 +111,7 @@ Gurax_ImplementMethodEx(wxAnyButton, GetBitmapDisabled_gurax, processor_gurax, a
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
-		pEntity_gurax->GetBitmapDisabled()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(pEntity_gurax->GetBitmapDisabled()));
 }
 
 // wx.AnyButton#GetBitmapFocus() {block?}
@@ -131,8 +128,7 @@ Gurax_ImplementMethodEx(wxAnyButton, GetBitmapFocus_gurax, processor_gurax, argu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
-		pEntity_gurax->GetBitmapFocus()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(pEntity_gurax->GetBitmapFocus()));
 }
 
 // wx.AnyButton#GetBitmapLabel() {block?}
@@ -149,8 +145,7 @@ Gurax_ImplementMethodEx(wxAnyButton, GetBitmapLabel_gurax, processor_gurax, argu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
-		pEntity_gurax->GetBitmapLabel()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(pEntity_gurax->GetBitmapLabel()));
 }
 
 // wx.AnyButton#GetBitmapPressed() {block?}
@@ -167,8 +162,7 @@ Gurax_ImplementMethodEx(wxAnyButton, GetBitmapPressed_gurax, processor_gurax, ar
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
-		pEntity_gurax->GetBitmapPressed()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(pEntity_gurax->GetBitmapPressed()));
 }
 
 // wx.AnyButton#SetBitmap(bitmap as wx.Bitmap, dir? as Number)
@@ -320,8 +314,7 @@ Gurax_ImplementMethodEx(wxAnyButton, GetBitmapMargins_gurax, processor_gurax, ar
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->GetBitmapMargins()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->GetBitmapMargins()));
 }
 
 // wx.AnyButton#SetBitmapPosition(dir as Number)

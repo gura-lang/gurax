@@ -175,8 +175,7 @@ Gurax_ImplementMethodEx(wxRect, GetBottomLeft_gurax, processor_gurax, argument_g
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->GetBottomLeft()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(pEntity_gurax->GetBottomLeft()));
 }
 
 // wx.Rect#GetBottomRight() {block?}
@@ -193,8 +192,7 @@ Gurax_ImplementMethodEx(wxRect, GetBottomRight_gurax, processor_gurax, argument_
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->GetBottomRight()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(pEntity_gurax->GetBottomRight()));
 }
 
 // wx.Rect#GetHeight()
@@ -245,8 +243,7 @@ Gurax_ImplementMethodEx(wxRect, GetPosition_gurax, processor_gurax, argument_gur
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->GetPosition()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(pEntity_gurax->GetPosition()));
 }
 
 // wx.Rect#GetRight()
@@ -280,8 +277,7 @@ Gurax_ImplementMethodEx(wxRect, GetSize_gurax, processor_gurax, argument_gurax)
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->GetSize()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->GetSize()));
 }
 
 // wx.Rect#GetTop()
@@ -315,8 +311,7 @@ Gurax_ImplementMethodEx(wxRect, GetTopLeft_gurax, processor_gurax, argument_gura
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->GetTopLeft()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(pEntity_gurax->GetTopLeft()));
 }
 
 // wx.Rect#GetTopRight() {block?}
@@ -333,8 +328,7 @@ Gurax_ImplementMethodEx(wxRect, GetTopRight_gurax, processor_gurax, argument_gur
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->GetTopRight()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(pEntity_gurax->GetTopRight()));
 }
 
 // wx.Rect#GetWidth()
@@ -407,8 +401,7 @@ Gurax_ImplementMethodEx(wxRect, Intersect_gurax, processor_gurax, argument_gurax
 	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
 	const wxRect& rect = value_rect.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect(
-		pEntity_gurax->Intersect(rect)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect(pEntity_gurax->Intersect(rect)));
 }
 
 // wx.Rect#IsEmpty()
@@ -750,8 +743,7 @@ Gurax_ImplementMethodEx(wxRect, CentreIn_gurax, processor_gurax, argument_gurax)
 	bool dir_validFlag = args_gurax.IsValid();
 	int dir = dir_validFlag? args_gurax.PickNumber<int>() : wxBOTH;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect(
-		pEntity_gurax->CentreIn(r, dir)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect(pEntity_gurax->CentreIn(r, dir)));
 }
 
 // wx.Rect#CenterIn(r as wx.Rect, dir? as Number) {block?}
@@ -776,8 +768,7 @@ Gurax_ImplementMethodEx(wxRect, CenterIn_gurax, processor_gurax, argument_gurax)
 	bool dir_validFlag = args_gurax.IsValid();
 	int dir = dir_validFlag? args_gurax.PickNumber<int>() : wxBOTH;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect(
-		pEntity_gurax->CenterIn(r, dir)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect(pEntity_gurax->CenterIn(r, dir)));
 }
 
 // wx.Rect#Deflate(args* as Any)

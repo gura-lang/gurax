@@ -153,8 +153,7 @@ Gurax_ImplementMethodEx(wxFontPickerCtrl, GetSelectedFont_gurax, processor_gurax
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(
-		pEntity_gurax->GetSelectedFont()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(pEntity_gurax->GetSelectedFont()));
 }
 
 // wx.FontPickerCtrl#SetMaxPointSize(max as Number)

@@ -62,8 +62,7 @@ Gurax_ImplementMethodEx(wxDateEvent, GetDate_gurax, processor_gurax, argument_gu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateTime(
-		pEntity_gurax->GetDate()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateTime(pEntity_gurax->GetDate()));
 }
 
 // wx.DateEvent#SetDate(date as wx.DateTime)

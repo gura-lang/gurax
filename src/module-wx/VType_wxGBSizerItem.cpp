@@ -263,8 +263,7 @@ Gurax_ImplementMethodEx(wxGBSizerItem, GetPos_gurax, processor_gurax, argument_g
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGBPosition(
-		pEntity_gurax->GetPos()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGBPosition(pEntity_gurax->GetPos()));
 }
 
 // wx.GBSizerItem#GetPosRowCol(&row:nilRef as Number, &col:nilRef as Number)

@@ -90,8 +90,7 @@ Gurax_ImplementMethodEx(wxCursorProperty, OnMeasureImage_gurax, processor_gurax,
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int item = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->OnMeasureImage(item)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->OnMeasureImage(item)));
 }
 
 // wx.CursorProperty#OnCustomPaint(dc as wx.DC, rect as wx.Rect, paintdata as wx.PGPaintData)

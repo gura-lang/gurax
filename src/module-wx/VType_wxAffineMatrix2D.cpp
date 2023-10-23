@@ -203,8 +203,7 @@ Gurax_ImplementMethodEx(wxAffineMatrix2D, TransformPoint_gurax, processor_gurax,
 	Value_wxPoint2DDouble& value_p = args_gurax.Pick<Value_wxPoint2DDouble>();
 	const wxPoint2DDouble& p = value_p.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint2DDouble(
-		pEntity_gurax->TransformPoint(p)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint2DDouble(pEntity_gurax->TransformPoint(p)));
 }
 
 // wx.AffineMatrix2D#TransformDistance(p as wx.Point2DDouble) {block?}
@@ -226,8 +225,7 @@ Gurax_ImplementMethodEx(wxAffineMatrix2D, TransformDistance_gurax, processor_gur
 	Value_wxPoint2DDouble& value_p = args_gurax.Pick<Value_wxPoint2DDouble>();
 	const wxPoint2DDouble& p = value_p.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint2DDouble(
-		pEntity_gurax->TransformDistance(p)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint2DDouble(pEntity_gurax->TransformDistance(p)));
 }
 
 //-----------------------------------------------------------------------------

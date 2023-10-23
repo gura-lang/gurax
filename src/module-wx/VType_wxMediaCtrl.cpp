@@ -144,8 +144,7 @@ Gurax_ImplementMethodEx(wxMediaCtrl, GetBestSize_gurax, processor_gurax, argumen
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->GetBestSize()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->GetBestSize()));
 }
 
 // wx.MediaCtrl#GetPlaybackRate()

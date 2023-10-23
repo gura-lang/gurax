@@ -154,8 +154,7 @@ Gurax_ImplementMethodEx(wxAuiMDIChildFrame, GetMenuBar_gurax, processor_gurax, a
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenuBar(
-		pEntity_gurax->GetMenuBar()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenuBar(pEntity_gurax->GetMenuBar()));
 }
 
 // wx.AuiMDIChildFrame#SetTitle(title as String)
@@ -232,8 +231,7 @@ Gurax_ImplementMethodEx(wxAuiMDIChildFrame, GetIcons_gurax, processor_gurax, arg
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxIconBundle(
-		pEntity_gurax->GetIcons()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxIconBundle(pEntity_gurax->GetIcons()));
 }
 
 // wx.AuiMDIChildFrame#SetIcon(icon as wx.Icon)
@@ -272,8 +270,7 @@ Gurax_ImplementMethodEx(wxAuiMDIChildFrame, GetIcon_gurax, processor_gurax, argu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxIcon(
-		pEntity_gurax->GetIcon()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxIcon(pEntity_gurax->GetIcon()));
 }
 
 // wx.AuiMDIChildFrame#Activate()
@@ -359,8 +356,7 @@ Gurax_ImplementMethodEx(wxAuiMDIChildFrame, CreateStatusBar_gurax, processor_gur
 	bool name_validFlag = args_gurax.IsValid();
 	wxString name = name_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxStatusBar(
-		pEntity_gurax->CreateStatusBar(number, style, winid, name)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxStatusBar(pEntity_gurax->CreateStatusBar(number, style, winid, name)));
 }
 
 // wx.AuiMDIChildFrame#GetStatusBar() {block?}
@@ -377,8 +373,7 @@ Gurax_ImplementMethodEx(wxAuiMDIChildFrame, GetStatusBar_gurax, processor_gurax,
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxStatusBar(
-		pEntity_gurax->GetStatusBar()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxStatusBar(pEntity_gurax->GetStatusBar()));
 }
 
 // wx.AuiMDIChildFrame#SetStatusText(text as String, number? as Number)
@@ -448,8 +443,7 @@ Gurax_ImplementMethodEx(wxAuiMDIChildFrame, CreateToolBar_gurax, processor_gurax
 	wxWindowID winid = args_gurax.PickNumber<wxWindowID>();
 	wxString name(args_gurax.PickString());
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBar(
-		pEntity_gurax->CreateToolBar(style, winid, name)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBar(pEntity_gurax->CreateToolBar(style, winid, name)));
 }
 
 // wx.AuiMDIChildFrame#GetToolBar() {block?}
@@ -466,8 +460,7 @@ Gurax_ImplementMethodEx(wxAuiMDIChildFrame, GetToolBar_gurax, processor_gurax, a
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBar(
-		pEntity_gurax->GetToolBar()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBar(pEntity_gurax->GetToolBar()));
 }
 
 // wx.AuiMDIChildFrame#Maximize(maximize? as Bool)
@@ -656,8 +649,7 @@ Gurax_ImplementMethodEx(wxAuiMDIChildFrame, GetMDIParentFrame_gurax, processor_g
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxAuiMDIParentFrame(
-		pEntity_gurax->GetMDIParentFrame()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxAuiMDIParentFrame(pEntity_gurax->GetMDIParentFrame()));
 }
 
 //-----------------------------------------------------------------------------

@@ -138,8 +138,7 @@ Gurax_ImplementMethodEx(wxTextCtrl, GetDefaultStyle_gurax, processor_gurax, argu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTextAttr(
-		pEntity_gurax->GetDefaultStyle()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTextAttr(pEntity_gurax->GetDefaultStyle()));
 }
 
 // wx.TextCtrl#GetLineLength(lineNo as Number)
@@ -440,8 +439,7 @@ Gurax_ImplementMethodEx(wxTextCtrl, PositionToCoords_gurax, processor_gurax, arg
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	long pos = args_gurax.PickNumber<long>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->PositionToCoords(pos)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(pEntity_gurax->PositionToCoords(pos)));
 }
 
 // wx.TextCtrl#SaveFile(filename? as String, fileType? as Number)
@@ -1237,8 +1235,7 @@ Gurax_ImplementMethodEx(wxTextCtrl, GetMargins_gurax, processor_gurax, argument_
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->GetMargins()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(pEntity_gurax->GetMargins()));
 }
 
 // wx.TextCtrl#SetValue(value as String)

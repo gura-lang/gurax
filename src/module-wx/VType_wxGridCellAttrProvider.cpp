@@ -149,8 +149,7 @@ Gurax_ImplementMethodEx(wxGridCellAttrProvider, GetCornerRenderer_gurax, process
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGridCornerHeaderRenderer(
-		pEntity_gurax->GetCornerRenderer()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGridCornerHeaderRenderer(pEntity_gurax->GetCornerRenderer()));
 }
 
 //-----------------------------------------------------------------------------

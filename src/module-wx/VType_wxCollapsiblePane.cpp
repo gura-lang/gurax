@@ -174,8 +174,7 @@ Gurax_ImplementMethodEx(wxCollapsiblePane, GetPane_gurax, processor_gurax, argum
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
-		pEntity_gurax->GetPane()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(pEntity_gurax->GetPane()));
 }
 
 // wx.CollapsiblePane#IsCollapsed()

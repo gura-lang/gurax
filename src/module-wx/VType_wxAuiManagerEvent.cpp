@@ -96,8 +96,7 @@ Gurax_ImplementMethodEx(wxAuiManagerEvent, GetDC_gurax, processor_gurax, argumen
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDC(
-		*pEntity_gurax->GetDC()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDC(*pEntity_gurax->GetDC()));
 }
 
 // wx.AuiManagerEvent#GetVeto()
@@ -131,8 +130,7 @@ Gurax_ImplementMethodEx(wxAuiManagerEvent, GetManager_gurax, processor_gurax, ar
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxAuiManager(
-		pEntity_gurax->GetManager()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxAuiManager(pEntity_gurax->GetManager()));
 }
 
 // wx.AuiManagerEvent#SetButton(button as Number)

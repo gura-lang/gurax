@@ -1289,7 +1289,7 @@ r.DeclareType('EventType', 'wxEventType', 'wxEventType', 'wxEventType',
 	${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_${this.vtype}>().GetEntity() : -1;
 	'''
 	codeFunctionBody = R'''
-	return Util::LookupEventType(${caller}).Reference();
+	return ${funcInfo.ComposeReturn('Util::LookupEventType(' + caller + ').Reference()')};
 	''')
 
 classInfoTbl.Each {|classInfo|
@@ -1307,8 +1307,7 @@ classInfoTbl.Each {|classInfo|
 			codeConvToC = 'Value_${this.vtype}::GetEntityPtr(${src})'
 			codeConvToGurax = 'new Value_${this.vtype}(${varName})'
 			codeFunctionBody = R'''
-			return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
-				${caller}));
+			return ${funcInfo.ComposeReturn('new Value_' + this.vtype + '(' + caller + ')')};
 			''')
 	} else {
 		typeInfo_p = r.DeclareType(classInfo.className + '_p', 'wx' + classInfo.className + '*',
@@ -1324,8 +1323,7 @@ classInfoTbl.Each {|classInfo|
 			codeConvToC = 'Value_${this.vtype}::GetEntityPtr(${src})'
 			codeConvToGurax = 'new Value_${this.vtype}(${varName})'
 			codeFunctionBody = R'''
-			return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
-				*${caller}));
+			return ${funcInfo.ComposeReturn('new Value_' + this.vtype + '(*' + caller + ')')};
 			''')
 	}
 	typeInfo = r.DeclareType(classInfo.className, 'wx' + classInfo.className,
@@ -1341,8 +1339,7 @@ classInfoTbl.Each {|classInfo|
 		codeConvToC = 'Value_${this.vtype}::GetEntity(${src})'
 		codeConvToGurax = 'new Value_${this.vtype}(${varName})'
 		codeFunctionBody = R'''
-		return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
-			${caller}));
+		return ${funcInfo.ComposeReturn('new Value_' + this.vtype + '(' + caller + ')')};
 		''')
 	r.DeclareType('const_' + classInfo.className + '_p', 'const wx' + classInfo.className + '*',
 		'wx' + classInfo.className, 'wx.' + classInfo.className,
@@ -1357,8 +1354,7 @@ classInfoTbl.Each {|classInfo|
 		codeConvToC = 'Value_${this.vtype}::GetEntityPtr(${src})'
 		codeConvToGurax = 'new Value_${this.vtype}(${varName})'
 		codeFunctionBody = R'''
-		return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
-			*${caller}));
+		return ${funcInfo.ComposeReturn('new Value_' + this.vtype + '(*' + caller + ')')};
 		''')
 	r.DeclareType(classInfo.className + '_r', 'wx' + classInfo.className + '&',
 		'wx' + classInfo.className, 'wx.' + classInfo.className,
@@ -1373,8 +1369,7 @@ classInfoTbl.Each {|classInfo|
 		codeConvToC = 'Value_${this.vtype}::GetEntity(${src})'
 		codeConvToGurax = 'new Value_${this.vtype}(${varName})'
 		codeFunctionBody = R'''
-		return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
-			${caller}));
+		return ${funcInfo.ComposeReturn('new Value_' + this.vtype + '(' + caller + ')')};
 		''')
 	r.DeclareType('const_' + classInfo.className + '_r', 'const wx' + classInfo.className + '&',
 		'wx' + classInfo.className, 'wx.' + classInfo.className,
@@ -1389,8 +1384,7 @@ classInfoTbl.Each {|classInfo|
 		codeConvToC = 'Value_${this.vtype}::GetEntity(${src})'
 		codeConvToGurax = 'new Value_${this.vtype}(${varName})'
 		codeFunctionBody = R'''
-		return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
-			${caller}));
+		return ${funcInfo.ComposeReturn('new Value_' + this.vtype + '(' + caller + ')')};
 		''')
 	if (classInfo.IsEvtHandlerOrDeriv()) {
 		classInfo.typeInfo = typeInfo_p

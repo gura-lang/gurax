@@ -150,8 +150,7 @@ Gurax_ImplementMethodEx(wxFilePickerCtrl, GetFileName_gurax, processor_gurax, ar
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFileName(
-		pEntity_gurax->GetFileName()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFileName(pEntity_gurax->GetFileName()));
 }
 
 // wx.FilePickerCtrl#GetPath()

@@ -119,8 +119,7 @@ Gurax_ImplementMethodEx(wxFindReplaceDialog, GetData_gurax, processor_gurax, arg
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFindReplaceData(
-		*pEntity_gurax->GetData()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFindReplaceData(*pEntity_gurax->GetData()));
 }
 
 //-----------------------------------------------------------------------------

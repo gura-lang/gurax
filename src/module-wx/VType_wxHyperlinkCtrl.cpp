@@ -136,8 +136,7 @@ Gurax_ImplementMethodEx(wxHyperlinkCtrl, GetHoverColour_gurax, processor_gurax, 
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetHoverColour()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetHoverColour()));
 }
 
 // wx.HyperlinkCtrl#GetNormalColour() {block?}
@@ -154,8 +153,7 @@ Gurax_ImplementMethodEx(wxHyperlinkCtrl, GetNormalColour_gurax, processor_gurax,
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetNormalColour()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetNormalColour()));
 }
 
 // wx.HyperlinkCtrl#GetURL()
@@ -206,8 +204,7 @@ Gurax_ImplementMethodEx(wxHyperlinkCtrl, GetVisitedColour_gurax, processor_gurax
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetVisitedColour()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetVisitedColour()));
 }
 
 // wx.HyperlinkCtrl#SetHoverColour(colour as wx.Colour)

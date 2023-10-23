@@ -238,8 +238,7 @@ Gurax_ImplementMethodEx(wxComboCtrl, GetBitmapDisabled_gurax, processor_gurax, a
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
-		pEntity_gurax->GetBitmapDisabled()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(pEntity_gurax->GetBitmapDisabled()));
 }
 
 // wx.ComboCtrl#GetBitmapHover() {block?}
@@ -256,8 +255,7 @@ Gurax_ImplementMethodEx(wxComboCtrl, GetBitmapHover_gurax, processor_gurax, argu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
-		pEntity_gurax->GetBitmapHover()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(pEntity_gurax->GetBitmapHover()));
 }
 
 // wx.ComboCtrl#GetBitmapNormal() {block?}
@@ -274,8 +272,7 @@ Gurax_ImplementMethodEx(wxComboCtrl, GetBitmapNormal_gurax, processor_gurax, arg
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
-		pEntity_gurax->GetBitmapNormal()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(pEntity_gurax->GetBitmapNormal()));
 }
 
 // wx.ComboCtrl#GetBitmapPressed() {block?}
@@ -292,8 +289,7 @@ Gurax_ImplementMethodEx(wxComboCtrl, GetBitmapPressed_gurax, processor_gurax, ar
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
-		pEntity_gurax->GetBitmapPressed()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(pEntity_gurax->GetBitmapPressed()));
 }
 
 // wx.ComboCtrl#GetButtonSize() {block?}
@@ -310,8 +306,7 @@ Gurax_ImplementMethodEx(wxComboCtrl, GetButtonSize_gurax, processor_gurax, argum
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->GetButtonSize()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->GetButtonSize()));
 }
 
 // wx.ComboCtrl#GetCustomPaintWidth()
@@ -396,8 +391,7 @@ Gurax_ImplementMethodEx(wxComboCtrl, GetMargins_gurax, processor_gurax, argument
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->GetMargins()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(pEntity_gurax->GetMargins()));
 }
 
 // wx.ComboCtrl#GetPopupControl() {block?}
@@ -414,8 +408,7 @@ Gurax_ImplementMethodEx(wxComboCtrl, GetPopupControl_gurax, processor_gurax, arg
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxComboPopup(
-		pEntity_gurax->GetPopupControl()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxComboPopup(pEntity_gurax->GetPopupControl()));
 }
 
 // wx.ComboCtrl#GetPopupWindow() {block?}
@@ -432,8 +425,7 @@ Gurax_ImplementMethodEx(wxComboCtrl, GetPopupWindow_gurax, processor_gurax, argu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
-		pEntity_gurax->GetPopupWindow()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(pEntity_gurax->GetPopupWindow()));
 }
 
 // wx.ComboCtrl#GetTextCtrl() {block?}
@@ -450,8 +442,7 @@ Gurax_ImplementMethodEx(wxComboCtrl, GetTextCtrl_gurax, processor_gurax, argumen
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTextCtrl(
-		pEntity_gurax->GetTextCtrl()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTextCtrl(pEntity_gurax->GetTextCtrl()));
 }
 
 // wx.ComboCtrl#GetTextRect() {block?}
@@ -468,8 +459,7 @@ Gurax_ImplementMethodEx(wxComboCtrl, GetTextRect_gurax, processor_gurax, argumen
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect(
-		pEntity_gurax->GetTextRect()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect(pEntity_gurax->GetTextRect()));
 }
 
 // wx.ComboCtrl#GetValue()

@@ -286,8 +286,7 @@ Gurax_ImplementMethodEx(wxMenuBar, GetMenu_gurax, processor_gurax, argument_gura
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	size_t menuIndex = args_gurax.PickNumber<size_t>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenu(
-		pEntity_gurax->GetMenu(menuIndex)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenu(pEntity_gurax->GetMenu(menuIndex)));
 }
 
 // wx.MenuBar#GetMenuCount()
@@ -458,8 +457,7 @@ Gurax_ImplementMethodEx(wxMenuBar, Remove_gurax, processor_gurax, argument_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	size_t pos = args_gurax.PickNumber<size_t>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenu(
-		pEntity_gurax->Remove(pos)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenu(pEntity_gurax->Remove(pos)));
 }
 
 // wx.MenuBar#Replace(pos as Number, menu as wx.Menu, title as String) {block?}
@@ -485,8 +483,7 @@ Gurax_ImplementMethodEx(wxMenuBar, Replace_gurax, processor_gurax, argument_gura
 	wxMenu* menu = value_menu.GetEntityPtr();
 	wxString title(args_gurax.PickString());
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenu(
-		pEntity_gurax->Replace(pos, menu, title)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenu(pEntity_gurax->Replace(pos, menu, title)));
 }
 
 // wx.MenuBar#SetHelpString(id as Number, helpString as String)
@@ -572,8 +569,7 @@ Gurax_ImplementMethodEx(wxMenuBar, GetFrame_gurax, processor_gurax, argument_gur
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFrame(
-		pEntity_gurax->GetFrame()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFrame(pEntity_gurax->GetFrame()));
 }
 
 // wx.MenuBar#IsAttached()

@@ -62,8 +62,7 @@ Gurax_ImplementMethodEx(wxRibbonButtonBarEvent, GetBar_gurax, processor_gurax, a
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBar(
-		pEntity_gurax->GetBar()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBar(pEntity_gurax->GetBar()));
 }
 
 // wx.RibbonButtonBarEvent#SetBar(bar as wx.RibbonButtonBar)
@@ -102,8 +101,7 @@ Gurax_ImplementMethodEx(wxRibbonButtonBarEvent, GetButton_gurax, processor_gurax
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(
-		pEntity_gurax->GetButton()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(pEntity_gurax->GetButton()));
 }
 
 // wx.RibbonButtonBarEvent#SetButton(bar as wx.RibbonButtonBarButtonBase)

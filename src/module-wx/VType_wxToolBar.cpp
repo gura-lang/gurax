@@ -113,8 +113,7 @@ Gurax_ImplementMethodEx(wxToolBar, AddCheckTool_gurax, processor_gurax, argument
 	wxString longHelp = longHelp_validFlag? wxString(args_gurax.PickString()) : "";
 	const Value& clientData = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(
-		*pEntity_gurax->AddCheckTool(toolId, label, bitmap1, bmpDisabled, shortHelp, longHelp, ClientObject::Create(clientData))));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(*pEntity_gurax->AddCheckTool(toolId, label, bitmap1, bmpDisabled, shortHelp, longHelp, ClientObject::Create(clientData))));
 }
 
 // wx.ToolBar#AddControl(control as wx.Control, label? as String) {block?}
@@ -139,8 +138,7 @@ Gurax_ImplementMethodEx(wxToolBar, AddControl_gurax, processor_gurax, argument_g
 	bool label_validFlag = args_gurax.IsValid();
 	wxString label = label_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(
-		*pEntity_gurax->AddControl(control, label)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(*pEntity_gurax->AddControl(control, label)));
 }
 
 // wx.ToolBar#AddRadioTool(toolId as Number, label as String, bitmap1 as wx.Bitmap, bmpDisabled? as wx.Bitmap, shortHelp? as String, longHelp? as String, clientData? as Any) {block?}
@@ -176,8 +174,7 @@ Gurax_ImplementMethodEx(wxToolBar, AddRadioTool_gurax, processor_gurax, argument
 	wxString longHelp = longHelp_validFlag? wxString(args_gurax.PickString()) : "";
 	const Value& clientData = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(
-		*pEntity_gurax->AddRadioTool(toolId, label, bitmap1, bmpDisabled, shortHelp, longHelp, ClientObject::Create(clientData))));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(*pEntity_gurax->AddRadioTool(toolId, label, bitmap1, bmpDisabled, shortHelp, longHelp, ClientObject::Create(clientData))));
 }
 
 // wx.ToolBar#AddSeparator() {block?}
@@ -194,8 +191,7 @@ Gurax_ImplementMethodEx(wxToolBar, AddSeparator_gurax, processor_gurax, argument
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(
-		*pEntity_gurax->AddSeparator()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(*pEntity_gurax->AddSeparator()));
 }
 
 // wx.ToolBar#AddStretchableSpace() {block?}
@@ -212,8 +208,7 @@ Gurax_ImplementMethodEx(wxToolBar, AddStretchableSpace_gurax, processor_gurax, a
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(
-		*pEntity_gurax->AddStretchableSpace()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(*pEntity_gurax->AddStretchableSpace()));
 }
 
 // wx.ToolBar#ClearTools()
@@ -316,8 +311,7 @@ Gurax_ImplementMethodEx(wxToolBar, FindById_gurax, processor_gurax, argument_gur
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int id = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(
-		*pEntity_gurax->FindById(id)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(*pEntity_gurax->FindById(id)));
 }
 
 // wx.ToolBar#FindControl(id as Number) {block?}
@@ -338,8 +332,7 @@ Gurax_ImplementMethodEx(wxToolBar, FindControl_gurax, processor_gurax, argument_
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int id = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxControl(
-		pEntity_gurax->FindControl(id)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxControl(pEntity_gurax->FindControl(id)));
 }
 
 // wx.ToolBar#FindToolForPosition(x as Number, y as Number) {block?}
@@ -362,8 +355,7 @@ Gurax_ImplementMethodEx(wxToolBar, FindToolForPosition_gurax, processor_gurax, a
 	wxCoord x = args_gurax.PickNumber<wxCoord>();
 	wxCoord y = args_gurax.PickNumber<wxCoord>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(
-		*pEntity_gurax->FindToolForPosition(x, y)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(*pEntity_gurax->FindToolForPosition(x, y)));
 }
 
 // wx.ToolBar#GetMargins() {block?}
@@ -380,8 +372,7 @@ Gurax_ImplementMethodEx(wxToolBar, GetMargins_gurax, processor_gurax, argument_g
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->GetMargins()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->GetMargins()));
 }
 
 // wx.ToolBar#GetToolBitmapSize() {block?}
@@ -398,8 +389,7 @@ Gurax_ImplementMethodEx(wxToolBar, GetToolBitmapSize_gurax, processor_gurax, arg
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->GetToolBitmapSize()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->GetToolBitmapSize()));
 }
 
 // wx.ToolBar#GetToolByPos(pos as Number) {block?}
@@ -420,8 +410,7 @@ Gurax_ImplementMethodEx(wxToolBar, GetToolByPos_gurax, processor_gurax, argument
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int pos = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(
-		*pEntity_gurax->GetToolByPos(pos)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(*pEntity_gurax->GetToolByPos(pos)));
 }
 
 // wx.ToolBar#GetToolClientData(toolId as Number)
@@ -578,8 +567,7 @@ Gurax_ImplementMethodEx(wxToolBar, GetToolSize_gurax, processor_gurax, argument_
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->GetToolSize()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->GetToolSize()));
 }
 
 // wx.ToolBar#GetToolState(toolId as Number)
@@ -644,8 +632,7 @@ Gurax_ImplementMethodEx(wxToolBar, InsertControl_gurax, processor_gurax, argumen
 	bool label_validFlag = args_gurax.IsValid();
 	wxString label = label_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(
-		*pEntity_gurax->InsertControl(pos, control, label)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(*pEntity_gurax->InsertControl(pos, control, label)));
 }
 
 // wx.ToolBar#InsertSeparator(pos as Number) {block?}
@@ -666,8 +653,7 @@ Gurax_ImplementMethodEx(wxToolBar, InsertSeparator_gurax, processor_gurax, argum
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	size_t pos = args_gurax.PickNumber<size_t>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(
-		*pEntity_gurax->InsertSeparator(pos)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(*pEntity_gurax->InsertSeparator(pos)));
 }
 
 // wx.ToolBar#InsertStretchableSpace(pos as Number) {block?}
@@ -688,8 +674,7 @@ Gurax_ImplementMethodEx(wxToolBar, InsertStretchableSpace_gurax, processor_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	size_t pos = args_gurax.PickNumber<size_t>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(
-		*pEntity_gurax->InsertStretchableSpace(pos)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(*pEntity_gurax->InsertStretchableSpace(pos)));
 }
 
 // wx.ToolBar#OnLeftClick(toolId as Number, toggleDown as Bool)
@@ -796,8 +781,7 @@ Gurax_ImplementMethodEx(wxToolBar, RemoveTool_gurax, processor_gurax, argument_g
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int id = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(
-		*pEntity_gurax->RemoveTool(id)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBarToolBase(*pEntity_gurax->RemoveTool(id)));
 }
 
 // wx.ToolBar#SetDropdownMenu(id as Number, menu as wx.Menu)

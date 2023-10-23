@@ -79,8 +79,7 @@ Gurax_ImplementMethodEx(wxSplitterEvent, GetWindowBeingRemoved_gurax, processor_
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
-		pEntity_gurax->GetWindowBeingRemoved()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(pEntity_gurax->GetWindowBeingRemoved()));
 }
 
 // wx.SplitterEvent#GetX()

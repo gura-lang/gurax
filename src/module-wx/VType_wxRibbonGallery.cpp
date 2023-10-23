@@ -179,8 +179,7 @@ Gurax_ImplementMethodEx(wxRibbonGallery, GetItem_gurax, processor_gurax, argumen
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	unsigned int n = args_gurax.PickNumber<unsigned int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonGalleryItem(
-		pEntity_gurax->GetItem(n)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonGalleryItem(pEntity_gurax->GetItem(n)));
 }
 
 // wx.RibbonGallery#Append(bitmap as wx.Bitmap, id as Number) {block?}
@@ -204,8 +203,7 @@ Gurax_ImplementMethodEx(wxRibbonGallery, Append_gurax, processor_gurax, argument
 	const wxBitmap& bitmap = value_bitmap.GetEntity();
 	int id = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonGalleryItem(
-		pEntity_gurax->Append(bitmap, id)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonGalleryItem(pEntity_gurax->Append(bitmap, id)));
 }
 
 // wx.RibbonGallery#SetItemClientObject(item as wx.RibbonGalleryItem, data as Any)
@@ -319,8 +317,7 @@ Gurax_ImplementMethodEx(wxRibbonGallery, GetSelection_gurax, processor_gurax, ar
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonGalleryItem(
-		pEntity_gurax->GetSelection()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonGalleryItem(pEntity_gurax->GetSelection()));
 }
 
 // wx.RibbonGallery#GetHoveredItem() {block?}
@@ -337,8 +334,7 @@ Gurax_ImplementMethodEx(wxRibbonGallery, GetHoveredItem_gurax, processor_gurax, 
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonGalleryItem(
-		pEntity_gurax->GetHoveredItem()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonGalleryItem(pEntity_gurax->GetHoveredItem()));
 }
 
 // wx.RibbonGallery#GetActiveItem() {block?}
@@ -355,8 +351,7 @@ Gurax_ImplementMethodEx(wxRibbonGallery, GetActiveItem_gurax, processor_gurax, a
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonGalleryItem(
-		pEntity_gurax->GetActiveItem()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonGalleryItem(pEntity_gurax->GetActiveItem()));
 }
 
 // wx.RibbonGallery#GetUpButtonState()

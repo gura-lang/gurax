@@ -139,8 +139,7 @@ Gurax_ImplementMethodEx(wxAcceleratorEntry, GetMenuItem_gurax, processor_gurax, 
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenuItem(
-		*pEntity_gurax->GetMenuItem()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenuItem(*pEntity_gurax->GetMenuItem()));
 }
 
 // wx.AcceleratorEntry#Set(flags as Number, keyCode as Number, cmd as Number, item? as wx.MenuItem)

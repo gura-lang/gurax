@@ -113,8 +113,7 @@ Gurax_ImplementMethodEx(wxFontData, GetChosenFont_gurax, processor_gurax, argume
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(
-		pEntity_gurax->GetChosenFont()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(pEntity_gurax->GetChosenFont()));
 }
 
 // wx.FontData#GetColour() {block?}
@@ -131,8 +130,7 @@ Gurax_ImplementMethodEx(wxFontData, GetColour_gurax, processor_gurax, argument_g
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetColour()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetColour()));
 }
 
 // wx.FontData#GetEnableEffects()
@@ -166,8 +164,7 @@ Gurax_ImplementMethodEx(wxFontData, GetInitialFont_gurax, processor_gurax, argum
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(
-		pEntity_gurax->GetInitialFont()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(pEntity_gurax->GetInitialFont()));
 }
 
 // wx.FontData#GetShowHelp()

@@ -151,8 +151,7 @@ Gurax_ImplementMethodEx(wxWizard, GetBitmap_gurax, processor_gurax, argument_gur
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
-		pEntity_gurax->GetBitmap()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(pEntity_gurax->GetBitmap()));
 }
 
 // wx.Wizard#GetBitmapBackgroundColour() {block?}
@@ -169,8 +168,7 @@ Gurax_ImplementMethodEx(wxWizard, GetBitmapBackgroundColour_gurax, processor_gur
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetBitmapBackgroundColour()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetBitmapBackgroundColour()));
 }
 
 // wx.Wizard#GetBitmapPlacement()
@@ -204,8 +202,7 @@ Gurax_ImplementMethodEx(wxWizard, GetCurrentPage_gurax, processor_gurax, argumen
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWizardPage(
-		pEntity_gurax->GetCurrentPage()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWizardPage(pEntity_gurax->GetCurrentPage()));
 }
 
 // wx.Wizard#GetMinimumBitmapWidth()
@@ -239,8 +236,7 @@ Gurax_ImplementMethodEx(wxWizard, GetPageAreaSizer_gurax, processor_gurax, argum
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizer(
-		pEntity_gurax->GetPageAreaSizer()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizer(pEntity_gurax->GetPageAreaSizer()));
 }
 
 // wx.Wizard#GetPageSize() {block?}
@@ -257,8 +253,7 @@ Gurax_ImplementMethodEx(wxWizard, GetPageSize_gurax, processor_gurax, argument_g
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->GetPageSize()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->GetPageSize()));
 }
 
 // wx.Wizard#HasNextPage(page as wx.WizardPage)

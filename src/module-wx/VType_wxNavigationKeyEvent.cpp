@@ -62,8 +62,7 @@ Gurax_ImplementMethodEx(wxNavigationKeyEvent, GetCurrentFocus_gurax, processor_g
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
-		pEntity_gurax->GetCurrentFocus()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(pEntity_gurax->GetCurrentFocus()));
 }
 
 // wx.NavigationKeyEvent#GetDirection()

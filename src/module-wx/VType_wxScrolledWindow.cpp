@@ -124,8 +124,7 @@ Gurax_ImplementMethodEx(wxScrolledWindow, CalcScrolledPosition_gurax, processor_
 	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
 	const wxPoint& pt = value_pt.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->CalcScrolledPosition(pt)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(pEntity_gurax->CalcScrolledPosition(pt)));
 }
 
 // wx.ScrolledWindow#CalcUnscrolledPositionXY(x as Number, y as Number)
@@ -171,8 +170,7 @@ Gurax_ImplementMethodEx(wxScrolledWindow, CalcUnscrolledPosition_gurax, processo
 	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
 	const wxPoint& pt = value_pt.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->CalcUnscrolledPosition(pt)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(pEntity_gurax->CalcUnscrolledPosition(pt)));
 }
 
 // wx.ScrolledWindow#DisableKeyboardScrolling()
@@ -310,8 +308,7 @@ Gurax_ImplementMethodEx(wxScrolledWindow, GetViewStart_gurax, processor_gurax, a
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->GetViewStart()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(pEntity_gurax->GetViewStart()));
 }
 
 // wx.ScrolledWindow#GetVirtualSize()
@@ -532,8 +529,7 @@ Gurax_ImplementMethodEx(wxScrolledWindow, GetTargetWindow_gurax, processor_gurax
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
-		pEntity_gurax->GetTargetWindow()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(pEntity_gurax->GetTargetWindow()));
 }
 
 // wx.ScrolledWindow#SetTargetRect(rect as wx.Rect)
@@ -572,8 +568,7 @@ Gurax_ImplementMethodEx(wxScrolledWindow, GetTargetRect_gurax, processor_gurax, 
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect(
-		pEntity_gurax->GetTargetRect()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect(pEntity_gurax->GetTargetRect()));
 }
 
 // wx.ScrolledWindow#GetScrollPageSize(orient as Number)

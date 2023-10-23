@@ -161,8 +161,7 @@ Gurax_ImplementFunctionEx(GetColourFromUser_gurax, processor_gurax, argument_gur
 	wxString caption = caption_validFlag? wxString(args_gurax.PickString()) : "";
 	wxColourData* data = args_gurax.IsValid()? args_gurax.Pick<Value_wxColourData>().GetEntityPtr() : nullptr;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		wxGetColourFromUser(parent, colInit, caption, data)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(wxGetColourFromUser(parent, colInit, caption, data)));
 }
 
 // wx.GetFontFromUser(parent as wx.Window, fontInit as wx.Font, caption? as String) {block?}
@@ -186,8 +185,7 @@ Gurax_ImplementFunctionEx(GetFontFromUser_gurax, processor_gurax, argument_gurax
 	bool caption_validFlag = args_gurax.IsValid();
 	wxString caption = caption_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(
-		wxGetFontFromUser(parent, fontInit, caption)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(wxGetFontFromUser(parent, fontInit, caption)));
 }
 
 // wx.GetKeyCodeName(keyCode as Number)

@@ -109,8 +109,7 @@ Gurax_ImplementMethodEx(wxBrush, GetColour_gurax, processor_gurax, argument_gura
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetColour()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetColour()));
 }
 
 // wx.Brush#GetStipple() {block?}
@@ -127,8 +126,7 @@ Gurax_ImplementMethodEx(wxBrush, GetStipple_gurax, processor_gurax, argument_gur
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
-		*pEntity_gurax->GetStipple()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(*pEntity_gurax->GetStipple()));
 }
 
 // wx.Brush#GetStyle()

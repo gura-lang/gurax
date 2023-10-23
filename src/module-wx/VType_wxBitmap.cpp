@@ -75,8 +75,7 @@ Gurax_ImplementMethodEx(wxBitmap, ConvertToImage_gurax, processor_gurax, argumen
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
-		pEntity_gurax->ConvertToImage()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(pEntity_gurax->ConvertToImage()));
 }
 
 // wx.Bitmap#CopyFromIcon(icon as wx.Icon)
@@ -175,8 +174,7 @@ Gurax_ImplementMethodEx(wxBitmap, GetMask_gurax, processor_gurax, argument_gurax
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMask(
-		*pEntity_gurax->GetMask()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMask(*pEntity_gurax->GetMask()));
 }
 
 // wx.Bitmap#GetPalette() {block?}
@@ -193,8 +191,7 @@ Gurax_ImplementMethodEx(wxBitmap, GetPalette_gurax, processor_gurax, argument_gu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPalette(
-		*pEntity_gurax->GetPalette()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPalette(*pEntity_gurax->GetPalette()));
 }
 
 // wx.Bitmap#GetSubBitmap(rect as wx.Rect) {block?}
@@ -216,8 +213,7 @@ Gurax_ImplementMethodEx(wxBitmap, GetSubBitmap_gurax, processor_gurax, argument_
 	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
 	const wxRect& rect = value_rect.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
-		pEntity_gurax->GetSubBitmap(rect)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(pEntity_gurax->GetSubBitmap(rect)));
 }
 
 // wx.Bitmap#GetSize() {block?}
@@ -234,8 +230,7 @@ Gurax_ImplementMethodEx(wxBitmap, GetSize_gurax, processor_gurax, argument_gurax
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->GetSize()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->GetSize()));
 }
 
 // wx.Bitmap#ConvertToDisabled(brightness? as Number) {block?}
@@ -257,8 +252,7 @@ Gurax_ImplementMethodEx(wxBitmap, ConvertToDisabled_gurax, processor_gurax, argu
 	bool brightness_validFlag = args_gurax.IsValid();
 	unsigned char brightness = brightness_validFlag? args_gurax.PickNumber<unsigned char>() : 255;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
-		pEntity_gurax->ConvertToDisabled(brightness)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(pEntity_gurax->ConvertToDisabled(brightness)));
 }
 
 // wx.Bitmap#GetWidth()
@@ -495,8 +489,7 @@ Gurax_ImplementClassMethodEx(wxBitmap, FindHandler_gurax, processor_gurax, argum
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	wxString name(args_gurax.PickString());
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGDIImageHandler(
-		wxBitmap::FindHandler(name)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGDIImageHandler(wxBitmap::FindHandler(name)));
 }
 
 // wx.Bitmap.InitStandardHandlers()

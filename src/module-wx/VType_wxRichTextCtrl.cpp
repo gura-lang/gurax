@@ -515,8 +515,7 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetTextCursor_gurax, processor_gurax, ar
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxCursor(
-		pEntity_gurax->GetTextCursor()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxCursor(pEntity_gurax->GetTextCursor()));
 }
 
 // wx.RichTextCtrl#SetURLCursor(cursor as wx.Cursor)
@@ -555,8 +554,7 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetURLCursor_gurax, processor_gurax, arg
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxCursor(
-		pEntity_gurax->GetURLCursor()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxCursor(pEntity_gurax->GetURLCursor()));
 }
 
 // wx.RichTextCtrl#GetCaretAtLineStart()
@@ -687,8 +685,7 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetDragStartPoint_gurax, processor_gurax
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->GetDragStartPoint()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(pEntity_gurax->GetDragStartPoint()));
 }
 
 // wx.RichTextCtrl#SetDragStartPoint(sp as wx.Point)
@@ -727,8 +724,7 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetDragStartTime_gurax, processor_gurax,
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateTime(
-		pEntity_gurax->GetDragStartTime()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateTime(pEntity_gurax->GetDragStartTime()));
 }
 
 // wx.RichTextCtrl#SetDragStartTime(st as wx.DateTime)
@@ -767,8 +763,7 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetContextMenu_gurax, processor_gurax, a
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenu(
-		pEntity_gurax->GetContextMenu()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenu(pEntity_gurax->GetContextMenu()));
 }
 
 // wx.RichTextCtrl#SetContextMenu(menu as wx.Menu)
@@ -845,8 +840,7 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetSelectionAnchorObject_gurax, processo
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextObject(
-		pEntity_gurax->GetSelectionAnchorObject()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextObject(pEntity_gurax->GetSelectionAnchorObject()));
 }
 
 // wx.RichTextCtrl#SetSelectionAnchorObject(anchor as wx.RichTextObject)
@@ -885,8 +879,7 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetFocusObject_gurax, processor_gurax, a
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextParagraphLayoutBox(
-		pEntity_gurax->GetFocusObject()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextParagraphLayoutBox(pEntity_gurax->GetFocusObject()));
 }
 
 // wx.RichTextCtrl#StoreFocusObject(obj as wx.RichTextParagraphLayoutBox)
@@ -1340,8 +1333,7 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetDefaultStyleEx_gurax, processor_gurax
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextAttr(
-		pEntity_gurax->GetDefaultStyleEx()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextAttr(pEntity_gurax->GetDefaultStyleEx()));
 }
 
 // wx.RichTextCtrl#ClearListStyle(range as wx.RichTextRange, flags? as Number)
@@ -1864,8 +1856,7 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetBasicStyle_gurax, processor_gurax, ar
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextAttr(
-		pEntity_gurax->GetBasicStyle()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextAttr(pEntity_gurax->GetBasicStyle()));
 }
 
 // wx.RichTextCtrl#BeginStyle(style as wx.RichTextAttr)
@@ -2702,8 +2693,7 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetSelectionRange_gurax, processor_gurax
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextRange(
-		pEntity_gurax->GetSelectionRange()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextRange(pEntity_gurax->GetSelectionRange()));
 }
 
 // wx.RichTextCtrl#SetSelectionRange(range as wx.RichTextRange)
@@ -2742,8 +2732,7 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetInternalSelectionRange_gurax, process
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextRange(
-		pEntity_gurax->GetInternalSelectionRange()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextRange(pEntity_gurax->GetInternalSelectionRange()));
 }
 
 // wx.RichTextCtrl#SetInternalSelectionRange(range as wx.RichTextRange)
@@ -2786,8 +2775,7 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, AddParagraph_gurax, processor_gurax, arg
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	wxString text(args_gurax.PickString());
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextRange(
-		pEntity_gurax->AddParagraph(text)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextRange(pEntity_gurax->AddParagraph(text)));
 }
 
 // wx.RichTextCtrl#AddImage(image as wx.Image) {block?}
@@ -2809,8 +2797,7 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, AddImage_gurax, processor_gurax, argumen
 	Value_wxImage& value_image = args_gurax.Pick<Value_wxImage>();
 	const wxImage& image = value_image.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextRange(
-		pEntity_gurax->AddImage(image)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextRange(pEntity_gurax->AddImage(image)));
 }
 
 // wx.RichTextCtrl#LayoutContent(onlyVisibleRect? as Bool)
@@ -3591,8 +3578,7 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetStyleSheet_gurax, processor_gurax, ar
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextStyleSheet(
-		*pEntity_gurax->GetStyleSheet()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextStyleSheet(*pEntity_gurax->GetStyleSheet()));
 }
 
 // wx.RichTextCtrl#PushStyleSheet(styleSheet as wx.RichTextStyleSheet)
@@ -3631,8 +3617,7 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, PopStyleSheet_gurax, processor_gurax, ar
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextStyleSheet(
-		*pEntity_gurax->PopStyleSheet()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextStyleSheet(*pEntity_gurax->PopStyleSheet()));
 }
 
 // wx.RichTextCtrl#ApplyStyleSheet(styleSheet? as wx.RichTextStyleSheet)
@@ -4027,8 +4012,7 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetUnscaledPoint_gurax, processor_gurax,
 	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
 	const wxPoint& pt = value_pt.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->GetUnscaledPoint(pt)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(pEntity_gurax->GetUnscaledPoint(pt)));
 }
 
 // wx.RichTextCtrl#GetScaledPoint(pt as wx.Point) {block?}
@@ -4050,8 +4034,7 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetScaledPoint_gurax, processor_gurax, a
 	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
 	const wxPoint& pt = value_pt.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->GetScaledPoint(pt)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(pEntity_gurax->GetScaledPoint(pt)));
 }
 
 // wx.RichTextCtrl#GetUnscaledSize(sz as wx.Size) {block?}
@@ -4073,8 +4056,7 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetUnscaledSize_gurax, processor_gurax, 
 	Value_wxSize& value_sz = args_gurax.Pick<Value_wxSize>();
 	const wxSize& sz = value_sz.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->GetUnscaledSize(sz)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->GetUnscaledSize(sz)));
 }
 
 // wx.RichTextCtrl#GetScaledSize(sz as wx.Size) {block?}
@@ -4096,8 +4078,7 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetScaledSize_gurax, processor_gurax, ar
 	Value_wxSize& value_sz = args_gurax.Pick<Value_wxSize>();
 	const wxSize& sz = value_sz.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->GetScaledSize(sz)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->GetScaledSize(sz)));
 }
 
 // wx.RichTextCtrl#GetUnscaledRect(rect as wx.Rect) {block?}
@@ -4119,8 +4100,7 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetUnscaledRect_gurax, processor_gurax, 
 	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
 	const wxRect& rect = value_rect.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect(
-		pEntity_gurax->GetUnscaledRect(rect)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect(pEntity_gurax->GetUnscaledRect(rect)));
 }
 
 // wx.RichTextCtrl#GetScaledRect(rect as wx.Rect) {block?}
@@ -4142,8 +4122,7 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetScaledRect_gurax, processor_gurax, ar
 	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
 	const wxRect& rect = value_rect.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect(
-		pEntity_gurax->GetScaledRect(rect)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect(pEntity_gurax->GetScaledRect(rect)));
 }
 
 // wx.RichTextCtrl#GetVirtualAttributesEnabled()
@@ -5346,8 +5325,7 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetVisibleLineForCaretPosition_gurax, pr
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	long caretPosition = args_gurax.PickNumber<long>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextLine(
-		*pEntity_gurax->GetVisibleLineForCaretPosition(caretPosition)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextLine(*pEntity_gurax->GetVisibleLineForCaretPosition(caretPosition)));
 }
 
 // wx.RichTextCtrl#GetPhysicalPoint(ptLogical as wx.Point) {block?}
@@ -5369,8 +5347,7 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetPhysicalPoint_gurax, processor_gurax,
 	Value_wxPoint& value_ptLogical = args_gurax.Pick<Value_wxPoint>();
 	const wxPoint& ptLogical = value_ptLogical.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->GetPhysicalPoint(ptLogical)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(pEntity_gurax->GetPhysicalPoint(ptLogical)));
 }
 
 // wx.RichTextCtrl#GetLogicalPoint(ptPhysical as wx.Point) {block?}
@@ -5392,8 +5369,7 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetLogicalPoint_gurax, processor_gurax, 
 	Value_wxPoint& value_ptPhysical = args_gurax.Pick<Value_wxPoint>();
 	const wxPoint& ptPhysical = value_ptPhysical.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->GetLogicalPoint(ptPhysical)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(pEntity_gurax->GetLogicalPoint(ptPhysical)));
 }
 
 // wx.RichTextCtrl#FindNextWordPosition(direction? as Number)
@@ -5547,8 +5523,7 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetFirstVisiblePoint_gurax, processor_gu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->GetFirstVisiblePoint()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(pEntity_gurax->GetFirstVisiblePoint()));
 }
 
 // wx.RichTextCtrl#GetValue()
@@ -5702,8 +5677,7 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetSelection_gurax, processor_gurax, arg
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextSelection(
-		pEntity_gurax->GetSelection()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextSelection(pEntity_gurax->GetSelection()));
 }
 
 // wx.RichTextCtrl#GetContextMenuPropertiesInfo() {block?}
@@ -5720,8 +5694,7 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetContextMenuPropertiesInfo_gurax, proc
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextContextMenuPropertiesInfo(
-		pEntity_gurax->GetContextMenuPropertiesInfo()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextContextMenuPropertiesInfo(pEntity_gurax->GetContextMenuPropertiesInfo()));
 }
 
 // wx.RichTextCtrl#GetStyle(position as Number, style as wx.TextAttr)

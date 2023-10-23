@@ -118,8 +118,7 @@ Gurax_ImplementMethodEx(wxTimer, GetOwner_gurax, processor_gurax, argument_gurax
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxEvtHandler(
-		pEntity_gurax->GetOwner()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxEvtHandler(pEntity_gurax->GetOwner()));
 }
 
 // wx.Timer#IsOneShot()

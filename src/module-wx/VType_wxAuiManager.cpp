@@ -106,8 +106,7 @@ Gurax_ImplementMethodEx(wxAuiManager, GetArtProvider_gurax, processor_gurax, arg
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxAuiDockArt(
-		pEntity_gurax->GetArtProvider()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxAuiDockArt(pEntity_gurax->GetArtProvider()));
 }
 
 // wx.AuiManager#GetFlags()
@@ -141,8 +140,7 @@ Gurax_ImplementMethodEx(wxAuiManager, GetManagedWindow_gurax, processor_gurax, a
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
-		pEntity_gurax->GetManagedWindow()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(pEntity_gurax->GetManagedWindow()));
 }
 
 // wx.AuiManager#HideHint()

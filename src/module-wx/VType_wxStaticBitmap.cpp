@@ -134,8 +134,7 @@ Gurax_ImplementMethodEx(wxStaticBitmap, GetBitmap_gurax, processor_gurax, argume
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
-		pEntity_gurax->GetBitmap()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(pEntity_gurax->GetBitmap()));
 }
 
 // wx.StaticBitmap#GetIcon() {block?}
@@ -152,8 +151,7 @@ Gurax_ImplementMethodEx(wxStaticBitmap, GetIcon_gurax, processor_gurax, argument
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxIcon(
-		pEntity_gurax->GetIcon()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxIcon(pEntity_gurax->GetIcon()));
 }
 
 // wx.StaticBitmap#SetBitmap(label as wx.Bitmap)

@@ -84,8 +84,7 @@ Gurax_ImplementMethodEx(wxBoxSizer, AddSpacer_gurax, processor_gurax, argument_g
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int size = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(
-		*pEntity_gurax->AddSpacer(size)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*pEntity_gurax->AddSpacer(size)));
 }
 
 // wx.BoxSizer#CalcMin() {block?}
@@ -102,8 +101,7 @@ Gurax_ImplementMethodEx(wxBoxSizer, CalcMin_gurax, processor_gurax, argument_gur
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->CalcMin()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->CalcMin()));
 }
 
 // wx.BoxSizer#GetOrientation()

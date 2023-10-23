@@ -211,8 +211,7 @@ Gurax_ImplementMethodEx(wxRibbonBar, GetPage_gurax, processor_gurax, argument_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int n = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonPage(
-		pEntity_gurax->GetPage(n)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonPage(pEntity_gurax->GetPage(n)));
 }
 
 // wx.RibbonBar#GetPageCount()

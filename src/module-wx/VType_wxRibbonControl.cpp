@@ -118,8 +118,7 @@ Gurax_ImplementMethodEx(wxRibbonControl, GetArtProvider_gurax, processor_gurax, 
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonArtProvider(
-		pEntity_gurax->GetArtProvider()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonArtProvider(pEntity_gurax->GetArtProvider()));
 }
 
 // wx.RibbonControl#IsSizingContinuous()
@@ -157,8 +156,7 @@ Gurax_ImplementMethodEx(wxRibbonControl, GetNextSmallerSize_gurax, processor_gur
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	wxOrientation direction = args_gurax.PickNumber<wxOrientation>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->GetNextSmallerSize(direction)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->GetNextSmallerSize(direction)));
 }
 
 // wx.RibbonControl#GetNextLargerSize(direction as Number) {block?}
@@ -179,8 +177,7 @@ Gurax_ImplementMethodEx(wxRibbonControl, GetNextLargerSize_gurax, processor_gura
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	wxOrientation direction = args_gurax.PickNumber<wxOrientation>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->GetNextLargerSize(direction)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->GetNextLargerSize(direction)));
 }
 
 // wx.RibbonControl#Realize()
@@ -231,8 +228,7 @@ Gurax_ImplementMethodEx(wxRibbonControl, GetAncestorRibbonBar_gurax, processor_g
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonBar(
-		pEntity_gurax->GetAncestorRibbonBar()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonBar(pEntity_gurax->GetAncestorRibbonBar()));
 }
 
 // wx.RibbonControl#GetBestSizeForParentSize(parentSize as wx.Size) {block?}
@@ -254,8 +250,7 @@ Gurax_ImplementMethodEx(wxRibbonControl, GetBestSizeForParentSize_gurax, process
 	Value_wxSize& value_parentSize = args_gurax.Pick<Value_wxSize>();
 	const wxSize& parentSize = value_parentSize.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->GetBestSizeForParentSize(parentSize)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->GetBestSizeForParentSize(parentSize)));
 }
 
 //-----------------------------------------------------------------------------

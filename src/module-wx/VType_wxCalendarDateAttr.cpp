@@ -117,8 +117,7 @@ Gurax_ImplementMethodEx(wxCalendarDateAttr, GetBackgroundColour_gurax, processor
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetBackgroundColour()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetBackgroundColour()));
 }
 
 // wx.CalendarDateAttr#GetBorder()
@@ -152,8 +151,7 @@ Gurax_ImplementMethodEx(wxCalendarDateAttr, GetBorderColour_gurax, processor_gur
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetBorderColour()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetBorderColour()));
 }
 
 // wx.CalendarDateAttr#GetFont() {block?}
@@ -170,8 +168,7 @@ Gurax_ImplementMethodEx(wxCalendarDateAttr, GetFont_gurax, processor_gurax, argu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(
-		pEntity_gurax->GetFont()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(pEntity_gurax->GetFont()));
 }
 
 // wx.CalendarDateAttr#GetTextColour() {block?}
@@ -188,8 +185,7 @@ Gurax_ImplementMethodEx(wxCalendarDateAttr, GetTextColour_gurax, processor_gurax
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetTextColour()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetTextColour()));
 }
 
 // wx.CalendarDateAttr#HasBackgroundColour()
@@ -433,8 +429,7 @@ Gurax_DeclareClassMethodAlias(wxCalendarDateAttr, GetMark_gurax, "GetMark")
 Gurax_ImplementClassMethodEx(wxCalendarDateAttr, GetMark_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxCalendarDateAttr(
-		wxCalendarDateAttr::GetMark()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxCalendarDateAttr(wxCalendarDateAttr::GetMark()));
 }
 
 // wx.CalendarDateAttr.SetMark(m as wx.CalendarDateAttr)

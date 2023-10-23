@@ -85,8 +85,7 @@ Gurax_ImplementMethodEx(wxHVScrolledWindow, GetRowColumnCount_gurax, processor_g
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->GetRowColumnCount()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->GetRowColumnCount()));
 }
 
 // wx.HVScrolledWindow#GetVisibleBegin() {block?}
@@ -103,8 +102,7 @@ Gurax_ImplementMethodEx(wxHVScrolledWindow, GetVisibleBegin_gurax, processor_gur
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPosition(
-		pEntity_gurax->GetVisibleBegin()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPosition(pEntity_gurax->GetVisibleBegin()));
 }
 
 // wx.HVScrolledWindow#GetVisibleEnd() {block?}
@@ -121,8 +119,7 @@ Gurax_ImplementMethodEx(wxHVScrolledWindow, GetVisibleEnd_gurax, processor_gurax
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPosition(
-		pEntity_gurax->GetVisibleEnd()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPosition(pEntity_gurax->GetVisibleEnd()));
 }
 
 // wx.HVScrolledWindow#SetRowColumnCount(rowCount as Number, columnCount as Number)
@@ -264,8 +261,7 @@ Gurax_ImplementMethodEx(wxHVScrolledWindow, VirtualHitTest_gurax, processor_gura
 	wxCoord x = args_gurax.PickNumber<wxCoord>();
 	wxCoord y = args_gurax.PickNumber<wxCoord>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPosition(
-		pEntity_gurax->VirtualHitTest(x, y)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPosition(pEntity_gurax->VirtualHitTest(x, y)));
 }
 
 // wx.HVScrolledWindow#GetColumnCount()

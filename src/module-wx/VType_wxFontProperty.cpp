@@ -165,8 +165,7 @@ Gurax_ImplementMethodEx(wxFontProperty, ChildChanged_gurax, processor_gurax, arg
 	Value_wxVariant& value_childValue = args_gurax.Pick<Value_wxVariant>();
 	wxVariant& childValue = value_childValue.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxVariant(
-		pEntity_gurax->ChildChanged(thisValue, childIndex, childValue)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxVariant(pEntity_gurax->ChildChanged(thisValue, childIndex, childValue)));
 }
 
 // wx.FontProperty#RefreshChildren()

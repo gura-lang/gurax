@@ -580,8 +580,7 @@ Gurax_ImplementMethodEx(wxListCtrl, GetEditControl_gurax, processor_gurax, argum
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTextCtrl(
-		pEntity_gurax->GetEditControl()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTextCtrl(pEntity_gurax->GetEditControl()));
 }
 
 // wx.ListCtrl#GetImageList(which as Number) {block?}
@@ -602,8 +601,7 @@ Gurax_ImplementMethodEx(wxListCtrl, GetImageList_gurax, processor_gurax, argumen
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int which = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImageList(
-		pEntity_gurax->GetImageList(which)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImageList(pEntity_gurax->GetImageList(which)));
 }
 
 // wx.ListCtrl#GetItem(info as wx.ListItem)
@@ -646,8 +644,7 @@ Gurax_ImplementMethodEx(wxListCtrl, GetItemBackgroundColour_gurax, processor_gur
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	long item = args_gurax.PickNumber<long>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetItemBackgroundColour(item)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetItemBackgroundColour(item)));
 }
 
 // wx.ListCtrl#GetItemCount()
@@ -685,8 +682,7 @@ Gurax_ImplementMethodEx(wxListCtrl, GetItemFont_gurax, processor_gurax, argument
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	long item = args_gurax.PickNumber<long>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(
-		pEntity_gurax->GetItemFont(item)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(pEntity_gurax->GetItemFont(item)));
 }
 
 // wx.ListCtrl#GetItemPosition(item as Number, pos as wx.Point)
@@ -754,8 +750,7 @@ Gurax_ImplementMethodEx(wxListCtrl, GetItemSpacing_gurax, processor_gurax, argum
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->GetItemSpacing()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->GetItemSpacing()));
 }
 
 // wx.ListCtrl#GetItemState(item as Number, stateMask as Number)
@@ -823,8 +818,7 @@ Gurax_ImplementMethodEx(wxListCtrl, GetItemTextColour_gurax, processor_gurax, ar
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	long item = args_gurax.PickNumber<long>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetItemTextColour(item)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetItemTextColour(item)));
 }
 
 // wx.ListCtrl#GetNextItem(item as Number, geometry? as Number, state? as Number)
@@ -914,8 +908,7 @@ Gurax_ImplementMethodEx(wxListCtrl, GetTextColour_gurax, processor_gurax, argume
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetTextColour()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetTextColour()));
 }
 
 // wx.ListCtrl#GetTopItem()
@@ -949,8 +942,7 @@ Gurax_ImplementMethodEx(wxListCtrl, GetViewRect_gurax, processor_gurax, argument
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect(
-		pEntity_gurax->GetViewRect()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect(pEntity_gurax->GetViewRect()));
 }
 
 // wx.ListCtrl#SetAlternateRowColour(colour as wx.Colour)
@@ -1776,8 +1768,7 @@ Gurax_ImplementMethodEx(wxListCtrl, OnGetItemAttr_gurax, processor_gurax, argume
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	long item = args_gurax.PickNumber<long>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxListItemAttr(
-		*pEntity_gurax->OnGetItemAttr(item)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxListItemAttr(*pEntity_gurax->OnGetItemAttr(item)));
 }
 
 // wx.ListCtrl#OnGetItemColumnAttr(item as Number, column as Number) {block?}
@@ -1800,8 +1791,7 @@ Gurax_ImplementMethodEx(wxListCtrl, OnGetItemColumnAttr_gurax, processor_gurax, 
 	long item = args_gurax.PickNumber<long>();
 	long column = args_gurax.PickNumber<long>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxListItemAttr(
-		*pEntity_gurax->OnGetItemColumnAttr(item, column)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxListItemAttr(*pEntity_gurax->OnGetItemColumnAttr(item, column)));
 }
 
 // wx.ListCtrl#OnGetItemColumnImage(item as Number, column as Number)

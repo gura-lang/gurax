@@ -130,8 +130,7 @@ Gurax_ImplementMethodEx(wxHtmlListBox, GetFileSystem_gurax, processor_gurax, arg
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFileSystem(
-		pEntity_gurax->GetFileSystem()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFileSystem(pEntity_gurax->GetFileSystem()));
 }
 
 // wx.HtmlListBox#OnLinkClicked(n as Number, link as wx.HtmlLinkInfo)
@@ -177,8 +176,7 @@ Gurax_ImplementMethodEx(wxHtmlListBox, GetSelectedTextBgColour_gurax, processor_
 	Value_wxColour& value_colBg = args_gurax.Pick<Value_wxColour>();
 	const wxColour& colBg = value_colBg.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetSelectedTextBgColour(colBg)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetSelectedTextBgColour(colBg)));
 }
 
 // wx.HtmlListBox#GetSelectedTextColour(colFg as wx.Colour) {block?}
@@ -200,8 +198,7 @@ Gurax_ImplementMethodEx(wxHtmlListBox, GetSelectedTextColour_gurax, processor_gu
 	Value_wxColour& value_colFg = args_gurax.Pick<Value_wxColour>();
 	const wxColour& colFg = value_colFg.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetSelectedTextColour(colFg)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetSelectedTextColour(colFg)));
 }
 
 // wx.HtmlListBox#OnGetItemMarkup(n as Number)

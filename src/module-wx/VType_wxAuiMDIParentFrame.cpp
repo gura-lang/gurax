@@ -154,8 +154,7 @@ Gurax_ImplementMethodEx(wxAuiMDIParentFrame, GetArtProvider_gurax, processor_gur
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxAuiTabArt(
-		pEntity_gurax->GetArtProvider()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxAuiTabArt(pEntity_gurax->GetArtProvider()));
 }
 
 // wx.AuiMDIParentFrame#GetNotebook() {block?}
@@ -172,8 +171,7 @@ Gurax_ImplementMethodEx(wxAuiMDIParentFrame, GetNotebook_gurax, processor_gurax,
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxAuiNotebook(
-		pEntity_gurax->GetNotebook()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxAuiNotebook(pEntity_gurax->GetNotebook()));
 }
 
 // wx.AuiMDIParentFrame#GetWindowMenu() {block?}
@@ -190,8 +188,7 @@ Gurax_ImplementMethodEx(wxAuiMDIParentFrame, GetWindowMenu_gurax, processor_gura
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenu(
-		pEntity_gurax->GetWindowMenu()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenu(pEntity_gurax->GetWindowMenu()));
 }
 
 // wx.AuiMDIParentFrame#SetWindowMenu(pMenu as wx.Menu)
@@ -274,8 +271,7 @@ Gurax_ImplementMethodEx(wxAuiMDIParentFrame, GetActiveChild_gurax, processor_gur
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxAuiMDIChildFrame(
-		pEntity_gurax->GetActiveChild()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxAuiMDIChildFrame(pEntity_gurax->GetActiveChild()));
 }
 
 // wx.AuiMDIParentFrame#SetActiveChild(pChildFrame as wx.AuiMDIChildFrame)
@@ -314,8 +310,7 @@ Gurax_ImplementMethodEx(wxAuiMDIParentFrame, GetClientWindow_gurax, processor_gu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxAuiMDIClientWindow(
-		pEntity_gurax->GetClientWindow()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxAuiMDIClientWindow(pEntity_gurax->GetClientWindow()));
 }
 
 // wx.AuiMDIParentFrame#OnCreateClient() {block?}
@@ -332,8 +327,7 @@ Gurax_ImplementMethodEx(wxAuiMDIParentFrame, OnCreateClient_gurax, processor_gur
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxAuiMDIClientWindow(
-		pEntity_gurax->OnCreateClient()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxAuiMDIClientWindow(pEntity_gurax->OnCreateClient()));
 }
 
 // wx.AuiMDIParentFrame#Cascade()

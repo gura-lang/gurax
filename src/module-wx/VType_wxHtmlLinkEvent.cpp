@@ -62,8 +62,7 @@ Gurax_ImplementMethodEx(wxHtmlLinkEvent, GetLinkInfo_gurax, processor_gurax, arg
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxHtmlLinkInfo(
-		pEntity_gurax->GetLinkInfo()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxHtmlLinkInfo(pEntity_gurax->GetLinkInfo()));
 }
 
 //-----------------------------------------------------------------------------

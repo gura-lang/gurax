@@ -161,8 +161,7 @@ Gurax_ImplementMethodEx(wxDatePickerCtrl, GetValue_gurax, processor_gurax, argum
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateTime(
-		pEntity_gurax->GetValue()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateTime(pEntity_gurax->GetValue()));
 }
 
 // wx.DatePickerCtrl#SetRange(dt1 as wx.DateTime, dt2 as wx.DateTime)

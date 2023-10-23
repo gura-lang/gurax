@@ -62,8 +62,7 @@ Gurax_ImplementMethodEx(wxRibbonGalleryEvent, GetGallery_gurax, processor_gurax,
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonGallery(
-		pEntity_gurax->GetGallery()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonGallery(pEntity_gurax->GetGallery()));
 }
 
 // wx.RibbonGalleryEvent#GetGalleryItem() {block?}
@@ -80,8 +79,7 @@ Gurax_ImplementMethodEx(wxRibbonGalleryEvent, GetGalleryItem_gurax, processor_gu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonGalleryItem(
-		pEntity_gurax->GetGalleryItem()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonGalleryItem(pEntity_gurax->GetGalleryItem()));
 }
 
 // wx.RibbonGalleryEvent#SetGallery(gallery as wx.RibbonGallery)

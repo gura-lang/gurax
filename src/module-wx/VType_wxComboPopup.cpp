@@ -171,8 +171,7 @@ Gurax_ImplementMethodEx(wxComboPopup, GetAdjustedSize_gurax, processor_gurax, ar
 	int prefHeight = args_gurax.PickNumber<int>();
 	int maxHeight = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->GetAdjustedSize(minWidth, prefHeight, maxHeight)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->GetAdjustedSize(minWidth, prefHeight, maxHeight)));
 }
 
 // wx.ComboPopup#GetComboCtrl() {block?}
@@ -189,8 +188,7 @@ Gurax_ImplementMethodEx(wxComboPopup, GetComboCtrl_gurax, processor_gurax, argum
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxComboCtrl(
-		pEntity_gurax->GetComboCtrl()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxComboCtrl(pEntity_gurax->GetComboCtrl()));
 }
 
 // wx.ComboPopup#GetControl() {block?}
@@ -207,8 +205,7 @@ Gurax_ImplementMethodEx(wxComboPopup, GetControl_gurax, processor_gurax, argumen
 	auto pEntity_gurax = dynamic_cast<Value_wxComboPopup::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
-		pEntity_gurax->GetControl()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(pEntity_gurax->GetControl()));
 }
 
 // wx.ComboPopup#GetStringValue()

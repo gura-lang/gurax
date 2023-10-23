@@ -79,8 +79,7 @@ Gurax_ImplementMethodEx(wxDataViewEvent, GetDataViewColumn_gurax, processor_gura
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDataViewColumn(
-		pEntity_gurax->GetDataViewColumn()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDataViewColumn(pEntity_gurax->GetDataViewColumn()));
 }
 
 // wx.DataViewEvent#GetModel() {block?}
@@ -97,8 +96,7 @@ Gurax_ImplementMethodEx(wxDataViewEvent, GetModel_gurax, processor_gurax, argume
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDataViewModel(
-		pEntity_gurax->GetModel()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDataViewModel(pEntity_gurax->GetModel()));
 }
 
 // wx.DataViewEvent#GetPosition() {block?}
@@ -115,8 +113,7 @@ Gurax_ImplementMethodEx(wxDataViewEvent, GetPosition_gurax, processor_gurax, arg
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->GetPosition()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(pEntity_gurax->GetPosition()));
 }
 
 // wx.DataViewEvent#GetValue() {block?}
@@ -133,8 +130,7 @@ Gurax_ImplementMethodEx(wxDataViewEvent, GetValue_gurax, processor_gurax, argume
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxVariant(
-		pEntity_gurax->GetValue()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxVariant(pEntity_gurax->GetValue()));
 }
 
 // wx.DataViewEvent#IsEditCancelled()
@@ -277,8 +273,7 @@ Gurax_ImplementMethodEx(wxDataViewEvent, GetDataFormat_gurax, processor_gurax, a
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDataFormat(
-		pEntity_gurax->GetDataFormat()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDataFormat(pEntity_gurax->GetDataFormat()));
 }
 
 // wx.DataViewEvent#GetDataSize()
@@ -384,8 +379,7 @@ Gurax_ImplementMethodEx(wxDataViewEvent, GetItem_gurax, processor_gurax, argumen
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDataViewItem(
-		pEntity_gurax->GetItem()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDataViewItem(pEntity_gurax->GetItem()));
 }
 
 // wx.DataViewEvent#SetItem(item as wx.DataViewItem)
@@ -470,8 +464,7 @@ Gurax_ImplementMethodEx(wxDataViewEvent, GetDataObject_gurax, processor_gurax, a
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDataObject(
-		pEntity_gurax->GetDataObject()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDataObject(pEntity_gurax->GetDataObject()));
 }
 
 // wx.DataViewEvent#SetDataFormat(format as wx.DataFormat)

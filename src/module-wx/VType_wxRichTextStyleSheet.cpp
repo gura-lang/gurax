@@ -186,8 +186,7 @@ Gurax_ImplementMethodEx(wxRichTextStyleSheet, FindCharacterStyle_gurax, processo
 	wxString name(args_gurax.PickString());
 	bool recurse = args_gurax.IsValid()? args_gurax.PickBool() : true;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextCharacterStyleDefinition(
-		pEntity_gurax->FindCharacterStyle(name, recurse)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextCharacterStyleDefinition(pEntity_gurax->FindCharacterStyle(name, recurse)));
 }
 
 // wx.RichTextStyleSheet#FindListStyle(name as String, recurse? as Bool) {block?}
@@ -210,8 +209,7 @@ Gurax_ImplementMethodEx(wxRichTextStyleSheet, FindListStyle_gurax, processor_gur
 	wxString name(args_gurax.PickString());
 	bool recurse = args_gurax.IsValid()? args_gurax.PickBool() : true;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextListStyleDefinition(
-		pEntity_gurax->FindListStyle(name, recurse)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextListStyleDefinition(pEntity_gurax->FindListStyle(name, recurse)));
 }
 
 // wx.RichTextStyleSheet#FindParagraphStyle(name as String, recurse? as Bool) {block?}
@@ -234,8 +232,7 @@ Gurax_ImplementMethodEx(wxRichTextStyleSheet, FindParagraphStyle_gurax, processo
 	wxString name(args_gurax.PickString());
 	bool recurse = args_gurax.IsValid()? args_gurax.PickBool() : true;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextParagraphStyleDefinition(
-		pEntity_gurax->FindParagraphStyle(name, recurse)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextParagraphStyleDefinition(pEntity_gurax->FindParagraphStyle(name, recurse)));
 }
 
 // wx.RichTextStyleSheet#FindStyle(name as String) {block?}
@@ -256,8 +253,7 @@ Gurax_ImplementMethodEx(wxRichTextStyleSheet, FindStyle_gurax, processor_gurax, 
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	wxString name(args_gurax.PickString());
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextStyleDefinition(
-		pEntity_gurax->FindStyle(name)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextStyleDefinition(pEntity_gurax->FindStyle(name)));
 }
 
 // wx.RichTextStyleSheet#GetCharacterStyle(n as Number) {block?}
@@ -278,8 +274,7 @@ Gurax_ImplementMethodEx(wxRichTextStyleSheet, GetCharacterStyle_gurax, processor
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	size_t n = args_gurax.PickNumber<size_t>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextCharacterStyleDefinition(
-		pEntity_gurax->GetCharacterStyle(n)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextCharacterStyleDefinition(pEntity_gurax->GetCharacterStyle(n)));
 }
 
 // wx.RichTextStyleSheet#GetCharacterStyleCount()
@@ -334,8 +329,7 @@ Gurax_ImplementMethodEx(wxRichTextStyleSheet, GetListStyle_gurax, processor_gura
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	size_t n = args_gurax.PickNumber<size_t>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextListStyleDefinition(
-		pEntity_gurax->GetListStyle(n)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextListStyleDefinition(pEntity_gurax->GetListStyle(n)));
 }
 
 // wx.RichTextStyleSheet#GetListStyleCount()
@@ -390,8 +384,7 @@ Gurax_ImplementMethodEx(wxRichTextStyleSheet, GetParagraphStyle_gurax, processor
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	size_t n = args_gurax.PickNumber<size_t>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextParagraphStyleDefinition(
-		pEntity_gurax->GetParagraphStyle(n)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextParagraphStyleDefinition(pEntity_gurax->GetParagraphStyle(n)));
 }
 
 // wx.RichTextStyleSheet#GetParagraphStyleCount()
@@ -563,8 +556,7 @@ Gurax_ImplementMethodEx(wxRichTextStyleSheet, GetProperties_gurax, processor_gur
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextProperties(
-		pEntity_gurax->GetProperties()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextProperties(pEntity_gurax->GetProperties()));
 }
 
 // wx.RichTextStyleSheet#SetProperties(props as wx.RichTextProperties)

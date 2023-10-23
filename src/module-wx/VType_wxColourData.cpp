@@ -92,8 +92,7 @@ Gurax_ImplementMethodEx(wxColourData, GetColour_gurax, processor_gurax, argument
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetColour()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetColour()));
 }
 
 // wx.ColourData#GetCustomColour(i as Number) {block?}
@@ -114,8 +113,7 @@ Gurax_ImplementMethodEx(wxColourData, GetCustomColour_gurax, processor_gurax, ar
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int i = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->GetCustomColour(i)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetCustomColour(i)));
 }
 
 // wx.ColourData#SetChooseFull(flag as Bool)

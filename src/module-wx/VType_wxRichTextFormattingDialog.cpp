@@ -162,8 +162,7 @@ Gurax_ImplementMethodEx(wxRichTextFormattingDialog, GetImageList_gurax, processo
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImageList(
-		pEntity_gurax->GetImageList()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImageList(pEntity_gurax->GetImageList()));
 }
 
 // wx.RichTextFormattingDialog#GetStyle(ctrl as wx.RichTextCtrl, range as wx.RichTextRange)
@@ -205,8 +204,7 @@ Gurax_ImplementMethodEx(wxRichTextFormattingDialog, GetStyleDefinition_gurax, pr
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextStyleDefinition(
-		pEntity_gurax->GetStyleDefinition()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextStyleDefinition(pEntity_gurax->GetStyleDefinition()));
 }
 
 // wx.RichTextFormattingDialog#GetStyleSheet() {block?}
@@ -223,8 +221,7 @@ Gurax_ImplementMethodEx(wxRichTextFormattingDialog, GetStyleSheet_gurax, process
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextStyleSheet(
-		*pEntity_gurax->GetStyleSheet()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextStyleSheet(*pEntity_gurax->GetStyleSheet()));
 }
 
 // wx.RichTextFormattingDialog#SetAttributes(attr as wx.TextAttr)
@@ -412,8 +409,7 @@ Gurax_ImplementMethodEx(wxRichTextFormattingDialog, GetAttributes_gurax, process
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTextAttr(
-		pEntity_gurax->GetAttributes()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTextAttr(pEntity_gurax->GetAttributes()));
 }
 
 // wx.RichTextFormattingDialog.GetDialog(win as wx.Window) {block?}
@@ -430,8 +426,7 @@ Gurax_ImplementClassMethodEx(wxRichTextFormattingDialog, GetDialog_gurax, proces
 	Value_wxWindow& value_win = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* win = value_win.GetEntityPtr();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextFormattingDialog(
-		wxRichTextFormattingDialog::GetDialog(win)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextFormattingDialog(wxRichTextFormattingDialog::GetDialog(win)));
 }
 
 // wx.RichTextFormattingDialog.GetDialogAttributes(win as wx.Window) {block?}
@@ -448,8 +443,7 @@ Gurax_ImplementClassMethodEx(wxRichTextFormattingDialog, GetDialogAttributes_gur
 	Value_wxWindow& value_win = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* win = value_win.GetEntityPtr();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTextAttr(
-		*wxRichTextFormattingDialog::GetDialogAttributes(win)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTextAttr(*wxRichTextFormattingDialog::GetDialogAttributes(win)));
 }
 
 // wx.RichTextFormattingDialog.GetDialogStyleDefinition(win as wx.Window) {block?}
@@ -466,8 +460,7 @@ Gurax_ImplementClassMethodEx(wxRichTextFormattingDialog, GetDialogStyleDefinitio
 	Value_wxWindow& value_win = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* win = value_win.GetEntityPtr();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextStyleDefinition(
-		wxRichTextFormattingDialog::GetDialogStyleDefinition(win)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextStyleDefinition(wxRichTextFormattingDialog::GetDialogStyleDefinition(win)));
 }
 
 // wx.RichTextFormattingDialog.GetFormattingDialogFactory() {block?}
@@ -479,8 +472,7 @@ Gurax_DeclareClassMethodAlias(wxRichTextFormattingDialog, GetFormattingDialogFac
 Gurax_ImplementClassMethodEx(wxRichTextFormattingDialog, GetFormattingDialogFactory_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextFormattingDialogFactory(
-		wxRichTextFormattingDialog::GetFormattingDialogFactory()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRichTextFormattingDialogFactory(wxRichTextFormattingDialog::GetFormattingDialogFactory()));
 }
 
 // wx.RichTextFormattingDialog.SetFormattingDialogFactory(factory as wx.RichTextFormattingDialogFactory)

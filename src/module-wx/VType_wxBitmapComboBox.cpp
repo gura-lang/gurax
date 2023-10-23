@@ -166,8 +166,7 @@ Gurax_ImplementMethodEx(wxBitmapComboBox, GetBitmapSize_gurax, processor_gurax, 
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->GetBitmapSize()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->GetBitmapSize()));
 }
 
 // wx.BitmapComboBox#GetItemBitmap(n as Number) {block?}
@@ -188,8 +187,7 @@ Gurax_ImplementMethodEx(wxBitmapComboBox, GetItemBitmap_gurax, processor_gurax, 
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	unsigned int n = args_gurax.PickNumber<unsigned int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
-		pEntity_gurax->GetItemBitmap(n)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(pEntity_gurax->GetItemBitmap(n)));
 }
 
 // wx.BitmapComboBox#Insert(item as String, bitmap as wx.Bitmap, pos as Number)

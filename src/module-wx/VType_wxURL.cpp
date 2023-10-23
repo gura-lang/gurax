@@ -97,8 +97,7 @@ Gurax_ImplementMethodEx(wxURL, GetInputStream_gurax, processor_gurax, argument_g
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxInputStream(
-		pEntity_gurax->GetInputStream()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxInputStream(pEntity_gurax->GetInputStream()));
 }
 
 // wx.URL#IsOk()

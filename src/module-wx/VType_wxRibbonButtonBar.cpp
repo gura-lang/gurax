@@ -138,8 +138,7 @@ Gurax_ImplementMethodEx(wxRibbonButtonBar, AddButton_gurax, processor_gurax, arg
 	bool kind_validFlag = args_gurax.IsValid();
 	wxRibbonButtonKind kind = kind_validFlag? args_gurax.PickNumber<wxRibbonButtonKind>() : wxRIBBON_BUTTON_NORMAL;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(
-		pEntity_gurax->AddButton(button_id, label, bitmap, help_string, kind)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(pEntity_gurax->AddButton(button_id, label, bitmap, help_string, kind)));
 }
 
 // wx.RibbonButtonBar#AddDropdownButton(button_id as Number, label as String, bitmap as wx.Bitmap, help_string? as String) {block?}
@@ -168,8 +167,7 @@ Gurax_ImplementMethodEx(wxRibbonButtonBar, AddDropdownButton_gurax, processor_gu
 	bool help_string_validFlag = args_gurax.IsValid();
 	wxString help_string = help_string_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(
-		pEntity_gurax->AddDropdownButton(button_id, label, bitmap, help_string)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(pEntity_gurax->AddDropdownButton(button_id, label, bitmap, help_string)));
 }
 
 // wx.RibbonButtonBar#AddHybridButton(button_id as Number, label as String, bitmap as wx.Bitmap, help_string? as String) {block?}
@@ -198,8 +196,7 @@ Gurax_ImplementMethodEx(wxRibbonButtonBar, AddHybridButton_gurax, processor_gura
 	bool help_string_validFlag = args_gurax.IsValid();
 	wxString help_string = help_string_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(
-		pEntity_gurax->AddHybridButton(button_id, label, bitmap, help_string)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(pEntity_gurax->AddHybridButton(button_id, label, bitmap, help_string)));
 }
 
 // wx.RibbonButtonBar#AddToggleButton(button_id as Number, label as String, bitmap as wx.Bitmap, help_string? as String) {block?}
@@ -228,8 +225,7 @@ Gurax_ImplementMethodEx(wxRibbonButtonBar, AddToggleButton_gurax, processor_gura
 	bool help_string_validFlag = args_gurax.IsValid();
 	wxString help_string = help_string_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(
-		pEntity_gurax->AddToggleButton(button_id, label, bitmap, help_string)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(pEntity_gurax->AddToggleButton(button_id, label, bitmap, help_string)));
 }
 
 // wx.RibbonButtonBar#InsertButton(pos as Number, button_id as Number, label as String, bitmap as wx.Bitmap, help_string as String, kind? as Number) {block?}
@@ -262,8 +258,7 @@ Gurax_ImplementMethodEx(wxRibbonButtonBar, InsertButton_gurax, processor_gurax, 
 	bool kind_validFlag = args_gurax.IsValid();
 	wxRibbonButtonKind kind = kind_validFlag? args_gurax.PickNumber<wxRibbonButtonKind>() : wxRIBBON_BUTTON_NORMAL;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(
-		pEntity_gurax->InsertButton(pos, button_id, label, bitmap, help_string, kind)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(pEntity_gurax->InsertButton(pos, button_id, label, bitmap, help_string, kind)));
 }
 
 // wx.RibbonButtonBar#InsertDropdownButton(pos as Number, button_id as Number, label as String, bitmap as wx.Bitmap, help_string? as String) {block?}
@@ -294,8 +289,7 @@ Gurax_ImplementMethodEx(wxRibbonButtonBar, InsertDropdownButton_gurax, processor
 	bool help_string_validFlag = args_gurax.IsValid();
 	wxString help_string = help_string_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(
-		pEntity_gurax->InsertDropdownButton(pos, button_id, label, bitmap, help_string)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(pEntity_gurax->InsertDropdownButton(pos, button_id, label, bitmap, help_string)));
 }
 
 // wx.RibbonButtonBar#InsertHybridButton(pos as Number, button_id as Number, label as String, bitmap as wx.Bitmap, help_string? as String) {block?}
@@ -326,8 +320,7 @@ Gurax_ImplementMethodEx(wxRibbonButtonBar, InsertHybridButton_gurax, processor_g
 	bool help_string_validFlag = args_gurax.IsValid();
 	wxString help_string = help_string_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(
-		pEntity_gurax->InsertHybridButton(pos, button_id, label, bitmap, help_string)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(pEntity_gurax->InsertHybridButton(pos, button_id, label, bitmap, help_string)));
 }
 
 // wx.RibbonButtonBar#InsertToggleButton(pos as Number, button_id as Number, label as String, bitmap as wx.Bitmap, help_string? as String) {block?}
@@ -358,8 +351,7 @@ Gurax_ImplementMethodEx(wxRibbonButtonBar, InsertToggleButton_gurax, processor_g
 	bool help_string_validFlag = args_gurax.IsValid();
 	wxString help_string = help_string_validFlag? wxString(args_gurax.PickString()) : "";
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(
-		pEntity_gurax->InsertToggleButton(pos, button_id, label, bitmap, help_string)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(pEntity_gurax->InsertToggleButton(pos, button_id, label, bitmap, help_string)));
 }
 
 // wx.RibbonButtonBar#GetButtonCount()
@@ -472,8 +464,7 @@ Gurax_ImplementMethodEx(wxRibbonButtonBar, GetItem_gurax, processor_gurax, argum
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	size_t n = args_gurax.PickNumber<size_t>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(
-		pEntity_gurax->GetItem(n)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(pEntity_gurax->GetItem(n)));
 }
 
 // wx.RibbonButtonBar#GetItemById(id as Number) {block?}
@@ -494,8 +485,7 @@ Gurax_ImplementMethodEx(wxRibbonButtonBar, GetItemById_gurax, processor_gurax, a
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int id = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(
-		pEntity_gurax->GetItemById(id)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(pEntity_gurax->GetItemById(id)));
 }
 
 // wx.RibbonButtonBar#GetItemId(item as wx.RibbonButtonBarButtonBase)
@@ -635,8 +625,7 @@ Gurax_ImplementMethodEx(wxRibbonButtonBar, GetActiveItem_gurax, processor_gurax,
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(
-		pEntity_gurax->GetActiveItem()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(pEntity_gurax->GetActiveItem()));
 }
 
 // wx.RibbonButtonBar#GetHoveredItem() {block?}
@@ -653,8 +642,7 @@ Gurax_ImplementMethodEx(wxRibbonButtonBar, GetHoveredItem_gurax, processor_gurax
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(
-		pEntity_gurax->GetHoveredItem()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRibbonButtonBarButtonBase(pEntity_gurax->GetHoveredItem()));
 }
 
 // wx.RibbonButtonBar#SetShowToolTipsForDisabled(show as Bool)

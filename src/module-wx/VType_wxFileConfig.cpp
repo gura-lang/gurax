@@ -332,8 +332,7 @@ Gurax_ImplementClassMethodEx(wxFileConfig, GetGlobalFile_gurax, processor_gurax,
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	wxString basename(args_gurax.PickString());
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFileName(
-		wxFileConfig::GetGlobalFile(basename)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFileName(wxFileConfig::GetGlobalFile(basename)));
 }
 
 // wx.FileConfig.GetLocalFile(basename as String, style? as Number) {block?}
@@ -352,8 +351,7 @@ Gurax_ImplementClassMethodEx(wxFileConfig, GetLocalFile_gurax, processor_gurax, 
 	bool style_validFlag = args_gurax.IsValid();
 	int style = style_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFileName(
-		wxFileConfig::GetLocalFile(basename, style)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFileName(wxFileConfig::GetLocalFile(basename, style)));
 }
 
 // wx.FileConfig.GetGlobalFileName(szFile as String)

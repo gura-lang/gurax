@@ -79,8 +79,7 @@ Gurax_ImplementMethodEx(wxCalculateLayoutEvent, GetRect_gurax, processor_gurax, 
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect(
-		pEntity_gurax->GetRect()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect(pEntity_gurax->GetRect()));
 }
 
 // wx.CalculateLayoutEvent#SetFlags(flags as Number)

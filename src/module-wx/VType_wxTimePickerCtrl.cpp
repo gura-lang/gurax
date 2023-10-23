@@ -165,8 +165,7 @@ Gurax_ImplementMethodEx(wxTimePickerCtrl, GetValue_gurax, processor_gurax, argum
 	auto pEntity_gurax = dynamic_cast<Value_wxTimePickerCtrl::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateTime(
-		pEntity_gurax->GetValue()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDateTime(pEntity_gurax->GetValue()));
 }
 
 // wx.TimePickerCtrl#SetTime(hour as Number, min as Number, sec as Number)

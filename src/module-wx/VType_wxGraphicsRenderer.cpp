@@ -67,8 +67,7 @@ Gurax_ImplementMethodEx(wxGraphicsRenderer, CreateBitmapFromImage_gurax, process
 	Value_wxImage& value_image = args_gurax.Pick<Value_wxImage>();
 	const wxImage& image = value_image.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsBitmap(
-		pEntity_gurax->CreateBitmapFromImage(image)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsBitmap(pEntity_gurax->CreateBitmapFromImage(image)));
 }
 
 // wx.GraphicsRenderer#CreateImageFromBitmap(bmp as wx.GraphicsBitmap) {block?}
@@ -90,8 +89,7 @@ Gurax_ImplementMethodEx(wxGraphicsRenderer, CreateImageFromBitmap_gurax, process
 	Value_wxGraphicsBitmap& value_bmp = args_gurax.Pick<Value_wxGraphicsBitmap>();
 	const wxGraphicsBitmap& bmp = value_bmp.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
-		pEntity_gurax->CreateImageFromBitmap(bmp)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(pEntity_gurax->CreateImageFromBitmap(bmp)));
 }
 
 // wx.GraphicsRenderer#CreateBitmapFromNativeBitmap(bitmap as Pointer) {block?}
@@ -116,8 +114,7 @@ Gurax_ImplementMethodEx(wxGraphicsRenderer, CreateBitmapFromNativeBitmap_gurax, 
 		return Value::nil();
 	}
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsBitmap(
-		pEntity_gurax->CreateBitmapFromNativeBitmap(bitmap)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsBitmap(pEntity_gurax->CreateBitmapFromNativeBitmap(bitmap)));
 }
 
 // wx.GraphicsRenderer#CreateContext(window as wx.Window) {block?}
@@ -139,8 +136,7 @@ Gurax_ImplementMethodEx(wxGraphicsRenderer, CreateContext_gurax, processor_gurax
 	Value_wxWindow& value_window = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* window = value_window.GetEntityPtr();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsContext(
-		*pEntity_gurax->CreateContext(window)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsContext(*pEntity_gurax->CreateContext(window)));
 }
 
 // wx.GraphicsRenderer#CreateContextFromImage(image as wx.Image) {block?}
@@ -162,8 +158,7 @@ Gurax_ImplementMethodEx(wxGraphicsRenderer, CreateContextFromImage_gurax, proces
 	Value_wxImage& value_image = args_gurax.Pick<Value_wxImage>();
 	wxImage& image = value_image.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsContext(
-		*pEntity_gurax->CreateContextFromImage(image)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsContext(*pEntity_gurax->CreateContextFromImage(image)));
 }
 
 // wx.GraphicsRenderer#CreateBrush(brush as wx.Brush) {block?}
@@ -185,8 +180,7 @@ Gurax_ImplementMethodEx(wxGraphicsRenderer, CreateBrush_gurax, processor_gurax, 
 	Value_wxBrush& value_brush = args_gurax.Pick<Value_wxBrush>();
 	const wxBrush& brush = value_brush.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsBrush(
-		pEntity_gurax->CreateBrush(brush)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsBrush(pEntity_gurax->CreateBrush(brush)));
 }
 
 // wx.GraphicsRenderer#CreateContextFromNativeContext(context as Pointer) {block?}
@@ -211,8 +205,7 @@ Gurax_ImplementMethodEx(wxGraphicsRenderer, CreateContextFromNativeContext_gurax
 		return Value::nil();
 	}
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsContext(
-		*pEntity_gurax->CreateContextFromNativeContext(context)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsContext(*pEntity_gurax->CreateContextFromNativeContext(context)));
 }
 
 // wx.GraphicsRenderer#CreateContextFromNativeWindow(window as Pointer) {block?}
@@ -237,8 +230,7 @@ Gurax_ImplementMethodEx(wxGraphicsRenderer, CreateContextFromNativeWindow_gurax,
 		return Value::nil();
 	}
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsContext(
-		*pEntity_gurax->CreateContextFromNativeWindow(window)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsContext(*pEntity_gurax->CreateContextFromNativeWindow(window)));
 }
 
 // wx.GraphicsRenderer#CreateMeasuringContext() {block?}
@@ -255,8 +247,7 @@ Gurax_ImplementMethodEx(wxGraphicsRenderer, CreateMeasuringContext_gurax, proces
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsContext(
-		*pEntity_gurax->CreateMeasuringContext()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsContext(*pEntity_gurax->CreateMeasuringContext()));
 }
 
 // wx.GraphicsRenderer#CreateFont(font as wx.Font, col? as wx.Colour) {block?}
@@ -280,8 +271,7 @@ Gurax_ImplementMethodEx(wxGraphicsRenderer, CreateFont_gurax, processor_gurax, a
 	const wxFont& font = value_font.GetEntity();
 	const wxColour& col = args_gurax.IsValid()? args_gurax.Pick<Value_wxColour>().GetEntity() : *wxBLACK;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsFont(
-		pEntity_gurax->CreateFont(font, col)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsFont(pEntity_gurax->CreateFont(font, col)));
 }
 
 // wx.GraphicsRenderer#CreateLinearGradientBrush(x1 as Number, y1 as Number, x2 as Number, y2 as Number, stops as wx.GraphicsGradientStops) {block?}
@@ -311,8 +301,7 @@ Gurax_ImplementMethodEx(wxGraphicsRenderer, CreateLinearGradientBrush_gurax, pro
 	Value_wxGraphicsGradientStops& value_stops = args_gurax.Pick<Value_wxGraphicsGradientStops>();
 	const wxGraphicsGradientStops& stops = value_stops.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsBrush(
-		pEntity_gurax->CreateLinearGradientBrush(x1, y1, x2, y2, stops)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsBrush(pEntity_gurax->CreateLinearGradientBrush(x1, y1, x2, y2, stops)));
 }
 
 // wx.GraphicsRenderer#CreateMatrix(a? as Number, b? as Number, c? as Number, d? as Number, tx? as Number, ty? as Number) {block?}
@@ -349,8 +338,7 @@ Gurax_ImplementMethodEx(wxGraphicsRenderer, CreateMatrix_gurax, processor_gurax,
 	bool ty_validFlag = args_gurax.IsValid();
 	Double ty = ty_validFlag? args_gurax.PickNumber<Double>() : 0.0;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsMatrix(
-		pEntity_gurax->CreateMatrix(a, b, c, d, tx, ty)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsMatrix(pEntity_gurax->CreateMatrix(a, b, c, d, tx, ty)));
 }
 
 // wx.GraphicsRenderer#CreatePath() {block?}
@@ -367,8 +355,7 @@ Gurax_ImplementMethodEx(wxGraphicsRenderer, CreatePath_gurax, processor_gurax, a
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsPath(
-		pEntity_gurax->CreatePath()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsPath(pEntity_gurax->CreatePath()));
 }
 
 // wx.GraphicsRenderer#CreateRadialGradientBrush(xo as Number, yo as Number, xc as Number, yc as Number, radius as Number, stops as wx.GraphicsGradientStops) {block?}
@@ -400,8 +387,7 @@ Gurax_ImplementMethodEx(wxGraphicsRenderer, CreateRadialGradientBrush_gurax, pro
 	Value_wxGraphicsGradientStops& value_stops = args_gurax.Pick<Value_wxGraphicsGradientStops>();
 	const wxGraphicsGradientStops& stops = value_stops.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsBrush(
-		pEntity_gurax->CreateRadialGradientBrush(xo, yo, xc, yc, radius, stops)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsBrush(pEntity_gurax->CreateRadialGradientBrush(xo, yo, xc, yc, radius, stops)));
 }
 
 // wx.GraphicsRenderer#CreateSubBitmap(bitmap as wx.GraphicsBitmap, x as Number, y as Number, w as Number, h as Number) {block?}
@@ -431,8 +417,7 @@ Gurax_ImplementMethodEx(wxGraphicsRenderer, CreateSubBitmap_gurax, processor_gur
 	Double w = args_gurax.PickNumber<Double>();
 	Double h = args_gurax.PickNumber<Double>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsBitmap(
-		pEntity_gurax->CreateSubBitmap(bitmap, x, y, w, h)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsBitmap(pEntity_gurax->CreateSubBitmap(bitmap, x, y, w, h)));
 }
 
 // wx.GraphicsRenderer.GetDefaultRenderer() {block?}
@@ -444,8 +429,7 @@ Gurax_DeclareClassMethodAlias(wxGraphicsRenderer, GetDefaultRenderer_gurax, "Get
 Gurax_ImplementClassMethodEx(wxGraphicsRenderer, GetDefaultRenderer_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsRenderer(
-		wxGraphicsRenderer::GetDefaultRenderer()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsRenderer(wxGraphicsRenderer::GetDefaultRenderer()));
 }
 
 // wx.GraphicsRenderer.GetCairoRenderer() {block?}
@@ -457,8 +441,7 @@ Gurax_DeclareClassMethodAlias(wxGraphicsRenderer, GetCairoRenderer_gurax, "GetCa
 Gurax_ImplementClassMethodEx(wxGraphicsRenderer, GetCairoRenderer_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsRenderer(
-		wxGraphicsRenderer::GetCairoRenderer()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGraphicsRenderer(wxGraphicsRenderer::GetCairoRenderer()));
 }
 
 //-----------------------------------------------------------------------------

@@ -132,8 +132,7 @@ Gurax_ImplementMethodEx(wxAnimationCtrl, GetAnimation_gurax, processor_gurax, ar
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxAnimation(
-		pEntity_gurax->GetAnimation()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxAnimation(pEntity_gurax->GetAnimation()));
 }
 
 // wx.AnimationCtrl#GetInactiveBitmap() {block?}
@@ -150,8 +149,7 @@ Gurax_ImplementMethodEx(wxAnimationCtrl, GetInactiveBitmap_gurax, processor_gura
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
-		pEntity_gurax->GetInactiveBitmap()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(pEntity_gurax->GetInactiveBitmap()));
 }
 
 // wx.AnimationCtrl#IsPlaying()

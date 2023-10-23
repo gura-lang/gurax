@@ -114,8 +114,7 @@ Gurax_ImplementMethodEx(wxDataViewColumn, GetOwner_gurax, processor_gurax, argum
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDataViewCtrl(
-		pEntity_gurax->GetOwner()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDataViewCtrl(pEntity_gurax->GetOwner()));
 }
 
 // wx.DataViewColumn#GetRenderer() {block?}
@@ -132,8 +131,7 @@ Gurax_ImplementMethodEx(wxDataViewColumn, GetRenderer_gurax, processor_gurax, ar
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDataViewRenderer(
-		pEntity_gurax->GetRenderer()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDataViewRenderer(pEntity_gurax->GetRenderer()));
 }
 
 //-----------------------------------------------------------------------------

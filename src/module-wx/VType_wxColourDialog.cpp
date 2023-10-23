@@ -107,8 +107,7 @@ Gurax_ImplementMethodEx(wxColourDialog, GetColourData_gurax, processor_gurax, ar
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColourData(
-		pEntity_gurax->GetColourData()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColourData(pEntity_gurax->GetColourData()));
 }
 
 // wx.ColourDialog#ShowModal()

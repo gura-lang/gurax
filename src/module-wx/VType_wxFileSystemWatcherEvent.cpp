@@ -62,8 +62,7 @@ Gurax_ImplementMethodEx(wxFileSystemWatcherEvent, GetPath_gurax, processor_gurax
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFileName(
-		pEntity_gurax->GetPath()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFileName(pEntity_gurax->GetPath()));
 }
 
 // wx.FileSystemWatcherEvent#GetNewPath() {block?}
@@ -80,8 +79,7 @@ Gurax_ImplementMethodEx(wxFileSystemWatcherEvent, GetNewPath_gurax, processor_gu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFileName(
-		pEntity_gurax->GetNewPath()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFileName(pEntity_gurax->GetNewPath()));
 }
 
 // wx.FileSystemWatcherEvent#GetChangeType()

@@ -113,8 +113,7 @@ Gurax_ImplementMethodEx(wxStaticBoxSizer, GetStaticBox_gurax, processor_gurax, a
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxStaticBox(
-		pEntity_gurax->GetStaticBox()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxStaticBox(pEntity_gurax->GetStaticBox()));
 }
 
 // wx.StaticBoxSizer#CalcMin() {block?}
@@ -131,8 +130,7 @@ Gurax_ImplementMethodEx(wxStaticBoxSizer, CalcMin_gurax, processor_gurax, argume
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->CalcMin()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->CalcMin()));
 }
 
 // wx.StaticBoxSizer#RecalcSizes()

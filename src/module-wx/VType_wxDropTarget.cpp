@@ -194,8 +194,7 @@ Gurax_ImplementMethodEx(wxDropTarget, GetDataObject_gurax, processor_gurax, argu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDataObject(
-		pEntity_gurax->GetDataObject()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDataObject(pEntity_gurax->GetDataObject()));
 }
 
 // wx.DropTarget#SetDataObject(data as wx.DataObject)

@@ -238,8 +238,7 @@ Gurax_ImplementMethodEx(wxHtmlHelpWindow, GetData_gurax, processor_gurax, argume
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxHtmlHelpData(
-		pEntity_gurax->GetData()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxHtmlHelpData(pEntity_gurax->GetData()));
 }
 
 // wx.HtmlHelpWindow#KeywordSearch(keyword as String, mode? as Number)
@@ -372,8 +371,7 @@ Gurax_ImplementMethodEx(wxHtmlHelpWindow, GetController_gurax, processor_gurax, 
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxHtmlHelpController(
-		pEntity_gurax->GetController()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxHtmlHelpController(pEntity_gurax->GetController()));
 }
 
 // wx.HtmlHelpWindow#SetController(controller as wx.HtmlHelpController)

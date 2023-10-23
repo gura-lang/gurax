@@ -84,8 +84,7 @@ Gurax_ImplementMethodEx(wxPaletteChangedEvent, GetChangedWindow_gurax, processor
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
-		pEntity_gurax->GetChangedWindow()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(pEntity_gurax->GetChangedWindow()));
 }
 
 //-----------------------------------------------------------------------------

@@ -292,8 +292,7 @@ Gurax_ImplementMethodEx(wxRegion, ConvertToBitmap_gurax, processor_gurax, argume
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
-		pEntity_gurax->ConvertToBitmap()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(pEntity_gurax->ConvertToBitmap()));
 }
 
 // wx.Region#Intersect(args* as Any)
@@ -673,8 +672,7 @@ Gurax_ImplementMethodEx(wxRegion, GetBoxRect_gurax, processor_gurax, argument_gu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect(
-		pEntity_gurax->GetBox()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect(pEntity_gurax->GetBox()));
 }
 
 // wx.Region#Offset(args* as Any)

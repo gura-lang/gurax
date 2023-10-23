@@ -62,8 +62,7 @@ Gurax_ImplementMethodEx(wxGridBagSizer, CalcMin_gurax, processor_gurax, argument
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->CalcMin()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->CalcMin()));
 }
 
 // wx.GridBagSizer#FindItemAtPoint(pt as wx.Point) {block?}
@@ -85,8 +84,7 @@ Gurax_ImplementMethodEx(wxGridBagSizer, FindItemAtPoint_gurax, processor_gurax, 
 	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
 	const wxPoint& pt = value_pt.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGBSizerItem(
-		*pEntity_gurax->FindItemAtPoint(pt)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGBSizerItem(*pEntity_gurax->FindItemAtPoint(pt)));
 }
 
 // wx.GridBagSizer#FindItemAtPosition(pos as wx.GBPosition) {block?}
@@ -108,8 +106,7 @@ Gurax_ImplementMethodEx(wxGridBagSizer, FindItemAtPosition_gurax, processor_gura
 	Value_wxGBPosition& value_pos = args_gurax.Pick<Value_wxGBPosition>();
 	const wxGBPosition& pos = value_pos.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGBSizerItem(
-		*pEntity_gurax->FindItemAtPosition(pos)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGBSizerItem(*pEntity_gurax->FindItemAtPosition(pos)));
 }
 
 // wx.GridBagSizer#FindItemWithData(userData as wx.Object) {block?}
@@ -131,8 +128,7 @@ Gurax_ImplementMethodEx(wxGridBagSizer, FindItemWithData_gurax, processor_gurax,
 	Value_wxObject& value_userData = args_gurax.Pick<Value_wxObject>();
 	const wxObject* userData = value_userData.GetEntityPtr();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGBSizerItem(
-		*pEntity_gurax->FindItemWithData(userData)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGBSizerItem(*pEntity_gurax->FindItemWithData(userData)));
 }
 
 // wx.GridBagSizer#GetCellSize(row as Number, col as Number) {block?}
@@ -155,8 +151,7 @@ Gurax_ImplementMethodEx(wxGridBagSizer, GetCellSize_gurax, processor_gurax, argu
 	int row = args_gurax.PickNumber<int>();
 	int col = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->GetCellSize(row, col)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->GetCellSize(row, col)));
 }
 
 // wx.GridBagSizer#GetEmptyCellSize() {block?}
@@ -173,8 +168,7 @@ Gurax_ImplementMethodEx(wxGridBagSizer, GetEmptyCellSize_gurax, processor_gurax,
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->GetEmptyCellSize()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->GetEmptyCellSize()));
 }
 
 // wx.GridBagSizer#RecalcSizes()
@@ -248,8 +242,7 @@ Gurax_ImplementMethodEx(wxGridBagSizer, Add_gurax, processor_gurax, argument_gur
 	int border = border_validFlag? args_gurax.PickNumber<int>() : 0;
 	const Value& userData = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(
-		*pEntity_gurax->Add(window, pos, span, flag, border, ClientObject::Create(userData))));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*pEntity_gurax->Add(window, pos, span, flag, border, ClientObject::Create(userData))));
 }
 
 // wx.GridBagSizer#CheckForIntersection(item as wx.GBSizerItem, excludeItem? as wx.GBSizerItem)
@@ -295,8 +288,7 @@ Gurax_ImplementMethodEx(wxGridBagSizer, FindItem_gurax, processor_gurax, argumen
 	Value_wxWindow& value_window = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* window = value_window.GetEntityPtr();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGBSizerItem(
-		*pEntity_gurax->FindItem(window)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGBSizerItem(*pEntity_gurax->FindItem(window)));
 }
 
 // wx.GridBagSizer#GetItemPosition(window as wx.Window) {block?}
@@ -318,8 +310,7 @@ Gurax_ImplementMethodEx(wxGridBagSizer, GetItemPosition_gurax, processor_gurax, 
 	Value_wxWindow& value_window = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* window = value_window.GetEntityPtr();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGBPosition(
-		pEntity_gurax->GetItemPosition(window)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGBPosition(pEntity_gurax->GetItemPosition(window)));
 }
 
 // wx.GridBagSizer#GetItemSpan(window as wx.Window) {block?}
@@ -341,8 +332,7 @@ Gurax_ImplementMethodEx(wxGridBagSizer, GetItemSpan_gurax, processor_gurax, argu
 	Value_wxWindow& value_window = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* window = value_window.GetEntityPtr();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGBSpan(
-		pEntity_gurax->GetItemSpan(window)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGBSpan(pEntity_gurax->GetItemSpan(window)));
 }
 
 // wx.GridBagSizer#SetItemPosition(window as wx.Window, pos as wx.GBPosition)

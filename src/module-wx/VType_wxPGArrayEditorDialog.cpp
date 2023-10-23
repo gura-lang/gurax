@@ -151,8 +151,7 @@ Gurax_ImplementMethodEx(wxPGArrayEditorDialog, GetDialogValue_gurax, processor_g
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxVariant(
-		pEntity_gurax->GetDialogValue()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxVariant(pEntity_gurax->GetDialogValue()));
 }
 
 // wx.PGArrayEditorDialog#IsModified()

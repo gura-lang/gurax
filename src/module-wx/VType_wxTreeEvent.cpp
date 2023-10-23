@@ -62,8 +62,7 @@ Gurax_ImplementMethodEx(wxTreeEvent, GetItem_gurax, processor_gurax, argument_gu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(
-		pEntity_gurax->GetItem()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(pEntity_gurax->GetItem()));
 }
 
 // wx.TreeEvent#GetKeyCode()
@@ -114,8 +113,7 @@ Gurax_ImplementMethodEx(wxTreeEvent, GetOldItem_gurax, processor_gurax, argument
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(
-		pEntity_gurax->GetOldItem()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(pEntity_gurax->GetOldItem()));
 }
 
 // wx.TreeEvent#GetPoint() {block?}
@@ -132,8 +130,7 @@ Gurax_ImplementMethodEx(wxTreeEvent, GetPoint_gurax, processor_gurax, argument_g
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->GetPoint()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(pEntity_gurax->GetPoint()));
 }
 
 // wx.TreeEvent#IsEditCancelled()

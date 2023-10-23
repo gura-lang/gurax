@@ -62,8 +62,7 @@ Gurax_ImplementMethodEx(wxImage, Copy_gurax, processor_gurax, argument_gurax)
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
-		pEntity_gurax->Copy()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(pEntity_gurax->Copy()));
 }
 
 // wx.Image#Clear(value? as Number)
@@ -140,8 +139,7 @@ Gurax_ImplementMethodEx(wxImage, BlurHorizontal_gurax, processor_gurax, argument
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int blurRadius = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
-		pEntity_gurax->BlurHorizontal(blurRadius)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(pEntity_gurax->BlurHorizontal(blurRadius)));
 }
 
 // wx.Image#BlurVertical(blurRadius as Number) {block?}
@@ -162,8 +160,7 @@ Gurax_ImplementMethodEx(wxImage, BlurVertical_gurax, processor_gurax, argument_g
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int blurRadius = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
-		pEntity_gurax->BlurVertical(blurRadius)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(pEntity_gurax->BlurVertical(blurRadius)));
 }
 
 // wx.Image#Mirror(horizontally? as Bool) {block?}
@@ -184,8 +181,7 @@ Gurax_ImplementMethodEx(wxImage, Mirror_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	bool horizontally = args_gurax.IsValid()? args_gurax.PickBool() : true;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
-		pEntity_gurax->Mirror(horizontally)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(pEntity_gurax->Mirror(horizontally)));
 }
 
 // wx.Image#Paste(image as wx.Image, x as Number, y as Number)
@@ -268,8 +264,7 @@ Gurax_ImplementMethodEx(wxImage, Rescale_gurax, processor_gurax, argument_gurax)
 	bool quality_validFlag = args_gurax.IsValid();
 	wxImageResizeQuality quality = quality_validFlag? args_gurax.PickNumber<wxImageResizeQuality>() : wxIMAGE_QUALITY_NORMAL;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
-		pEntity_gurax->Rescale(width, height, quality)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(pEntity_gurax->Rescale(width, height, quality)));
 }
 
 // wx.Image#Resize(size as wx.Size, pos as wx.Point, red? as Number, green? as Number, blue? as Number) {block?}
@@ -303,8 +298,7 @@ Gurax_ImplementMethodEx(wxImage, Resize_gurax, processor_gurax, argument_gurax)
 	bool blue_validFlag = args_gurax.IsValid();
 	int blue = blue_validFlag? args_gurax.PickNumber<int>() : -1;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
-		pEntity_gurax->Resize(size, pos, red, green, blue)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(pEntity_gurax->Resize(size, pos, red, green, blue)));
 }
 
 // wx.Image#Rotate(angle as Number, rotationCentre as wx.Point, interpolating? as Bool, offsetAfterRotation? as wx.Point) {block?}
@@ -332,8 +326,7 @@ Gurax_ImplementMethodEx(wxImage, Rotate_gurax, processor_gurax, argument_gurax)
 	bool interpolating = args_gurax.IsValid()? args_gurax.PickBool() : true;
 	wxPoint* offsetAfterRotation = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntityPtr() : nullptr;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
-		pEntity_gurax->Rotate(angle, rotationCentre, interpolating, offsetAfterRotation)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(pEntity_gurax->Rotate(angle, rotationCentre, interpolating, offsetAfterRotation)));
 }
 
 // wx.Image#Rotate90(clockwise? as Bool) {block?}
@@ -354,8 +347,7 @@ Gurax_ImplementMethodEx(wxImage, Rotate90_gurax, processor_gurax, argument_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	bool clockwise = args_gurax.IsValid()? args_gurax.PickBool() : true;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
-		pEntity_gurax->Rotate90(clockwise)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(pEntity_gurax->Rotate90(clockwise)));
 }
 
 // wx.Image#Rotate180() {block?}
@@ -372,8 +364,7 @@ Gurax_ImplementMethodEx(wxImage, Rotate180_gurax, processor_gurax, argument_gura
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
-		pEntity_gurax->Rotate180()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(pEntity_gurax->Rotate180()));
 }
 
 // wx.Image#RotateHue(angle as Number)
@@ -420,8 +411,7 @@ Gurax_ImplementMethodEx(wxImage, Scale_gurax, processor_gurax, argument_gurax)
 	bool quality_validFlag = args_gurax.IsValid();
 	wxImageResizeQuality quality = quality_validFlag? args_gurax.PickNumber<wxImageResizeQuality>() : wxIMAGE_QUALITY_NORMAL;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
-		pEntity_gurax->Scale(width, height, quality)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(pEntity_gurax->Scale(width, height, quality)));
 }
 
 // wx.Image#Size(size as wx.Size, pos as wx.Point, red? as Number, green? as Number, blue? as Number) {block?}
@@ -455,8 +445,7 @@ Gurax_ImplementMethodEx(wxImage, Size_gurax, processor_gurax, argument_gurax)
 	bool blue_validFlag = args_gurax.IsValid();
 	int blue = blue_validFlag? args_gurax.PickNumber<int>() : -1;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
-		pEntity_gurax->Size(size, pos, red, green, blue)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(pEntity_gurax->Size(size, pos, red, green, blue)));
 }
 
 // wx.Image#ConvertAlphaToMask(threshold? as Number)
@@ -503,8 +492,7 @@ Gurax_ImplementMethodEx(wxImage, ConvertToGreyscale_gurax, processor_gurax, argu
 	double weight_g = args_gurax.PickNumber<double>();
 	double weight_b = args_gurax.PickNumber<double>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
-		pEntity_gurax->ConvertToGreyscale(weight_r, weight_g, weight_b)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(pEntity_gurax->ConvertToGreyscale(weight_r, weight_g, weight_b)));
 }
 
 // wx.Image#ConvertToMono(r as Number, g as Number, b as Number) {block?}
@@ -529,8 +517,7 @@ Gurax_ImplementMethodEx(wxImage, ConvertToMono_gurax, processor_gurax, argument_
 	unsigned char g = args_gurax.PickNumber<unsigned char>();
 	unsigned char b = args_gurax.PickNumber<unsigned char>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
-		pEntity_gurax->ConvertToMono(r, g, b)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(pEntity_gurax->ConvertToMono(r, g, b)));
 }
 
 // wx.Image#ConvertToDisabled(brightness? as Number) {block?}
@@ -552,8 +539,7 @@ Gurax_ImplementMethodEx(wxImage, ConvertToDisabled_gurax, processor_gurax, argum
 	bool brightness_validFlag = args_gurax.IsValid();
 	unsigned char brightness = brightness_validFlag? args_gurax.PickNumber<unsigned char>() : 255;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
-		pEntity_gurax->ConvertToDisabled(brightness)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(pEntity_gurax->ConvertToDisabled(brightness)));
 }
 
 // wx.Image#ComputeHistogram(histogram as wx.ImageHistogram)
@@ -746,8 +732,7 @@ Gurax_ImplementMethodEx(wxImage, GetSize_gurax, processor_gurax, argument_gurax)
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->GetSize()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(pEntity_gurax->GetSize()));
 }
 
 // wx.Image#GetOption(name as String)
@@ -806,8 +791,7 @@ Gurax_ImplementMethodEx(wxImage, GetPalette_gurax, processor_gurax, argument_gur
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPalette(
-		pEntity_gurax->GetPalette()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPalette(pEntity_gurax->GetPalette()));
 }
 
 // wx.Image#GetSubImage(rect as wx.Rect) {block?}
@@ -829,8 +813,7 @@ Gurax_ImplementMethodEx(wxImage, GetSubImage_gurax, processor_gurax, argument_gu
 	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
 	const wxRect& rect = value_rect.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
-		pEntity_gurax->GetSubImage(rect)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(pEntity_gurax->GetSubImage(rect)));
 }
 
 // wx.Image#GetType()
@@ -1231,8 +1214,7 @@ Gurax_ImplementClassMethodEx(wxImage, FindHandler_gurax, processor_gurax, argume
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	wxString name(args_gurax.PickString());
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImageHandler(
-		*wxImage::FindHandler(name)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImageHandler(*wxImage::FindHandler(name)));
 }
 
 // wx.Image.FindHandlerMime(mimetype as String) {block?}
@@ -1248,8 +1230,7 @@ Gurax_ImplementClassMethodEx(wxImage, FindHandlerMime_gurax, processor_gurax, ar
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	wxString mimetype(args_gurax.PickString());
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImageHandler(
-		*wxImage::FindHandlerMime(mimetype)));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImageHandler(*wxImage::FindHandlerMime(mimetype)));
 }
 
 // wx.Image.InitStandardHandlers()

@@ -375,8 +375,7 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, GetIcon_gurax, processor_gurax, argum
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxIcon(
-		pEntity_gurax->GetIcon()));
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxIcon(pEntity_gurax->GetIcon()));
 }
 
 // wx.AboutDialogInfo#SetIcon(icon as wx.Icon)
