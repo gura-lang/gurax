@@ -266,6 +266,7 @@ FuncInfo = class {
 	}
 	ComposeReturn(code as String) = cond(this.HasBlock(), Format('argument_gurax.ReturnValue(processor_gurax, %s)', code), code)
 	HasBlock() = this.hasBlockFlag || this.GetTypeInfo().blockOccurFlag
+	//HasBlock() = this.hasBlockFlag
 	ToString() = Format('%s.%s(%s)%s%s', this.moduleName, this.name, this.argInfoTbl:*ToString().Join(', '),
 		cond(this.mapFlag, ':map', ''), cond(this.HasBlock(), ' {block?}', ''))
 }
