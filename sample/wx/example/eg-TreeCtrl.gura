@@ -4,7 +4,7 @@ import(image)
 
 MyApp = class(wx.App) {
 	OnInit() = {
-		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(1000, 600)).Show()
 		true
 	}
 }
@@ -16,101 +16,126 @@ MyFrame = class(wx.Frame) {
 }
 
 PanelTop = class(wx.Panel) {
-	treeCtrl as wx.TreeCtrl
-	comboBox as wx.ComboBox
 	textCtrl as wx.TextCtrl
 	__init__(parent as wx.Window) = {|parent|
 		[imageList, imageIds] = image.InitImageList(image.mini_icons)
-		sizerTop = wx.BoxSizer(wx.VERTICAL)
-		this.SetSizer(sizerTop)
-		wx.BoxSizer(wx.HORIZONTAL) {|hbox|
-			sizerTop.Add(hbox, wx.SizerFlags(3).Expand())
-			wx.TreeCtrl(this, style = wx.TR_DEFAULT_STYLE | wx.TR_EDIT_LABELS | wx.TR_ROW_LINES) {|ctrl|
-				hbox.Add(ctrl, wx.SizerFlags(1).Expand())
-				ctrl.SetImageList(imageList);
-				ctrl.AddRoot('root', image = imageIds[`folder]) {|itemId|
-					ctrl.AppendItem(itemId, 'child 1', image = imageIds[`page], data = 'hello 1')
-					ctrl.AppendItem(itemId, 'child 2', image = imageIds[`folder]) {|itemId|
-						ctrl.AppendItem(itemId, 'child 2-1', data = 'hello 2-1', image = imageIds[`page])
-						ctrl.AppendItem(itemId, 'child 2-2', data = 'hello 2-2', image = imageIds[`page])
-						ctrl.AppendItem(itemId, 'child 2-3', data = 'hello 2-3', image = imageIds[`page])
-						ctrl.AppendItem(itemId, 'child 2-4', data = 'hello 2-4', image = imageIds[`page])
-					}
-					ctrl.AppendItem(itemId, 'child 3', image = imageIds[`page])
-					ctrl.AppendItem(itemId, 'child 4', image = imageIds[`page])
-					ctrl.AppendItem(itemId, 'child 5', image = imageIds[`folder]) {|itemId|
-						ctrl.AppendItem(itemId, 'child 5-1', image = imageIds[`page])
-						ctrl.AppendItem(itemId, 'child 5-2', image = imageIds[`page])
-						ctrl.AppendItem(itemId, 'child 5-3', image = imageIds[`page])
-						ctrl.AppendItem(itemId, 'child 5-4', image = imageIds[`page])
-					}
-					ctrl.AppendItem(itemId, 'child 6', image = imageIds[`page])
+		sizer = wx.BoxSizer(wx.VERTICAL)
+		this.SetSizer(sizer)
+		wx.BoxSizer(wx.HORIZONTAL) {|sizer|
+			(^sizer).Add(sizer, wx.SizerFlags(3).Expand())
+			wx.BoxSizer(wx.VERTICAL) {|sizer|
+				(^sizer).Add(sizer, wx.SizerFlags(1).Expand())
+				wx.StaticText(this, wx.ID_ANY, 'Default') {|ctrl|
+					sizer.Add(ctrl, wx.SizerFlags().Expand())
 				}
-				this.treeCtrl = ctrl
-				wx.EVT_TREE_BEGIN_DRAG(ctrl, this.OnTree)
-				wx.EVT_TREE_BEGIN_RDRAG(ctrl, this.OnTree)
-				wx.EVT_TREE_END_DRAG(ctrl, this.OnTree)
-				wx.EVT_TREE_BEGIN_LABEL_EDIT(ctrl, this.OnTree)
-				wx.EVT_TREE_END_LABEL_EDIT(ctrl, this.OnTree)
-				wx.EVT_TREE_DELETE_ITEM(ctrl, this.OnTree)
-				wx.EVT_TREE_GET_INFO(ctrl, this.OnTree)
-				wx.EVT_TREE_SET_INFO(ctrl, this.OnTree)
-				wx.EVT_TREE_ITEM_ACTIVATED(ctrl, this.OnTree)
-				wx.EVT_TREE_ITEM_COLLAPSED(ctrl, this.OnTree)
-				wx.EVT_TREE_ITEM_COLLAPSING(ctrl, this.OnTree)
-				wx.EVT_TREE_ITEM_EXPANDED(ctrl, this.OnTree)
-				wx.EVT_TREE_ITEM_EXPANDING(ctrl, this.OnTree)
-				wx.EVT_TREE_ITEM_RIGHT_CLICK(ctrl, this.OnTree)
-				wx.EVT_TREE_ITEM_MIDDLE_CLICK(ctrl, this.OnTree)
-				wx.EVT_TREE_SEL_CHANGED(ctrl, this.OnTree)
-				wx.EVT_TREE_SEL_CHANGING(ctrl, this.OnTree)
-				wx.EVT_TREE_KEY_DOWN(ctrl, this.OnTreeKeyDown)
-				wx.EVT_TREE_ITEM_GETTOOLTIP(ctrl, this.OnTreeItemGetToolTip)
-				wx.EVT_TREE_ITEM_MENU(ctrl, this.OnTree)
-				wx.EVT_TREE_STATE_IMAGE_CLICK(ctrl, this.OnTree)
-			}
-			wx.TreeCtrl(this, style = wx.TR_DEFAULT_STYLE | wx.TR_EDIT_LABELS) {|ctrl|
-				hbox.Add(ctrl, wx.SizerFlags(1).Expand())
-				ctrl.SetImageList(imageList);
-				ctrl.SetIndent(50)
-				ctrl.AddRoot('root', image = imageIds[`folder]) {|itemId|
-					ctrl.AppendItem(itemId, 'child 1', image = imageIds[`page], data = 'hello 1')
-					ctrl.AppendItem(itemId, 'child 2', image = imageIds[`folder]) {|itemId|
-						ctrl.AppendItem(itemId, 'child 2-1', data = 'hello 2-1', image = imageIds[`page])
-						ctrl.AppendItem(itemId, 'child 2-2', data = 'hello 2-2', image = imageIds[`page])
-						ctrl.AppendItem(itemId, 'child 2-3', data = 'hello 2-3', image = imageIds[`page])
-						ctrl.AppendItem(itemId, 'child 2-4', data = 'hello 2-4', image = indices[`page])
+				wx.TreeCtrl(this, style = wx.TR_DEFAULT_STYLE | wx.TR_EDIT_LABELS) {|ctrl|
+					sizer.Add(ctrl, wx.SizerFlags(1).Expand())
+					ctrl.SetImageList(imageList);
+					this.SetTreeCtrlContent(ctrl, imageList, imageIds)
+					this.SetTreeCtrlEventHandler(ctrl)
+					treeCtrl = ctrl
+				}
+				wx.BoxSizer(wx.HORIZONTAL) {|sizer|
+					(^sizer).Add(sizer, wx.SizerFlags().Expand())
+					wx.ComboBox(this, wx.ID_ANY, style = wx.CB_READONLY, size = wx.Size(150, -1), choices = ['GetSelections']) {|ctrl|
+						sizer.Add(ctrl, wx.SizerFlags().Expand())
+						ctrl.SetSelection(0)
+						comboBox = ctrl
 					}
-					ctrl.AppendItem(itemId, 'child 3', image = indices[`page])
-					ctrl.AppendItem(itemId, 'child 4', image = indices[`page])
-					ctrl.AppendItem(itemId, 'child 5', image = indices[`folder]) {|itemId|
-						ctrl.AppendItem(itemId, 'child 5-1', image = indices[`page])
-						ctrl.AppendItem(itemId, 'child 5-2', image = indices[`page])
-						ctrl.AppendItem(itemId, 'child 5-3', image = indices[`page])
-						ctrl.AppendItem(itemId, 'child 5-4', image = indices[`page])
-						ctrl.Expand(itemId)
+					wx.Button(this, wx.ID_ANY, 'Execute') {|ctrl|
+						sizer.Add(ctrl, wx.SizerFlags().Expand().Border(wx.LEFT, 4))
+						wx.EVT_BUTTON(ctrl, this.OnButton_Execute, (treeCtrl, comboBox))
 					}
-					ctrl.AppendItem(itemId, 'child 6', image = indices[`page])
-					ctrl.Expand(itemId)
 				}
 			}
-		}
-		wx.BoxSizer(wx.HORIZONTAL) {|hbox|
-			sizerTop.Add(hbox, wx.SizerFlags().Expand())
-			wx.ComboBox(this, wx.ID_ANY, style = wx.CB_READONLY, size = wx.Size(150, -1), choices = ['GetSelections']) {|ctrl|
-				hbox.Add(ctrl, wx.SizerFlags().Expand())
-				ctrl.SetSelection(0)
-				this.comboBox = ctrl
+			wx.BoxSizer(wx.VERTICAL) {|sizer|
+				(^sizer).Add(sizer, wx.SizerFlags(1).Expand())
+				wx.StaticText(this, wx.ID_ANY, 'TR_HIDE_ROOT') {|ctrl|
+					sizer.Add(ctrl, wx.SizerFlags().Expand())
+				}
+				wx.TreeCtrl(this, style = wx.TR_DEFAULT_STYLE | wx.TR_EDIT_LABELS | wx.TR_HIDE_ROOT) {|ctrl|
+					sizer.Add(ctrl, wx.SizerFlags(1).Expand())
+					ctrl.SetImageList(imageList);
+					this.SetTreeCtrlContent(ctrl, imageList, imageIds)
+					this.SetTreeCtrlEventHandler(ctrl)
+				}
 			}
-			wx.Button(this, wx.ID_ANY, 'Execute') {|ctrl|
-				hbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.LEFT, 4))
-				wx.EVT_BUTTON(ctrl, this.OnButton_Execute)
+			wx.BoxSizer(wx.VERTICAL) {|sizer|
+				(^sizer).Add(sizer, wx.SizerFlags(1).Expand())
+				wx.StaticText(this, wx.ID_ANY, 'TR_NO_LINES') {|ctrl|
+					sizer.Add(ctrl, wx.SizerFlags().Expand())
+				}
+				wx.TreeCtrl(this, style = wx.TR_DEFAULT_STYLE | wx.TR_EDIT_LABELS | wx.TR_NO_LINES) {|ctrl|
+					sizer.Add(ctrl, wx.SizerFlags(1).Expand())
+					ctrl.SetImageList(imageList);
+					this.SetTreeCtrlContent(ctrl, imageList, imageIds)
+					this.SetTreeCtrlEventHandler(ctrl)
+				}
+			}
+			wx.BoxSizer(wx.VERTICAL) {|sizer|
+				(^sizer).Add(sizer, wx.SizerFlags(1).Expand())
+				wx.StaticText(this, wx.ID_ANY, 'SetIndent(50)') {|ctrl|
+					sizer.Add(ctrl, wx.SizerFlags().Expand())
+				}
+				wx.TreeCtrl(this, style = wx.TR_DEFAULT_STYLE | wx.TR_EDIT_LABELS) {|ctrl|
+					sizer.Add(ctrl, wx.SizerFlags(1).Expand())
+					ctrl.SetImageList(imageList);
+					ctrl.SetIndent(50)
+					this.SetTreeCtrlContent(ctrl, imageList, imageIds)
+					this.SetTreeCtrlEventHandler(ctrl)
+				}
 			}
 		}
 		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
-			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
+			(^sizer).Add(ctrl, wx.SizerFlags(1).Expand())
 			this.textCtrl = ctrl
 		}
+	}
+	SetTreeCtrlContent(ctrl as wx.TreeCtrl, imageList as wx.ImageList, imageIds as Dict) = {
+		ctrl.SetImageList(imageList);
+		ctrl.AddRoot('root', image = imageIds[`folder]) {|itemId|
+			ctrl.AppendItem(itemId, 'child 1', image = imageIds[`page], data = 'hello 1')
+			ctrl.AppendItem(itemId, 'child 2', image = imageIds[`folder]) {|itemId|
+				ctrl.AppendItem(itemId, 'child 2-1', data = 'hello 2-1', image = imageIds[`page])
+				ctrl.AppendItem(itemId, 'child 2-2', data = 'hello 2-2', image = imageIds[`page])
+				ctrl.AppendItem(itemId, 'child 2-3', data = 'hello 2-3', image = imageIds[`page])
+				ctrl.AppendItem(itemId, 'child 2-4', data = 'hello 2-4', image = imageIds[`page])
+			}
+			ctrl.AppendItem(itemId, 'child 3', image = imageIds[`page])
+			ctrl.AppendItem(itemId, 'child 4', image = imageIds[`page])
+			ctrl.AppendItem(itemId, 'child 5', image = imageIds[`folder]) {|itemId|
+				ctrl.AppendItem(itemId, 'child 5-1', image = imageIds[`page])
+				ctrl.AppendItem(itemId, 'child 5-2', image = imageIds[`page])
+				ctrl.AppendItem(itemId, 'child 5-3', image = imageIds[`page])
+				ctrl.AppendItem(itemId, 'child 5-4', image = imageIds[`page])
+				ctrl.Expand(itemId)
+			}
+			ctrl.AppendItem(itemId, 'child 6', image = imageIds[`page])
+			if (!ctrl.HasFlag(wx.TR_HIDE_ROOT)) { ctrl.Expand(itemId) }
+		}
+	}
+	SetTreeCtrlEventHandler(ctrl as wx.TreeCtrl) = {
+		wx.EVT_TREE_BEGIN_DRAG(ctrl, this.OnTree, ctrl)
+		wx.EVT_TREE_BEGIN_RDRAG(ctrl, this.OnTree, ctrl)
+		wx.EVT_TREE_END_DRAG(ctrl, this.OnTree, ctrl)
+		wx.EVT_TREE_BEGIN_LABEL_EDIT(ctrl, this.OnTree, ctrl)
+		wx.EVT_TREE_END_LABEL_EDIT(ctrl, this.OnTree, ctrl)
+		wx.EVT_TREE_DELETE_ITEM(ctrl, this.OnTree, ctrl)
+		wx.EVT_TREE_GET_INFO(ctrl, this.OnTree, ctrl)
+		wx.EVT_TREE_SET_INFO(ctrl, this.OnTree, ctrl)
+		wx.EVT_TREE_ITEM_ACTIVATED(ctrl, this.OnTree, ctrl)
+		wx.EVT_TREE_ITEM_COLLAPSED(ctrl, this.OnTree, ctrl)
+		wx.EVT_TREE_ITEM_COLLAPSING(ctrl, this.OnTree, ctrl)
+		wx.EVT_TREE_ITEM_EXPANDED(ctrl, this.OnTree, ctrl)
+		wx.EVT_TREE_ITEM_EXPANDING(ctrl, this.OnTree, ctrl)
+		wx.EVT_TREE_ITEM_RIGHT_CLICK(ctrl, this.OnTree, ctrl)
+		wx.EVT_TREE_ITEM_MIDDLE_CLICK(ctrl, this.OnTree, ctrl)
+		wx.EVT_TREE_SEL_CHANGED(ctrl, this.OnTree, ctrl)
+		wx.EVT_TREE_SEL_CHANGING(ctrl, this.OnTree, ctrl)
+		wx.EVT_TREE_KEY_DOWN(ctrl, this.OnTreeKeyDown, ctrl)
+		wx.EVT_TREE_ITEM_GETTOOLTIP(ctrl, this.OnTreeItemGetToolTip, ctrl)
+		wx.EVT_TREE_ITEM_MENU(ctrl, this.OnTree, ctrl)
+		wx.EVT_TREE_STATE_IMAGE_CLICK(ctrl, this.OnTree, ctrl)
 	}
 	OnTree(event) = {
 		this.PrintTreeEvent(event)
@@ -121,23 +146,26 @@ PanelTop = class(wx.Panel) {
 		this.Printf('%s(%d)\n', eventName, event.GetKeyCode())
 	}
 	OnTreeItemGetToolTip(event) = {
+		treeCtrl = event.GetEventUserData()
 		this.PrintTreeEvent(event)
 		itemId = event.GetItem()
-		event.SetToolTip(this.treeCtrl.GetItemText(itemId))
+		event.SetToolTip(treeCtrl.GetItemText(itemId))
 	}
 	OnButton_Execute(event) = {
-		n = this.comboBox.GetSelection()
-		cmdName = this.comboBox.GetString(n)
+		[treeCtrl, comboBox] = event.GetEventUserData()
+		n = comboBox.GetSelection()
+		cmdName = comboBox.GetString(n)
 		if (cmdName == 'GetSelections') {
-			this.treeCtrl.GetSelections().Each {|itemId|
-				this.Printf('%s\n', this.treeCtrl.GetItemText(itemId))
+			treeCtrl.GetSelections().Each {|itemId|
+				this.Printf('%s\n', treeCtrl.GetItemText(itemId))
 			}
 		}
 	}
 	PrintTreeEvent(event) = {
+		treeCtrl = event.GetEventUserData()
 		eventName = event.GetEventType().name
 		itemId = event.GetItem()
-		this.Printf('%s(\'%s\')\n', eventName, this.treeCtrl.GetItemText(itemId))
+		this.Printf('%s(\'%s\')\n', eventName, treeCtrl.GetItemText(itemId))
 	}
 	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
 }

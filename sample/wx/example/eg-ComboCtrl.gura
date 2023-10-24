@@ -65,9 +65,11 @@ PanelMain = class(wx.Panel) {
 					ctrlPopup.AppendColumn('Column1')
 					ctrlPopup.AppendColumn('Column2')
 					ctrlPopup.AppendColumn('Column3')
-					ctrlPopup.InsertItem(ctrlPopup.GetItemCount(), 'item1')
-					ctrlPopup.InsertItem(ctrlPopup.GetItemCount(), 'item2')
-					ctrlPopup.InsertItem(ctrlPopup.GetItemCount(), 'item3')
+					repeat (10) {|index|
+						ctrlPopup.InsertItem(index, Format('item%d', index + 1))
+						ctrlPopup.SetItem(index, 1, Format('item%d-2', index + 1))
+						ctrlPopup.SetItem(index, 2, Format('item%d-3', index + 1))
+					}
 				}
 			}
 		}
