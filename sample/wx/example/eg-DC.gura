@@ -17,8 +17,31 @@ MyFrame = class(wx.Frame) {
 			[Page_Brush, Page_Pen, Page_Line, Page_Arc, Page_Circle, Page_Ellipse, Page_EllipticArc, Page_Text].Each {|cls|
 				noteBook.AddPage(cls(noteBook), cls.name)
 			}
-			noteBook.SetSelection(1)
+			noteBook.SetSelection(7)
 		}
+	}
+}
+
+wx.DC.PutText(text as String, x as Number, y as Number, anchor as Symbol) = {
+	size = this.GetTextExtent(text)
+	if (anchor == `center) {
+		this.DrawText(text, x - size.GetWidth() / 2, y - size.GetHeight() / 2)
+	} elsif (anchor == `north) {
+		this.DrawText(text, x - size.GetWidth() / 2, y)
+	} elsif (anchor == `south) {
+		this.DrawText(text, x - size.GetWidth() / 2, y - size.GetHeight())
+	} elsif (anchor == `east) {
+		this.DrawText(text, x - size.GetWidth(), y - size.GetHeight() / 2)
+	} elsif (anchor == `west) {
+		this.DrawText(text, x, y - size.GetHeight() / 2)
+	} elsif (anchor == `northeast) {
+		this.DrawText(text, x - size.GetWidth(), y)
+	} elsif (anchor == `southeast) {
+		this.DrawText(text, x - size.GetWidth(), y - size.GetHeight())
+	} elsif (anchor == `northwest) {
+		this.DrawText(text, x, y)
+	} elsif (anchor == `southwest) {
+		this.DrawText(text, x, y - size.GetHeight())
 	}
 }
 
@@ -171,9 +194,32 @@ Page_Line = class(wx.Panel) {
 	}
 	OnPaint(event) = {
 		dc = wx.PaintDC(this)
-		dc.DrawLine(0, 0, 100, 100)
-		dc.DrawLines(@(wx.Point) {{0, 0}, {30, 100}, {50, 50}}, 300, 50)
-		dc.DrawIcon(wx.Icon(sample_xpm), [200, 240, 280], 20)
+		fontLabel = dc.GetFont()
+		fontLabel.SetPointSize(10)
+		dc.SetFont(fontLabel)
+		dc.SetPen(wx.Pen('#ff8888', 1, wx.PENSTYLE_SOLID))
+		rad = (math.pi * 29 / 30) * [0..60]
+		radius = 80
+		xOffset = 100, yOffset = 100
+		scope {
+			dc.PutText('DrawLine(x1, y1, x2, y2)', xOffset, yOffset, `center)
+			ptTbl = wx.Point(math.Cos(rad) * radius + xOffset, math.Sin(rad) * radius + yOffset):map
+			repeat (ptTbl.len - 1) {|i|
+				dc.DrawLine(ptTbl[i].x, ptTbl[i].y, ptTbl[i + 1].x, ptTbl[i + 1].y)
+			}
+		}
+		xOffset += 200
+		scope {
+			ptTbl = wx.Point(math.Cos(rad) * radius + xOffset, math.Sin(rad) * radius + yOffset):map
+			repeat (ptTbl.len - 1) {|i|
+				dc.DrawLine(ptTbl[i], ptTbl[i + 1])
+			}
+		}
+		xOffset += 200
+		scope {
+			ptTbl = wx.Point(math.Cos(rad) * radius + xOffset, math.Sin(rad) * radius + yOffset):map
+			dc.DrawLines(ptTbl)
+		}
 		dc = nil
 	}
 }
@@ -268,15 +314,17 @@ Page_EllipticArc = class(wx.Panel) {
 }
 
 Page_Text = class(wx.Panel) {
-	name:static = 'Text'
+	name:static = 'DrawText'
 	__init__(parent as wx.Window) = {|parent|
 		this.Bind(wx.EVT_PAINT, this.OnPaint)
 	}
 	OnPaint(event) = {
 		dc = wx.PaintDC(this)
-		dc.DrawText('Hello World', 30, 200)
 		dc.SetFont(wx.Font(30, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
-		dc.DrawText('Hello World', 30, 240)
+		dc.PutText('North', 200, 200, `north)
+		dc.PutText('South', 200, 200, `south)
+		dc.PutText('West', 200, 200, `west)
+		dc.PutText('East', 200, 200, `east)
 		dc = nil
 	}
 }
