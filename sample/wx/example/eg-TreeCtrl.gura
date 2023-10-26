@@ -25,10 +25,10 @@ PanelTop = class(wx.Panel) {
 			(^sizer).Add(sizer, wx.SizerFlags(3).Expand())
 			wx.BoxSizer(wx.VERTICAL) {|sizer|
 				(^sizer).Add(sizer, wx.SizerFlags(1).Expand())
-				wx.StaticText(this, wx.ID_ANY, 'Default') {|ctrl|
+				wx.StaticText(this, wx.ID_ANY, 'TR_MULTIPLE') {|ctrl|
 					sizer.Add(ctrl, wx.SizerFlags().Expand())
 				}
-				wx.TreeCtrl(this, style = wx.TR_DEFAULT_STYLE | wx.TR_EDIT_LABELS) {|ctrl|
+				wx.TreeCtrl(this, style = wx.TR_DEFAULT_STYLE | wx.TR_MULTIPLE | wx.TR_EDIT_LABELS) {|ctrl|
 					sizer.Add(ctrl, wx.SizerFlags(1).Expand())
 					ctrl.SetImageList(imageList);
 					this.SetTreeCtrlContent(ctrl, imageList, imageIds)
@@ -58,6 +58,19 @@ PanelTop = class(wx.Panel) {
 					ctrl.SetImageList(imageList);
 					this.SetTreeCtrlContent(ctrl, imageList, imageIds)
 					this.SetTreeCtrlEventHandler(ctrl)
+					treeCtrl = ctrl
+				}
+				wx.BoxSizer(wx.HORIZONTAL) {|sizer|
+					(^sizer).Add(sizer, wx.SizerFlags().Expand())
+					wx.ComboBox(this, wx.ID_ANY, style = wx.CB_READONLY, size = wx.Size(150, -1), choices = ['GetSelections']) {|ctrl|
+						sizer.Add(ctrl, wx.SizerFlags().Expand())
+						ctrl.SetSelection(0)
+						comboBox = ctrl
+					}
+					wx.Button(this, wx.ID_ANY, 'Execute') {|ctrl|
+						sizer.Add(ctrl, wx.SizerFlags().Expand().Border(wx.LEFT, 4))
+						wx.EVT_BUTTON(ctrl, this.OnButton_Execute, (treeCtrl, comboBox))
+					}
 				}
 			}
 			wx.BoxSizer(wx.VERTICAL) {|sizer|
@@ -70,6 +83,19 @@ PanelTop = class(wx.Panel) {
 					ctrl.SetImageList(imageList);
 					this.SetTreeCtrlContent(ctrl, imageList, imageIds)
 					this.SetTreeCtrlEventHandler(ctrl)
+					treeCtrl = ctrl
+				}
+				wx.BoxSizer(wx.HORIZONTAL) {|sizer|
+					(^sizer).Add(sizer, wx.SizerFlags().Expand())
+					wx.ComboBox(this, wx.ID_ANY, style = wx.CB_READONLY, size = wx.Size(150, -1), choices = ['GetSelections']) {|ctrl|
+						sizer.Add(ctrl, wx.SizerFlags().Expand())
+						ctrl.SetSelection(0)
+						comboBox = ctrl
+					}
+					wx.Button(this, wx.ID_ANY, 'Execute') {|ctrl|
+						sizer.Add(ctrl, wx.SizerFlags().Expand().Border(wx.LEFT, 4))
+						wx.EVT_BUTTON(ctrl, this.OnButton_Execute, (treeCtrl, comboBox))
+					}
 				}
 			}
 			wx.BoxSizer(wx.VERTICAL) {|sizer|
@@ -83,6 +109,19 @@ PanelTop = class(wx.Panel) {
 					ctrl.SetIndent(50)
 					this.SetTreeCtrlContent(ctrl, imageList, imageIds)
 					this.SetTreeCtrlEventHandler(ctrl)
+					treeCtrl = ctrl
+				}
+				wx.BoxSizer(wx.HORIZONTAL) {|sizer|
+					(^sizer).Add(sizer, wx.SizerFlags().Expand())
+					wx.ComboBox(this, wx.ID_ANY, style = wx.CB_READONLY, size = wx.Size(150, -1), choices = ['GetSelections']) {|ctrl|
+						sizer.Add(ctrl, wx.SizerFlags().Expand())
+						ctrl.SetSelection(0)
+						comboBox = ctrl
+					}
+					wx.Button(this, wx.ID_ANY, 'Execute') {|ctrl|
+						sizer.Add(ctrl, wx.SizerFlags().Expand().Border(wx.LEFT, 4))
+						wx.EVT_BUTTON(ctrl, this.OnButton_Execute, (treeCtrl, comboBox))
+					}
 				}
 			}
 		}
@@ -153,12 +192,9 @@ PanelTop = class(wx.Panel) {
 	}
 	OnButton_Execute(event) = {
 		[treeCtrl, comboBox] = event.GetEventUserData()
-		n = comboBox.GetSelection()
-		cmdName = comboBox.GetString(n)
+		cmdName = comboBox.GetString(comboBox.GetSelection())
 		if (cmdName == 'GetSelections') {
-			treeCtrl.GetSelections().Each {|itemId|
-				this.Printf('%s\n', treeCtrl.GetItemText(itemId))
-			}
+			this.Printf('%s\n', treeCtrl.GetItemText(treeCtrl.GetSelections()):map.Join(', '))
 		}
 	}
 	PrintTreeEvent(event) = {
