@@ -22,27 +22,29 @@ MyFrame = class(wx.Frame) {
 	}
 }
 
-wx.DC.PutText(text as String, x as Number, y as Number, anchor as Symbol) = {
+wx.DC.PutText(text as String, x as Number, y as Number, anchor as Symbol):map = {
 	size = this.GetTextExtent(text)
 	if (anchor == `center) {
-		this.DrawText(text, x - size.GetWidth() / 2, y - size.GetHeight() / 2)
+		x -= size.GetWidth() / 2, y -= size.GetHeight() / 2
 	} elsif (anchor == `north) {
-		this.DrawText(text, x - size.GetWidth() / 2, y)
+		x -= size.GetWidth() / 2
 	} elsif (anchor == `south) {
-		this.DrawText(text, x - size.GetWidth() / 2, y - size.GetHeight())
+		x -= size.GetWidth() / 2, y -= size.GetHeight()
 	} elsif (anchor == `east) {
-		this.DrawText(text, x - size.GetWidth(), y - size.GetHeight() / 2)
+		x -= size.GetWidth(), y -= size.GetHeight() / 2
 	} elsif (anchor == `west) {
-		this.DrawText(text, x, y - size.GetHeight() / 2)
+		y -= size.GetHeight() / 2
 	} elsif (anchor == `northeast) {
-		this.DrawText(text, x - size.GetWidth(), y)
+		x -= size.GetWidth()
 	} elsif (anchor == `southeast) {
-		this.DrawText(text, x - size.GetWidth(), y - size.GetHeight())
+		x -= size.GetWidth(), y -= size.GetHeight()
 	} elsif (anchor == `northwest) {
-		this.DrawText(text, x, y)
+		// nothing to do
 	} elsif (anchor == `southwest) {
-		this.DrawText(text, x, y - size.GetHeight())
+		y -= size.GetHeight()
 	}
+	this.DrawText(text, x, y)
+	wx.Rect(x, y, size.GetWidth(), size.GetHeight())
 }
 
 Page_Brush = class(wx.Panel) {
@@ -198,26 +200,29 @@ Page_Line = class(wx.Panel) {
 		fontLabel.SetPointSize(10)
 		dc.SetFont(fontLabel)
 		dc.SetPen(wx.Pen('#ff8888', 1, wx.PENSTYLE_SOLID))
-		rad = (math.pi * 29 / 30) * [0..60]
+		radTbl = (math.pi * 29 / 30) * [0..60]
+		//radTbl = (math.pi * 4 / 5) * [0..5]
 		radius = 80
-		xOffset = 100, yOffset = 100
+		xOffset = 100, yOffset = 120
 		scope {
-			dc.PutText('DrawLine(x1, y1, x2, y2)', xOffset, yOffset, `center)
-			ptTbl = wx.Point(math.Cos(rad) * radius + xOffset, math.Sin(rad) * radius + yOffset):map
+			dc.PutText('DrawLine(x1, y1, x2, y2)', xOffset, yOffset - radius - 10, `south)
+			ptTbl = wx.Point(math.Cos(radTbl) * radius + xOffset, math.Sin(radTbl) * radius + yOffset):map
 			repeat (ptTbl.len - 1) {|i|
 				dc.DrawLine(ptTbl[i].x, ptTbl[i].y, ptTbl[i + 1].x, ptTbl[i + 1].y)
 			}
 		}
 		xOffset += 200
 		scope {
-			ptTbl = wx.Point(math.Cos(rad) * radius + xOffset, math.Sin(rad) * radius + yOffset):map
+			dc.PutText('DrawLine(pt1, pt2)', xOffset, yOffset - radius - 10, `south)
+			ptTbl = wx.Point(math.Cos(radTbl) * radius + xOffset, math.Sin(radTbl) * radius + yOffset):map
 			repeat (ptTbl.len - 1) {|i|
 				dc.DrawLine(ptTbl[i], ptTbl[i + 1])
 			}
 		}
 		xOffset += 200
 		scope {
-			ptTbl = wx.Point(math.Cos(rad) * radius + xOffset, math.Sin(rad) * radius + yOffset):map
+			dc.PutText('DrawLines(ptTbl)', xOffset, yOffset - radius - 10, `south)
+			ptTbl = wx.Point(math.Cos(radTbl) * radius + xOffset, math.Sin(radTbl) * radius + yOffset):map
 			dc.DrawLines(ptTbl)
 		}
 		dc = nil
@@ -320,11 +325,16 @@ Page_Text = class(wx.Panel) {
 	}
 	OnPaint(event) = {
 		dc = wx.PaintDC(this)
+		dc.SetPen(wx.Pen('#ff8888', 1, wx.PENSTYLE_SOLID))
 		dc.SetFont(wx.Font(30, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
-		dc.PutText('North', 200, 200, `north)
-		dc.PutText('South', 200, 200, `south)
-		dc.PutText('West', 200, 200, `west)
-		dc.PutText('East', 200, 200, `east)
+		for (anchor in [`north, `south, `east, `west, `northwest, `southwest, `northeast, `southeast, `center]) {|i|
+			dc.SetBrush(wx.Brush('#ff8888', wx.BRUSHSTYLE_SOLID))
+			x = (i % 4) * 200 + 100
+			y = Int(i / 4) * 100 + 80
+			dc.DrawCircle(x, y, 5)
+			dc.SetBrush(wx.TRANSPARENT_BRUSH)
+			dc.DrawRectangle(dc.PutText(anchor, x, y, anchor))
+		}
 		dc = nil
 	}
 }
