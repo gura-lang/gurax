@@ -4,14 +4,14 @@ import(xpm)
 
 sample_xpm = xpm.XPMFile('sample.xpm').lines
 
-MyApp = class(wx.App) {
+AppMain = class(wx.App) {
 	OnInit() = {
-		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(1000, 700)).Show()
+		FrameMain(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(1000, 700)).Show()
 		true
 	}
 }
 
-MyFrame = class(wx.Frame) {
+FrameMain = class(wx.Frame) {
 	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
 		wx.Notebook(this, wx.ID_ANY) {|noteBook|
 			[Page_Brush, Page_Pen, Page_Line, Page_Arc, Page_Circle, Page_Ellipse, Page_EllipticArc, Page_Text].Each {|cls|
@@ -190,7 +190,7 @@ Page_Pen = class(wx.Panel) {
 }
 
 Page_Line = class(wx.Panel) {
-	name:static = 'Line'
+	name:static = 'DrawLine'
 	__init__(parent as wx.Window) = {|parent|
 		this.Bind(wx.EVT_PAINT, this.OnPaint)
 	}
@@ -200,30 +200,33 @@ Page_Line = class(wx.Panel) {
 		fontLabel.SetPointSize(10)
 		dc.SetFont(fontLabel)
 		dc.SetPen(wx.Pen('#ff8888', 1, wx.PENSTYLE_SOLID))
-		radTbl = (math.pi * 29 / 30) * [0..60]
-		//radTbl = (math.pi * 4 / 5) * [0..5]
-		radius = 80
-		xOffset = 100, yOffset = 120
-		scope {
-			dc.PutText('DrawLine(x1, y1, x2, y2)', xOffset, yOffset - radius - 10, `south)
-			ptTbl = wx.Point(math.Cos(radTbl) * radius + xOffset, math.Sin(radTbl) * radius + yOffset):map
-			repeat (ptTbl.len - 1) {|i|
-				dc.DrawLine(ptTbl[i].x, ptTbl[i].y, ptTbl[i + 1].x, ptTbl[i + 1].y)
+		yOffset = 120
+		for (n in [5, 13, 29]) {
+			radTbl = (math.pi * (n - 1) / n) * [0..n]
+			radius = 80
+			xOffset = 100
+			scope {
+				dc.PutText('DrawLine(x1, y1, x2, y2)', xOffset, yOffset - radius - 10, `south)
+				ptTbl = wx.Point(math.Cos(radTbl) * radius + xOffset, math.Sin(radTbl) * radius + yOffset):map
+				repeat (ptTbl.len - 1) {|i|
+					dc.DrawLine(ptTbl[i].x, ptTbl[i].y, ptTbl[i + 1].x, ptTbl[i + 1].y)
+				}
 			}
-		}
-		xOffset += 200
-		scope {
-			dc.PutText('DrawLine(pt1, pt2)', xOffset, yOffset - radius - 10, `south)
-			ptTbl = wx.Point(math.Cos(radTbl) * radius + xOffset, math.Sin(radTbl) * radius + yOffset):map
-			repeat (ptTbl.len - 1) {|i|
-				dc.DrawLine(ptTbl[i], ptTbl[i + 1])
+			xOffset += 200
+			scope {
+				dc.PutText('DrawLine(pt1, pt2)', xOffset, yOffset - radius - 10, `south)
+				ptTbl = wx.Point(math.Cos(radTbl) * radius + xOffset, math.Sin(radTbl) * radius + yOffset):map
+				repeat (ptTbl.len - 1) {|i|
+					dc.DrawLine(ptTbl[i], ptTbl[i + 1])
+				}
 			}
-		}
-		xOffset += 200
-		scope {
-			dc.PutText('DrawLines(ptTbl)', xOffset, yOffset - radius - 10, `south)
-			ptTbl = wx.Point(math.Cos(radTbl) * radius + xOffset, math.Sin(radTbl) * radius + yOffset):map
-			dc.DrawLines(ptTbl)
+			xOffset += 200
+			scope {
+				dc.PutText('DrawLines(ptTbl)', xOffset, yOffset - radius - 10, `south)
+				ptTbl = wx.Point(math.Cos(radTbl) * radius + xOffset, math.Sin(radTbl) * radius + yOffset):map
+				dc.DrawLines(ptTbl)
+			}
+			yOffset += 200
 		}
 		dc = nil
 	}
@@ -326,17 +329,44 @@ Page_Text = class(wx.Panel) {
 	OnPaint(event) = {
 		dc = wx.PaintDC(this)
 		dc.SetPen(wx.Pen('#ff8888', 1, wx.PENSTYLE_SOLID))
+		dc.SetFont(wx.Font(20, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
+		dc.SetBrush(wx.Brush('#ff8888', wx.BRUSHSTYLE_SOLID))
+		dc.DrawCircle(50, 50, 5)
+		dc.DrawText('DrawText(text, x, y)', 50, 50)
+		dc.DrawCircle(50, 100, 5)
+		dc.DrawText('DrawText(text, pt)', wx.Point(50, 100))
 		dc.SetFont(wx.Font(30, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
-		for (anchor in [`north, `south, `east, `west, `northwest, `southwest, `northeast, `southeast, `center]) {|i|
+		x = 100, y = 200
+		for (pair in [(`north, 0), (`south, 150), (`east, 0), (`west, 250),
+				(`northeast, 0), (`southeast, 0), (`northwest, 0), (`southwest, 250), (`center, 0)]) {|i|
+			[anchor, xStep] = pair
 			dc.SetBrush(wx.Brush('#ff8888', wx.BRUSHSTYLE_SOLID))
-			x = (i % 4) * 200 + 100
-			y = Int(i / 4) * 100 + 80
 			dc.DrawCircle(x, y, 5)
 			dc.SetBrush(wx.TRANSPARENT_BRUSH)
 			dc.DrawRectangle(dc.PutText(anchor, x, y, anchor))
+			x += xStep
+		}
+		dc.SetFont(wx.Font(20, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
+		dc.SetBrush(wx.Brush('#ff8888', wx.BRUSHSTYLE_SOLID))
+		dc.DrawCircle(50, 500, 5)
+		dc.DrawRotatedText('DrawRotatedText(text, x, y, 30)', 50, 500, 30)
+		dc.DrawCircle(50, 550, 5)
+		dc.DrawRotatedText('DrawRotatedText(text, pt, 30)', wx.Point(50, 550), 30)
+		dc.SetFont(wx.Font(18, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
+		x = 600, y = 400
+		dc.DrawCircle(x, y, 5)
+		repeat (12) {|i|
+			deg = i * 360 / 12
+			dc.DrawRotatedText(Format('rotated %d', deg), x, y, deg)
+		}
+		x = 800, y = 400
+		dc.DrawCircle(x, y, 5)
+		repeat (8) {|i|
+			deg = i * 360 / 8
+			dc.DrawRotatedText(Format('rotated %d', deg), x, y, deg)
 		}
 		dc = nil
 	}
 }
 
-wx.ImplementApp(MyApp())
+wx.ImplementApp(AppMain())
