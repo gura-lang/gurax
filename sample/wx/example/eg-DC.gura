@@ -17,7 +17,7 @@ FrameMain = class(wx.Frame) {
 			[Page_Brush, Page_Pen, Page_Line, Page_Arc, Page_Circle, Page_Ellipse, Page_EllipticArc, Page_Text].Each {|cls|
 				noteBook.AddPage(cls(noteBook), cls.name)
 			}
-			noteBook.SetSelection(7)
+			noteBook.SetSelection(3)
 		}
 	}
 }
@@ -199,61 +199,119 @@ Page_Line = class(wx.Panel) {
 		fontLabel = dc.GetFont()
 		fontLabel.SetPointSize(10)
 		dc.SetFont(fontLabel)
-		dc.SetPen(wx.Pen('#ff8888', 1, wx.PENSTYLE_SOLID))
-		yOffset = 120
-		for (n in [5, 13, 29]) {
-			radTbl = (math.pi * (n - 1) / n) * [0..n]
-			radius = 80
-			xOffset = 100
-			scope {
-				dc.PutText('DrawLine(x1, y1, x2, y2)', xOffset, yOffset - radius - 10, `south)
-				ptTbl = wx.Point(math.Cos(radTbl) * radius + xOffset, math.Sin(radTbl) * radius + yOffset):map
-				repeat (ptTbl.len - 1) {|i|
-					dc.DrawLine(ptTbl[i].x, ptTbl[i].y, ptTbl[i + 1].x, ptTbl[i + 1].y)
+		xOffset = 100
+		[1, 10].Each {|wdPen|
+			dc.SetPen(wx.Pen('#ff8888', wdPen, wx.PENSTYLE_SOLID))
+			y = 120
+			for (n in [5, 13, 29]) {
+				radTbl = (math.pi * (n - 1) / n) * [0..n]
+				radius = 70
+				x = xOffset
+				scope {
+					dc.PutText('DrawLine(x1, y1, x2, y2)', x, y - radius - 10, `south)
+					ptTbl = wx.Point(math.Cos(radTbl) * radius + x, math.Sin(radTbl) * radius + y):map
+					repeat (ptTbl.len - 1) {|i|
+						dc.DrawLine(ptTbl[i].x, ptTbl[i].y, ptTbl[i + 1].x, ptTbl[i + 1].y)
+					}
 				}
-			}
-			xOffset += 200
-			scope {
-				dc.PutText('DrawLine(pt1, pt2)', xOffset, yOffset - radius - 10, `south)
-				ptTbl = wx.Point(math.Cos(radTbl) * radius + xOffset, math.Sin(radTbl) * radius + yOffset):map
-				repeat (ptTbl.len - 1) {|i|
-					dc.DrawLine(ptTbl[i], ptTbl[i + 1])
+				x += 150
+				scope {
+					dc.PutText('DrawLine(pt1, pt2)', x, y - radius - 10, `south)
+					ptTbl = wx.Point(math.Cos(radTbl) * radius + x, math.Sin(radTbl) * radius + y):map
+					repeat (ptTbl.len - 1) {|i|
+						dc.DrawLine(ptTbl[i], ptTbl[i + 1])
+					}
 				}
+				x += 150
+				scope {
+					dc.PutText('DrawLines(ptTbl)', x, y - radius - 10, `south)
+					ptTbl = wx.Point(math.Cos(radTbl) * radius + x, math.Sin(radTbl) * radius + y):map
+					dc.DrawLines(ptTbl)
+				}
+				y += 200
 			}
-			xOffset += 200
-			scope {
-				dc.PutText('DrawLines(ptTbl)', xOffset, yOffset - radius - 10, `south)
-				ptTbl = wx.Point(math.Cos(radTbl) * radius + xOffset, math.Sin(radTbl) * radius + yOffset):map
-				dc.DrawLines(ptTbl)
-			}
-			yOffset += 200
+			xOffset += 480
 		}
 		dc = nil
 	}
 }
 
 Page_Arc = class(wx.Panel) {
-	name:static = 'Arc'
-	pen as wx.Pen
+	name:static = 'DrawArc'
 	brush as wx.Brush
+	ptCenter = wx.Point(400, 300)
+	ptStart = wx.Point(400 + 200, 300)
+	ptEnd = wx.Point(400 - 40, 300 - 200)
+	rcCenter as wx.Rect
+	rcStart as wx.Rect
+	rcEnd as wx.Rect
+	cursorHand as wx.Cursor
+	stat = `neutral
 	__init__(parent as wx.Window) = {|parent|
-		this.pen = wx.Pen('#ff8888', 1, wx.PENSTYLE_SOLID)
-		this.brush = wx.Brush('#ff8888', wx.BRUSHSTYLE_BDIAGONAL_HATCH)
+		//this.cursorHand = wx.Cursor(wx.CURSOR_HAND)
+		this.SetBackgroundStyle(wx.BG_STYLE_PAINT)
+		this.Bind(wx.EVT_MOTION, this.OnMotion)
+		this.Bind(wx.EVT_LEFT_DOWN, this.OnLeftDown)
+		this.Bind(wx.EVT_LEFT_UP, this.OnLeftUp)
 		this.Bind(wx.EVT_PAINT, this.OnPaint)
 	}
 	OnPaint(event) = {
+		radiusPoint = 5
 		idxs = Range(10):list
-		dc = wx.PaintDC(this)
-		xc = 100, yc = 100
-		dc.SetPen(this.pen)
-		dc.SetBrush(this.brush)
-		dc.DrawArc(xc + 50, yc, xc - 40, yc - 50, xc, yc)
+		dc = wx.BufferedPaintDC(this)
+		dc.SetBackground(wx.WHITE_BRUSH)
+		dc.Clear()
+		dc.SetPen(wx.Pen('#ff8888', 1, wx.PENSTYLE_SOLID))
+		dc.SetBrush(wx.Brush('#ff8888', wx.BRUSHSTYLE_BDIAGONAL_HATCH))
+		dc.DrawArc(this.ptStart.x, this.ptStart.y, this.ptEnd.x, this.ptEnd.y, this.ptCenter.x, this.ptCenter.y)
+		dc.SetPen(wx.Pen('#888888', 1, wx.PENSTYLE_SOLID))
+		dc.SetBrush(wx.Brush('#888888', wx.BRUSHSTYLE_SOLID))
+		dc.DrawCircle(this.ptCenter.x, this.ptCenter.y, radiusPoint)
+		dc.DrawCircle(this.ptStart.x, this.ptStart.y, radiusPoint)
+		dc.DrawCircle(this.ptEnd.x, this.ptEnd.y, radiusPoint)
+		dc.DrawLine(this.ptCenter, this.ptStart)
+		dc.DrawLine(this.ptCenter, this.ptEnd)
+		this.rcCenter = wx.Rect(this.ptCenter.x - radiusPoint, this.ptCenter.y - radiusPoint, radiusPoint * 2, radiusPoint * 2)
+		this.rcStart = wx.Rect(this.ptStart.x - radiusPoint, this.ptStart.y - radiusPoint, radiusPoint * 2, radiusPoint * 2)
+		this.rcEnd = wx.Rect(this.ptEnd.x - radiusPoint, this.ptEnd.y - radiusPoint, radiusPoint * 2, radiusPoint * 2)
 		dc = nil
+	}
+	OnMotion(event as wx.MouseEvent) = {
+		pt = event.GetPosition()
+		if (this.stat == `neutral) {
+			if (this.rcCenter.Contains(pt) || this.rcStart.Contains(pt) || this.rcEnd.Contains(pt)) {
+				this.SetCursor(wx.CROSS_CURSOR)
+			} else {
+				this.SetCursor(wx.STANDARD_CURSOR)
+			}
+		} elsif (this.stat == `moveCenter) {
+			this.ptCenter = pt
+			this.Refresh()
+		} elsif (this.stat == `moveStart) {
+			this.ptStart = pt
+			this.Refresh()
+		} elsif (this.stat == `moveEnd) {
+			this.ptEnd = pt
+			this.Refresh()
+		}
+	}
+	OnLeftDown(event as wx.MouseEvent) = {
+		pt = event.GetPosition()
+		if (this.rcCenter.Contains(pt)) {
+			this.stat = `moveCenter
+		} elsif (this.rcStart.Contains(pt)) {
+			this.stat = `moveStart
+		} elsif (this.rcEnd.Contains(pt)) {
+			this.stat = `moveEnd
+		}
+	}
+	OnLeftUp(event as wx.MouseEvent) = {
+		this.stat = `neutral		
 	}
 }
 
 Page_Circle = class(wx.Panel) {
-	name:static = 'Circle'
+	name:static = 'DrawCircle'
 	pen as wx.Pen
 	brush as wx.Brush
 	__init__(parent as wx.Window) = {|parent|
@@ -272,7 +330,7 @@ Page_Circle = class(wx.Panel) {
 }
 
 Page_Ellipse = class(wx.Panel) {
-	name:static = 'Ellipse'
+	name:static = 'DrawEllipse'
 	pen as wx.Pen
 	brush as wx.Brush
 	__init__(parent as wx.Window) = {|parent|
