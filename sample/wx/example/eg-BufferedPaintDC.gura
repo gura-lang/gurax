@@ -1,0 +1,97 @@
+#!/usr/bin/env gurax
+import(wx)
+
+AppMain = class(wx.App) {
+	OnInit() = {
+		FrameMain(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		true
+	}
+}
+
+FrameMain = class(wx.Frame) {
+	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
+		PanelMain(this)
+	}
+}
+
+PanelMain = class(wx.Panel) {
+	__init__(parent as wx.Window) = {|parent|
+		sizer = wx.BoxSizer(wx.VERTICAL)
+		this.SetSizer(sizer)
+		wx.BoxSizer(wx.HORIZONTAL) {|sizer|
+			(^sizer).Add(sizer, wx.SizerFlags(1).Expand())
+			wx.BoxSizer(wx.VERTICAL) {|sizer|
+				(^sizer).Add(sizer, wx.SizerFlags(1).Expand())
+				wx.StaticText(this, wx.ID_ANY, 'PaintDC (no buffer)') {|ctrl|
+					sizer.Add(ctrl, wx.SizerFlags().Expand())
+				}
+				PanelStage(this, false) {|panel|
+					sizer.Add(panel, wx.SizerFlags(1).Expand())
+				}
+			}
+			wx.BoxSizer(wx.VERTICAL) {|sizer|
+				(^sizer).Add(sizer, wx.SizerFlags(1).Expand().Border(wx.LEFT, 2))
+				wx.StaticText(this, wx.ID_ANY, 'BufferedPaintDC') {|ctrl|
+					sizer.Add(ctrl, wx.SizerFlags().Expand())
+				}
+				PanelStage(this, true) {|panel|
+					sizer.Add(panel, wx.SizerFlags(1).Expand())
+				}
+			}
+		}
+	}
+}
+
+Corner = class {
+	x as Number
+	y as Number
+	xStep as Number
+	yStep as Number
+	xDir as Number
+	yDir as Number
+	__init__(x as Number, y as Number, xStep as Number, yStep as Number):map = {
+		this.x = x, this.y = y, this.xStep = xStep, this.yStep = yStep
+		this.xDir = xStep, this.yDir = yStep
+	}
+	Move(rcBorder as wx.Rect) = {
+		if (this.x <= rcBorder.GetLeft()) { this.xDir = this.xStep }
+		if (this.x >= rcBorder.GetRight()) { this.xDir = -this.xStep }
+		if (this.y <= rcBorder.GetTop()) { this.yDir = this.yStep }
+		if (this.y >= rcBorder.GetBottom()) { this.yDir = -this.yStep }
+		this.x += this.xDir
+		this.y += this.yDir
+	}
+}
+
+PanelStage = class(wx.Panel) {
+	bufferFlag as Bool
+	timerId = 100
+	timer as wx.Timer
+	cornerTbl[] as Corner
+	__init__(parent as wx.Window, bufferFlag as Bool) = {|parent, style = wx.BORDER_SUNKEN|
+		this.bufferFlag = bufferFlag
+		if (this.bufferFlag) { this.SetBackgroundStyle(wx.BG_STYLE_PAINT) }
+		cnt = 300
+		rand = Random(0)
+		this.cornerTbl = Corner(rand.IntSeq(300, cnt), rand.IntSeq(500, cnt), 4, 4):list
+		this.timer = wx.Timer(this, this.timerId)
+		this.Bind(wx.EVT_PAINT, this.OnPaint)
+		wx.EVT_TIMER(this, this.OnTimer, this.timerId)
+		this.timer.Start(10)
+	}
+	OnPaint(event) = {
+		dc = cond(this.bufferFlag, wx.BufferedPaintDC(this), wx.PaintDC(this))
+		dc.SetBackground(wx.WHITE_BRUSH)
+		dc.Clear()
+		cnt = this.cornerTbl.len
+		ptTbl = wx.Point(this.cornerTbl:*x.Cycle(cnt + 1), this.cornerTbl:*y.Cycle(cnt + 1)):map:list
+		dc.DrawLines(ptTbl)
+		dc = nil
+	}
+	OnTimer(event) = {
+		this.cornerTbl::Move(this.GetClientRect())
+		this.Refresh()
+	}
+}
+
+wx.ImplementApp(AppMain())

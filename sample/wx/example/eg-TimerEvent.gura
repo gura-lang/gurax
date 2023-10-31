@@ -1,14 +1,14 @@
 #!/usr/bin/env gurax
 import(wx)
 
-MyApp = class(wx.App) {
+AppMain = class(wx.App) {
 	OnInit() = {
-		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 480)).Show()
+		FrameMain(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 480)).Show()
 		true
 	}
 }
 
-MyFrame = class(wx.Frame) {
+FrameMain = class(wx.Frame) {
 	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
 		PanelTop(this)
 	}
@@ -63,25 +63,25 @@ PanelTop = class(wx.Panel) {
 		//this.timer = TimerStandalone(this.textCtrl)
 		wx.EVT_TIMER(this, this.OnTimer, this.timerId)
 	}
-	OnScroll(event) = {
+	OnScroll(event as wx.CommandEvent) = {
 		if (this.timer.IsRunning()) {
 			interval = this.sliderCtrl.GetValue()
 			this.timer.Start(interval)
 		}
 	}
-	OnButton_Start(event) = {
+	OnButton_Start(event as wx.CommandEvent) = {
 		this.Printf('wx.Timer#Start()\n')
 		interval = this.sliderCtrl.GetValue()
 		this.timer.Start(interval)
 	}
-	OnButton_Stop(event) = {
+	OnButton_Stop(event as wx.CommandEvent) = {
 		this.Printf('wx.Timer#Stop()\n')
 		this.timer.Stop()
 	}
-	OnTimer(event) = {
+	OnTimer(event as wx.TimerEvent) = {
 		this.Printf('%s Interval: %dmsec\n', this.progress.NextValue(), this.timer.GetInterval())
 	}
 	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
 }
 
-wx.ImplementApp(MyApp())
+wx.ImplementApp(AppMain())
