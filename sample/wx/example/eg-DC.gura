@@ -294,6 +294,8 @@ Page_Arc = class(wx.Panel) {
 			this.ptEnd = pt
 			this.Refresh()
 		}
+		mouseState = wx.GetMouseState()
+		if (!mouseState.LeftIsDown()) { this.stat = `neutral }
 	}
 	OnLeftDown(event as wx.MouseEvent) = {
 		pt = event.GetPosition()

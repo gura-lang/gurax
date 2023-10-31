@@ -138,6 +138,19 @@ Gurax_ImplementFunctionEx(FileSelector_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_String(rtn.utf8_str().data());
 }
 
+// wx.GetBatteryState()
+Gurax_DeclareFunctionAlias(GetBatteryState_gurax, "GetBatteryState")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementFunctionEx(GetBatteryState_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	wxBatteryState rtn = wxGetBatteryState();
+	return new Gurax::Value_Number(rtn);
+}
+
 // wx.GetColourFromUser(parent as wx.Window, colInit as wx.Colour, caption? as String, data? as wx.ColourData) {block?}
 Gurax_DeclareFunctionAlias(GetColourFromUser_gurax, "GetColourFromUser")
 {
@@ -204,6 +217,23 @@ Gurax_ImplementFunctionEx(GetKeyCodeName_gurax, processor_gurax, argument_gurax)
 	return new Value_String(Util::GetKeyCodeName(keyCode));
 }
 
+// wx.GetKeyState(key as Number)
+Gurax_DeclareFunctionAlias(GetKeyState_gurax, "GetKeyState")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("key", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementFunctionEx(GetKeyState_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxKeyCode key = args_gurax.PickNumber<wxKeyCode>();
+	// Function body
+	bool rtn = wxGetKeyState(key);
+	return new Gurax::Value_Bool(rtn);
+}
+
 // wx.GetLocalTime()
 Gurax_DeclareFunctionAlias(GetLocalTime_gurax, "GetLocalTime")
 {
@@ -228,6 +258,19 @@ Gurax_ImplementFunctionEx(GetLocalTimeMillis_gurax, processor_gurax, argument_gu
 	// Function body
 	wxLongLong rtn = wxGetLocalTimeMillis();
 	return new Gurax::Value_Number(rtn.GetValue());
+}
+
+// wx.GetMousePosition() {block?}
+Gurax_DeclareFunctionAlias(GetMousePosition_gurax, "GetMousePosition")
+{
+	Declare(VTYPE_wxPoint, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementFunctionEx(GetMousePosition_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(wxGetMousePosition()));
 }
 
 // wx.GetNumberFromUser(message as String, prompt as String, caption as String, value as Number, min? as Number, max? as Number, parent? as wx.Window, pos? as wx.Point)
@@ -294,6 +337,19 @@ Gurax_ImplementFunctionEx(GetPasswordFromUser_gurax, processor_gurax, argument_g
 	// Function body
 	wxString rtn = wxGetPasswordFromUser(message, caption, default_value, parent, x, y, centre);
 	return new Gurax::Value_String(rtn.utf8_str().data());
+}
+
+// wx.GetPowerType()
+Gurax_DeclareFunctionAlias(GetPowerType_gurax, "GetPowerType")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementFunctionEx(GetPowerType_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	wxPowerType rtn = wxGetPowerType();
+	return new Gurax::Value_Number(rtn);
 }
 
 // wx.GetSingleChoice(message as String, caption as String, aChoices[] as String, parent? as wx.Window, x? as Number, y? as Number, centre? as Bool, width? as Number, height? as Number, initialSelection? as Number)
@@ -696,13 +752,17 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(DirSelector_gurax));
 	frame.Assign(Gurax_CreateFunction(EndBusyCursor_gurax));
 	frame.Assign(Gurax_CreateFunction(FileSelector_gurax));
+	frame.Assign(Gurax_CreateFunction(GetBatteryState_gurax));
 	frame.Assign(Gurax_CreateFunction(GetColourFromUser_gurax));
 	frame.Assign(Gurax_CreateFunction(GetFontFromUser_gurax));
 	frame.Assign(Gurax_CreateFunction(GetKeyCodeName_gurax));
+	frame.Assign(Gurax_CreateFunction(GetKeyState_gurax));
 	frame.Assign(Gurax_CreateFunction(GetLocalTime_gurax));
 	frame.Assign(Gurax_CreateFunction(GetLocalTimeMillis_gurax));
+	frame.Assign(Gurax_CreateFunction(GetMousePosition_gurax));
 	frame.Assign(Gurax_CreateFunction(GetNumberFromUser_gurax));
 	frame.Assign(Gurax_CreateFunction(GetPasswordFromUser_gurax));
+	frame.Assign(Gurax_CreateFunction(GetPowerType_gurax));
 	frame.Assign(Gurax_CreateFunction(GetSingleChoice_gurax));
 	frame.Assign(Gurax_CreateFunction(GetSingleChoiceIndex_gurax));
 	frame.Assign(Gurax_CreateFunction(GetTextFromUser_gurax));

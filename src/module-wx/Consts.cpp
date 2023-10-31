@@ -70,6 +70,11 @@ void AssignConsts(Frame& frame)
 	frame.Assign("AUI_TB_PLAIN_BACKGROUND", new Value_Number(wxAUI_TB_PLAIN_BACKGROUND));
 	frame.Assign("AUI_TB_TEXT", new Value_Number(wxAUI_TB_TEXT));
 	frame.Assign("AUI_TB_VERTICAL", new Value_Number(wxAUI_TB_VERTICAL));
+	frame.Assign("BATTERY_CRITICAL_STATE", new Value_Number(wxBATTERY_CRITICAL_STATE));
+	frame.Assign("BATTERY_LOW_STATE", new Value_Number(wxBATTERY_LOW_STATE));
+	frame.Assign("BATTERY_NORMAL_STATE", new Value_Number(wxBATTERY_NORMAL_STATE));
+	frame.Assign("BATTERY_SHUTDOWN_STATE", new Value_Number(wxBATTERY_SHUTDOWN_STATE));
+	frame.Assign("BATTERY_UNKNOWN_STATE", new Value_Number(wxBATTERY_UNKNOWN_STATE));
 	frame.Assign("BG_STYLE_COLOUR", new Value_Number(wxBG_STYLE_COLOUR));
 	frame.Assign("BG_STYLE_ERASE", new Value_Number(wxBG_STYLE_ERASE));
 	frame.Assign("BG_STYLE_PAINT", new Value_Number(wxBG_STYLE_PAINT));
@@ -962,6 +967,9 @@ void AssignConsts(Frame& frame)
 	frame.Assign("PNG_TYPE_GREY_RED", new Value_Number(wxPNG_TYPE_GREY_RED));
 	frame.Assign("PNG_TYPE_PALETTE", new Value_Number(wxPNG_TYPE_PALETTE));
 	frame.Assign("PORTRAIT", new Value_Number(wxPORTRAIT));
+	frame.Assign("POWER_BATTERY", new Value_Number(wxPOWER_BATTERY));
+	frame.Assign("POWER_SOCKET", new Value_Number(wxPOWER_SOCKET));
+	frame.Assign("POWER_UNKNOWN", new Value_Number(wxPOWER_UNKNOWN));
 	frame.Assign("PRINT_MODE_FILE", new Value_Number(wxPRINT_MODE_FILE));
 	frame.Assign("PRINT_MODE_NONE", new Value_Number(wxPRINT_MODE_NONE));
 	frame.Assign("PRINT_MODE_PREVIEW", new Value_Number(wxPRINT_MODE_PREVIEW));

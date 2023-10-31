@@ -15,6 +15,12 @@ GetKeyCodeName(keyCode as int) = \
 	R'''
 	return new Value_String(Util::GetKeyCodeName(keyCode));
 	'''
+GetBatteryState() as BatteryState
+//GetDisplayName() as String
+GetKeyState(key as KeyCode) as bool
+GetMousePosition() as Point
+//GetMouseState() as MouseState
+GetPowerType() as PowerType
 ImplementApp(app as App_p) = \
 	R'''
 	wxApp::SetInstance(app);
