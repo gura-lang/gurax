@@ -40,6 +40,7 @@ target_compile_definitions(wx.gurd PRIVATE GURAX_MODULE_SEPARATED
 	$<$<PLATFORM_ID:Darwin>:>)
 target_sources(wx.gurd PRIVATE
 	module-wx.cpp
+	$<$<PLATFORM_ID:Windows>:module-wx.rc>
 	Consts.cpp
 	Events.cpp
 	Functions.cpp

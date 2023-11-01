@@ -18,15 +18,19 @@ PanelMain = class(wx.Panel) {
 	__init__(parent as wx.Window) = {|parent|
 		sizer = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizer)
+		this.SetCursor(wx.Cursor(wx.CURSOR_PENCIL))
+		/*
 		wx.GridSizer(5, 2, 2) {|sizer|
 			(^sizer).Add(sizer, wx.SizerFlags(1).Expand())
 			repeat (5 * 5) {
-				wx.StaticText(this, wx.ID_ANY, 'Hello World', style = wx.BORDER_SUNKEN) {|ctrl|
+				//wx.StaticText(this, wx.ID_ANY, 'Hello World', style = wx.BORDER_SUNKEN) {|ctrl|
+				wx.Panel(this, wx.ID_ANY, style = wx.BORDER_SUNKEN) {|ctrl|
 					sizer.Add(ctrl, wx.SizerFlags(1).Expand())
 					ctrl.SetCursor(wx.Cursor(wx.CURSOR_IBEAM))
 				}
 			}
 		}
+		*/
 	}
 }
 
