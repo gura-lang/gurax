@@ -44,10 +44,129 @@ ${help.ComposeMethodHelp(wx.Cursor, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.Cursor(args* as Any) {block?}
+Gurax_DeclareConstructorAlias(Cursor_gurax, "Cursor")
+{
+	Declare(VTYPE_wxCursor, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementConstructorEx(Cursor_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const Gurax::ValueList& args = args_gurax.PickList();
+	// Function body
+	// wxCursor()
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		return new Value_wxCursor(wxCursor());
+	} while (0);
+	Error::ClearIssuedFlag();
+	// wxCursor(bits as Pointer@gurax, width as int, height as int, hotSpotX as int = -1, hotSpotY as int = -1, maskBits? as Pointer@gurax)
+	//do {
+	//	static DeclCallable* pDeclCallable = nullptr;
+	//	if (!pDeclCallable) {
+	//		pDeclCallable = new DeclCallable();
+	//		pDeclCallable->DeclareArg("bits", VTYPE_Pointer);
+	//		pDeclCallable->DeclareArg("width", VTYPE_Number);
+	//		pDeclCallable->DeclareArg("height", VTYPE_Number);
+	//		pDeclCallable->DeclareArg("hotSpotX", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+	//		pDeclCallable->DeclareArg("hotSpotY", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+	//		pDeclCallable->DeclareArg("maskBits", VTYPE_Pointer, DeclArg::Occur::ZeroOrOnce);
+	//	}
+	//	RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+	//	if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+	//	Error::Clear();
+	//	ArgPicker args(*pArgument);
+	//	const char* bits = args.Pick<Value_Pointer>().GetPointer().GetPointerC<char>();
+	//	int width = args.PickNumber<int>();
+	//	int height = args.PickNumber<int>();
+	//	int hotSpotX = args.IsValid()? args.PickNumber<int>() : 0;
+	//	int hotSpotY = args.IsValid()? args.PickNumber<int>() : 0;
+	//	const char* maskBits = args.IsValid()? args.Pick<Value_Pointer>().GetPointer().GetPointerC<char>() : nullptr;
+	//	return new Value_wxCursor(wxCursor(bits, width, height, hotSpotX, hotSpotY, maskBits));
+	//} while (0);
+	//Error::ClearIssuedFlag();
+	// wxCursor(cursorName as const_String_r, type as BitmapType = wxCURSOR_DEFAULT_TYPE, hotSpotX as int = 0, hotSpotY as int = 0)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("cursorName", VTYPE_String);
+			pDeclCallable->DeclareArg("type", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("hotSpotX", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("hotSpotY", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const char* cursorName = args.PickString();
+		wxBitmapType type = args.IsValid()? args.PickNumber<wxBitmapType>() : wxCURSOR_DEFAULT_TYPE;
+		int hotSpotX = args.IsValid()? args.PickNumber<int>() : 0;
+		int hotSpotY = args.IsValid()? args.PickNumber<int>() : 0;
+		return new Value_wxCursor(wxCursor(cursorName, type, hotSpotX, hotSpotY));
+	} while (0);
+	Error::ClearIssuedFlag();
+	// wxCursor(cursorId as StockCursor)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("cursorId", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxStockCursor cursorId = args.PickNumber<wxStockCursor>();
+		return new Value_wxCursor(wxCursor(cursorId));
+	} while (0);
+	Error::ClearIssuedFlag();
+	// wxCursor(image as const_Image_r)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("image", VTYPE_wxImage);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxImage& image = args.Pick<Value_wxImage>().GetEntity();
+		return new Value_wxCursor(wxCursor(image));
+	} while (0);
+	return Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.Cursor#IsOk()
+Gurax_DeclareMethodAlias(wxCursor, IsOk_gurax, "IsOk")
+{
+	Declare(VTYPE_Bool, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxCursor, IsOk_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsOk();
+	return new Gurax::Value_Bool(rtn);
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -64,8 +183,9 @@ void VType_wxCursor::DoPrepare(Frame& frameOuter)
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
-	Declare(VTYPE_wxGDIObject, Flag::Mutable);
+	Declare(VTYPE_wxGDIObject, Flag::Mutable, Gurax_CreateConstructor(Cursor_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxCursor, IsOk_gurax));
 }
 
 //------------------------------------------------------------------------------
