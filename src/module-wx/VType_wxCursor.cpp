@@ -54,7 +54,6 @@ Gurax_DeclareConstructorAlias(Cursor_gurax, "Cursor")
 
 Gurax_ImplementConstructorEx(Cursor_gurax, processor_gurax, argument_gurax)
 {
-	::printf("wx.Cursor()\n");
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	const Gurax::ValueList& args = args_gurax.PickList();
@@ -68,8 +67,22 @@ Gurax_ImplementConstructorEx(Cursor_gurax, processor_gurax, argument_gurax)
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
 		Error::Clear();
-		::printf("check %d\n", __LINE__);
 		return new Value_wxCursor(wxCursor());
+	} while (0);
+	Error::ClearIssuedFlag();
+	// wxCursor(cursorId as StockCursor)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("cursorId", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxStockCursor cursorId = args.PickNumber<wxStockCursor>();
+		return new Value_wxCursor(wxCursor(cursorId));
 	} while (0);
 	Error::ClearIssuedFlag();
 	// wxCursor(bits as Pointer@gurax, width as int, height as int, hotSpotX as int = -1, hotSpotY as int = -1, maskBits? as Pointer@gurax)
@@ -97,22 +110,6 @@ Gurax_ImplementConstructorEx(Cursor_gurax, processor_gurax, argument_gurax)
 	//	return new Value_wxCursor(wxCursor(bits, width, height, hotSpotX, hotSpotY, maskBits));
 	//} while (0);
 	//Error::ClearIssuedFlag();
-	// wxCursor(cursorId as StockCursor)
-	do {
-		static DeclCallable* pDeclCallable = nullptr;
-		if (!pDeclCallable) {
-			pDeclCallable = new DeclCallable();
-			pDeclCallable->DeclareArg("cursorId", VTYPE_Number);
-		}
-		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
-		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
-		Error::Clear();
-		ArgPicker args(*pArgument);
-		wxStockCursor cursorId = args.PickNumber<wxStockCursor>();
-		::printf("check %d\n", __LINE__);
-		return new Value_wxCursor(wxCursor(cursorId));
-	} while (0);
-	Error::ClearIssuedFlag();
 	// wxCursor(cursorName as const_String_r, type as BitmapType = wxCURSOR_DEFAULT_TYPE, hotSpotX as int = 0, hotSpotY as int = 0)
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
@@ -131,7 +128,6 @@ Gurax_ImplementConstructorEx(Cursor_gurax, processor_gurax, argument_gurax)
 		wxBitmapType type = args.IsValid()? args.PickNumber<wxBitmapType>() : wxCURSOR_DEFAULT_TYPE;
 		int hotSpotX = args.IsValid()? args.PickNumber<int>() : 0;
 		int hotSpotY = args.IsValid()? args.PickNumber<int>() : 0;
-		::printf("check %d\n", __LINE__);
 		return new Value_wxCursor(wxCursor(cursorName, type, hotSpotX, hotSpotY));
 	} while (0);
 	Error::ClearIssuedFlag();
@@ -147,10 +143,8 @@ Gurax_ImplementConstructorEx(Cursor_gurax, processor_gurax, argument_gurax)
 		Error::Clear();
 		ArgPicker args(*pArgument);
 		const wxImage& image = args.Pick<Value_wxImage>().GetEntity();
-		::printf("check %d\n", __LINE__);
 		return new Value_wxCursor(wxCursor(image));
 	} while (0);
-	::printf("check %d\n", __LINE__);
 	return Value::nil();
 }
 

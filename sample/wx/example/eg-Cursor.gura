@@ -18,19 +18,49 @@ PanelMain = class(wx.Panel) {
 	__init__(parent as wx.Window) = {|parent|
 		sizer = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizer)
-		this.SetCursor(wx.Cursor(wx.CURSOR_PENCIL))
-		/*
 		wx.GridSizer(5, 2, 2) {|sizer|
 			(^sizer).Add(sizer, wx.SizerFlags(1).Expand())
-			repeat (5 * 5) {
-				//wx.StaticText(this, wx.ID_ANY, 'Hello World', style = wx.BORDER_SUNKEN) {|ctrl|
-				wx.Panel(this, wx.ID_ANY, style = wx.BORDER_SUNKEN) {|ctrl|
+			[
+				`wx.CURSOR_ARROW
+				`wx.CURSOR_RIGHT_ARROW
+				`wx.CURSOR_BULLSEYE
+				`wx.CURSOR_CHAR
+				`wx.CURSOR_CROSS
+				`wx.CURSOR_HAND
+				`wx.CURSOR_IBEAM
+				`wx.CURSOR_LEFT_BUTTON
+				`wx.CURSOR_MAGNIFIER
+				`wx.CURSOR_MIDDLE_BUTTON
+				`wx.CURSOR_NO_ENTRY
+				`wx.CURSOR_PAINT_BRUSH
+				`wx.CURSOR_PENCIL
+				`wx.CURSOR_POINT_LEFT
+				`wx.CURSOR_POINT_RIGHT
+				`wx.CURSOR_QUESTION_ARROW
+				`wx.CURSOR_RIGHT_BUTTON
+				`wx.CURSOR_SIZENESW
+				`wx.CURSOR_SIZENS
+				`wx.CURSOR_SIZENWSE
+				`wx.CURSOR_SIZEWE
+				`wx.CURSOR_SIZING
+				`wx.CURSOR_SPRAYCAN
+				`wx.CURSOR_WAIT
+				`wx.CURSOR_WATCH
+				`wx.CURSOR_BLANK
+				`wx.CURSOR_DEFAULT
+				//`wx.CURSOR_COPY_ARROW
+				//`wx.CURSOR_CROSS_REVERSE
+				//`wx.CURSOR_DOUBLE_ARROW
+				//`wx.CURSOR_BASED_ARROW_UP
+				//`wx.CURSOR_BASED_ARROW_DOWN
+				`wx.CURSOR_ARROWWAIT
+			].Each {|cursorId|
+				wx.StaticText(this, wx.ID_ANY, cursorId, style = wx.BORDER_SUNKEN) {|ctrl|
 					sizer.Add(ctrl, wx.SizerFlags(1).Expand())
-					ctrl.SetCursor(wx.Cursor(wx.CURSOR_IBEAM))
+					ctrl.SetCursor(wx.Cursor(cursorId.Eval()))
 				}
 			}
 		}
-		*/
 	}
 }
 

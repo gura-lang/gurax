@@ -16,6 +16,21 @@ Cursor = Class(GDIObject):holdEntity {
 			return new Value_wxCursor(wxCursor());
 		} while (0);
 		Error::ClearIssuedFlag();
+		// wxCursor(cursorId as StockCursor)
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("cursorId", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxStockCursor cursorId = args.PickNumber<wxStockCursor>();
+			return new Value_wxCursor(wxCursor(cursorId));
+		} while (0);
+		Error::ClearIssuedFlag();
 		// wxCursor(bits as Pointer@gurax, width as int, height as int, hotSpotX as int = -1, hotSpotY as int = -1, maskBits? as Pointer@gurax)
 		//do {
 		//	static DeclCallable* pDeclCallable = nullptr;
@@ -60,21 +75,6 @@ Cursor = Class(GDIObject):holdEntity {
 			int hotSpotX = args.IsValid()? args.PickNumber<int>() : 0;
 			int hotSpotY = args.IsValid()? args.PickNumber<int>() : 0;
 			return new Value_wxCursor(wxCursor(cursorName, type, hotSpotX, hotSpotY));
-		} while (0);
-		Error::ClearIssuedFlag();
-		// wxCursor(cursorId as StockCursor)
-		do {
-			static DeclCallable* pDeclCallable = nullptr;
-			if (!pDeclCallable) {
-				pDeclCallable = new DeclCallable();
-				pDeclCallable->DeclareArg("cursorId", VTYPE_Number);
-			}
-			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
-			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
-			Error::Clear();
-			ArgPicker args(*pArgument);
-			wxStockCursor cursorId = args.PickNumber<wxStockCursor>();
-			return new Value_wxCursor(wxCursor(cursorId));
 		} while (0);
 		Error::ClearIssuedFlag();
 		// wxCursor(image as const_Image_r)
