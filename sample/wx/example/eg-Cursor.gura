@@ -1,0 +1,33 @@
+#!/usr/bin/env gurax
+import(wx)
+
+AppMain = class(wx.App) {
+	OnInit() = {
+		FrameMain(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		true
+	}
+}
+
+FrameMain = class(wx.Frame) {
+	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
+		PanelMain(this)
+	}
+}
+
+PanelMain = class(wx.Panel) {
+	__init__(parent as wx.Window) = {|parent|
+		sizer = wx.BoxSizer(wx.VERTICAL)
+		this.SetSizer(sizer)
+		wx.GridSizer(5, 2, 2) {|sizer|
+			(^sizer).Add(sizer, wx.SizerFlags(1).Expand())
+			repeat (5 * 5) {
+				wx.StaticText(this, wx.ID_ANY, 'Hello World', style = wx.BORDER_SUNKEN) {|ctrl|
+					sizer.Add(ctrl, wx.SizerFlags(1).Expand())
+					ctrl.SetCursor(wx.Cursor(wx.CURSOR_IBEAM))
+				}
+			}
+		}
+	}
+}
+
+wx.ImplementApp(AppMain())
