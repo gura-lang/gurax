@@ -18,7 +18,7 @@ PanelMain = class(wx.Panel) {
 	__init__(parent as wx.Window) = {|parent|
 		sizer = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizer)
-		wx.GridSizer(5, 2, 2) {|sizer|
+		wx.GridSizer(4, 2, 2) {|sizer|
 			(^sizer).Add(sizer, wx.SizerFlags(1).Expand())
 			[
 				`wx.CURSOR_ARROW
@@ -54,10 +54,12 @@ PanelMain = class(wx.Panel) {
 				//`wx.CURSOR_BASED_ARROW_UP
 				//`wx.CURSOR_BASED_ARROW_DOWN
 				`wx.CURSOR_ARROWWAIT
-			].Each {|cursorId|
-				wx.StaticText(this, wx.ID_ANY, cursorId, style = wx.BORDER_SUNKEN) {|ctrl|
+			].Each {|exprCursorId|
+				label = (exprCursorId as String).Sub('wx.CURSOR_', '')
+				cursorId = exprCursorId.Eval()
+				wx.StaticText(this, wx.ID_ANY, label, style = wx.ALIGN_CENTRE_HORIZONTAL | wx.BORDER_SUNKEN) {|ctrl|
 					sizer.Add(ctrl, wx.SizerFlags(1).Expand())
-					ctrl.SetCursor(wx.Cursor(cursorId.Eval()))
+					ctrl.SetCursor(wx.Cursor(cursorId))
 				}
 			}
 		}
