@@ -17,7 +17,7 @@ FrameMain = class(wx.Frame) {
 			[Page_Brush, Page_Pen, Page_DrawLine, Page_DrawArc, Page_DrawCircle, Page_DrawEllipse, Page_EllipticArc, Page_Text].Each {|cls|
 				noteBook.AddPage(cls(noteBook), cls.name)
 			}
-			noteBook.SetSelection(3)
+			noteBook.SetSelection(4)
 		}
 	}
 }
@@ -323,20 +323,77 @@ Page_DrawArc = class(wx.Panel) {
 
 Page_DrawCircle = class(wx.Panel) {
 	name:static = 'DrawCircle'
-	pen as wx.Pen
 	brush as wx.Brush
+	ptCentre = wx.Point(500, 300)
+	ptSizer = wx.Point(500 + 200, 300)
+	rcCentre as wx.Rect
+	rcSizer as wx.Rect
+	font as wx.Font
+	stat = `neutral
 	__init__(parent as wx.Window) = {|parent|
-		this.pen = wx.Pen('#ff8888', 1, wx.PENSTYLE_SOLID)
-		this.brush = wx.Brush('#ff8888', wx.BRUSHSTYLE_BDIAGONAL_HATCH)
+		this.SetBackgroundStyle(wx.BG_STYLE_PAINT)
+		this.font = wx.Font(10, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL)
+		this.Bind(wx.EVT_MOTION, this.OnMotion)
+		this.Bind(wx.EVT_LEFT_DOWN, this.OnLeftDown)
+		this.Bind(wx.EVT_LEFT_UP, this.OnLeftUp)
 		this.Bind(wx.EVT_PAINT, this.OnPaint)
 	}
 	OnPaint(event) = {
-		idxs  = Range(10)
-		dc = wx.PaintDC(this)
-		dc.SetPen(this.pen)
-		dc.SetBrush(this.brush)
-		dc.DrawCircle(idxs * 100, 100, idxs * 10 + 10)
+		radiusPoint = 5
+		idxs = Range(10):list
+		dc = wx.BufferedPaintDC(this)
+		dc.SetBackground(wx.WHITE_BRUSH)
+		dc.Clear()
+		dc.SetFont(this.font)
+		dc.SetTextForeground('#444444')
+		dc.SetPen(wx.Pen('#ff8888', 1, wx.PENSTYLE_SOLID))
+		dc.SetBrush(wx.Brush('#ff8888', wx.BRUSHSTYLE_BDIAGONAL_HATCH))
+		dc.DrawArc(100 + 80, 100 - 10, 100 - 10, 100 - 10, 100, 100)
+		dc.PutText('DrawArc(xStart, yStart, xEnd, yEnd, xCentre, yCentre)', 100, 100 - 30, `southwest)
+		dc.DrawArc(wx.Point(100 + 80, 200 - 10), wx.Point(100 - 10, 200 - 10), wx.Point(100, 200))
+		dc.PutText('DrawArc(ptStart, ptEnd, ptCentre)', 100, 200 - 30, `southwest)
+		dc.DrawCircle(this.ptCentre, this.ptSizer.x - this.ptCentre.x)
+		dc.SetPen(wx.Pen('#888888', 1, wx.PENSTYLE_SOLID))
+		dc.SetBrush(wx.Brush('#888888', wx.BRUSHSTYLE_SOLID))
+		dc.DrawCircle(this.ptCentre.x, this.ptCentre.y, radiusPoint)
+		dc.DrawCircle(this.ptSizer.x, this.ptSizer.y, radiusPoint)
+		dc.DrawLine(this.ptCentre, this.ptSizer)
+		dc.PutText('Centre', this.ptCentre.x + 4, this.ptCentre.y + 4, `northwest)
+		dc.PutText('Sizer', this.ptSizer.x + 4, this.ptSizer.y + 4, `northwest)
+		this.rcCentre = wx.Rect(this.ptCentre.x - radiusPoint, this.ptCentre.y - radiusPoint, radiusPoint * 2, radiusPoint * 2)
+		this.rcSizer = wx.Rect(this.ptSizer.x - radiusPoint, this.ptSizer.y - radiusPoint, radiusPoint * 2, radiusPoint * 2)
 		dc = nil
+	}
+	OnMotion(event as wx.MouseEvent) = {
+		pt = event.GetPosition()
+		if (this.stat == `neutral) {
+			if (this.rcCentre.Contains(pt) || this.rcSizer.Contains(pt)) {
+				this.SetCursor(wx.CROSS_CURSOR)
+			} else {
+				this.SetCursor(wx.STANDARD_CURSOR)
+			}
+		} elsif (this.stat == `moveCentre) {
+			radius = this.ptSizer.x - this.ptCentre.x
+			this.ptCentre = pt
+			this.ptSizer = wx.Point(this.ptCentre.x + radius, this.ptCentre.y)
+			this.Refresh()
+		} elsif (this.stat == `moveSizer) {
+			this.ptSizer = wx.Point(pt.x, this.ptCentre.y)
+			this.Refresh()
+		}
+		//mouseState = wx.GetMouseState()
+		//if (!mouseState.LeftIsDown()) { this.stat = `neutral }
+	}
+	OnLeftDown(event as wx.MouseEvent) = {
+		pt = event.GetPosition()
+		if (this.rcCentre.Contains(pt)) {
+			this.stat = `moveCentre
+		} elsif (this.rcSizer.Contains(pt)) {
+			this.stat = `moveSizer
+		}
+	}
+	OnLeftUp(event as wx.MouseEvent) = {
+		this.stat = `neutral		
 	}
 }
 
