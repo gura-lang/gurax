@@ -14,7 +14,7 @@ AppMain = class(wx.App) {
 FrameMain = class(wx.Frame) {
 	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
 		wx.Notebook(this, wx.ID_ANY) {|noteBook|
-			[Page_Brush, Page_Pen, Page_Line, Page_Arc, Page_Circle, Page_Ellipse, Page_EllipticArc, Page_Text].Each {|cls|
+			[Page_Brush, Page_Pen, Page_DrawLine, Page_DrawArc, Page_DrawCircle, Page_DrawEllipse, Page_EllipticArc, Page_Text].Each {|cls|
 				noteBook.AddPage(cls(noteBook), cls.name)
 			}
 			noteBook.SetSelection(3)
@@ -24,7 +24,7 @@ FrameMain = class(wx.Frame) {
 
 wx.DC.PutText(text as String, x as Number, y as Number, anchor as Symbol):map = {
 	size = this.GetTextExtent(text)
-	if (anchor == `center) {
+	if (anchor == `centre) {
 		x -= size.GetWidth() / 2, y -= size.GetHeight() / 2
 	} elsif (anchor == `north) {
 		x -= size.GetWidth() / 2
@@ -189,7 +189,7 @@ Page_Pen = class(wx.Panel) {
 	}
 }
 
-Page_Line = class(wx.Panel) {
+Page_DrawLine = class(wx.Panel) {
 	name:static = 'DrawLine'
 	__init__(parent as wx.Window) = {|parent|
 		this.Bind(wx.EVT_PAINT, this.OnPaint)
@@ -236,20 +236,20 @@ Page_Line = class(wx.Panel) {
 	}
 }
 
-Page_Arc = class(wx.Panel) {
+Page_DrawArc = class(wx.Panel) {
 	name:static = 'DrawArc'
 	brush as wx.Brush
-	ptCenter = wx.Point(400, 300)
+	ptCentre = wx.Point(400, 300)
 	ptStart = wx.Point(400 + 200, 300)
 	ptEnd = wx.Point(400 - 40, 300 - 200)
-	rcCenter as wx.Rect
+	rcCentre as wx.Rect
 	rcStart as wx.Rect
 	rcEnd as wx.Rect
-	cursorHand as wx.Cursor
+	font as wx.Font
 	stat = `neutral
 	__init__(parent as wx.Window) = {|parent|
-		//this.cursorHand = wx.Cursor(wx.CURSOR_HAND)
 		this.SetBackgroundStyle(wx.BG_STYLE_PAINT)
+		this.font = wx.Font(10, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL)
 		this.Bind(wx.EVT_MOTION, this.OnMotion)
 		this.Bind(wx.EVT_LEFT_DOWN, this.OnLeftDown)
 		this.Bind(wx.EVT_LEFT_UP, this.OnLeftUp)
@@ -263,15 +263,20 @@ Page_Arc = class(wx.Panel) {
 		dc.Clear()
 		dc.SetPen(wx.Pen('#ff8888', 1, wx.PENSTYLE_SOLID))
 		dc.SetBrush(wx.Brush('#ff8888', wx.BRUSHSTYLE_BDIAGONAL_HATCH))
-		dc.DrawArc(this.ptStart.x, this.ptStart.y, this.ptEnd.x, this.ptEnd.y, this.ptCenter.x, this.ptCenter.y)
+		dc.DrawArc(this.ptStart.x, this.ptStart.y, this.ptEnd.x, this.ptEnd.y, this.ptCentre.x, this.ptCentre.y)
 		dc.SetPen(wx.Pen('#888888', 1, wx.PENSTYLE_SOLID))
 		dc.SetBrush(wx.Brush('#888888', wx.BRUSHSTYLE_SOLID))
-		dc.DrawCircle(this.ptCenter.x, this.ptCenter.y, radiusPoint)
+		dc.DrawCircle(this.ptCentre.x, this.ptCentre.y, radiusPoint)
 		dc.DrawCircle(this.ptStart.x, this.ptStart.y, radiusPoint)
 		dc.DrawCircle(this.ptEnd.x, this.ptEnd.y, radiusPoint)
-		dc.DrawLine(this.ptCenter, this.ptStart)
-		dc.DrawLine(this.ptCenter, this.ptEnd)
-		this.rcCenter = wx.Rect(this.ptCenter.x - radiusPoint, this.ptCenter.y - radiusPoint, radiusPoint * 2, radiusPoint * 2)
+		dc.DrawLine(this.ptCentre, this.ptStart)
+		dc.DrawLine(this.ptCentre, this.ptEnd)
+		dc.SetFont(this.font)
+		dc.SetTextForeground('#888888')
+		dc.PutText('Centre', this.ptCentre.x + 4, this.ptCentre.y + 4, `northwest)
+		dc.PutText('Start', this.ptStart.x + 4, this.ptStart.y + 4, `northwest)
+		dc.PutText('End', this.ptEnd.x + 4, this.ptEnd.y + 4, `northwest)
+		this.rcCentre = wx.Rect(this.ptCentre.x - radiusPoint, this.ptCentre.y - radiusPoint, radiusPoint * 2, radiusPoint * 2)
 		this.rcStart = wx.Rect(this.ptStart.x - radiusPoint, this.ptStart.y - radiusPoint, radiusPoint * 2, radiusPoint * 2)
 		this.rcEnd = wx.Rect(this.ptEnd.x - radiusPoint, this.ptEnd.y - radiusPoint, radiusPoint * 2, radiusPoint * 2)
 		dc = nil
@@ -279,13 +284,13 @@ Page_Arc = class(wx.Panel) {
 	OnMotion(event as wx.MouseEvent) = {
 		pt = event.GetPosition()
 		if (this.stat == `neutral) {
-			if (this.rcCenter.Contains(pt) || this.rcStart.Contains(pt) || this.rcEnd.Contains(pt)) {
+			if (this.rcCentre.Contains(pt) || this.rcStart.Contains(pt) || this.rcEnd.Contains(pt)) {
 				this.SetCursor(wx.CROSS_CURSOR)
 			} else {
 				this.SetCursor(wx.STANDARD_CURSOR)
 			}
-		} elsif (this.stat == `moveCenter) {
-			this.ptCenter = pt
+		} elsif (this.stat == `moveCentre) {
+			this.ptCentre = pt
 			this.Refresh()
 		} elsif (this.stat == `moveStart) {
 			this.ptStart = pt
@@ -294,13 +299,13 @@ Page_Arc = class(wx.Panel) {
 			this.ptEnd = pt
 			this.Refresh()
 		}
-		mouseState = wx.GetMouseState()
-		if (!mouseState.LeftIsDown()) { this.stat = `neutral }
+		//mouseState = wx.GetMouseState()
+		//if (!mouseState.LeftIsDown()) { this.stat = `neutral }
 	}
 	OnLeftDown(event as wx.MouseEvent) = {
 		pt = event.GetPosition()
-		if (this.rcCenter.Contains(pt)) {
-			this.stat = `moveCenter
+		if (this.rcCentre.Contains(pt)) {
+			this.stat = `moveCentre
 		} elsif (this.rcStart.Contains(pt)) {
 			this.stat = `moveStart
 		} elsif (this.rcEnd.Contains(pt)) {
@@ -312,7 +317,7 @@ Page_Arc = class(wx.Panel) {
 	}
 }
 
-Page_Circle = class(wx.Panel) {
+Page_DrawCircle = class(wx.Panel) {
 	name:static = 'DrawCircle'
 	pen as wx.Pen
 	brush as wx.Brush
@@ -331,7 +336,7 @@ Page_Circle = class(wx.Panel) {
 	}
 }
 
-Page_Ellipse = class(wx.Panel) {
+Page_DrawEllipse = class(wx.Panel) {
 	name:static = 'DrawEllipse'
 	pen as wx.Pen
 	brush as wx.Brush
@@ -398,7 +403,7 @@ Page_Text = class(wx.Panel) {
 		dc.SetFont(wx.Font(30, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
 		x = 100, y = 200
 		for (pair in [(`north, 0), (`south, 150), (`east, 0), (`west, 250),
-				(`northeast, 0), (`southeast, 0), (`northwest, 0), (`southwest, 250), (`center, 0)]) {|i|
+				(`northeast, 0), (`southeast, 0), (`northwest, 0), (`southwest, 250), (`centre, 0)]) {|i|
 			[anchor, xStep] = pair
 			dc.SetBrush(wx.Brush('#ff8888', wx.BRUSHSTYLE_SOLID))
 			dc.DrawCircle(x, y, 5)
