@@ -239,9 +239,9 @@ Page_DrawLine = class(wx.Panel) {
 Page_DrawArc = class(wx.Panel) {
 	name:static = 'DrawArc'
 	brush as wx.Brush
-	ptCentre = wx.Point(400, 300)
-	ptStart = wx.Point(400 + 200, 300)
-	ptEnd = wx.Point(400 - 40, 300 - 200)
+	ptCentre = wx.Point(500, 300)
+	ptStart = wx.Point(500 + 200, 300)
+	ptEnd = wx.Point(500 - 40, 300 - 200)
 	rcCentre as wx.Rect
 	rcStart as wx.Rect
 	rcEnd as wx.Rect
