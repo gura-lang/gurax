@@ -17,7 +17,7 @@ FrameMain = class(wx.Frame) {
 			[Page_Brush, Page_Pen, Page_DrawLine, Page_DrawArc, Page_DrawCircle, Page_DrawEllipse, Page_EllipticArc, Page_Text].Each {|cls|
 				noteBook.AddPage(cls(noteBook), cls.name)
 			}
-			noteBook.SetSelection(3)
+			noteBook.SetSelection(4)
 		}
 	}
 }
@@ -317,12 +317,13 @@ Page_DrawArc = class(wx.Panel) {
 Page_DrawCircle = class(wx.Panel) {
 	name:static = 'DrawCircle'
 	brush as wx.Brush
-	ptCentre = wx.Point(500, 300)
-	ptSizer = wx.Point(500 + 200, 300)
-	rcCentre as wx.Rect
-	rcSizer as wx.Rect
+	ptDict = %{
+		`centre => wx.Point(500, 300)
+		`sizer => wx.Point(500 + 200, 300)
+	}
+	rcDict = %{}
 	font as wx.Font
-	stat = `neutral
+	target = `none
 	__init__(parent as wx.Window) = {|parent|
 		this.SetBackgroundStyle(wx.BG_STYLE_PAINT)
 		this.font = wx.Font(10, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL)
@@ -341,52 +342,58 @@ Page_DrawCircle = class(wx.Panel) {
 		dc.SetTextForeground('#444444')
 		dc.SetPen(wx.Pen('#ff8888', 1, wx.PENSTYLE_SOLID))
 		dc.SetBrush(wx.Brush('#ff8888', wx.BRUSHSTYLE_BDIAGONAL_HATCH))
-		dc.DrawArc(100 + 80, 100 - 10, 100 - 10, 100 - 10, 100, 100)
-		dc.PutText('DrawArc(xStart, yStart, xEnd, yEnd, xCentre, yCentre)', 100, 100 - 30, `southwest)
-		dc.DrawArc(wx.Point(100 + 80, 200 - 10), wx.Point(100 - 10, 200 - 10), wx.Point(100, 200))
-		dc.PutText('DrawArc(ptStart, ptEnd, ptCentre)', 100, 200 - 30, `southwest)
-		dc.DrawCircle(this.ptCentre, this.ptSizer.x - this.ptCentre.x)
+		dc.DrawCircle(100, 100, 60)
+		dc.PutText('DrawCircle(xCentre, yCentre, radius)', 100, 100, `southwest)
+		dc.DrawCircle(wx.Point(100, 250), 60)
+		dc.PutText('DrawCircle(ptCentre, radius)', 100, 250, `southwest)
+		dc.DrawCircle(this.ptDict[`centre], this.ptDict[`sizer].x - this.ptDict[`centre].x)
 		dc.SetPen(wx.Pen('#888888', 1, wx.PENSTYLE_SOLID))
 		dc.SetBrush(wx.Brush('#888888', wx.BRUSHSTYLE_SOLID))
-		dc.DrawCircle(this.ptCentre.x, this.ptCentre.y, radiusPoint)
-		dc.DrawCircle(this.ptSizer.x, this.ptSizer.y, radiusPoint)
-		dc.DrawLine(this.ptCentre, this.ptSizer)
-		dc.PutText('Centre', this.ptCentre.x + 4, this.ptCentre.y + 4, `northwest)
-		dc.PutText('Sizer', this.ptSizer.x + 4, this.ptSizer.y + 4, `northwest)
-		this.rcCentre = wx.Rect(this.ptCentre.x - radiusPoint, this.ptCentre.y - radiusPoint, radiusPoint * 2, radiusPoint * 2)
-		this.rcSizer = wx.Rect(this.ptSizer.x - radiusPoint, this.ptSizer.y - radiusPoint, radiusPoint * 2, radiusPoint * 2)
+		this.ptDict.Each {|pair|
+			[symbol, pt] = pair
+			dc.DrawCircle(pt.x, pt.y, radiusPoint)
+			this.rcDict[symbol] = wx.Rect(pt.x - radiusPoint, pt.y - radiusPoint, radiusPoint * 2, radiusPoint * 2)
+		}
+		dc.DrawLine(this.ptDict[`centre], this.ptDict[`sizer])
+		dc.PutText('Centre', this.ptDict[`centre].x + 4, this.ptDict[`centre].y + 4, `northwest)
+		pt = (this.ptDict[`centre] + this.ptDict[`sizer]) / 2
+		dc.PutText('Radius', pt.x, pt.y - 4, `south)
 		dc = nil
 	}
 	OnMotion(event as wx.MouseEvent) = {
 		pt = event.GetPosition()
-		if (this.stat == `neutral) {
-			if (this.rcCentre.Contains(pt) || this.rcSizer.Contains(pt)) {
+		if (this.target == `none) {
+			if (this.rcDict.EachValue():*Contains(pt).Or()) {
 				this.SetCursor(wx.CROSS_CURSOR)
 			} else {
 				this.SetCursor(wx.STANDARD_CURSOR)
 			}
-		} elsif (this.stat == `moveCentre) {
-			radius = this.ptSizer.x - this.ptCentre.x
-			this.ptCentre = pt
-			this.ptSizer = wx.Point(this.ptCentre.x + radius, this.ptCentre.y)
+		} elsif (this.target == `sizer) {
+			this.ptDict[this.target] = pt
+			this.ptDict[`sizer].y = this.ptDict[`centre].y
 			this.Refresh()
-		} elsif (this.stat == `moveSizer) {
-			this.ptSizer = wx.Point(pt.x, this.ptCentre.y)
+		} else {
+			radius = this.ptDict[`sizer].x - this.ptDict[`centre].x
+			this.ptDict[this.target] = pt
+			this.ptDict[`sizer].x = this.ptDict[`centre].x + radius
+			this.ptDict[`sizer].y = this.ptDict[`centre].y
 			this.Refresh()
 		}
 		//mouseState = wx.GetMouseState()
-		//if (!mouseState.LeftIsDown()) { this.stat = `neutral }
+		//if (!mouseState.LeftIsDown()) { this.target = `none }
 	}
 	OnLeftDown(event as wx.MouseEvent) = {
 		pt = event.GetPosition()
-		if (this.rcCentre.Contains(pt)) {
-			this.stat = `moveCentre
-		} elsif (this.rcSizer.Contains(pt)) {
-			this.stat = `moveSizer
+		this.rcDict.Each {|pair|
+			[symbol, rc] = pair
+			if (rc.Contains(pt)) {
+				this.target = symbol
+				break
+			}
 		}
 	}
 	OnLeftUp(event as wx.MouseEvent) = {
-		this.stat = `neutral		
+		this.target = `none		
 	}
 }
 
