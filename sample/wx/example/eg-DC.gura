@@ -17,7 +17,7 @@ FrameMain = class(wx.Frame) {
 			[Page_Brush, Page_Pen, Page_DrawLine, Page_DrawArc, Page_DrawCircle, Page_DrawEllipse, Page_EllipticArc, Page_Text].Each {|cls|
 				noteBook.AddPage(cls(noteBook), cls.name)
 			}
-			noteBook.SetSelection(4)
+			noteBook.SetSelection(3)
 		}
 	}
 }
@@ -239,12 +239,18 @@ Page_DrawLine = class(wx.Panel) {
 Page_DrawArc = class(wx.Panel) {
 	name:static = 'DrawArc'
 	brush as wx.Brush
-	ptCentre = wx.Point(500, 300)
-	ptStart = wx.Point(500 + 200, 300)
-	ptEnd = wx.Point(500 - 40, 300 - 200)
-	rcCentre as wx.Rect
-	rcStart as wx.Rect
-	rcEnd as wx.Rect
+	//ptCentre = wx.Point(500, 300)
+	//ptStart = wx.Point(500 + 200, 300)
+	//ptEnd = wx.Point(500 - 40, 300 - 200)
+	ptDict = %{
+		`centre => wx.Point(500, 300)
+		`start => wx.Point(500 + 200, 300)
+		`end => wx.Point(500 - 40, 300 - 200)
+	}
+	//rcCentre as wx.Rect
+	//rcStart as wx.Rect
+	//rcEnd as wx.Rect
+	rcDict = %{}
 	font as wx.Font
 	stat = `neutral
 	__init__(parent as wx.Window) = {|parent|
@@ -268,39 +274,39 @@ Page_DrawArc = class(wx.Panel) {
 		dc.DrawArc(100 + 80, 100 - 10, 100 - 10, 100 - 10, 100, 100)
 		dc.PutText('DrawArc(xStart, yStart, xEnd, yEnd, xCentre, yCentre)', 100, 100 - 30, `southwest)
 		dc.DrawArc(wx.Point(100 + 80, 200 - 10), wx.Point(100 - 10, 200 - 10), wx.Point(100, 200))
-		dc.PutText('DrawArc(ptStart, ptEnd, ptCentre)', 100, 200 - 30, `southwest)
-		dc.DrawArc(this.ptStart, this.ptEnd, this.ptCentre)
+		dc.PutText('DrawArc(ptDict[`start], ptDict[`end], ptDict[`centre])', 100, 200 - 30, `southwest)
+		dc.DrawArc(this.ptDict[`start], this.ptDict[`end], this.ptDict[`centre])
 		dc.SetPen(wx.Pen('#888888', 1, wx.PENSTYLE_SOLID))
 		dc.SetBrush(wx.Brush('#888888', wx.BRUSHSTYLE_SOLID))
-		dc.DrawCircle(this.ptCentre.x, this.ptCentre.y, radiusPoint)
-		dc.DrawCircle(this.ptStart.x, this.ptStart.y, radiusPoint)
-		dc.DrawCircle(this.ptEnd.x, this.ptEnd.y, radiusPoint)
-		dc.DrawLine(this.ptCentre, this.ptStart)
-		dc.DrawLine(this.ptCentre, this.ptEnd)
-		dc.PutText('Centre', this.ptCentre.x + 4, this.ptCentre.y + 4, `northwest)
-		dc.PutText('Start', this.ptStart.x + 4, this.ptStart.y + 4, `northwest)
-		dc.PutText('End', this.ptEnd.x + 4, this.ptEnd.y + 4, `northwest)
-		this.rcCentre = wx.Rect(this.ptCentre.x - radiusPoint, this.ptCentre.y - radiusPoint, radiusPoint * 2, radiusPoint * 2)
-		this.rcStart = wx.Rect(this.ptStart.x - radiusPoint, this.ptStart.y - radiusPoint, radiusPoint * 2, radiusPoint * 2)
-		this.rcEnd = wx.Rect(this.ptEnd.x - radiusPoint, this.ptEnd.y - radiusPoint, radiusPoint * 2, radiusPoint * 2)
+		dc.DrawCircle(this.ptDict[`centre].x, this.ptDict[`centre].y, radiusPoint)
+		dc.DrawCircle(this.ptDict[`start].x, this.ptDict[`start].y, radiusPoint)
+		dc.DrawCircle(this.ptDict[`end].x, this.ptDict[`end].y, radiusPoint)
+		dc.DrawLine(this.ptDict[`centre], this.ptDict[`start])
+		dc.DrawLine(this.ptDict[`centre], this.ptDict[`end])
+		dc.PutText('Centre', this.ptDict[`centre].x + 4, this.ptDict[`centre].y + 4, `northwest)
+		dc.PutText('Start', this.ptDict[`start].x + 4, this.ptDict[`start].y + 4, `northwest)
+		dc.PutText('End', this.ptDict[`end].x + 4, this.ptDict[`end].y + 4, `northwest)
+		this.rcDict[`centre] = wx.Rect(this.ptDict[`centre].x - radiusPoint, this.ptDict[`centre].y - radiusPoint, radiusPoint * 2, radiusPoint * 2)
+		this.rcDict[`start] = wx.Rect(this.ptDict[`start].x - radiusPoint, this.ptDict[`start].y - radiusPoint, radiusPoint * 2, radiusPoint * 2)
+		this.rcDict[`end] = wx.Rect(this.ptDict[`end].x - radiusPoint, this.ptDict[`end].y - radiusPoint, radiusPoint * 2, radiusPoint * 2)
 		dc = nil
 	}
 	OnMotion(event as wx.MouseEvent) = {
 		pt = event.GetPosition()
 		if (this.stat == `neutral) {
-			if (this.rcCentre.Contains(pt) || this.rcStart.Contains(pt) || this.rcEnd.Contains(pt)) {
+			if (this.rcDict[`centre].Contains(pt) || this.rcDict[`start].Contains(pt) || this.rcDict[`end].Contains(pt)) {
 				this.SetCursor(wx.CROSS_CURSOR)
 			} else {
 				this.SetCursor(wx.STANDARD_CURSOR)
 			}
 		} elsif (this.stat == `moveCentre) {
-			this.ptCentre = pt
+			this.ptDict[`centre] = pt
 			this.Refresh()
 		} elsif (this.stat == `moveStart) {
-			this.ptStart = pt
+			this.ptDict[`start] = pt
 			this.Refresh()
 		} elsif (this.stat == `moveEnd) {
-			this.ptEnd = pt
+			this.ptDict[`end] = pt
 			this.Refresh()
 		}
 		//mouseState = wx.GetMouseState()
@@ -308,11 +314,11 @@ Page_DrawArc = class(wx.Panel) {
 	}
 	OnLeftDown(event as wx.MouseEvent) = {
 		pt = event.GetPosition()
-		if (this.rcCentre.Contains(pt)) {
+		if (this.rcDict[`centre].Contains(pt)) {
 			this.stat = `moveCentre
-		} elsif (this.rcStart.Contains(pt)) {
+		} elsif (this.rcDict[`start].Contains(pt)) {
 			this.stat = `moveStart
-		} elsif (this.rcEnd.Contains(pt)) {
+		} elsif (this.rcDict[`end].Contains(pt)) {
 			this.stat = `moveEnd
 		}
 	}
