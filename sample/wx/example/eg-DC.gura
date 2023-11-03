@@ -399,27 +399,82 @@ Page_DrawCircle = class(wx.Panel) {
 
 Page_DrawEllipse = class(wx.Panel) {
 	name:static = 'DrawEllipse'
-	pen as wx.Pen
 	brush as wx.Brush
+	ptDict = %{
+		`lefttop => wx.Point(400, 100)
+		`rightbottom => wx.Point(400 + 400, 100 + 300)
+	}
+	rcDict = %{}
+	font as wx.Font
+	target = `none
 	__init__(parent as wx.Window) = {|parent|
-		this.pen = wx.Pen('#ff8888', 1, wx.PENSTYLE_SOLID)
-		this.brush = wx.Brush('#ff8888', wx.BRUSHSTYLE_BDIAGONAL_HATCH)
+		this.SetBackgroundStyle(wx.BG_STYLE_PAINT)
+		this.font = wx.Font(10, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL)
+		this.Bind(wx.EVT_MOTION, this.OnMotion)
+		this.Bind(wx.EVT_LEFT_DOWN, this.OnLeftDown)
+		this.Bind(wx.EVT_LEFT_UP, this.OnLeftUp)
 		this.Bind(wx.EVT_PAINT, this.OnPaint)
 	}
 	OnPaint(event) = {
-		dc = wx.PaintDC(this)
-		dc.SetPen(this.pen)
-		dc.SetBrush(this.brush)
-		dc.DrawEllipse(50, 50, 100, 50)
-		dc.DrawEllipse(50, 120, 100, 100)
-		dc.DrawEllipse(50, 250, 100, 150)
-		dc.DrawEllipse(wx.Point(200, 50), wx.Size(100, 50))
-		dc.DrawEllipse(wx.Point(200, 120), wx.Size(100, 100))
-		dc.DrawEllipse(wx.Point(200, 250), wx.Size(100, 150))
-		dc.DrawEllipse(wx.Rect(350, 50, 100, 50))
-		dc.DrawEllipse(wx.Rect(350, 120, 100, 100))
-		dc.DrawEllipse(wx.Rect(350, 250, 100, 150))
+		radiusPoint = 5
+		idxs = Range(10):list
+		dc = wx.BufferedPaintDC(this)
+		dc.SetBackground(wx.WHITE_BRUSH)
+		dc.Clear()
+		dc.SetFont(this.font)
+		dc.SetTextForeground('#444444')
+		dc.SetPen(wx.Pen('#ff8888', 1, wx.PENSTYLE_SOLID))
+		dc.SetBrush(wx.Brush('#ff8888', wx.BRUSHSTYLE_BDIAGONAL_HATCH))
+		dc.DrawEllipse(30, 40, 100, 70)
+		dc.PutText('DrawEllipse(x, y, width, height)', 30 + 100 / 2, 40 + 70 / 2, `southwest)
+		dc.DrawEllipse(wx.Point(30, 130), wx.Size(100, 70))
+		dc.PutText('DrawEllipse(pt, size)', 30 + 100 / 2, 130 + 70 / 2, `southwest)
+		dc.DrawEllipse(wx.Rect(30, 220, 100, 70))
+		dc.PutText('DrawEllipse(rect)', 30 + 100 / 2, 220 + 70 / 2, `southwest)
+		pt = this.ptDict[`rightbottom] - this.ptDict[`lefttop]
+		dc.DrawEllipse(this.ptDict[`lefttop], wx.Size(pt.x, pt.y))
+		dc.SetPen(wx.Pen('#888888', 1, wx.PENSTYLE_SOLID))
+		dc.SetBrush(wx.TRANSPARENT_BRUSH)
+		dc.DrawRectangle(this.ptDict[`lefttop], wx.Size(pt.x, pt.y))
+		dc.SetBrush(wx.Brush('#888888', wx.BRUSHSTYLE_SOLID))
+		this.ptDict.Each {|pair|
+			[symbol, pt] = pair
+			dc.DrawCircle(pt.x, pt.y, radiusPoint)
+			this.rcDict[symbol] = wx.Rect(pt.x - radiusPoint, pt.y - radiusPoint, radiusPoint * 2, radiusPoint * 2)
+		}
+		dc.PutText('pt', this.ptDict[`lefttop].x + 4, this.ptDict[`lefttop].y + 4, `northwest)
+		ptMiddle = (this.ptDict[`lefttop] + this.ptDict[`rightbottom]) / 2
+		dc.PutText('width', ptMiddle.x, this.ptDict[`lefttop].y - 4, `south)
+		dc.PutText('height', this.ptDict[`rightbottom].x + 4, ptMiddle.y, `west)
 		dc = nil
+	}
+	OnMotion(event as wx.MouseEvent) = {
+		pt = event.GetPosition()
+		if (this.target == `none) {
+			if (this.rcDict.EachValue():*Contains(pt).Or()) {
+				this.SetCursor(wx.CROSS_CURSOR)
+			} else {
+				this.SetCursor(wx.STANDARD_CURSOR)
+			}
+		} else {
+			this.ptDict[this.target] = pt
+			this.Refresh()
+		}
+		//mouseState = wx.GetMouseState()
+		//if (!mouseState.LeftIsDown()) { this.target = `none }
+	}
+	OnLeftDown(event as wx.MouseEvent) = {
+		pt = event.GetPosition()
+		this.rcDict.Each {|pair|
+			[symbol, rc] = pair
+			if (rc.Contains(pt)) {
+				this.target = symbol
+				break
+			}
+		}
+	}
+	OnLeftUp(event as wx.MouseEvent) = {
+		this.target = `none		
 	}
 }
 
