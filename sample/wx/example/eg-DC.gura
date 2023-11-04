@@ -285,25 +285,25 @@ Page_DrawArc = class(wx.Panel) {
 		dc = nil
 	}
 	OnMotion(event as wx.MouseEvent) = {
-		pt = event.GetPosition()
+		ptCursor = event.GetPosition()
 		if (this.target == `none) {
-			if (this.rcDict.EachValue():*Contains(pt).Or()) {
+			if (this.rcDict.EachValue():*Contains(ptCursor).Or()) {
 				this.SetCursor(wx.CROSS_CURSOR)
 			} else {
 				this.SetCursor(wx.STANDARD_CURSOR)
 			}
 		} else {
-			this.ptDict[this.target] = pt
+			this.ptDict[this.target] = ptCursor
 			this.Refresh()
 		}
 		//mouseState = wx.GetMouseState()
 		//if (!mouseState.LeftIsDown()) { this.target = `none }
 	}
 	OnLeftDown(event as wx.MouseEvent) = {
-		pt = event.GetPosition()
+		ptCursor = event.GetPosition()
 		this.rcDict.Each {|pair|
 			[symbol, rc] = pair
-			if (rc.Contains(pt)) {
+			if (rc.Contains(ptCursor)) {
 				this.target = symbol
 				break
 			}
@@ -361,20 +361,20 @@ Page_DrawCircle = class(wx.Panel) {
 		dc = nil
 	}
 	OnMotion(event as wx.MouseEvent) = {
-		pt = event.GetPosition()
+		ptCursor = event.GetPosition()
 		if (this.target == `none) {
-			if (this.rcDict.EachValue():*Contains(pt).Or()) {
+			if (this.rcDict.EachValue():*Contains(ptCursor).Or()) {
 				this.SetCursor(wx.CROSS_CURSOR)
 			} else {
 				this.SetCursor(wx.STANDARD_CURSOR)
 			}
 		} elsif (this.target == `sizer) {
-			this.ptDict[this.target] = pt
+			this.ptDict[this.target] = ptCursor
 			this.ptDict[`sizer].y = this.ptDict[`centre].y
 			this.Refresh()
 		} else {
 			radius = this.ptDict[`sizer].x - this.ptDict[`centre].x
-			this.ptDict[this.target] = pt
+			this.ptDict[this.target] = ptCursor
 			this.ptDict[`sizer].x = this.ptDict[`centre].x + radius
 			this.ptDict[`sizer].y = this.ptDict[`centre].y
 			this.Refresh()
@@ -383,10 +383,10 @@ Page_DrawCircle = class(wx.Panel) {
 		//if (!mouseState.LeftIsDown()) { this.target = `none }
 	}
 	OnLeftDown(event as wx.MouseEvent) = {
-		pt = event.GetPosition()
+		ptCursor = event.GetPosition()
 		this.rcDict.Each {|pair|
 			[symbol, rc] = pair
-			if (rc.Contains(pt)) {
+			if (rc.Contains(ptCursor)) {
 				this.target = symbol
 				break
 			}
@@ -449,25 +449,25 @@ Page_DrawEllipse = class(wx.Panel) {
 		dc = nil
 	}
 	OnMotion(event as wx.MouseEvent) = {
-		pt = event.GetPosition()
+		ptCursor = event.GetPosition()
 		if (this.target == `none) {
-			if (this.rcDict.EachValue():*Contains(pt).Or()) {
+			if (this.rcDict.EachValue():*Contains(ptCursor).Or()) {
 				this.SetCursor(wx.CROSS_CURSOR)
 			} else {
 				this.SetCursor(wx.STANDARD_CURSOR)
 			}
 		} else {
-			this.ptDict[this.target] = pt
+			this.ptDict[this.target] = ptCursor
 			this.Refresh()
 		}
 		//mouseState = wx.GetMouseState()
 		//if (!mouseState.LeftIsDown()) { this.target = `none }
 	}
 	OnLeftDown(event as wx.MouseEvent) = {
-		pt = event.GetPosition()
+		ptCursor = event.GetPosition()
 		this.rcDict.Each {|pair|
 			[symbol, rc] = pair
-			if (rc.Contains(pt)) {
+			if (rc.Contains(ptCursor)) {
 				this.target = symbol
 				break
 			}
@@ -481,11 +481,12 @@ Page_DrawEllipse = class(wx.Panel) {
 Page_EllipticArc = class(wx.Panel) {
 	name:static = 'DrawEllipticArc'
 	brush as wx.Brush
+	radiusDict = %{ `angleStart => 100, `angleEnd => 90 }
 	ptDict = %{
 		`lefttop => wx.Point(400, 100)
 		`rightbottom => wx.Point(400 + 400, 100 + 300)
-		`start => wx.Point(400 + 400 / 2 + 100, 100 + 300 / 2)
-		`end => wx.Point(400 + 400 / 2, 100 + 300 / 2 + 100)
+		`angleStart => wx.Point(400 + 400 / 2 + 100, 100 + 300 / 2)
+		`angleEnd => wx.Point(400 + 400 / 2, 100 + 300 / 2 + 90)
 	}
 	rcDict = %{}
 	font as wx.Font
@@ -502,6 +503,10 @@ Page_EllipticArc = class(wx.Panel) {
 		radiusPoint = 5
 		idxs = Range(10):list
 		ptMiddle = (this.ptDict[`lefttop] + this.ptDict[`rightbottom]) / 2
+		ptDiff = this.ptDict[`angleStart] - ptMiddle
+		angleStart = math.Atan2(-ptDiff.y, ptDiff.x) * 180 / math.pi
+		ptDiff = this.ptDict[`angleEnd] - ptMiddle
+		angleEnd = math.Atan2(-ptDiff.y, ptDiff.x) * 180 / math.pi
 		dc = wx.BufferedPaintDC(this)
 		dc.SetBackground(wx.WHITE_BRUSH)
 		dc.Clear()
@@ -516,11 +521,13 @@ Page_EllipticArc = class(wx.Panel) {
 		dc.DrawEllipse(wx.Rect(30, 220, 100, 70))
 		dc.PutText('DrawEllipse(rect)', 30 + 100 / 2, 220 + 70 / 2, `southwest)
 		pt = this.ptDict[`rightbottom] - this.ptDict[`lefttop]
-		dc.DrawEllipticArc(this.ptDict[`lefttop], wx.Size(pt.x, pt.y), 0, 40)
+		dc.DrawEllipticArc(this.ptDict[`lefttop], wx.Size(pt.x, pt.y), angleStart, angleEnd)
 		dc.SetPen(wx.Pen('#888888', 1, wx.PENSTYLE_SOLID))
 		dc.SetBrush(wx.TRANSPARENT_BRUSH)
 		dc.DrawRectangle(this.ptDict[`lefttop], wx.Size(pt.x, pt.y))
-		dc.DrawCircle(ptMiddle, 100)
+		dc.SetPen(wx.Pen('#cccccc', 1, wx.PENSTYLE_SOLID))
+		dc.DrawCircle(ptMiddle, this.radiusDict[`angleStart])
+		dc.DrawCircle(ptMiddle, this.radiusDict[`angleEnd])
 		dc.SetBrush(wx.Brush('#888888', wx.BRUSHSTYLE_SOLID))
 		this.ptDict.Each {|pair|
 			[symbol, pt] = pair
@@ -533,31 +540,45 @@ Page_EllipticArc = class(wx.Panel) {
 		dc = nil
 	}
 	OnMotion(event as wx.MouseEvent) = {
-		pt = event.GetPosition()
+		ptCursor = event.GetPosition()
 		if (this.target == `none) {
-			if (this.rcDict.EachValue():*Contains(pt).Or()) {
+			if (this.rcDict.EachValue():*Contains(ptCursor).Or()) {
 				this.SetCursor(wx.CROSS_CURSOR)
 			} else {
 				this.SetCursor(wx.STANDARD_CURSOR)
 			}
-		} elsif (this.target in [`start, `end]) {
+		} elsif (this.target in [`angleStart, `angleEnd]) {
 			ptMiddle = (this.ptDict[`lefttop] + this.ptDict[`rightbottom]) / 2
-			ptDiff = pt - ptMiddle
+			ptDiff = ptCursor - ptMiddle
 			rad = math.Atan2(ptDiff.y, ptDiff.x)
-			this.ptDict[this.target] = ptMiddle + wx.Point(100 * math.Cos(rad), 100 * math.Sin(rad))
+			radius = this.radiusDict[this.target]
+			this.ptDict[this.target] = ptMiddle + wx.Point(radius * math.Cos(rad), radius * math.Sin(rad))
 			this.Refresh()
 		} else {
-			this.ptDict[this.target] = pt
+			ptMiddle = (this.ptDict[`lefttop] + this.ptDict[`rightbottom]) / 2
+			radDict = %{}
+			[`angleStart, `angleEnd].Each {|target|
+				pt = this.ptDict[target]
+				ptDiff = pt - ptMiddle
+				radDict[target] = math.Atan2(ptDiff.y, ptDiff.x)
+			}
+			this.ptDict[this.target] = ptCursor
+			ptMiddle = (this.ptDict[`lefttop] + this.ptDict[`rightbottom]) / 2
+			[`angleStart, `angleEnd].Each {|target|
+				rad = radDict[target]
+				radius = this.radiusDict[target]
+				this.ptDict[target] = ptMiddle + wx.Point(radius * math.Cos(rad), radius * math.Sin(rad))
+			}
 			this.Refresh()
 		}
 		//mouseState = wx.GetMouseState()
 		//if (!mouseState.LeftIsDown()) { this.target = `none }
 	}
 	OnLeftDown(event as wx.MouseEvent) = {
-		pt = event.GetPosition()
+		ptCursor = event.GetPosition()
 		this.rcDict.Each {|pair|
 			[symbol, rc] = pair
-			if (rc.Contains(pt)) {
+			if (rc.Contains(ptCursor)) {
 				this.target = symbol
 				break
 			}
