@@ -620,7 +620,7 @@ Page_DrawRectangle = class(wx.Panel) {
 		dc.SetPen(wx.Pen('#ff8888', 1, wx.PENSTYLE_SOLID))
 		dc.SetBrush(wx.Brush('#ff8888', wx.BRUSHSTYLE_BDIAGONAL_HATCH))
 		dc.DrawRectangle(30, 40, 100, 70)
-		dc.PutText('DrawRectangle(x, y, width, height, sa, ea)', 30 + 100 / 2, 40 + 70 / 2, `southwest)
+		dc.PutText('DrawRectangle(x, y, width, height)', 30 + 100 / 2, 40 + 70 / 2, `southwest)
 		dc.DrawRectangle(wx.Point(30, 130), wx.Size(100, 70))
 		dc.PutText('DrawRectangle(pt, size)', 30 + 100 / 2, 130 + 70 / 2, `southwest)
 		dc.DrawRectangle(wx.Rect(30, 220, 100, 70))
@@ -675,7 +675,7 @@ Page_DrawRoundedRectangle = class(wx.Panel) {
 	ptDict = %{
 		`lefttop => wx.Point(400, 100)
 		`rightbottom => wx.Point(400 + 400, 100 + 300)
-		`corner => wx.Point(400 + 20, 100 + 300)
+		`corner => wx.Point(400 + 40, 100 + 300)
 	}
 	rcDict = %{}
 	font as wx.Font
@@ -697,16 +697,20 @@ Page_DrawRoundedRectangle = class(wx.Panel) {
 		dc.Clear()
 		dc.SetFont(this.font)
 		dc.SetTextForeground('#444444')
+		pt = this.ptDict[`rightbottom] - this.ptDict[`lefttop]
+		dc.SetPen(wx.Pen('#cccccc', 1, wx.PENSTYLE_SOLID))
+		dc.SetBrush(wx.TRANSPARENT_BRUSH)
+		dc.DrawRectangle(this.ptDict[`lefttop], wx.Size(pt.x, pt.y))
 		dc.SetPen(wx.Pen('#ff8888', 1, wx.PENSTYLE_SOLID))
 		dc.SetBrush(wx.Brush('#ff8888', wx.BRUSHSTYLE_BDIAGONAL_HATCH))
-		dc.DrawRectangle(30, 40, 100, 70)
-		dc.PutText('DrawRectangle(x, y, width, height, sa, ea)', 30 + 100 / 2, 40 + 70 / 2, `southwest)
-		dc.DrawRectangle(wx.Point(30, 130), wx.Size(100, 70))
-		dc.PutText('DrawRectangle(pt, size)', 30 + 100 / 2, 130 + 70 / 2, `southwest)
-		dc.DrawRectangle(wx.Rect(30, 220, 100, 70))
-		dc.PutText('DrawRectangle(rect)', 30 + 100 / 2, 220 + 70 / 2, `southwest)
-		pt = this.ptDict[`rightbottom] - this.ptDict[`lefttop]
-		dc.DrawRectangle(this.ptDict[`lefttop], wx.Size(pt.x, pt.y))
+		dc.DrawRoundedRectangle(30, 40, 100, 70, 10)
+		dc.PutText('DrawRoundedRectangle(x, y, width, height, radius)', 30 + 100 / 2, 40 + 70 / 2, `southwest)
+		dc.DrawRoundedRectangle(wx.Point(30, 130), wx.Size(100, 70), 10)
+		dc.PutText('DrawRoundedRectangle(pt, size, radius)', 30 + 100 / 2, 130 + 70 / 2, `southwest)
+		dc.DrawRoundedRectangle(wx.Rect(30, 220, 100, 70), 10)
+		dc.PutText('DrawRoundedRectangle(rect, radius)', 30 + 100 / 2, 220 + 70 / 2, `southwest)
+		radius = this.ptDict[`corner].x - this.ptDict[`lefttop].x
+		dc.DrawRoundedRectangle(this.ptDict[`lefttop], wx.Size(pt.x, pt.y), radius)
 		dc.SetPen(wx.TRANSPARENT_PEN)
 		dc.SetBrush(wx.Brush('#888888', wx.BRUSHSTYLE_SOLID))
 		this.ptDict.Each {|pair|
@@ -734,7 +738,7 @@ Page_DrawRoundedRectangle = class(wx.Panel) {
 		} else {
 			radius = this.ptDict[`corner].x - this.ptDict[`lefttop].x
 			this.ptDict[this.target] = ptCursor
-			this.ptDict[`corner] = wx.Point(this.ptDict[`lefttop].x + radius, this.ptDict[`rightbottom].y)
+			this.ptDict[`corner] = wx.Point(Min(Max(this.ptDict[`lefttop].x + radius, this.ptDict[`lefttop].x), this.ptDict[`rightbottom].x), this.ptDict[`rightbottom].y)
 			this.Refresh()
 		}
 		//mouseState = wx.GetMouseState()
