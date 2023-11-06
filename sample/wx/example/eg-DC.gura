@@ -242,9 +242,9 @@ Page_DrawArc = class(wx.Panel) {
 	name:static = 'DrawArc'
 	brush as wx.Brush
 	ptDict = %{
-		`centre => wx.Point(500, 300)
-		`start => wx.Point(500 + 200, 300)
-		`end => wx.Point(500 - 40, 300 - 200)
+		`centre => wx.Point(600, 300)
+		`start => wx.Point(600 + 200, 300)
+		`end => wx.Point(600 - 40, 300 - 200)
 	}
 	rcDict = %{}
 	font as wx.Font
@@ -320,8 +320,8 @@ Page_DrawCircle = class(wx.Panel) {
 	name:static = 'DrawCircle'
 	brush as wx.Brush
 	ptDict = %{
-		`centre => wx.Point(500, 300)
-		`sizer => wx.Point(500 + 200, 300)
+		`centre => wx.Point(600, 300)
+		`sizer => wx.Point(600 + 200, 300)
 	}
 	rcDict = %{}
 	font as wx.Font
