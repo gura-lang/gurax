@@ -383,8 +383,59 @@ DC = Class {
 		} while (0);
 		return Value::nil();
 		'''
-	//DrawLabel(text as String, bitmap as const_Bitmap_r, rect as const_Rect_r, alignment as int = wxALIGN_LEFT | wxALIGN_TOP,  indexAccel as int = -1, rectBounding as Rect_r = nullptr) as void
-	DrawLabel(text as String, rect as const_Rect_r, alignment as int = wxALIGN_LEFT | wxALIGN_TOP, indexAccel as int = -1):map as void
+	DrawLabel(args* as any):map as void = \
+		R'''
+		// DrawLabel(text as String, bitmap as const_Bitmap_r, rect as const_Rect_r, alignment as int = wxALIGN_LEFT | wxALIGN_TOP, indexAccel as int = -1, rectBounding?:nilRef as Rect) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("text", VTYPE_String);
+				pDeclCallable->DeclareArg("bitmap", VTYPE_wxBitmap);
+				pDeclCallable->DeclareArg("rect", VTYPE_wxRect);
+				pDeclCallable->DeclareArg("alignment", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("indexAccel", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("rectBounding", VTYPE_wxRect, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::NilRef | DeclArg::Flag::Referencer);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const char* text = args.PickString();
+			const wxBitmap& bitmap = args.Pick<Value_wxBitmap>().GetEntity();
+			const wxRect& rect = args.Pick<Value_wxRect>().GetEntity();
+			int alignment = args.IsValid()? args.PickNumber<int>() : wxALIGN_LEFT | wxALIGN_TOP;
+			int indexAccel = args.IsValid()? args.PickNumber<int>() : -1;
+			RefPtr<Referencer> rectBounding(args_gurax.PickReferencer().Reference());
+			wxRect rectBounding_;
+			pEntity_gurax->DrawLabel(text, bitmap, rect, alignment, indexAccel, &rectBounding_);
+			if (rectBounding) rectBounding->SetValue(new Value_wxRect(rectBounding_));
+			return Value::nil();
+		} while (0);
+		Error::ClearIssuedFlag();
+		// DrawLabel(text as String, rect as const_Rect_r, alignment as int = wxALIGN_LEFT | wxALIGN_TOP, indexAccel as int = -1) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("text", VTYPE_String);
+				pDeclCallable->DeclareArg("rect", VTYPE_wxRect);
+				pDeclCallable->DeclareArg("alignment", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("indexAccel", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const char* text = args.PickString();
+			const wxRect& rect = args.Pick<Value_wxRect>().GetEntity();
+			int alignment = args.IsValid()? args.PickNumber<int>() : wxALIGN_LEFT | wxALIGN_TOP;
+			int indexAccel = args.IsValid()? args.PickNumber<int>() : -1;
+			pEntity_gurax->DrawLabel(text, rect, alignment, indexAccel);
+			return Value::nil();
+		} while (0);
+		return Value::nil();
+		'''
 	DrawLine(args* as any):map as void = \
 		R'''
 		// DrawLine(x1 as Coord, y1 as Coord, x2 as Coord, y2 as Coord) as void

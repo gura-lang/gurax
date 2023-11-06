@@ -1108,14 +1108,11 @@ Gurax_ImplementMethodEx(wxDC, DrawIcon_gurax, processor_gurax, argument_gurax)
 	return Value::nil();
 }
 
-// wx.DC#DrawLabel(text as String, rect as wx.Rect, alignment? as Number, indexAccel? as Number):map
+// wx.DC#DrawLabel(args* as Any):map
 Gurax_DeclareMethodAlias(wxDC, DrawLabel_gurax, "DrawLabel")
 {
 	Declare(VTYPE_Nil, Flag::Map);
-	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("alignment", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("indexAccel", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 }
 
 Gurax_ImplementMethodEx(wxDC, DrawLabel_gurax, processor_gurax, argument_gurax)
@@ -1126,16 +1123,58 @@ Gurax_ImplementMethodEx(wxDC, DrawLabel_gurax, processor_gurax, argument_gurax)
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	wxString text(args_gurax.PickString());
-	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
-	const wxRect& rect = value_rect.GetEntity();
-	bool alignment_validFlag = args_gurax.IsValid();
-	int alignment = alignment_validFlag? args_gurax.PickNumber<int>() : (wxALIGN_LEFT | wxALIGN_TOP);
-	bool indexAccel_validFlag = args_gurax.IsValid();
-	int indexAccel = indexAccel_validFlag? args_gurax.PickNumber<int>() : -1;
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	pEntity_gurax->DrawLabel(text, rect, alignment, indexAccel);
-	return Gurax::Value::nil();
+	// DrawLabel(text as String, bitmap as const_Bitmap_r, rect as const_Rect_r, alignment as int = wxALIGN_LEFT | wxALIGN_TOP, indexAccel as int = -1, rectBounding?:nilRef as Rect) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("text", VTYPE_String);
+			pDeclCallable->DeclareArg("bitmap", VTYPE_wxBitmap);
+			pDeclCallable->DeclareArg("rect", VTYPE_wxRect);
+			pDeclCallable->DeclareArg("alignment", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("indexAccel", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("rectBounding", VTYPE_wxRect, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::NilRef | DeclArg::Flag::Referencer);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const char* text = args.PickString();
+		const wxBitmap& bitmap = args.Pick<Value_wxBitmap>().GetEntity();
+		const wxRect& rect = args.Pick<Value_wxRect>().GetEntity();
+		int alignment = args.IsValid()? args.PickNumber<int>() : wxALIGN_LEFT | wxALIGN_TOP;
+		int indexAccel = args.IsValid()? args.PickNumber<int>() : -1;
+		RefPtr<Referencer> rectBounding(args_gurax.PickReferencer().Reference());
+		wxRect rectBounding_;
+		pEntity_gurax->DrawLabel(text, bitmap, rect, alignment, indexAccel, &rectBounding_);
+		if (rectBounding) rectBounding->SetValue(new Value_wxRect(rectBounding_));
+		return Value::nil();
+	} while (0);
+	Error::ClearIssuedFlag();
+	// DrawLabel(text as String, rect as const_Rect_r, alignment as int = wxALIGN_LEFT | wxALIGN_TOP, indexAccel as int = -1) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("text", VTYPE_String);
+			pDeclCallable->DeclareArg("rect", VTYPE_wxRect);
+			pDeclCallable->DeclareArg("alignment", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("indexAccel", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const char* text = args.PickString();
+		const wxRect& rect = args.Pick<Value_wxRect>().GetEntity();
+		int alignment = args.IsValid()? args.PickNumber<int>() : wxALIGN_LEFT | wxALIGN_TOP;
+		int indexAccel = args.IsValid()? args.PickNumber<int>() : -1;
+		pEntity_gurax->DrawLabel(text, rect, alignment, indexAccel);
+		return Value::nil();
+	} while (0);
+	return Value::nil();
 }
 
 // wx.DC#DrawLine(args* as Any):map
