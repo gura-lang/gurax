@@ -601,6 +601,7 @@ Value* VType_Iterator::Method_Find(Processor& processor, Argument& argument, Ite
 	// Arguments
 	ArgPicker args(argument);
 	RefPtr<Value> pValue(args.IsValid()? args.PickValue().Reference() : Value::nil());
+	bool indexFlag = argument.IsSet(Gurax_Symbol(index));
 	// Function body
 	RefPtr<Value> pValueRtn(Value::nil());
 	if (!pValue->IsValid()) {
@@ -608,7 +609,7 @@ Value* VType_Iterator::Method_Find(Processor& processor, Argument& argument, Ite
 			RefPtr<Value> pValueSrc(iteratorSrc.NextValue());
 			if (!pValueSrc) break;
 			if (pValueSrc->GetBool()) {
-				pValueRtn.reset(pValueSrc.release());
+				pValueRtn.reset(indexFlag? new Value_Number(idx) : pValueSrc.release());
 				break;
 			}
 		}
@@ -627,7 +628,7 @@ Value* VType_Iterator::Method_Find(Processor& processor, Argument& argument, Ite
 			}
 			RefPtr<Value> pValueResult(func.Eval(processor, *pArgument));
 			if (pValueResult->GetBool()) {
-				pValueRtn.reset(pValueSrc.release());
+				pValueRtn.reset(indexFlag? new Value_Number(idx) : pValueSrc.release());
 				break;
 			}
 		}
@@ -639,7 +640,7 @@ Value* VType_Iterator::Method_Find(Processor& processor, Argument& argument, Ite
 			RefPtr<Value> pValueCriteria(pIteratorCriteria->NextValue());
 			if (!pValueCriteria) break;
 			if (pValueCriteria->GetBool()) {
-				pValueRtn.reset(pValueSrc.release());
+				pValueRtn.reset(indexFlag? new Value_Number(idx) : pValueSrc.release());
 				break;
 			}
 		}
