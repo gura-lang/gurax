@@ -17,13 +17,13 @@ FrameMain = class(wx.Frame) {
 			Page_Brush, Page_Pen, Page_DrawLine,
 			Page_DrawArc, Page_DrawCircle, Page_DrawEllipse, Page_DrawEllipticArc,
 			Page_DrawPolygon, Page_DrawRectangle, Page_DrawRoundedRectangle,
-			Page_DrawSpline, Page_DrawText
+			Page_DrawSpline, Page_DrawText, Page_GradientFillConcentric
 		]
 		wx.Notebook(this, wx.ID_ANY) {|noteBook|
 			pageClasses.Each {|pageClass|
 				noteBook.AddPage(pageClass(noteBook), pageClass.name)
 			}
-			noteBook.SetSelection((pageClasses.Each() == Page_DrawPolygon).Find():index)
+			noteBook.SetSelection((pageClasses.Each() == Page_GradientFillConcentric).Find():index)
 		}
 	}
 }
@@ -644,10 +644,10 @@ Page_DrawPolygon = class(wx.Panel) {
 		dc.SetPen(wx.Pen('#ff8888', 1, wx.PENSTYLE_SOLID))
 		dc.SetBrush(wx.Brush('#ff8888', wx.BRUSHSTYLE_BDIAGONAL_HATCH))
 		scope {
-			dc.DrawPolygon(MakePolygonPoint(wx.Point(40, 50), 50, [0, 2, 4, 1, 3], 5), fill_style = wx.ODDEVEN_RULE)
-			dc.PutText('DrawPolygon(points)', 40 + 60, 50, `southwest)
-			dc.DrawPolygon(MakePolygonPoint(wx.Point(0, 0), 50, [0, 2, 4, 1, 3], 5), 40, 150, fill_style = wx.ODDEVEN_RULE)
-			dc.PutText('DrawPolygon(points, xoffset, yoffset)', 40 + 60, 150, `southwest)
+			dc.DrawPolygon(MakePolygonPoint(wx.Point(40, 60), 50, [0, 2, 4, 1, 3], 5), fill_style = wx.ODDEVEN_RULE)
+			dc.PutText('DrawPolygon(points)', 40 + 60, 60, `southwest)
+			dc.DrawPolygon(MakePolygonPoint(wx.Point(0, 0), 50, [0, 2, 4, 1, 3], 5), 40, 160, fill_style = wx.ODDEVEN_RULE)
+			dc.PutText('DrawPolygon(points, xoffset, yoffset)', 40 + 60, 160, `southwest)
 		}
 		ptTbl = this.ptDict[`p1, `p2, `p3, `p4, `p5]
 		dc.DrawPolygon(ptTbl, fill_style = wx.ODDEVEN_RULE)
@@ -904,9 +904,9 @@ Page_DrawSpline = class(wx.Panel) {
 			//dc.PutText('DrawRectangle(x, y, width, height)', 30 + 100 / 2, 40 + 70 / 2, `southwest)
 			//dc.DrawRectangle(wx.Point(30, 130), wx.Size(100, 70))
 			//dc.PutText('DrawRectangle(pt, size)', 30 + 100 / 2, 130 + 70 / 2, `southwest)
+			//dc.DrawRectangle(wx.Rect(30, 220, 100, 70))
+			//dc.PutText('DrawRectangle(rect)', 30 + 100 / 2, 220 + 70 / 2, `southwest)
 		}
-		dc.DrawRectangle(wx.Rect(30, 220, 100, 70))
-		dc.PutText('DrawRectangle(rect)', 30 + 100 / 2, 220 + 70 / 2, `southwest)
 		dc.DrawSpline(this.ptDict[`p1, `p2, `p3, `p4, `p5, `p6])
 		dc.SetPen(wx.TRANSPARENT_PEN)
 		dc.SetBrush(wx.Brush('#888888', wx.BRUSHSTYLE_SOLID))
@@ -992,6 +992,87 @@ Page_DrawText = class(wx.Panel) {
 			dc.DrawRotatedText(Format('rotated %d', deg), x, y, deg)
 		}
 		dc = nil
+	}
+}
+
+Page_GradientFillConcentric = class(wx.Panel) {
+	name:static = 'GradientFillConcentric'
+	brush as wx.Brush
+	ptDict = %{
+		`lefttop => wx.Point(400, 100)
+		`rightbottom => wx.Point(400 + 400, 100 + 300)
+	}
+	rcDict = %{}
+	font as wx.Font
+	target = `none
+	__init__(parent as wx.Window) = {|parent|
+		this.SetBackgroundStyle(wx.BG_STYLE_PAINT)
+		this.font = wx.Font(10, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL)
+		this.Bind(wx.EVT_MOTION, this.OnMotion)
+		this.Bind(wx.EVT_LEFT_DOWN, this.OnLeftDown)
+		this.Bind(wx.EVT_LEFT_UP, this.OnLeftUp)
+		this.Bind(wx.EVT_PAINT, this.OnPaint)
+	}
+	OnPaint(event) = {
+		radiusPoint = 5
+		idxs = Range(10):list
+		ptMiddle = (this.ptDict[`lefttop] + this.ptDict[`rightbottom]) / 2
+		dc = wx.BufferedPaintDC(this)
+		dc.SetBackground(wx.WHITE_BRUSH)
+		dc.Clear()
+		dc.SetFont(this.font)
+		dc.SetTextForeground('#444444')
+		dc.SetPen(wx.Pen('#ff8888', 1, wx.PENSTYLE_SOLID))
+		dc.SetBrush(wx.Brush('#ff8888', wx.BRUSHSTYLE_BDIAGONAL_HATCH))
+		scope {
+			dc.DrawRectangle(30, 40, 100, 70)
+			dc.PutText('DrawRectangle(x, y, width, height)', 30 + 100 / 2, 40 + 70 / 2, `southwest)
+			dc.DrawRectangle(wx.Point(30, 130), wx.Size(100, 70))
+			dc.PutText('DrawRectangle(pt, size)', 30 + 100 / 2, 130 + 70 / 2, `southwest)
+			dc.DrawRectangle(wx.Rect(30, 220, 100, 70))
+			dc.PutText('DrawRectangle(rect)', 30 + 100 / 2, 220 + 70 / 2, `southwest)
+		}
+		pt = this.ptDict[`rightbottom] - this.ptDict[`lefttop]
+		dc.GradientFillConcentric(wx.Rect(this.ptDict[`lefttop].x, this.ptDict[`lefttop].y, pt.x, pt.y), wx.RED, wx.WHITE)
+		dc.SetPen(wx.TRANSPARENT_PEN)
+		dc.SetBrush(wx.Brush('#888888', wx.BRUSHSTYLE_SOLID))
+		this.ptDict.Each {|pair|
+			[symbol, pt] = pair
+			dc.DrawCircle(pt.x, pt.y, radiusPoint)
+			this.rcDict[symbol] = wx.Rect(pt.x - radiusPoint, pt.y - radiusPoint, radiusPoint * 2, radiusPoint * 2)
+		}
+		dc.PutText('pt', this.ptDict[`lefttop].x + 4, this.ptDict[`lefttop].y + 4, `northwest)
+		dc.PutText('width', ptMiddle.x, this.ptDict[`lefttop].y - 4, `south)
+		dc.PutText('height', this.ptDict[`rightbottom].x + 4, ptMiddle.y, `west)
+		dc = nil
+	}
+	OnMotion(event as wx.MouseEvent) = {
+		ptCursor = event.GetPosition()
+		if (this.target == `none) {
+			if (this.rcDict.EachValue():*Contains(ptCursor).Or()) {
+				this.SetCursor(wx.CROSS_CURSOR)
+			} else {
+				this.SetCursor(wx.STANDARD_CURSOR)
+			}
+		} else {
+			this.ptDict[this.target] = ptCursor
+			this.Refresh()
+		}
+		//mouseState = wx.GetMouseState()
+		//if (!mouseState.LeftIsDown()) { this.target = `none }
+	}
+	OnLeftDown(event as wx.MouseEvent) = {
+		ptCursor = event.GetPosition()
+		this.rcDict.Each {|pair|
+			[symbol, rc] = pair
+			if (rc.Contains(ptCursor)) {
+				this.target = symbol
+				break
+			}
+		}
+	}
+	OnLeftUp(event as wx.MouseEvent) = {
+		this.target = `none		
 	}
 }
 
