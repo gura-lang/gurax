@@ -997,6 +997,26 @@ Page_DrawText = class(wx.Panel) {
 
 Page_GradientFill = class(wx.Panel) {
 	name:static = 'GradientFillConcentric/Linear'
+	__init__(parent as wx.Window) = {|parent|
+		sizer = wx.BoxSizer(wx.VERTICAL)
+		this.SetSizer(sizer)
+		wx.BoxSizer(wx.HORIZONTAL) {|sizer|
+			(^sizer).Add(sizer, wx.SizerFlags().Expand())
+			sizer.AddStretchSpacer(1)
+			wx.Button(this, wx.ID_ANY, 'Initial') {|ctrl|
+				sizer.Add(ctrl, wx.SizerFlags())
+			}
+			wx.Button(this, wx.ID_ANY, 'Dest') {|ctrl|
+				sizer.Add(ctrl, wx.SizerFlags().Border(wx.LEFT, 4))
+			}
+		}
+		Page_GradientFill_Canvas(this) {|panel|
+			sizer.Add(panel, wx.SizerFlags(1).Expand())
+		}
+	}
+}
+
+Page_GradientFill_Canvas = class(wx.Panel) {
 	brush as wx.Brush
 	ptDict = %{
 		`topLeftConcentric => wx.Point(400, 50)
