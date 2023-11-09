@@ -44,14 +44,11 @@ ${help.ComposeMethodHelp(wx.Rect, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Rect(x? as Number, y? as Number, width? as Number, height? as Number):map {block?}
+// wx.Rect(args* as Any) {block?}
 Gurax_DeclareConstructorAlias(Rect_gurax, "Rect")
 {
-	Declare(VTYPE_wxRect, Flag::Map);
-	DeclareArg("x", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("y", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("width", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("height", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	Declare(VTYPE_wxRect, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 }
 
@@ -59,17 +56,78 @@ Gurax_ImplementConstructorEx(Rect_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	bool x_validFlag = args_gurax.IsValid();
-	int x = x_validFlag? args_gurax.PickNumber<int>() : 0;
-	bool y_validFlag = args_gurax.IsValid();
-	int y = y_validFlag? args_gurax.PickNumber<int>() : 0;
-	bool width_validFlag = args_gurax.IsValid();
-	int width = width_validFlag? args_gurax.PickNumber<int>() : 0;
-	bool height_validFlag = args_gurax.IsValid();
-	int height = height_validFlag? args_gurax.PickNumber<int>() : 0;
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect(
-		wxRect(x, y, width, height)));
+	// wxRect(x as int = 0, y as int = 0, width as int = 0, height as int = 0)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("x", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("y", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("width", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("height", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		int x = args.IsValid()? args.PickNumber<int>() : 0;
+		int y = args.IsValid()? args.PickNumber<int>() : 0;
+		int width = args.IsValid()? args.PickNumber<int>() : 0;
+		int height = args.IsValid()? args.PickNumber<int>() : 0;
+		return new Value_wxRect(wxRect(x, y, width, height));
+	} while (0);
+	Error::ClearIssuedFlag();
+	// wxRect(topLeft as const_Point_r, bottomRight as const_Point_r)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("topLeft", VTYPE_wxPoint);
+			pDeclCallable->DeclareArg("bottomRight", VTYPE_wxPoint);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxPoint& topLeft = args.Pick<Value_wxPoint>().GetEntity();
+		const wxPoint& bottomRight = args.Pick<Value_wxPoint>().GetEntity();
+		return new Value_wxRect(wxRect(topLeft, bottomRight));
+	} while (0);
+	Error::ClearIssuedFlag();
+	// wxRect(pos as const_Point_r, size as const_Size_r)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("pos", VTYPE_wxPoint);
+			pDeclCallable->DeclareArg("size", VTYPE_wxSize);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxPoint& pos = args.Pick<Value_wxPoint>().GetEntity();
+		const wxSize& size = args.Pick<Value_wxSize>().GetEntity();
+		return new Value_wxRect(wxRect(pos, size));
+	} while (0);
+	Error::ClearIssuedFlag();
+	// wxRect(size as const_Size_r)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("size", VTYPE_wxSize);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxSize& size = args.Pick<Value_wxSize>().GetEntity();
+		return new Value_wxRect(wxRect(size));
+	} while (0);
+	return Value::nil();
 }
 
 //-----------------------------------------------------------------------------

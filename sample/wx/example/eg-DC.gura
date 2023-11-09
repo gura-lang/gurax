@@ -4,6 +4,10 @@ import(xpm)
 
 sample_xpm = xpm.XPMFile('sample.xpm').lines
 
+MakePolygonPoint(ptCenter as wx.Point, radius as Number, iCorner as Number, nCorners as Number):map = {
+	wx.Point(math.Cos(math.pi * 2 * iCorner / nCorners) * radius + ptCenter.x, math.Sin(math.pi * 2 * iCorner / nCorners) * radius + ptCenter.y)
+}
+
 AppMain = class(wx.App) {
 	OnInit() = {
 		FrameMain(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(1000, 700)).Show()
@@ -17,13 +21,13 @@ FrameMain = class(wx.Frame) {
 			Page_Brush, Page_Pen, Page_DrawLine,
 			Page_DrawArc, Page_DrawCircle, Page_DrawEllipse, Page_DrawEllipticArc,
 			Page_DrawPolygon, Page_DrawRectangle, Page_DrawRoundedRectangle,
-			Page_DrawSpline, Page_DrawText, Page_GradientFillConcentric
+			Page_DrawSpline, Page_DrawText, Page_GradientFill
 		]
 		wx.Notebook(this, wx.ID_ANY) {|noteBook|
 			pageClasses.Each {|pageClass|
 				noteBook.AddPage(pageClass(noteBook), pageClass.name)
 			}
-			noteBook.SetSelection((pageClasses.Each() == Page_GradientFillConcentric).Find():index)
+			noteBook.SetSelection((pageClasses.Each() == Page_GradientFill).Find():index)
 		}
 	}
 }
@@ -412,8 +416,8 @@ Page_DrawEllipse = class(wx.Panel) {
 	name:static = 'DrawEllipse'
 	brush as wx.Brush
 	ptDict = %{
-		`lefttop => wx.Point(400, 100)
-		`rightbottom => wx.Point(400 + 400, 100 + 300)
+		`topLeft => wx.Point(400, 100)
+		`bottomRight => wx.Point(400 + 400, 100 + 300)
 	}
 	rcDict = %{}
 	font as wx.Font
@@ -444,21 +448,21 @@ Page_DrawEllipse = class(wx.Panel) {
 			dc.DrawEllipse(wx.Rect(30, 220, 100, 70))
 			dc.PutText('DrawEllipse(rect)', 30 + 100 / 2, 220 + 70 / 2, `southwest)
 		}
-		pt = this.ptDict[`rightbottom] - this.ptDict[`lefttop]
-		dc.DrawEllipse(this.ptDict[`lefttop], wx.Size(pt.x, pt.y))
+		pt = this.ptDict[`bottomRight] - this.ptDict[`topLeft]
+		dc.DrawEllipse(this.ptDict[`topLeft], wx.Size(pt.x, pt.y))
 		dc.SetPen(wx.Pen('#888888', 1, wx.PENSTYLE_SOLID))
 		dc.SetBrush(wx.TRANSPARENT_BRUSH)
-		dc.DrawRectangle(this.ptDict[`lefttop], wx.Size(pt.x, pt.y))
+		dc.DrawRectangle(this.ptDict[`topLeft], wx.Size(pt.x, pt.y))
 		dc.SetBrush(wx.Brush('#888888', wx.BRUSHSTYLE_SOLID))
 		this.ptDict.Each {|pair|
 			[symbol, pt] = pair
 			dc.DrawCircle(pt.x, pt.y, radiusPoint)
 			this.rcDict[symbol] = wx.Rect(pt.x - radiusPoint, pt.y - radiusPoint, radiusPoint * 2, radiusPoint * 2)
 		}
-		dc.PutText('pt', this.ptDict[`lefttop].x + 4, this.ptDict[`lefttop].y + 4, `northwest)
-		ptMiddle = (this.ptDict[`lefttop] + this.ptDict[`rightbottom]) / 2
-		dc.PutText('width', ptMiddle.x, this.ptDict[`lefttop].y - 4, `south)
-		dc.PutText('height', this.ptDict[`rightbottom].x + 4, ptMiddle.y, `west)
+		dc.PutText('pt', this.ptDict[`topLeft].x + 4, this.ptDict[`topLeft].y + 4, `northwest)
+		ptMiddle = (this.ptDict[`topLeft] + this.ptDict[`bottomRight]) / 2
+		dc.PutText('width', ptMiddle.x, this.ptDict[`topLeft].y - 4, `south)
+		dc.PutText('height', this.ptDict[`bottomRight].x + 4, ptMiddle.y, `west)
 		dc = nil
 	}
 	OnMotion(event as wx.MouseEvent) = {
@@ -496,8 +500,8 @@ Page_DrawEllipticArc = class(wx.Panel) {
 	brush as wx.Brush
 	radiusDict = %{ `angleStart => 100, `angleEnd => 90 }
 	ptDict = %{
-		`lefttop => wx.Point(400, 100)
-		`rightbottom => wx.Point(400 + 400, 100 + 300)
+		`topLeft => wx.Point(400, 100)
+		`bottomRight => wx.Point(400 + 400, 100 + 300)
 		`angleStart => wx.Point(400 + 400 / 2 + 100, 100 + 300 / 2)
 		`angleEnd => wx.Point(400 + 400 / 2, 100 + 300 / 2 + 90)
 	}
@@ -515,7 +519,7 @@ Page_DrawEllipticArc = class(wx.Panel) {
 	OnPaint(event) = {
 		radiusPoint = 5
 		idxs = Range(10):list
-		ptMiddle = (this.ptDict[`lefttop] + this.ptDict[`rightbottom]) / 2
+		ptMiddle = (this.ptDict[`topLeft] + this.ptDict[`bottomRight]) / 2
 		ptDiff = this.ptDict[`angleStart] - ptMiddle
 		angleStart = math.Atan2(-ptDiff.y, ptDiff.x) * 180 / math.pi
 		ptDiff = this.ptDict[`angleEnd] - ptMiddle
@@ -533,11 +537,11 @@ Page_DrawEllipticArc = class(wx.Panel) {
 			dc.DrawEllipticArc(wx.Point(30, 130), wx.Size(100, 70), 30, 290)
 			dc.PutText('DrawEllipticArc(pt, size, sa, ea)', 30 + 100 / 2, 130 + 70 / 2, `southwest)
 		}
-		pt = this.ptDict[`rightbottom] - this.ptDict[`lefttop]
-		dc.DrawEllipticArc(this.ptDict[`lefttop], wx.Size(pt.x, pt.y), angleStart, angleEnd)
+		pt = this.ptDict[`bottomRight] - this.ptDict[`topLeft]
+		dc.DrawEllipticArc(this.ptDict[`topLeft], wx.Size(pt.x, pt.y), angleStart, angleEnd)
 		dc.SetPen(wx.Pen('#888888', 1, wx.PENSTYLE_SOLID))
 		dc.SetBrush(wx.TRANSPARENT_BRUSH)
-		dc.DrawRectangle(this.ptDict[`lefttop], wx.Size(pt.x, pt.y))
+		dc.DrawRectangle(this.ptDict[`topLeft], wx.Size(pt.x, pt.y))
 		dc.SetPen(wx.Pen('#cccccc', 1, wx.PENSTYLE_SOLID))
 		dc.DrawCircle(ptMiddle, this.radiusDict[`angleStart])
 		dc.DrawCircle(ptMiddle, this.radiusDict[`angleEnd])
@@ -548,9 +552,9 @@ Page_DrawEllipticArc = class(wx.Panel) {
 			dc.DrawCircle(pt.x, pt.y, radiusPoint)
 			this.rcDict[symbol] = wx.Rect(pt.x - radiusPoint, pt.y - radiusPoint, radiusPoint * 2, radiusPoint * 2)
 		}
-		dc.PutText('pt', this.ptDict[`lefttop].x + 4, this.ptDict[`lefttop].y + 4, `northwest)
-		dc.PutText('width', ptMiddle.x, this.ptDict[`lefttop].y - 4, `south)
-		dc.PutText('height', this.ptDict[`rightbottom].x + 4, ptMiddle.y, `west)
+		dc.PutText('pt', this.ptDict[`topLeft].x + 4, this.ptDict[`topLeft].y + 4, `northwest)
+		dc.PutText('width', ptMiddle.x, this.ptDict[`topLeft].y - 4, `south)
+		dc.PutText('height', this.ptDict[`bottomRight].x + 4, ptMiddle.y, `west)
 		dc = nil
 	}
 	OnMotion(event as wx.MouseEvent) = {
@@ -562,14 +566,14 @@ Page_DrawEllipticArc = class(wx.Panel) {
 				this.SetCursor(wx.STANDARD_CURSOR)
 			}
 		} elsif (this.target in [`angleStart, `angleEnd]) {
-			ptMiddle = (this.ptDict[`lefttop] + this.ptDict[`rightbottom]) / 2
+			ptMiddle = (this.ptDict[`topLeft] + this.ptDict[`bottomRight]) / 2
 			ptDiff = ptCursor - ptMiddle
 			rad = math.Atan2(ptDiff.y, ptDiff.x)
 			radius = this.radiusDict[this.target]
 			this.ptDict[this.target] = ptMiddle + wx.Point(radius * math.Cos(rad), radius * math.Sin(rad))
 			this.Refresh()
 		} else {
-			ptMiddle = (this.ptDict[`lefttop] + this.ptDict[`rightbottom]) / 2
+			ptMiddle = (this.ptDict[`topLeft] + this.ptDict[`bottomRight]) / 2
 			radDict = %{}
 			[`angleStart, `angleEnd].Each {|target|
 				pt = this.ptDict[target]
@@ -577,7 +581,7 @@ Page_DrawEllipticArc = class(wx.Panel) {
 				radDict[target] = math.Atan2(ptDiff.y, ptDiff.x)
 			}
 			this.ptDict[this.target] = ptCursor
-			ptMiddle = (this.ptDict[`lefttop] + this.ptDict[`rightbottom]) / 2
+			ptMiddle = (this.ptDict[`topLeft] + this.ptDict[`bottomRight]) / 2
 			[`angleStart, `angleEnd].Each {|target|
 				rad = radDict[target]
 				radius = this.radiusDict[target]
@@ -601,10 +605,6 @@ Page_DrawEllipticArc = class(wx.Panel) {
 	OnLeftUp(event as wx.MouseEvent) = {
 		this.target = `none		
 	}
-}
-
-MakePolygonPoint(ptCenter as wx.Point, radius as Number, iCorner as Number, nCorners as Number):map = {
-	wx.Point(math.Cos(math.pi * 2 * iCorner / nCorners) * radius + ptCenter.x, math.Sin(math.pi * 2 * iCorner / nCorners) * radius + ptCenter.y)
 }
 
 Page_DrawPolygon = class(wx.Panel) {
@@ -700,8 +700,8 @@ Page_DrawRectangle = class(wx.Panel) {
 	name:static = 'DrawRectangle'
 	brush as wx.Brush
 	ptDict = %{
-		`lefttop => wx.Point(400, 100)
-		`rightbottom => wx.Point(400 + 400, 100 + 300)
+		`topLeft => wx.Point(400, 100)
+		`bottomRight => wx.Point(400 + 400, 100 + 300)
 	}
 	rcDict = %{}
 	font as wx.Font
@@ -717,7 +717,7 @@ Page_DrawRectangle = class(wx.Panel) {
 	OnPaint(event) = {
 		radiusPoint = 5
 		idxs = Range(10):list
-		ptMiddle = (this.ptDict[`lefttop] + this.ptDict[`rightbottom]) / 2
+		ptMiddle = (this.ptDict[`topLeft] + this.ptDict[`bottomRight]) / 2
 		dc = wx.BufferedPaintDC(this)
 		dc.SetBackground(wx.WHITE_BRUSH)
 		dc.Clear()
@@ -733,8 +733,8 @@ Page_DrawRectangle = class(wx.Panel) {
 			dc.DrawRectangle(wx.Rect(30, 220, 100, 70))
 			dc.PutText('DrawRectangle(rect)', 30 + 100 / 2, 220 + 70 / 2, `southwest)
 		}
-		pt = this.ptDict[`rightbottom] - this.ptDict[`lefttop]
-		dc.DrawRectangle(this.ptDict[`lefttop], wx.Size(pt.x, pt.y))
+		pt = this.ptDict[`bottomRight] - this.ptDict[`topLeft]
+		dc.DrawRectangle(this.ptDict[`topLeft], wx.Size(pt.x, pt.y))
 		dc.SetPen(wx.TRANSPARENT_PEN)
 		dc.SetBrush(wx.Brush('#888888', wx.BRUSHSTYLE_SOLID))
 		this.ptDict.Each {|pair|
@@ -742,9 +742,9 @@ Page_DrawRectangle = class(wx.Panel) {
 			dc.DrawCircle(pt.x, pt.y, radiusPoint)
 			this.rcDict[symbol] = wx.Rect(pt.x - radiusPoint, pt.y - radiusPoint, radiusPoint * 2, radiusPoint * 2)
 		}
-		dc.PutText('pt', this.ptDict[`lefttop].x + 4, this.ptDict[`lefttop].y + 4, `northwest)
-		dc.PutText('width', ptMiddle.x, this.ptDict[`lefttop].y - 4, `south)
-		dc.PutText('height', this.ptDict[`rightbottom].x + 4, ptMiddle.y, `west)
+		dc.PutText('pt', this.ptDict[`topLeft].x + 4, this.ptDict[`topLeft].y + 4, `northwest)
+		dc.PutText('width', ptMiddle.x, this.ptDict[`topLeft].y - 4, `south)
+		dc.PutText('height', this.ptDict[`bottomRight].x + 4, ptMiddle.y, `west)
 		dc = nil
 	}
 	OnMotion(event as wx.MouseEvent) = {
@@ -781,8 +781,8 @@ Page_DrawRoundedRectangle = class(wx.Panel) {
 	name:static = 'DrawRoundedRectangle'
 	brush as wx.Brush
 	ptDict = %{
-		`lefttop => wx.Point(400, 100)
-		`rightbottom => wx.Point(400 + 400, 100 + 300)
+		`topLeft => wx.Point(400, 100)
+		`bottomRight => wx.Point(400 + 400, 100 + 300)
 		`corner => wx.Point(400 + 40, 100 + 300)
 	}
 	rcDict = %{}
@@ -799,16 +799,16 @@ Page_DrawRoundedRectangle = class(wx.Panel) {
 	OnPaint(event) = {
 		radiusPoint = 5
 		idxs = Range(10):list
-		ptMiddle = (this.ptDict[`lefttop] + this.ptDict[`rightbottom]) / 2
+		ptMiddle = (this.ptDict[`topLeft] + this.ptDict[`bottomRight]) / 2
 		dc = wx.BufferedPaintDC(this)
 		dc.SetBackground(wx.WHITE_BRUSH)
 		dc.Clear()
 		dc.SetFont(this.font)
 		dc.SetTextForeground('#444444')
-		pt = this.ptDict[`rightbottom] - this.ptDict[`lefttop]
+		pt = this.ptDict[`bottomRight] - this.ptDict[`topLeft]
 		dc.SetPen(wx.Pen('#cccccc', 1, wx.PENSTYLE_SOLID))
 		dc.SetBrush(wx.TRANSPARENT_BRUSH)
-		dc.DrawRectangle(this.ptDict[`lefttop], wx.Size(pt.x, pt.y))
+		dc.DrawRectangle(this.ptDict[`topLeft], wx.Size(pt.x, pt.y))
 		dc.SetPen(wx.Pen('#ff8888', 1, wx.PENSTYLE_SOLID))
 		dc.SetBrush(wx.Brush('#ff8888', wx.BRUSHSTYLE_BDIAGONAL_HATCH))
 		dc.DrawRoundedRectangle(30, 40, 100, 70, 10)
@@ -817,8 +817,8 @@ Page_DrawRoundedRectangle = class(wx.Panel) {
 		dc.PutText('DrawRoundedRectangle(pt, size, radius)', 30 + 100 / 2, 130 + 70 / 2, `southwest)
 		dc.DrawRoundedRectangle(wx.Rect(30, 220, 100, 70), 10)
 		dc.PutText('DrawRoundedRectangle(rect, radius)', 30 + 100 / 2, 220 + 70 / 2, `southwest)
-		radius = this.ptDict[`corner].x - this.ptDict[`lefttop].x
-		dc.DrawRoundedRectangle(this.ptDict[`lefttop], wx.Size(pt.x, pt.y), radius)
+		radius = this.ptDict[`corner].x - this.ptDict[`topLeft].x
+		dc.DrawRoundedRectangle(this.ptDict[`topLeft], wx.Size(pt.x, pt.y), radius)
 		dc.SetPen(wx.TRANSPARENT_PEN)
 		dc.SetBrush(wx.Brush('#888888', wx.BRUSHSTYLE_SOLID))
 		this.ptDict.Each {|pair|
@@ -826,10 +826,10 @@ Page_DrawRoundedRectangle = class(wx.Panel) {
 			dc.DrawCircle(pt.x, pt.y, radiusPoint)
 			this.rcDict[symbol] = wx.Rect(pt.x - radiusPoint, pt.y - radiusPoint, radiusPoint * 2, radiusPoint * 2)
 		}
-		dc.PutText('pt', this.ptDict[`lefttop].x + 4, this.ptDict[`lefttop].y + 4, `northwest)
-		dc.PutText('width', ptMiddle.x, this.ptDict[`lefttop].y - 4, `south)
-		dc.PutText('height', this.ptDict[`rightbottom].x + 4, ptMiddle.y, `west)
-		dc.PutText('radius', (this.ptDict[`lefttop].x + this.ptDict[`corner].x) / 2, this.ptDict[`rightbottom].y + 4, `north)
+		dc.PutText('pt', this.ptDict[`topLeft].x + 4, this.ptDict[`topLeft].y + 4, `northwest)
+		dc.PutText('width', ptMiddle.x, this.ptDict[`topLeft].y - 4, `south)
+		dc.PutText('height', this.ptDict[`bottomRight].x + 4, ptMiddle.y, `west)
+		dc.PutText('radius', (this.ptDict[`topLeft].x + this.ptDict[`corner].x) / 2, this.ptDict[`bottomRight].y + 4, `north)
 		dc = nil
 	}
 	OnMotion(event as wx.MouseEvent) = {
@@ -841,12 +841,12 @@ Page_DrawRoundedRectangle = class(wx.Panel) {
 				this.SetCursor(wx.STANDARD_CURSOR)
 			}
 		} elsif (this.target == `corner) {
-			this.ptDict[`corner].x = Min(Max(ptCursor.x, this.ptDict[`lefttop].x), this.ptDict[`rightbottom].x)
+			this.ptDict[`corner].x = Min(Max(ptCursor.x, this.ptDict[`topLeft].x), this.ptDict[`bottomRight].x)
 			this.Refresh()
 		} else {
-			radius = this.ptDict[`corner].x - this.ptDict[`lefttop].x
+			radius = this.ptDict[`corner].x - this.ptDict[`topLeft].x
 			this.ptDict[this.target] = ptCursor
-			this.ptDict[`corner] = wx.Point(Min(Max(this.ptDict[`lefttop].x + radius, this.ptDict[`lefttop].x), this.ptDict[`rightbottom].x), this.ptDict[`rightbottom].y)
+			this.ptDict[`corner] = wx.Point(Min(Max(this.ptDict[`topLeft].x + radius, this.ptDict[`topLeft].x), this.ptDict[`bottomRight].x), this.ptDict[`bottomRight].y)
 			this.Refresh()
 		}
 		//mouseState = wx.GetMouseState()
@@ -995,12 +995,15 @@ Page_DrawText = class(wx.Panel) {
 	}
 }
 
-Page_GradientFillConcentric = class(wx.Panel) {
-	name:static = 'GradientFillConcentric'
+Page_GradientFill = class(wx.Panel) {
+	name:static = 'GradientFillConcentric/Linear'
 	brush as wx.Brush
 	ptDict = %{
-		`lefttop => wx.Point(400, 100)
-		`rightbottom => wx.Point(400 + 400, 100 + 300)
+		`topLeftConcentric => wx.Point(400, 50)
+		`bottomRightConcentric => wx.Point(400 + 400, 50 + 240)
+		//`centreConcentric => wx.Point(400 + 200, 50 + 120)
+		`topLeftLinear => wx.Point(400, 350)
+		`bottomRightLinear => wx.Point(400 + 400, 350 + 240)
 	}
 	rcDict = %{}
 	font as wx.Font
@@ -1016,7 +1019,6 @@ Page_GradientFillConcentric = class(wx.Panel) {
 	OnPaint(event) = {
 		radiusPoint = 5
 		idxs = Range(10):list
-		ptMiddle = (this.ptDict[`lefttop] + this.ptDict[`rightbottom]) / 2
 		dc = wx.BufferedPaintDC(this)
 		dc.SetBackground(wx.WHITE_BRUSH)
 		dc.Clear()
@@ -1032,8 +1034,8 @@ Page_GradientFillConcentric = class(wx.Panel) {
 			dc.DrawRectangle(wx.Rect(30, 220, 100, 70))
 			dc.PutText('DrawRectangle(rect)', 30 + 100 / 2, 220 + 70 / 2, `southwest)
 		}
-		pt = this.ptDict[`rightbottom] - this.ptDict[`lefttop]
-		dc.GradientFillConcentric(wx.Rect(this.ptDict[`lefttop].x, this.ptDict[`lefttop].y, pt.x, pt.y), wx.RED, wx.WHITE)
+		dc.GradientFillConcentric(wx.Rect(this.ptDict[`topLeftConcentric], this.ptDict[`bottomRightConcentric]), wx.RED, wx.WHITE)
+		dc.GradientFillLinear(wx.Rect(this.ptDict[`topLeftLinear], this.ptDict[`bottomRightLinear]), wx.RED, wx.WHITE, wx.LEFT)
 		dc.SetPen(wx.TRANSPARENT_PEN)
 		dc.SetBrush(wx.Brush('#888888', wx.BRUSHSTYLE_SOLID))
 		this.ptDict.Each {|pair|
@@ -1041,9 +1043,10 @@ Page_GradientFillConcentric = class(wx.Panel) {
 			dc.DrawCircle(pt.x, pt.y, radiusPoint)
 			this.rcDict[symbol] = wx.Rect(pt.x - radiusPoint, pt.y - radiusPoint, radiusPoint * 2, radiusPoint * 2)
 		}
-		dc.PutText('pt', this.ptDict[`lefttop].x + 4, this.ptDict[`lefttop].y + 4, `northwest)
-		dc.PutText('width', ptMiddle.x, this.ptDict[`lefttop].y - 4, `south)
-		dc.PutText('height', this.ptDict[`rightbottom].x + 4, ptMiddle.y, `west)
+		//ptMiddle = (this.ptDict[`topLeftConcentric] + this.ptDict[`bottomRightConcentric]) / 2
+		//dc.PutText('pt', this.ptDict[`topLeftConcentric].x + 4, this.ptDict[`topLeftConcentric].y + 4, `northwest)
+		//dc.PutText('width', ptMiddle.x, this.ptDict[`topLeftConcentric].y - 4, `south)
+		//dc.PutText('height', this.ptDict[`bottomRightConcentric].x + 4, ptMiddle.y, `west)
 		dc = nil
 	}
 	OnMotion(event as wx.MouseEvent) = {

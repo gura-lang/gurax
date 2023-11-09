@@ -2,7 +2,79 @@
 // VType_wxRect.gura
 //==============================================================================
 Rect = Class {
-	__init__(x as int = 0, y as int = 0, width as int = 0, height as int = 0):map
+	__init__(args* as any) = \
+		R'''
+		// wxRect(x as int = 0, y as int = 0, width as int = 0, height as int = 0)
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("x", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("y", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("width", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("height", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			int x = args.IsValid()? args.PickNumber<int>() : 0;
+			int y = args.IsValid()? args.PickNumber<int>() : 0;
+			int width = args.IsValid()? args.PickNumber<int>() : 0;
+			int height = args.IsValid()? args.PickNumber<int>() : 0;
+			return new Value_wxRect(wxRect(x, y, width, height));
+		} while (0);
+		Error::ClearIssuedFlag();
+		// wxRect(topLeft as const_Point_r, bottomRight as const_Point_r)
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("topLeft", VTYPE_wxPoint);
+				pDeclCallable->DeclareArg("bottomRight", VTYPE_wxPoint);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxPoint& topLeft = args.Pick<Value_wxPoint>().GetEntity();
+			const wxPoint& bottomRight = args.Pick<Value_wxPoint>().GetEntity();
+			return new Value_wxRect(wxRect(topLeft, bottomRight));
+		} while (0);
+		Error::ClearIssuedFlag();
+		// wxRect(pos as const_Point_r, size as const_Size_r)
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("pos", VTYPE_wxPoint);
+				pDeclCallable->DeclareArg("size", VTYPE_wxSize);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxPoint& pos = args.Pick<Value_wxPoint>().GetEntity();
+			const wxSize& size = args.Pick<Value_wxSize>().GetEntity();
+			return new Value_wxRect(wxRect(pos, size));
+		} while (0);
+		Error::ClearIssuedFlag();
+		// wxRect(size as const_Size_r)
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("size", VTYPE_wxSize);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxSize& size = args.Pick<Value_wxSize>().GetEntity();
+			return new Value_wxRect(wxRect(size));
+		} while (0);
+		return Value::nil();
+		'''
 	Contains(args* as any) as void = \
 		R'''
 		// Contains(x as int, y as int) as bool
