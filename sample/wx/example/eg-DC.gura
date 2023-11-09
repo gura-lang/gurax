@@ -997,6 +997,7 @@ Page_DrawText = class(wx.Panel) {
 
 Page_GradientFill = class(wx.Panel) {
 	name:static = 'GradientFillConcentric/Linear'
+	canvas as Page_GradientFill_Canvas
 	__init__(parent as wx.Window) = {|parent|
 		sizer = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizer)
@@ -1005,19 +1006,31 @@ Page_GradientFill = class(wx.Panel) {
 			sizer.AddStretchSpacer(1)
 			wx.Button(this, wx.ID_ANY, 'Initial') {|ctrl|
 				sizer.Add(ctrl, wx.SizerFlags())
+				wx.EVT_BUTTON(ctrl, this.OnButton_Colour, `initial)
 			}
 			wx.Button(this, wx.ID_ANY, 'Dest') {|ctrl|
 				sizer.Add(ctrl, wx.SizerFlags().Border(wx.LEFT, 4))
+				wx.EVT_BUTTON(ctrl, this.OnButton_Colour, `dest)
 			}
 		}
-		Page_GradientFill_Canvas(this) {|panel|
-			sizer.Add(panel, wx.SizerFlags(1).Expand())
+		Page_GradientFill_Canvas(this) {|canvas|
+			sizer.Add(canvas, wx.SizerFlags(1).Expand())
+			this.canvas = canvas
+		}
+	}
+	OnButton_Colour(event as wx.CommandEvent) = {
+		dlg = wx.ColourDialog(this)
+		symbol = event.GetEventUserData()
+		if (dlg.ShowModal() == wx.ID_OK) {
+			this.canvas.colours[symbol] = dlg.GetColourData().GetColour()
+			this.canvas.Refresh()
 		}
 	}
 }
 
 Page_GradientFill_Canvas = class(wx.Panel) {
 	brush as wx.Brush
+	colours = %{`initial => wx.RED, `dest => wx.WHITE}
 	ptDict = %{
 		`topLeftConcentric => wx.Point(400, 50)
 		`bottomRightConcentric => wx.Point(400 + 400, 50 + 240)
@@ -1054,8 +1067,8 @@ Page_GradientFill_Canvas = class(wx.Panel) {
 			dc.DrawRectangle(wx.Rect(30, 220, 100, 70))
 			dc.PutText('DrawRectangle(rect)', 30 + 100 / 2, 220 + 70 / 2, `southwest)
 		}
-		dc.GradientFillConcentric(wx.Rect(this.ptDict[`topLeftConcentric], this.ptDict[`bottomRightConcentric]), wx.RED, wx.WHITE)
-		dc.GradientFillLinear(wx.Rect(this.ptDict[`topLeftLinear], this.ptDict[`bottomRightLinear]), wx.RED, wx.WHITE, wx.LEFT)
+		dc.GradientFillConcentric(wx.Rect(this.ptDict[`topLeftConcentric], this.ptDict[`bottomRightConcentric]), this.colours[`initial], this.colours[`dest])
+		dc.GradientFillLinear(wx.Rect(this.ptDict[`topLeftLinear], this.ptDict[`bottomRightLinear]), this.colours[`initial], this.colours[`dest], wx.LEFT)
 		dc.SetPen(wx.TRANSPARENT_PEN)
 		dc.SetBrush(wx.Brush('#888888', wx.BRUSHSTYLE_SOLID))
 		this.ptDict.Each {|pair|
