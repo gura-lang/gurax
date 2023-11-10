@@ -23,7 +23,7 @@ FrameMain = class(wx.Frame) {
 			Page_DrawPolygon, Page_DrawRectangle, Page_DrawRoundedRectangle,
 			Page_DrawSpline, Page_DrawText, Page_GradientFill
 		]
-		wx.Notebook(this, wx.ID_ANY) {|noteBook|
+		wx.Notebook(this, wx.ID_ANY, style = wx.NB_MULTILINE) {|noteBook|
 			pageClasses.Each {|pageClass|
 				noteBook.AddPage(pageClass(noteBook), pageClass.name)
 			}
@@ -1001,36 +1001,43 @@ Page_GradientFill = class(wx.Panel) {
 	__init__(parent as wx.Window) = {|parent|
 		sizer = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizer)
+		colourInitial = wx.Colour(255, 128, 128)
+		colourDest = wx.Colour(255, 240, 240)
 		wx.BoxSizer(wx.HORIZONTAL) {|sizer|
 			(^sizer).Add(sizer, wx.SizerFlags().Expand())
 			sizer.AddStretchSpacer(1)
-			wx.Button(this, wx.ID_ANY, 'Initial') {|ctrl|
-				sizer.Add(ctrl, wx.SizerFlags())
-				wx.EVT_BUTTON(ctrl, this.OnButton_Colour, `initial)
+			wx.StaticText(this, wx.ID_ANY, 'Initial') {|ctrl|
+				sizer.Add(ctrl, wx.SizerFlags().Align(wx.CENTRE))
 			}
-			wx.Button(this, wx.ID_ANY, 'Dest') {|ctrl|
-				sizer.Add(ctrl, wx.SizerFlags().Border(wx.LEFT, 4))
-				wx.EVT_BUTTON(ctrl, this.OnButton_Colour, `dest)
+			wx.ColourPickerCtrl(this, wx.ID_ANY, colourInitial) {|ctrl|
+				sizer.Add(ctrl, wx.SizerFlags().Border(wx.LEFT, 8))
+				wx.EVT_COLOURPICKER_CHANGED(ctrl, this.OnColourPickerChanged, `initial)
+			}
+			wx.StaticText(this, wx.ID_ANY, 'Dest') {|ctrl|
+				sizer.Add(ctrl, wx.SizerFlags().Align(wx.CENTRE).Border(wx.LEFT, 16))
+			}
+			wx.ColourPickerCtrl(this, wx.ID_ANY, colourDest) {|ctrl|
+				sizer.Add(ctrl, wx.SizerFlags().Border(wx.LEFT, 8))
+				wx.EVT_COLOURPICKER_CHANGED(ctrl, this.OnColourPickerChanged, `dest)
 			}
 		}
 		Page_GradientFill_Canvas(this) {|canvas|
+			canvas.colours[`initial] = colourInitial
+			canvas.colours[`dest] = colourDest
 			sizer.Add(canvas, wx.SizerFlags(1).Expand())
 			this.canvas = canvas
 		}
 	}
-	OnButton_Colour(event as wx.CommandEvent) = {
-		dlg = wx.ColourDialog(this)
+	OnColourPickerChanged(event as wx.ColourPickerEvent) = {
 		symbol = event.GetEventUserData()
-		if (dlg.ShowModal() == wx.ID_OK) {
-			this.canvas.colours[symbol] = dlg.GetColourData().GetColour()
-			this.canvas.Refresh()
-		}
+		this.canvas.colours[symbol] = event.GetColour()
+		this.canvas.Refresh()
 	}
 }
 
 Page_GradientFill_Canvas = class(wx.Panel) {
 	brush as wx.Brush
-	colours = %{`initial => wx.RED, `dest => wx.WHITE}
+	colours = %{}
 	ptDict = %{
 		`topLeftConcentric => wx.Point(400, 50)
 		`bottomRightConcentric => wx.Point(400 + 400, 50 + 240)
