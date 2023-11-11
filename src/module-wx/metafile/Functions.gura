@@ -21,9 +21,9 @@ GetKeyState(key as KeyCode) as bool
 GetMousePosition() as Point
 //GetMouseState() as MouseState
 GetPowerType() as PowerType
-ImplementApp(app as App_p) = \
+ImplementApp(app as AppConsole_p) = \
 	R'''
-	wxApp::SetInstance(app);
+	wxAppConsole::SetInstance(app);
 	int argc = 0;
 	char* argv[1] = { nullptr };
 	::wxEntry(argc, argv);

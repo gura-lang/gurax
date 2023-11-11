@@ -517,21 +517,21 @@ Gurax_ImplementFunctionEx(GetUTCTimeUSec_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn.GetValue());
 }
 
-// wx.ImplementApp(app as wx.App)
+// wx.ImplementApp(app as wx.AppConsole)
 Gurax_DeclareFunctionAlias(ImplementApp_gurax, "ImplementApp")
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareArg("app", VTYPE_wxApp, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("app", VTYPE_wxAppConsole, ArgOccur::Once, ArgFlag::None);
 }
 
 Gurax_ImplementFunctionEx(ImplementApp_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxApp& value_app = args_gurax.Pick<Value_wxApp>();
-	wxApp* app = value_app.GetEntityPtr();
+	Value_wxAppConsole& value_app = args_gurax.Pick<Value_wxAppConsole>();
+	wxAppConsole* app = value_app.GetEntityPtr();
 	// Function body
-	wxApp::SetInstance(app);
+	wxAppConsole::SetInstance(app);
 	int argc = 0;
 	char* argv[1] = { nullptr };
 	::wxEntry(argc, argv);
