@@ -18,7 +18,7 @@ AppMain = class(wx.App) {
 FrameMain = class(wx.Frame) {
 	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
 		pageClasses = [
-			Page_Brush, Page_Pen, Page_DrawLine,
+			Page_Brush, Page_Pen, Page_CrossHair, Page_DrawLine,
 			Page_DrawArc, Page_DrawCircle, Page_DrawEllipse, Page_DrawEllipticArc,
 			Page_DrawPolygon, Page_DrawRectangle, Page_DrawRoundedRectangle,
 			Page_DrawSpline, Page_DrawText, Page_GradientFill
@@ -27,7 +27,7 @@ FrameMain = class(wx.Frame) {
 			pageClasses.Each {|pageClass|
 				noteBook.AddPage(pageClass(noteBook), pageClass.name)
 			}
-			noteBook.SetSelection((pageClasses.Each() == Page_GradientFill).Find():index)
+			//noteBook.SetSelection((pageClasses.Each() == Page_CrossHair).Find():index)
 		}
 	}
 }
@@ -196,6 +196,87 @@ Page_Pen = class(wx.Panel) {
 			dc.DrawText(label, x + 120 + 10, y - 10)
 		}
 		dc = nil
+	}
+}
+
+Page_CrossHair = class(wx.Panel) {
+	name:static = 'CrossHair'
+	brush as wx.Brush
+	ptDict = %{
+		`p1 => wx.Point(400, 110)
+		`p2 => wx.Point(700, 100)
+		`p3 => wx.Point(800, 150)
+		`p4 => wx.Point(700, 250)
+		`p5 => wx.Point(600, 300)
+		`p6 => wx.Point(300, 240)
+	}
+	rcDict = %{}
+	font as wx.Font
+	target = `none
+	__init__(parent as wx.Window) = {|parent|
+		this.SetBackgroundStyle(wx.BG_STYLE_PAINT)
+		this.font = wx.Font(10, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL)
+		this.Bind(wx.EVT_MOTION, this.OnMotion)
+		this.Bind(wx.EVT_LEFT_DOWN, this.OnLeftDown)
+		this.Bind(wx.EVT_LEFT_UP, this.OnLeftUp)
+		this.Bind(wx.EVT_PAINT, this.OnPaint)
+	}
+	OnPaint(event) = {
+		radiusPoint = 5
+		idxs = Range(10):list
+		dc = wx.BufferedPaintDC(this)
+		dc.SetBackground(wx.WHITE_BRUSH)
+		dc.Clear()
+		dc.SetFont(this.font)
+		dc.SetTextForeground('#444444')
+		dc.SetPen(wx.Pen('#ff8888', 2, wx.PENSTYLE_SOLID))
+		dc.SetBrush(wx.Brush('#ff8888', wx.BRUSHSTYLE_BDIAGONAL_HATCH))
+		scope {
+			//dc.DrawRectangle(30, 40, 100, 70)
+			//dc.PutText('DrawRectangle(x, y, width, height)', 30 + 100 / 2, 40 + 70 / 2, `southwest)
+			//dc.DrawRectangle(wx.Point(30, 130), wx.Size(100, 70))
+			//dc.PutText('DrawRectangle(pt, size)', 30 + 100 / 2, 130 + 70 / 2, `southwest)
+			//dc.DrawRectangle(wx.Rect(30, 220, 100, 70))
+			//dc.PutText('DrawRectangle(rect)', 30 + 100 / 2, 220 + 70 / 2, `southwest)
+		}
+		dc.CrossHair(this.ptDict[`p1, `p2, `p3, `p4, `p5, `p6]):map
+		//dc.DrawCheckMark(wx.Rect(this.ptDict[`p1], wx.Size(24, 24))):map
+		dc.SetPen(wx.TRANSPARENT_PEN)
+		dc.SetBrush(wx.Brush('#888888', wx.BRUSHSTYLE_SOLID))
+		this.ptDict.Each {|pair|
+			[symbol, pt] = pair
+			dc.DrawCircle(pt.x, pt.y, radiusPoint)
+			this.rcDict[symbol] = wx.Rect(pt.x - radiusPoint, pt.y - radiusPoint, radiusPoint * 2, radiusPoint * 2)
+		}
+		dc = nil
+	}
+	OnMotion(event as wx.MouseEvent) = {
+		ptCursor = event.GetPosition()
+		if (this.target == `none) {
+			if (this.rcDict.EachValue():*Contains(ptCursor).Or()) {
+				this.SetCursor(wx.CROSS_CURSOR)
+			} else {
+				this.SetCursor(wx.STANDARD_CURSOR)
+			}
+		} else {
+			this.ptDict[this.target] = ptCursor
+			this.Refresh()
+		}
+		//mouseState = wx.GetMouseState()
+		//if (!mouseState.LeftIsDown()) { this.target = `none }
+	}
+	OnLeftDown(event as wx.MouseEvent) = {
+		ptCursor = event.GetPosition()
+		this.rcDict.Each {|pair|
+			[symbol, rc] = pair
+			if (rc.Contains(ptCursor)) {
+				this.target = symbol
+				break
+			}
+		}
+	}
+	OnLeftUp(event as wx.MouseEvent) = {
+		this.target = `none		
 	}
 }
 
