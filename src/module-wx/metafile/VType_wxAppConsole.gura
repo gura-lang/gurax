@@ -4,7 +4,49 @@
 AppConsole = Class(EvtHandler) {
 	@include['wx/app.h']
 	__init__()
+	Yield(onlyIfNeeded as bool = false) as bool
+	SetCLocale() as void
+	MainLoop():virtual as int
+	ExitMainLoop():virtual as void
+	//FilterEvent(event as Event_r):virtual as int
+	GetMainLoop() as EventLoopBase_p
+	//HandleEvent(handler as EvtHandler_p, func as EventFunction, event as Event_r):virtual as void
+	//UsesEventLoop():virtual as bool
+	ProcessPendingEvents():virtual as void
+	DeletePendingEvents() as void
+	HasPendingEvents() as bool
+	SuspendProcessingOfPendingEvents() as void
+	ResumeProcessingOfPendingEvents() as void
+	ScheduleForDestruction(object as Object_p) as void
+	IsScheduledForDestruction(object as Object_p) as bool
+	//OnAssertFailure(file as const_char_p, line as int, func as const_char_p, cond as const_char_p, msg as const_char_p):virtual as void
+	OnCmdLineError(parser as CmdLineParser_r):virtual as bool
+	OnCmdLineHelp(parser as CmdLineParser_r):virtual as bool
+	OnCmdLineParsed(parser as CmdLineParser_r):virtual as bool
+	OnEventLoopEnter(loop as EventLoopBase_p):virtual as void
+	OnEventLoopExit(loop as EventLoopBase_p):virtual as void
+	OnExceptionInMainLoop():virtual as bool
+	OnExit():virtual as int
+	OnFatalException():virtual as void
 	OnInit():virtual as bool
+	OnInitCmdLine(parser as CmdLineParser_r):virtual as void
+	OnRun():virtual as int
+	OnUnhandledException():virtual as void
+	GetAppDisplayName() as String
+	GetAppName() as String
+	GetClassName() as String
+	//GetTraits() as AppTraits_p
+	GetVendorDisplayName() as String
+	GetVendorName() as String
+	SetAppDisplayName(name as const_String_r) as void
+	SetAppName(name as const_String_r) as void
+	SetClassName(name as const_String_r) as void
+	SetVendorDisplayName(name as const_String_r) as void
+	SetVendorName(name as const_String_r) as void
+	SetInstance(app as AppConsole_p):static as void
+	GetInstance():static as AppConsole_p
+	IsMainLoopRunning():static as bool
+	//CreateTraits():virtual as AppTraits_p
 } %% R'''
 # Overview
 

@@ -40,8 +40,36 @@ public:
 		using wxAppConsole::wxAppConsole;
 	public:
 		EntityCore core_gurax;
+		virtual int MainLoop() override;
+		virtual void ExitMainLoop() override;
+		virtual void ProcessPendingEvents() override;
+		virtual bool OnCmdLineError(wxCmdLineParser& parser) override;
+		virtual bool OnCmdLineHelp(wxCmdLineParser& parser) override;
+		virtual bool OnCmdLineParsed(wxCmdLineParser& parser) override;
+		virtual void OnEventLoopEnter(wxEventLoopBase* loop) override;
+		virtual void OnEventLoopExit(wxEventLoopBase* loop) override;
+		virtual bool OnExceptionInMainLoop() override;
+		virtual int OnExit() override;
+		virtual void OnFatalException() override;
 		virtual bool OnInit() override;
+		virtual void OnInitCmdLine(wxCmdLineParser& parser) override;
+		virtual int OnRun() override;
+		virtual void OnUnhandledException() override;
+		int public_MainLoop() { return wxAppConsole::MainLoop(); }
+		void public_ExitMainLoop() { wxAppConsole::ExitMainLoop(); }
+		void public_ProcessPendingEvents() { wxAppConsole::ProcessPendingEvents(); }
+		bool public_OnCmdLineError(wxCmdLineParser& parser) { return wxAppConsole::OnCmdLineError(parser); }
+		bool public_OnCmdLineHelp(wxCmdLineParser& parser) { return wxAppConsole::OnCmdLineHelp(parser); }
+		bool public_OnCmdLineParsed(wxCmdLineParser& parser) { return wxAppConsole::OnCmdLineParsed(parser); }
+		void public_OnEventLoopEnter(wxEventLoopBase* loop) { wxAppConsole::OnEventLoopEnter(loop); }
+		void public_OnEventLoopExit(wxEventLoopBase* loop) { wxAppConsole::OnEventLoopExit(loop); }
+		bool public_OnExceptionInMainLoop() { return wxAppConsole::OnExceptionInMainLoop(); }
+		int public_OnExit() { return wxAppConsole::OnExit(); }
+		void public_OnFatalException() { wxAppConsole::OnFatalException(); }
 		bool public_OnInit() { return wxAppConsole::OnInit(); }
+		void public_OnInitCmdLine(wxCmdLineParser& parser) { wxAppConsole::OnInitCmdLine(parser); }
+		int public_OnRun() { return wxAppConsole::OnRun(); }
+		void public_OnUnhandledException() { wxAppConsole::OnUnhandledException(); }
 	};
 public:
 	static VType& vtype;

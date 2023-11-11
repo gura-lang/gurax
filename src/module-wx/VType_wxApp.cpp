@@ -63,172 +63,262 @@ Gurax_ImplementConstructorEx(App_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.App#OnCmdLineError(parser as wx.CmdLineParser)
-Gurax_DeclareMethodAlias(wxApp, OnCmdLineError_gurax, "OnCmdLineError")
+// wx.App#GetDisplayMode() {block?}
+Gurax_DeclareMethodAlias(wxApp, GetDisplayMode_gurax, "GetDisplayMode")
 {
-	Declare(VTYPE_Bool, Flag::None);
-	DeclareArg("parser", VTYPE_wxCmdLineParser, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_wxVideoMode, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 }
 
-Gurax_ImplementMethodEx(wxApp, OnCmdLineError_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = dynamic_cast<Value_wxApp::EntityT*>(valueThis_gurax.GetEntityPtr());
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxCmdLineParser& value_parser = args_gurax.Pick<Value_wxCmdLineParser>();
-	wxCmdLineParser& parser = value_parser.GetEntity();
-	// Function body
-	bool rtn = pEntity_gurax->OnCmdLineError(parser);
-	return new Gurax::Value_Bool(rtn);
-}
-
-// wx.App#OnCmdLineHelp(parser as wx.CmdLineParser)
-Gurax_DeclareMethodAlias(wxApp, OnCmdLineHelp_gurax, "OnCmdLineHelp")
-{
-	Declare(VTYPE_Bool, Flag::None);
-	DeclareArg("parser", VTYPE_wxCmdLineParser, ArgOccur::Once, ArgFlag::None);
-}
-
-Gurax_ImplementMethodEx(wxApp, OnCmdLineHelp_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementMethodEx(wxApp, GetDisplayMode_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = dynamic_cast<Value_wxApp::EntityT*>(valueThis_gurax.GetEntityPtr());
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxCmdLineParser& value_parser = args_gurax.Pick<Value_wxCmdLineParser>();
-	wxCmdLineParser& parser = value_parser.GetEntity();
 	// Function body
-	bool rtn = pEntity_gurax->OnCmdLineHelp(parser);
-	return new Gurax::Value_Bool(rtn);
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxVideoMode(pEntity_gurax->GetDisplayMode()));
 }
 
-// wx.App#OnCmdLineParsed(parser as wx.CmdLineParser)
-Gurax_DeclareMethodAlias(wxApp, OnCmdLineParsed_gurax, "OnCmdLineParsed")
-{
-	Declare(VTYPE_Bool, Flag::None);
-	DeclareArg("parser", VTYPE_wxCmdLineParser, ArgOccur::Once, ArgFlag::None);
-}
-
-Gurax_ImplementMethodEx(wxApp, OnCmdLineParsed_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = dynamic_cast<Value_wxApp::EntityT*>(valueThis_gurax.GetEntityPtr());
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxCmdLineParser& value_parser = args_gurax.Pick<Value_wxCmdLineParser>();
-	wxCmdLineParser& parser = value_parser.GetEntity();
-	// Function body
-	bool rtn = pEntity_gurax->OnCmdLineParsed(parser);
-	return new Gurax::Value_Bool(rtn);
-}
-
-// wx.App#OnExceptionInMainLoop()
-Gurax_DeclareMethodAlias(wxApp, OnExceptionInMainLoop_gurax, "OnExceptionInMainLoop")
+// wx.App#GetExitOnFrameDelete()
+Gurax_DeclareMethodAlias(wxApp, GetExitOnFrameDelete_gurax, "GetExitOnFrameDelete")
 {
 	Declare(VTYPE_Bool, Flag::None);
 }
 
-Gurax_ImplementMethodEx(wxApp, OnExceptionInMainLoop_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementMethodEx(wxApp, GetExitOnFrameDelete_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = dynamic_cast<Value_wxApp::EntityT*>(valueThis_gurax.GetEntityPtr());
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	bool rtn = pEntity_gurax->OnExceptionInMainLoop();
+	bool rtn = pEntity_gurax->GetExitOnFrameDelete();
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.App#OnExit()
-Gurax_DeclareMethodAlias(wxApp, OnExit_gurax, "OnExit")
+// wx.App#GetLayoutDirection()
+Gurax_DeclareMethodAlias(wxApp, GetLayoutDirection_gurax, "GetLayoutDirection")
 {
 	Declare(VTYPE_Number, Flag::None);
 }
 
-Gurax_ImplementMethodEx(wxApp, OnExit_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementMethodEx(wxApp, GetLayoutDirection_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = dynamic_cast<Value_wxApp::EntityT*>(valueThis_gurax.GetEntityPtr());
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	int rtn = pEntity_gurax->OnExit();
+	wxLayoutDirection rtn = pEntity_gurax->GetLayoutDirection();
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.App#OnFatalException()
-Gurax_DeclareMethodAlias(wxApp, OnFatalException_gurax, "OnFatalException")
-{
-	Declare(VTYPE_Nil, Flag::None);
-}
-
-Gurax_ImplementMethodEx(wxApp, OnFatalException_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = dynamic_cast<Value_wxApp::EntityT*>(valueThis_gurax.GetEntityPtr());
-	if (!pEntity_gurax) return Value::nil();
-	// Function body
-	pEntity_gurax->OnFatalException();
-	return Gurax::Value::nil();
-}
-
-// wx.App#OnInit()
-Gurax_DeclareMethodAlias(wxApp, OnInit_gurax, "OnInit")
+// wx.App#GetUseBestVisual()
+Gurax_DeclareMethodAlias(wxApp, GetUseBestVisual_gurax, "GetUseBestVisual")
 {
 	Declare(VTYPE_Bool, Flag::None);
 }
 
-Gurax_ImplementMethodEx(wxApp, OnInit_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementMethodEx(wxApp, GetUseBestVisual_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = dynamic_cast<Value_wxApp::EntityT*>(valueThis_gurax.GetEntityPtr());
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	bool rtn = pEntity_gurax->OnInit();
+	bool rtn = pEntity_gurax->GetUseBestVisual();
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.App#OnUnhandledException()
-Gurax_DeclareMethodAlias(wxApp, OnUnhandledException_gurax, "OnUnhandledException")
+// wx.App#GetTopWindow() {block?}
+Gurax_DeclareMethodAlias(wxApp, GetTopWindow_gurax, "GetTopWindow")
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_wxWindow, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 }
 
-Gurax_ImplementMethodEx(wxApp, OnUnhandledException_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementMethodEx(wxApp, GetTopWindow_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(pEntity_gurax->GetTopWindow()));
+}
+
+// wx.App#IsActive()
+Gurax_DeclareMethodAlias(wxApp, IsActive_gurax, "IsActive")
+{
+	Declare(VTYPE_Bool, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxApp, IsActive_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsActive();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.App#SafeYield(win as wx.Window, onlyIfNeeded as Bool)
+Gurax_DeclareMethodAlias(wxApp, SafeYield_gurax, "SafeYield")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("win", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("onlyIfNeeded", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxApp, SafeYield_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
 	auto pEntity_gurax = dynamic_cast<Value_wxApp::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_win = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* win = value_win.GetEntityPtr();
+	bool onlyIfNeeded = args_gurax.PickBool();
 	// Function body
-	pEntity_gurax->OnUnhandledException();
+	bool rtn = pEntity_gurax->SafeYield(win, onlyIfNeeded);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.App#SafeYieldFor(win as wx.Window, eventsToProcess as Number)
+Gurax_DeclareMethodAlias(wxApp, SafeYieldFor_gurax, "SafeYieldFor")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("win", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("eventsToProcess", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxApp, SafeYieldFor_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = dynamic_cast<Value_wxApp::EntityT*>(valueThis_gurax.GetEntityPtr());
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_win = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* win = value_win.GetEntityPtr();
+	long eventsToProcess = args_gurax.PickNumber<long>();
+	// Function body
+	bool rtn = pEntity_gurax->SafeYieldFor(win, eventsToProcess);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.App#SetDisplayMode(info as wx.VideoMode)
+Gurax_DeclareMethodAlias(wxApp, SetDisplayMode_gurax, "SetDisplayMode")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("info", VTYPE_wxVideoMode, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxApp, SetDisplayMode_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = dynamic_cast<Value_wxApp::EntityT*>(valueThis_gurax.GetEntityPtr());
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxVideoMode& value_info = args_gurax.Pick<Value_wxVideoMode>();
+	const wxVideoMode& info = value_info.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->SetDisplayMode(info);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.App#SetExitOnFrameDelete(flag as Bool)
+Gurax_DeclareMethodAlias(wxApp, SetExitOnFrameDelete_gurax, "SetExitOnFrameDelete")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("flag", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxApp, SetExitOnFrameDelete_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool flag = args_gurax.PickBool();
+	// Function body
+	pEntity_gurax->SetExitOnFrameDelete(flag);
 	return Gurax::Value::nil();
 }
 
-// wx.App.SetInstance(app as wx.AppConsole)
-Gurax_DeclareClassMethodAlias(wxApp, SetInstance_gurax, "SetInstance")
+// wx.App#SetNativeTheme(theme as String)
+Gurax_DeclareMethodAlias(wxApp, SetNativeTheme_gurax, "SetNativeTheme")
 {
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("app", VTYPE_wxAppConsole, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("theme", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 }
 
-Gurax_ImplementClassMethodEx(wxApp, SetInstance_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementMethodEx(wxApp, SetNativeTheme_gurax, processor_gurax, argument_gurax)
 {
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = dynamic_cast<Value_wxApp::EntityT*>(valueThis_gurax.GetEntityPtr());
+	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxAppConsole& value_app = args_gurax.Pick<Value_wxAppConsole>();
-	wxAppConsole* app = value_app.GetEntityPtr();
+	wxString theme(args_gurax.PickString());
 	// Function body
-	wxApp::SetInstance(app);
+	bool rtn = pEntity_gurax->SetNativeTheme(theme);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.App#SetTopWindow(window as wx.Window)
+Gurax_DeclareMethodAlias(wxApp, SetTopWindow_gurax, "SetTopWindow")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxApp, SetTopWindow_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_window = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* window = value_window.GetEntityPtr();
+	// Function body
+	pEntity_gurax->SetTopWindow(window);
+	return Gurax::Value::nil();
+}
+
+// wx.App#SetUseBestVisual(flag as Bool, forceTrueColour? as Bool)
+Gurax_DeclareMethodAlias(wxApp, SetUseBestVisual_gurax, "SetUseBestVisual")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("flag", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("forceTrueColour", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxApp, SetUseBestVisual_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool flag = args_gurax.PickBool();
+	bool forceTrueColour = args_gurax.IsValid()? args_gurax.PickBool() : false;
+	// Function body
+	pEntity_gurax->SetUseBestVisual(flag, forceTrueColour);
 	return Gurax::Value::nil();
 }
 
@@ -249,15 +339,19 @@ void VType_wxApp::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxAppConsole, Flag::Mutable, Gurax_CreateConstructor(App_gurax));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(wxApp, OnCmdLineError_gurax));
-	Assign(Gurax_CreateMethod(wxApp, OnCmdLineHelp_gurax));
-	Assign(Gurax_CreateMethod(wxApp, OnCmdLineParsed_gurax));
-	Assign(Gurax_CreateMethod(wxApp, OnExceptionInMainLoop_gurax));
-	Assign(Gurax_CreateMethod(wxApp, OnExit_gurax));
-	Assign(Gurax_CreateMethod(wxApp, OnFatalException_gurax));
-	Assign(Gurax_CreateMethod(wxApp, OnInit_gurax));
-	Assign(Gurax_CreateMethod(wxApp, OnUnhandledException_gurax));
-	Assign(Gurax_CreateMethod(wxApp, SetInstance_gurax));
+	Assign(Gurax_CreateMethod(wxApp, GetDisplayMode_gurax));
+	Assign(Gurax_CreateMethod(wxApp, GetExitOnFrameDelete_gurax));
+	Assign(Gurax_CreateMethod(wxApp, GetLayoutDirection_gurax));
+	Assign(Gurax_CreateMethod(wxApp, GetUseBestVisual_gurax));
+	Assign(Gurax_CreateMethod(wxApp, GetTopWindow_gurax));
+	Assign(Gurax_CreateMethod(wxApp, IsActive_gurax));
+	Assign(Gurax_CreateMethod(wxApp, SafeYield_gurax));
+	Assign(Gurax_CreateMethod(wxApp, SafeYieldFor_gurax));
+	Assign(Gurax_CreateMethod(wxApp, SetDisplayMode_gurax));
+	Assign(Gurax_CreateMethod(wxApp, SetExitOnFrameDelete_gurax));
+	Assign(Gurax_CreateMethod(wxApp, SetNativeTheme_gurax));
+	Assign(Gurax_CreateMethod(wxApp, SetTopWindow_gurax));
+	Assign(Gurax_CreateMethod(wxApp, SetUseBestVisual_gurax));
 }
 
 //------------------------------------------------------------------------------
@@ -273,17 +367,21 @@ String Value_wxApp::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Value_wxApp::EntityT
 //------------------------------------------------------------------------------
-bool Value_wxApp::EntityT::OnCmdLineError(wxCmdLineParser& parser)
+bool Value_wxApp::EntityT::SafeYield(wxWindow* win, bool onlyIfNeeded)
 {
 	static const Symbol* pSymbolFunc = nullptr;
-	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnCmdLineError");
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("SafeYield");
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxCmdLineParser(parser))) {
+		if (!args_gurax.FeedValue(new Value_wxWindow(win))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		if (!args_gurax.FeedValue(new Gurax::Value_Bool(onlyIfNeeded))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -296,27 +394,31 @@ bool Value_wxApp::EntityT::OnCmdLineError(wxCmdLineParser& parser)
 		// Return Value
 		if (!pValueRtn->IsInstanceOf(VTYPE_Bool)) {
 			Error::IssueWith(ErrorType::TypeError, pFunc_gurax->GetDeclCallable().GetExprSrc(),
-				"the function OnCmdLineError is expected to return a value of %s or its derived class",
+				"the function SafeYield is expected to return a value of %s or its derived class",
 				VTYPE_Bool.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
 		}
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
-	return public_OnCmdLineError(parser);
+	return public_SafeYield(win, onlyIfNeeded);
 }
 
-bool Value_wxApp::EntityT::OnCmdLineHelp(wxCmdLineParser& parser)
+bool Value_wxApp::EntityT::SafeYieldFor(wxWindow* win, long eventsToProcess)
 {
 	static const Symbol* pSymbolFunc = nullptr;
-	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnCmdLineHelp");
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("SafeYieldFor");
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxCmdLineParser(parser))) {
+		if (!args_gurax.FeedValue(new Value_wxWindow(win))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(eventsToProcess))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -329,27 +431,27 @@ bool Value_wxApp::EntityT::OnCmdLineHelp(wxCmdLineParser& parser)
 		// Return Value
 		if (!pValueRtn->IsInstanceOf(VTYPE_Bool)) {
 			Error::IssueWith(ErrorType::TypeError, pFunc_gurax->GetDeclCallable().GetExprSrc(),
-				"the function OnCmdLineHelp is expected to return a value of %s or its derived class",
+				"the function SafeYieldFor is expected to return a value of %s or its derived class",
 				VTYPE_Bool.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
 		}
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
-	return public_OnCmdLineHelp(parser);
+	return public_SafeYieldFor(win, eventsToProcess);
 }
 
-bool Value_wxApp::EntityT::OnCmdLineParsed(wxCmdLineParser& parser)
+bool Value_wxApp::EntityT::SetDisplayMode(const wxVideoMode& info)
 {
 	static const Symbol* pSymbolFunc = nullptr;
-	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnCmdLineParsed");
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("SetDisplayMode");
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxCmdLineParser(parser))) {
+		if (!args_gurax.FeedValue(new Value_wxVideoMode(info))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -362,26 +464,30 @@ bool Value_wxApp::EntityT::OnCmdLineParsed(wxCmdLineParser& parser)
 		// Return Value
 		if (!pValueRtn->IsInstanceOf(VTYPE_Bool)) {
 			Error::IssueWith(ErrorType::TypeError, pFunc_gurax->GetDeclCallable().GetExprSrc(),
-				"the function OnCmdLineParsed is expected to return a value of %s or its derived class",
+				"the function SetDisplayMode is expected to return a value of %s or its derived class",
 				VTYPE_Bool.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
 		}
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
-	return public_OnCmdLineParsed(parser);
+	return public_SetDisplayMode(info);
 }
 
-bool Value_wxApp::EntityT::OnExceptionInMainLoop()
+bool Value_wxApp::EntityT::SetNativeTheme(const wxString& theme)
 {
 	static const Symbol* pSymbolFunc = nullptr;
-	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnExceptionInMainLoop");
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("SetNativeTheme");
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
-		// (none)
+		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
+		if (!args_gurax.FeedValue(new Gurax::Value_String(theme.utf8_str().data()))) {
+			Util::ExitMainLoop();
+			break;
+		}
 		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 		if (Error::IsIssued()) {
@@ -391,114 +497,14 @@ bool Value_wxApp::EntityT::OnExceptionInMainLoop()
 		// Return Value
 		if (!pValueRtn->IsInstanceOf(VTYPE_Bool)) {
 			Error::IssueWith(ErrorType::TypeError, pFunc_gurax->GetDeclCallable().GetExprSrc(),
-				"the function OnExceptionInMainLoop is expected to return a value of %s or its derived class",
+				"the function SetNativeTheme is expected to return a value of %s or its derived class",
 				VTYPE_Bool.MakeFullName().c_str());
 			Util::ExitMainLoop();
 			break;
 		}
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
-	return public_OnExceptionInMainLoop();
-}
-
-int Value_wxApp::EntityT::OnExit()
-{
-	static const Symbol* pSymbolFunc = nullptr;
-	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnExit");
-	do {
-		Gurax::Function* pFunc_gurax;
-		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
-		// Argument
-		// (none)
-		// Evaluation
-		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
-		if (Error::IsIssued()) {
-			Util::ExitMainLoop();
-			break;
-		}
-		// Return Value
-		if (!pValueRtn->IsInstanceOf(VTYPE_Number)) {
-			Error::IssueWith(ErrorType::TypeError, pFunc_gurax->GetDeclCallable().GetExprSrc(),
-				"the function OnExit is expected to return a value of %s or its derived class",
-				VTYPE_Number.MakeFullName().c_str());
-			Util::ExitMainLoop();
-			break;
-		}
-		return Value_Number::GetNumber<int>(*pValueRtn);
-	} while (0);
-	return public_OnExit();
-}
-
-void Value_wxApp::EntityT::OnFatalException()
-{
-	static const Symbol* pSymbolFunc = nullptr;
-	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnFatalException");
-	do {
-		Gurax::Function* pFunc_gurax;
-		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
-		// Argument
-		// (none)
-		// Evaluation
-		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
-		if (Error::IsIssued()) {
-			Util::ExitMainLoop();
-			break;
-		}
-		return;
-	} while (0);
-	public_OnFatalException();
-}
-
-bool Value_wxApp::EntityT::OnInit()
-{
-	static const Symbol* pSymbolFunc = nullptr;
-	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnInit");
-	do {
-		Gurax::Function* pFunc_gurax;
-		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
-		// Argument
-		// (none)
-		// Evaluation
-		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
-		if (Error::IsIssued()) {
-			Util::ExitMainLoop();
-			break;
-		}
-		// Return Value
-		if (!pValueRtn->IsInstanceOf(VTYPE_Bool)) {
-			Error::IssueWith(ErrorType::TypeError, pFunc_gurax->GetDeclCallable().GetExprSrc(),
-				"the function OnInit is expected to return a value of %s or its derived class",
-				VTYPE_Bool.MakeFullName().c_str());
-			Util::ExitMainLoop();
-			break;
-		}
-		return Value_Bool::GetBool(*pValueRtn);
-	} while (0);
-	return public_OnInit();
-}
-
-void Value_wxApp::EntityT::OnUnhandledException()
-{
-	static const Symbol* pSymbolFunc = nullptr;
-	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnUnhandledException");
-	do {
-		Gurax::Function* pFunc_gurax;
-		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
-		// Argument
-		// (none)
-		// Evaluation
-		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
-		if (Error::IsIssued()) {
-			Util::ExitMainLoop();
-			break;
-		}
-		return;
-	} while (0);
-	public_OnUnhandledException();
+	return public_SetNativeTheme(theme);
 }
 
 Gurax_EndModuleScope(wx)

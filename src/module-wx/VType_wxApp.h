@@ -40,22 +40,14 @@ public:
 		using wxApp::wxApp;
 	public:
 		EntityCore core_gurax;
-		virtual bool OnCmdLineError(wxCmdLineParser& parser) override;
-		virtual bool OnCmdLineHelp(wxCmdLineParser& parser) override;
-		virtual bool OnCmdLineParsed(wxCmdLineParser& parser) override;
-		virtual bool OnExceptionInMainLoop() override;
-		virtual int OnExit() override;
-		virtual void OnFatalException() override;
-		virtual bool OnInit() override;
-		virtual void OnUnhandledException() override;
-		bool public_OnCmdLineError(wxCmdLineParser& parser) { return wxApp::OnCmdLineError(parser); }
-		bool public_OnCmdLineHelp(wxCmdLineParser& parser) { return wxApp::OnCmdLineHelp(parser); }
-		bool public_OnCmdLineParsed(wxCmdLineParser& parser) { return wxApp::OnCmdLineParsed(parser); }
-		bool public_OnExceptionInMainLoop() { return wxApp::OnExceptionInMainLoop(); }
-		int public_OnExit() { return wxApp::OnExit(); }
-		void public_OnFatalException() { wxApp::OnFatalException(); }
-		bool public_OnInit() { return wxApp::OnInit(); }
-		void public_OnUnhandledException() { wxApp::OnUnhandledException(); }
+		virtual bool SafeYield(wxWindow* win, bool onlyIfNeeded) override;
+		virtual bool SafeYieldFor(wxWindow* win, long eventsToProcess) override;
+		virtual bool SetDisplayMode(const wxVideoMode& info) override;
+		virtual bool SetNativeTheme(const wxString& theme) override;
+		bool public_SafeYield(wxWindow* win, bool onlyIfNeeded) { return wxApp::SafeYield(win, onlyIfNeeded); }
+		bool public_SafeYieldFor(wxWindow* win, long eventsToProcess) { return wxApp::SafeYieldFor(win, eventsToProcess); }
+		bool public_SetDisplayMode(const wxVideoMode& info) { return wxApp::SetDisplayMode(info); }
+		bool public_SetNativeTheme(const wxString& theme) { return wxApp::SetNativeTheme(theme); }
 	};
 public:
 	static VType& vtype;
