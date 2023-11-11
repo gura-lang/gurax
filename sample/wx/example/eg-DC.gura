@@ -10,7 +10,7 @@ MakePolygonPoint(ptCenter as wx.Point, radius as Number, iCorner as Number, nCor
 
 AppMain = class(wx.App) {
 	OnInit() = {
-		FrameMain(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(1000, 700)).Show()
+		FrameMain(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(1000, 750)).Show()
 		true
 	}
 }
@@ -897,7 +897,7 @@ Page_DrawSpline = class(wx.Panel) {
 		dc.Clear()
 		dc.SetFont(this.font)
 		dc.SetTextForeground('#444444')
-		dc.SetPen(wx.Pen('#ff8888', 1, wx.PENSTYLE_SOLID))
+		dc.SetPen(wx.Pen('#ff8888', 2, wx.PENSTYLE_SOLID))
 		dc.SetBrush(wx.Brush('#ff8888', wx.BRUSHSTYLE_BDIAGONAL_HATCH))
 		scope {
 			//dc.DrawRectangle(30, 40, 100, 70)
@@ -1064,15 +1064,15 @@ Page_GradientFill_Canvas = class(wx.Panel) {
 		dc.Clear()
 		dc.SetFont(this.font)
 		dc.SetTextForeground('#444444')
-		dc.SetPen(wx.Pen('#ff8888', 1, wx.PENSTYLE_SOLID))
-		dc.SetBrush(wx.Brush('#ff8888', wx.BRUSHSTYLE_BDIAGONAL_HATCH))
+		//dc.SetPen(wx.Pen('#ff8888', 1, wx.PENSTYLE_SOLID))
+		//dc.SetBrush(wx.Brush('#ff8888', wx.BRUSHSTYLE_BDIAGONAL_HATCH))
 		scope {
-			dc.DrawRectangle(30, 40, 100, 70)
-			dc.PutText('DrawRectangle(x, y, width, height)', 30 + 100 / 2, 40 + 70 / 2, `southwest)
-			dc.DrawRectangle(wx.Point(30, 130), wx.Size(100, 70))
-			dc.PutText('DrawRectangle(pt, size)', 30 + 100 / 2, 130 + 70 / 2, `southwest)
-			dc.DrawRectangle(wx.Rect(30, 220, 100, 70))
-			dc.PutText('DrawRectangle(rect)', 30 + 100 / 2, 220 + 70 / 2, `southwest)
+			//dc.DrawRectangle(30, 40, 100, 70)
+			//dc.PutText('DrawRectangle(x, y, width, height)', 30 + 100 / 2, 40 + 70 / 2, `southwest)
+			//dc.DrawRectangle(wx.Point(30, 130), wx.Size(100, 70))
+			//dc.PutText('DrawRectangle(pt, size)', 30 + 100 / 2, 130 + 70 / 2, `southwest)
+			//dc.DrawRectangle(wx.Rect(30, 220, 100, 70))
+			//dc.PutText('DrawRectangle(rect)', 30 + 100 / 2, 220 + 70 / 2, `southwest)
 		}
 		dc.GradientFillConcentric(wx.Rect(this.ptDict[`topLeftConcentric], this.ptDict[`bottomRightConcentric]), this.colours[`initial], this.colours[`dest])
 		dc.GradientFillLinear(wx.Rect(this.ptDict[`topLeftLinear], this.ptDict[`bottomRightLinear]), this.colours[`initial], this.colours[`dest], wx.LEFT)
