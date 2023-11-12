@@ -548,7 +548,7 @@ ${if (hasVirtualFlag)}
 //------------------------------------------------------------------------------
 // Value_wx${className}::EntityT
 //------------------------------------------------------------------------------
-${funcInfoVirtualTbl.Each {|funcInfo|}}
+${funcInfoVirtualTbl.Filter(!funcInfoVirtualTbl:*handCodeFlag) {|funcInfo|}}
 ${funcInfo.ComposeCDecl('Value_wx' + className + '::EntityT::')}
 {
 	static const Symbol* pSymbolFunc = nullptr;

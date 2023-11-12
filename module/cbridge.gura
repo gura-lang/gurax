@@ -232,6 +232,7 @@ FuncInfo = class {
 	tmplFunctionBody as Template
 	virtualFlag as Bool
 	pureFlag as Bool
+	handCodeFlag as Bool
 	returnThisFlag as Bool
 	returnNilFlag as Bool
 	constFlag as Bool
@@ -242,11 +243,11 @@ FuncInfo = class {
 	helpInfoTbl[] as HelpInfo
 	hasBlockFlag as Bool
 	__init__(r as Renderer, moduleName as String, name as String, nameOnCall:nil as String, argInfoTbl[] as ArgInfo, typeName as String, codeFunctionBody:nil as String,
-			virtualFlag as Bool, pureFlag as Bool, returnThisFlag as Bool, returnNilFlag as Bool, constFlag as Bool, staticFlag as Bool, mapFlag as Bool, type as Symbol, operator? as Operator, helpInfoTbl[] as HelpInfo = [],
+			virtualFlag as Bool, pureFlag as Bool, handCodeFlag as Bool, returnThisFlag as Bool, returnNilFlag as Bool, constFlag as Bool, staticFlag as Bool, mapFlag as Bool, type as Symbol, operator? as Operator, helpInfoTbl[] as HelpInfo = [],
 			hasBlockFlag as Bool = false) = {
 		this.r = r, this.moduleName = moduleName, this.name = name, this.nameOnCall = nameOnCall
 		this.argInfoTbl = argInfoTbl, this.typeName = typeName
-		this.virtualFlag = virtualFlag, this.pureFlag = pureFlag, this.returnThisFlag = returnThisFlag, this.returnNilFlag = returnNilFlag, this.constFlag = constFlag
+		this.virtualFlag = virtualFlag, this.pureFlag = pureFlag, this.handCodeFlag = handCodeFlag, this.returnThisFlag = returnThisFlag, this.returnNilFlag = returnNilFlag, this.constFlag = constFlag
 		this.staticFlag = staticFlag, this.mapFlag = mapFlag
 		this.type = type, this.operator = operator, this.helpInfoTbl = helpInfoTbl, this.hasBlockFlag = hasBlockFlag
 		if (codeFunctionBody) { this.tmplFunctionBody = Template().Parse(codeFunctionBody) }
@@ -306,6 +307,7 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 	typeName = 'any'
 	virtualFlag = false
 	pureFlag = false
+	handCodeFlag = false
 	returnThisFlag = false
 	returnNilFlag = false
 	constFlag = false
@@ -329,6 +331,7 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 		if (expr.attr.IsSet(`void)) { typeName = 'void' }
 		if (expr.attr.IsSet(`virtual)) { virtualFlag = true }
 		if (expr.attr.IsSet(`pure)) { pureFlag = true }
+		if (expr.attr.IsSet(`handCode)) { handCodeFlag = true }
 		if (expr.attr.IsSet(`returnThis)) { returnThisFlag = true }
 		if (expr.attr.IsSet(`returnNil)) { returnNilFlag = true }
 		if (expr.attr.IsSet(`const)) { constFlag = true }
@@ -391,7 +394,7 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 	} else {
 		ErrorDone(expr, 'Caller is expected')
 	}
-	FuncInfo(r, moduleName, symbolName, symbolNameOnCall, argInfoTbl, typeName, codeFunctionBody, virtualFlag, pureFlag, returnThisFlag, returnNilFlag, constFlag,
+	FuncInfo(r, moduleName, symbolName, symbolNameOnCall, argInfoTbl, typeName, codeFunctionBody, virtualFlag, pureFlag, handCodeFlag, returnThisFlag, returnNilFlag, constFlag,
 		staticFlag, mapFlag, type, operator, helpInfoTbl, hasBlockFlag)
 }
 

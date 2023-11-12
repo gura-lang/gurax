@@ -28,7 +28,7 @@ AppConsole = Class(EvtHandler) {
 	OnExceptionInMainLoop():virtual as bool
 	OnExit():virtual as int
 	OnFatalException():virtual as void
-	OnInit():virtual as bool
+	OnInit():virtual:handCode as bool
 	OnInitCmdLine(parser as CmdLineParser_r):virtual as void
 	OnRun():virtual as int
 	OnUnhandledException():virtual as void

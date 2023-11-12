@@ -1,0 +1,11 @@
+#!/usr/bin/env gurax
+import(wx)
+
+AppMain = class(wx.AppConsole) {
+	OnInit() = {
+		Println('hello')
+		false
+	}
+}
+
+wx.ImplementApp(AppMain())

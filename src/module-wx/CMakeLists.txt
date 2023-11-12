@@ -49,6 +49,7 @@ target_sources(wx.gurd PRIVATE
 	Objects.cpp
 	Util.cpp
 	VTypes.cpp
+	VType_wxAppConsole_HandCode.cpp
 	${SRCFILES_VTYPE})
 #-------------------------------------------------------------------------------
 # Link
