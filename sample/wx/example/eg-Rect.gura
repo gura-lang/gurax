@@ -1,0 +1,30 @@
+#!/usr/bin/env gurax
+import(wx)
+import(util.tester) {*}
+
+AppMain = class(wx.AppConsole) {}
+
+AppMain.OnInit() = {
+	TestCase('Constructor') {
+		Tester(`wx.Rect())
+		Tester(`wx.Rect(12, 16, 240, 130))
+		Tester(`wx.Rect(wx.Point(12, 16), wx.Point(240, 130)))
+		Tester(`wx.Rect(wx.Point(12, 16), wx.Size(240, 130)))
+		Tester(`wx.Rect(wx.Size(240, 130)))
+	}
+	TestCase('wx.Rect#Contains()') {
+		Tester(`wx.Rect(12, 16, 240, 130).Contains(100, 100))
+		Tester(`wx.Rect(12, 16, 240, 130).Contains(5, 5))
+		Tester(`wx.Rect(12, 16, 240, 130).Contains(wx.Point(100, 100)))
+		Tester(`wx.Rect(12, 16, 240, 130).Contains(wx.Point(5, 5)))
+		Tester(`wx.Rect(12, 16, 240, 130).Contains(wx.Rect(100, 100, 5, 5)))
+		Tester(`wx.Rect(12, 16, 240, 130).Contains(wx.Rect(100, 100, 100, 100)))
+	}
+	TestCase('Operation') {
+		Tester(`(wx.Rect(12, 16, 240, 130) + wx.Rect(100, 100, 200, 150)))
+		Tester(`(wx.Rect(12, 16, 240, 130) * wx.Rect(100, 100, 200, 150)))
+	}
+	false
+}
+
+wx.ImplementApp(AppMain())
