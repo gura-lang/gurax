@@ -140,7 +140,8 @@ VType& Value_wxPoint::vtype = VTYPE_wxPoint;
 
 String Value_wxPoint::ToString(const StringStyle& ss) const
 {
-	return ToStringGeneric(ss, "wx.Point");
+	const wxPoint& pt = GetEntity();
+	return ToStringGeneric(ss, String().Format("wx.Point:x=%d:y=%d", pt.x, pt.y));
 }
 
 Gurax_EndModuleScope(wx)

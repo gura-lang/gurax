@@ -333,6 +333,7 @@ set(SRCFILES_VTYPE
 	VType_wxQueryNewPaletteEvent.cpp
 	VType_wxRadioBox.cpp
 	VType_wxRadioButton.cpp
+	VType_wxRealPoint.cpp
 	VType_wxRearrangeCtrl.cpp
 	VType_wxRearrangeDialog.cpp
 	VType_wxRearrangeList.cpp

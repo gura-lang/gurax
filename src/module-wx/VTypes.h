@@ -336,6 +336,7 @@
 #include "VType_wxQueryNewPaletteEvent.h"
 #include "VType_wxRadioBox.h"
 #include "VType_wxRadioButton.h"
+#include "VType_wxRealPoint.h"
 #include "VType_wxRearrangeCtrl.h"
 #include "VType_wxRearrangeDialog.h"
 #include "VType_wxRearrangeList.h"

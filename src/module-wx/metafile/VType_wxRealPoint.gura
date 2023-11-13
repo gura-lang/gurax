@@ -1,0 +1,69 @@
+//==============================================================================
+// VType_wxRealPoint.gura
+//==============================================================================
+RealPoint = Class {
+	__init__(x? as double, y? as double):map
+	x.getter as double = \
+		R'''
+		return new Value_Number(valueThis_gurax.GetEntity().x);
+		'''
+	x.setter as double = \
+		R'''
+		double x = Value_Number::GetNumber<double>(value_gurax);
+		valueThis_gurax.GetEntity().x = x;
+		'''
+	y.getter as double = \
+		R'''
+		return new Value_Number(valueThis_gurax.GetEntity().y);
+		'''
+	y.setter as double = \
+		R'''
+		double y = Value_Number::GetNumber<double>(value_gurax);
+		valueThis_gurax.GetEntity().y = y;
+		'''
+	__toString__() = \
+		R'''
+		const wxRealPoint& pt = GetEntity();
+		return ToStringGeneric(ss, String().Format("wx.RealPoint:x=%g:y=%g", pt.x, pt.y));
+		'''
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RealPoint, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RealPoint, `en)}
+
+${help.ComposeMethodHelp(wx.RealPoint, `en)}
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RealPoint, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RealPoint, `ja)}
+
+${help.ComposeMethodHelp(wx.RealPoint, `ja)}
+'''ja
+
+(const_RealPoint_r == const_RealPoint_r) as bool
+(const_RealPoint_r != const_RealPoint_r) as bool
+(const_RealPoint_r + const_RealPoint_r) as RealPoint
+(const_RealPoint_r - const_RealPoint_r) as RealPoint
+(const_RealPoint_r + const_Size_r) as RealPoint
+(const_RealPoint_r - const_Size_r) as RealPoint
+(const_Size_r + const_RealPoint_r) as RealPoint
+(const_Size_r - const_RealPoint_r) as RealPoint
+(const_RealPoint_r / int) as RealPoint
+(const_RealPoint_r * int) as RealPoint
+(-const_RealPoint_r) as RealPoint

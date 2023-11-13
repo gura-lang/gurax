@@ -1193,7 +1193,8 @@ VType& Value_wxRect::vtype = VTYPE_wxRect;
 
 String Value_wxRect::ToString(const StringStyle& ss) const
 {
-	return ToStringGeneric(ss, "wx.Rect");
+	const wxRect& rect = GetEntity();
+	return ToStringGeneric(ss, String().Format("wx.Rect:x=%d:y=%d:width=%d:height=%d", rect.x, rect.y, rect.width, rect.height));
 }
 
 Gurax_EndModuleScope(wx)

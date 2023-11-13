@@ -342,6 +342,11 @@ Rect = Class {
 		int y = Value_Number::GetNumber<int>(value_gurax);
 		valueThis_gurax.GetEntity().y = y;
 		'''
+	__toString__() = \
+		R'''
+		const wxRect& rect = GetEntity();
+		return ToStringGeneric(ss, String().Format("wx.Rect:x=%d:y=%d:width=%d:height=%d", rect.x, rect.y, rect.width, rect.height));
+		'''
 } %% R'''
 # Overview
 

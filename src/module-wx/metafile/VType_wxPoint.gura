@@ -21,6 +21,11 @@ Point = Class {
 		int y = Value_Number::GetNumber<int>(value_gurax);
 		valueThis_gurax.GetEntity().y = y;
 		'''
+	__toString__() = \
+		R'''
+		const wxPoint& pt = GetEntity();
+		return ToStringGeneric(ss, String().Format("wx.Point:x=%d:y=%d", pt.x, pt.y));
+		'''
 } %% R'''
 # Overview
 

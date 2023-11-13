@@ -341,6 +341,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxQueryNewPaletteEvent);
 	frame.Assign(VTYPE_wxRadioBox);
 	frame.Assign(VTYPE_wxRadioButton);
+	frame.Assign(VTYPE_wxRealPoint);
 	frame.Assign(VTYPE_wxRearrangeCtrl);
 	frame.Assign(VTYPE_wxRearrangeDialog);
 	frame.Assign(VTYPE_wxRearrangeList);
