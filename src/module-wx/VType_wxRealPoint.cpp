@@ -44,12 +44,11 @@ ${help.ComposeMethodHelp(wx.RealPoint, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.RealPoint(x? as Number, y? as Number):map {block?}
+// wx.RealPoint(args* as Any) {block?}
 Gurax_DeclareConstructorAlias(RealPoint_gurax, "RealPoint")
 {
-	Declare(VTYPE_wxRealPoint, Flag::Map);
-	DeclareArg("x", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("y", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	Declare(VTYPE_wxRealPoint, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 }
 
@@ -57,13 +56,40 @@ Gurax_ImplementConstructorEx(RealPoint_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	bool x_validFlag = args_gurax.IsValid();
-	double x = x_validFlag? args_gurax.PickNumber<double>() : 0;
-	bool y_validFlag = args_gurax.IsValid();
-	double y = y_validFlag? args_gurax.PickNumber<double>() : 0;
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRealPoint(
-		wxRealPoint(x, y)));
+	// wxRealPoint(x as double = 0, y as double = 0)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("x", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("y", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		double x = args.IsValid()? args.PickNumber<double>() : 0;
+		double y = args.IsValid()? args.PickNumber<double>() : 0;
+		return new Value_wxRealPoint(wxRealPoint(x, y));
+	} while (0);
+	Error::ClearIssuedFlag();
+	// wxRealPoint(pt as const_RealPoint_r)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+		return new Value_wxRealPoint(wxRealPoint(pt));
+	} while (0);
+	return Value::nil();
 }
 
 //-----------------------------------------------------------------------------

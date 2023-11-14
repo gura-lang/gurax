@@ -2,7 +2,41 @@
 // VType_wxRealPoint.gura
 //==============================================================================
 RealPoint = Class {
-	__init__(x? as double, y? as double):map
+	__init__(args* as any) = \
+		R'''
+		// wxRealPoint(x as double = 0, y as double = 0)
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("x", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("y", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			double x = args.IsValid()? args.PickNumber<double>() : 0;
+			double y = args.IsValid()? args.PickNumber<double>() : 0;
+			return new Value_wxRealPoint(wxRealPoint(x, y));
+		} while (0);
+		Error::ClearIssuedFlag();
+		// wxRealPoint(pt as const_RealPoint_r)
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+			return new Value_wxRealPoint(wxRealPoint(pt));
+		} while (0);
+		return Value::nil();
+		'''
 	x.getter as double = \
 		R'''
 		return new Value_Number(valueThis_gurax.GetEntity().x);

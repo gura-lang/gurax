@@ -44,12 +44,11 @@ ${help.ComposeMethodHelp(wx.Point, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Point(x? as Number, y? as Number):map {block?}
+// wx.Point(args* as Any) {block?}
 Gurax_DeclareConstructorAlias(Point_gurax, "Point")
 {
-	Declare(VTYPE_wxPoint, Flag::Map);
-	DeclareArg("x", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("y", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	Declare(VTYPE_wxPoint, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 }
 
@@ -57,13 +56,40 @@ Gurax_ImplementConstructorEx(Point_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	bool x_validFlag = args_gurax.IsValid();
-	int x = x_validFlag? args_gurax.PickNumber<int>() : 0;
-	bool y_validFlag = args_gurax.IsValid();
-	int y = y_validFlag? args_gurax.PickNumber<int>() : 0;
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		wxPoint(x, y)));
+	// wxPoint(x as int = 0, y as int = 0)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("x", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("y", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		int x = args.IsValid()? args.PickNumber<int>() : 0;
+		int y = args.IsValid()? args.PickNumber<int>() : 0;
+		return new Value_wxPoint(wxPoint(x, y));
+	} while (0);
+	Error::ClearIssuedFlag();
+	// wxPoint(pt as const_RealPoint_r)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("pt", VTYPE_wxRealPoint);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxRealPoint& pt = args.Pick<Value_wxRealPoint>().GetEntity();
+		return new Value_wxPoint(wxPoint(pt));
+	} while (0);
+	return Value::nil();
 }
 
 //-----------------------------------------------------------------------------

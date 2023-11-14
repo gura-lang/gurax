@@ -1,0 +1,20 @@
+#!/usr/bin/env gurax
+import(wx)
+import(util.tester) {*}
+
+AppMain = class(wx.AppConsole) {}
+
+AppMain.OnInit() = {
+	TestCase('Constructor') {
+		Tester(`wx.Point())
+		Tester(`wx.Point(12, 16))
+		Tester(`wx.Point(wx.RealPoint(24.5, 13.8)))
+	}
+	TestCase('Operation') {
+		//Tester(`(wx.Rect(12, 16, 240, 130) + wx.Rect(100, 100, 200, 150)))
+		//Tester(`(wx.Rect(12, 16, 240, 130) * wx.Rect(100, 100, 200, 150)))
+	}
+	false
+}
+
+wx.ImplementApp(AppMain())
