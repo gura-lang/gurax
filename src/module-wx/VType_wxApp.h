@@ -40,10 +40,12 @@ public:
 		using wxApp::wxApp;
 	public:
 		EntityCore core_gurax;
+		virtual bool OnInit() override;
 		virtual bool SafeYield(wxWindow* win, bool onlyIfNeeded) override;
 		virtual bool SafeYieldFor(wxWindow* win, long eventsToProcess) override;
 		virtual bool SetDisplayMode(const wxVideoMode& info) override;
 		virtual bool SetNativeTheme(const wxString& theme) override;
+		bool public_OnInit() { return wxApp::OnInit(); }
 		bool public_SafeYield(wxWindow* win, bool onlyIfNeeded) { return wxApp::SafeYield(win, onlyIfNeeded); }
 		bool public_SafeYieldFor(wxWindow* win, long eventsToProcess) { return wxApp::SafeYieldFor(win, eventsToProcess); }
 		bool public_SetDisplayMode(const wxVideoMode& info) { return wxApp::SetDisplayMode(info); }

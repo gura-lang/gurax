@@ -9,6 +9,9 @@ App = Class(AppConsole) {
 	GetLayoutDirection() as LayoutDirection
 	GetUseBestVisual() as bool
 	GetTopWindow() as Window_p
+
+	OnInit():virtual:handCode as bool
+
 	IsActive() as bool
 	SafeYield(win as Window_p, onlyIfNeeded as bool):virtual as bool
 	SafeYieldFor(win as Window_p, eventsToProcess as long):virtual as bool

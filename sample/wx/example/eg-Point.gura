@@ -10,9 +10,20 @@ AppMain.OnInit() = {
 		Tester(`wx.Point(12, 16))
 		Tester(`wx.Point(wx.RealPoint(24.5, 13.8)))
 	}
+	TestCase('Cast') {
+		Tester(`(wx.RealPoint(24.5, 13.8) as wx.Point))
+	}
 	TestCase('Operation') {
-		//Tester(`(wx.Rect(12, 16, 240, 130) + wx.Rect(100, 100, 200, 150)))
-		//Tester(`(wx.Rect(12, 16, 240, 130) * wx.Rect(100, 100, 200, 150)))
+		Tester(`(wx.Point(12, 16) == wx.Point(12, 16)))
+		Tester(`(wx.Point(12, 16) == wx.Point(22, 16)))
+		Tester(`(wx.Point(12, 16) != wx.Point(12, 16)))
+		Tester(`(wx.Point(12, 16) != wx.Point(22, 16)))
+		Tester(`(wx.Point(12, 16) + wx.Point(32, 24)))
+		Tester(`(wx.Point(12, 16) - wx.Point(32, 24)))
+		Tester(`(wx.Point(12, 16) + wx.Size(32, 24)))
+		Tester(`(wx.Point(12, 16) - wx.Size(32, 24)))
+		Tester(`(wx.Point(12, 18) / 3))
+		Tester(`(wx.Point(12, 18) * 3))
 	}
 	false
 }

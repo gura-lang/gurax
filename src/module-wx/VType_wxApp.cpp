@@ -148,6 +148,23 @@ Gurax_ImplementMethodEx(wxApp, GetTopWindow_gurax, processor_gurax, argument_gur
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(pEntity_gurax->GetTopWindow()));
 }
 
+// wx.App#OnInit()
+Gurax_DeclareMethodAlias(wxApp, OnInit_gurax, "OnInit")
+{
+	Declare(VTYPE_Bool, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxApp, OnInit_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = dynamic_cast<Value_wxApp::EntityT*>(valueThis_gurax.GetEntityPtr());
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->OnInit();
+	return new Gurax::Value_Bool(rtn);
+}
+
 // wx.App#IsActive()
 Gurax_DeclareMethodAlias(wxApp, IsActive_gurax, "IsActive")
 {
@@ -344,6 +361,7 @@ void VType_wxApp::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxApp, GetLayoutDirection_gurax));
 	Assign(Gurax_CreateMethod(wxApp, GetUseBestVisual_gurax));
 	Assign(Gurax_CreateMethod(wxApp, GetTopWindow_gurax));
+	Assign(Gurax_CreateMethod(wxApp, OnInit_gurax));
 	Assign(Gurax_CreateMethod(wxApp, IsActive_gurax));
 	Assign(Gurax_CreateMethod(wxApp, SafeYield_gurax));
 	Assign(Gurax_CreateMethod(wxApp, SafeYieldFor_gurax));

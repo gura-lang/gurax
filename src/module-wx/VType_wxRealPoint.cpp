@@ -159,6 +159,16 @@ void VType_wxRealPoint::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(wxRealPoint, y));
 }
 
+Value* VType_wxRealPoint::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+{
+	RefPtr<Value_wxPoint> pValueCasted(value.Cast<Value_wxPoint>(flags));
+	if (pValueCasted) {
+		const wxPoint& pt = pValueCasted->GetEntity();
+		return new Value_wxRealPoint(wxRealPoint(pt));
+	}
+	return nullptr;
+}
+
 //------------------------------------------------------------------------------
 // Value_wxRealPoint
 //------------------------------------------------------------------------------

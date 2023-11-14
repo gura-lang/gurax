@@ -55,6 +55,15 @@ RealPoint = Class {
 		double y = Value_Number::GetNumber<double>(value_gurax);
 		valueThis_gurax.GetEntity().y = y;
 		'''
+	__cast__() = \
+		R'''
+		RefPtr<Value_wxPoint> pValueCasted(value.Cast<Value_wxPoint>(flags));
+		if (pValueCasted) {
+			const wxPoint& pt = pValueCasted->GetEntity();
+			return new Value_wxRealPoint(wxRealPoint(pt));
+		}
+		return nullptr;
+		'''
 	__toString__() = \
 		R'''
 		const wxRealPoint& pt = GetEntity();
