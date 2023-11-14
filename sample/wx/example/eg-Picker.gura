@@ -20,10 +20,14 @@ PanelMain = class(wx.Panel) {
 		this.SetSizer(sizer)
 		wx.BoxSizer(wx.VERTICAL) {|sizer|
 			(^sizer).Add(sizer, wx.SizerFlags(1).Expand())
-			//wx.TimePicker(this, wx.ID_ANY) {|ctrl|
-			//	sizer.Add(ctrl, wx.SizerFlags().Expand())
-			//	//wx.EVT_BUTTON(ctrl, this.OnButton)
-			//}
+			wx.Button(this, wx.ID_ANY, 'push') {|ctrl|
+				sizer.Add(ctrl, wx.SizerFlags())
+				//wx.EVT_BUTTON(ctrl, this.OnButton)
+			}
+			wx.TimePickerCtrl(this, wx.ID_ANY) {|ctrl|
+				sizer.Add(ctrl, wx.SizerFlags())
+				//wx.EVT_BUTTON(ctrl, this.OnButton)
+			}
 		}
 	}
 	OnButton(event as wx.CommandEvent) = {
