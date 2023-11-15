@@ -161,9 +161,8 @@ void VType_wxRealPoint::DoPrepare(Frame& frameOuter)
 
 Value* VType_wxRealPoint::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
-	RefPtr<Value_wxPoint> pValueCasted(value.Cast<Value_wxPoint>(flags));
-	if (pValueCasted) {
-		const wxPoint& pt = pValueCasted->GetEntity();
+	if (value.IsInstanceOf(VTYPE_wxPoint)) {
+		const wxPoint& pt = Value_wxPoint::GetEntity(value);
 		return new Value_wxRealPoint(wxRealPoint(pt));
 	}
 	return nullptr;

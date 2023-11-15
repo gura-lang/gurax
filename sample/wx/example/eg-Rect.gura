@@ -17,8 +17,26 @@ AppMain.OnInit() = {
 		Tester(`wx.Rect(12, 16, 240, 130).Contains(5, 5))
 		Tester(`wx.Rect(12, 16, 240, 130).Contains(wx.Point(100, 100)))
 		Tester(`wx.Rect(12, 16, 240, 130).Contains(wx.Point(5, 5)))
+		Tester(`wx.Rect(12, 16, 240, 130).Contains(wx.Point(5, 5)))
 		Tester(`wx.Rect(12, 16, 240, 130).Contains(wx.Rect(100, 100, 5, 5)))
 		Tester(`wx.Rect(12, 16, 240, 130).Contains(wx.Rect(100, 100, 100, 100)))
+	}
+	TestCase('wx.Rect#CentreIn()') {
+		Tester(`wx.Rect(12, 16, 240, 130).CentreIn(wx.Rect(80, 100, 400, 300)))
+	}
+	TestCase('wx.Rect#Deflate()') {
+		Tester(`wx.Rect(12, 16, 240, 130).Deflate(20, 10))
+		Tester(`wx.Rect(12, 16, 240, 130).Deflate(wx.Size(20, 10)))
+		Tester(`wx.Rect(12, 16, 240, 130).Deflate(20))
+	}
+	TestCase('wx.Rect#Inflate()') {
+		Tester(`wx.Rect(12, 16, 240, 130).Inflate(20, 10))
+		Tester(`wx.Rect(12, 16, 240, 130).Inflate(wx.Size(20, 10)))
+		Tester(`wx.Rect(12, 16, 240, 130).Inflate(20))
+	}
+	TestCase('wx.Rect#Offset()') {
+	}
+	TestCase('wx.Rect#Union()') {
 	}
 	TestCase('Operation') {
 		Tester(`(wx.Rect(12, 16, 240, 130) + wx.Rect(100, 100, 200, 150)))

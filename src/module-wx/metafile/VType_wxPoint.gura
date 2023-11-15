@@ -57,9 +57,8 @@ Point = Class {
 		'''
 	__cast__() = \
 		R'''
-		RefPtr<Value_wxRealPoint> pValueCasted(value.Cast<Value_wxRealPoint>(flags));
-		if (pValueCasted) {
-			const wxRealPoint& pt = pValueCasted->GetEntity();
+		if (value.IsInstanceOf(VTYPE_wxRealPoint)) {
+			const wxRealPoint& pt = Value_wxRealPoint::GetEntity(value);
 			return new Value_wxPoint(wxPoint(pt));
 		}
 		return nullptr;
