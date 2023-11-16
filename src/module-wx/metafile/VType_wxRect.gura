@@ -143,7 +143,7 @@ Rect = Class {
 	GetX() as int
 	GetY() as int
 	Intersect(rect as const_Rect_r) as Rect
-	//Intersects(rect as const_Rect_r) as bool
+	Intersects(rect as const_Rect_r) as bool
 	IsEmpty() as bool
 	SetHeight(height as int) as void
 	SetPosition(pos as const_Point_r) as void

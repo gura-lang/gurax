@@ -462,6 +462,28 @@ Gurax_ImplementMethodEx(wxRect, Intersect_gurax, processor_gurax, argument_gurax
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect(pEntity_gurax->Intersect(rect)));
 }
 
+// wx.Rect#Intersects(rect as wx.Rect)
+Gurax_DeclareMethodAlias(wxRect, Intersects_gurax, "Intersects")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxRect, Intersects_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
+	const wxRect& rect = value_rect.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->Intersects(rect);
+	return new Gurax::Value_Bool(rtn);
+}
+
 // wx.Rect#IsEmpty()
 Gurax_DeclareMethodAlias(wxRect, IsEmpty_gurax, "IsEmpty")
 {
@@ -1158,6 +1180,7 @@ void VType_wxRect::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxRect, GetX_gurax));
 	Assign(Gurax_CreateMethod(wxRect, GetY_gurax));
 	Assign(Gurax_CreateMethod(wxRect, Intersect_gurax));
+	Assign(Gurax_CreateMethod(wxRect, Intersects_gurax));
 	Assign(Gurax_CreateMethod(wxRect, IsEmpty_gurax));
 	Assign(Gurax_CreateMethod(wxRect, SetHeight_gurax));
 	Assign(Gurax_CreateMethod(wxRect, SetPosition_gurax));
