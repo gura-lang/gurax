@@ -57,20 +57,20 @@ indices = [
 `page_wizard
 ]
 
-MyApp = class(wx.App) {
+AppMain = class(wx.App) {
 	OnInit() = {
-		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		FrameMain(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
 		true
 	}
 }
 
-MyFrame = class(wx.Frame) {
+FrameMain = class(wx.Frame) {
 	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
-		PanelTop(this)
+		PanelMain(this)
 	}
 }
 
-PanelTop = class(wx.Panel) {
+PanelMain = class(wx.Panel) {
 	textCtrl as wx.TextCtrl
 	__init__(parent as wx.Window) = {|parent|
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
@@ -136,4 +136,4 @@ PanelTop = class(wx.Panel) {
 	}
 }
 
-wx.ImplementApp(MyApp())
+wx.ImplementApp(AppMain())
