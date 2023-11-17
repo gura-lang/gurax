@@ -309,3 +309,11 @@ TestCase('Serialization') {
 	TestSerialization(DateTime.Create(2019, nil, nil, nil, nil, 42))
 	TestSerialization(DateTime.Create(2019, 5, 21, 8, 23, 42, minsOff = 60 * 9))
 }
+
+TestCase('Sort') {
+	rand = Random(0)
+	dateTimes = DateTime.Create(rand.IntSeq(10) + 2010, rand.IntSeq(12) + 1, rand.IntSeq(28) + 1, rand.IntSeq(24), rand.IntSeq(60), rand.IntSeq(60)).Head(20):list
+	Tester(`dateTimes)
+	Tester(`dateTimes.Sort())
+	Tester(`dateTimes.Sort(`descend))
+}

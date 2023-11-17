@@ -136,8 +136,8 @@ public:
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const DateTime& dateTime) const { return this == &dateTime; }
-	bool IsEqualTo(const DateTime& dateTime) const { return IsIdentical(dateTime); }
-	bool IsLessThan(const DateTime& dateTime) const { return this < &dateTime; }
+	bool IsEqualTo(const DateTime& dateTime) const { return Compare(*this, dateTime) == 0; }
+	bool IsLessThan(const DateTime& dateTime) const { return Compare(*this, dateTime) < 0; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 

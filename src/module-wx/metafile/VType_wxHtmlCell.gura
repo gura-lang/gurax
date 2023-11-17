@@ -3,6 +3,32 @@
 //==============================================================================
 HtmlCell = Class(Object) {
 	@include ['wx/html/htmlwin.h']
+	__init__()
+	AdjustPagebreak(pagebreak as int_p, known_pagebreaks as const_ArrayInt_r, pageHeight as int):virtual as bool
+	Draw(dc as DC_r, x as int, y as int, view_y1 as int, view_y2 as int, info as HtmlRenderingInfo_r):virtual as void
+	DrawInvisible(dc as DC_r, x as int, y as int, info as HtmlRenderingInfo_r):virtual as void
+	Find(condition as int, param as const_void_p):virtual as HtmlCell_p
+	FindCellByPos(x as Coord, y as Coord, flags as unsigned = wxHTML_FIND_EXACT):virtual as HtmlCell_p
+	GetDescent() as int
+	GetFirstChild():virtual as HtmlCell_p
+	GetHeight() as int
+	GetId() as String
+	GetLink(x as int = 0, y as int = 0):virtual as HtmlLinkInfo_p
+	GetMouseCursor(window as HtmlWindowInterface_p):virtual as Cursor
+	GetMouseCursorAt(window as HtmlWindowInterface_p, rePos as const_Point_r):virtual as Cursor
+	GetNext() as HtmlCell_p
+	GetParent() as HtmlContainerCell_p
+	GetPosX() as int
+	GetPosY() as int
+	GetWidth() as int
+	Layout(w as int):virtual as void
+	ProcessMouseClick(window as HtmlWindowInterface_p, pos as const_Point_r, event as const_MouseEvent_r):virtual as bool
+	SetId(id as const_String_r) as void
+	SetLink(link as const_HtmlLinkInfo_r) as void
+	SetNext(cell as HtmlCell_p) as void
+	SetParent(p as HtmlContainerCell_p) as void
+	SetPos(x as int, y as int):virtual as void
+	ConvertToText(sel as HtmlSelection_p):virtual as String
 } %% R'''
 # Overview
 
