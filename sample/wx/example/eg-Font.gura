@@ -39,12 +39,12 @@ PanelTop = class(wx.Panel) {
 		{ wx.FONTFAMILY_TELETYPE,	'Teletype'		}
 	}
 	fontStyleTbl = @(SelectionItem) {
-		{ wx.FONTSTYLE_NORMAL,		'Normal'		}
+		{ wx.FONTSTYLE_NORMAL,		'Normal '		}
 		{ wx.FONTSTYLE_ITALIC,		'Italic'		}
 		{ wx.FONTSTYLE_SLANT,		'Slant'			}
 	}
 	fontWeightTbl = @(SelectionItem) {
-		{ wx.FONTWEIGHT_NORMAL,		'Normal'		}
+		{ wx.FONTWEIGHT_NORMAL,		'Normal '		}
 		{ wx.FONTWEIGHT_LIGHT,		'Light'			}
 		{ wx.FONTWEIGHT_BOLD,		'Bold'			}
 	}
