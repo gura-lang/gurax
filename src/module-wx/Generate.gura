@@ -969,11 +969,12 @@ stringNameTbl = []
 enumNameTbl = []
 eventInfoTbl = []
 
-pathStats = path.Glob('metafile/*.gura'):stat:list
-pathStats.Each {|pathStat|
-	//fileName = path.FileName(pathName)
-	fileName = pathStat.name
-	pathName = path.Join('metafile', fileName)
+//pathStats = path.Glob('metafile/*.gura'):stat:list
+//pathStats.Sort(`descend, pathStats::mtime).Each {|pathStat|
+path.Glob('metafile/*.gura') {|pathName|
+	fileName = path.FileName(pathName)
+	//fileName = pathStat.name
+	//pathName = path.Join('metafile', fileName)
 	Println(fileName)
 	(fileName in ['VType_wxEventType.gura']) && continue
 	Expr(pathName).EachElem {|expr|

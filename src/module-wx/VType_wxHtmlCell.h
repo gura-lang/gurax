@@ -33,6 +33,17 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxHtmlCell");
 public:
+	class EntityT : public wxHtmlCell {
+	public:
+		using wxHtmlCell::wxHtmlCell;
+	public:
+		EntityCore core_gurax;
+		virtual void Layout(int w) override;
+		virtual void SetPos(int x, int y) override;
+		void public_Layout(int w) { wxHtmlCell::Layout(w); }
+		void public_SetPos(int x, int y) { wxHtmlCell::SetPos(x, y); }
+	};
+public:
 	static VType& vtype;
 public:
 	// Constructor

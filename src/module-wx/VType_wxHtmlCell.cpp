@@ -44,10 +44,380 @@ ${help.ComposeMethodHelp(wx.HtmlCell, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.HtmlCell() {block?}
+Gurax_DeclareConstructorAlias(HtmlCell_gurax, "HtmlCell")
+{
+	Declare(VTYPE_wxHtmlCell, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementConstructorEx(HtmlCell_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxHtmlCell(
+		wxHtmlCell()));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.HtmlCell#Find(condition as Number, param as Pointer) {block?}
+Gurax_DeclareMethodAlias(wxHtmlCell, Find_gurax, "Find")
+{
+	Declare(VTYPE_wxHtmlCell, Flag::None);
+	DeclareArg("condition", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("param", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxHtmlCell, Find_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int condition = args_gurax.PickNumber<int>();
+	const void* param = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxHtmlCell(*pEntity_gurax->Find(condition, param)));
+}
+
+// wx.HtmlCell#FindCellByPos(x as Number, y as Number, flags? as Number) {block?}
+Gurax_DeclareMethodAlias(wxHtmlCell, FindCellByPos_gurax, "FindCellByPos")
+{
+	Declare(VTYPE_wxHtmlCell, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxHtmlCell, FindCellByPos_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord x = args_gurax.PickNumber<wxCoord>();
+	wxCoord y = args_gurax.PickNumber<wxCoord>();
+	bool flags_validFlag = args_gurax.IsValid();
+	unsigned flags = flags_validFlag? args_gurax.PickNumber<unsigned>() : wxHTML_FIND_EXACT;
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxHtmlCell(*pEntity_gurax->FindCellByPos(x, y, flags)));
+}
+
+// wx.HtmlCell#GetDescent()
+Gurax_DeclareMethodAlias(wxHtmlCell, GetDescent_gurax, "GetDescent")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlCell, GetDescent_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetDescent();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.HtmlCell#GetFirstChild() {block?}
+Gurax_DeclareMethodAlias(wxHtmlCell, GetFirstChild_gurax, "GetFirstChild")
+{
+	Declare(VTYPE_wxHtmlCell, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxHtmlCell, GetFirstChild_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxHtmlCell(*pEntity_gurax->GetFirstChild()));
+}
+
+// wx.HtmlCell#GetHeight()
+Gurax_DeclareMethodAlias(wxHtmlCell, GetHeight_gurax, "GetHeight")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlCell, GetHeight_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetHeight();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.HtmlCell#GetId()
+Gurax_DeclareMethodAlias(wxHtmlCell, GetId_gurax, "GetId")
+{
+	Declare(VTYPE_String, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlCell, GetId_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxString rtn = pEntity_gurax->GetId();
+	return new Gurax::Value_String(rtn.utf8_str().data());
+}
+
+// wx.HtmlCell#GetLink(x? as Number, y? as Number) {block?}
+Gurax_DeclareMethodAlias(wxHtmlCell, GetLink_gurax, "GetLink")
+{
+	Declare(VTYPE_wxHtmlLinkInfo, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxHtmlCell, GetLink_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool x_validFlag = args_gurax.IsValid();
+	int x = x_validFlag? args_gurax.PickNumber<int>() : 0;
+	bool y_validFlag = args_gurax.IsValid();
+	int y = y_validFlag? args_gurax.PickNumber<int>() : 0;
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxHtmlLinkInfo(pEntity_gurax->GetLink(x, y)));
+}
+
+// wx.HtmlCell#GetNext() {block?}
+Gurax_DeclareMethodAlias(wxHtmlCell, GetNext_gurax, "GetNext")
+{
+	Declare(VTYPE_wxHtmlCell, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxHtmlCell, GetNext_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxHtmlCell(*pEntity_gurax->GetNext()));
+}
+
+// wx.HtmlCell#GetParent() {block?}
+Gurax_DeclareMethodAlias(wxHtmlCell, GetParent_gurax, "GetParent")
+{
+	Declare(VTYPE_wxHtmlContainerCell, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxHtmlCell, GetParent_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxHtmlContainerCell(*pEntity_gurax->GetParent()));
+}
+
+// wx.HtmlCell#GetPosX()
+Gurax_DeclareMethodAlias(wxHtmlCell, GetPosX_gurax, "GetPosX")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlCell, GetPosX_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetPosX();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.HtmlCell#GetPosY()
+Gurax_DeclareMethodAlias(wxHtmlCell, GetPosY_gurax, "GetPosY")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlCell, GetPosY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetPosY();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.HtmlCell#GetWidth()
+Gurax_DeclareMethodAlias(wxHtmlCell, GetWidth_gurax, "GetWidth")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlCell, GetWidth_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetWidth();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.HtmlCell#Layout(w as Number)
+Gurax_DeclareMethodAlias(wxHtmlCell, Layout_gurax, "Layout")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlCell, Layout_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = dynamic_cast<Value_wxHtmlCell::EntityT*>(valueThis_gurax.GetEntityPtr());
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int w = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->Layout(w);
+	return Gurax::Value::nil();
+}
+
+// wx.HtmlCell#SetId(id as String)
+Gurax_DeclareMethodAlias(wxHtmlCell, SetId_gurax, "SetId")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("id", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlCell, SetId_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxString id(args_gurax.PickString());
+	// Function body
+	pEntity_gurax->SetId(id);
+	return Gurax::Value::nil();
+}
+
+// wx.HtmlCell#SetLink(link as wx.HtmlLinkInfo)
+Gurax_DeclareMethodAlias(wxHtmlCell, SetLink_gurax, "SetLink")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("link", VTYPE_wxHtmlLinkInfo, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlCell, SetLink_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxHtmlLinkInfo& value_link = args_gurax.Pick<Value_wxHtmlLinkInfo>();
+	const wxHtmlLinkInfo& link = value_link.GetEntity();
+	// Function body
+	pEntity_gurax->SetLink(link);
+	return Gurax::Value::nil();
+}
+
+// wx.HtmlCell#SetNext(cell as wx.HtmlCell)
+Gurax_DeclareMethodAlias(wxHtmlCell, SetNext_gurax, "SetNext")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("cell", VTYPE_wxHtmlCell, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlCell, SetNext_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxHtmlCell& value_cell = args_gurax.Pick<Value_wxHtmlCell>();
+	wxHtmlCell* cell = value_cell.GetEntityPtr();
+	// Function body
+	pEntity_gurax->SetNext(cell);
+	return Gurax::Value::nil();
+}
+
+// wx.HtmlCell#SetParent(p as wx.HtmlContainerCell)
+Gurax_DeclareMethodAlias(wxHtmlCell, SetParent_gurax, "SetParent")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("p", VTYPE_wxHtmlContainerCell, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlCell, SetParent_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxHtmlContainerCell& value_p = args_gurax.Pick<Value_wxHtmlContainerCell>();
+	wxHtmlContainerCell* p = value_p.GetEntityPtr();
+	// Function body
+	pEntity_gurax->SetParent(p);
+	return Gurax::Value::nil();
+}
+
+// wx.HtmlCell#SetPos(x as Number, y as Number)
+Gurax_DeclareMethodAlias(wxHtmlCell, SetPos_gurax, "SetPos")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlCell, SetPos_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = dynamic_cast<Value_wxHtmlCell::EntityT*>(valueThis_gurax.GetEntityPtr());
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int x = args_gurax.PickNumber<int>();
+	int y = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetPos(x, y);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -64,8 +434,26 @@ void VType_wxHtmlCell::DoPrepare(Frame& frameOuter)
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
-	Declare(VTYPE_wxObject, Flag::Mutable);
+	Declare(VTYPE_wxObject, Flag::Mutable, Gurax_CreateConstructor(HtmlCell_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxHtmlCell, Find_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlCell, FindCellByPos_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlCell, GetDescent_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlCell, GetFirstChild_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlCell, GetHeight_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlCell, GetId_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlCell, GetLink_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlCell, GetNext_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlCell, GetParent_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlCell, GetPosX_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlCell, GetPosY_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlCell, GetWidth_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlCell, Layout_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlCell, SetId_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlCell, SetLink_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlCell, SetNext_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlCell, SetParent_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlCell, SetPos_gurax));
 }
 
 //------------------------------------------------------------------------------
@@ -76,6 +464,63 @@ VType& Value_wxHtmlCell::vtype = VTYPE_wxHtmlCell;
 String Value_wxHtmlCell::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "wx.HtmlCell");
+}
+
+//------------------------------------------------------------------------------
+// Value_wxHtmlCell::EntityT
+//------------------------------------------------------------------------------
+void Value_wxHtmlCell::EntityT::Layout(int w)
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("Layout");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(w))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		return;
+	} while (0);
+	public_Layout(w);
+}
+
+void Value_wxHtmlCell::EntityT::SetPos(int x, int y)
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("SetPos");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(x))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(y))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		return;
+	} while (0);
+	public_SetPos(x, y);
 }
 
 Gurax_EndModuleScope(wx)
