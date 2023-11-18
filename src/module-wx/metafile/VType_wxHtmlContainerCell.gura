@@ -3,6 +3,22 @@
 //==============================================================================
 HtmlContainerCell = Class(HtmlCell) {
 	@include['wx/html/htmlcell.h']
+	__init__(parent as HtmlContainerCell_p)
+	GetAlignHor() as int
+	GetAlignVer() as int
+	GetBackgroundColour() as Colour
+	GetIndent(ind as int) as int
+	GetIndentUnits(ind as int) as int
+	InsertCell(cell as HtmlCell_p) as void
+	//SetAlign(tag as const_HtmlTag_r) as void
+	SetAlignHor(al as int) as void
+	SetAlignVer(al as int) as void
+	SetBackgroundColour(clr as const_Colour_r) as void
+	SetBorder(clr1 as const_Colour_r, clr2 as const_Colour_r, border as int = 1) as void
+	SetIndent(i as int, what as int, units as int = wxHTML_UNITS_PIXELS) as void
+	SetMinHeight(h as int, align as int = wxHTML_ALIGN_TOP) as void
+	SetWidthFloat(w as int, units as int) as void
+	//SetWidthFloat(tag as const_HtmlTag_r, pixel_scale as double = 1.0) as void
 } %% R'''
 # Overview
 

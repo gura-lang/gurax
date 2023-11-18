@@ -214,7 +214,7 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	${classNames.Sort().Each {|className|}}
+	${classNames.Each {|className|}}
 	frame.Assign(VTYPE_wx${className});
 	${end}
 }

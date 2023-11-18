@@ -44,10 +44,307 @@ ${help.ComposeMethodHelp(wx.HtmlContainerCell, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.HtmlContainerCell(parent as wx.HtmlContainerCell) {block?}
+Gurax_DeclareConstructorAlias(HtmlContainerCell_gurax, "HtmlContainerCell")
+{
+	Declare(VTYPE_wxHtmlContainerCell, Flag::None);
+	DeclareArg("parent", VTYPE_wxHtmlContainerCell, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementConstructorEx(HtmlContainerCell_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxHtmlContainerCell& value_parent = args_gurax.Pick<Value_wxHtmlContainerCell>();
+	wxHtmlContainerCell* parent = value_parent.GetEntityPtr();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxHtmlContainerCell(
+		wxHtmlContainerCell(parent)));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.HtmlContainerCell#GetAlignHor()
+Gurax_DeclareMethodAlias(wxHtmlContainerCell, GetAlignHor_gurax, "GetAlignHor")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlContainerCell, GetAlignHor_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetAlignHor();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.HtmlContainerCell#GetAlignVer()
+Gurax_DeclareMethodAlias(wxHtmlContainerCell, GetAlignVer_gurax, "GetAlignVer")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlContainerCell, GetAlignVer_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetAlignVer();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.HtmlContainerCell#GetBackgroundColour() {block?}
+Gurax_DeclareMethodAlias(wxHtmlContainerCell, GetBackgroundColour_gurax, "GetBackgroundColour")
+{
+	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxHtmlContainerCell, GetBackgroundColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(pEntity_gurax->GetBackgroundColour()));
+}
+
+// wx.HtmlContainerCell#GetIndent(ind as Number)
+Gurax_DeclareMethodAlias(wxHtmlContainerCell, GetIndent_gurax, "GetIndent")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("ind", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlContainerCell, GetIndent_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int ind = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = pEntity_gurax->GetIndent(ind);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.HtmlContainerCell#GetIndentUnits(ind as Number)
+Gurax_DeclareMethodAlias(wxHtmlContainerCell, GetIndentUnits_gurax, "GetIndentUnits")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("ind", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlContainerCell, GetIndentUnits_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int ind = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = pEntity_gurax->GetIndentUnits(ind);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.HtmlContainerCell#InsertCell(cell as wx.HtmlCell)
+Gurax_DeclareMethodAlias(wxHtmlContainerCell, InsertCell_gurax, "InsertCell")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("cell", VTYPE_wxHtmlCell, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlContainerCell, InsertCell_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxHtmlCell& value_cell = args_gurax.Pick<Value_wxHtmlCell>();
+	wxHtmlCell* cell = value_cell.GetEntityPtr();
+	// Function body
+	pEntity_gurax->InsertCell(cell);
+	return Gurax::Value::nil();
+}
+
+// wx.HtmlContainerCell#SetAlignHor(al as Number)
+Gurax_DeclareMethodAlias(wxHtmlContainerCell, SetAlignHor_gurax, "SetAlignHor")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("al", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlContainerCell, SetAlignHor_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int al = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetAlignHor(al);
+	return Gurax::Value::nil();
+}
+
+// wx.HtmlContainerCell#SetAlignVer(al as Number)
+Gurax_DeclareMethodAlias(wxHtmlContainerCell, SetAlignVer_gurax, "SetAlignVer")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("al", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlContainerCell, SetAlignVer_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int al = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetAlignVer(al);
+	return Gurax::Value::nil();
+}
+
+// wx.HtmlContainerCell#SetBackgroundColour(clr as wx.Colour)
+Gurax_DeclareMethodAlias(wxHtmlContainerCell, SetBackgroundColour_gurax, "SetBackgroundColour")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("clr", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlContainerCell, SetBackgroundColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxColour& value_clr = args_gurax.Pick<Value_wxColour>();
+	const wxColour& clr = value_clr.GetEntity();
+	// Function body
+	pEntity_gurax->SetBackgroundColour(clr);
+	return Gurax::Value::nil();
+}
+
+// wx.HtmlContainerCell#SetBorder(clr1 as wx.Colour, clr2 as wx.Colour, border? as Number)
+Gurax_DeclareMethodAlias(wxHtmlContainerCell, SetBorder_gurax, "SetBorder")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("clr1", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("clr2", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("border", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlContainerCell, SetBorder_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxColour& value_clr1 = args_gurax.Pick<Value_wxColour>();
+	const wxColour& clr1 = value_clr1.GetEntity();
+	Value_wxColour& value_clr2 = args_gurax.Pick<Value_wxColour>();
+	const wxColour& clr2 = value_clr2.GetEntity();
+	bool border_validFlag = args_gurax.IsValid();
+	int border = border_validFlag? args_gurax.PickNumber<int>() : 1;
+	// Function body
+	pEntity_gurax->SetBorder(clr1, clr2, border);
+	return Gurax::Value::nil();
+}
+
+// wx.HtmlContainerCell#SetIndent(i as Number, what as Number, units? as Number)
+Gurax_DeclareMethodAlias(wxHtmlContainerCell, SetIndent_gurax, "SetIndent")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("i", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("what", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("units", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlContainerCell, SetIndent_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int i = args_gurax.PickNumber<int>();
+	int what = args_gurax.PickNumber<int>();
+	bool units_validFlag = args_gurax.IsValid();
+	int units = units_validFlag? args_gurax.PickNumber<int>() : wxHTML_UNITS_PIXELS;
+	// Function body
+	pEntity_gurax->SetIndent(i, what, units);
+	return Gurax::Value::nil();
+}
+
+// wx.HtmlContainerCell#SetMinHeight(h as Number, align? as Number)
+Gurax_DeclareMethodAlias(wxHtmlContainerCell, SetMinHeight_gurax, "SetMinHeight")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("h", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("align", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlContainerCell, SetMinHeight_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int h = args_gurax.PickNumber<int>();
+	bool align_validFlag = args_gurax.IsValid();
+	int align = align_validFlag? args_gurax.PickNumber<int>() : wxHTML_ALIGN_TOP;
+	// Function body
+	pEntity_gurax->SetMinHeight(h, align);
+	return Gurax::Value::nil();
+}
+
+// wx.HtmlContainerCell#SetWidthFloat(w as Number, units as Number)
+Gurax_DeclareMethodAlias(wxHtmlContainerCell, SetWidthFloat_gurax, "SetWidthFloat")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("units", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlContainerCell, SetWidthFloat_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int w = args_gurax.PickNumber<int>();
+	int units = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetWidthFloat(w, units);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -64,8 +361,21 @@ void VType_wxHtmlContainerCell::DoPrepare(Frame& frameOuter)
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
-	Declare(VTYPE_wxHtmlCell, Flag::Mutable);
+	Declare(VTYPE_wxHtmlCell, Flag::Mutable, Gurax_CreateConstructor(HtmlContainerCell_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxHtmlContainerCell, GetAlignHor_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlContainerCell, GetAlignVer_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlContainerCell, GetBackgroundColour_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlContainerCell, GetIndent_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlContainerCell, GetIndentUnits_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlContainerCell, InsertCell_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlContainerCell, SetAlignHor_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlContainerCell, SetAlignVer_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlContainerCell, SetBackgroundColour_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlContainerCell, SetBorder_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlContainerCell, SetIndent_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlContainerCell, SetMinHeight_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlContainerCell, SetWidthFloat_gurax));
 }
 
 //------------------------------------------------------------------------------

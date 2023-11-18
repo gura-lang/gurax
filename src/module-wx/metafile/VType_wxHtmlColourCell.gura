@@ -3,6 +3,7 @@
 //==============================================================================
 HtmlColourCell = Class(HtmlCell) {
 	@include['wx/html/htmlcell.h']
+	__init__(clr as const_Colour_r, flags as int = wxHTML_CLR_FOREGROUND)
 } %% R'''
 # Overview
 

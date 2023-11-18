@@ -44,6 +44,27 @@ ${help.ComposeMethodHelp(wx.HtmlColourCell, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.HtmlColourCell(clr as wx.Colour, flags? as Number) {block?}
+Gurax_DeclareConstructorAlias(HtmlColourCell_gurax, "HtmlColourCell")
+{
+	Declare(VTYPE_wxHtmlColourCell, Flag::None);
+	DeclareArg("clr", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementConstructorEx(HtmlColourCell_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxColour& value_clr = args_gurax.Pick<Value_wxColour>();
+	const wxColour& clr = value_clr.GetEntity();
+	bool flags_validFlag = args_gurax.IsValid();
+	int flags = flags_validFlag? args_gurax.PickNumber<int>() : wxHTML_CLR_FOREGROUND;
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxHtmlColourCell(
+		wxHtmlColourCell(clr, flags)));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -64,7 +85,7 @@ void VType_wxHtmlColourCell::DoPrepare(Frame& frameOuter)
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
-	Declare(VTYPE_wxHtmlCell, Flag::Mutable);
+	Declare(VTYPE_wxHtmlCell, Flag::Mutable, Gurax_CreateConstructor(HtmlColourCell_gurax));
 	// Assignment of method
 }
 
