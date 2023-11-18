@@ -2,7 +2,7 @@
 // VType_wxTreeListEvent.gura
 //==============================================================================
 TreeListEvent = Class(NotifyEvent) {
-	@include['wx/treectrl.h']	
+	@include['wx/treelist.h']	
 	//GetItem() as TreeItemId
 	GetOldCheckedState() as CheckBoxState
 	GetColumn() as unsigned

@@ -186,7 +186,7 @@ tmplVTypesH = tR'''
 #include <gurax.h>
 #include "VType_wxApp.h"
 #include "VType_wxEventType.h"
-${fileNamesHeader.Each {|fileNameHeader|}}
+${fileNamesHeader.Sort().Each {|fileNameHeader|}}
 #include "${fileNameHeader}"
 ${end}
 
@@ -214,7 +214,7 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	${classNames.Each {|className|}}
+	${classNames.Sort().Each {|className|}}
 	frame.Assign(VTYPE_wx${className});
 	${end}
 }
@@ -969,12 +969,10 @@ stringNameTbl = []
 enumNameTbl = []
 eventInfoTbl = []
 
-//pathStats = path.Glob('metafile/*.gura'):stat:list
-//pathStats.Sort(`descend, pathStats::mtime).Each {|pathStat|
-path.Glob('metafile/*.gura') {|pathName|
-	fileName = path.FileName(pathName)
-	//fileName = pathStat.name
-	//pathName = path.Join('metafile', fileName)
+pathStats = path.Glob('metafile/*.gura'):stat:list
+pathStats.Sort(`descend, pathStats::mtime).Each {|pathStat|
+	fileName = pathStat.name
+	pathName = path.Join('metafile', fileName)
 	Println(fileName)
 	(fileName in ['VType_wxEventType.gura']) && continue
 	Expr(pathName).EachElem {|expr|

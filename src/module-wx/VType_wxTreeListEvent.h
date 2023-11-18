@@ -6,7 +6,7 @@
 #define GURAX_MODULE_WX_VTYPE_WXTREELISTEVENT_H
 #include <gurax.h>
 #include <wx/wx.h>
-#include <wx/treectrl.h>
+#include <wx/treelist.h>
 #include "Util.h"
 #include "VType_wxNotifyEvent.h"
 

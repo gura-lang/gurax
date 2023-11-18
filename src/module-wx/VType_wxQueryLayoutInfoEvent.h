@@ -6,6 +6,7 @@
 #define GURAX_MODULE_WX_VTYPE_WXQUERYLAYOUTINFOEVENT_H
 #include <gurax.h>
 #include <wx/wx.h>
+#include <wx/laywin.h>
 #include "Util.h"
 #include "VType_wxEvent.h"
 

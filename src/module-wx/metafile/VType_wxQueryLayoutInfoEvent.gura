@@ -2,6 +2,7 @@
 // VType_wxQueryLayoutInfoEvent.gura
 //==============================================================================
 QueryLayoutInfoEvent = Class(Event) {
+	@include['wx/laywin.h']
 	GetAlignment() as LayoutAlignment
 	GetFlags() as int
 	GetOrientation() as LayoutOrientation

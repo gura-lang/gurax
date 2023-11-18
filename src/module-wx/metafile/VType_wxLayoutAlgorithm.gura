@@ -2,6 +2,7 @@
 // VType_wxLayoutAlgorithm.gura
 //==============================================================================
 LayoutAlgorithm = Class(Object) {
+	@include['wx/laywin.h']
 	__init__()
 	LayoutFrame(frame as Frame_p, mainWindow as Window_p = nullptr) as bool
 	LayoutMDIFrame(frame as MDIParentFrame_p, rect as Rect_p = nullptr) as bool

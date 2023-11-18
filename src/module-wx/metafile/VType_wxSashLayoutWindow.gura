@@ -2,6 +2,7 @@
 // VType_wxSashLayoutWindow.gura
 //==============================================================================
 SashLayoutWindow = Class(SashWindow) {
+	@include['wx/laywin.h']
 	__init__(parent as Window_p, id as WindowID, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxCLIP_CHILDREN | wxSW_3D, name as const_String_r = "layoutWindow")
 	Create(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxCLIP_CHILDREN | wxSW_3D, name as const_String_r = "layoutWindow") as bool
 	GetAlignment() as LayoutAlignment
