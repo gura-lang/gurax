@@ -44,10 +44,185 @@ ${help.ComposeMethodHelp(wx.HtmlHelpFrame, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.HtmlHelpFrame(args* as Any) {block?}
+Gurax_DeclareConstructorAlias(HtmlHelpFrame_gurax, "HtmlHelpFrame")
+{
+	Declare(VTYPE_wxHtmlHelpFrame, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementConstructorEx(HtmlHelpFrame_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const Gurax::ValueList& args = args_gurax.PickList();
+	// Function body
+	// wxHtmlHelpFrame(data as HtmlHelpData_p = NULL)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("data", VTYPE_wxHtmlHelpData, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxHtmlHelpData* data = args.IsValid()? args.Pick<Value_wxHtmlHelpData>().GetEntityPtr() : nullptr;
+		return new Value_wxHtmlHelpFrame(new wxHtmlHelpFrame(data));
+	} while (0);
+	Error::ClearIssuedFlag();
+	// wxHtmlHelpFrame(parent as Window_p, id as WindowID, title as const_String_r = wxEmptyString, style as int = wxHF_DEFAULT_STYLE, data as HtmlHelpData_p = NULL, config as ConfigBase_p = NULL, rootpath as const_String_r = wxEmptyString)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("parent", VTYPE_wxWindow);
+			pDeclCallable->DeclareArg("id", VTYPE_Number);
+			pDeclCallable->DeclareArg("title", VTYPE_String, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("style", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("data", VTYPE_wxHtmlHelpData, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("config", VTYPE_wxConfigBase, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("rootpath", VTYPE_String, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxWindow* parent = args.Pick<Value_wxWindow>().GetEntityPtr();
+		wxWindowID id = args.PickNumber<wxWindowID>();
+		wxString title = args.IsValid()? wxString(args.PickString()) : wxEmptyString;
+		int style = args.IsValid()? args.PickNumber<int>() : wxHF_DEFAULT_STYLE;
+		wxHtmlHelpData* data = args.IsValid()? args.Pick<Value_wxHtmlHelpData>().GetEntityPtr() : nullptr;
+		wxConfigBase* config = args.IsValid()? args.Pick<Value_wxConfigBase>().GetEntityPtr() : nullptr;
+		wxString rootpath = args.IsValid()? wxString(args.PickString()) : wxEmptyString;
+		return new Value_wxHtmlHelpFrame(new wxHtmlHelpFrame(parent, id, title, style, data, config, rootpath));
+	} while (0);
+	return Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.HtmlHelpFrame#AddToolbarButtons(toolBar as wx.ToolBar, style as Number)
+Gurax_DeclareMethodAlias(wxHtmlHelpFrame, AddToolbarButtons_gurax, "AddToolbarButtons")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("toolBar", VTYPE_wxToolBar, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlHelpFrame, AddToolbarButtons_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = dynamic_cast<Value_wxHtmlHelpFrame::EntityT*>(valueThis_gurax.GetEntityPtr());
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxToolBar& value_toolBar = args_gurax.Pick<Value_wxToolBar>();
+	wxToolBar* toolBar = value_toolBar.GetEntityPtr();
+	int style = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->AddToolbarButtons(toolBar, style);
+	return Gurax::Value::nil();
+}
+
+// wx.HtmlHelpFrame#Create(parent as wx.Window, id as Number, title? as String, style? as Number, config? as wx.ConfigBase, rootpath? as String)
+Gurax_DeclareMethodAlias(wxHtmlHelpFrame, Create_gurax, "Create")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("title", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("config", VTYPE_wxConfigBase, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("rootpath", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlHelpFrame, Create_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* parent = value_parent.GetEntityPtr();
+	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
+	bool title_validFlag = args_gurax.IsValid();
+	wxString title = title_validFlag? wxString(args_gurax.PickString()) : "";
+	bool style_validFlag = args_gurax.IsValid();
+	int style = style_validFlag? args_gurax.PickNumber<int>() : wxHF_DEFAULT_STYLE;
+	wxConfigBase* config = args_gurax.IsValid()? args_gurax.Pick<Value_wxConfigBase>().GetEntityPtr() : nullptr;
+	bool rootpath_validFlag = args_gurax.IsValid();
+	wxString rootpath = rootpath_validFlag? wxString(args_gurax.PickString()) : "";
+	// Function body
+	bool rtn = pEntity_gurax->Create(parent, id, title, style, config, rootpath);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.HtmlHelpFrame#GetController() {block?}
+Gurax_DeclareMethodAlias(wxHtmlHelpFrame, GetController_gurax, "GetController")
+{
+	Declare(VTYPE_wxHtmlHelpController, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxHtmlHelpFrame, GetController_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxHtmlHelpController(pEntity_gurax->GetController()));
+}
+
+// wx.HtmlHelpFrame#SetController(controller as wx.HtmlHelpController)
+Gurax_DeclareMethodAlias(wxHtmlHelpFrame, SetController_gurax, "SetController")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("controller", VTYPE_wxHtmlHelpController, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlHelpFrame, SetController_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxHtmlHelpController& value_controller = args_gurax.Pick<Value_wxHtmlHelpController>();
+	wxHtmlHelpController* controller = value_controller.GetEntityPtr();
+	// Function body
+	pEntity_gurax->SetController(controller);
+	return Gurax::Value::nil();
+}
+
+// wx.HtmlHelpFrame#SetTitleFormat(format as String)
+Gurax_DeclareMethodAlias(wxHtmlHelpFrame, SetTitleFormat_gurax, "SetTitleFormat")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlHelpFrame, SetTitleFormat_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxString format(args_gurax.PickString());
+	// Function body
+	pEntity_gurax->SetTitleFormat(format);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -64,8 +239,13 @@ void VType_wxHtmlHelpFrame::DoPrepare(Frame& frameOuter)
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
-	Declare(VTYPE_wxFrame, Flag::Mutable);
+	Declare(VTYPE_wxFrame, Flag::Mutable, Gurax_CreateConstructor(HtmlHelpFrame_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxHtmlHelpFrame, AddToolbarButtons_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlHelpFrame, Create_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlHelpFrame, GetController_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlHelpFrame, SetController_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlHelpFrame, SetTitleFormat_gurax));
 }
 
 //------------------------------------------------------------------------------
@@ -81,5 +261,33 @@ String Value_wxHtmlHelpFrame::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Value_wxHtmlHelpFrame::EntityT
 //------------------------------------------------------------------------------
+void Value_wxHtmlHelpFrame::EntityT::AddToolbarButtons(wxToolBar* toolBar, int style)
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("AddToolbarButtons");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
+		if (!args_gurax.FeedValue(new Value_wxToolBar(toolBar))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(style))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		return;
+	} while (0);
+	public_AddToolbarButtons(toolBar, style);
+}
 
 Gurax_EndModuleScope(wx)

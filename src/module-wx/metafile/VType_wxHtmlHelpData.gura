@@ -3,6 +3,14 @@
 //==============================================================================
 HtmlHelpData = Class():loosePointer {
 	@include['wx/html/helpdata.h']
+	__init__()
+	AddBook(book_url as const_String_r) as bool
+	FindPageById(id as int) as String
+	FindPageByName(page as const_String_r) as String
+	GetBookRecArray() as HtmlBookRecArray
+	GetContentsArray() as HtmlHelpDataItems
+	GetIndexArray() as HtmlHelpDataItems
+	SetTempDir(path as const_String_r) as void
 } %% R'''
 # Overview
 

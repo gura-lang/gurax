@@ -3,6 +3,57 @@
 //==============================================================================
 HtmlHelpFrame = Class(Frame) {
 	@include['wx/html/helpfrm.h']
+	//__init__(data as HtmlHelpData_p = NULL)
+	__init__(args* as any) = \
+		R'''
+		// wxHtmlHelpFrame(data as HtmlHelpData_p = NULL)
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("data", VTYPE_wxHtmlHelpData, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxHtmlHelpData* data = args.IsValid()? args.Pick<Value_wxHtmlHelpData>().GetEntityPtr() : nullptr;
+			return new Value_wxHtmlHelpFrame(new wxHtmlHelpFrame(data));
+		} while (0);
+		Error::ClearIssuedFlag();
+		// wxHtmlHelpFrame(parent as Window_p, id as WindowID, title as const_String_r = wxEmptyString, style as int = wxHF_DEFAULT_STYLE, data as HtmlHelpData_p = NULL, config as ConfigBase_p = NULL, rootpath as const_String_r = wxEmptyString)
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("parent", VTYPE_wxWindow);
+				pDeclCallable->DeclareArg("id", VTYPE_Number);
+				pDeclCallable->DeclareArg("title", VTYPE_String, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("style", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("data", VTYPE_wxHtmlHelpData, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("config", VTYPE_wxConfigBase, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("rootpath", VTYPE_String, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxWindow* parent = args.Pick<Value_wxWindow>().GetEntityPtr();
+			wxWindowID id = args.PickNumber<wxWindowID>();
+			wxString title = args.IsValid()? wxString(args.PickString()) : wxEmptyString;
+			int style = args.IsValid()? args.PickNumber<int>() : wxHF_DEFAULT_STYLE;
+			wxHtmlHelpData* data = args.IsValid()? args.Pick<Value_wxHtmlHelpData>().GetEntityPtr() : nullptr;
+			wxConfigBase* config = args.IsValid()? args.Pick<Value_wxConfigBase>().GetEntityPtr() : nullptr;
+			wxString rootpath = args.IsValid()? wxString(args.PickString()) : wxEmptyString;
+			return new Value_wxHtmlHelpFrame(new wxHtmlHelpFrame(parent, id, title, style, data, config, rootpath));
+		} while (0);
+		return Value::nil();
+		'''
+	AddToolbarButtons(toolBar as ToolBar_p, style as int):virtual as void
+	Create(parent as Window_p, id as WindowID, title as const_String_r = wxEmptyString, style as int = wxHF_DEFAULT_STYLE, config as ConfigBase_p = NULL, rootpath as const_String_r = wxEmptyString) as bool
+	GetController() as HtmlHelpController_p
+	SetController(controller as HtmlHelpController_p) as void
+	SetTitleFormat(format as const_String_r) as void
 } %% R'''
 # Overview
 

@@ -44,6 +44,24 @@ ${help.ComposeMethodHelp(wx.HtmlFontCell, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.HtmlFontCell(font as wx.Font) {block?}
+Gurax_DeclareConstructorAlias(HtmlFontCell_gurax, "HtmlFontCell")
+{
+	Declare(VTYPE_wxHtmlFontCell, Flag::None);
+	DeclareArg("font", VTYPE_wxFont, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementConstructorEx(HtmlFontCell_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxFont& value_font = args_gurax.Pick<Value_wxFont>();
+	wxFont* font = value_font.GetEntityPtr();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxHtmlFontCell(
+		wxHtmlFontCell(font)));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -64,7 +82,7 @@ void VType_wxHtmlFontCell::DoPrepare(Frame& frameOuter)
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
-	Declare(VTYPE_wxHtmlCell, Flag::Mutable);
+	Declare(VTYPE_wxHtmlCell, Flag::Mutable, Gurax_CreateConstructor(HtmlFontCell_gurax));
 	// Assignment of method
 }
 

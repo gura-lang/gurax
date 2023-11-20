@@ -3,6 +3,7 @@
 //==============================================================================
 HtmlFontCell = Class(HtmlCell) {
 	@include['wx/html/htmlcell.h']
+	__init__(font as Font_p)
 } %% R'''
 # Overview
 

@@ -40,6 +40,8 @@ public:
 		using wxHtmlHelpFrame::wxHtmlHelpFrame;
 	public:
 		EntityCore core_gurax;
+		virtual void AddToolbarButtons(wxToolBar* toolBar, int style) override;
+		void public_AddToolbarButtons(wxToolBar* toolBar, int style) { wxHtmlHelpFrame::AddToolbarButtons(toolBar, style); }
 	};
 public:
 	static VType& vtype;

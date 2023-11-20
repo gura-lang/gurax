@@ -44,10 +44,345 @@ ${help.ComposeMethodHelp(wx.HtmlHelpController, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.HtmlHelpController(style? as Number, parentWindow? as wx.Window) {block?}
+Gurax_DeclareConstructorAlias(HtmlHelpController_gurax, "HtmlHelpController")
+{
+	Declare(VTYPE_wxHtmlHelpController, Flag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("parentWindow", VTYPE_wxWindow, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementConstructorEx(HtmlHelpController_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool style_validFlag = args_gurax.IsValid();
+	int style = style_validFlag? args_gurax.PickNumber<int>() : wxHF_DEFAULT_STYLE;
+	wxWindow* parentWindow = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
+	// Function body
+	auto pEntity_gurax = new Value_wxHtmlHelpController::EntityT(style, parentWindow);
+	RefPtr<Value_wxHtmlHelpController> pValue_gurax(new Value_wxHtmlHelpController(pEntity_gurax));
+	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.HtmlHelpController#AddBook(bookFile as wx.FileName, showWaitMsg? as Bool)
+Gurax_DeclareMethodAlias(wxHtmlHelpController, AddBook_gurax, "AddBook")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("bookFile", VTYPE_wxFileName, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("showWaitMsg", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlHelpController, AddBook_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxFileName& value_bookFile = args_gurax.Pick<Value_wxFileName>();
+	const wxFileName& bookFile = value_bookFile.GetEntity();
+	bool showWaitMsg = args_gurax.IsValid()? args_gurax.PickBool() : false;
+	// Function body
+	bool rtn = pEntity_gurax->AddBook(bookFile, showWaitMsg);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.HtmlHelpController#Display(x as String)
+Gurax_DeclareMethodAlias(wxHtmlHelpController, Display_gurax, "Display")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("x", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlHelpController, Display_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxString x(args_gurax.PickString());
+	// Function body
+	bool rtn = pEntity_gurax->Display(x);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.HtmlHelpController#DisplayContents()
+Gurax_DeclareMethodAlias(wxHtmlHelpController, DisplayContents_gurax, "DisplayContents")
+{
+	Declare(VTYPE_Bool, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlHelpController, DisplayContents_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = dynamic_cast<Value_wxHtmlHelpController::EntityT*>(valueThis_gurax.GetEntityPtr());
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->DisplayContents();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.HtmlHelpController#DisplayIndex()
+Gurax_DeclareMethodAlias(wxHtmlHelpController, DisplayIndex_gurax, "DisplayIndex")
+{
+	Declare(VTYPE_Bool, Flag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlHelpController, DisplayIndex_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->DisplayIndex();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.HtmlHelpController#KeywordSearch(keyword as String, mode? as Number)
+Gurax_DeclareMethodAlias(wxHtmlHelpController, KeywordSearch_gurax, "KeywordSearch")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("keyword", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("mode", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlHelpController, KeywordSearch_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = dynamic_cast<Value_wxHtmlHelpController::EntityT*>(valueThis_gurax.GetEntityPtr());
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxString keyword(args_gurax.PickString());
+	bool mode_validFlag = args_gurax.IsValid();
+	wxHelpSearchMode mode = mode_validFlag? args_gurax.PickNumber<wxHelpSearchMode>() : wxHELP_SEARCH_ALL;
+	// Function body
+	bool rtn = pEntity_gurax->KeywordSearch(keyword, mode);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.HtmlHelpController#ReadCustomization(cfg as wx.ConfigBase, path? as String)
+Gurax_DeclareMethodAlias(wxHtmlHelpController, ReadCustomization_gurax, "ReadCustomization")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("cfg", VTYPE_wxConfigBase, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("path", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlHelpController, ReadCustomization_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = dynamic_cast<Value_wxHtmlHelpController::EntityT*>(valueThis_gurax.GetEntityPtr());
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxConfigBase& value_cfg = args_gurax.Pick<Value_wxConfigBase>();
+	wxConfigBase* cfg = value_cfg.GetEntityPtr();
+	bool path_validFlag = args_gurax.IsValid();
+	wxString path = path_validFlag? wxString(args_gurax.PickString()) : "";
+	// Function body
+	pEntity_gurax->ReadCustomization(cfg, path);
+	return Gurax::Value::nil();
+}
+
+// wx.HtmlHelpController#SetShouldPreventAppExit(enable as Bool)
+Gurax_DeclareMethodAlias(wxHtmlHelpController, SetShouldPreventAppExit_gurax, "SetShouldPreventAppExit")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("enable", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlHelpController, SetShouldPreventAppExit_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool enable = args_gurax.PickBool();
+	// Function body
+	pEntity_gurax->SetShouldPreventAppExit(enable);
+	return Gurax::Value::nil();
+}
+
+// wx.HtmlHelpController#SetTempDir(path as String)
+Gurax_DeclareMethodAlias(wxHtmlHelpController, SetTempDir_gurax, "SetTempDir")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("path", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlHelpController, SetTempDir_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxString path(args_gurax.PickString());
+	// Function body
+	pEntity_gurax->SetTempDir(path);
+	return Gurax::Value::nil();
+}
+
+// wx.HtmlHelpController#SetTitleFormat(format as String)
+Gurax_DeclareMethodAlias(wxHtmlHelpController, SetTitleFormat_gurax, "SetTitleFormat")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlHelpController, SetTitleFormat_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxString format(args_gurax.PickString());
+	// Function body
+	pEntity_gurax->SetTitleFormat(format);
+	return Gurax::Value::nil();
+}
+
+// wx.HtmlHelpController#UseConfig(config as wx.ConfigBase, rootpath? as String)
+Gurax_DeclareMethodAlias(wxHtmlHelpController, UseConfig_gurax, "UseConfig")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("config", VTYPE_wxConfigBase, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rootpath", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlHelpController, UseConfig_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxConfigBase& value_config = args_gurax.Pick<Value_wxConfigBase>();
+	wxConfigBase* config = value_config.GetEntityPtr();
+	bool rootpath_validFlag = args_gurax.IsValid();
+	wxString rootpath = rootpath_validFlag? wxString(args_gurax.PickString()) : "";
+	// Function body
+	pEntity_gurax->UseConfig(config, rootpath);
+	return Gurax::Value::nil();
+}
+
+// wx.HtmlHelpController#WriteCustomization(cfg as wx.ConfigBase, path? as String)
+Gurax_DeclareMethodAlias(wxHtmlHelpController, WriteCustomization_gurax, "WriteCustomization")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("cfg", VTYPE_wxConfigBase, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("path", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlHelpController, WriteCustomization_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = dynamic_cast<Value_wxHtmlHelpController::EntityT*>(valueThis_gurax.GetEntityPtr());
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxConfigBase& value_cfg = args_gurax.Pick<Value_wxConfigBase>();
+	wxConfigBase* cfg = value_cfg.GetEntityPtr();
+	bool path_validFlag = args_gurax.IsValid();
+	wxString path = path_validFlag? wxString(args_gurax.PickString()) : "";
+	// Function body
+	pEntity_gurax->WriteCustomization(cfg, path);
+	return Gurax::Value::nil();
+}
+
+// wx.HtmlHelpController#GetHelpWindow() {block?}
+Gurax_DeclareMethodAlias(wxHtmlHelpController, GetHelpWindow_gurax, "GetHelpWindow")
+{
+	Declare(VTYPE_wxHtmlHelpWindow, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxHtmlHelpController, GetHelpWindow_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxHtmlHelpWindow(pEntity_gurax->GetHelpWindow()));
+}
+
+// wx.HtmlHelpController#SetHelpWindow(helpWindow as wx.HtmlHelpWindow)
+Gurax_DeclareMethodAlias(wxHtmlHelpController, SetHelpWindow_gurax, "SetHelpWindow")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("helpWindow", VTYPE_wxHtmlHelpWindow, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementMethodEx(wxHtmlHelpController, SetHelpWindow_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxHtmlHelpWindow& value_helpWindow = args_gurax.Pick<Value_wxHtmlHelpWindow>();
+	wxHtmlHelpWindow* helpWindow = value_helpWindow.GetEntityPtr();
+	// Function body
+	pEntity_gurax->SetHelpWindow(helpWindow);
+	return Gurax::Value::nil();
+}
+
+// wx.HtmlHelpController#GetFrame() {block?}
+Gurax_DeclareMethodAlias(wxHtmlHelpController, GetFrame_gurax, "GetFrame")
+{
+	Declare(VTYPE_wxHtmlHelpFrame, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxHtmlHelpController, GetFrame_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxHtmlHelpFrame(pEntity_gurax->GetFrame()));
+}
+
+// wx.HtmlHelpController#GetDialog() {block?}
+Gurax_DeclareMethodAlias(wxHtmlHelpController, GetDialog_gurax, "GetDialog")
+{
+	Declare(VTYPE_wxHtmlHelpDialog, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementMethodEx(wxHtmlHelpController, GetDialog_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxHtmlHelpDialog(pEntity_gurax->GetDialog()));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -64,8 +399,23 @@ void VType_wxHtmlHelpController::DoPrepare(Frame& frameOuter)
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
-	Declare(VTYPE_wxHelpControllerBase, Flag::Mutable);
+	Declare(VTYPE_wxHelpControllerBase, Flag::Mutable, Gurax_CreateConstructor(HtmlHelpController_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxHtmlHelpController, AddBook_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlHelpController, Display_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlHelpController, DisplayContents_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlHelpController, DisplayIndex_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlHelpController, KeywordSearch_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlHelpController, ReadCustomization_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlHelpController, SetShouldPreventAppExit_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlHelpController, SetTempDir_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlHelpController, SetTitleFormat_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlHelpController, UseConfig_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlHelpController, WriteCustomization_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlHelpController, GetHelpWindow_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlHelpController, SetHelpWindow_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlHelpController, GetFrame_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlHelpController, GetDialog_gurax));
 }
 
 //------------------------------------------------------------------------------
@@ -76,6 +426,133 @@ VType& Value_wxHtmlHelpController::vtype = VTYPE_wxHtmlHelpController;
 String Value_wxHtmlHelpController::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "wx.HtmlHelpController");
+}
+
+//------------------------------------------------------------------------------
+// Value_wxHtmlHelpController::EntityT
+//------------------------------------------------------------------------------
+bool Value_wxHtmlHelpController::EntityT::DisplayContents()
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("DisplayContents");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		// (none)
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Return Value
+		if (!pValueRtn->IsInstanceOf(VTYPE_Bool)) {
+			Error::IssueWith(ErrorType::TypeError, pFunc_gurax->GetDeclCallable().GetExprSrc(),
+				"the function DisplayContents is expected to return a value of %s or its derived class",
+				VTYPE_Bool.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
+		return Value_Bool::GetBool(*pValueRtn);
+	} while (0);
+	return public_DisplayContents();
+}
+
+bool Value_wxHtmlHelpController::EntityT::KeywordSearch(const wxString& keyword, wxHelpSearchMode mode)
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("KeywordSearch");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
+		if (!args_gurax.FeedValue(new Gurax::Value_String(keyword.utf8_str().data()))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(mode))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Return Value
+		if (!pValueRtn->IsInstanceOf(VTYPE_Bool)) {
+			Error::IssueWith(ErrorType::TypeError, pFunc_gurax->GetDeclCallable().GetExprSrc(),
+				"the function KeywordSearch is expected to return a value of %s or its derived class",
+				VTYPE_Bool.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
+		return Value_Bool::GetBool(*pValueRtn);
+	} while (0);
+	return public_KeywordSearch(keyword, mode);
+}
+
+void Value_wxHtmlHelpController::EntityT::ReadCustomization(wxConfigBase* cfg, const wxString& path)
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("ReadCustomization");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
+		if (!args_gurax.FeedValue(new Value_wxConfigBase(cfg))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		if (!args_gurax.FeedValue(new Gurax::Value_String(path.utf8_str().data()))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		return;
+	} while (0);
+	public_ReadCustomization(cfg, path);
+}
+
+void Value_wxHtmlHelpController::EntityT::WriteCustomization(wxConfigBase* cfg, const wxString& path)
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("WriteCustomization");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
+		if (!args_gurax.FeedValue(new Value_wxConfigBase(cfg))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		if (!args_gurax.FeedValue(new Gurax::Value_String(path.utf8_str().data()))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		return;
+	} while (0);
+	public_WriteCustomization(cfg, path);
 }
 
 Gurax_EndModuleScope(wx)

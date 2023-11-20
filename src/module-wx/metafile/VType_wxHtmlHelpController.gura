@@ -3,6 +3,24 @@
 //==============================================================================
 HtmlHelpController = Class(HelpControllerBase) {
 	@include['wx/html/helpctrl.h']
+	__init__(style as int = wxHF_DEFAULT_STYLE, parentWindow as Window_p = NULL)
+	AddBook(bookFile as const_FileName_r, showWaitMsg as bool = false) as bool
+	//AddBook(bookUrl as const_String_r, showWaitMsg as bool = false) as bool
+	Display(x as const_String_r) as bool
+	//Display(id as int) as bool
+	DisplayContents():virtual as bool
+	DisplayIndex() as bool
+	KeywordSearch(keyword as const_String_r, mode as HelpSearchMode = wxHELP_SEARCH_ALL):virtual as bool
+	ReadCustomization(cfg as ConfigBase_p, path as const_String_r = wxEmptyString):virtual as void
+	SetShouldPreventAppExit(enable as bool) as void
+	SetTempDir(path as const_String_r) as void
+	SetTitleFormat(format as const_String_r) as void
+	UseConfig(config as ConfigBase_p, rootpath as const_String_r = wxEmptyString) as void
+	WriteCustomization(cfg as ConfigBase_p, path as const_String_r = wxEmptyString):virtual as void
+	GetHelpWindow() as HtmlHelpWindow_p
+	SetHelpWindow(helpWindow as HtmlHelpWindow_p) as void
+	GetFrame() as HtmlHelpFrame_p
+	GetDialog() as HtmlHelpDialog_p
 } %% R'''
 # Overview
 

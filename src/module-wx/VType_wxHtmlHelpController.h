@@ -35,6 +35,21 @@ public:
 protected:
 	wxHtmlHelpController* _pEntity;
 public:
+	class EntityT : public wxHtmlHelpController {
+	public:
+		using wxHtmlHelpController::wxHtmlHelpController;
+	public:
+		EntityCore core_gurax;
+		virtual bool DisplayContents() override;
+		virtual bool KeywordSearch(const wxString& keyword, wxHelpSearchMode mode) override;
+		virtual void ReadCustomization(wxConfigBase* cfg, const wxString& path) override;
+		virtual void WriteCustomization(wxConfigBase* cfg, const wxString& path) override;
+		bool public_DisplayContents() { return wxHtmlHelpController::DisplayContents(); }
+		bool public_KeywordSearch(const wxString& keyword, wxHelpSearchMode mode) { return wxHtmlHelpController::KeywordSearch(keyword, mode); }
+		void public_ReadCustomization(wxConfigBase* cfg, const wxString& path) { wxHtmlHelpController::ReadCustomization(cfg, path); }
+		void public_WriteCustomization(wxConfigBase* cfg, const wxString& path) { wxHtmlHelpController::WriteCustomization(cfg, path); }
+	};
+public:
 	static VType& vtype;
 public:
 	// Constructor
