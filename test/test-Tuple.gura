@@ -1,6 +1,10 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
+words10 = [
+	'bubble', 'tasteful', 'yell', 'unarmed', 'vest', 'private', 'cowardly', 'happen', 'demonic', 'entertaining'
+]
+
 TestCase('PUnit') {
 	exprs = [
 		`()
@@ -101,4 +105,11 @@ TestCase('Expansion') {
 	Tester(`(('The', 'quick', 'brown')*, 'fox', ('jumps', 'over')*, ('the', 'lazy', 'dog')*))
 	Tester(`(Range(6), 6, 7, Range(8, 11)))
 	Tester(`(Range(6)*, 6, 7, Range(8, 11)*))
+}
+
+TestCase('Sort') {
+	rand = Random(0)
+	tuples = repeat (20):list { (rand.Int(4), rand.Int(4), rand.Int(4)) }
+	Tester(`tuples)
+	Tester(`tuples.Sort())
 }
