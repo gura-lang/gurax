@@ -1,0 +1,35 @@
+
+//==============================================================================
+// VType_wxHtmlHelpDataItems.gura
+//==============================================================================
+HtmlHelpDataItems = Class {
+	@include['wx/html/helpdata.h']
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.HtmlHelpDataItems, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.HtmlHelpDataItems, `en)}
+
+${help.ComposeMethodHelp(wx.HtmlHelpDataItems, `en)}
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.HtmlHelpDataItems, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.HtmlHelpDataItems, `ja)}
+
+${help.ComposeMethodHelp(wx.HtmlHelpDataItems, `ja)}
+'''ja

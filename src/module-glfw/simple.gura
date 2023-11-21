@@ -6,8 +6,8 @@ main() = {
 	window = glfwCreateWindow(640, 480, "Hello World", nil, nil)
 	window.MakeContextCurrent();
 	glewInit()
-	window.SetWindowPosCallback(&{Printf('WindowPos(%d, %d)\n', $xpos, $ypos)})
-	window.SetWindowSizeCallback(&{Printf('WindowSize(%d, %d)\n', $width, $height)})
+	window.SetWindowPosCallback(&{Printf('WindowPos(%s, %d, %d)\n', $window, $xpos, $ypos)})
+	window.SetWindowSizeCallback(&{Printf('WindowSize(%s, %d, %d)\n', $window, $width, $height)})
 	window.SetWindowCloseCallback(&{Printf('WindowClose()\n')})
 	window.SetKeyCallback(Function(window, key, scancode, action) {
 		if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {

@@ -3,8 +3,19 @@
 // test-glfw.gura
 //==============================================================================
 import(util.tester) {*}
-import(glfw)
+import(glfw) {*}
 
-TestCase('Basic test') {
-	glfw.Test()
+glfwInit()
+
+TestCase('GLFWmonitor') {
+	glfwGetMonitors().Each {|monitor|
+		Tester(`monitor.GetMonitorPos())
+		Tester(`monitor.GetMonitorWorkarea())
+		Tester(`monitor.GetMonitorPhysicalSize())
+		Tester(`monitor.GetMonitorContentScale())
+		Tester(`monitor.GetMonitorName())
+		monitor.GetVideoModes().Each {|vidmode|
+			Println(vidmode)
+		}
+	}
 }
