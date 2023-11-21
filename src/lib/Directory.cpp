@@ -218,7 +218,7 @@ bool Directory::Core::AddChildInTree(const char* pathName, RefPtr<Core> pCoreChi
 void Directory::Core::Print(Stream& stream, int indentLevel) const
 {
 	stream.Printf("%*s%s%s\n", indentLevel * 2, "", GetName(),
-				  (_type == Type::Folder)? "/" : (_type == Type::Boundary)? "%" : "");
+					(_type == Type::Folder)? "/" : (_type == Type::Boundary)? "%" : "");
 	for (const Core* pCore : GetCoreOwner()) {
 		pCore->Print(stream, indentLevel + 1);
 	}
@@ -278,10 +278,7 @@ void DirectoryDequeOwner::Clear()
 //-----------------------------------------------------------------------------
 Iterator_DirectoryWalk::Iterator_DirectoryWalk(
 	Directory* pDirectory, int depthMax, const StringList& patterns, Directory::WalkFlags walkFlags) :
-//	bool addSepFlag, bool statFlag, bool caseFlag, bool fileFlag, bool dirFlag) :
 	_pDirectoryCur(pDirectory), _depthMax(depthMax), _patterns(patterns), _walkFlags(walkFlags)
-//	_addSepFlag(addSepFlag), _statFlag(statFlag), _caseFlag(caseFlag),
-//	_fileFlag(fileFlag), _dirFlag(dirFlag)
 {
 	_depthMax = (depthMax < 0)? -1 : pDirectory->CountDepth() + depthMax + 1;
 	_pDirectoryCur->RewindChild();
@@ -387,7 +384,7 @@ Value* Iterator_DirectoryGlob::DoNextValue()
 	if (_patternSegs.empty()) {
 		RefPtr<Directory> pDirectoryChild(_pDirectoryCur.release());
 		if ((pDirectoryChild->IsLikeFolder() && Directory::WalkFlag::IsDir(_walkFlags)) ||
-		   (!pDirectoryChild->IsLikeFolder() && Directory::WalkFlag::IsFile(_walkFlags))) {
+			(!pDirectoryChild->IsLikeFolder() && Directory::WalkFlag::IsFile(_walkFlags))) {
 			if (Directory::WalkFlag::IsStat(_walkFlags)) {
 				pValueRtn.reset(pDirectoryChild->CreateStatValue());
 			} else {
@@ -420,7 +417,7 @@ Value* Iterator_DirectoryGlob::DoNextValue()
 					_depthDeque.d.push_back(static_cast<UInt>(_depth + 1));
 				}
 			} else if ((pDirectoryChild->IsLikeFolder() && Directory::WalkFlag::IsDir(_walkFlags)) ||
-					   (!pDirectoryChild->IsLikeFolder() && Directory::WalkFlag::IsFile(_walkFlags))) {
+						(!pDirectoryChild->IsLikeFolder() && Directory::WalkFlag::IsFile(_walkFlags))) {
 				if (Directory::WalkFlag::IsStat(_walkFlags)) {
 					pValueRtn.reset(pDirectoryChild->CreateStatValue());
 				} else {
