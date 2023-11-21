@@ -84,8 +84,8 @@ public:
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const TimeDelta& timeDelta) const { return this == &timeDelta; }
-	bool IsEqualTo(const TimeDelta& timeDelta) const { return IsIdentical(timeDelta); }
-	bool IsLessThan(const TimeDelta& timeDelta) const { return this < &timeDelta; }
+	bool IsEqualTo(const TimeDelta& timeDelta) const { return Compare(*this, timeDelta) == 0; }
+	bool IsLessThan(const TimeDelta& timeDelta) const { return Compare(*this, timeDelta) < 0; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 

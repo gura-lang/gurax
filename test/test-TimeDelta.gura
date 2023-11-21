@@ -5,6 +5,14 @@ TestCase('Property') {
 	TimeDelta.PrintPropSlots()
 }
 
+TestCase('Sort') {
+	rand = Random(0)
+	timeDeltas = TimeDelta(rand.IntSeq(7), rand.IntSeq(24), rand.IntSeq(60), rand.IntSeq(60), rand.IntSeq(1000)).Head(20):list
+	Tester(`timeDeltas)
+	Tester(`timeDeltas.Sort())
+	Tester(`timeDeltas.Sort(`descend))
+}
+sys.Exit()
 TestCase('Constructor') {
 	Tester(`TimeDelta())
 	Tester(`TimeDelta(123))
