@@ -64,6 +64,7 @@ public:
 	bool MustBeFinite() const;
 	bool IsLenUndetermined() const { return (GetFlags() & Flag::LenDetermined) == 0; }
 	bool IsLenDetermined() const { return (GetFlags() & Flag::LenDetermined) != 0; }
+	bool IsRewindable() const { return (GetFlags() & Flag::Rewindable) != 0; }
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Iterator& iterator) const { return this == &iterator; }
 	bool IsEqualTo(const Iterator& iterator) const { return IsIdentical(iterator); }

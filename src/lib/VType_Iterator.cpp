@@ -52,7 +52,7 @@ Gurax_ImplementMethod(Iterator, IsFinite)
 	auto& valueThis = GetValueThis(argument);
 	const Iterator& iteratorThis = valueThis.GetIterator();
 	// Function body
-	return new Value_Bool(!iteratorThis.IsInfinite());
+	return new Value_Bool(iteratorThis.IsFinite());
 }
 
 // Iterator#IsInfinite()
@@ -76,6 +76,44 @@ Gurax_ImplementMethod(Iterator, IsInfinite)
 	return new Value_Bool(iteratorThis.IsInfinite());
 }
 
+// Iterator#IsLenDetermined()
+Gurax_DeclareMethod(Iterator, IsLenDetermined)
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
+	AddHelp(Gurax_Symbol(ja), u8R"""(
+)""");
+}
+
+Gurax_ImplementMethod(Iterator, IsLenDetermined)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	const Iterator& iteratorThis = valueThis.GetIterator();
+	// Function body
+	return new Value_Bool(iteratorThis.IsLenDetermined());
+}
+
+// Iterator#IsRewindable()
+Gurax_DeclareMethod(Iterator, IsRewindable)
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
+	AddHelp(Gurax_Symbol(ja), u8R"""(
+)""");
+}
+
+Gurax_ImplementMethod(Iterator, IsRewindable)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	const Iterator& iteratorThis = valueThis.GetIterator();
+	// Function body
+	return new Value_Bool(iteratorThis.IsRewindable());
+}
+
 // Iterator#NextValue()
 Gurax_DeclareMethod(Iterator, NextValue)
 {
@@ -96,6 +134,30 @@ Gurax_ImplementMethod(Iterator, NextValue)
 	// Function body
 	RefPtr<Value> pValue(iteratorThis.NextValue());
 	return pValue? pValue.release() : Value::nil();
+}
+
+// Iterator#Rewind():void
+Gurax_DeclareMethod(Iterator, Rewind)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
+	AddHelp(Gurax_Symbol(ja), u8R"""(
+)""");
+}
+
+Gurax_ImplementMethod(Iterator, Rewind)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Iterator& iteratorThis = valueThis.GetIterator();
+	// Function body
+	if (!iteratorThis.IsRewindable()) {
+		Error::Issue(ErrorType::IteratorError, "the iterator is not rewindable");
+		return Value::nil();
+	}
+	iteratorThis.Rewind();
+	return Value::nil();
 }
 
 // Iterator#Skip(n as Number):void
@@ -1647,7 +1709,10 @@ void VType_Iterator::DoPrepare(Frame& frameOuter)
 	// Assignment of method specific to Iterator
 	Assign(Gurax_CreateMethod(Iterator, IsFinite));
 	Assign(Gurax_CreateMethod(Iterator, IsInfinite));
+	Assign(Gurax_CreateMethod(Iterator, IsLenDetermined));
+	Assign(Gurax_CreateMethod(Iterator, IsRewindable));
 	Assign(Gurax_CreateMethod(Iterator, NextValue));
+	Assign(Gurax_CreateMethod(Iterator, Rewind));
 	Assign(Gurax_CreateMethod(Iterator, Skip));
 	// Assignment of method common to both Iterator and List
 	Assign(Gurax_CreateMethod(Iterator, After));
