@@ -24,24 +24,6 @@ ${help.ComposeConstructorHelp(sdl.SDL_AudioStream, `en)}
 ${help.ComposeMethodHelp(sdl.SDL_AudioStream, `en)}
 )""";
 
-//-----------------------------------------------------------------------------
-// Implementation of property
-//-----------------------------------------------------------------------------
-// sdl.SDL_AudioStream#propSkeleton
-Gurax_DeclareProperty_R(SDL_AudioStream, propSkeleton)
-{
-	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"""(
-
-)""");
-}
-
-Gurax_ImplementPropertyGetter(SDL_AudioStream, propSkeleton)
-{
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
-}
-
 //------------------------------------------------------------------------------
 // VType_SDL_AudioStream
 //------------------------------------------------------------------------------
@@ -53,8 +35,6 @@ void VType_SDL_AudioStream::DoPrepare(Frame& frameOuter)
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
-	// Assignment of property
-	Assign(Gurax_CreateProperty(SDL_AudioStream, propSkeleton));
 }
 
 //------------------------------------------------------------------------------
