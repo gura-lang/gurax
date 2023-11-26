@@ -69,19 +69,19 @@ Gurax_ImplementMethod(CData, Textize)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// xml.CData#propSkeleton
-Gurax_DeclareProperty_R(CData, propSkeleton)
+// xml.CData#text
+Gurax_DeclareProperty_R(CData, text)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 
 )""");
 }
 
-Gurax_ImplementPropertyGetter(CData, propSkeleton)
+Gurax_ImplementPropertyGetter(CData, text)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(valueThis.GetCData().GetText());
 }
 
 //------------------------------------------------------------------------------
@@ -98,7 +98,7 @@ void VType_CData::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(CData, Textize));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(CData, propSkeleton));
+	Assign(Gurax_CreateProperty(CData, text));
 }
 
 //------------------------------------------------------------------------------

@@ -55,6 +55,7 @@ Gurax_ImplementConstructor(XmlDecl)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+#if 0
 // xml.XmlDecl#MethodSkeleton(num1 as Number, num2 as Number)
 Gurax_DeclareMethod(XmlDecl, MethodSkeleton)
 {
@@ -77,6 +78,7 @@ Gurax_ImplementMethod(XmlDecl, MethodSkeleton)
 	// Function body
 	return new Value_Number(num1 + num2);
 }
+#endif
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -144,7 +146,7 @@ void VType_XmlDecl::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Node, Flag::Immutable, Gurax_CreateConstructor(XmlDecl));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(XmlDecl, MethodSkeleton));
+	//Assign(Gurax_CreateMethod(XmlDecl, MethodSkeleton));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(XmlDecl, version));
 	Assign(Gurax_CreateProperty(XmlDecl, encoding));

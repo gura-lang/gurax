@@ -79,19 +79,34 @@ Gurax_ImplementMethod(Attr, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// xml.Attr#propSkeleton
-Gurax_DeclareProperty_R(Attr, propSkeleton)
+// xml.Attr#name
+Gurax_DeclareProperty_R(Attr, name)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 
 )""");
 }
 
-Gurax_ImplementPropertyGetter(Attr, propSkeleton)
+Gurax_ImplementPropertyGetter(Attr, name)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(valueThis.GetAttr().GetName());
+}
+
+// xml.Attr#value
+Gurax_DeclareProperty_R(Attr, value)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+
+)""");
+}
+
+Gurax_ImplementPropertyGetter(Attr, value)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(valueThis.GetAttr().GetValue());
 }
 
 //------------------------------------------------------------------------------
@@ -108,7 +123,8 @@ void VType_Attr::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Attr, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Attr, propSkeleton));
+	Assign(Gurax_CreateProperty(Attr, name));
+	Assign(Gurax_CreateProperty(Attr, value));
 }
 
 //------------------------------------------------------------------------------

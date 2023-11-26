@@ -71,19 +71,19 @@ Gurax_ImplementMethod(Comment, Textize)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// xml.Comment#propSkeleton
-Gurax_DeclareProperty_R(Comment, propSkeleton)
+// xml.Comment#data
+Gurax_DeclareProperty_R(Comment, data)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 
 )""");
 }
 
-Gurax_ImplementPropertyGetter(Comment, propSkeleton)
+Gurax_ImplementPropertyGetter(Comment, data)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(valueThis.GetComment().GetData());
 }
 
 //------------------------------------------------------------------------------
@@ -100,7 +100,7 @@ void VType_Comment::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Comment, Textize));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Comment, propSkeleton));
+	Assign(Gurax_CreateProperty(Comment, data));
 }
 
 //------------------------------------------------------------------------------
