@@ -61,28 +61,6 @@ Gurax_ImplementConstructor(cairo_matrix_t)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// cairo.cairo_matrix_t#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(cairo_matrix_t, MethodSkeleton)
-{
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"""(
-Skeleton.
-)""");
-}
-
-Gurax_ImplementMethod(cairo_matrix_t, MethodSkeleton)
-{
-	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
-	// Function body
-	return new Value_Number(num1 + num2);
-}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -225,7 +203,7 @@ void VType_cairo_matrix_t::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(cairo_matrix_t));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(cairo_matrix_t, MethodSkeleton));
+	//Assign(Gurax_CreateMethod(cairo_matrix_t, MethodSkeleton));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(cairo_matrix_t, xx));
 	Assign(Gurax_CreateProperty(cairo_matrix_t, yx));

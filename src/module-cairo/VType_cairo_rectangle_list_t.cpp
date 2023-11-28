@@ -27,34 +27,12 @@ ${help.ComposeMethodHelp(cairo.cairo_rectangle_list_t, `en)}
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// cairo.cairo_rectangle_list_t#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(cairo_rectangle_list_t, MethodSkeleton)
-{
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"""(
-Skeleton.
-)""");
-}
-
-Gurax_ImplementMethod(cairo_rectangle_list_t, MethodSkeleton)
-{
-	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
-	// Function body
-	return new Value_Number(num1 + num2);
-}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// cairo.cairo_rectangle_list_t#propSkeleton
-Gurax_DeclareProperty_R(cairo_rectangle_list_t, propSkeleton)
+// cairo.cairo_rectangle_list_t#status
+Gurax_DeclareProperty_R(cairo_rectangle_list_t, status)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -62,10 +40,42 @@ Gurax_DeclareProperty_R(cairo_rectangle_list_t, propSkeleton)
 )""");
 }
 
-Gurax_ImplementPropertyGetter(cairo_rectangle_list_t, propSkeleton)
+Gurax_ImplementPropertyGetter(cairo_rectangle_list_t, status)
 {
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().status);
+}
+
+// cairo.cairo_rectangle_list_t#rectangles
+Gurax_DeclareProperty_R(cairo_rectangle_list_t, rectangles)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+
+)""");
+}
+
+Gurax_ImplementPropertyGetter(cairo_rectangle_list_t, rectangles)
+{
+	//**************************************************************************
 	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	//return new Value_Number(valueThis.GetEntity().rectangles);
+	return Value::nil();
+}
+
+// cairo.cairo_rectangle_list_t#num_rectangles
+Gurax_DeclareProperty_R(cairo_rectangle_list_t, num_rectangles)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+
+)""");
+}
+
+Gurax_ImplementPropertyGetter(cairo_rectangle_list_t, num_rectangles)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().num_rectangles);
 }
 
 //------------------------------------------------------------------------------
@@ -80,9 +90,11 @@ void VType_cairo_rectangle_list_t::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(cairo_rectangle_list_t, MethodSkeleton));
+	//Assign(Gurax_CreateMethod(cairo_rectangle_list_t, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(cairo_rectangle_list_t, propSkeleton));
+	Assign(Gurax_CreateProperty(cairo_rectangle_list_t, status));
+	Assign(Gurax_CreateProperty(cairo_rectangle_list_t, rectangles));
+	Assign(Gurax_CreateProperty(cairo_rectangle_list_t, num_rectangles));
 }
 
 //------------------------------------------------------------------------------

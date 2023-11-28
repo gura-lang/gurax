@@ -57,34 +57,12 @@ Gurax_ImplementConstructor(cairo_rectangle_t)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// cairo.cairo_rectangle_t#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(cairo_rectangle_t, MethodSkeleton)
-{
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"""(
-Skeleton.
-)""");
-}
-
-Gurax_ImplementMethod(cairo_rectangle_t, MethodSkeleton)
-{
-	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
-	// Function body
-	return new Value_Number(num1 + num2);
-}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// cairo.cairo_rectangle_t#propSkeleton
-Gurax_DeclareProperty_R(cairo_rectangle_t, propSkeleton)
+// cairo.cairo_rectangle_t#x
+Gurax_DeclareProperty_RW(cairo_rectangle_t, x)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -92,10 +70,79 @@ Gurax_DeclareProperty_R(cairo_rectangle_t, propSkeleton)
 )""");
 }
 
-Gurax_ImplementPropertyGetter(cairo_rectangle_t, propSkeleton)
+Gurax_ImplementPropertyGetter(cairo_rectangle_t, x)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().x);
+}
+
+Gurax_ImplementPropertySetter(cairo_rectangle_t, x)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetEntity().x = Value_Number::GetNumber<double>(value);
+}
+
+// cairo.cairo_rectangle_t#y
+Gurax_DeclareProperty_RW(cairo_rectangle_t, y)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+
+)""");
+}
+
+Gurax_ImplementPropertyGetter(cairo_rectangle_t, y)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().y);
+}
+
+Gurax_ImplementPropertySetter(cairo_rectangle_t, y)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetEntity().y = Value_Number::GetNumber<double>(value);
+}
+
+// cairo.cairo_rectangle_t#width
+Gurax_DeclareProperty_RW(cairo_rectangle_t, width)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+
+)""");
+}
+
+Gurax_ImplementPropertyGetter(cairo_rectangle_t, width)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().width);
+}
+
+Gurax_ImplementPropertySetter(cairo_rectangle_t, width)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetEntity().width = Value_Number::GetNumber<double>(value);
+}
+
+// cairo.cairo_rectangle_t#height
+Gurax_DeclareProperty_RW(cairo_rectangle_t, height)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+
+)""");
+}
+
+Gurax_ImplementPropertyGetter(cairo_rectangle_t, height)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetEntity().height);
+}
+
+Gurax_ImplementPropertySetter(cairo_rectangle_t, height)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetEntity().height = Value_Number::GetNumber<double>(value);
 }
 
 //------------------------------------------------------------------------------
@@ -110,9 +157,12 @@ void VType_cairo_rectangle_t::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(cairo_rectangle_t));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(cairo_rectangle_t, MethodSkeleton));
+	//Assign(Gurax_CreateMethod(cairo_rectangle_t, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(cairo_rectangle_t, propSkeleton));
+	Assign(Gurax_CreateProperty(cairo_rectangle_t, x));
+	Assign(Gurax_CreateProperty(cairo_rectangle_t, y));
+	Assign(Gurax_CreateProperty(cairo_rectangle_t, width));
+	Assign(Gurax_CreateProperty(cairo_rectangle_t, height));
 }
 
 //------------------------------------------------------------------------------
