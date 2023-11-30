@@ -174,7 +174,6 @@ cairo_set_line_cap(cr as cairo_t_p, line_cap as cairo_line_cap_t):void
 
 cairo_set_line_join(cr as cairo_t_p, line_join as cairo_line_join_t):void
 
-//cairo_set_dash(cr as cairo_t_p, dashes as const_double_p, num_dashes as int, offset as double):void
 cairo_set_dash(cr as cairo_t_p, dashes[] as double, offset as double) as void = \
 	R'''
 	int num_dashes = dashes.sizeT<int>();
@@ -301,7 +300,6 @@ cairo_in_fill(cr as cairo_t_p, x as double, y as double) as cairo_bool_t
 
 cairo_in_clip(cr as cairo_t_p, x as double, y as double) as cairo_bool_t
 
-//cairo_stroke_extents(cr as cairo_t_p, x1 as double_p, y1 as double_p, x2 as double_p, y2 as double_p):void
 cairo_stroke_extents(cr as cairo_t_p, &x1:nilRef as double, &y1:nilRef as double, &x2:nilRef as double, &y2:nilRef as double) = \
 	R'''
 	double x1_, y1_, x2_, y2_;
@@ -313,7 +311,6 @@ cairo_stroke_extents(cr as cairo_t_p, &x1:nilRef as double, &y1:nilRef as double
 	return Value::nil();
 	'''
 
-//cairo_fill_extents(cr as cairo_t_p, x1 as double_p, y1 as double_p, x2 as double_p, y2 as double_p):void
 cairo_fill_extents(cr as cairo_t_p, &x1:nilRef as double, &y1:nilRef as double, &x2:nilRef as double, &y2:nilRef as double):void = \
 	R'''
 	double x1_, y1_, x2_, y2_;
@@ -331,7 +328,6 @@ cairo_clip(cr as cairo_t_p):void
 
 cairo_clip_preserve(cr as cairo_t_p):void
 
-//cairo_clip_extents(cr as cairo_t_p, x1 as double_p, y1 as double_p, x2 as double_p, y2 as double_p):void
 cairo_clip_extents(cr as cairo_t_p, &x1:nilRef as double, &y1:nilRef as double, &x2:nilRef as double, &y2:nilRef as double):void = \
 	R'''
 	double x1_, y1_, x2_, y2_;
