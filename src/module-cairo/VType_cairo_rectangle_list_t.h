@@ -81,6 +81,25 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
+//------------------------------------------------------------------------------
+// Iterator_cairo_rectangle_list
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_cairo_rectangle_list : public Iterator {
+private:
+	RefPtr<Value_cairo_rectangle_list_t> _pValue;
+	int _idx;
+public:
+	Iterator_cairo_rectangle_list(Value_cairo_rectangle_list_t* pValue) : _pValue(pValue), _idx(0) {}
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override {
+		return Flag::Finite | Flag::LenDetermined;
+	}
+	virtual size_t GetLength() const override { return _pValue->GetEntity().num_rectangles; }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
 Gurax_EndModuleScope(cairo)
 
 #endif

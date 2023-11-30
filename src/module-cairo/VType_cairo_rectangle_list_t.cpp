@@ -57,10 +57,8 @@ Gurax_DeclareProperty_R(cairo_rectangle_list_t, rectangles)
 
 Gurax_ImplementPropertyGetter(cairo_rectangle_list_t, rectangles)
 {
-	//**************************************************************************
-	//auto& valueThis = GetValueThis(valueTarget);
-	//return new Value_Number(valueThis.GetEntity().rectangles);
-	return Value::nil();
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Iterator(new Iterator_cairo_rectangle_list(valueThis.Reference()));
 }
 
 // cairo.cairo_rectangle_list_t#num_rectangles
@@ -105,6 +103,22 @@ VType& Value_cairo_rectangle_list_t::vtype = VTYPE_cairo_rectangle_list_t;
 String Value_cairo_rectangle_list_t::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "cairo.cairo_rectangle_list_t");
+}
+
+//------------------------------------------------------------------------------
+// Iterator_cairo_rectangle_list
+//------------------------------------------------------------------------------
+Value* Iterator_cairo_rectangle_list::DoNextValue()
+{
+	if (_idx >= GetLength()) return nullptr;
+	RefPtr<Value_cairo_rectangle_t> pValue(new Value_cairo_rectangle_t(_pValue->GetEntity().rectangles[_idx]));
+	_idx++;
+	return pValue.release();
+}
+
+String Iterator_cairo_rectangle_list::ToString(const StringStyle& ss) const
+{
+	return String().Format("cairo_rectangle_list:n=%d", _pValue->GetEntity().num_rectangles);
 }
 
 Gurax_EndModuleScope(cairo)
