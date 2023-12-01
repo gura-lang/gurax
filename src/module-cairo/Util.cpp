@@ -5,6 +5,32 @@
 
 Gurax_BeginModuleScope(cairo)
 
+RefPtr<Function> g_pFunc_font_face_init;
+RefPtr<Function> g_pFunc_font_face_render_glyph;
+RefPtr<Function> g_pFunc_font_face_text_to_glyphs;
+RefPtr<Function> g_pFunc_font_face_unicode_to_glyph;
+
+cairo_status_t font_face_init_func(cairo_scaled_font_t* scaled_font, cairo_t* cr, cairo_font_extents_t* extents)
+{
+	return CAIRO_STATUS_SUCCESS;
+}
+
+cairo_status_t font_face_render_glyph_func(cairo_scaled_font_t* scaled_font, unsigned long glyph, cairo_t* cr, cairo_text_extents_t* extents)
+{
+	return CAIRO_STATUS_SUCCESS;
+}
+
+cairo_status_t font_face_text_to_glyphs_func(cairo_scaled_font_t* scaled_font, const char* utf8, int utf8_len,
+	cairo_glyph_t** glyphs, int* num_glyphs, cairo_text_cluster_t** clusters, int* num_clusters, cairo_text_cluster_flags_t* cluster_flags)
+{
+	return CAIRO_STATUS_SUCCESS;
+}
+
+cairo_status_t font_face_unicode_to_glyph_func(cairo_scaled_font_t* scaled_font, unsigned long  unicode, unsigned long* glyph_index)
+{
+	return CAIRO_STATUS_SUCCESS;
+}
+
 inline UInt8 DemultiplyAlpha(UInt8 elem, UInt8 alpha)
 {
 	return (alpha == 0)? 0 : static_cast<UInt8>(static_cast<UInt32>(elem) * 255 / alpha);

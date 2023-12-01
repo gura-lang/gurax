@@ -484,12 +484,36 @@ cairo_toy_font_face_get_weight(font_face as cairo_font_face_t_p) as cairo_font_w
 cairo_user_font_face_create() as cairo_font_face_t_p
 
 //cairo_user_font_face_set_init_func(font_face as cairo_font_face_t_p, init_func as cairo_user_scaled_font_init_func_t):void
+cairo_user_font_face_set_init_func(font_face as cairo_font_face_t_p, init_func as Function@gurax):void = \
+	R'''
+	g_pFunc_font_face_init.reset(init_func.Reference());
+	cairo_user_font_face_set_init_func(font_face, font_face_init_func);
+	return Value::nil();
+	'''
 
 //cairo_user_font_face_set_render_glyph_func(font_face as cairo_font_face_t_p, render_glyph_func as cairo_user_scaled_font_render_glyph_func_t):void
+cairo_user_font_face_set_render_glyph_func(font_face as cairo_font_face_t_p, render_glyph_func as Function@gurax):void = \
+	R'''
+	g_pFunc_font_face_render_glyph.reset(render_glyph_func.Reference());
+	cairo_user_font_face_set_render_glyph_func(font_face, font_face_render_glyph_func);
+	return Value::nil();
+	'''
 
 //cairo_user_font_face_set_text_to_glyphs_func(font_face as cairo_font_face_t_p, text_to_glyphs_func as cairo_user_scaled_font_text_to_glyphs_func_t):void
+cairo_user_font_face_set_text_to_glyphs_func(font_face as cairo_font_face_t_p, text_to_glyphs_func as Function@gurax):void = \
+	R'''
+	g_pFunc_font_face_text_to_glyphs.reset(text_to_glyphs_func.Reference());
+	cairo_user_font_face_set_text_to_glyphs_func(font_face, font_face_text_to_glyphs_func);
+	return Value::nil();
+	'''
 
 //cairo_user_font_face_set_unicode_to_glyph_func(font_face as cairo_font_face_t_p, unicode_to_glyph_func as cairo_user_scaled_font_unicode_to_glyph_func_t):void
+cairo_user_font_face_set_unicode_to_glyph_func(font_face as cairo_font_face_t_p, unicode_to_glyph_func as Function@gurax):void = \
+	R'''
+	g_pFunc_font_face_unicode_to_glyph.reset(unicode_to_glyph_func.Reference());
+	cairo_user_font_face_set_unicode_to_glyph_func(font_face, font_face_unicode_to_glyph_func);
+	return Value::nil();
+	'''
 
 //cairo_user_font_face_get_init_func(font_face as cairo_font_face_t_p) as cairo_user_scaled_font_init_func_t
 
@@ -509,7 +533,6 @@ cairo_get_antialias(cr as cairo_t_p) as cairo_antialias_t
 
 cairo_has_current_point(cr as cairo_t_p) as cairo_bool_t
 
-//cairo_get_current_point(cr as cairo_t_p, x as double_p, y as double_p):void
 cairo_get_current_point(cr as cairo_t_p, &x:nilRef as double, &y:nilRef as double) = \
 	R'''
 	double x_, y_;

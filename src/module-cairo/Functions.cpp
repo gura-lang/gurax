@@ -2790,6 +2790,90 @@ Gurax_ImplementFunctionEx(cairo_user_font_face_create_gurax, processor_gurax, ar
 	return new Value_cairo_font_face_t(rtn);
 }
 
+// cairo.cairo_user_font_face_set_init_func(font_face as cairo_font_face_t, init_func as Function)
+Gurax_DeclareFunctionAlias(cairo_user_font_face_set_init_func_gurax, "cairo_user_font_face_set_init_func")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("font_face", VTYPE_cairo_font_face_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("init_func", VTYPE_Function, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementFunctionEx(cairo_user_font_face_set_init_func_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_font_face = args_gurax.Pick<Value_cairo_font_face_t>();
+	cairo_font_face_t* font_face = value_font_face.GetEntityPtr();
+	RefPtr<Function> init_func(args_gurax.PickFunction().Reference());
+	// Function body
+	g_pFunc_font_face_init.reset(init_func.Reference());
+	cairo_user_font_face_set_init_func(font_face, font_face_init_func);
+	return Value::nil();
+}
+
+// cairo.cairo_user_font_face_set_render_glyph_func(font_face as cairo_font_face_t, render_glyph_func as Function)
+Gurax_DeclareFunctionAlias(cairo_user_font_face_set_render_glyph_func_gurax, "cairo_user_font_face_set_render_glyph_func")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("font_face", VTYPE_cairo_font_face_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("render_glyph_func", VTYPE_Function, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementFunctionEx(cairo_user_font_face_set_render_glyph_func_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_font_face = args_gurax.Pick<Value_cairo_font_face_t>();
+	cairo_font_face_t* font_face = value_font_face.GetEntityPtr();
+	RefPtr<Function> render_glyph_func(args_gurax.PickFunction().Reference());
+	// Function body
+	g_pFunc_font_face_render_glyph.reset(render_glyph_func.Reference());
+	cairo_user_font_face_set_render_glyph_func(font_face, font_face_render_glyph_func);
+	return Value::nil();
+}
+
+// cairo.cairo_user_font_face_set_text_to_glyphs_func(font_face as cairo_font_face_t, text_to_glyphs_func as Function)
+Gurax_DeclareFunctionAlias(cairo_user_font_face_set_text_to_glyphs_func_gurax, "cairo_user_font_face_set_text_to_glyphs_func")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("font_face", VTYPE_cairo_font_face_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("text_to_glyphs_func", VTYPE_Function, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementFunctionEx(cairo_user_font_face_set_text_to_glyphs_func_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_font_face = args_gurax.Pick<Value_cairo_font_face_t>();
+	cairo_font_face_t* font_face = value_font_face.GetEntityPtr();
+	RefPtr<Function> text_to_glyphs_func(args_gurax.PickFunction().Reference());
+	// Function body
+	g_pFunc_font_face_text_to_glyphs.reset(text_to_glyphs_func.Reference());
+	cairo_user_font_face_set_text_to_glyphs_func(font_face, font_face_text_to_glyphs_func);
+	return Value::nil();
+}
+
+// cairo.cairo_user_font_face_set_unicode_to_glyph_func(font_face as cairo_font_face_t, unicode_to_glyph_func as Function)
+Gurax_DeclareFunctionAlias(cairo_user_font_face_set_unicode_to_glyph_func_gurax, "cairo_user_font_face_set_unicode_to_glyph_func")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("font_face", VTYPE_cairo_font_face_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("unicode_to_glyph_func", VTYPE_Function, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementFunctionEx(cairo_user_font_face_set_unicode_to_glyph_func_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_font_face = args_gurax.Pick<Value_cairo_font_face_t>();
+	cairo_font_face_t* font_face = value_font_face.GetEntityPtr();
+	RefPtr<Function> unicode_to_glyph_func(args_gurax.PickFunction().Reference());
+	// Function body
+	g_pFunc_font_face_unicode_to_glyph.reset(unicode_to_glyph_func.Reference());
+	cairo_user_font_face_set_unicode_to_glyph_func(font_face, font_face_unicode_to_glyph_func);
+	return Value::nil();
+}
+
 // cairo.cairo_get_operator(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_get_operator_gurax, "cairo_get_operator")
 {
@@ -6653,6 +6737,10 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(cairo_toy_font_face_get_slant_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_toy_font_face_get_weight_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_user_font_face_create_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_user_font_face_set_init_func_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_user_font_face_set_render_glyph_func_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_user_font_face_set_text_to_glyphs_func_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_user_font_face_set_unicode_to_glyph_func_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_get_operator_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_get_source_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_get_tolerance_gurax));
