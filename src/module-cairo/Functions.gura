@@ -870,6 +870,13 @@ cairo_pattern_get_rgba(pattern as cairo_pattern_t_p, &red:nilRef as double, &gre
 	'''
 
 //cairo_pattern_get_surface(pattern as cairo_pattern_t_p, surface as cairo_surface_t_pp) as cairo_status_t
+cairo_pattern_get_surface(pattern as cairo_pattern_t_p, &surface:nilRef as cairo_surface_t_p) as cairo_status_t = \
+	R'''
+	cairo_surface_t* surface_;
+	cairo_status_t rtn = cairo_pattern_get_surface(pattern, &surface_);
+	surface->SetValue(new Value_cairo_surface_t(surface_));
+	return new Value_Number(rtn);
+	'''
 
 cairo_pattern_get_color_stop_rgba(pattern as cairo_pattern_t_p, index as int, &offset:nilRef as double, &red:nilRef as double, &green:nilRef as double, &blue:nilRef as double, &alpha:nilRef as double) = \
 	R'''
@@ -884,12 +891,47 @@ cairo_pattern_get_color_stop_rgba(pattern as cairo_pattern_t_p, index as int, &o
 	'''
 
 //cairo_pattern_get_color_stop_count(pattern as cairo_pattern_t_p, count as int_p) as cairo_status_t
+cairo_pattern_get_color_stop_count(pattern as cairo_pattern_t_p, &count:nilRef as int) as cairo_status_t = \
+	R'''
+	int count_;
+	cairo_status_t rtn = cairo_pattern_get_color_stop_count(pattern, &count_);
+	count->SetValue(new Value_Number(count_));
+	return new Value_Number(rtn);
+	'''
 
 //cairo_pattern_get_linear_points(pattern as cairo_pattern_t_p, x0 as double_p, y0 as double_p, x1 as double_p, y1 as double_p) as cairo_status_t
+cairo_pattern_get_linear_points(pattern as cairo_pattern_t_p, &x0:nilRef as double, &y0:nilRef as double, &x1:nilRef as double, &y1:nilRef as double) as cairo_status_t = \
+	R'''
+	double x0_, y0_, x1_, y1_;
+	cairo_status_t rtn = cairo_pattern_get_linear_points(pattern, &x0_, &y0_, &x1_, &y1_);
+	x0->SetValue(new Value_Number(x0_));
+	y0->SetValue(new Value_Number(y0_));
+	x1->SetValue(new Value_Number(x1_));
+	y1->SetValue(new Value_Number(y1_));
+	return new Value_Number(rtn);
+	'''
 
-//cairo_pattern_get_radial_circles(pattern as cairo_pattern_t_p, x0 as double_p, y0 as double_p, r0 as double_p, x1 as double_p, y1 as double_p, r1 as double_p) as cairo_status_t
+cairo_pattern_get_radial_circles(pattern as cairo_pattern_t_p, &x0:nilRef as double, &y0:nilRef as double, &r0:nilRef as double, &x1:nilRef as double, &y1:nilRef as double, &r1:nilRef as double) as cairo_status_t = \
+	R'''
+	double x0_, y0_, r0_, x1_, y1_, r1_;
+	cairo_status_t rtn = cairo_pattern_get_radial_circles(pattern, &x0_, &y0_, &r0_, &x1_, &y1_, &r1_);
+	x0->SetValue(new Value_Number(x0_));
+	y0->SetValue(new Value_Number(y0_));
+	r0->SetValue(new Value_Number(r0_));
+	x1->SetValue(new Value_Number(x1_));
+	y1->SetValue(new Value_Number(y1_));
+	r1->SetValue(new Value_Number(r1_));
+	return new Value_Number(rtn);
+	'''
 
 //cairo_mesh_pattern_get_patch_count(pattern as cairo_pattern_t_p, count as unsigned_int_p) as cairo_status_t
+cairo_mesh_pattern_get_patch_count(pattern as cairo_pattern_t_p, &count:nilRef as unsigned_int) as cairo_status_t = \
+	R'''
+	unsigned int count_;
+	cairo_status_t rtn = cairo_mesh_pattern_get_patch_count(pattern, &count_);
+	count->SetValue(new Value_Number(count_));
+	return new Value_Number(rtn);
+	'''
 
 cairo_mesh_pattern_get_path(pattern as cairo_pattern_t_p, patch_num as unsigned_int) as cairo_path_t_p
 
@@ -1040,7 +1082,6 @@ cairo_pdf_surface_set_thumbnail_size(surface as cairo_surface_t_p, width as int,
 
 cairo_ps_surface_create(filename as const_char_p, width_in_points as double, height_in_points as double) as cairo_surface_t_p
 
-//cairo_ps_surface_create_for_stream(write_func as cairo_write_func_t, closure as void_p, width_in_points as double, height_in_points as double) as cairo_surface_t_p
 cairo_ps_surface_create_for_stream(stream:w as Stream@gurax, width_in_points as double, height_in_points as double) = \
 	R'''
 	cairo_surface_t* surface = cairo_ps_surface_create_for_stream(write_func, stream.get(), width_in_points, height_in_points);
@@ -1049,7 +1090,6 @@ cairo_ps_surface_create_for_stream(stream:w as Stream@gurax, width_in_points as 
 
 cairo_ps_surface_restrict_to_level(surface as cairo_surface_t_p, level as cairo_ps_level_t):void
 
-//cairo_ps_get_levels(levels as cairo_ps_level_t_const_pp, num_levels as int_p):void
 cairo_ps_get_levels(&levels:nilRef as Tuple@gurax):void = \
 	R'''
 	const cairo_ps_level_t* levels_;
@@ -1077,7 +1117,6 @@ cairo_ps_surface_dsc_begin_page_setup(surface as cairo_surface_t_p):void
 
 cairo_script_create(filename as const_char_p) as cairo_device_t_p
 
-//cairo_script_create_for_stream(write_func as cairo_write_func_t, closure as void_p) as cairo_device_t_p
 cairo_script_create_for_stream(stream:w as Stream@gurax) = \
 	R'''
 	cairo_device_t* device = cairo_script_create_for_stream(write_func, stream.get());
@@ -1100,7 +1139,6 @@ cairo_script_from_recording_surface(script as cairo_device_t_p, recording_surfac
 
 cairo_svg_surface_create(filename as const_char_p, width_in_points as double, height_in_points as double) as cairo_surface_t_p
 
-//cairo_svg_surface_create_for_stream(write_func as cairo_write_func_t, closure as void_p, width_in_points as double, height_in_points as double) as cairo_surface_t_p
 cairo_svg_surface_create_for_stream(stream:w as Stream@gurax, width_in_points as double, height_in_points as double) = \
 	R'''
 	cairo_surface_t* surface = cairo_svg_surface_create_for_stream(write_func, stream.get(), width_in_points, height_in_points);
@@ -1109,7 +1147,6 @@ cairo_svg_surface_create_for_stream(stream:w as Stream@gurax, width_in_points as
 
 cairo_svg_surface_restrict_to_version(surface as cairo_surface_t_p, version as cairo_svg_version_t):void
 
-//cairo_svg_get_versions(versions as cairo_svg_version_t_const_pp, num_versions as int_p):void
 cairo_svg_get_versions(&versions:nilRef as Tuple@gurax):void = \
 	R'''
 	const cairo_svg_version_t* versions_;
