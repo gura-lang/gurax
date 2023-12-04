@@ -936,8 +936,26 @@ cairo_mesh_pattern_get_patch_count(pattern as cairo_pattern_t_p, &count:nilRef a
 cairo_mesh_pattern_get_path(pattern as cairo_pattern_t_p, patch_num as unsigned_int) as cairo_path_t_p
 
 //cairo_mesh_pattern_get_corner_color_rgba(pattern as cairo_pattern_t_p, patch_num as unsigned_int, corner_num as unsigned_int, red as double_p, green as double_p, blue as double_p, alpha as double_p) as cairo_status_t
+cairo_mesh_pattern_get_corner_color_rgba(pattern as cairo_pattern_t_p, patch_num as unsigned_int, corner_num as unsigned_int, &red:nilRef as double, &green:nilRef as double, &blue:nilRef as double, &alpha:nilRef as double) as cairo_status_t = \
+	R'''
+	double red_, green_, blue_, alpha_;
+	cairo_status_t rtn = cairo_mesh_pattern_get_corner_color_rgba(pattern, patch_num, corner_num, &red_, &green_, &blue_, &alpha_);
+	red->SetValue(new Value_Number(red_));
+	green->SetValue(new Value_Number(green_));
+	blue->SetValue(new Value_Number(blue_));
+	alpha->SetValue(new Value_Number(alpha_));
+	return new Value_Number(rtn);
+	'''
 
 //cairo_mesh_pattern_get_control_point(pattern as cairo_pattern_t_p, patch_num as unsigned_int, point_num as unsigned_int, x as double_p, y as double_p) as cairo_status_t
+cairo_mesh_pattern_get_control_point(pattern as cairo_pattern_t_p, patch_num as unsigned_int, point_num as unsigned_int, &x:nilRef as double, &y:nilRef as double) as cairo_status_t = \
+	R'''
+	double x_, y_;
+	cairo_status_t rtn = cairo_mesh_pattern_get_control_point(pattern, patch_num, point_num, &x_, &y_);
+	x->SetValue(new Value_Number(x_));
+	y->SetValue(new Value_Number(y_));
+	return new Value_Number(rtn);
+	'''
 
 cairo_matrix_init(matrix as cairo_matrix_t_p, xx as double, yx as double, xy as double, yy as double, x0 as double, y0 as double):void
 

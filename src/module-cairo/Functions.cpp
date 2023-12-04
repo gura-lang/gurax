@@ -5329,6 +5329,70 @@ Gurax_ImplementFunctionEx(cairo_mesh_pattern_get_path_gurax, processor_gurax, ar
 	return new Value_cairo_path_t(rtn);
 }
 
+// cairo.cairo_mesh_pattern_get_corner_color_rgba(pattern as cairo_pattern_t, patch_num as Number, corner_num as Number, &red:nilRef as Number, &green:nilRef as Number, &blue:nilRef as Number, &alpha:nilRef as Number)
+Gurax_DeclareFunctionAlias(cairo_mesh_pattern_get_corner_color_rgba_gurax, "cairo_mesh_pattern_get_corner_color_rgba")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("pattern", VTYPE_cairo_pattern_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("patch_num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("corner_num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("alpha", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+}
+
+Gurax_ImplementFunctionEx(cairo_mesh_pattern_get_corner_color_rgba_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_pattern = args_gurax.Pick<Value_cairo_pattern_t>();
+	cairo_pattern_t* pattern = value_pattern.GetEntityPtr();
+	unsigned int patch_num = args_gurax.PickNumber<unsigned int>();
+	unsigned int corner_num = args_gurax.PickNumber<unsigned int>();
+	RefPtr<Referencer> red(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> green(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> blue(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> alpha(args_gurax.PickReferencer().Reference());
+	// Function body
+	double red_, green_, blue_, alpha_;
+	cairo_status_t rtn = cairo_mesh_pattern_get_corner_color_rgba(pattern, patch_num, corner_num, &red_, &green_, &blue_, &alpha_);
+	red->SetValue(new Value_Number(red_));
+	green->SetValue(new Value_Number(green_));
+	blue->SetValue(new Value_Number(blue_));
+	alpha->SetValue(new Value_Number(alpha_));
+	return new Value_Number(rtn);
+}
+
+// cairo.cairo_mesh_pattern_get_control_point(pattern as cairo_pattern_t, patch_num as Number, point_num as Number, &x:nilRef as Number, &y:nilRef as Number)
+Gurax_DeclareFunctionAlias(cairo_mesh_pattern_get_control_point_gurax, "cairo_mesh_pattern_get_control_point")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("pattern", VTYPE_cairo_pattern_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("patch_num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("point_num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+}
+
+Gurax_ImplementFunctionEx(cairo_mesh_pattern_get_control_point_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_pattern = args_gurax.Pick<Value_cairo_pattern_t>();
+	cairo_pattern_t* pattern = value_pattern.GetEntityPtr();
+	unsigned int patch_num = args_gurax.PickNumber<unsigned int>();
+	unsigned int point_num = args_gurax.PickNumber<unsigned int>();
+	RefPtr<Referencer> x(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y(args_gurax.PickReferencer().Reference());
+	// Function body
+	double x_, y_;
+	cairo_status_t rtn = cairo_mesh_pattern_get_control_point(pattern, patch_num, point_num, &x_, &y_);
+	x->SetValue(new Value_Number(x_));
+	y->SetValue(new Value_Number(y_));
+	return new Value_Number(rtn);
+}
+
 // cairo.cairo_matrix_init(matrix as cairo_matrix_t, xx as Number, yx as Number, xy as Number, yy as Number, x0 as Number, y0 as Number)
 Gurax_DeclareFunctionAlias(cairo_matrix_init_gurax, "cairo_matrix_init")
 {
@@ -7062,6 +7126,8 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(cairo_pattern_get_radial_circles_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_mesh_pattern_get_patch_count_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_mesh_pattern_get_path_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_mesh_pattern_get_corner_color_rgba_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_mesh_pattern_get_control_point_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_matrix_init_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_matrix_init_identity_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_matrix_init_translate_gurax));
