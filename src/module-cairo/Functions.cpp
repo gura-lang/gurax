@@ -3668,6 +3668,206 @@ Gurax_ImplementFunctionEx(cairo_surface_create_observer_gurax, processor_gurax, 
 	return new Value_cairo_surface_t(rtn);
 }
 
+// cairo.cairo_surface_observer_add_paint_callback(abstract_surface as cairo_surface_t, func as Function, data as Pointer)
+Gurax_DeclareFunctionAlias(cairo_surface_observer_add_paint_callback_gurax, "cairo_surface_observer_add_paint_callback")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("abstract_surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("func", VTYPE_Function, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementFunctionEx(cairo_surface_observer_add_paint_callback_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_abstract_surface = args_gurax.Pick<Value_cairo_surface_t>();
+	cairo_surface_t* abstract_surface = value_abstract_surface.GetEntityPtr();
+	RefPtr<Function> func(args_gurax.PickFunction().Reference());
+	void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>();
+	if (!data) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	return new Value_Number(0);
+}
+
+// cairo.cairo_surface_observer_add_mask_callback(abstract_surface as cairo_surface_t, func as Function, data as Pointer)
+Gurax_DeclareFunctionAlias(cairo_surface_observer_add_mask_callback_gurax, "cairo_surface_observer_add_mask_callback")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("abstract_surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("func", VTYPE_Function, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementFunctionEx(cairo_surface_observer_add_mask_callback_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_abstract_surface = args_gurax.Pick<Value_cairo_surface_t>();
+	cairo_surface_t* abstract_surface = value_abstract_surface.GetEntityPtr();
+	RefPtr<Function> func(args_gurax.PickFunction().Reference());
+	void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>();
+	if (!data) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	return new Value_Number(0);
+}
+
+// cairo.cairo_surface_observer_add_fill_callback(abstract_surface as cairo_surface_t, func as Function, data as Pointer)
+Gurax_DeclareFunctionAlias(cairo_surface_observer_add_fill_callback_gurax, "cairo_surface_observer_add_fill_callback")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("abstract_surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("func", VTYPE_Function, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementFunctionEx(cairo_surface_observer_add_fill_callback_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_abstract_surface = args_gurax.Pick<Value_cairo_surface_t>();
+	cairo_surface_t* abstract_surface = value_abstract_surface.GetEntityPtr();
+	RefPtr<Function> func(args_gurax.PickFunction().Reference());
+	void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>();
+	if (!data) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	return new Value_Number(0);
+}
+
+// cairo.cairo_surface_observer_add_stroke_callback(abstract_surface as cairo_surface_t, func as Function, data as Pointer)
+Gurax_DeclareFunctionAlias(cairo_surface_observer_add_stroke_callback_gurax, "cairo_surface_observer_add_stroke_callback")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("abstract_surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("func", VTYPE_Function, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementFunctionEx(cairo_surface_observer_add_stroke_callback_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_abstract_surface = args_gurax.Pick<Value_cairo_surface_t>();
+	cairo_surface_t* abstract_surface = value_abstract_surface.GetEntityPtr();
+	RefPtr<Function> func(args_gurax.PickFunction().Reference());
+	void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>();
+	if (!data) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	return new Value_Number(0);
+}
+
+// cairo.cairo_surface_observer_add_glyphs_callback(abstract_surface as cairo_surface_t, func as Function, data as Pointer)
+Gurax_DeclareFunctionAlias(cairo_surface_observer_add_glyphs_callback_gurax, "cairo_surface_observer_add_glyphs_callback")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("abstract_surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("func", VTYPE_Function, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementFunctionEx(cairo_surface_observer_add_glyphs_callback_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_abstract_surface = args_gurax.Pick<Value_cairo_surface_t>();
+	cairo_surface_t* abstract_surface = value_abstract_surface.GetEntityPtr();
+	RefPtr<Function> func(args_gurax.PickFunction().Reference());
+	void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>();
+	if (!data) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	return new Value_Number(0);
+}
+
+// cairo.cairo_surface_observer_add_flush_callback(abstract_surface as cairo_surface_t, func as Function, data as Pointer)
+Gurax_DeclareFunctionAlias(cairo_surface_observer_add_flush_callback_gurax, "cairo_surface_observer_add_flush_callback")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("abstract_surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("func", VTYPE_Function, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementFunctionEx(cairo_surface_observer_add_flush_callback_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_abstract_surface = args_gurax.Pick<Value_cairo_surface_t>();
+	cairo_surface_t* abstract_surface = value_abstract_surface.GetEntityPtr();
+	RefPtr<Function> func(args_gurax.PickFunction().Reference());
+	void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>();
+	if (!data) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	return new Value_Number(0);
+}
+
+// cairo.cairo_surface_observer_add_finish_callback(abstract_surface as cairo_surface_t, func as Function, data as Pointer)
+Gurax_DeclareFunctionAlias(cairo_surface_observer_add_finish_callback_gurax, "cairo_surface_observer_add_finish_callback")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("abstract_surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("func", VTYPE_Function, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementFunctionEx(cairo_surface_observer_add_finish_callback_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_abstract_surface = args_gurax.Pick<Value_cairo_surface_t>();
+	cairo_surface_t* abstract_surface = value_abstract_surface.GetEntityPtr();
+	RefPtr<Function> func(args_gurax.PickFunction().Reference());
+	void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>();
+	if (!data) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	return new Value_Number(0);
+}
+
+// cairo.cairo_surface_observer_print(surface as cairo_surface_t, write_func as Function, closure as Pointer)
+Gurax_DeclareFunctionAlias(cairo_surface_observer_print_gurax, "cairo_surface_observer_print")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("write_func", VTYPE_Function, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("closure", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementFunctionEx(cairo_surface_observer_print_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_surface = args_gurax.Pick<Value_cairo_surface_t>();
+	cairo_surface_t* surface = value_surface.GetEntityPtr();
+	RefPtr<Function> write_func(args_gurax.PickFunction().Reference());
+	void* closure = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>();
+	if (!closure) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	return new Value_Number(0);
+}
+
 // cairo.cairo_surface_observer_elapsed(surface as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_surface_observer_elapsed_gurax, "cairo_surface_observer_elapsed")
 {
@@ -7048,6 +7248,14 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(cairo_surface_unmap_image_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_surface_create_for_rectangle_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_surface_create_observer_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_surface_observer_add_paint_callback_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_surface_observer_add_mask_callback_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_surface_observer_add_fill_callback_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_surface_observer_add_stroke_callback_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_surface_observer_add_glyphs_callback_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_surface_observer_add_flush_callback_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_surface_observer_add_finish_callback_gurax));
+	frame.Assign(Gurax_CreateFunction(cairo_surface_observer_print_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_surface_observer_elapsed_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_device_observer_elapsed_gurax));
 	frame.Assign(Gurax_CreateFunction(cairo_device_observer_paint_elapsed_gurax));

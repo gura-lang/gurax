@@ -10,6 +10,15 @@ RefPtr<Function> g_pFunc_font_face_render_glyph;
 RefPtr<Function> g_pFunc_font_face_text_to_glyphs;
 RefPtr<Function> g_pFunc_font_face_unicode_to_glyph;
 
+RefPtr<Function> g_pFunc_surface_observer_add_paint;
+RefPtr<Function> g_pFunc_surface_observer_add_mask;
+RefPtr<Function> g_pFunc_surface_observer_add_fill;
+RefPtr<Function> g_pFunc_surface_observer_add_stroke;
+RefPtr<Function> g_pFunc_surface_observer_add_glyphs;
+RefPtr<Function> g_pFunc_surface_observer_add_flush;
+RefPtr<Function> g_pFunc_surface_observer_add_finish;
+RefPtr<Function> g_pFunc_surface_observer_print;
+
 cairo_status_t font_face_init_func(cairo_scaled_font_t* scaled_font, cairo_t* cr, cairo_font_extents_t* extents)
 {
 	return CAIRO_STATUS_SUCCESS;
@@ -30,6 +39,47 @@ cairo_status_t font_face_unicode_to_glyph_func(cairo_scaled_font_t* scaled_font,
 {
 	return CAIRO_STATUS_SUCCESS;
 }
+
+cairo_status_t surface_observer_add_paint_callback(cairo_surface_t* observer, cairo_surface_t* target, void* data)
+{
+	return CAIRO_STATUS_SUCCESS;
+}
+
+cairo_status_t surface_observer_add_mask_callback(cairo_surface_t* observer, cairo_surface_t* target, void* data)
+{
+	return CAIRO_STATUS_SUCCESS;
+}
+
+cairo_status_t surface_observer_add_fill_callback(cairo_surface_t* observer, cairo_surface_t* target, void* data)
+{
+	return CAIRO_STATUS_SUCCESS;
+}
+
+cairo_status_t surface_observer_add_stroke_callback(cairo_surface_t* observer, cairo_surface_t* target, void* data)
+{
+	return CAIRO_STATUS_SUCCESS;
+}
+
+cairo_status_t surface_observer_add_glyphs_callback(cairo_surface_t* observer, cairo_surface_t* target, void* data)
+{
+	return CAIRO_STATUS_SUCCESS;
+}
+
+cairo_status_t surface_observer_add_flush_callback(cairo_surface_t* observer, cairo_surface_t* target, void* data)
+{
+	return CAIRO_STATUS_SUCCESS;
+}
+
+cairo_status_t surface_observer_add_finish_callback(cairo_surface_t* observer, cairo_surface_t* target, void* data)
+{
+	return CAIRO_STATUS_SUCCESS;
+}
+
+cairo_status_t surface_observer_print(void* closure, const unsigned char* data, unsigned int length)
+{
+	return CAIRO_STATUS_SUCCESS;
+}
+
 
 inline UInt8 DemultiplyAlpha(UInt8 elem, UInt8 alpha)
 {

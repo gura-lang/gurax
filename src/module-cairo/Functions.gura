@@ -634,20 +634,52 @@ cairo_surface_create_for_rectangle(target as cairo_surface_t_p, x as double, y a
 cairo_surface_create_observer(target as cairo_surface_t_p, mode as cairo_surface_observer_mode_t) as cairo_surface_t_p
 
 //cairo_surface_observer_add_paint_callback(abstract_surface as cairo_surface_t_p, func as cairo_surface_observer_callback_t, data as void_p) as cairo_status_t
+cairo_surface_observer_add_paint_callback(abstract_surface as cairo_surface_t_p, func as Function@gurax, data as void_p) as cairo_status_t = \
+	R'''
+	return new Value_Number(0);
+	'''
 
 //cairo_surface_observer_add_mask_callback(abstract_surface as cairo_surface_t_p, func as cairo_surface_observer_callback_t, data as void_p) as cairo_status_t
+cairo_surface_observer_add_mask_callback(abstract_surface as cairo_surface_t_p, func as Function@gurax, data as void_p) as cairo_status_t = \
+	R'''
+	return new Value_Number(0);
+	'''
 
 //cairo_surface_observer_add_fill_callback(abstract_surface as cairo_surface_t_p, func as cairo_surface_observer_callback_t, data as void_p) as cairo_status_t
+cairo_surface_observer_add_fill_callback(abstract_surface as cairo_surface_t_p, func as Function@gurax, data as void_p) as cairo_status_t = \
+	R'''
+	return new Value_Number(0);
+	'''
 
 //cairo_surface_observer_add_stroke_callback(abstract_surface as cairo_surface_t_p, func as cairo_surface_observer_callback_t, data as void_p) as cairo_status_t
+cairo_surface_observer_add_stroke_callback(abstract_surface as cairo_surface_t_p, func as Function@gurax, data as void_p) as cairo_status_t = \
+	R'''
+	return new Value_Number(0);
+	'''
 
 //cairo_surface_observer_add_glyphs_callback(abstract_surface as cairo_surface_t_p, func as cairo_surface_observer_callback_t, data as void_p) as cairo_status_t
+cairo_surface_observer_add_glyphs_callback(abstract_surface as cairo_surface_t_p, func as Function@gurax, data as void_p) as cairo_status_t = \
+	R'''
+	return new Value_Number(0);
+	'''
 
 //cairo_surface_observer_add_flush_callback(abstract_surface as cairo_surface_t_p, func as cairo_surface_observer_callback_t, data as void_p) as cairo_status_t
+cairo_surface_observer_add_flush_callback(abstract_surface as cairo_surface_t_p, func as Function@gurax, data as void_p) as cairo_status_t = \
+	R'''
+	return new Value_Number(0);
+	'''
 
 //cairo_surface_observer_add_finish_callback(abstract_surface as cairo_surface_t_p, func as cairo_surface_observer_callback_t, data as void_p) as cairo_status_t
+cairo_surface_observer_add_finish_callback(abstract_surface as cairo_surface_t_p, func as Function@gurax, data as void_p) as cairo_status_t = \
+	R'''
+	return new Value_Number(0);
+	'''
 
 //cairo_surface_observer_print(surface as cairo_surface_t_p, write_func as cairo_write_func_t, closure as void_p) as cairo_status_t
+cairo_surface_observer_print(surface as cairo_surface_t_p, write_func as Function@gurax, closure as void_p) as cairo_status_t = \
+	R'''
+	return new Value_Number(0);
+	'''
 
 cairo_surface_observer_elapsed(surface as cairo_surface_t_p) as double
 
