@@ -178,6 +178,21 @@ function ExecCommand([String] $cmd, [String] $argList) {
 }
 
 #---------------------------------------------------------------------------------
+# Package: zlib
+#---------------------------------------------------------------------------------
+class Package_zlib {
+	[String] $name = "zlib"
+	[String] $ver = "1.2.11"
+	[String] $baseName = "$($this.name)-$($this.ver)"
+	[String[]] $fileNames = @("$($this.baseName).tar.gz")
+	[String] $dirName = $this.baseName
+	Build() {
+		nmake /f win32\Makefile.msc
+	}
+}
+$packages += [Package_zlib]::new()
+
+#---------------------------------------------------------------------------------
 # Package: bzip2
 #---------------------------------------------------------------------------------
 class Package_bzip2 {
@@ -191,6 +206,21 @@ class Package_bzip2 {
 	}
 }
 $packages += [Package_bzip2]::new()
+
+#---------------------------------------------------------------------------------
+# Package: pixman
+#---------------------------------------------------------------------------------
+class Package_pixman {
+	[String] $name = "pixman"
+	[String] $ver = "0.40.0"
+	[String] $baseName = "$($this.name)-$($this.ver)"
+	[String[]] $fileNames = @("$($this.baseName).tar.gz")
+	[String] $dirName = $this.baseName
+	Build() {
+		make.exe -f Makefile.win32 MMX=off pixman
+	}
+}
+$packages += [Package_pixman]::new()
 
 #---------------------------------------------------------------------------------
 # Package: curl
@@ -271,6 +301,7 @@ $packages += [Package_libjpeg]::new()
 
 #---------------------------------------------------------------------------------
 # Package: libpng
+# Dependencies: zlib
 #---------------------------------------------------------------------------------
 class Package_libpng {
 	[String] $name = "libpng"
@@ -397,37 +428,8 @@ class Package_yaml {
 $packages += [Package_yaml]::new()
 
 #---------------------------------------------------------------------------------
-# Package: zlib
-#---------------------------------------------------------------------------------
-class Package_zlib {
-	[String] $name = "zlib"
-	[String] $ver = "1.2.11"
-	[String] $baseName = "$($this.name)-$($this.ver)"
-	[String[]] $fileNames = @("$($this.baseName).tar.gz")
-	[String] $dirName = $this.baseName
-	Build() {
-		nmake /f win32\Makefile.msc
-	}
-}
-$packages += [Package_zlib]::new()
-
-#---------------------------------------------------------------------------------
-# Package: pixman
-#---------------------------------------------------------------------------------
-class Package_pixman {
-	[String] $name = "pixman"
-	[String] $ver = "0.40.0"
-	[String] $baseName = "$($this.name)-$($this.ver)"
-	[String[]] $fileNames = @("$($this.baseName).tar.gz")
-	[String] $dirName = $this.baseName
-	Build() {
-		make.exe -f Makefile.win32 MMX=off pixman
-	}
-}
-$packages += [Package_pixman]::new()
-
-#---------------------------------------------------------------------------------
 # Package: cairo
+# Dependencies: pixman, zlib, libpng
 #---------------------------------------------------------------------------------
 class Package_cairo {
 	[String] $name = "cairo"
@@ -452,8 +454,8 @@ class Package_wx {
 	[String] $dirName = $this.baseName
 	Build() {
 		#ExecCommand msbuild 'build\msw\wx_vc16.sln /Clp:DisableConsoleColor /t:Build /p:Configuration="DLL Debug" /p:Platform=x64'
-		msbuild build\msw\wx_vc16.sln /Clp:DisableConsoleColor /t:Build /p:Configuration="DLL Release" /p:Platform=x64
-		copy lib\vc_x64_dll\*.dll ..\..\bin
+		#ExecCommand msbuild build\msw\wx_vc16.sln /Clp:DisableConsoleColor /t:Build /p:Configuration="DLL Release" /p:Platform=x64
+		#copy lib\vc_x64_dll\*.dll ..\..\bin
 	}
 }
 $packages += [Package_wx]::new()
