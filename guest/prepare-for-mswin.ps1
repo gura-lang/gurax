@@ -154,7 +154,7 @@ function ExpandFiles([String[]] $fileNames) {
 			7za x -y $fileName
 			7za x -y "${baseName}.tar"
 			Remove-Item -ErrorAction Ignore -Force "${baseName}.tar"
-		} elseif (($fileName -match "(?<baseName>wxWidgets.+).(?<extName>zip|7z)$")) {
+		} elseif (($fileName -match "(?<baseName>wxWidgets.+).(?<extName>7z)$")) {
 			$baseName = $Matches['baseName']
 			$extName = $Matches['extName']
 			$fileName = "${baseName}.${extName}"
@@ -450,11 +450,11 @@ class Package_wx {
 	[String] $name = "wx"
 	[String] $ver = "3.1.5"
 	[String] $baseName = "wxWidgets-$($this.ver)"
-	[String[]] $fileNames = @("$($this.baseName).7z")
+	[String[]] $fileNames = @("$($this.baseName).7z", "$($this.baseName)-gurapatch-vs2022.zip")
 	[String] $dirName = $this.baseName
 	Build() {
 		#ExecCommand msbuild 'build\msw\wx_vc16.sln /Clp:DisableConsoleColor /t:Build /p:Configuration="DLL Debug" /p:Platform=x64'
-		#ExecCommand msbuild build\msw\wx_vc16.sln /Clp:DisableConsoleColor /t:Build /p:Configuration="DLL Release" /p:Platform=x64
+		msbuild build\msw\wx_vc16.sln /clp:DisableConsoleColor /t:Build /p:Configuration="DLL Release" /p:Platform=x64
 		#copy lib\vc_x64_dll\*.dll ..\..\bin
 	}
 }
