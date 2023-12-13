@@ -27,7 +27,7 @@ ${help.ComposeMethodHelp(zip.Writer, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// zip.Writer(stream:Stream:w, compression?:Symbol) {block?}
+// zip.Writer(stream:w as Stream, compression? as Symbol) {block?}
 Gurax_DeclareConstructor(Writer)
 {
 	Declare(VTYPE_Writer, Flag::None);
@@ -58,7 +58,7 @@ Gurax_ImplementConstructor(Writer)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// zip.Writer#Add(stream:Stream:r, fileName?:String, compression?:Symbol, timeStamp?:DateTime):map:reduce
+// zip.Writer#Add(stream:r as Stream, fileName? as String, compression? as Symbol, timeStamp? as DateTime):map:reduce
 Gurax_DeclareMethod(Writer, Add)
 {
 	Declare(VTYPE_Writer, Flag::Reduce | Flag::Map);

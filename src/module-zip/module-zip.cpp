@@ -13,7 +13,7 @@ RefPtr<Codec> g_pCodec;
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
-// zip.Directory(stream:Stream) {block?}
+// zip.Directory(stream as Stream) {block?}
 Gurax_DeclareFunction(Directory)
 {
 	Declare(VTYPE_Directory, Flag::None);
@@ -36,7 +36,7 @@ Gurax_ImplementFunction(Directory)
 	return argument.ReturnValue(processor, new Value_Directory(pDirectory.release()));
 }
 
-// zip.Inspect(stream:Stream)
+// zip.Inspect(stream as Stream)
 Gurax_DeclareFunction(Inspect)
 {
 	Declare(VTYPE_Nil, Flag::None);

@@ -225,7 +225,7 @@ bool Writer::Finish()
 		Gurax_PackUInt16(fields.TotalNumberOfEntriesInTheCentralDirectory,				nCentralFileHeaders);
 		Gurax_PackUInt32(fields.SizeOfTheCentralDirectory,								sizeOfTheCentralDirectory);
 		Gurax_PackUInt32(fields.OffsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber,
-						 																offsetOfCentralDirectory);
+																						offsetOfCentralDirectory);
 		Gurax_PackUInt16(fields.ZIPFileCommentLength,									0x0000);
 		if (!rec.Write(*_pStreamDst)) return false;
 	} while (0);

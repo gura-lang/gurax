@@ -27,7 +27,7 @@ ${help.ComposeMethodHelp(zip.Reader, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// zip.Reader(stream:Stream:r) {block?}
+// zip.Reader(stream:r as Stream) {block?}
 Gurax_DeclareConstructor(Reader)
 {
 	Declare(VTYPE_Reader, Flag::None);
@@ -53,7 +53,7 @@ Gurax_ImplementConstructor(Reader)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// zip.Reader#Entry(name:String) {block?}
+// zip.Reader#Entry(name as String) {block?}
 Gurax_DeclareMethod(Reader, Entry)
 {
 	Declare(VTYPE_Stream, Flag::None);

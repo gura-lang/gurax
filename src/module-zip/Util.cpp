@@ -81,8 +81,7 @@ UInt32 SeekCentralDirectory(Stream& streamSrc, EndOfCentralDirectoryRecord* pRec
 	EndOfCentralDirectoryRecord record;
 	::memcpy(reinterpret_cast<void*>(&record), buffAnchor, EndOfCentralDirectoryRecord::MinSize);
 	if (pRecord) *pRecord = record;
-	return Gurax_UnpackUInt32(record.GetFields().
-							  OffsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber);
+	return Gurax_UnpackUInt32(record.GetFields().OffsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber);
 }
 
 bool InspectDescriptor(Stream& streamCon, Stream& streamSrc)

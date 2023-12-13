@@ -12,8 +12,8 @@ bool PathMgrEx::IsResponsible(Directory* pDirectoryParent, const char* pathName)
 {
 	return pDirectoryParent && //!pDirectoryParent->IsFolder() &&
 		(String::EndsWith<CharICase>(pDirectoryParent->GetName(), ".zip") ||
-		 String::EndsWith<CharICase>(pDirectoryParent->GetName(), ".gurc") ||
-		 String::EndsWith<CharICase>(pDirectoryParent->GetName(), ".gurcw"));
+		String::EndsWith<CharICase>(pDirectoryParent->GetName(), ".gurc") ||
+		String::EndsWith<CharICase>(pDirectoryParent->GetName(), ".gurcw"));
 }
 
 Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName, Directory::Type typeWouldBe)
