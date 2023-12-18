@@ -25,6 +25,7 @@
 #include "VType_SDL_GLContext.h"
 #include "VType_SDL_Haptic.h"
 #include "VType_SDL_HapticEffect.h"
+#include "VType_SDL_HapticConstant.h"
 #include "VType_SDL_Joystick.h"
 #include "VType_SDL_JoystickGUID.h"
 #include "VType_SDL_Keysym.h"

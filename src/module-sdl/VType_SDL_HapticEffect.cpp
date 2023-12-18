@@ -45,7 +45,7 @@ Gurax_ImplementPropertyGetter(SDL_HapticEffect, type)
 // sdl.SDL_HapticEffect#constant
 Gurax_DeclareProperty_R(SDL_HapticEffect, constant)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_SDL_HapticConstant, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 
 )""");
@@ -53,8 +53,8 @@ Gurax_DeclareProperty_R(SDL_HapticEffect, constant)
 
 Gurax_ImplementPropertyGetter(SDL_HapticEffect, constant)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_SDL_HapticConstant(valueThis.Reference());
 }
 
 // sdl.SDL_HapticEffect#periodic
