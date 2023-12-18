@@ -54,6 +54,7 @@ target_sources(sdl.gurd PRIVATE
 	VType_SDL_GameController.cpp
 	VType_SDL_GLContext.cpp
 	VType_SDL_Haptic.cpp
+	VType_SDL_HapticDirection.cpp
 	VType_SDL_HapticEffect.cpp
 	VType_SDL_HapticConstant.cpp
 	VType_SDL_Joystick.cpp

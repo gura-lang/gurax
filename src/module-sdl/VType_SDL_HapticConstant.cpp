@@ -45,7 +45,7 @@ Gurax_ImplementPropertyGetter(SDL_HapticConstant, type)
 // sdl.SDL_HapticConstant#direction
 Gurax_DeclareProperty_R(SDL_HapticConstant, direction)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_SDL_HapticDirection, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 
 )""");
@@ -54,8 +54,7 @@ Gurax_DeclareProperty_R(SDL_HapticConstant, direction)
 Gurax_ImplementPropertyGetter(SDL_HapticConstant, direction)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	//return new Value_Number(valueThis.GetEntity().direction);
-	return new Value_Number(3);
+	return new Value_SDL_HapticDirection(valueThis.GetValue_HapticEffect().Reference());
 }
 
 // sdl.SDL_HapticConstant#length

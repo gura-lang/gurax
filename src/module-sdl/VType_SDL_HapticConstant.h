@@ -5,6 +5,7 @@
 #define GURAX_MODULE_SDL_VTYPE_SDL_HAPTICCONSTANT_H
 #include "module-sdl.h"
 #include "VType_SDL_HapticEffect.h"
+#include "VType_SDL_HapticDirection.h"
 
 Gurax_BeginModuleScope(sdl)
 
@@ -64,6 +65,8 @@ public:
 	static const SDL_HapticConstant* GetEntityPtr(const Value& value) {
 		return dynamic_cast<const Value_SDL_HapticConstant&>(value).GetEntityPtr();
 	}
+public:
+	const Value_SDL_HapticEffect& GetValue_HapticEffect() const { return *_pValue_HapticEffect; }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }

@@ -24,6 +24,7 @@
 #include "VType_SDL_GameController.h"
 #include "VType_SDL_GLContext.h"
 #include "VType_SDL_Haptic.h"
+#include "VType_SDL_HapticDirection.h"
 #include "VType_SDL_HapticEffect.h"
 #include "VType_SDL_HapticConstant.h"
 #include "VType_SDL_Joystick.h"
