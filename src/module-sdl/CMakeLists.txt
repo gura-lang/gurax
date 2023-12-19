@@ -57,6 +57,11 @@ target_sources(sdl.gurd PRIVATE
 	VType_SDL_HapticDirection.cpp
 	VType_SDL_HapticEffect.cpp
 	VType_SDL_HapticConstant.cpp
+	VTYPE_SDL_HapticPeriodic.cpp
+	VTYPE_SDL_HapticCondition.cpp
+	VTYPE_SDL_HapticRamp.cpp
+	VTYPE_SDL_HapticLeftRight.cpp
+	VTYPE_SDL_HapticCustom.cpp
 	VType_SDL_Joystick.cpp
 	VType_SDL_JoystickGUID.cpp
 	VType_SDL_Keysym.cpp

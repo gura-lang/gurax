@@ -87,6 +87,11 @@ Gurax_ModulePrepare()
     Assign(VTYPE_SDL_Haptic);
     Assign(VTYPE_SDL_HapticEffect);
     Assign(VTYPE_SDL_HapticConstant);
+    Assign(VTYPE_SDL_HapticPeriodic);
+    Assign(VTYPE_SDL_HapticCondition);
+    Assign(VTYPE_SDL_HapticRamp);
+    Assign(VTYPE_SDL_HapticLeftRight);
+    Assign(VTYPE_SDL_HapticCustom);
     Assign(VTYPE_SDL_Joystick);
     Assign(VTYPE_SDL_JoystickGUID);
     Assign(VTYPE_SDL_Keysym);
