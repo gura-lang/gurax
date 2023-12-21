@@ -4,6 +4,17 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
+	VType_wxHtmlWindowInterface.cpp
+	VType_wxWithImages.cpp
+	VType_wxVarVScrollHelper.cpp
+	VType_wxVarScrollHelperBase.cpp
+	VType_wxVarHVScrollHelper.cpp
+	VType_wxVarHScrollHelper.cpp
+	VType_wxTextEntry.cpp
+	VType_wxMouseState.cpp
+	VType_wxKeyboardState.cpp
+	VType_wxItemContainer.cpp
+	VType_wxHtmlWidgetCell.cpp
 	VType_wxHtmlHelpFrame.cpp
 	VType_wxHtmlHelpController.cpp
 	VType_wxHtmlHelpDataItems.cpp
@@ -54,22 +65,22 @@ set(SRCFILES_VTYPE
 	VType_wxTreeListItemComparator.cpp
 	VType_wxTreeListItems.cpp
 	VType_wxTreeListItem.cpp
+	VType_wxSizerItem.cpp
+	VType_wxToolBarToolBase.cpp
 	VType_wxMenuItem.cpp
 	VType_wxToolTip.cpp
-	VType_wxToolBarToolBase.cpp
-	VType_wxSizerItem.cpp
 	VType_wxObject.cpp
 	VType_wxMask.cpp
 	VType_wxListItem.cpp
 	VType_wxLayoutConstraints.cpp
 	VType_wxImageHandler.cpp
 	VType_wxImage.cpp
-	VType_wxGDIObject.cpp
 	VType_wxGridTableBase.cpp
 	VType_wxGraphicsObject.cpp
+	VType_wxGDIObject.cpp
 	VType_wxGridBagSizer.cpp
-	VType_wxFindReplaceData.cpp
 	VType_wxFileSystem.cpp
+	VType_wxFindReplaceData.cpp
 	VType_wxAnimation.cpp
 	VType_wxAccessible.cpp
 	VType_wxClipboard.cpp
@@ -147,12 +158,12 @@ set(SRCFILES_VTYPE
 	VType_wxStaticText.cpp
 	VType_wxStaticLine.cpp
 	VType_wxStaticBoxSizer.cpp
-	VType_wxStaticBox.cpp
 	VType_wxStaticBitmap.cpp
+	VType_wxStaticBox.cpp
 	VType_wxSplitterWindow.cpp
 	VType_wxSpinEvent.cpp
-	VType_wxSpinCtrl.cpp
 	VType_wxSpinButton.cpp
+	VType_wxSpinCtrl.cpp
 	VType_wxSocketServer.cpp
 	VType_wxSocketEvent.cpp
 	VType_wxSocketClient.cpp
@@ -165,12 +176,12 @@ set(SRCFILES_VTYPE
 	VType_wxSimpleHtmlListBox.cpp
 	VType_wxSimplebook.cpp
 	VType_wxShowEvent.cpp
-	VType_wxSettableHeaderColumn.cpp
 	VType_wxSetCursorEvent.cpp
+	VType_wxSettableHeaderColumn.cpp
 	VType_wxScrollWinEvent.cpp
 	VType_wxScrollEvent.cpp
-	VType_wxScrolledWindow.cpp
 	VType_wxScrolledCanvas.cpp
+	VType_wxScrolledWindow.cpp
 	VType_wxScrollBar.cpp
 	VType_wxScreenDC.cpp
 	VType_wxSashWindow.cpp
@@ -178,8 +189,8 @@ set(SRCFILES_VTYPE
 	VType_wxRichTextTable.cpp
 	VType_wxRichTextStyleSheet.cpp
 	VType_wxRichTextStyleOrganiserDialog.cpp
-	VType_wxRichTextStyleListBox.cpp
 	VType_wxRichTextStyleListCtrl.cpp
+	VType_wxRichTextStyleListBox.cpp
 	VType_wxRichTextStyleDefinition.cpp
 	VType_wxRichTextStyleComboCtrl.cpp
 	VType_wxRichTextSelection.cpp
@@ -190,14 +201,14 @@ set(SRCFILES_VTYPE
 	VType_wxRichTextParagraph.cpp
 	VType_wxRichTextObject.cpp
 	VType_wxRichTextListStyleDefinition.cpp
-	VType_wxRichTextFormattingDialogFactory.cpp
 	VType_wxRichTextLine.cpp
+	VType_wxRichTextFormattingDialogFactory.cpp
 	VType_wxRichTextFormattingDialog.cpp
 	VType_wxRichTextField.cpp
 	VType_wxRichTextCtrl.cpp
 	VType_wxRichTextContextMenuPropertiesInfo.cpp
-	VType_wxRichTextCharacterStyleDefinition.cpp
 	VType_wxRichTextCompositeObject.cpp
+	VType_wxRichTextCharacterStyleDefinition.cpp
 	VType_wxRichTextCell.cpp
 	VType_wxRichTextBuffer.cpp
 	VType_wxRichTextBox.cpp
@@ -217,11 +228,11 @@ set(SRCFILES_VTYPE
 	VType_wxProtocolLog.cpp
 	VType_wxProtocol.cpp
 	VType_wxPropertyGridPage.cpp
-	VType_wxPropertyGrid.cpp
 	VType_wxPropertyGridManager.cpp
+	VType_wxPropertyGrid.cpp
 	VType_wxPropertyCategory.cpp
-	VType_wxProcessEvent.cpp
 	VType_wxProgressDialog.cpp
+	VType_wxProcessEvent.cpp
 	VType_wxPrintPreview.cpp
 	VType_wxPrinterDC.cpp
 	VType_wxPrintData.cpp
@@ -232,14 +243,14 @@ set(SRCFILES_VTYPE
 	VType_wxPopupTransientWindow.cpp
 	VType_wxPoint2DDouble.cpp
 	VType_wxPNGHandler.cpp
-	VType_wxPGValidationInfo.cpp
 	VType_wxPickerBase.cpp
+	VType_wxPGValidationInfo.cpp
 	VType_wxPGPropertyFlags.cpp
-	VType_wxPGProperty.cpp
 	VType_wxPGPaintData.cpp
+	VType_wxPGProperty.cpp
 	VType_wxPGEditorDialogAdapter.cpp
-	VType_wxPGChoices.cpp
 	VType_wxPGEditor.cpp
+	VType_wxPGChoices.cpp
 	VType_wxPGChoiceEditor.cpp
 	VType_wxPGCellRenderer.cpp
 	VType_wxPGCell.cpp
@@ -293,29 +304,28 @@ set(SRCFILES_VTYPE
 	VType_wxIconBundle.cpp
 	VType_wxIcon.cpp
 	VType_wxHyperlinkEvent.cpp
-	VType_wxHVScrolledWindow.cpp
 	VType_wxHyperlinkCtrl.cpp
+	VType_wxHVScrolledWindow.cpp
 	VType_wxHTTP.cpp
 	VType_wxHtmlWordWithTabsCell.cpp
 	VType_wxHtmlWordCell.cpp
 	VType_wxHtmlWindow.cpp
-	VType_wxHtmlWidgetCell.cpp
 	VType_wxHtmlLinkInfo.cpp
 	VType_wxHtmlLinkEvent.cpp
 	VType_wxHtmlHelpWindow.cpp
 	VType_wxHtmlCellEvent.cpp
 	VType_wxHScrolledWindow.cpp
 	VType_wxHelpEvent.cpp
-	VType_wxHelpControllerBase.cpp
 	VType_wxHeaderCtrlSimple.cpp
+	VType_wxHelpControllerBase.cpp
 	VType_wxHeaderCtrlEvent.cpp
-	VType_wxHeaderColumnSimple.cpp
 	VType_wxHeaderCtrl.cpp
+	VType_wxHeaderColumnSimple.cpp
 	VType_wxHeaderColumn.cpp
 	VType_wxGridTableMessage.cpp
 	VType_wxGridSizesInfo.cpp
-	VType_wxGridRowHeaderRendererDefault.cpp
 	VType_wxGridSizer.cpp
+	VType_wxGridRowHeaderRendererDefault.cpp
 	VType_wxGridRowHeaderRenderer.cpp
 	VType_wxGridHeaderLabelsRenderer.cpp
 	VType_wxGridEvent.cpp
@@ -354,14 +364,14 @@ set(SRCFILES_VTYPE
 	VType_wxGDIImageHandler.cpp
 	VType_wxGCDC.cpp
 	VType_wxGBSpan.cpp
-	VType_wxGauge.cpp
 	VType_wxGBPosition.cpp
+	VType_wxGauge.cpp
 	VType_wxFTP.cpp
 	VType_wxFrame.cpp
 	VType_wxFontProperty.cpp
 	VType_wxFontPickerEvent.cpp
-	VType_wxFontPickerCtrl.cpp
 	VType_wxFontMetrics.cpp
+	VType_wxFontPickerCtrl.cpp
 	VType_wxFontInfo.cpp
 	VType_wxFontData.cpp
 	VType_wxFont.cpp
@@ -378,8 +388,8 @@ set(SRCFILES_VTYPE
 	VType_wxFileCtrl.cpp
 	VType_wxFileConfig.cpp
 	VType_wxEvtHandler.cpp
-	VType_wxEvent.cpp
 	VType_wxEventLoopBase.cpp
+	VType_wxEvent.cpp
 	VType_wxEraseEvent.cpp
 	VType_wxEnumProperty.cpp
 	VType_wxEditEnumProperty.cpp
@@ -409,8 +419,8 @@ set(SRCFILES_VTYPE
 	VType_wxDataViewIndexListModel.cpp
 	VType_wxDataViewEvent.cpp
 	VType_wxDataViewCtrl.cpp
-	VType_wxDataObject.cpp
 	VType_wxDataViewColumn.cpp
+	VType_wxDataObject.cpp
 	VType_wxDatagramSocket.cpp
 	VType_wxDataFormat.cpp
 	VType_wxCursorProperty.cpp
@@ -432,8 +442,8 @@ set(SRCFILES_VTYPE
 	VType_wxClientDC.cpp
 	VType_wxChoicebook.cpp
 	VType_wxChoice.cpp
-	VType_wxCheckListBox.cpp
 	VType_wxCheckBox.cpp
+	VType_wxCheckListBox.cpp
 	VType_wxCharBuffer.cpp
 	VType_wxCaret.cpp
 	VType_wxCalendarEvent.cpp
@@ -456,8 +466,8 @@ set(SRCFILES_VTYPE
 	VType_wxAutoBufferedPaintDC.cpp
 	VType_wxAuiToolBarItem.cpp
 	VType_wxAuiToolBarEvent.cpp
-	VType_wxAuiToolBar.cpp
 	VType_wxAuiToolBarArt.cpp
+	VType_wxAuiToolBar.cpp
 	VType_wxAuiTabArt.cpp
 	VType_wxAuiNotebook.cpp
 	VType_wxAuiNotebookEvent.cpp
@@ -467,8 +477,8 @@ set(SRCFILES_VTYPE
 	VType_wxAuiManagerEvent.cpp
 	VType_wxAuiManager.cpp
 	VType_wxAuiDockArt.cpp
-	VType_wxAuiDefaultToolBarArt.cpp
 	VType_wxArrayStringProperty.cpp
+	VType_wxAuiDefaultToolBarArt.cpp
 	VType_wxAnyButton.cpp
 	VType_wxAnimationCtrl.cpp
 	VType_wxActivateEvent.cpp

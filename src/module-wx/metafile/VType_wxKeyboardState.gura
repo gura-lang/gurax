@@ -1,7 +1,7 @@
 //==============================================================================
 // VType_wxKeyboardState.gura
 //==============================================================================
-KeyboardState = Class():mixin {
+KeyboardState = Class():mixin:loosePointer {
 	GetModifiers() as int
 	HasAnyModifiers() as bool
 	HasModifiers() as bool

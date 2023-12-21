@@ -1,7 +1,7 @@
 //==============================================================================
 // VType_wxVarHScrollHelper.gura
 //==============================================================================
-VarHScrollHelper = Class():mixin {
+VarHScrollHelper = Class():mixin:loosePointer {
 	@include['wx/vscroll.h']
 	@mixin[VarScrollHelperBase]
 	GetColumnCount() as size_t

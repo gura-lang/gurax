@@ -1,7 +1,7 @@
 //==============================================================================
 // VType_wxHtmlWindowInterface.gura
 //==============================================================================
-HtmlWindowInterface = Class():mixin {
+HtmlWindowInterface = Class():mixin:loosePointer {
 	@include['wx/html/htmlwin.h']
 } %% R'''
 # Overview

@@ -1,7 +1,7 @@
 //==============================================================================
 // VType_wxVarVScrollHelper.gura
 //==============================================================================
-VarVScrollHelper = Class():mixin {
+VarVScrollHelper = Class():mixin:loosePointer {
 	@include['wx/vscroll.h']
 	@mixin[VarScrollHelperBase]
 	GetRowCount() as size_t

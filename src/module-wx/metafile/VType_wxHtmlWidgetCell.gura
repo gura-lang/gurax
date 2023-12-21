@@ -3,6 +3,7 @@
 //==============================================================================
 HtmlWidgetCell = Class(HtmlCell) {
 	@include['wx/html/htmlcell.h']
+	__init__(wnd as Window_p, w as int = 0)
 } %% R'''
 # Overview
 

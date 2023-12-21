@@ -32,14 +32,16 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxVarScrollHelperBase");
 protected:
-	wxVarScrollHelperBase _entity;
+	wxVarScrollHelperBase* _pEntity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxVarScrollHelperBase() = delete;
+	explicit Value_wxVarScrollHelperBase(wxVarScrollHelperBase* pEntity, VType& vtype = VTYPE_wxVarScrollHelperBase) :
+		Value_Object(vtype), _pEntity(pEntity) {}
 	explicit Value_wxVarScrollHelperBase(const wxVarScrollHelperBase& entity, VType& vtype = VTYPE_wxVarScrollHelperBase) :
-		Value_Object(vtype), _entity(entity) {}
+		Value_Object(vtype), _pEntity(const_cast<wxVarScrollHelperBase*>(&entity)) {}
 	// Copy constructor/operator
 	Value_wxVarScrollHelperBase(const Value_wxVarScrollHelperBase& src) = delete;
 	Value_wxVarScrollHelperBase& operator=(const Value_wxVarScrollHelperBase& src) = delete;
@@ -50,10 +52,10 @@ protected:
 	// Destructor
 	~Value_wxVarScrollHelperBase() = default;
 public:
-	wxVarScrollHelperBase& GetEntity() { return _entity; }
-	const wxVarScrollHelperBase& GetEntity() const { return _entity; }
-	wxVarScrollHelperBase* GetEntityPtr() { return &_entity; }
-	const wxVarScrollHelperBase* GetEntityPtr() const { return &_entity; }
+	wxVarScrollHelperBase& GetEntity() { return *_pEntity; }
+	const wxVarScrollHelperBase& GetEntity() const { return *_pEntity; }
+	wxVarScrollHelperBase* GetEntityPtr() { return _pEntity; }
+	const wxVarScrollHelperBase* GetEntityPtr() const { return _pEntity; }
 public:
 	static wxVarScrollHelperBase& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxVarScrollHelperBase&>(value).GetEntity();

@@ -1,7 +1,7 @@
 //==============================================================================
 // VType_wxVarHVScrollHelper.gura
 //==============================================================================
-VarHVScrollHelper = Class():mixin {
+VarHVScrollHelper = Class():mixin:loosePointer {
 	@include['wx/vscroll.h']
 	@mixin[VarHScrollHelper, VarVScrollHelper]
 	EnablePhysicalScrolling(vscrolling as bool = true, hscrolling as bool = true) as void

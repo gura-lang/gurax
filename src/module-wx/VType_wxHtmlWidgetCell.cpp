@@ -44,6 +44,27 @@ ${help.ComposeMethodHelp(wx.HtmlWidgetCell, `ja)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.HtmlWidgetCell(wnd as wx.Window, w? as Number) {block?}
+Gurax_DeclareConstructorAlias(HtmlWidgetCell_gurax, "HtmlWidgetCell")
+{
+	Declare(VTYPE_wxHtmlWidgetCell, Flag::None);
+	DeclareArg("wnd", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("w", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementConstructorEx(HtmlWidgetCell_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_wnd = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* wnd = value_wnd.GetEntityPtr();
+	bool w_validFlag = args_gurax.IsValid();
+	int w = w_validFlag? args_gurax.PickNumber<int>() : 0;
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxHtmlWidgetCell(
+		wxHtmlWidgetCell(wnd, w)));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -64,7 +85,7 @@ void VType_wxHtmlWidgetCell::DoPrepare(Frame& frameOuter)
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
-	Declare(VTYPE_wxHtmlCell, Flag::Mutable);
+	Declare(VTYPE_wxHtmlCell, Flag::Mutable, Gurax_CreateConstructor(HtmlWidgetCell_gurax));
 	// Assignment of method
 }
 

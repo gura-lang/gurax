@@ -31,14 +31,16 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxTextEntry");
 protected:
-	wxTextEntry _entity;
+	wxTextEntry* _pEntity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxTextEntry() = delete;
+	explicit Value_wxTextEntry(wxTextEntry* pEntity, VType& vtype = VTYPE_wxTextEntry) :
+		Value_Object(vtype), _pEntity(pEntity) {}
 	explicit Value_wxTextEntry(const wxTextEntry& entity, VType& vtype = VTYPE_wxTextEntry) :
-		Value_Object(vtype), _entity(entity) {}
+		Value_Object(vtype), _pEntity(const_cast<wxTextEntry*>(&entity)) {}
 	// Copy constructor/operator
 	Value_wxTextEntry(const Value_wxTextEntry& src) = delete;
 	Value_wxTextEntry& operator=(const Value_wxTextEntry& src) = delete;
@@ -49,10 +51,10 @@ protected:
 	// Destructor
 	~Value_wxTextEntry() = default;
 public:
-	wxTextEntry& GetEntity() { return _entity; }
-	const wxTextEntry& GetEntity() const { return _entity; }
-	wxTextEntry* GetEntityPtr() { return &_entity; }
-	const wxTextEntry* GetEntityPtr() const { return &_entity; }
+	wxTextEntry& GetEntity() { return *_pEntity; }
+	const wxTextEntry& GetEntity() const { return *_pEntity; }
+	wxTextEntry* GetEntityPtr() { return _pEntity; }
+	const wxTextEntry* GetEntityPtr() const { return _pEntity; }
 public:
 	static wxTextEntry& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxTextEntry&>(value).GetEntity();

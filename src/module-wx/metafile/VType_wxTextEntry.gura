@@ -1,7 +1,7 @@
 //==============================================================================
 // VType_wxTextEntry.gura
 //==============================================================================
-TextEntry = Class():mixin {
+TextEntry = Class():mixin:loosePointer {
 	AppendText(text as const_String_r) as void
 	AutoComplete(choices as const_ArrayString_r) as bool
 	//AutoComplete(completer as TextCompleter_p) as bool

@@ -1,7 +1,7 @@
 //==============================================================================
 // VType_wxItemContainer.gura
 //==============================================================================
-ItemContainer = Class():mixin {
+ItemContainer = Class():mixin:loosePointer {
 	Clear() as void
 	Delete(n as unsigned_int) as void
 	//DetachClientObject(n as unsigned_int) as ClientData_p

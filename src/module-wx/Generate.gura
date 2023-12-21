@@ -1060,7 +1060,8 @@ pathStats.Sort(`descend, pathStats::mtime).Each {|pathStat|
 				}
 				if (exprBody.attr.IsSet(`mixin)) {
 					classInfoToMixinTbl.Add(classInfo)
-				} else {
+				}
+				if (!exprBody.attr.IsSet(`noVType)) {
 					classInfoTbl.Add(classInfo)
 				}
 			}

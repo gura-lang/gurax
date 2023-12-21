@@ -1,7 +1,7 @@
 //==============================================================================
 // VType_wxVarScrollHelperBase.gura
 //==============================================================================
-VarScrollHelperBase = Class():mixin {
+VarScrollHelperBase = Class():mixin:loosePointer {
 	@include['wx/vscroll.h']
 } %% R'''
 # Overview

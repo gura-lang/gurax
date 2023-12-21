@@ -1,7 +1,7 @@
 //==============================================================================
 // VType_wxScrolled.gura
 //==============================================================================
-Scrolled = Class():mixin {
+Scrolled = Class():mixin:noVType {
 	//CalcScrolledPosition(x as int, y as int, xx as int_p, yy as int_p) as void
 	CalcScrolledPositionXY(x as int, y as int) = \
 		R'''
