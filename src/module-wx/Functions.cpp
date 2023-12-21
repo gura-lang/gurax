@@ -273,6 +273,19 @@ Gurax_ImplementFunctionEx(GetMousePosition_gurax, processor_gurax, argument_gura
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(wxGetMousePosition()));
 }
 
+// wx.GetMouseState() {block?}
+Gurax_DeclareFunctionAlias(GetMouseState_gurax, "GetMouseState")
+{
+	Declare(VTYPE_wxMouseState, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+}
+
+Gurax_ImplementFunctionEx(GetMouseState_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMouseState(wxGetMouseState()));
+}
+
 // wx.GetNumberFromUser(message as String, prompt as String, caption as String, value as Number, min? as Number, max? as Number, parent? as wx.Window, pos? as wx.Point)
 Gurax_DeclareFunctionAlias(GetNumberFromUser_gurax, "GetNumberFromUser")
 {
@@ -760,6 +773,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(GetLocalTime_gurax));
 	frame.Assign(Gurax_CreateFunction(GetLocalTimeMillis_gurax));
 	frame.Assign(Gurax_CreateFunction(GetMousePosition_gurax));
+	frame.Assign(Gurax_CreateFunction(GetMouseState_gurax));
 	frame.Assign(Gurax_CreateFunction(GetNumberFromUser_gurax));
 	frame.Assign(Gurax_CreateFunction(GetPasswordFromUser_gurax));
 	frame.Assign(Gurax_CreateFunction(GetPowerType_gurax));

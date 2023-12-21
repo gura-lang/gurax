@@ -4,6 +4,7 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
+	VType_wxMouseState.cpp
 	VType_wxHtmlWindowInterface.cpp
 	VType_wxWithImages.cpp
 	VType_wxVarVScrollHelper.cpp
@@ -11,7 +12,6 @@ set(SRCFILES_VTYPE
 	VType_wxVarHVScrollHelper.cpp
 	VType_wxVarHScrollHelper.cpp
 	VType_wxTextEntry.cpp
-	VType_wxMouseState.cpp
 	VType_wxKeyboardState.cpp
 	VType_wxItemContainer.cpp
 	VType_wxHtmlWidgetCell.cpp

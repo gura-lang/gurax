@@ -1,7 +1,7 @@
 //==============================================================================
 // VType_wxMouseState.gura
 //==============================================================================
-MouseState = Class():mixin:loosePointer {
+MouseState = Class():mixin {
 	@mixin[KeyboardState]
 	GetX() as Coord
 	GetY() as Coord

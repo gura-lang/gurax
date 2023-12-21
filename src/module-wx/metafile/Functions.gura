@@ -19,7 +19,7 @@ GetBatteryState() as BatteryState
 //GetDisplayName() as String
 GetKeyState(key as KeyCode) as bool
 GetMousePosition() as Point
-//GetMouseState() as MouseState
+GetMouseState() as MouseState
 GetPowerType() as PowerType
 ImplementApp(app as AppConsole_p) = \
 	R'''

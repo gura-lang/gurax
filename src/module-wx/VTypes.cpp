@@ -12,6 +12,7 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
+	frame.Assign(VTYPE_wxMouseState);
 	frame.Assign(VTYPE_wxHtmlWindowInterface);
 	frame.Assign(VTYPE_wxWithImages);
 	frame.Assign(VTYPE_wxVarVScrollHelper);
@@ -19,7 +20,6 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxVarHVScrollHelper);
 	frame.Assign(VTYPE_wxVarHScrollHelper);
 	frame.Assign(VTYPE_wxTextEntry);
-	frame.Assign(VTYPE_wxMouseState);
 	frame.Assign(VTYPE_wxKeyboardState);
 	frame.Assign(VTYPE_wxItemContainer);
 	frame.Assign(VTYPE_wxHtmlWidgetCell);

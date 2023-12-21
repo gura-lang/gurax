@@ -31,16 +31,14 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxMouseState");
 protected:
-	wxMouseState* _pEntity;
+	wxMouseState _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxMouseState() = delete;
-	explicit Value_wxMouseState(wxMouseState* pEntity, VType& vtype = VTYPE_wxMouseState) :
-		Value_Object(vtype), _pEntity(pEntity) {}
 	explicit Value_wxMouseState(const wxMouseState& entity, VType& vtype = VTYPE_wxMouseState) :
-		Value_Object(vtype), _pEntity(const_cast<wxMouseState*>(&entity)) {}
+		Value_Object(vtype), _entity(entity) {}
 	// Copy constructor/operator
 	Value_wxMouseState(const Value_wxMouseState& src) = delete;
 	Value_wxMouseState& operator=(const Value_wxMouseState& src) = delete;
@@ -51,10 +49,10 @@ protected:
 	// Destructor
 	~Value_wxMouseState() = default;
 public:
-	wxMouseState& GetEntity() { return *_pEntity; }
-	const wxMouseState& GetEntity() const { return *_pEntity; }
-	wxMouseState* GetEntityPtr() { return _pEntity; }
-	const wxMouseState* GetEntityPtr() const { return _pEntity; }
+	wxMouseState& GetEntity() { return _entity; }
+	const wxMouseState& GetEntity() const { return _entity; }
+	wxMouseState* GetEntityPtr() { return &_entity; }
+	const wxMouseState* GetEntityPtr() const { return &_entity; }
 public:
 	static wxMouseState& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxMouseState&>(value).GetEntity();
