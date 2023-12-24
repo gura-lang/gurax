@@ -12,6 +12,7 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
+	frame.Assign(VTYPE_wxGridBagSizer);
 	frame.Assign(VTYPE_wxMouseState);
 	frame.Assign(VTYPE_wxHtmlWindowInterface);
 	frame.Assign(VTYPE_wxWithImages);
@@ -73,20 +74,19 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxTreeListItemComparator);
 	frame.Assign(VTYPE_wxTreeListItems);
 	frame.Assign(VTYPE_wxTreeListItem);
-	frame.Assign(VTYPE_wxSizerItem);
-	frame.Assign(VTYPE_wxToolBarToolBase);
-	frame.Assign(VTYPE_wxMenuItem);
 	frame.Assign(VTYPE_wxToolTip);
+	frame.Assign(VTYPE_wxToolBarToolBase);
+	frame.Assign(VTYPE_wxSizerItem);
+	frame.Assign(VTYPE_wxMenuItem);
 	frame.Assign(VTYPE_wxObject);
 	frame.Assign(VTYPE_wxMask);
 	frame.Assign(VTYPE_wxListItem);
 	frame.Assign(VTYPE_wxLayoutConstraints);
 	frame.Assign(VTYPE_wxImageHandler);
 	frame.Assign(VTYPE_wxImage);
-	frame.Assign(VTYPE_wxGridTableBase);
 	frame.Assign(VTYPE_wxGraphicsObject);
 	frame.Assign(VTYPE_wxGDIObject);
-	frame.Assign(VTYPE_wxGridBagSizer);
+	frame.Assign(VTYPE_wxGridTableBase);
 	frame.Assign(VTYPE_wxFileSystem);
 	frame.Assign(VTYPE_wxFindReplaceData);
 	frame.Assign(VTYPE_wxAnimation);

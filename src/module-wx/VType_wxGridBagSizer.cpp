@@ -210,16 +210,11 @@ Gurax_ImplementMethodEx(wxGridBagSizer, SetEmptyCellSize_gurax, processor_gurax,
 	return Gurax::Value::nil();
 }
 
-// wx.GridBagSizer#Add(window as wx.Window, pos as wx.GBPosition, span? as wx.GBSpan, flag? as Number, border? as Number, userData? as Any) {block?}
+// wx.GridBagSizer#Add(args* as Any) {block?}
 Gurax_DeclareMethodAlias(wxGridBagSizer, Add_gurax, "Add")
 {
 	Declare(VTYPE_wxSizerItem, Flag::None);
-	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("pos", VTYPE_wxGBPosition, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("span", VTYPE_wxGBSpan, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("flag", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("border", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("userData", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 }
 
@@ -231,18 +226,104 @@ Gurax_ImplementMethodEx(wxGridBagSizer, Add_gurax, processor_gurax, argument_gur
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxWindow& value_window = args_gurax.Pick<Value_wxWindow>();
-	wxWindow* window = value_window.GetEntityPtr();
-	Value_wxGBPosition& value_pos = args_gurax.Pick<Value_wxGBPosition>();
-	const wxGBPosition& pos = value_pos.GetEntity();
-	const wxGBSpan& span = args_gurax.IsValid()? args_gurax.Pick<Value_wxGBSpan>().GetEntity() : wxDefaultSpan;
-	bool flag_validFlag = args_gurax.IsValid();
-	int flag = flag_validFlag? args_gurax.PickNumber<int>() : 0;
-	bool border_validFlag = args_gurax.IsValid();
-	int border = border_validFlag? args_gurax.PickNumber<int>() : 0;
-	const Value& userData = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*pEntity_gurax->Add(window, pos, span, flag, border, ClientObject::Create(userData))));
+	//Add(window as Window_p, pos as const_GBPosition_r, span as const_GBSpan_r = wxDefaultSpan, flag as int = 0, border as int = 0, userData as Object_p = NULL) as SizerItem_p
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("window", VTYPE_wxWindow);
+			pDeclCallable->DeclareArg("pos", VTYPE_wxGBPosition);
+			pDeclCallable->DeclareArg("span", VTYPE_wxGBSpan, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("flag", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("border", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("userData", VTYPE_Any, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxWindow* window = args.Pick<Value_wxWindow>().GetEntityPtr();
+		const wxGBPosition& pos = args.Pick<Value_wxGBPosition>().GetEntity();
+		const wxGBSpan& span = args.IsValid()? args.Pick<Value_wxGBSpan>().GetEntity() : wxDefaultSpan;
+		int flag = args.IsValid()? args.PickNumber<int>() : 0;
+		int border = args.IsValid()? args.PickNumber<int>() : 0;
+		wxObject* userData = nullptr;
+		wxSizerItem* rtn = pEntity_gurax->Add(window, pos, span, flag, border, userData);
+		return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*rtn));
+	} while (0);
+	Error::ClearIssuedFlag();
+	//Add(sizer as Sizer_p, pos as const_GBPosition_r, span as const_GBSpan_r = wxDefaultSpan, flag as int = 0, border as int = 0, userData as Object_p = NULL) as SizerItem_p
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("sizer", VTYPE_wxSizer);
+			pDeclCallable->DeclareArg("pos", VTYPE_wxGBPosition);
+			pDeclCallable->DeclareArg("span", VTYPE_wxGBSpan, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("flag", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("border", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("userData", VTYPE_Any, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxSizer* sizer = args.Pick<Value_wxSizer>().GetEntityPtr();
+		const wxGBPosition& pos = args.Pick<Value_wxGBPosition>().GetEntity();
+		const wxGBSpan& span = args.IsValid()? args.Pick<Value_wxGBSpan>().GetEntity() : wxDefaultSpan;
+		int flag = args.IsValid()? args.PickNumber<int>() : 0;
+		int border = args.IsValid()? args.PickNumber<int>() : 0;
+		wxObject* userData = nullptr;
+		wxSizerItem* rtn = pEntity_gurax->Add(sizer, pos, span, flag, border, userData);
+		return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*rtn));
+	} while (0);
+	Error::ClearIssuedFlag();
+	//Add(item as GBSizerItem_p) as SizerItem_p
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("item", VTYPE_wxGBSizerItem);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxGBSizerItem* item = args.Pick<Value_wxGBSizerItem>().GetEntityPtr();
+		wxSizerItem* rtn = pEntity_gurax->Add(item);
+		return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*rtn));
+	} while (0);
+	Error::ClearIssuedFlag();
+	//Add(width as int, height as int, pos as const_GBPosition_r, span as const_GBSpan_r = wxDefaultSpan, flag as int = 0, border as int = 0, userData as Object_p = NULL) as SizerItem_p
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("width", VTYPE_Number);
+			pDeclCallable->DeclareArg("height", VTYPE_Number);
+			pDeclCallable->DeclareArg("pos", VTYPE_wxGBPosition);
+			pDeclCallable->DeclareArg("span", VTYPE_wxGBSpan, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("flag", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("border", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("userData", VTYPE_Any, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		int width = args.PickNumber<int>();
+		int height = args.PickNumber<int>();
+		const wxGBPosition& pos = args.Pick<Value_wxGBPosition>().GetEntity();
+		const wxGBSpan& span = args.IsValid()? args.Pick<Value_wxGBSpan>().GetEntity() : wxDefaultSpan;
+		int flag = args.IsValid()? args.PickNumber<int>() : 0;
+		int border = args.IsValid()? args.PickNumber<int>() : 0;
+		wxObject* userData = nullptr;
+		wxSizerItem* rtn = pEntity_gurax->Add(width, height, pos, span, flag, border, userData);
+		return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*rtn));
+	} while (0);
+	return Value::nil();
 }
 
 // wx.GridBagSizer#CheckForIntersection(item as wx.GBSizerItem, excludeItem? as wx.GBSizerItem)

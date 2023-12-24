@@ -4,6 +4,7 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
+	VType_wxGridBagSizer.cpp
 	VType_wxMouseState.cpp
 	VType_wxHtmlWindowInterface.cpp
 	VType_wxWithImages.cpp
@@ -65,20 +66,19 @@ set(SRCFILES_VTYPE
 	VType_wxTreeListItemComparator.cpp
 	VType_wxTreeListItems.cpp
 	VType_wxTreeListItem.cpp
-	VType_wxSizerItem.cpp
-	VType_wxToolBarToolBase.cpp
-	VType_wxMenuItem.cpp
 	VType_wxToolTip.cpp
+	VType_wxToolBarToolBase.cpp
+	VType_wxSizerItem.cpp
+	VType_wxMenuItem.cpp
 	VType_wxObject.cpp
 	VType_wxMask.cpp
 	VType_wxListItem.cpp
 	VType_wxLayoutConstraints.cpp
 	VType_wxImageHandler.cpp
 	VType_wxImage.cpp
-	VType_wxGridTableBase.cpp
 	VType_wxGraphicsObject.cpp
 	VType_wxGDIObject.cpp
-	VType_wxGridBagSizer.cpp
+	VType_wxGridTableBase.cpp
 	VType_wxFileSystem.cpp
 	VType_wxFindReplaceData.cpp
 	VType_wxAnimation.cpp
