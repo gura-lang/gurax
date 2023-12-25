@@ -110,8 +110,50 @@ GridBagSizer = Class(FlexGridSizer) {
 		} while (0);
 		return Value::nil();
 		'''
-	CheckForIntersection(item as GBSizerItem_p, excludeItem as GBSizerItem_p = NULL) as bool
-	//CheckForIntersection(pos as const_GBPosition_r, span as const_GBSpan_r, excludeItem as GBSizerItem_p = NULL) as bool
+	CheckForIntersection(args* as any) as bool = \
+		R'''
+		//CheckForIntersection(item as GBSizerItem_p, excludeItem as GBSizerItem_p = NULL) as bool
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("item", VTYPE_wxGBSizerItem);
+				pDeclCallable->DeclareArg("excludeItem", VTYPE_wxGBSizerItem, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxGBSizerItem* item = args.Pick<Value_wxGBSizerItem>().GetEntityPtr();
+			wxGBSizerItem* excludeItem = args.IsValid()? args.Pick<Value_wxGBSizerItem>().GetEntityPtr() : nullptr;
+			bool rtn = pEntity_gurax->CheckForIntersection(item, excludeItem);
+			return argument_gurax.ReturnValue(processor_gurax, new Value_Bool(rtn));
+		} while (0);
+		Error::ClearIssuedFlag();
+		//CheckForIntersection(pos as const_GBPosition_r, span as const_GBSpan_r, excludeItem as GBSizerItem_p = NULL) as bool
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("pos", VTYPE_wxGBPosition);
+				pDeclCallable->DeclareArg("span", VTYPE_wxGBSpan);
+				pDeclCallable->DeclareArg("excludeItem", VTYPE_wxGBSizerItem, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxGBPosition& pos = args.Pick<Value_wxGBPosition>().GetEntity();
+			const wxGBSpan& span = args.Pick<Value_wxGBSpan>().GetEntity();
+			wxGBSizerItem* excludeItem = args.IsValid()? args.Pick<Value_wxGBSizerItem>().GetEntityPtr() : nullptr;
+			bool rtn = pEntity_gurax->CheckForIntersection(pos, span, excludeItem);
+			return argument_gurax.ReturnValue(processor_gurax, new Value_Bool(rtn));
+		} while (0);
+		return Value::nil();
+		'''
+	//FindItem(window as Window_p) as GBSizerItem_p = \
+	//	R'''
+	//	'''
 	FindItem(window as Window_p) as GBSizerItem_p
 	//FindItem(sizer as Sizer_p) as GBSizerItem_p
 	GetItemPosition(window as Window_p) as GBPosition

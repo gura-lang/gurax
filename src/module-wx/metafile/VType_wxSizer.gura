@@ -149,15 +149,13 @@ Sizer = Class():loosePointer {
 	Hide(window as Window_p, recursive as bool = false) as bool
 	//Hide(sizer as Sizer_p, recursive as bool = false) as bool
 	//Hide(index as size_t) as bool
-	//Insert(index as size_t, window as Window_p, flags as const_SizerFlags_r) as SizerItem_p
 	//Insert(index as size_t, window as Window_p, proportion as int = 0, flag as int = 0, border as int = 0, userData as Object_p = NULL) as SizerItem_p
-	//Insert(index as size_t, sizer as Sizer_p, flags as const_SizerFlags_r) as SizerItem_p
 	//Insert(index as size_t, sizer as Sizer_p, proportion as int = 0, flag as int = 0, border as int = 0, userData as Object_p = NULL) as SizerItem_p
 	//Insert(index as size_t, width as int, height as int, proportion as int = 0, flag as int = 0, border as int = 0, userData as Object_p = NULL) as SizerItem_p
-	//Insert(index as size_t, width as int, height as int, flags as const_SizerFlags_r) as SizerItem_p
 	//Insert(index as size_t, item as SizerItem_p) as SizerItem_p
 	Insert(index as size_t, args* as any) as SizerItem_p = \
 		R'''
+		//Insert(index as size_t, window as Window_p, flags as const_SizerFlags_r) as SizerItem_p
 		do {
 			static DeclCallable* pDeclCallable = nullptr;
 			if (!pDeclCallable) {
@@ -174,6 +172,7 @@ Sizer = Class():loosePointer {
 			return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*rtn));
 		} while (0);
 		Error::ClearIssuedFlag();
+		//Insert(index as size_t, sizer as Sizer_p, flags as const_SizerFlags_r) as SizerItem_p
 		do {
 			static DeclCallable* pDeclCallable = nullptr;
 			if (!pDeclCallable) {
@@ -190,6 +189,7 @@ Sizer = Class():loosePointer {
 			return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*rtn));
 		} while (0);
 		Error::ClearIssuedFlag();
+		//Insert(index as size_t, width as int, height as int, flags as const_SizerFlags_r) as SizerItem_p
 		do {
 			static DeclCallable* pDeclCallable = nullptr;
 			if (!pDeclCallable) {

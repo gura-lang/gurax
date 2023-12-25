@@ -600,6 +600,7 @@ Gurax_ImplementMethodEx(wxSizer, Insert_gurax, processor_gurax, argument_gurax)
 	size_t index = args_gurax.PickNumber<size_t>();
 	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
+	//Insert(index as size_t, window as Window_p, flags as const_SizerFlags_r) as SizerItem_p
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
 		if (!pDeclCallable) {
@@ -616,6 +617,7 @@ Gurax_ImplementMethodEx(wxSizer, Insert_gurax, processor_gurax, argument_gurax)
 		return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*rtn));
 	} while (0);
 	Error::ClearIssuedFlag();
+	//Insert(index as size_t, sizer as Sizer_p, flags as const_SizerFlags_r) as SizerItem_p
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
 		if (!pDeclCallable) {
@@ -632,6 +634,7 @@ Gurax_ImplementMethodEx(wxSizer, Insert_gurax, processor_gurax, argument_gurax)
 		return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*rtn));
 	} while (0);
 	Error::ClearIssuedFlag();
+	//Insert(index as size_t, width as int, height as int, flags as const_SizerFlags_r) as SizerItem_p
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
 		if (!pDeclCallable) {
