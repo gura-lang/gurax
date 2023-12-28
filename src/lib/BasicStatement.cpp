@@ -411,19 +411,17 @@ The following example evaluates the loop twice:
 )""");
 }
 
-Gurax_ImplementStatement(for_)
+void ImplementStatement_for_cross(Composer& composer, Expr_Caller& exprCaller, bool crossFlag)
 {
 	RefPtr<DeclArgOwner> pDeclArgOwner(new DeclArgOwner());
 	for (Expr* pExpr = exprCaller.GetExprParamFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		if (!pExpr->IsType<Expr_BinaryOp>()) {
-			Error::IssueWith(ErrorType::ArgumentError, *pExpr,
-							"invalid argument for for-statement");
+			Error::IssueWith(ErrorType::ArgumentError, *pExpr, "invalid argument for the statement");
 			return;
 		}
 		Expr_BinaryOp* pExprEx = dynamic_cast<Expr_BinaryOp*>(pExpr);
 		if (!pExprEx->GetOperator()->IsType(OpType::Contains)) {
-			Error::IssueWith(ErrorType::ArgumentError, *pExpr,
-							"invalid argument for for-statement");
+			Error::IssueWith(ErrorType::ArgumentError, *pExpr, "invalid argument for the statement");
 			return;
 		}
 		RefPtr<DeclArg> pDeclArg(DeclArg::CreateFromExpr(pExprEx->GetExprLeft()));
@@ -441,8 +439,13 @@ Gurax_ImplementStatement(for_)
 		composer.ComposeAsSequence(*exprCaller.GetExprOfBlock());
 		composer.Add_SequenceEnd(*exprCaller.GetExprOfBlock());
 		pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
-		composer.Add_GenIterator_for(
-			exprCaller.GetExprOfBlock()->Reference(), pDeclArgOwner.release(), xiterFlag, exprCaller);	// [Iterator]
+		if (crossFlag) {
+			composer.Add_GenIterator_cross(
+				exprCaller.GetExprOfBlock()->Reference(), pDeclArgOwner.release(), xiterFlag, exprCaller);	// [Iterator]
+		} else {
+			composer.Add_GenIterator_for(
+				exprCaller.GetExprOfBlock()->Reference(), pDeclArgOwner.release(), xiterFlag, exprCaller);	// [Iterator]
+		}
 	} else {	
 		const DeclArgOwner& declArgsOfBlock = exprCaller.GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
 		bool listFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(list));
@@ -462,7 +465,11 @@ Gurax_ImplementStatement(for_)
 				composer.Add_ListElem(0, xlistFlag, false, exprCaller);			// [Iterator1..n List]
 				pPUnitOfSkipFirst->SetPUnitBranchDest(composer.PeekPUnitCont());
 				PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
-				composer.Add_ForEach(1, pDeclArgOwner.release(), exprCaller);	// [Iterator1..n List]
+				if (crossFlag) {
+					composer.Add_CrossEach(1, pDeclArgOwner.release(), exprCaller);	// [Iterator1..n List]
+				} else {
+					composer.Add_ForEach(1, pDeclArgOwner.release(), exprCaller);	// [Iterator1..n List]
+				}
 				composer.BeginRepeaterBlock(pPUnitOfLoop, pPUnitOfBranch, pPUnitOfBreak);
 				exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Iterator1..n List Elem]
 				composer.EndRepeaterBlock();
@@ -474,7 +481,11 @@ Gurax_ImplementStatement(for_)
 				composer.Add_Value(Value::nil(), exprCaller);					// [Iterator1..n Last=nil]
 				PUnit* pPUnitOfLoop = composer.PeekPUnitCont();
 				PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
-				composer.Add_ForEach(1, pDeclArgOwner.release(), exprCaller);	// [Iterator1..n Last]
+				if (crossFlag) {
+					composer.Add_CrossEach(1, pDeclArgOwner.release(), exprCaller);	// [Iterator1..n Last]
+				} else {
+					composer.Add_ForEach(1, pDeclArgOwner.release(), exprCaller);	// [Iterator1..n Last]
+				}
 				composer.Add_DiscardValue(exprCaller);							// [Iterator1..n]
 				composer.BeginRepeaterBlock(pPUnitOfLoop, pPUnitOfBranch, nullptr);
 				exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Iterator1..n Last]
@@ -500,7 +511,11 @@ Gurax_ImplementStatement(for_)
 				composer.Add_ListElem(0, xlistFlag, false, exprCaller);			// [Iterator1..n Iterator List]
 				pPUnitOfSkipFirst->SetPUnitBranchDest(composer.PeekPUnitCont());
 				PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
-				composer.Add_ForEach(2, pDeclArgOwner.release(), exprCaller);	// [Iterator1..n Iterator List]
+				if (crossFlag) {
+					composer.Add_CrossEach(2, pDeclArgOwner.release(), exprCaller);	// [Iterator1..n Iterator List]
+				} else {
+					composer.Add_ForEach(2, pDeclArgOwner.release(), exprCaller);	// [Iterator1..n Iterator List]
+				}
 				composer.Add_EvalIterator(1, false, exprCaller);				// [Iterator1..n Iterator List Idx]
 				composer.Add_AssignToDeclArg((*ppDeclArg)->Reference(), exprCaller);
 				composer.FlushDiscard();										// [Iterator1..n Iterator List]
@@ -515,7 +530,11 @@ Gurax_ImplementStatement(for_)
 				composer.Add_Value(Value::nil(), exprCaller);					// [Iterator1..n Iterator Last=nil]
 				PUnit* pPUnitOfLoop = composer.PeekPUnitCont();
 				PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
-				composer.Add_ForEach(2, pDeclArgOwner.release(), exprCaller);	// [Iterator1..n Iterator Last]
+				if (crossFlag) {
+					composer.Add_CrossEach(2, pDeclArgOwner.release(), exprCaller);	// [Iterator1..n Iterator Last]
+				} else {
+					composer.Add_ForEach(2, pDeclArgOwner.release(), exprCaller);	// [Iterator1..n Iterator Last]
+				}
 				composer.Add_DiscardValue(exprCaller);							// [Iterator1..n Iterator]
 				composer.Add_EvalIterator(0, false, exprCaller);				// [Iterator1..n Iterator Idx]
 				composer.Add_AssignToDeclArg((*ppDeclArg)->Reference(), exprCaller);
@@ -529,11 +548,30 @@ Gurax_ImplementStatement(for_)
 			}
 			composer.Add_PopFrame(exprCaller);
 		} else {
-			Error::IssueWith(ErrorType::ArgumentError, exprCaller,
-							"invalid number of block parameters");
+			Error::IssueWith(ErrorType::ArgumentError, exprCaller, "invalid number of block parameters");
 			return;
 		}
 	}
+}
+
+Gurax_ImplementStatement(for_)
+{
+	ImplementStatement_for_cross(composer, exprCaller, false);
+}
+
+// cross (`cond+) {`block}
+Gurax_DeclareStatement(cross)
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("cond", VTYPE_Quote, ArgOccur::OnceOrMore, ArgFlag::None);
+	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
+}
+
+Gurax_ImplementStatement(cross)
+{
+	ImplementStatement_for_cross(composer, exprCaller, true);
 }
 
 // while (`cond) {`block}

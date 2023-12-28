@@ -265,6 +265,68 @@ String Iterator_IteratorEvaluator::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
+// Iterator_cross
+//------------------------------------------------------------------------------
+Value* Iterator_cross::DoNextValue()
+{
+	RefPtr<Value> pValueResult;
+	GetProcessor().PushFrame(GetFrame().Reference());
+	while (_contFlag) {
+		auto ppDeclArg = GetDeclArgOwner().begin();
+		auto ppIterator = GetIteratorOwner().rbegin();
+		for ( ; ppDeclArg != GetDeclArgOwner().end() && ppIterator != GetIteratorOwner().rend();
+				ppDeclArg++, ppIterator++) {
+			DeclArg& declArg = **ppDeclArg;
+			Iterator& iterator = **ppIterator;
+			RefPtr<Value> pValue(iterator.NextValue());
+			if (!pValue) {
+				_contFlag = false;
+				goto done;
+			}
+			if (!GetFrame().AssignWithCast(declArg, *pValue)) {
+				_contFlag = false;
+				goto done;
+			}
+		}
+		if (GetArgument().HasArgSlot()) {
+			ArgFeeder args(GetArgument(), GetFrame());
+			if (!args.FeedValue(new Value_Number(_idx))) {
+				_contFlag = false;
+				break;
+			}
+		}
+		_idx++;
+		Event event;
+		RefPtr<Value> pValueRtn(GetExprOfBlock().Eval(GetProcessor(), GetArgument(), event));
+		if (Error::IsIssued()) break;
+		if (Processor::IsEventBreak(event)) {
+			_contFlag = false;
+			if (pValueRtn->IsUndefined()) break;
+		}
+		if (GetSkipNilFlag()) {
+			if (pValueRtn->IsValid()) {
+				pValueResult.reset(pValueRtn.release());
+				break;
+			}
+		} else if (pValueRtn->IsValid()) {
+			pValueResult.reset(pValueRtn.release());
+			break;
+		} else {
+			pValueResult.reset(Value::nil());
+			break;
+		}
+	}
+done:
+	GetProcessor().PopFrame();
+	return pValueResult.release();
+}
+
+String Iterator_cross::ToString(const StringStyle& ss) const
+{
+	return "for";
+}
+
+//------------------------------------------------------------------------------
 // Iterator_for
 //------------------------------------------------------------------------------
 Value* Iterator_for::DoNextValue()

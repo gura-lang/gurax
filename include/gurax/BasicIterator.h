@@ -304,6 +304,43 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// Iterator_cross
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_cross : public Iterator {
+private:
+	RefPtr<Processor> _pProcessor;
+	RefPtr<Frame> _pFrame;
+	RefPtr<Expr_Block> _pExprOfBlock;
+	RefPtr<Argument> _pArgument;
+	RefPtr<DeclArgOwner> _pDeclArgOwner;
+	RefPtr<IteratorOwner> _pIteratorOwner;
+	bool _skipNilFlag;
+	size_t _idx;
+	bool _contFlag;
+public:
+	Iterator_cross(Processor* pProcessor, Expr_Block* pExprOfBlock, DeclArgOwner* pDeclArgOwner,
+				IteratorOwner* pIteratorOwner, bool skipNilFlag) :
+		_pProcessor(pProcessor), _pFrame(pProcessor->CreateFrame<Frame_Scope>()),
+		_pExprOfBlock(pExprOfBlock), _pArgument(Argument::CreateForBlockCall(*pProcessor, *pExprOfBlock)),
+		_pDeclArgOwner(pDeclArgOwner), _pIteratorOwner(pIteratorOwner),
+		_skipNilFlag(skipNilFlag), _idx(0), _contFlag(true) {}
+public:
+	Processor& GetProcessor() { return *_pProcessor; }
+	Frame& GetFrame() { return *_pFrame; }
+	const Expr_Block& GetExprOfBlock() { return *_pExprOfBlock; }
+	Argument& GetArgument() { return *_pArgument; }
+	const DeclArgOwner& GetDeclArgOwner() const { return *_pDeclArgOwner; }
+	IteratorOwner& GetIteratorOwner() { return *_pIteratorOwner; }
+	bool GetSkipNilFlag() const { return _skipNilFlag; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenUndetermined; }
+	virtual size_t GetLength() const override { return -1; }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
 // Iterator_for
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Iterator_for : public Iterator {

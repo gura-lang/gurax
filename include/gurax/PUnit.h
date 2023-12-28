@@ -718,10 +718,10 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_GenIterator_for
+// PUnit_GenIterator_for_cross
 //------------------------------------------------------------------------------
-template<bool discardValueFlag>
-class GURAX_DLLDECLARE PUnit_GenIterator_for : public PUnit {
+template<bool discardValueFlag, bool crossFlag>
+class GURAX_DLLDECLARE PUnit_GenIterator_for_cross : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
@@ -730,7 +730,7 @@ public:
 	bool _skipNilFlag;
 public:
 	// Constructor
-	PUnit_GenIterator_for(Expr_Block* pExprOfBlock, DeclArgOwner* pDeclArgOwner, bool skipNilFlag, Expr* pExprSrc) :
+	PUnit_GenIterator_for_cross(Expr_Block* pExprOfBlock, DeclArgOwner* pDeclArgOwner, bool skipNilFlag, Expr* pExprSrc) :
 		PUnit(pExprSrc), _pExprOfBlock(pExprOfBlock), _pDeclArgOwner(pDeclArgOwner), _skipNilFlag(skipNilFlag) {}
 public:
 	const Expr_Block& GetExprOfBlock() const { return *_pExprOfBlock; }
@@ -748,18 +748,19 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class GURAX_DLLDECLARE PUnitFactory_GenIterator_for : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_GenIterator_for_cross : public PUnitFactory {
 public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_GenIterator_for");
+	Gurax_MemoryPoolAllocator("PUnitFactory_GenIterator_for_cross");
 private:
 	RefPtr<Expr_Block> _pExprOfBlock;
 	RefPtr<DeclArgOwner> _pDeclArgOwner;
 	bool _skipNilFlag;
+	bool _crossFlag;
 public:
-	PUnitFactory_GenIterator_for(Expr_Block* pExprOfBlock, DeclArgOwner* pDeclArgOwner, bool skipNilFlag, Expr* pExprSrc) :
-		PUnitFactory(pExprSrc), _pExprOfBlock(pExprOfBlock), _pDeclArgOwner(pDeclArgOwner), _skipNilFlag(skipNilFlag) {}
+	PUnitFactory_GenIterator_for_cross(Expr_Block* pExprOfBlock, DeclArgOwner* pDeclArgOwner, bool skipNilFlag, Expr* pExprSrc, bool crossFlag) :
+		PUnitFactory(pExprSrc), _pExprOfBlock(pExprOfBlock), _pDeclArgOwner(pDeclArgOwner), _skipNilFlag(skipNilFlag), _crossFlag(crossFlag) {}
 	virtual size_t GetPUnitSize() const override {
-		return sizeof(PUnit_GenIterator_for<false>);
+		return sizeof(PUnit_GenIterator_for_cross<false, false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
@@ -900,6 +901,52 @@ public:
 		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc), _offset(offset), _raiseFlag(raiseFlag) {}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_EvalIterator<false>);
+	}
+	virtual PUnit* Create(bool discardValueFlag) override;
+};
+
+//------------------------------------------------------------------------------
+// PUnit_CrossEach
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+class GURAX_DLLDECLARE PUnit_CrossEach : public PUnit_Branch {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+private:
+	size_t _offset;
+	RefPtr<DeclArgOwner> _pDeclArgOwner;
+public:
+	// Constructor
+	PUnit_CrossEach(size_t offset, DeclArgOwner* pDeclArgOwner, const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
+		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1, pExprSrc),
+		_offset(offset), _pDeclArgOwner(pDeclArgOwner) {}
+public:
+	size_t GetOffset() const { return _offset; }
+	const DeclArgOwner& GetDeclArgOwner() const { return *_pDeclArgOwner; }
+public:
+	// Virtual functions of PUnit
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual const PUnit* GetPUnitAdjacent() const override { return this + 1; }
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return this + 1; }
+};
+
+class GURAX_DLLDECLARE PUnitFactory_CrossEach : public PUnitFactory_Branch {
+public:
+	Gurax_MemoryPoolAllocator("PUnitFactory_CrossEach");
+private:
+	size_t _offset;
+	RefPtr<DeclArgOwner> _pDeclArgOwner;
+public:
+	PUnitFactory_CrossEach(size_t offset, DeclArgOwner* pDeclArgOwner, const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
+		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc), _offset(offset), _pDeclArgOwner(pDeclArgOwner) {}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_CrossEach<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };

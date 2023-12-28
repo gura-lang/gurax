@@ -177,8 +177,11 @@ public:
 	void Add_GenIterator_ForLister(const Expr& exprSrc) {
 		SetFactory(new PUnitFactory_GenIterator_ForLister(exprSrc.Reference()));
 	}
+	void Add_GenIterator_cross(Expr_Block* pExprOfBlock, DeclArgOwner* pDeclArgOwner, bool skipNilFlag, const Expr& exprSrc) {
+		SetFactory(new PUnitFactory_GenIterator_for_cross(pExprOfBlock, pDeclArgOwner, skipNilFlag, exprSrc.Reference(), true));
+	}
 	void Add_GenIterator_for(Expr_Block* pExprOfBlock, DeclArgOwner* pDeclArgOwner, bool skipNilFlag, const Expr& exprSrc) {
-		SetFactory(new PUnitFactory_GenIterator_for(pExprOfBlock, pDeclArgOwner, skipNilFlag, exprSrc.Reference()));
+		SetFactory(new PUnitFactory_GenIterator_for_cross(pExprOfBlock, pDeclArgOwner, skipNilFlag, exprSrc.Reference(), false));
 	}
 	void Add_GenIterator_while(Expr* pExprCriteria, Expr_Block* pExprOfBlock, bool skipNilFlag, const Expr& exprSrc) {
 		SetFactory(new PUnitFactory_GenIterator_while(pExprCriteria, pExprOfBlock, skipNilFlag, exprSrc.Reference()));
@@ -189,6 +192,10 @@ public:
 	void Add_EvalIterator(size_t offset, bool raiseFlag, const Expr& exprSrc) {
 		const PUnit* pPUnitBranchDest = nullptr;
 		SetFactory(new PUnitFactory_EvalIterator(offset, raiseFlag, pPUnitBranchDest, exprSrc.Reference()));
+	}
+	void Add_CrossEach(size_t offset, DeclArgOwner* pDeclArgOwner, const Expr& exprSrc) {
+		const PUnit* pPUnitBranchDest = nullptr;
+		SetFactory(new PUnitFactory_CrossEach(offset, pDeclArgOwner, pPUnitBranchDest, exprSrc.Reference()));
 	}
 	void Add_ForEach(size_t offset, DeclArgOwner* pDeclArgOwner, const Expr& exprSrc) {
 		const PUnit* pPUnitBranchDest = nullptr;

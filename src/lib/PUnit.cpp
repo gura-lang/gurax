@@ -670,42 +670,57 @@ PUnit* PUnitFactory_GenIterator_ForLister::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
-// PUnit_GenIterator_for
+// PUnit_GenIterator_for_cross
 // Stack View: [Iterator1 .. IteratorN] -> [Iterator] (continue)
 //                                      -> []         (discard)
 //------------------------------------------------------------------------------
-template<bool discardValueFlag>
-void PUnit_GenIterator_for<discardValueFlag>::Exec(Processor& processor) const
+template<bool discardValueFlag, bool crossFlag>
+void PUnit_GenIterator_for_cross<discardValueFlag, crossFlag>::Exec(Processor& processor) const
 {
 	RefPtr<IteratorOwner> pIteratorOwner(new IteratorOwner());
 	for (size_t i = 0; i < GetDeclArgOwner().size(); i++) {
 		RefPtr<Value> pValue(processor.PopValue());
 		pIteratorOwner->push_back(Value_Iterator::GetIterator(*pValue).Reference());
 	}
-	RefPtr<Iterator> pIterator(
-		new Iterator_for(processor.Reference(), GetExprOfBlock().Reference(),
+	RefPtr<Iterator> pIterator;
+	if constexpr (crossFlag) {
+		pIterator.reset(new Iterator_cross(processor.Reference(), GetExprOfBlock().Reference(),
 						GetDeclArgOwner().Reference(), pIteratorOwner.release(), GetSkipNilFlag()));
+	} else {
+		pIterator.reset(new Iterator_for(processor.Reference(), GetExprOfBlock().Reference(),
+						GetDeclArgOwner().Reference(), pIteratorOwner.release(), GetSkipNilFlag()));
+	}
 	if constexpr (!discardValueFlag) processor.PushValue(new Value_Iterator(pIterator.release()));
 	processor.SetPUnitCur(_GetPUnitCont());
 }
 
-template<bool discardValueFlag>
-String PUnit_GenIterator_for<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+template<bool discardValueFlag, bool crossFlag>
+String PUnit_GenIterator_for_cross<discardValueFlag, crossFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str += "GenIterator_for()";
+	str += "GenIterator_for_cross()";
 	AppendInfoToString(str, ss);
 	return str;
 }
 
-PUnit* PUnitFactory_GenIterator_for::Create(bool discardValueFlag)
+PUnit* PUnitFactory_GenIterator_for_cross::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_GenIterator_for<true>(
-			_pExprOfBlock.Reference(), _pDeclArgOwner.Reference(), _skipNilFlag, _pExprSrc.Reference());
+		if (_crossFlag) {
+			_pPUnitCreated = new PUnit_GenIterator_for_cross<true, true>(
+				_pExprOfBlock.Reference(), _pDeclArgOwner.Reference(), _skipNilFlag, _pExprSrc.Reference());
+		} else {
+			_pPUnitCreated = new PUnit_GenIterator_for_cross<true, false>(
+				_pExprOfBlock.Reference(), _pDeclArgOwner.Reference(), _skipNilFlag, _pExprSrc.Reference());
+		}
 	} else {
-		_pPUnitCreated = new PUnit_GenIterator_for<false>(
-			_pExprOfBlock.Reference(), _pDeclArgOwner.Reference(), _skipNilFlag, _pExprSrc.Reference());
+		if (_crossFlag) {
+			_pPUnitCreated = new PUnit_GenIterator_for_cross<false, true>(
+				_pExprOfBlock.Reference(), _pDeclArgOwner.Reference(), _skipNilFlag, _pExprSrc.Reference());
+		} else {
+			_pPUnitCreated = new PUnit_GenIterator_for_cross<false, false>(
+				_pExprOfBlock.Reference(), _pDeclArgOwner.Reference(), _skipNilFlag, _pExprSrc.Reference());
+		}
 	}
 	return _pPUnitCreated;
 }
@@ -828,6 +843,51 @@ PUnit* PUnitFactory_EvalIterator::Create(bool discardValueFlag)
 		_pPUnitCreated = new PUnit_EvalIterator<true>(_offset, _raiseFlag, _pPUnitBranchDest, _pExprSrc.Reference());
 	} else {
 		_pPUnitCreated = new PUnit_EvalIterator<false>(_offset, _raiseFlag, _pPUnitBranchDest, _pExprSrc.Reference());
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_CrossEach
+// Stack View: [Iterator1..n ..] -> [Iterator1..n ..] (continue)
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+void PUnit_CrossEach<discardValueFlag>::Exec(Processor& processor) const
+{
+	Frame& frame = processor.GetFrameCur();
+	size_t offset = GetOffset() + GetDeclArgOwner().size() - 1;
+	for (DeclArg* pDeclArg : GetDeclArgOwner()) {
+		Iterator& iterator = Value_Iterator::GetIterator(processor.PeekValue(offset));
+		RefPtr<Value> pValueElem(iterator.NextValue());
+		if (!pValueElem) {
+			processor.SetPUnitCur(GetPUnitBranchDest());
+			return;
+		}
+		frame.AssignWithCast(*pDeclArg, *pValueElem);
+		offset--;
+	}
+	processor.SetPUnitCur(_GetPUnitCont());
+}
+
+template<bool discardValueFlag>
+String PUnit_CrossEach<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str.Format("CrossEach(offsetToIterator=%zu,branchDest=%s, decls=[%s])", GetOffset(),
+			MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str(),
+			GetDeclArgOwner().ToString(StringStyle().SetQuoteSymbol().SetCram()).c_str());
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_CrossEach::Create(bool discardValueFlag)
+{
+	if (discardValueFlag) {
+		_pPUnitCreated = new PUnit_CrossEach<true>(
+			_offset, _pDeclArgOwner.release(), _pPUnitBranchDest, _pExprSrc.Reference());
+	} else {
+		_pPUnitCreated = new PUnit_CrossEach<false>(
+			_offset, _pDeclArgOwner.release(), _pPUnitBranchDest, _pExprSrc.Reference());
 	}
 	return _pPUnitCreated;
 }
