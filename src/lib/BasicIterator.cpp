@@ -115,8 +115,7 @@ String Iterator_UnaryOpImpMap::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Iterator_BinaryOpImpMap
 //------------------------------------------------------------------------------
-Iterator_BinaryOpImpMap::Iterator_BinaryOpImpMap(Processor* pProcessor, Operator* pOp,
-												 Value* pValueL, Value* pValueR) :
+Iterator_BinaryOpImpMap::Iterator_BinaryOpImpMap(Processor* pProcessor, Operator* pOp, Value* pValueL, Value* pValueR) :
 	_pProcessor(pProcessor), _pOp(pOp), _pOpEntry(&OpEntry::Empty),
 	_pValueL(pValueL), _pValueR(pValueR), _pVTypePrevL(&VTYPE_Undefined), _pVTypePrevR(&VTYPE_Undefined),
 	_flags(Flag::None), _len(0)
@@ -251,7 +250,7 @@ Value* Iterator_IteratorEvaluator::DoNextValue()
 	if (!pValueElem) return nullptr;
 	if (!GetArgument().GetDeclCallable().IsIdentical(pValueElem->GetDeclCallable())) {
 		Error::Issue(ErrorType::ValueError,
-					 "member mapping cannot be applied to an iterator that returns different type of values");
+					"member mapping cannot be applied to an iterator that returns different type of values");
 		return nullptr;
 	}
 	RefPtr<Value> pValueRtn(pValueElem->Eval(GetProcessor(), GetArgument()));

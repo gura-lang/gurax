@@ -855,18 +855,22 @@ template<bool discardValueFlag>
 void PUnit_CrossEach<discardValueFlag>::Exec(Processor& processor) const
 {
 	Frame& frame = processor.GetFrameCur();
-	size_t offset = GetOffset() + GetDeclArgOwner().size() - 1;
+	const DeclArgOwner& declArgOwner = GetDeclArgOwner();
+	size_t offset = GetOffset() + declArgOwner.size() - 1;
 	for (DeclArg* pDeclArg : GetDeclArgOwner()) {
 		Iterator& iterator = Value_Iterator::GetIterator(processor.PeekValue(offset));
 		RefPtr<Value> pValueElem(iterator.NextValue());
-		if (!pValueElem) {
-			processor.SetPUnitCur(GetPUnitBranchDest());
+		if (pValueElem) {
+			frame.AssignWithCast(*pDeclArg, *pValueElem);
+			processor.SetPUnitCur(_GetPUnitCont());
 			return;
 		}
+		iterator.Rewind();
+		pValueElem.reset(iterator.NextValue());
 		frame.AssignWithCast(*pDeclArg, *pValueElem);
 		offset--;
 	}
-	processor.SetPUnitCur(_GetPUnitCont());
+	processor.SetPUnitCur(GetPUnitBranchDest());
 }
 
 template<bool discardValueFlag>

@@ -429,6 +429,9 @@ void ImplementStatement_for_cross(Composer& composer, Expr_Caller& exprCaller, b
 		pDeclArgOwner->push_back(pDeclArg.release());
 		pExprEx->GetExprRight().ComposeOrNil(composer);							// [Any]
 		composer.Add_GenIterator(exprCaller);									// [Iterator]
+		if (crossFlag) {
+			//composer.Add_CheckIteratorRewindable(exprCaller);
+		}
 	}
 	size_t nIterators = pDeclArgOwner->size();
 	bool iterFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(iter));
@@ -1092,6 +1095,7 @@ void BasicStatement::Prepare(Frame& frame)
 	frame.Assign(Gurax_CreateStatement(catch_));
 	frame.Assign(Gurax_CreateStatement(finally));
 	frame.Assign(Gurax_CreateStatement(for_));
+	frame.Assign(Gurax_CreateStatement(cross));
 	frame.Assign(Gurax_CreateStatement(while_));
 	frame.Assign(Gurax_CreateStatement(repeat));
 	frame.Assign(Gurax_CreateStatement(break_));

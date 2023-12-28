@@ -210,9 +210,10 @@ public:
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override {
-		return Flag::Finite | Flag::LenDetermined;
+		return Flag::Finite | Flag::LenDetermined | Flag::Rewindable;
 	}
 	virtual size_t GetLength() const override { return (_idxEnd - _idxBegin) / _idxStep; }
+	virtual void DoRewind() override { _idx = _idxBegin; }
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -507,8 +508,9 @@ public:
 	const ValueOwner& GetValueOwner() const { return *_pValueOwner; }
 public:
 	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined | Flag::Rewindable; }
 	virtual size_t GetLength() const override { return GetValueOwner().size(); }
+	virtual void DoRewind() override { _idx = _idxBegin; }
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
