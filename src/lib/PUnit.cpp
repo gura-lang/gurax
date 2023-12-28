@@ -856,8 +856,9 @@ void PUnit_CrossEach<discardValueFlag>::Exec(Processor& processor) const
 {
 	Frame& frame = processor.GetFrameCur();
 	const DeclArgOwner& declArgOwner = GetDeclArgOwner();
-	size_t offset = GetOffset() + declArgOwner.size() - 1;
-	for (DeclArg* pDeclArg : GetDeclArgOwner()) {
+	size_t offset = GetOffset();
+	for (auto ppDeclArg = declArgOwner.rbegin(); ppDeclArg != declArgOwner.rend(); ppDeclArg++) {
+		DeclArg* pDeclArg = *ppDeclArg;
 		Iterator& iterator = Value_Iterator::GetIterator(processor.PeekValue(offset));
 		RefPtr<Value> pValueElem(iterator.NextValue());
 		if (pValueElem) {
@@ -868,7 +869,7 @@ void PUnit_CrossEach<discardValueFlag>::Exec(Processor& processor) const
 		iterator.Rewind();
 		pValueElem.reset(iterator.NextValue());
 		frame.AssignWithCast(*pDeclArg, *pValueElem);
-		offset--;
+		offset++;
 	}
 	processor.SetPUnitCur(GetPUnitBranchDest());
 }
