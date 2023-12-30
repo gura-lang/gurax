@@ -538,6 +538,8 @@ void ImplementStatement_for_cross(Composer& composer, Expr_Caller& exprCaller, b
 			if (createListFlag) {
 				composer.Add_CreateList(32, exprCaller);						// [Iterator1..n Iterator List=[]]
 				if (crossFlag) {
+					PUnit* pPUnitOfFirst = composer.PeekPUnitCont();
+					composer.Add_ForEach(2, pDeclArgOwner.Reference(), exprCaller);	// [Iterator1..n Iterator Last]
 					PUnit* pPUnitOfSkipFirst = composer.PeekPUnitCont();
 					composer.Add_Jump(exprCaller);
 					PUnit* pPUnitOfBreak = composer.PeekPUnitCont();
@@ -546,9 +548,9 @@ void ImplementStatement_for_cross(Composer& composer, Expr_Caller& exprCaller, b
 					composer.Add_Jump(exprCaller);
 					PUnit* pPUnitOfLoop = composer.PeekPUnitCont();
 					composer.Add_ListElem(0, xlistFlag, false, exprCaller);			// [Iterator1..n Iterator List]
-					pPUnitOfSkipFirst->SetPUnitBranchDest(composer.PeekPUnitCont());
 					PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 					composer.Add_CrossEach(2, pDeclArgOwner.release(), exprCaller);	// [Iterator1..n Iterator List]
+					pPUnitOfSkipFirst->SetPUnitBranchDest(composer.PeekPUnitCont());
 					composer.Add_EvalIterator(1, false, exprCaller);				// [Iterator1..n Iterator List Idx]
 					composer.Add_AssignToDeclArg((*ppDeclArg)->Reference(), exprCaller);
 					composer.FlushDiscard();										// [Iterator1..n Iterator List]
@@ -556,6 +558,7 @@ void ImplementStatement_for_cross(Composer& composer, Expr_Caller& exprCaller, b
 					exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Iterator1..n Iterator List Elem]
 					composer.EndRepeaterBlock();
 					composer.Add_Jump(pPUnitOfLoop, exprCaller);
+					pPUnitOfFirst->SetPUnitBranchDest(composer.PeekPUnitCont());
 					pPUnitOfBreakBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 					pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 				} else {
@@ -584,9 +587,14 @@ void ImplementStatement_for_cross(Composer& composer, Expr_Caller& exprCaller, b
 			} else {
 				composer.Add_Value(Value::nil(), exprCaller);					// [Iterator1..n Iterator Last=nil]
 				if (crossFlag) {
+					PUnit* pPUnitOfFirst = composer.PeekPUnitCont();
+					composer.Add_ForEach(2, pDeclArgOwner.Reference(), exprCaller);	// [Iterator1..n Iterator Last]
+					PUnit* pPUnitOfSkipFirst = composer.PeekPUnitCont();
+					composer.Add_Jump(exprCaller);
 					PUnit* pPUnitOfLoop = composer.PeekPUnitCont();
 					PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 					composer.Add_CrossEach(2, pDeclArgOwner.release(), exprCaller);	// [Iterator1..n Iterator Last]
+					pPUnitOfSkipFirst->SetPUnitBranchDest(composer.PeekPUnitCont());
 					composer.Add_DiscardValue(exprCaller);							// [Iterator1..n Iterator]
 					composer.Add_EvalIterator(0, false, exprCaller);				// [Iterator1..n Iterator Idx]
 					composer.Add_AssignToDeclArg((*ppDeclArg)->Reference(), exprCaller);
@@ -595,6 +603,7 @@ void ImplementStatement_for_cross(Composer& composer, Expr_Caller& exprCaller, b
 					exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Iterator1..n Iterator Last]
 					composer.EndRepeaterBlock();
 					composer.Add_Jump(pPUnitOfLoop, exprCaller);
+					pPUnitOfFirst->SetPUnitBranchDest(composer.PeekPUnitCont());
 					pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 				} else {
 					PUnit* pPUnitOfLoop = composer.PeekPUnitCont();
