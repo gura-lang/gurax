@@ -868,6 +868,7 @@ void PUnit_CrossEach<discardValueFlag>::Exec(Processor& processor) const
 		}
 		iterator.Rewind();
 		pValueElem.reset(iterator.NextValue());
+		if (!pValueElem) break;
 		frame.AssignWithCast(*pDeclArg, *pValueElem);
 		offset++;
 	}

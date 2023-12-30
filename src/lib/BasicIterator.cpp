@@ -271,20 +271,46 @@ Value* Iterator_cross::DoNextValue()
 	RefPtr<Value> pValueResult;
 	GetProcessor().PushFrame(GetFrame().Reference());
 	while (_contFlag) {
-		auto ppDeclArg = GetDeclArgOwner().begin();
-		auto ppIterator = GetIteratorOwner().rbegin();
-		for ( ; ppDeclArg != GetDeclArgOwner().end() && ppIterator != GetIteratorOwner().rend();
-				ppDeclArg++, ppIterator++) {
-			DeclArg& declArg = **ppDeclArg;
-			Iterator& iterator = **ppIterator;
-			RefPtr<Value> pValue(iterator.NextValue());
-			if (!pValue) {
-				_contFlag = false;
-				goto done;
+		auto ppDeclArg = GetDeclArgOwner().rbegin();
+		auto ppIterator = GetIteratorOwner().begin();
+		if (_idx == 0) {
+			for ( ; ppDeclArg != GetDeclArgOwner().rend() && ppIterator != GetIteratorOwner().end();
+					ppDeclArg++, ppIterator++) {
+				DeclArg& declArg = **ppDeclArg;
+				Iterator& iterator = **ppIterator;
+				RefPtr<Value> pValue(iterator.NextValue());
+				if (!pValue) {
+					_contFlag = false;
+					goto done;
+				}
+				if (!GetFrame().AssignWithCast(declArg, *pValue)) {
+					_contFlag = false;
+					goto done;
+				}
 			}
-			if (!GetFrame().AssignWithCast(declArg, *pValue)) {
-				_contFlag = false;
-				goto done;
+		} else {
+			for ( ; ppDeclArg != GetDeclArgOwner().rend() && ppIterator != GetIteratorOwner().end();
+					ppDeclArg++, ppIterator++) {
+				DeclArg& declArg = **ppDeclArg;
+				Iterator& iterator = **ppIterator;
+				RefPtr<Value> pValue(iterator.NextValue());
+				if (pValue) {
+					if (!GetFrame().AssignWithCast(declArg, *pValue)) {
+						_contFlag = false;
+						goto done;
+					}
+					break;
+				}
+				iterator.Rewind();
+				pValue.reset(iterator.NextValue());
+				if (!pValue) {
+					_contFlag = false;
+					goto done;
+				}
+				if (!GetFrame().AssignWithCast(declArg, *pValue)) {
+					_contFlag = false;
+					goto done;
+				}
 			}
 		}
 		if (GetArgument().HasArgSlot()) {
@@ -322,7 +348,7 @@ done:
 
 String Iterator_cross::ToString(const StringStyle& ss) const
 {
-	return "for";
+	return "cross";
 }
 
 //------------------------------------------------------------------------------
