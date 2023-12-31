@@ -312,6 +312,10 @@ Value* Iterator_cross::DoNextValue()
 					goto done;
 				}
 			}
+			if (ppDeclArg == GetDeclArgOwner().rend()) {
+				_contFlag = false;
+				goto done;
+			}
 		}
 		if (GetArgument().HasArgSlot()) {
 			ArgFeeder args(GetArgument(), GetFrame());

@@ -24,43 +24,42 @@ TestCase('PUnit') {
 	]
 	exprs::PrintPUnitWithLabel()
 }
-sys.Exit()
+
 TestCase('Statement') {
-	tbl = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8]
+	tbl = [11, 22, 33, 44, 55, 66, 77, 88, 99]
 	Tester(`tbl)
 	Tester(`{x = [], cross (n in []) { x.Add(n) }, x})
 	Tester(`{x = [], cross (n in tbl) { x.Add(n) }, x})
 	Tester(`{x = [], cross (n in tbl) {|i| x.Add(n + i)}, x})
 	Tester(`{x = [], cross (n in tbl) { if (n % 2 == 0) { continue }; x.Add(n) }, x})
 	Tester(`{x = [], cross (n in tbl) { (n % 2 == 0) && continue; x.Add(n) }, x})
-	Tester(`{x = [], rtn = cross (n in tbl) { if (n > 8) { break }; x.Add(n) }, [rtn, x]})
-	Tester(`{x = [], rtn = cross (n in tbl) { (n > 8) && break; x.Add(n) }, [rtn, x]})
-	Tester(`{x = [], rtn = cross (n in tbl) { if (n > 8) { break('end') }; x.Add(n) }, [rtn, x]})
-	Tester(`{x = [], rtn = cross (n in tbl) { (n > 8) && break('end'); x.Add(n) }, [rtn, x]})
-	Tester(`{x = [], rtn = cross (n in tbl) { if (n > 8) { break(nil) }; x.Add(n) }, [rtn, x]})
-	Tester(`{x = [], rtn = cross (n in tbl) { (n > 8) && break(nil); x.Add(n) }, [rtn, x]})
-	Tester(`{x = [], cross (n in [3, 1, 4, 1, 5]) {|i| x.Add(Format('%d-%d', i, n))}, x})
-	Tester(`{x = [], cross (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1, 4, 2]) {|i| x.Add(Format('%d-%d-%d', i, n1, n2))}, x})
-	Tester(`{x = [], cross (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3, 2, 0]) {|i|
-		x.Add(Format('%d-%d-%d', i, n1, n2))
+	Tester(`{x = [], rtn = cross (n in tbl) { if (n > 8) { break }; x.Add(n) }, (rtn, x)})
+	Tester(`{x = [], rtn = cross (n in tbl) { (n > 8) && break; x.Add(n) }, (rtn, x)})
+	Tester(`{x = [], rtn = cross (n in tbl) { if (n > 8) { break('end') }; x.Add(n) }, (rtn, x)})
+	Tester(`{x = [], rtn = cross (n in tbl) { (n > 8) && break('end'); x.Add(n) }, (rtn, x)})
+	Tester(`{x = [], rtn = cross (n in tbl) { if (n > 8) { break(nil) }; x.Add(n) }, (rtn, x)})
+	Tester(`{x = [], rtn = cross (n in tbl) { (n > 8) && break(nil); x.Add(n) }, (rtn, x)})
+	Tester(`{x = [], cross (n in [11, 22, 33, 44, 55]) {|i| x.Add(Format('%d-%d', i, n))}, x})
+	Tester(`{x = [], cross (n1 in [11, 22, 33, 44, 55], n2 in [111, 222, 333, 444, 555]) {|i| x.Add(Format('%d-%d-%d', i, n1, n2))}, x})
+	Tester(`{x = [], cross (n1 in [11, 22, 33, 44, 55], n2 in [111, 222, 333, 444, 555], n3 in [1111, 2222, 3333, 4444, 5555]) {|i|
+		x.Add(Format('%d-%d-%d-%d', i, n1, n2, n3))
 	}, x})
-	Tester(`{x = [], cross (n1 in [3, 1, 4], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3, 2, 0]) {|i|
-		x.Add(Format('%d-%d-%d', i, n1, n2))
+	Tester(`{x = [], cross (n1 in [11, 22, 33], n2 in [111, 222, 333, 444, 555], n3 in [1111, 2222, 3333, 4444, 5555]) {|i|
+		x.Add(Format('%d-%d-%d-%d', i, n1, n2, n3))
 	}, x})
-	Tester(`{x = [], cross (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1], n3 in [1, 7, 3, 2, 0]) {|i|
-		x.Add(Format('%d-%d-%d', i, n1, n2))
+	Tester(`{x = [], cross (n1 in [11, 22, 33, 44, 55], n2 in [111, 222, 333], n3 in [1111, 2222, 3333, 4444, 5555]) {|i|
+		x.Add(Format('%d-%d-%d-%d', i, n1, n2, n3))
 	}, x})
-	Tester(`{x = [], cross (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3]) {|i|
-		x.Add(Format('%d-%d-%d', i, n1, n2))
+	Tester(`{x = [], cross (n1 in [11, 22, 33, 44, 55], n2 in [111, 222, 333, 444, 555], n3 in [111, 222, 333]) {|i|
+		x.Add(Format('%d-%d-%d-%d', i, n1, n2, n3))
 	}, x})
 	Tester(`i)
 	Tester(`n1)
 	Tester(`n2)
 	Tester(`n3)
 }
-
 TestCase('Create list') {
-	tbl = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8]
+	tbl = [11, 22, 33, 44, 55, 66, 77, 88, 99]
 	Tester(`tbl)
 	Tester(`(cross (n in []):list { n }))
 	Tester(`(cross (n in tbl):list { n }))
@@ -85,19 +84,19 @@ TestCase('Create list') {
 	Tester(`(cross (n in tbl):xlist { (n > 8) && break('end') ; n }))
 	Tester(`(cross (n in tbl):xlist { if (n > 8) { break(nil) }; n }))
 	Tester(`(cross (n in tbl):xlist { (n > 8) && break(nil) ; n }))
-	Tester(`(cross (n in [3, 1, 4, 1, 5]):list {|i| Format('%d-%d', i, n)}))
-	Tester(`(cross (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1, 4, 2]):list {|i| Format('%d-%d-%d', i, n1, n2)}))
-	Tester(`(cross (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3, 2, 0]):list {|i|
-		Format('%d-%d-%d', i, n1, n2)
+	Tester(`(cross (n in [11, 22, 33, 44, 55]):list {|i| Format('%d-%d', i, n)}))
+	Tester(`(cross (n1 in [11, 22, 33, 44, 55], n2 in [111, 222, 333, 444, 555]):list {|i| Format('%d-%d-%d', i, n1, n2)}))
+	Tester(`(cross (n1 in [11, 22, 33, 44, 55], n2 in [111, 222, 333, 444, 555], n3 in [1111, 2222, 3333, 4444, 5555]):list {|i|
+		Format('%d-%d-%d-%d', i, n1, n2, n3)
 	}))
-	Tester(`(cross (n1 in [3, 1, 4], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3, 2, 0]):list {|i|
-		Format('%d-%d-%d', i, n1, n2)
+	Tester(`(cross (n1 in [3, 1, 4], n2 in [111, 222, 333, 444, 555], n3 in [1111, 2222, 3333, 4444, 5555]):list {|i|
+		Format('%d-%d-%d-%d', i, n1, n2, n3)
 	}))
-	Tester(`(cross (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1], n3 in [1, 7, 3, 2, 0]):list {|i|
-		Format('%d-%d-%d', i, n1, n2)
+	Tester(`(cross (n1 in [11, 22, 33, 44, 55], n2 in [111, 222, 333], n3 in [1111, 2222, 3333, 4444, 5555]):list {|i|
+		Format('%d-%d-%d-%d', i, n1, n2, n3)
 	}))
-	Tester(`(cross (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3]):list {|i|
-		Format('%d-%d-%d', i, n1, n2)
+	Tester(`(cross (n1 in [11, 22, 33, 44, 55], n2 in [111, 222, 333, 444, 555], n3 in [1111, 2222, 3333]):list {|i|
+		Format('%d-%d-%d-%d', i, n1, n2, n3)
 	}))
 	Tester(`i)
 	Tester(`n1)
@@ -106,7 +105,7 @@ TestCase('Create list') {
 }
 
 TestCase('Create iterator') {
-	tbl = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8]
+	tbl = [11, 22, 33, 44, 55, 9, 2, 6, 5, 3, 5, 8]
 	Tester(`tbl)
 	Tester(`(cross (n in []):iter { n }[]))
 	Tester(`(cross (n in tbl):iter { n }[]))
@@ -131,22 +130,25 @@ TestCase('Create iterator') {
 	Tester(`(cross (n in tbl):xiter { (n > 8) && break('end') ; n }[]))
 	Tester(`(cross (n in tbl):xiter { if (n > 8) { break(nil) }; n }[]))
 	Tester(`(cross (n in tbl):xiter { (n > 8) && break(nil) ; n }[]))
-	Tester(`(cross (n in [3, 1, 4, 1, 5]):iter {|i| Format('%d-%d', i, n)}[]))
-	Tester(`(cross (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1, 4, 2]):iter {|i| Format('%d-%d-%d', i, n1, n2)}[]))
-	Tester(`(cross (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3, 2, 0]):iter {|i|
-		Format('%d-%d-%d', i, n1, n2)
+	Tester(`(cross (n in [11, 22, 33, 44, 55]):iter {|i| Format('%d-%d', i, n)}[]))
+	Tester(`(cross (n1 in [11, 22, 33, 44, 55], n2 in [111, 222, 333, 444, 555]):iter {|i| Format('%d-%d-%d', i, n1, n2)}[]))
+	Tester(`(cross (n1 in [11, 22, 33, 44, 55], n2 in [111, 222, 333, 444, 555], n3 in [1111, 2222, 3333, 4444, 5555]):iter {|i|
+		Format('%d-%d-%d-%d', i, n1, n2, n3)
 	}[]))
-	Tester(`(cross (n1 in [3, 1, 4], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3, 2, 0]):iter {|i|
-		Format('%d-%d-%d', i, n1, n2)
+	Tester(`(cross (n1 in [3, 1, 4], n2 in [111, 222, 333, 444, 555], n3 in [1111, 2222, 3333, 4444, 5555]):iter {|i|
+		Format('%d-%d-%d-%d', i, n1, n2, n3)
 	}[]))
-	Tester(`(cross (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1], n3 in [1, 7, 3, 2, 0]):iter {|i|
-		Format('%d-%d-%d', i, n1, n2)
+	Tester(`(cross (n1 in [11, 22, 33, 44, 55], n2 in [111, 222, 333], n3 in [1111, 2222, 3333, 4444, 5555]):iter {|i|
+		Format('%d-%d-%d-%d', i, n1, n2, n3)
 	}[]))
-	Tester(`(cross (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3]):iter {|i|
-		Format('%d-%d-%d', i, n1, n2)
+	Tester(`(cross (n1 in [11, 22, 33, 44, 55], n2 in [111, 222, 333, 444, 555], n3 in [1111, 2222, 3333]):iter {|i|
+		Format('%d-%d-%d-%d', i, n1, n2, n3)
 	}[]))
 	Tester(`i)
 	Tester(`n1)
 	Tester(`n2)
 	Tester(`n3)
+}
+TestCase('Reject Unrewindable') {
+	Tester(`cross (a in Random.IntSeq(10)) {})
 }
