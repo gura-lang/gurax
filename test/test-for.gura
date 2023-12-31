@@ -19,7 +19,6 @@ TestCase('PUnit') {
 		`for (v in tbl):list {|n| 1 }
 		`for (v in tbl):xlist {|n| 1 }
 		`for (v1 in tbl1, v2 in tbl2, v3 in tbl3) {|n| 1 }
-
 		`for (v in tbl) { break, 1 }
 		`for (v in tbl):list { break, 1 }
 	]

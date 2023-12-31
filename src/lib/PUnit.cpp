@@ -848,6 +848,44 @@ PUnit* PUnitFactory_EvalIterator::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
+// PUnit_CheckIterator_Rewindable
+// Stack View: [Iterator1..n ..] -> [Iterator1..n ..] (continue)
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+void PUnit_CheckIterator_Rewindable<discardValueFlag>::Exec(Processor& processor) const
+{
+	size_t offset = GetOffset();
+	for (size_t i = 0; i < _nIterators; i++, offset++) {
+		Iterator& iterator = Value_Iterator::GetIterator(processor.PeekValue(offset));
+		if (!iterator.IsRewindable()) {
+			Error::Issue(ErrorType::IteratorError, "iterator is not rewindable");
+			processor.ErrorDone();
+			return;
+		}
+	}
+	processor.SetPUnitCur(_GetPUnitCont());
+}
+
+template<bool discardValueFlag>
+String PUnit_CheckIterator_Rewindable<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str.Format("CheckIterator_Rewindable(offsetToIterator=%zu,nIterators=%zu)", GetOffset(), _nIterators);
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_CheckIterator_Rewindable::Create(bool discardValueFlag)
+{
+	if (discardValueFlag) {
+		_pPUnitCreated = new PUnit_CheckIterator_Rewindable<true>(_offset, _nIterators, _pExprSrc.Reference());
+	} else {
+		_pPUnitCreated = new PUnit_CheckIterator_Rewindable<false>(_offset, _nIterators, _pExprSrc.Reference());
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_CrossEach
 // Stack View: [Iterator1..n ..] -> [Iterator1..n ..] (continue)
 //------------------------------------------------------------------------------
