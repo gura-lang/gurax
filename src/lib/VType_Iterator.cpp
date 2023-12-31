@@ -136,10 +136,10 @@ Gurax_ImplementMethod(Iterator, NextValue)
 	return pValue? pValue.release() : Value::nil();
 }
 
-// Iterator#Rewind():void
+// Iterator#Rewind()
 Gurax_DeclareMethod(Iterator, Rewind)
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Iterator, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 )""");
 	AddHelp(Gurax_Symbol(ja), u8R"""(
@@ -157,7 +157,7 @@ Gurax_ImplementMethod(Iterator, Rewind)
 		return Value::nil();
 	}
 	iteratorThis.Rewind();
-	return Value::nil();
+	return valueThis.Reference();
 }
 
 // Iterator#Skip(n as Number):void

@@ -1,6 +1,17 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
+TestCase('Iterator#Rewind()') {
+	f(x as Iterator) = {
+		Println(x.__str__())
+		Println('  First:  ', x[].Join(','))
+		Println('  Rewind: ', x.Rewind()[].Join(','))
+	}
+	f([1, 2, 3, 4, 5, 6, 7, 8, 9, 10].Each())
+	f(Range(3, 20, 2))
+}
+sys.Exit()
+
 TestCase('Property') {
 	Iterator.PrintPropSlots()
 }
