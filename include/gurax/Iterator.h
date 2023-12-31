@@ -56,15 +56,16 @@ public:
 	template<typename T_Compare> Value* FindMinMax(Int* pIdxFound);
 	template<typename T_Compare> Value* FindMinMax(NumList<Int>& idxFoundList);
 public:
+	Flags GetFlags(Flags flags) const { return GetFlags() & flags; }
 	Int GetIdxCur() const { return _idxCur; }
 	Int GetIdxNext() const { return _idxNext; }
 	bool IsVirgin() const { return _idxCur < 0; }
-	bool IsInfinite() const { return (GetFlags() & Flag::Finite) == 0; }
-	bool IsFinite() const { return (GetFlags() & Flag::Finite) != 0; }
+	bool IsInfinite() const { return GetFlags(Flag::Finite) == 0; }
+	bool IsFinite() const { return GetFlags(Flag::Finite) != 0; }
 	bool MustBeFinite() const;
-	bool IsLenUndetermined() const { return (GetFlags() & Flag::LenDetermined) == 0; }
-	bool IsLenDetermined() const { return (GetFlags() & Flag::LenDetermined) != 0; }
-	bool IsRewindable() const { return (GetFlags() & Flag::Rewindable) != 0; }
+	bool IsLenUndetermined() const { return GetFlags(Flag::LenDetermined) == 0; }
+	bool IsLenDetermined() const { return GetFlags(Flag::LenDetermined) != 0; }
+	bool IsRewindable() const { return GetFlags(Flag::Rewindable) != 0; }
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Iterator& iterator) const { return this == &iterator; }
 	bool IsEqualTo(const Iterator& iterator) const { return IsIdentical(iterator); }

@@ -144,6 +144,7 @@ public:
 	NumList& Sort() { std::sort(NumList::begin(), NumList::end()); return *this; }
 	NumList& Sort(SortOrder sortOrder);
 	NumList& Unique() { NumList::erase(std::unique(NumList::begin(), NumList::end()), NumList::end()); return *this; }
+	NumList& Clear() { NumList::clear(); return *this; }
 	NumList& FillSeq(size_t n);
 };
 
