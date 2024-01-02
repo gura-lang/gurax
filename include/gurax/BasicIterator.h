@@ -336,8 +336,9 @@ public:
 	bool GetSkipNilFlag() const { return _skipNilFlag; }
 public:
 	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenUndetermined; }
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenUndetermined | Flag::Rewindable; }
 	virtual size_t GetLength() const override { return -1; }
+	virtual void DoRewind() override { _pIteratorOwner->Rewind(); }
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -551,8 +552,9 @@ public:
 	const ValueOwner& GetValueOwner() const { return *_pValueOwner; }
 public:
 	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined | Flag::Rewindable; }
 	virtual size_t GetLength() const override { return GetValueOwner().size(); }
+	virtual void DoRewind() override { _idx = 0; }
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -603,9 +605,10 @@ public:
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override {
-		return Flag::Finite | Flag::LenDetermined;
+		return Flag::Finite | Flag::LenDetermined | GetIteratorSrc().GetFlags(Flag::Rewindable);
 	}
 	virtual size_t GetLength() const override { return _cnt; }
+	virtual void DoRewind() override { GetIteratorSrc().Rewind(); _stuffFlag = false; }
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 };

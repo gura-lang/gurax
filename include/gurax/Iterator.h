@@ -123,6 +123,8 @@ public:
 // IteratorList
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE IteratorList : public ListBase<Iterator*> {
+public:
+	void Rewind();
 };
 
 //------------------------------------------------------------------------------

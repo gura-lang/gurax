@@ -98,7 +98,7 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 	bool skipNilFlag = false;
 	if ((flags & DeclCallable::Flag::Iter) || (skipNilFlag = (flags & DeclCallable::Flag::XIter))) {
 		RefPtr<Iterator> pIterator(new Iterator_DoEach(
-									   processor.Reference(), exprOfBlock.Reference(), Reference(), skipNilFlag));
+									processor.Reference(), exprOfBlock.Reference(), Reference(), skipNilFlag));
 		pValueRtn.reset(new Value_Iterator(pIterator.release()));
 	} else {
 		size_t nArgs = declArgOwner.size();
@@ -301,6 +301,10 @@ String Iterator::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // IteratorList
 //------------------------------------------------------------------------------
+void IteratorList::Rewind()
+{
+	for (Iterator* pIterator : *this) pIterator->Rewind();
+}
 
 //------------------------------------------------------------------------------
 // IteratorOwner
