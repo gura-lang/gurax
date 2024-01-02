@@ -106,7 +106,7 @@ public:
 		return true;
 	}
 	void Rewind() {
-		_idxCur = 0, _idxNext = -1;
+		_idxCur = -1, _idxNext = 0;
 		_pValuePeeked.reset();
 		DoRewind();
 	}

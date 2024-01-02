@@ -1,22 +1,6 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
-TestCase('Iterator#Rewind()') {
-	f(x as Iterator) = {
-		Println(x.__str__())
-		Println('  First:  ', x[].Join(', '))
-		Println('  Rewind: ', x.Rewind()[].Join(', '))
-	}
-	f([1, 2, 3, 4, 5, 6, 7, 8, 9, 10].Each())
-	f(2..12)
-	f(Range(3, 20, 2))
-	f([1, 2, 3, 4].Permutation())
-	f([1, 2, 3, 4].Permutation(3))
-	f([1, 2, 3, 4].Combination(2))
-	f((2..100).Head(10))
-}
-sys.Exit()
-
 TestCase('Property') {
 	Iterator.PrintPropSlots()
 }
@@ -533,6 +517,23 @@ TestCase('Iterator#Replace()') {
 
 TestCase('Iterator#Reverse()') {
 	Tester(`['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].Each().Reverse():list)
+}
+
+TestCase('Iterator#Rewind()') {
+	f(x as Iterator) = {
+		Println(x.__str__())
+		Println('  First:  ', x[].Join(', '))
+		Println('  Rewind: ', x.Rewind()[].Join(', '))
+		Println('  Rewind: ', x.Rewind()[].Join(', '))
+	}
+	f([1, 2, 3, 4, 5, 6, 7, 8, 9, 10].Each())
+	f(2..12)
+	f(Range(3, 20, 2))
+	f([1, 2, 3, 4].Permutation())
+	f([1, 2, 3, 4].Permutation(3))
+	f([1, 2, 3, 4].Combination(2))
+	f((2..100).Head(10))
+	f((2..14).Offset(3))
 }
 
 TestCase('Iterator#RoundOff()') {
