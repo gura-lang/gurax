@@ -11,7 +11,7 @@
 
 #define GURAX_VERSION "0.0.1"
 
-#define GURAX_COPYRIGHT	"Copyright (C) 2011-2023 ypsitau"
+#define GURAX_COPYRIGHT	"Copyright (C) 2011-2024 ypsitau"
 
 namespace Gurax {
 

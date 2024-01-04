@@ -1181,6 +1181,24 @@ Gurax_ImplementMethod(List, Since)
 	return VType_Iterator::Method_Since(processor, argument, *pIteratorSrc, true);
 }
 
+// List#SkipFalse() {block?}
+Gurax_DeclareMethod(List, SkipFalse)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	LinkHelp(VTYPE_Iterator, GetSymbol());
+}
+
+Gurax_ImplementMethod(List, SkipFalse)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
+	// Function body
+	RefPtr<Iterator> pIterator(new Iterator_SkipFalse(pIteratorThis.Reference()));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
 // List#SkipNil() {block?}
 Gurax_DeclareMethod(List, SkipNil)
 {
@@ -1543,6 +1561,7 @@ void VType_List::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(List, RoundOff));
 	Assign(Gurax_CreateMethod(List, RunLength));
 	Assign(Gurax_CreateMethod(List, Since));
+	Assign(Gurax_CreateMethod(List, SkipFalse));
 	Assign(Gurax_CreateMethod(List, SkipNil));
 	Assign(Gurax_CreateMethod(List, Sort));
 	Assign(Gurax_CreateMethod(List, Std));

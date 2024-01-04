@@ -534,6 +534,16 @@ TestCase('Iterator#Rewind()') {
 	f([1, 2, 3, 4].Combination(2))
 	f((2..100).Head(10))
 	f((2..14).Offset(3))
+	f([1, 2, 3, 4].PingPong(20))
+	f([1, 2, 3, 4].PingPong(20):sticky)
+	f([1, 2, 3, 4].PingPong(20):sticky@top)
+	f([1, 2, 3, 4].PingPong(20):sticky@btm)
+	f([1, 2, 3, 4].Cycle(12))
+	f([1, 2, 3, 4, 5, 6, 7].Align(10, -1))
+	f([1, 2, 2, 2, 3, 3, 4, 4, 4, 4, 5].Uniq())
+	f([1, 2, 2, 2, 3, 3, 4, 4, 4, 4, 5].RunLength())
+	f([1, nil, 2, nil, nil, nil, 3, 3, 4, nil, 4, 4, 4, 5].SkipNil())
+	f([1, nil, 2, nil, false, nil, 3, false, 3, 4, nil, 4, 4, 4, 5].SkipFalse())
 }
 
 TestCase('Iterator#RoundOff()') {

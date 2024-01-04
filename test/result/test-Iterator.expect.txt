@@ -418,6 +418,46 @@ tbl.Each().Offset(-1)[] .. negative value is not acceptable
   First:  5, 6, 7, 8, 9, 10, 11, 12, 13, 14
   Rewind: 5, 6, 7, 8, 9, 10, 11, 12, 13, 14
   Rewind: 5, 6, 7, 8, 9, 10, 11, 12, 13, 14
+<Iterator:PingPong:n=4>
+  First:  1, 2, 3, 4, 3, 2, 1, 2, 3, 4, 3, 2, 1, 2, 3, 4, 3, 2, 1, 2
+  Rewind: 1, 2, 3, 4, 3, 2, 1, 2, 3, 4, 3, 2, 1, 2, 3, 4, 3, 2, 1, 2
+  Rewind: 1, 2, 3, 4, 3, 2, 1, 2, 3, 4, 3, 2, 1, 2, 3, 4, 3, 2, 1, 2
+<Iterator:PingPong:n=4:sticky@top:sticky@btm>
+  First:  1, 2, 3, 4, 4, 3, 2, 1, 1, 2, 3, 4, 4, 3, 2, 1, 1, 2, 3, 4
+  Rewind: 1, 2, 3, 4, 4, 3, 2, 1, 1, 2, 3, 4, 4, 3, 2, 1, 1, 2, 3, 4
+  Rewind: 1, 2, 3, 4, 4, 3, 2, 1, 1, 2, 3, 4, 4, 3, 2, 1, 1, 2, 3, 4
+<Iterator:PingPong:n=4:sticky@top>
+  First:  1, 2, 3, 4, 3, 2, 1, 1, 2, 3, 4, 3, 2, 1, 1, 2, 3, 4, 3, 2
+  Rewind: 1, 2, 3, 4, 3, 2, 1, 1, 2, 3, 4, 3, 2, 1, 1, 2, 3, 4, 3, 2
+  Rewind: 1, 2, 3, 4, 3, 2, 1, 1, 2, 3, 4, 3, 2, 1, 1, 2, 3, 4, 3, 2
+<Iterator:PingPong:n=4:sticky@btm>
+  First:  1, 2, 3, 4, 4, 3, 2, 1, 2, 3, 4, 4, 3, 2, 1, 2, 3, 4, 4, 3
+  Rewind: 1, 2, 3, 4, 4, 3, 2, 1, 2, 3, 4, 4, 3, 2, 1, 2, 3, 4, 4, 3
+  Rewind: 1, 2, 3, 4, 4, 3, 2, 1, 2, 3, 4, 4, 3, 2, 1, 2, 3, 4, 4, 3
+<Iterator:Cycle:n=4>
+  First:  1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4
+  Rewind: 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4
+  Rewind: 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4
+<Iterator:Align(Each:begin=0:end=7)>
+  First:  1, 2, 3, 4, 5, 6, 7, -1, -1, -1
+  Rewind: 1, 2, 3, 4, 5, 6, 7, -1, -1, -1
+  Rewind: 1, 2, 3, 4, 5, 6, 7, -1, -1, -1
+<Iterator:Uniq>
+  First:  1, 2, 3, 4, 5
+  Rewind: 1, 2, 3, 4, 5
+  Rewind: 1, 2, 3, 4, 5
+<Iterator:RunLength>
+  First:  (1, 1), (3, 2), (2, 3), (4, 4), (1, 5)
+  Rewind: (1, 1), (3, 2), (2, 3), (4, 4), (1, 5)
+  Rewind: (1, 1), (3, 2), (2, 3), (4, 4), (1, 5)
+<Iterator:SkipNil>
+  First:  1, 2, 3, 3, 4, 4, 4, 4, 5
+  Rewind: 1, 2, 3, 3, 4, 4, 4, 4, 5
+  Rewind: 1, 2, 3, 3, 4, 4, 4, 4, 5
+<Iterator:SkipFalse>
+  First:  1, 2, 3, 3, 4, 4, 4, 4, 5
+  Rewind: 1, 2, 3, 3, 4, 4, 4, 4, 5
+  Rewind: 1, 2, 3, 3, 4, 4, 4, 4, 5
 ======== Iterator#RoundOff() ========
 ======== Iterator#RunLength() ========
 [].Each().RunLength():list .. []

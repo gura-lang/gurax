@@ -686,8 +686,9 @@ public:
 	const Iterator& GetIteratorSrc() const { return *_pIteratorSrc; }
 public:
 	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override { return GetIteratorSrc().GetFlags(Flag::Finite); }
+	virtual Flags GetFlags() const override { return GetIteratorSrc().GetFlags(Flag::Finite | Flag::Rewindable); }
 	virtual size_t GetLength() const override { return -1; }
+	virtual void DoRewind() override { GetIteratorSrc().Rewind(); _pValuePrev.reset(); _doneFlag = false; _cnt = 0; }
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -751,7 +752,7 @@ public:
 		return ((_cnt < 0)? (Flag::Infinite | Flag::LenUndetermined) : (Flag::Finite | Flag::LenDetermined)) | Flag::Rewindable;
 	}
 	virtual size_t GetLength() const override { return (_cnt < 0)? -1 : _cnt; }
-	virtual void DoRewind() override { _idx = 0; }
+	virtual void DoRewind() override { _idx = 0; _forwardFlag = true; }
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -1071,9 +1072,10 @@ public:
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override {
-		return GetIteratorSrc().GetFlags(Flag::Finite) | Flag::LenUndetermined;
+		return GetIteratorSrc().GetFlags(Flag::Finite | Flag::Rewindable) | Flag::LenUndetermined;
 	}
 	virtual size_t GetLength() const override { return -1; }
+	virtual void DoRewind() override { GetIteratorSrc().Rewind(); _doneFlag = false; }
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -1096,9 +1098,10 @@ public:
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override {
-		return GetIteratorSrc().GetFlags(Flag::Finite) | Flag::LenUndetermined;
+		return GetIteratorSrc().GetFlags(Flag::Finite | Flag::Rewindable) | Flag::LenUndetermined;
 	}
 	virtual size_t GetLength() const override { return -1; }
+	virtual void DoRewind() override { GetIteratorSrc().Rewind(); _doneFlag = false; }
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 };

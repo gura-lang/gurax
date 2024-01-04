@@ -607,8 +607,7 @@ String Iterator_Cycle::ToString(const StringStyle& ss) const
 //-----------------------------------------------------------------------------
 Value* Iterator_Align::DoNextValue()
 {
-	if (_cnt == 0) return nullptr;
-	_cnt--;
+	if (_idxCur >= _cnt) return nullptr;
 	if (_stuffFlag) return _pValueStuff.Reference();
 	RefPtr<Value> pValueElem(GetIteratorSrc().NextValue());
 	if (pValueElem) return pValueElem.release();
@@ -757,14 +756,15 @@ Value* Iterator_PingPong::DoNextValue()
 
 String Iterator_PingPong::ToString(const StringStyle& ss) const
 {
-	return String().Format("PingPong:n=%zu", GetValueOwner().size());
+	return String().Format("PingPong:n=%zu%s%s", GetValueOwner().size(),
+			_stickyFlagTop? ":sticky@top" : "", _stickyFlagBtm? ":sticky@btm" : "");
 }
 
 //-----------------------------------------------------------------------------
 // Iterator_Fold
 //-----------------------------------------------------------------------------
 Iterator_Fold::Iterator_Fold(Iterator* pIteratorSrc, size_t nSize, size_t nAdvance,
-							 bool itemAsIterFlag, bool neatFlag) :
+							bool itemAsIterFlag, bool neatFlag) :
 	_pIteratorSrc(pIteratorSrc), _nSize(nSize), _nAdvance(nAdvance),
 	_itemAsIterFlag(itemAsIterFlag), _neatFlag(neatFlag), _doneFlag(false)
 {

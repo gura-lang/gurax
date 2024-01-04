@@ -1339,6 +1339,26 @@ Value* VType_Iterator::Method_Since(Processor& processor, Argument& argument,
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
+// Iterator#SkipFalse() {block?}
+Gurax_DeclareMethod(Iterator, SkipFalse)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+
+)""");
+}
+
+Gurax_ImplementMethod(Iterator, SkipFalse)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Iterator& iteratorSrc = valueThis.GetIterator();
+	// Function body
+	RefPtr<Iterator> pIterator(new Iterator_SkipFalse(iteratorSrc.Reference()));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
 // Iterator#SkipNil() {block?}
 Gurax_DeclareMethod(Iterator, SkipNil)
 {
@@ -1754,6 +1774,7 @@ void VType_Iterator::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Iterator, RoundOff));
 	Assign(Gurax_CreateMethod(Iterator, RunLength));
 	Assign(Gurax_CreateMethod(Iterator, Since));
+	Assign(Gurax_CreateMethod(Iterator, SkipFalse));
 	Assign(Gurax_CreateMethod(Iterator, SkipNil));
 	Assign(Gurax_CreateMethod(Iterator, Sort));
 	Assign(Gurax_CreateMethod(Iterator, Std));
