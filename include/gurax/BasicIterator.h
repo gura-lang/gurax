@@ -338,7 +338,7 @@ public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenUndetermined | Flag::Rewindable; }
 	virtual size_t GetLength() const override { return -1; }
-	virtual void DoRewind() override { _pIteratorOwner->Rewind(); }
+	virtual void DoRewind() override { _pIteratorOwner->Rewind(); _idx = 0; _contFlag = true; }
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 };

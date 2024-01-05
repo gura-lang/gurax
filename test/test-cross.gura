@@ -149,6 +149,20 @@ TestCase('Create iterator') {
 	Tester(`n2)
 	Tester(`n3)
 }
+
 TestCase('Reject Unrewindable') {
 	Tester(`cross (a in Random.IntSeq(10)) {})
+}
+
+TestCase('Cross iterator') {
+	tbl1 = [1, 2, 3, 4, 5]
+	tbl2 = ['a', 'b', 'c']
+	tbl3 = ['A', 'B', 'C']
+	x = cross (v1 in tbl1, v2 in tbl2, v3 in tbl3):iter {(v1, v2, v3)}
+	Println(x)
+	x.Rewind()
+	tbl0 = ['+', '-', '*']
+	cross (v0 in tbl0, v in x) {
+		Printf('%s %s\n', v0, v)
+	}
 }
