@@ -79,6 +79,7 @@ public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override;
 	virtual size_t GetLength() const override;
+	virtual void DoRewind() override;
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 };

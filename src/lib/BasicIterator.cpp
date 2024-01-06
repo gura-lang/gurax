@@ -45,7 +45,7 @@ String Iterator_ConstN::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 Iterator::Flags Iterator_Concat::GetFlags() const
 {
-	return _pIteratorFirst->GetFlags() & _pIteratorSecond->GetFlags() & (Flag::Finite | Flag::LenDetermined);
+	return _pIteratorFirst->GetFlags() & _pIteratorSecond->GetFlags() & (Flag::Finite | Flag::LenDetermined | Flag::Rewindable);
 }
 
 size_t Iterator_Concat::GetLength() const
@@ -54,7 +54,13 @@ size_t Iterator_Concat::GetLength() const
 		_pIteratorFirst->GetLength() + _pIteratorSecond->GetLength() : -1;
 }
 
-Value* Iterator_Concat:: DoNextValue()
+void Iterator_Concat::DoRewind()
+{
+	_pIteratorFirst->Rewind();
+	_pIteratorSecond->Rewind();
+}
+
+Value* Iterator_Concat::DoNextValue()
 {
 	RefPtr<Value> pValue(_pIteratorFirst->DoNextValue());
 	if (pValue) return pValue.release();
