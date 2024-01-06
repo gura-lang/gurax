@@ -1464,7 +1464,7 @@ Gurax_ImplementOpBinary(Contains, Any, List)
 // List |+| List
 Gurax_ImplementOpBinary(Concat, List, List)
 {
-	RefPtr<ValueTypedOwner> pValues(Value_List::GetValueTypedOwner(valueL).Reference());
+	RefPtr<ValueTypedOwner> pValues(Value_List::GetValueTypedOwner(valueL).Clone());
 	const ValueTypedOwner& valuesR = Value_List::GetValueTypedOwner(valueR);
 	pValues->Add(valuesR);
 	return new Value_List(pValues.release());
@@ -1473,7 +1473,7 @@ Gurax_ImplementOpBinary(Concat, List, List)
 // List |+| Iterator
 Gurax_ImplementOpBinary(Concat, List, Iterator)
 {
-	RefPtr<ValueTypedOwner> pValues(Value_List::GetValueTypedOwner(valueL).Reference());
+	RefPtr<ValueTypedOwner> pValues(Value_List::GetValueTypedOwner(valueL).Clone());
 	Iterator& iteratorR = Value_Iterator::GetIterator(valueR);
 	if (!pValues->Add(iteratorR)) return Value::nil();
 	return new Value_List(pValues.release());
@@ -1492,7 +1492,7 @@ Gurax_ImplementOpBinary(Concat, Any, List)
 // List |+| Any
 Gurax_ImplementOpBinary(Concat, List, Any)
 {
-	RefPtr<ValueTypedOwner> pValues(Value_List::GetValueTypedOwner(valueL).Reference());
+	RefPtr<ValueTypedOwner> pValues(Value_List::GetValueTypedOwner(valueL).Clone());
 	pValues->Add(valueR.Reference());
 	return new Value_List(pValues.release());
 }

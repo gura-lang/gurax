@@ -113,3 +113,24 @@ TestCase('Sort') {
 	Tester(`tuples)
 	Tester(`tuples.Sort())
 }
+
+TestCase('Tuple |+| Tuple') {
+	Tester(`(() |+| ()))
+	Tester(`((1,) |+| ()))
+	Tester(`(() |+| (2,)))
+	Tester(`((1,) |+| (2,)))
+	Tester(`((1, 2, 3, 4) |+| (5, 6, 7, 8)))
+	Tester(`(([1, 2], [3, 4]) |+| ([5, 6], [7, 8])))
+	a = (1, 2, 3, 4)
+	Tester(`a)
+	Tester(`(a |+| (5, 6, 7, 8)))
+	Tester(`a)
+}
+
+TestCase('Any |+| Tuple, Tuple |+| Any') {
+	Tester(`(() |+| 111))
+	Tester(`(111 |+| ()))
+	Tester(`((1, 2, 3, 4) |+| 111))
+	Tester(`(111 |+| (1, 2, 3, 4)))
+	Tester(`(111 |+| (1, 2, 3, 4) |+| 222))
+}

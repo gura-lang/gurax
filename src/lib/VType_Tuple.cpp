@@ -185,6 +185,33 @@ Gurax_ImplementOpBinary(Ne, Tuple, Tuple)
 	return new Value_Bool(!valuesL.IsEqualTo(valuesR));
 }
 
+// Tuple |+| Tuple
+Gurax_ImplementOpBinary(Concat, Tuple, Tuple)
+{
+	RefPtr<ValueOwner> pValues(Value_Tuple::GetValueOwner(valueL).Clone());
+	const ValueOwner& valuesR = Value_Tuple::GetValueOwner(valueR);
+	pValues->Add(valuesR);
+	return new Value_Tuple(pValues.release());
+}
+
+// Any |+| Tuple
+Gurax_ImplementOpBinary(Concat, Any, Tuple)
+{
+	RefPtr<ValueOwner> pValues(new ValueOwner());
+	const ValueOwner& valuesR = Value_Tuple::GetValueOwner(valueR);
+	pValues->Add(valueL.Reference());
+	pValues->Add(valuesR);
+	return new Value_Tuple(pValues.release());
+}
+
+// Tuple |+| Any
+Gurax_ImplementOpBinary(Concat, Tuple, Any)
+{
+	RefPtr<ValueOwner> pValues(Value_Tuple::GetValueOwner(valueL).Clone());
+	pValues->Add(valueR.Reference());
+	return new Value_Tuple(pValues.release());
+}
+
 //------------------------------------------------------------------------------
 // VType_Tuple
 //------------------------------------------------------------------------------
@@ -210,6 +237,9 @@ void VType_Tuple::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpBinary(Le, Tuple, Tuple);
 	Gurax_AssignOpBinary(Lt, Tuple, Tuple);
 	Gurax_AssignOpBinary(Ne, Tuple, Tuple);
+	Gurax_AssignOpBinary(Concat, Tuple, Tuple);
+	Gurax_AssignOpBinary(Concat, Any, Tuple);
+	Gurax_AssignOpBinary(Concat, Tuple, Any);
 }
 
 Value* VType_Tuple::DoCastFrom(const Value& value, DeclArg::Flags flags) const
