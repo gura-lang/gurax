@@ -458,6 +458,14 @@ tbl.Each().Offset(-1)[] .. negative value is not acceptable
   First:  1, 2, 3, 3, 4, 4, 4, 4, 5
   Rewind: 1, 2, 3, 3, 4, 4, 4, 4, 5
   Rewind: 1, 2, 3, 3, 4, 4, 4, 4, 5
+<Iterator:Concat:(Range:begin=0:end=5:step=1) |+| (Concat:(Range:begin=0:end=3:step=1) |+| (Concat:(Range:begin=0:end=4:step=1) |+| (Range:begin=0:end=6:step=1)))>
+  First:  0, 1, 2, 3, 4, 0, 1, 2, 0, 1, 2, 3, 0, 1, 2, 3, 4, 5
+  Rewind: 0, 1, 2, 3, 4, 0, 1, 2, 0, 1, 2, 3, 0, 1, 2, 3, 4, 5
+  Rewind: 0, 1, 2, 3, 4, 0, 1, 2, 0, 1, 2, 3, 0, 1, 2, 3, 4, 5
+<Iterator:Concat:(Random.IntSeq:range=10:n=5) |+| (Concat:(Range:begin=0:end=3:step=1) |+| (Concat:(Range:begin=0:end=4:step=1) |+| (Range:begin=0:end=6:step=1)))>
+  First:  1, 6, 6, 1, 0, 0, 1, 2, 0, 1, 2, 3, 0, 1, 2, 3, 4, 5
+  Rewind: the iterator is not rewindable
+  Rewind: the iterator is not rewindable
 ======== Iterator#RoundOff() ========
 ======== Iterator#RunLength() ========
 [].Each().RunLength():list .. []
