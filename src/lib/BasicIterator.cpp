@@ -591,9 +591,9 @@ String Iterator_Reverse::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// Iterator_Cycle
+// Iterator_Cycle_List
 //------------------------------------------------------------------------------
-Value* Iterator_Cycle::DoNextValue()
+Value* Iterator_Cycle_List::DoNextValue()
 {
 	const ValueOwner& valueOwner = GetValueOwner();
 	if (_cnt >= 0 && _idxCur >= _cnt) return nullptr;
@@ -601,7 +601,7 @@ Value* Iterator_Cycle::DoNextValue()
 	return valueOwner[_idx++]->Reference();
 }
 
-String Iterator_Cycle::ToString(const StringStyle& ss) const
+String Iterator_Cycle_List::ToString(const StringStyle& ss) const
 {
 	String str;
 	str.Format("Cycle:n=%zu", GetValueOwner().size());

@@ -547,10 +547,10 @@ Gurax_ImplementMethod(Iterator, Cycle)
 	RefPtr<ValueTypedOwner> pValueTypedOwner(ValueTypedOwner::CreateFromIterator(valueThis.GetIterator(), false));
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	return VType_Iterator::Method_Cycle(processor, argument, *pValueTypedOwner);
+	return VType_Iterator::Method_Cycle_List(processor, argument, *pValueTypedOwner);
 }
 
-Value* VType_Iterator::Method_Cycle(
+Value* VType_Iterator::Method_Cycle_List(
 	Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner)
 {
 	if (valueTypedOwner.IsEmpty()) {
@@ -562,7 +562,7 @@ Value* VType_Iterator::Method_Cycle(
 	Int n = args.IsValid()? args.PickNumberNonNeg<Int>() : -1;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_Cycle(valueTypedOwner.GetValueOwnerReference(), n));
+	RefPtr<Iterator> pIterator(new Iterator_Cycle_List(valueTypedOwner.GetValueOwnerReference(), n));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 

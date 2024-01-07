@@ -545,7 +545,7 @@ TestCase('Iterator#Rewind()') {
 	f([1, nil, 2, nil, nil, nil, 3, 3, 4, nil, 4, 4, 4, 5].SkipNil())
 	f([1, nil, 2, nil, false, nil, 3, false, 3, 4, nil, 4, 4, 4, 5].SkipFalse())
 	f(Range(5) |+| Range(3) |+| Range(4) |+| Range(6))
-	f(Random.IntSeq(10, 5) |+| Range(3) |+| Range(4) |+| Range(6))
+	f(Random(0).IntSeq(10, 5) |+| Range(3) |+| Range(4) |+| Range(6))
 }
 
 TestCase('Iterator#RoundOff()') {

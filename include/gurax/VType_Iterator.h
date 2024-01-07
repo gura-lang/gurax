@@ -24,7 +24,7 @@ public:
 	static Value* Method_ArgMin(Argument& argument, Iterator& iteratorThis);
 	static Value* Method_Combination(
 		Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner);
-	static Value* Method_Cycle(
+	static Value* Method_Cycle_List(
 		Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner);
 	static Value* Method_Filter(Processor& processor, Argument& argument, Iterator& iteratorSrc);
 	static Value* Method_Find(Processor& processor, Argument& argument, Iterator& iteratorSrc);
@@ -39,11 +39,11 @@ public:
 	static Value* Method_Reverse(
 		Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner);
 	static Value* Method_Since(Processor& processor, Argument& argument,
-							   Iterator& iteratorSrc, bool includeFirstFlag);
+							Iterator& iteratorSrc, bool includeFirstFlag);
 	static Value* Method_Sort(
 		Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner);
 	static Value* Method_Until(Processor& processor, Argument& argument,
-							   Iterator& iteratorSrc, bool includeLastFlag);
+							Iterator& iteratorSrc, bool includeLastFlag);
 	static Value* Method_While(Processor& processor, Argument& argument, Iterator& iteratorSrc);
 };
 

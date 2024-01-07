@@ -657,7 +657,7 @@ Gurax_ImplementMethod(List, Cycle)
 	auto& valueThis = GetValueThis(argument);
 	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Function body
-	return VType_Iterator::Method_Cycle(processor, argument, valueTypedOwner);
+	return VType_Iterator::Method_Cycle_List(processor, argument, valueTypedOwner);
 }
 
 // List#Each() {`block?}

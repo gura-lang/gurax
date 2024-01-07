@@ -561,18 +561,18 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Iterator_Cycle
+// Iterator_Cycle_List
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Iterator_Cycle : public Iterator {
+class GURAX_DLLDECLARE Iterator_Cycle_List : public Iterator {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Iterator_Cycle");
+	Gurax_MemoryPoolAllocator("Iterator_Cycle_List");
 private:
 	RefPtr<ValueOwner> _pValueOwner;
 	Int _cnt;
 	Int _idx;
 public:
-	Iterator_Cycle(ValueOwner* pValueOwner, Int cnt) :
+	Iterator_Cycle_List(ValueOwner* pValueOwner, Int cnt) :
 		_pValueOwner(pValueOwner), _cnt(cnt), _idx(0) {}
 public:
 	ValueOwner& GetValueOwner() { return *_pValueOwner; }
