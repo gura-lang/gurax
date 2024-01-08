@@ -27,10 +27,13 @@ ${help.ComposeMethodHelp(Pixel, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Pixel() {block?}
+// Pixel(color? as Color, x? as Number, y? as Number) {block?}
 Gurax_DeclareConstructor(Pixel)
 {
 	Declare(VTYPE_Pixel, Flag::None);
+	DeclareArg("color", VTYPE_Color, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 Creates a `Pixel` instance.
@@ -40,37 +43,18 @@ Creates a `Pixel` instance.
 Gurax_ImplementConstructor(Pixel)
 {
 	// Arguments
-	//ArgPicker args(argument);
+	ArgPicker args(argument);
+	const Color& color = args.IsValid()? args.PickColor() : Color::black;
+	int x = args.IsValid()? args.PickNumber<int>() : 0;
+	int y = args.IsValid()? args.PickNumber<int>() : 0;
 	// Function body
-	RefPtr<Pixel> pPixel(new Pixel(Color::black, 0, 0));
+	RefPtr<Pixel> pPixel(new Pixel(color, x, y));
 	return argument.ReturnValue(processor, new Value_Pixel(pPixel.release()));
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// Pixel#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(Pixel, MethodSkeleton)
-{
-	Declare(VTYPE_List, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"""(
-Skeleton.
-)""");
-}
-
-Gurax_ImplementMethod(Pixel, MethodSkeleton)
-{
-	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
-	// Function body
-	return new Value_Number(num1 + num2);
-}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -132,7 +116,7 @@ void VType_Pixel::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Pixel));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Pixel, MethodSkeleton));
+	//Assign(Gurax_CreateMethod(Pixel, MethodSkeleton));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Pixel, color));
 	Assign(Gurax_CreateProperty(Pixel, x));

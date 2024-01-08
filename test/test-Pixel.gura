@@ -1,0 +1,16 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+
+TestCase('Property') {
+	Pixel.PrintPropSlots()
+}
+
+TestCase('Constructor') {
+	Tester(`Pixel())
+	Tester(`Pixel(`black))
+	Tester(`Pixel(`red))
+	Tester(`Pixel(`green))
+	Tester(`Pixel(`blue))
+	Tester(`Pixel(`white))
+	Tester(`Pixel(`green, 120, 30))
+}

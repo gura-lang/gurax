@@ -1,0 +1,13 @@
+======== Property ========
+Pixel
+  #color            Color        R
+  #x                Number       R
+  #y                Number       R
+======== Constructor ========
+Pixel() .. <Pixel:[#000000,ff]:x=0:y=0>
+Pixel(`black) .. <Pixel:[#000000,ff]:x=0:y=0>
+Pixel(`red) .. <Pixel:[#ff0000,ff]:x=0:y=0>
+Pixel(`green) .. <Pixel:[#008000,ff]:x=0:y=0>
+Pixel(`blue) .. <Pixel:[#0000ff,ff]:x=0:y=0>
+Pixel(`white) .. <Pixel:[#ffffff,ff]:x=0:y=0>
+Pixel(`green, 120, 30) .. <Pixel:[#008000,ff]:x=120:y=30>
