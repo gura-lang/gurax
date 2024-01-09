@@ -76,6 +76,14 @@ Value* Function::Eval(Processor& processor, Argument& argument) const
 	return DoEval(processor, argument);
 }
 
+Value* Function::EvalEasy(Processor& processor, const ValueList& valuesArg, DeclCallable::Flags flags) const
+{
+	RefPtr<Argument> pArg(new Argument(processor, *this, flags));
+	ArgFeeder args(*pArg, processor.GetFrameCur());
+	if (!args.FeedValues(valuesArg)) return Value::nil();
+	return Eval(processor, *pArg);
+}
+
 Value* Function::EvalEasy(Processor& processor, RefPtr<Value> pValueArg, DeclCallable::Flags flags) const
 {
 	RefPtr<Argument> pArg(new Argument(processor, *this, flags));

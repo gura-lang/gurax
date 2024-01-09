@@ -123,4 +123,19 @@ String Iterator_ReadLineAsTuple::ToString(const StringStyle& ss) const
 	return String().Format("csv.ReadLineAsTuple:%s", _pReader->GetStream().GetName());
 }
 
+//------------------------------------------------------------------------------
+// Iterator_ReadLineAndEval
+//------------------------------------------------------------------------------
+Value* Iterator_ReadLineAndEval::DoNextValue()
+{
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	if (!_pReader->ReadLine(*pValueOwner)) return nullptr;
+	return _pFunc->EvalEasy(*_pProcessor, *pValueOwner);
+}
+
+String Iterator_ReadLineAndEval::ToString(const StringStyle& ss) const
+{
+	return String().Format("csv.ReadLineAndEval:%s", _pReader->GetStream().GetName());
+}
+
 Gurax_EndModuleScope(csv)

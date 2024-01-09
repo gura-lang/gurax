@@ -79,6 +79,27 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
+//------------------------------------------------------------------------------
+// Iterator_ReadLineAndEval
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_ReadLineAndEval : public Iterator {
+private:
+	RefPtr<Reader> _pReader;
+	RefPtr<Processor> _pProcessor;
+	RefPtr<Function> _pFunc;
+public:
+	Iterator_ReadLineAndEval(Reader* pReader, Processor* pProcessor, Function* pFunc) :
+		_pReader(pReader), _pProcessor(pProcessor), _pFunc(pFunc) {}
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override {
+		return Flag::Finite | Flag::LenUndetermined;
+	}
+	virtual size_t GetLength() const override { return -1; }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
 Gurax_EndModuleScope(csv)
 
 #endif

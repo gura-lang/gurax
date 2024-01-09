@@ -260,6 +260,7 @@ public:
 	void LinkHelp(VType& vtype, const Symbol* pSymbol);
 	void Exec(Processor& processor, Argument& argument) const;
 	Value* Eval(Processor& processor, Argument& argument) const;
+	Value* EvalEasy(Processor& processor, const ValueList& valuesArg, DeclCallable::Flags flags = DeclCallable::Flag::None) const;
 	Value* EvalEasy(Processor& processor, RefPtr<Value> pValueArg, DeclCallable::Flags flags = DeclCallable::Flag::None) const;
 	Value* EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2,
 						DeclCallable::Flags flags = DeclCallable::Flag::None) const;
