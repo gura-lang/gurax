@@ -156,11 +156,12 @@ TestCase('CSV and struct') {
 	"Kasai Ayaka","kasai_ayaka@example.com","female",67,"1942/12/2","090-4956-49FD"
 	'''
 	table = csv.Reader(text.ToReader()).ReadLines():list
-	people = Person * table
+	//people = Person * table
+	people = csv.Reader(text.ToReader()).ReadLines(Person):list
 	Printf('name:%s email:%s gender:%s age:%s birthDay:%s mobile:%s\n', people:*name, people:*email, people:*gender, people:*age, people:*birthDay, people:*mobile)
-	tableOut = people as Tuple
+	tableCast = people as Tuple
 	Println(table)
-	Println(tableOut)
-	Println(cond(table == tableOut, 'Success', '**failed**'))
-	csv.Writer(sys.cout).WriteLine * tableOut
+	Println(tableCast)
+	Println(cond(table == tableCast, 'Success', '**failed**'))
+	csv.Writer(sys.cout).WriteLine * tableCast
 }

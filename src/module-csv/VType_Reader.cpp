@@ -51,10 +51,11 @@ Gurax_ImplementConstructor(Reader)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// csv.Reader#ReadLine():[asList,asTuple] {block?}
+// csv.Reader#ReadLine(func? as Function):[asList,asTuple] {block?}
 Gurax_DeclareMethod(Reader, ReadLine)
 {
 	Declare(VTYPE_List, Flag::None);
+	DeclareArg("func", VTYPE_Function, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	DeclareAttrOpt(Gurax_Symbol(asList));
 	DeclareAttrOpt(Gurax_Symbol(asTuple));
@@ -68,19 +69,26 @@ Gurax_ImplementMethod(Reader, ReadLine)
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Argument
+	ArgPicker args(argument);
+	const Function* pFunc = args.IsValid()? &args.PickFunction() : nullptr;
 	bool asListFlag = argument.IsSet(Gurax_Symbol(asList));
 	// Function body
 	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 	if (!valueThis.GetReader().ReadLine(*pValueOwner)) return Value::nil();
-	return asListFlag?
-		argument.ReturnValue(processor, new Value_List(VTYPE_String, pValueOwner.release())) :
-		argument.ReturnValue(processor, new Value_Tuple(pValueOwner.release()));
+	if (pFunc) {
+		return argument.ReturnValue(processor, pFunc->EvalEasy(processor, *pValueOwner));
+	} else if (asListFlag) {
+		return argument.ReturnValue(processor, new Value_List(VTYPE_String, pValueOwner.release()));
+	} else {
+		return argument.ReturnValue(processor, new Value_Tuple(pValueOwner.release()));
+	}
 }
 
-// csv.Reader#ReadLines():[asList,asTuple] {block?}
+// csv.Reader#ReadLines(func? as Function):[asList,asTuple] {block?}
 Gurax_DeclareMethod(Reader, ReadLines)
 {
 	Declare(VTYPE_Iterator, Flag::None);
+	DeclareArg("func", VTYPE_Function, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	DeclareAttrOpt(Gurax_Symbol(asList));
 	DeclareAttrOpt(Gurax_Symbol(asTuple));
@@ -94,11 +102,17 @@ Gurax_ImplementMethod(Reader, ReadLines)
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Argument
+	ArgPicker args(argument);
+	const Function* pFunc = args.IsValid()? &args.PickFunction() : nullptr;
 	bool asListFlag = argument.IsSet(Gurax_Symbol(asList));
 	// Function body
-	return asListFlag?
-		argument.ReturnIterator(processor, new Iterator_ReadLineAsList(valueThis.GetReader().Reference())) :
-		argument.ReturnIterator(processor, new Iterator_ReadLineAsTuple(valueThis.GetReader().Reference()));
+	if (pFunc) {
+		return argument.ReturnIterator(processor, new Iterator_ReadLineAndEval(valueThis.GetReader().Reference(), processor.Reference(), pFunc->Reference()));
+	} else if (asListFlag) {
+		return argument.ReturnIterator(processor, new Iterator_ReadLineAsList(valueThis.GetReader().Reference()));
+	} else {
+		return argument.ReturnIterator(processor, new Iterator_ReadLineAsTuple(valueThis.GetReader().Reference()));
+	}
 }
 
 //------------------------------------------------------------------------------
