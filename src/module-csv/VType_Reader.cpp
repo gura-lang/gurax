@@ -96,8 +96,9 @@ Gurax_ImplementMethod(Reader, ReadLines)
 	// Argument
 	bool asListFlag = argument.IsSet(Gurax_Symbol(asList));
 	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_ReadLine(valueThis.GetReader().Reference(), asListFlag));
-	return argument.ReturnIterator(processor, pIterator.release());
+	return asListFlag?
+		argument.ReturnIterator(processor, new Iterator_ReadLineAsList(valueThis.GetReader().Reference())) :
+		argument.ReturnIterator(processor, new Iterator_ReadLineAsTuple(valueThis.GetReader().Reference()));
 }
 
 //------------------------------------------------------------------------------

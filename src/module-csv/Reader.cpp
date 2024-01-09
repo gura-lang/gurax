@@ -94,22 +94,33 @@ String Reader::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// Iterator_ReadLine
+// Iterator_ReadLineAsList
 //------------------------------------------------------------------------------
-Value* Iterator_ReadLine::DoNextValue()
+Value* Iterator_ReadLineAsList::DoNextValue()
 {
 	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 	if (!_pReader->ReadLine(*pValueOwner)) return nullptr;
-	if (_asListFlag) {
-		return new Value_List(VTYPE_String, pValueOwner.release());
-	} else {
-		return new Value_Tuple(pValueOwner.release());
-	}
+	return new Value_List(VTYPE_String, pValueOwner.release());
 }
 
-String Iterator_ReadLine::ToString(const StringStyle& ss) const
+String Iterator_ReadLineAsList::ToString(const StringStyle& ss) const
 {
-	return String().Format("csv.ReadLine:%s", _pReader->GetStream().GetName());
+	return String().Format("csv.ReadLineAsList:%s", _pReader->GetStream().GetName());
+}
+
+//------------------------------------------------------------------------------
+// Iterator_ReadLineAsTuple
+//------------------------------------------------------------------------------
+Value* Iterator_ReadLineAsTuple::DoNextValue()
+{
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	if (!_pReader->ReadLine(*pValueOwner)) return nullptr;
+	return new Value_Tuple(pValueOwner.release());
+}
+
+String Iterator_ReadLineAsTuple::ToString(const StringStyle& ss) const
+{
+	return String().Format("csv.ReadLineAsTuple:%s", _pReader->GetStream().GetName());
 }
 
 Gurax_EndModuleScope(csv)

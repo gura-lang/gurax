@@ -123,7 +123,7 @@ Gurax_ImplementMethod(Writer, WriteLines)
 			const ValueOwner& valOwner = Value_Tuple::GetValueOwner(*pValue);
 			valueThis.GetWriter().PutValues(valOwner, true);
 		} else {
-			Error::Issue(ErrorType::TypeError, "must be a Tuple value");
+			Error::Issue(ErrorType::TypeError, "must be a List or Tuple value");
 			return false;
 		}
 	}

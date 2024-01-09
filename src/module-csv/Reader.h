@@ -44,14 +44,31 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Iterator_ReadLine
+// Iterator_ReadLineAsList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Iterator_ReadLine : public Iterator {
+class GURAX_DLLDECLARE Iterator_ReadLineAsList : public Iterator {
 private:
 	RefPtr<Reader> _pReader;
-	bool _asListFlag;
 public:
-	Iterator_ReadLine(Reader* pReader, bool asListFlag) : _pReader(pReader), _asListFlag(asListFlag) {}
+	Iterator_ReadLineAsList(Reader* pReader) : _pReader(pReader) {}
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override {
+		return Flag::Finite | Flag::LenUndetermined;
+	}
+	virtual size_t GetLength() const override { return -1; }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// Iterator_ReadLineAsTuple
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_ReadLineAsTuple : public Iterator {
+private:
+	RefPtr<Reader> _pReader;
+public:
+	Iterator_ReadLineAsTuple(Reader* pReader) : _pReader(pReader) {}
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override {
