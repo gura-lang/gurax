@@ -5,8 +5,8 @@ csv.Writer#ResetFormatForNumber():reduce
 csv.Writer#WriteLine(values* as Any):reduce
 csv.Writer#WriteLines(iterator as Iterator):reduce
 csv.Reader
-csv.Reader#ReadLine(func? as Function):[asList,asTuple] {block?}
-csv.Reader#ReadLines(func? as Function):[asList,asTuple] {block?}
+csv.Reader#ReadLine(func? as Function) {block?}
+csv.Reader#ReadLines(func? as Function) {block?}
 ======== csv.Writer ========
 "field1"
 "field1","field2"

@@ -135,6 +135,28 @@ Gurax_ImplementStatement(_at_)
 	}
 }
 
+//------------------------------------------------------------------------------
+// Implementation of constructor
+//------------------------------------------------------------------------------
+// List() {block?}
+Gurax_DeclareConstructor(List)
+{
+	Declare(VTYPE_List, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Creates a `List` instance.
+)""");
+}
+
+Gurax_ImplementConstructor(List)
+{
+	// Arguments
+	//ArgPicker args(argument);
+	// Function body
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	return argument.ReturnValue(processor, new Value_List(pValueOwner.release()));
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of class method
 //-----------------------------------------------------------------------------
@@ -1507,7 +1529,7 @@ void VType_List::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(List));
 	// Assignment of statement
 	frameOuter.Assign(Gurax_CreateStatement(_at_));
 	// Assignment of method specific to List

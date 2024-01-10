@@ -103,7 +103,7 @@ TestCase('csv.Reader') {
 	test
 	third line here",field2,field3
 	'''
-	csv.Reader(testText.ToReader()).ReadLines():asList {|row|
+	csv.Reader(testText.ToReader()).ReadLines(List) {|row|
 		Println('----')
 		if (row.IsEmpty()) {
 			Println('(empty)')
