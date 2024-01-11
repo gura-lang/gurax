@@ -39,6 +39,11 @@ world
 3 4 5
 ======== not affected by implicit mapping ========
 (3, 4, 5)
+======== Tuple#Each() ========
+tbl.Each():list .. ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
+======== Tuple#IsEmpty() ========
+().IsEmpty() .. true
+(1, 2, 3).IsEmpty() .. false
 ======== Operator ========
 () == () .. true
 () != () .. false

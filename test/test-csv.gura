@@ -12,7 +12,7 @@ TestCase('Property') {
 	csv.Reader.PrintMethods()
 }
 
-TestCase('csv.Writer') {
+TestCase('csv.Writer#WriteLine(), csv.Writer#WriteLines()') {
 	w = csv.Writer(sys.cout)
 	w.WriteLine('field1')
 	w.WriteLine('field1', 'field2')
@@ -70,7 +70,7 @@ TestCase('csv.Writer') {
 	}
 }
 
-TestCase('csv.Reader') {
+TestCase('csv.Reader#ReadLine()') {
 	testText = R'''
 	field1
 	field1,field2
@@ -103,13 +103,88 @@ TestCase('csv.Reader') {
 	test
 	third line here",field2,field3
 	'''
+	csv.Reader(testText.ToReader()) {|reader|
+		while (row = reader.ReadLine(Tuple)) {
+			Println('----')
+			if (row.IsEmpty()) {
+				Println('(empty)')
+			} else {
+				Println(row)
+			}
+		}
+	}
+	csv.Reader(testText.ToReader()) {|reader|
+		while (row = reader.ReadLine(List)) {
+			Println('----')
+			if (row.IsEmpty()) {
+				Println('(empty)')
+			} else {
+				Println(row):noMap
+			}
+		}
+	}
+	Record = struct { field1 = nil, field2 = nil, field3 = nil, field4 = nil, field5 = nil, field6 = nil, field7 = nil, field8 = nil, field9 = nil }
+	csv.Reader(testText.ToReader()) {|reader|
+		while (row = reader.ReadLine(Record)) {
+			Println('----')
+			Printf('%s, %s, %s, %s, %s, %s, %s, %s, %s\n', row.field1, row.field2, row.field3, row.field4, row.field5, row.field6, row.field7, row.field8, row.field9)
+		}
+	}
+}
+
+TestCase('csv.Reader#ReadLines()') {
+	testText = R'''
+	field1
+	field1,field2
+	field1,field2,field3
+	field1,field2,field3,field4
+	field1, field2,field3 , field4 ,field5
+	"field1"
+	 "field1"
+	 "field1" 
+	"field1","field2"
+	"field1" ,"field2"
+	 "field1", field2
+	 "field1", ""field2
+	 "field1" "trail",field2,field3,field4
+	 "field1" ,field2
+	"field1" trail,field2,field3,field4
+	"field1" "trail"
+	"field1" "trail,field2,field3
+	
+	A
+	,
+	,,
+	,,,,,,,,
+	,,field3,,,,field7,,
+	"Hello ""world"", aaa",field2,field3
+	"multiline
+	test
+	third line here",field2,field3
+	"multiline again
+	test
+	third line here",field2,field3
+	'''
+	csv.Reader(testText.ToReader()).ReadLines(Tuple) {|row|
+		Println('----')
+		if (row.IsEmpty()) {
+			Println('(empty)')
+		} else {
+			Println(row)
+		}
+	}
 	csv.Reader(testText.ToReader()).ReadLines(List) {|row|
 		Println('----')
 		if (row.IsEmpty()) {
 			Println('(empty)')
 		} else {
-			Println(('[' + row + ']').Join(','))
+			Println(row):noMap
 		}
+	}
+	Record = struct { field1 = nil, field2 = nil, field3 = nil, field4 = nil, field5 = nil, field6 = nil, field7 = nil, field8 = nil, field9 = nil }
+	csv.Reader(testText.ToReader()).ReadLines(Record) {|row|
+		Println('----')
+		Printf('%s, %s, %s, %s, %s, %s, %s, %s, %s\n', row.field1, row.field2, row.field3, row.field4, row.field5, row.field6, row.field7, row.field8, row.field9)
 	}
 }
 

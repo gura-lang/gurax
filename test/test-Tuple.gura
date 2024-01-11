@@ -47,6 +47,16 @@ TestCase('not affected by implicit mapping') {
 	f((3, 4, 5))
 }
 
+TestCase('Tuple#Each()') {
+	tbl = ('zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten')
+	Tester(`tbl.Each():list)
+}
+
+TestCase('Tuple#IsEmpty()') {
+	Tester(`().IsEmpty())
+	Tester(`(1, 2, 3).IsEmpty())
+}
+
 TestCase('Operator') {
 	Tester(`(() == ()))
 	Tester(`(() != ()))

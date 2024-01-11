@@ -67,6 +67,23 @@ Gurax_ImplementMethod(Tuple, Each)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
+// Tuple#IsEmpty()
+Gurax_DeclareMethod(Tuple, IsEmpty)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+A boolean value indicating whether the tuple is empty or not.
+)""");
+}
+
+Gurax_ImplementMethod(Tuple, IsEmpty)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return new Value_Bool(valueThis.GetValueOwner().empty());
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -225,6 +242,7 @@ void VType_Tuple::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Tuple));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Tuple, Each));
+	Assign(Gurax_CreateMethod(Tuple, IsEmpty));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Tuple, first));
 	Assign(Gurax_CreateProperty(Tuple, last));

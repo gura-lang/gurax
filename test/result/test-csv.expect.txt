@@ -7,7 +7,7 @@ csv.Writer#WriteLines(iterator as Iterator):reduce
 csv.Reader
 csv.Reader#ReadLine(func? as Function) {block?}
 csv.Reader#ReadLines(func? as Function) {block?}
-======== csv.Writer ========
+======== csv.Writer#WriteLine(), csv.Writer#WriteLines() ========
 "field1"
 "field1","field2"
 "field1","field2","field3"
@@ -52,63 +52,328 @@ csv.Reader#ReadLines(func? as Function) {block?}
 12345678h,ffffffffh,a8a8a8a8h
 0,1,2,3.1415
 w.formatForNumber .. %g
-======== csv.Reader ========
+======== csv.Reader#ReadLine() ========
 ----
-[field1]
+('field1',)
 ----
-[field1],[field2]
+('field1', 'field2')
 ----
-[field1],[field2],[field3]
+('field1', 'field2', 'field3')
 ----
-[field1],[field2],[field3],[field4]
+('field1', 'field2', 'field3', 'field4')
 ----
-[field1],[ field2],[field3 ],[ field4 ],[field5]
+('field1', ' field2', 'field3 ', ' field4 ', 'field5')
 ----
-[field1]
+('field1',)
 ----
-[ "field1"]
+(' "field1"',)
 ----
-[ "field1" ]
+(' "field1" ',)
 ----
-[field1],[field2]
+('field1', 'field2')
 ----
-[field1 ],[field2]
+('field1 ', 'field2')
 ----
-[ "field1"],[ field2]
+(' "field1"', ' field2')
 ----
-[ "field1"],[ ""field2]
+(' "field1"', ' ""field2')
 ----
-[ "field1" "trail"],[field2],[field3],[field4]
+(' "field1" "trail"', 'field2', 'field3', 'field4')
 ----
-[ "field1" ],[field2]
+(' "field1" ', 'field2')
 ----
-[field1 trail],[field2],[field3],[field4]
+('field1 trail', 'field2', 'field3', 'field4')
 ----
-[field1 "trail"]
+('field1 "trail"',)
 ----
-[field1 "trail],[field2],[field3]
+('field1 "trail', 'field2', 'field3')
 ----
 (empty)
 ----
-[A]
+('A',)
 ----
-[],[]
+('', '')
 ----
-[],[],[]
+('', '', '')
 ----
-[],[],[],[],[],[],[],[],[]
+('', '', '', '', '', '', '', '', '')
 ----
-[],[],[field3],[],[],[],[field7],[],[]
+('', '', 'field3', '', '', '', 'field7', '', '')
 ----
-[Hello "world", aaa],[field2],[field3]
+('Hello "world", aaa', 'field2', 'field3')
 ----
-[multiline
+('multiline\ntest\nthird line here', 'field2', 'field3')
+----
+('multiline again\ntest\nthird line here', 'field2', 'field3')
+----
+['field1']
+----
+['field1', 'field2']
+----
+['field1', 'field2', 'field3']
+----
+['field1', 'field2', 'field3', 'field4']
+----
+['field1', ' field2', 'field3 ', ' field4 ', 'field5']
+----
+['field1']
+----
+[' "field1"']
+----
+[' "field1" ']
+----
+['field1', 'field2']
+----
+['field1 ', 'field2']
+----
+[' "field1"', ' field2']
+----
+[' "field1"', ' ""field2']
+----
+[' "field1" "trail"', 'field2', 'field3', 'field4']
+----
+[' "field1" ', 'field2']
+----
+['field1 trail', 'field2', 'field3', 'field4']
+----
+['field1 "trail"']
+----
+['field1 "trail', 'field2', 'field3']
+----
+(empty)
+----
+['A']
+----
+['', '']
+----
+['', '', '']
+----
+['', '', '', '', '', '', '', '', '']
+----
+['', '', 'field3', '', '', '', 'field7', '', '']
+----
+['Hello "world", aaa', 'field2', 'field3']
+----
+['multiline\ntest\nthird line here', 'field2', 'field3']
+----
+['multiline again\ntest\nthird line here', 'field2', 'field3']
+----
+field1, , , , , , , , 
+----
+field1, field2, , , , , , , 
+----
+field1, field2, field3, , , , , , 
+----
+field1, field2, field3, field4, , , , , 
+----
+field1,  field2, field3 ,  field4 , field5, , , , 
+----
+field1, , , , , , , , 
+----
+ "field1", , , , , , , , 
+----
+ "field1" , , , , , , , , 
+----
+field1, field2, , , , , , , 
+----
+field1 , field2, , , , , , , 
+----
+ "field1",  field2, , , , , , , 
+----
+ "field1",  ""field2, , , , , , , 
+----
+ "field1" "trail", field2, field3, field4, , , , , 
+----
+ "field1" , field2, , , , , , , 
+----
+field1 trail, field2, field3, field4, , , , , 
+----
+field1 "trail", , , , , , , , 
+----
+field1 "trail, field2, field3, , , , , , 
+----
+, , , , , , , , 
+----
+A, , , , , , , , 
+----
+, , , , , , , , 
+----
+, , , , , , , , 
+----
+, , , , , , , , 
+----
+, , field3, , , , field7, , 
+----
+Hello "world", aaa, field2, field3, , , , , , 
+----
+multiline
 test
-third line here],[field2],[field3]
+third line here, field2, field3, , , , , , 
 ----
-[multiline again
+multiline again
 test
-third line here],[field2],[field3]
+third line here, field2, field3, , , , , , 
+======== csv.Reader#ReadLines() ========
+----
+('field1',)
+----
+('field1', 'field2')
+----
+('field1', 'field2', 'field3')
+----
+('field1', 'field2', 'field3', 'field4')
+----
+('field1', ' field2', 'field3 ', ' field4 ', 'field5')
+----
+('field1',)
+----
+(' "field1"',)
+----
+(' "field1" ',)
+----
+('field1', 'field2')
+----
+('field1 ', 'field2')
+----
+(' "field1"', ' field2')
+----
+(' "field1"', ' ""field2')
+----
+(' "field1" "trail"', 'field2', 'field3', 'field4')
+----
+(' "field1" ', 'field2')
+----
+('field1 trail', 'field2', 'field3', 'field4')
+----
+('field1 "trail"',)
+----
+('field1 "trail', 'field2', 'field3')
+----
+(empty)
+----
+('A',)
+----
+('', '')
+----
+('', '', '')
+----
+('', '', '', '', '', '', '', '', '')
+----
+('', '', 'field3', '', '', '', 'field7', '', '')
+----
+('Hello "world", aaa', 'field2', 'field3')
+----
+('multiline\ntest\nthird line here', 'field2', 'field3')
+----
+('multiline again\ntest\nthird line here', 'field2', 'field3')
+----
+['field1']
+----
+['field1', 'field2']
+----
+['field1', 'field2', 'field3']
+----
+['field1', 'field2', 'field3', 'field4']
+----
+['field1', ' field2', 'field3 ', ' field4 ', 'field5']
+----
+['field1']
+----
+[' "field1"']
+----
+[' "field1" ']
+----
+['field1', 'field2']
+----
+['field1 ', 'field2']
+----
+[' "field1"', ' field2']
+----
+[' "field1"', ' ""field2']
+----
+[' "field1" "trail"', 'field2', 'field3', 'field4']
+----
+[' "field1" ', 'field2']
+----
+['field1 trail', 'field2', 'field3', 'field4']
+----
+['field1 "trail"']
+----
+['field1 "trail', 'field2', 'field3']
+----
+(empty)
+----
+['A']
+----
+['', '']
+----
+['', '', '']
+----
+['', '', '', '', '', '', '', '', '']
+----
+['', '', 'field3', '', '', '', 'field7', '', '']
+----
+['Hello "world", aaa', 'field2', 'field3']
+----
+['multiline\ntest\nthird line here', 'field2', 'field3']
+----
+['multiline again\ntest\nthird line here', 'field2', 'field3']
+----
+field1, , , , , , , , 
+----
+field1, field2, , , , , , , 
+----
+field1, field2, field3, , , , , , 
+----
+field1, field2, field3, field4, , , , , 
+----
+field1,  field2, field3 ,  field4 , field5, , , , 
+----
+field1, , , , , , , , 
+----
+ "field1", , , , , , , , 
+----
+ "field1" , , , , , , , , 
+----
+field1, field2, , , , , , , 
+----
+field1 , field2, , , , , , , 
+----
+ "field1",  field2, , , , , , , 
+----
+ "field1",  ""field2, , , , , , , 
+----
+ "field1" "trail", field2, field3, field4, , , , , 
+----
+ "field1" , field2, , , , , , , 
+----
+field1 trail, field2, field3, field4, , , , , 
+----
+field1 "trail", , , , , , , , 
+----
+field1 "trail, field2, field3, , , , , , 
+----
+, , , , , , , , 
+----
+A, , , , , , , , 
+----
+, , , , , , , , 
+----
+, , , , , , , , 
+----
+, , , , , , , , 
+----
+, , field3, , , , field7, , 
+----
+Hello "world", aaa, field2, field3, , , , , , 
+----
+multiline
+test
+third line here, field2, field3, , , , , , 
+----
+multiline again
+test
+third line here, field2, field3, , , , , , 
 ======== CSV and struct ========
 <VType:Person(name? as String,email? as String,gender? as String,age?:stringCast as Number,birthDay? as String,mobile? as String){block?}>
 name:Hayasaka Hiroko email:hayasaka_hiroko@example.com gender:female age:33 birthDay:1976/8/27 mobile:090-9134-30BF
