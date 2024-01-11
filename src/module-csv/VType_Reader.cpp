@@ -72,7 +72,7 @@ Gurax_ImplementMethod(Reader, ReadLine)
 	// Function body
 	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 	if (!valueThis.GetReader().ReadLine(*pValueOwner)) return Value::nil();
-	if (!pFunc) {
+	if (!pFunc || pFunc->GetSymbol()->IsIdentical(Gurax_Symbol(Tuple))) {
 		return argument.ReturnValue(processor, new Value_Tuple(pValueOwner.release()));
 	} else if (pFunc->GetSymbol()->IsIdentical(Gurax_Symbol(List))) {
 		return argument.ReturnValue(processor, new Value_List(VTYPE_String, pValueOwner.release()));
@@ -100,7 +100,7 @@ Gurax_ImplementMethod(Reader, ReadLines)
 	ArgPicker args(argument);
 	const Function* pFunc = args.IsValid()? &args.PickFunction() : nullptr;
 	// Function body
-	if (!pFunc) {
+	if (!pFunc || pFunc->GetSymbol()->IsIdentical(Gurax_Symbol(Tuple))) {
 		return argument.ReturnIterator(processor, new Iterator_ReadLineAsTuple(valueThis.GetReader().Reference()));
 	} else if (pFunc->GetSymbol()->IsIdentical(Gurax_Symbol(List))) {
 		return argument.ReturnIterator(processor, new Iterator_ReadLineAsList(valueThis.GetReader().Reference()));
