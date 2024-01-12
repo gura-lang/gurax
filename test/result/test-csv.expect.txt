@@ -374,7 +374,7 @@ third line here, field2, field3, , , , , ,
 multiline again
 test
 third line here, field2, field3, , , , , , 
-======== CSV and struct ========
+======== CSV and struct (1) ========
 <VType:Person(name? as String,email? as String,gender? as String,age?:stringCast as Number,birthDay? as String,mobile? as String){block?}>
 name:Hayasaka Hiroko email:hayasaka_hiroko@example.com gender:female age:33 birthDay:1976/8/27 mobile:090-9134-30BF
 name:Hannda Yumiko email:hannda_yumiko@example.com gender:female age:75 birthDay:1934/10/20 mobile:080-6713-87BI
@@ -404,7 +404,7 @@ name:Kasahara Shidou email:kasahara_shidou@example.com gender:male age:58 birthD
 name:Nakayama Yoshiki email:nakayama_yoshiki@example.com gender:male age:39 birthDay:1970/11/2 mobile:090-7101-88BF
 name:Takaya Masahiko email:takaya_masahiko@example.com gender:male age:29 birthDay:1980/4/12 mobile:090-6963-52GJ
 name:Nagao Erika email:nagao_erika@example.com gender:female age:29 birthDay:1980/11/23 mobile:080-2472-74DI
-name:Fujisawa Haruomi email:fujisawa_haruomi@example.com gender:male age:22 birthDay:1987/4/15 mobile:080-  76-16JF
+name:Fujisawa Haruomi email:fujisawa_haruomi@example.com gender:male age:22 birthDay:1987/4/15 mobile:080-7776-16JF
 name:Kasai Ayaka email:kasai_ayaka@example.com gender:female age:67 birthDay:1942/12/2 mobile:090-4956-49FD
 ('Hayasaka Hiroko', 'hayasaka_hiroko@example.com', 'female', '33', '1976/8/27', '090-9134-30BF')
 ('Hannda Yumiko', 'hannda_yumiko@example.com', 'female', '75', '1934/10/20', '080-6713-87BI')
@@ -434,7 +434,7 @@ name:Kasai Ayaka email:kasai_ayaka@example.com gender:female age:67 birthDay:194
 ('Nakayama Yoshiki', 'nakayama_yoshiki@example.com', 'male', '39', '1970/11/2', '090-7101-88BF')
 ('Takaya Masahiko', 'takaya_masahiko@example.com', 'male', '29', '1980/4/12', '090-6963-52GJ')
 ('Nagao Erika', 'nagao_erika@example.com', 'female', '29', '1980/11/23', '080-2472-74DI')
-('Fujisawa Haruomi', 'fujisawa_haruomi@example.com', 'male', '22', '1987/4/15', '080-  76-16JF')
+('Fujisawa Haruomi', 'fujisawa_haruomi@example.com', 'male', '22', '1987/4/15', '080-7776-16JF')
 ('Kasai Ayaka', 'kasai_ayaka@example.com', 'female', '67', '1942/12/2', '090-4956-49FD')
 ('Hayasaka Hiroko', 'hayasaka_hiroko@example.com', 'female', 33, '1976/8/27', '090-9134-30BF')
 ('Hannda Yumiko', 'hannda_yumiko@example.com', 'female', 75, '1934/10/20', '080-6713-87BI')
@@ -464,7 +464,7 @@ name:Kasai Ayaka email:kasai_ayaka@example.com gender:female age:67 birthDay:194
 ('Nakayama Yoshiki', 'nakayama_yoshiki@example.com', 'male', 39, '1970/11/2', '090-7101-88BF')
 ('Takaya Masahiko', 'takaya_masahiko@example.com', 'male', 29, '1980/4/12', '090-6963-52GJ')
 ('Nagao Erika', 'nagao_erika@example.com', 'female', 29, '1980/11/23', '080-2472-74DI')
-('Fujisawa Haruomi', 'fujisawa_haruomi@example.com', 'male', 22, '1987/4/15', '080-  76-16JF')
+('Fujisawa Haruomi', 'fujisawa_haruomi@example.com', 'male', 22, '1987/4/15', '080-7776-16JF')
 ('Kasai Ayaka', 'kasai_ayaka@example.com', 'female', 67, '1942/12/2', '090-4956-49FD')
 Success
 "Hayasaka Hiroko","hayasaka_hiroko@example.com","female",33,"1976/8/27","090-9134-30BF"
@@ -495,5 +495,36 @@ Success
 "Nakayama Yoshiki","nakayama_yoshiki@example.com","male",39,"1970/11/2","090-7101-88BF"
 "Takaya Masahiko","takaya_masahiko@example.com","male",29,"1980/4/12","090-6963-52GJ"
 "Nagao Erika","nagao_erika@example.com","female",29,"1980/11/23","080-2472-74DI"
-"Fujisawa Haruomi","fujisawa_haruomi@example.com","male",22,"1987/4/15","080-  76-16JF"
+"Fujisawa Haruomi","fujisawa_haruomi@example.com","male",22,"1987/4/15","080-7776-16JF"
 "Kasai Ayaka","kasai_ayaka@example.com","female",67,"1942/12/2","090-4956-49FD"
+======== CSV and struct (2) ========
+name:Hayasaka Hiroko email:hayasaka_hiroko@example.com gender:female age:33 birthDay:1976-08-27 mobile:090-9134-30BF
+name:Hannda Yumiko email:hannda_yumiko@example.com gender:female age:75 birthDay:1934-10-20 mobile:080-6713-87BI
+name:Honma Chise email:honma_chise@example.com gender:female age:46 birthDay:1964-03-09 mobile:090-5237-82FJ
+name:Kawahata Nana email:kawahata_nana@example.com gender:female age:47 birthDay:1962-04-23 mobile:090-4760-51JA
+name:Kikuchi Takao email:kikuchi_takao@example.com gender:male age:35 birthDay:1975-01-01 mobile:080-1904-58CH
+name:Iwai Michiko email:iwai_michiko@example.com gender:female age:36 birthDay:1974-02-02 mobile:090-4520-77GH
+name:Kasai Satoshi email:kasai_satoshi@example.com gender:male age:24 birthDay:1985-12-23 mobile:090-8055-78CB
+name:Shima Masashi email:shima_masashi@example.com gender:male age:61 birthDay:1948-12-20 mobile:090-4180-99GH
+name:Suenaga Rena email:suenaga_rena@example.com gender:female age:80 birthDay:1929-05-22 mobile:080-1042-32EG
+name:Yokokawa Fumiyo email:yokokawa_fumiyo@example.com gender:female age:24 birthDay:1985-11-09 mobile:090-2679-49BI
+name:Yamanaka Mayuko email:yamanaka_mayuko@example.com gender:female age:62 birthDay:1947-09-09 mobile:090-1826-25EC
+name:Aoi Tatsuya email:aoi_tatsuya@example.com gender:male age:21 birthDay:1988-08-30 mobile:080-5257-80CB
+name:Tachikawa Hiroaki email:tachikawa_hiroaki@example.com gender:male age:40 birthDay:1970-01-25 mobile:090-3998-69FA
+name:Tsutsumi Manami email:tsutsumi_manami@example.com gender:female age:75 birthDay:1934-11-01 mobile:090-8224-26EH
+name:Sugimura Shunsuke email:sugimura_shunsuke@example.com gender:male age:70 birthDay:1939-08-10 mobile:090-6873-43DC
+name:Wakabayashi Mitsuru email:wakabayashi_mitsuru@example.com gender:male age:59 birthDay:1950-05-13 mobile:080-2151-64CI
+name:Maehara Tatsuhito email:maehara_tatsuhito@example.com gender:male age:49 birthDay:1960-06-21 mobile:080-5857- 9EA
+name:Chiba Hiroyuki email:chiba_hiroyuki@example.com gender:male age:59 birthDay:1950-05-08 mobile:080-2637-74JH
+name:Yoshioka Stmaria email:yoshioka_stmaria@example.com gender:male age:43 birthDay:1966-06-21 mobile:080-7737-22EA
+name:Kameyama Mitsunori email:kameyama_mitsunori@example.com gender:male age:65 birthDay:1944-07-22 mobile:090-4515-66EE
+name:Tamura Meisa email:tamura_meisa@example.com gender:female age:60 birthDay:1949-06-12 mobile:080- 698-23AC
+name:Taue Takashi email:taue_takashi@example.com gender:male age:34 birthDay:1975-05-15 mobile:090- 393- 7BD
+name:Yanagiya Yuujirou email:yanagiya_yuujirou@example.com gender:male age:32 birthDay:1977-12-18 mobile:080-1094-23CE
+name:Inagaki Ouga email:inagaki_ouga@example.com gender:male age:29 birthDay:1981-03-20 mobile:080-1535-79FF
+name:Kasahara Shidou email:kasahara_shidou@example.com gender:male age:58 birthDay:1951-08-03 mobile:090-2261-24IF
+name:Nakayama Yoshiki email:nakayama_yoshiki@example.com gender:male age:39 birthDay:1970-11-02 mobile:090-7101-88BF
+name:Takaya Masahiko email:takaya_masahiko@example.com gender:male age:29 birthDay:1980-04-12 mobile:090-6963-52GJ
+name:Nagao Erika email:nagao_erika@example.com gender:female age:29 birthDay:1980-11-23 mobile:080-2472-74DI
+name:Fujisawa Haruomi email:fujisawa_haruomi@example.com gender:male age:22 birthDay:1987-04-15 mobile:080-7776-16JF
+name:Kasai Ayaka email:kasai_ayaka@example.com gender:female age:67 birthDay:1942-12-02 mobile:090-4956-49FD
