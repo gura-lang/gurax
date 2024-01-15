@@ -407,20 +407,24 @@ SDL_GetWindowBordersSize(window as SDL_Window_p, &top:nilRef as int, &left:nilRe
 
 SDL_SetWindowMinimumSize(window as SDL_Window_p, min_w as int, min_h as int):void
 
-SDL_GetWindowMinimumSize(window as SDL_Window_p) = \
+SDL_GetWindowMinimumSize(window as SDL_Window_p, &w:nilRef as int, &h:nilRef as int):void = \
 	R'''
-	int w, h;
-	SDL_GetWindowMinimumSize(window, &w, &h);
-	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h));
+	int w_, h_;
+	SDL_GetWindowMinimumSize(window, &w_, &h_);
+	w->SetValue(new Value_Number(w_));
+	h->SetValue(new Value_Number(h_));
+	return Value::nil();
 	'''
 
 SDL_SetWindowMaximumSize(window as SDL_Window_p, max_w as int, max_h as int):void
 
-SDL_GetWindowMaximumSize(window as SDL_Window_p) = \
+SDL_GetWindowMaximumSize(window as SDL_Window_p, &w:nilRef as int, &h:nilRef as int):void = \
 	R'''
-	int w, h;
-	SDL_GetWindowMaximumSize(window, &w, &h);
-	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h));
+	int w_, h_;
+	SDL_GetWindowMaximumSize(window, &w_, &h_);
+	w->SetValue(new Value_Number(w_));
+	h->SetValue(new Value_Number(h_));
+	return Value::nil();
 	'''
 
 SDL_SetWindowBordered(window as SDL_Window_p, bordered as SDL_bool):void

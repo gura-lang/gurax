@@ -974,11 +974,13 @@ Gurax_ImplementFunctionEx(SDL_SetWindowMinimumSize_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_GetWindowMinimumSize(window as SDL_Window)
+// sdl.SDL_GetWindowMinimumSize(window as SDL_Window, &w:nilRef as Number, &h:nilRef as Number)
 Gurax_DeclareFunctionAlias(SDL_GetWindowMinimumSize_gurax, "SDL_GetWindowMinimumSize")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("h", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_GetWindowMinimumSize_gurax, processor_gurax, argument_gurax)
@@ -987,10 +989,14 @@ Gurax_ImplementFunctionEx(SDL_GetWindowMinimumSize_gurax, processor_gurax, argum
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
 	SDL_Window* window = value_window.GetEntityPtr();
+	RefPtr<Referencer> w(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> h(args_gurax.PickReferencer().Reference());
 	// Function body
-	int w, h;
-	SDL_GetWindowMinimumSize(window, &w, &h);
-	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h));
+	int w_, h_;
+	SDL_GetWindowMinimumSize(window, &w_, &h_);
+	w->SetValue(new Value_Number(w_));
+	h->SetValue(new Value_Number(h_));
+	return Value::nil();
 }
 
 // sdl.SDL_SetWindowMaximumSize(window as SDL_Window, max_w as Number, max_h as Number)
@@ -1015,11 +1021,13 @@ Gurax_ImplementFunctionEx(SDL_SetWindowMaximumSize_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_GetWindowMaximumSize(window as SDL_Window)
+// sdl.SDL_GetWindowMaximumSize(window as SDL_Window, &w:nilRef as Number, &h:nilRef as Number)
 Gurax_DeclareFunctionAlias(SDL_GetWindowMaximumSize_gurax, "SDL_GetWindowMaximumSize")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("h", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_GetWindowMaximumSize_gurax, processor_gurax, argument_gurax)
@@ -1028,10 +1036,14 @@ Gurax_ImplementFunctionEx(SDL_GetWindowMaximumSize_gurax, processor_gurax, argum
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
 	SDL_Window* window = value_window.GetEntityPtr();
+	RefPtr<Referencer> w(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> h(args_gurax.PickReferencer().Reference());
 	// Function body
-	int w, h;
-	SDL_GetWindowMaximumSize(window, &w, &h);
-	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h));
+	int w_, h_;
+	SDL_GetWindowMaximumSize(window, &w_, &h_);
+	w->SetValue(new Value_Number(w_));
+	h->SetValue(new Value_Number(h_));
+	return Value::nil();
 }
 
 // sdl.SDL_SetWindowBordered(window as SDL_Window, bordered as Bool)
