@@ -440,11 +440,12 @@ Gurax_ImplementFunctionEx(SDL_GetDisplayName_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_String(rtn);
 }
 
-// sdl.SDL_GetDisplayBounds(displayIndex as Number)
+// sdl.SDL_GetDisplayBounds(displayIndex as Number, &rect:nilRef as SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_GetDisplayBounds_gurax, "SDL_GetDisplayBounds")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("displayIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_GetDisplayBounds_gurax, processor_gurax, argument_gurax)
@@ -452,17 +453,20 @@ Gurax_ImplementFunctionEx(SDL_GetDisplayBounds_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int displayIndex = args_gurax.PickNumber<int>();
+	RefPtr<Referencer> rect(args_gurax.PickReferencer().Reference());
 	// Function body
-	SDL_Rect rect;
-	if (SDL_GetDisplayBounds(displayIndex, &rect) != 0) return Value::nil();
-	return new Value_SDL_Rect(rect);
+	SDL_Rect rect_;
+	int rtn = SDL_GetDisplayBounds(displayIndex, &rect_);
+	rect->SetValue(new Value_SDL_Rect(rect_));
+	return new Value_Number(rtn);
 }
 
-// sdl.SDL_GetDisplayUsableBounds(displayIndex as Number)
+// sdl.SDL_GetDisplayUsableBounds(displayIndex as Number, &rect:nilRef as SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_GetDisplayUsableBounds_gurax, "SDL_GetDisplayUsableBounds")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("displayIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_GetDisplayUsableBounds_gurax, processor_gurax, argument_gurax)
@@ -470,17 +474,22 @@ Gurax_ImplementFunctionEx(SDL_GetDisplayUsableBounds_gurax, processor_gurax, arg
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int displayIndex = args_gurax.PickNumber<int>();
+	RefPtr<Referencer> rect(args_gurax.PickReferencer().Reference());
 	// Function body
-	SDL_Rect rect;
-	if (SDL_GetDisplayUsableBounds(displayIndex, &rect) != 0) return Value::nil();
-	return new Value_SDL_Rect(rect);
+	SDL_Rect rect_;
+	int rtn = SDL_GetDisplayUsableBounds(displayIndex, &rect_);
+	rect->SetValue(new Value_SDL_Rect(rect_));
+	return new Value_Number(rtn);
 }
 
-// sdl.SDL_GetDisplayDPI(displayIndex as Number)
+// sdl.SDL_GetDisplayDPI(displayIndex as Number, &ddpi:nilRef as Number, &hdpi:nilRef as Number, &vdpi:nilRef as Number)
 Gurax_DeclareFunctionAlias(SDL_GetDisplayDPI_gurax, "SDL_GetDisplayDPI")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("displayIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ddpi", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("hdpi", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("vdpi", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_GetDisplayDPI_gurax, processor_gurax, argument_gurax)
@@ -488,10 +497,16 @@ Gurax_ImplementFunctionEx(SDL_GetDisplayDPI_gurax, processor_gurax, argument_gur
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int displayIndex = args_gurax.PickNumber<int>();
+	RefPtr<Referencer> ddpi(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> hdpi(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> vdpi(args_gurax.PickReferencer().Reference());
 	// Function body
-	float ddpi, hdpi, vdpi;
-	if (SDL_GetDisplayDPI(displayIndex, &ddpi, &hdpi, &vdpi) != 0) return Value::nil();
-	return Value_Tuple::Create(new Value_Number(ddpi), new Value_Number(hdpi), new Value_Number(vdpi));
+	float ddpi_, hdpi_, vdpi_;
+	int rtn = SDL_GetDisplayDPI(displayIndex, &ddpi_, &hdpi_, &vdpi_);
+	ddpi->SetValue(new Value_Number(ddpi_));
+	hdpi->SetValue(new Value_Number(hdpi_));
+	vdpi->SetValue(new Value_Number(vdpi_));
+	return new Value_Number(rtn);
 }
 
 // sdl.SDL_GetDisplayOrientation(displayIndex as Number)
@@ -528,12 +543,13 @@ Gurax_ImplementFunctionEx(SDL_GetNumDisplayModes_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetDisplayMode(displayIndex as Number, modeIndex as Number)
+// sdl.SDL_GetDisplayMode(displayIndex as Number, modeIndex as Number, &mode:nilRef as SDL_DisplayMode)
 Gurax_DeclareFunctionAlias(SDL_GetDisplayMode_gurax, "SDL_GetDisplayMode")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("displayIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("modeIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("mode", VTYPE_SDL_DisplayMode, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_GetDisplayMode_gurax, processor_gurax, argument_gurax)
@@ -542,17 +558,20 @@ Gurax_ImplementFunctionEx(SDL_GetDisplayMode_gurax, processor_gurax, argument_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int displayIndex = args_gurax.PickNumber<int>();
 	int modeIndex = args_gurax.PickNumber<int>();
+	RefPtr<Referencer> mode(args_gurax.PickReferencer().Reference());
 	// Function body
-	SDL_DisplayMode mode = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
-	if (SDL_GetDisplayMode(displayIndex, modeIndex, &mode) != 0) return Value::nil();
-	return new Value_SDL_DisplayMode(mode);
+	SDL_DisplayMode mode_ = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
+	int rtn = SDL_GetDisplayMode(displayIndex, modeIndex, &mode_);
+	mode->SetValue(new Value_SDL_DisplayMode(mode_));
+	return new Value_Number(rtn);
 }
 
-// sdl.SDL_GetDesktopDisplayMode(displayIndex as Number)
+// sdl.SDL_GetDesktopDisplayMode(displayIndex as Number, &mode:nilRef as SDL_DisplayMode)
 Gurax_DeclareFunctionAlias(SDL_GetDesktopDisplayMode_gurax, "SDL_GetDesktopDisplayMode")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("displayIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("mode", VTYPE_SDL_DisplayMode, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_GetDesktopDisplayMode_gurax, processor_gurax, argument_gurax)
@@ -560,17 +579,20 @@ Gurax_ImplementFunctionEx(SDL_GetDesktopDisplayMode_gurax, processor_gurax, argu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int displayIndex = args_gurax.PickNumber<int>();
+	RefPtr<Referencer> mode(args_gurax.PickReferencer().Reference());
 	// Function body
-	SDL_DisplayMode mode = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
-	if (SDL_GetDesktopDisplayMode(displayIndex, &mode) != 0) return Value::nil();
-	return new Value_SDL_DisplayMode(mode);
+	SDL_DisplayMode mode_ = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
+	int rtn = SDL_GetDesktopDisplayMode(displayIndex, &mode_);
+	mode->SetValue(new Value_SDL_DisplayMode(mode_));
+	return new Value_Number(rtn);
 }
 
-// sdl.SDL_GetCurrentDisplayMode(displayIndex as Number)
+// sdl.SDL_GetCurrentDisplayMode(displayIndex as Number, &mode:nilRef as SDL_DisplayMode)
 Gurax_DeclareFunctionAlias(SDL_GetCurrentDisplayMode_gurax, "SDL_GetCurrentDisplayMode")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("displayIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("mode", VTYPE_SDL_DisplayMode, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_GetCurrentDisplayMode_gurax, processor_gurax, argument_gurax)
@@ -578,10 +600,12 @@ Gurax_ImplementFunctionEx(SDL_GetCurrentDisplayMode_gurax, processor_gurax, argu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int displayIndex = args_gurax.PickNumber<int>();
+	RefPtr<Referencer> mode(args_gurax.PickReferencer().Reference());
 	// Function body
-	SDL_DisplayMode mode = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
-	if (SDL_GetCurrentDisplayMode(displayIndex, &mode) != 0) return Value::nil();
-	return new Value_SDL_DisplayMode(mode);
+	SDL_DisplayMode mode_ = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
+	int rtn = SDL_GetCurrentDisplayMode(displayIndex, &mode_);
+	mode->SetValue(new Value_SDL_DisplayMode(mode_));
+	return new Value_Number(rtn);
 }
 
 // sdl.SDL_GetWindowDisplayIndex(window as SDL_Window)
@@ -825,11 +849,13 @@ Gurax_ImplementFunctionEx(SDL_SetWindowPosition_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_GetWindowPosition(window as SDL_Window)
+// sdl.SDL_GetWindowPosition(window as SDL_Window, &x:nilRef as Number, &y:nilRef as Number)
 Gurax_DeclareFunctionAlias(SDL_GetWindowPosition_gurax, "SDL_GetWindowPosition")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_GetWindowPosition_gurax, processor_gurax, argument_gurax)
@@ -838,10 +864,14 @@ Gurax_ImplementFunctionEx(SDL_GetWindowPosition_gurax, processor_gurax, argument
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
 	SDL_Window* window = value_window.GetEntityPtr();
+	RefPtr<Referencer> x(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y(args_gurax.PickReferencer().Reference());
 	// Function body
-	int x, y;
-	SDL_GetWindowPosition(window, &x, &y);
-	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+	int x_, y_;
+	SDL_GetWindowPosition(window, &x_, &y_);
+	x->SetValue(new Value_Number(x_));
+	y->SetValue(new Value_Number(y_));
+	return Value::nil();
 }
 
 // sdl.SDL_SetWindowSize(window as SDL_Window, w as Number, h as Number)
@@ -866,11 +896,13 @@ Gurax_ImplementFunctionEx(SDL_SetWindowSize_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_GetWindowSize(window as SDL_Window)
+// sdl.SDL_GetWindowSize(window as SDL_Window, &w:nilRef as Number, &h:nilRef as Number)
 Gurax_DeclareFunctionAlias(SDL_GetWindowSize_gurax, "SDL_GetWindowSize")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("h", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_GetWindowSize_gurax, processor_gurax, argument_gurax)
@@ -879,17 +911,25 @@ Gurax_ImplementFunctionEx(SDL_GetWindowSize_gurax, processor_gurax, argument_gur
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
 	SDL_Window* window = value_window.GetEntityPtr();
+	RefPtr<Referencer> w(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> h(args_gurax.PickReferencer().Reference());
 	// Function body
-	int w, h;
-	SDL_GetWindowSize(window, &w, &h);
-	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h));
+	int w_, h_;
+	SDL_GetWindowSize(window, &w_, &h_);
+	w->SetValue(new Value_Number(w_));
+	h->SetValue(new Value_Number(h_));
+	return Value::nil();
 }
 
-// sdl.SDL_GetWindowBordersSize(window as SDL_Window)
+// sdl.SDL_GetWindowBordersSize(window as SDL_Window, &top:nilRef as Number, &left:nilRef as Number, &bottom:nilRef as Number, &right:nilRef as Number)
 Gurax_DeclareFunctionAlias(SDL_GetWindowBordersSize_gurax, "SDL_GetWindowBordersSize")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("top", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("left", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("bottom", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("right", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_GetWindowBordersSize_gurax, processor_gurax, argument_gurax)
@@ -898,10 +938,18 @@ Gurax_ImplementFunctionEx(SDL_GetWindowBordersSize_gurax, processor_gurax, argum
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
 	SDL_Window* window = value_window.GetEntityPtr();
+	RefPtr<Referencer> top(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> left(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> bottom(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> right(args_gurax.PickReferencer().Reference());
 	// Function body
-	int top, left, bottom, right;
-	if (SDL_GetWindowBordersSize(window, &top, &left, &bottom, &right) != 0) return Value::nil();
-	return Value_Tuple::Create(new Value_Number(top), new Value_Number(left), new Value_Number(bottom), new Value_Number(right));
+	int top_, left_, bottom_, right_;
+	int rtn = SDL_GetWindowBordersSize(window, &top_, &left_, &bottom_, &right_);
+	top->SetValue(new Value_Number(top_));
+	left->SetValue(new Value_Number(left_));
+	bottom->SetValue(new Value_Number(bottom_));
+	right->SetValue(new Value_Number(right_));
+	return new Value_Number(rtn);
 }
 
 // sdl.SDL_SetWindowMinimumSize(window as SDL_Window, min_w as Number, min_h as Number)
@@ -4983,46 +5031,70 @@ Gurax_ImplementFunctionEx(SDL_GetMouseFocus_gurax, processor_gurax, argument_gur
 	return new Value_SDL_Window(rtn);
 }
 
-// sdl.SDL_GetMouseState()
+// sdl.SDL_GetMouseState(&x:nilRef as Number, &y:nilRef as Number)
 Gurax_DeclareFunctionAlias(SDL_GetMouseState_gurax, "SDL_GetMouseState")
 {
 	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_GetMouseState_gurax, processor_gurax, argument_gurax)
 {
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Referencer> x(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y(args_gurax.PickReferencer().Reference());
 	// Function body
-	int x, y;
-	Uint32 state = SDL_GetMouseState(&x, &y);
-	return Value_Tuple::Create(new Value_Number(state), new Value_Number(x), new Value_Number(y));
+	int x_, y_;
+	Uint32 state = SDL_GetMouseState(&x_, &y_);
+	x->SetValue(new Value_Number(x_));
+	y->SetValue(new Value_Number(y_));
+	return new Value_Number(state);
 }
 
-// sdl.SDL_GetGlobalMouseState()
+// sdl.SDL_GetGlobalMouseState(&x:nilRef as Number, &y:nilRef as Number)
 Gurax_DeclareFunctionAlias(SDL_GetGlobalMouseState_gurax, "SDL_GetGlobalMouseState")
 {
 	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_GetGlobalMouseState_gurax, processor_gurax, argument_gurax)
 {
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Referencer> x(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y(args_gurax.PickReferencer().Reference());
 	// Function body
-	int x, y;
-	Uint32 state = SDL_GetGlobalMouseState(&x, &y);
-	return Value_Tuple::Create(new Value_Number(state), new Value_Number(x), new Value_Number(y));
+	int x_, y_;
+	Uint32 state = SDL_GetGlobalMouseState(&x_, &y_);
+	x->SetValue(new Value_Number(x_));
+	y->SetValue(new Value_Number(y_));
+	return new Value_Number(state);
 }
 
-// sdl.SDL_GetRelativeMouseState()
+// sdl.SDL_GetRelativeMouseState(&x:nilRef as Number, &y:nilRef as Number)
 Gurax_DeclareFunctionAlias(SDL_GetRelativeMouseState_gurax, "SDL_GetRelativeMouseState")
 {
 	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_GetRelativeMouseState_gurax, processor_gurax, argument_gurax)
 {
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Referencer> x(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> y(args_gurax.PickReferencer().Reference());
 	// Function body
-	int x, y;
-	Uint32 state = SDL_GetRelativeMouseState(&x, &y);
-	return Value_Tuple::Create(new Value_Number(state), new Value_Number(x), new Value_Number(y));
+	int x_, y_;
+	Uint32 state = SDL_GetRelativeMouseState(&x_, &y_);
+	x->SetValue(new Value_Number(x_));
+	y->SetValue(new Value_Number(y_));
+	return new Value_Number(state);
 }
 
 // sdl.SDL_WarpMouseInWindow(window as SDL_Window, x as Number, y as Number)
@@ -5851,12 +5923,14 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetHat_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_JoystickGetBall(joystick as SDL_Joystick, ball as Number)
+// sdl.SDL_JoystickGetBall(joystick as SDL_Joystick, ball as Number, &dx:nilRef as Number, &dy:nilRef as Number)
 Gurax_DeclareFunctionAlias(SDL_JoystickGetBall_gurax, "SDL_JoystickGetBall")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ball", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dx", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("dy", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_JoystickGetBall_gurax, processor_gurax, argument_gurax)
@@ -5866,10 +5940,14 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetBall_gurax, processor_gurax, argument_g
 	auto& value_joystick = args_gurax.Pick<Value_SDL_Joystick>();
 	SDL_Joystick* joystick = value_joystick.GetEntityPtr();
 	int ball = args_gurax.PickNumber<int>();
+	RefPtr<Referencer> dx(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> dy(args_gurax.PickReferencer().Reference());
 	// Function body
-	int dx, dy;
-	if (SDL_JoystickGetBall(joystick, ball, &dx, &dy) != 0) return Value::nil();
-	return Value_Tuple::Create(new Value_Number(dx), new Value_Number(dy));
+	int dx_, dy_;
+	int rtn = SDL_JoystickGetBall(joystick, ball, &dx_, &dy_);
+	dx->SetValue(new Value_Number(dx_));
+	dy->SetValue(new Value_Number(dy_));
+	return new Value_Number(rtn);
 }
 
 // sdl.SDL_JoystickGetButton(joystick as SDL_Joystick, button as Number)
@@ -8676,18 +8754,26 @@ Gurax_ImplementFunctionEx(SDL_SIMDFree_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_GetPowerInfo()
+// sdl.SDL_GetPowerInfo(&secs:nilRef as Number, &pct:nilRef as Number)
 Gurax_DeclareFunctionAlias(SDL_GetPowerInfo_gurax, "SDL_GetPowerInfo")
 {
 	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("secs", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("pct", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_GetPowerInfo_gurax, processor_gurax, argument_gurax)
 {
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Referencer> secs(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> pct(args_gurax.PickReferencer().Reference());
 	// Function body
-	int secs, pct;
-	SDL_PowerState state = SDL_GetPowerInfo(&secs, &pct);
-	return Value_Tuple::Create(new Value_Number(state), new Value_Number(secs), new Value_Number(pct));
+	int secs_, pct_;
+	SDL_PowerState state = SDL_GetPowerInfo(&secs_, &pct_);
+	secs->SetValue(new Value_Number(secs_));
+	pct->SetValue(new Value_Number(pct_));
+	return new Value_Number(state);
 }
 
 // sdl.IMG_Linked_Version()

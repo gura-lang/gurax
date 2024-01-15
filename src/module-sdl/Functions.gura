@@ -122,6 +122,7 @@ r.DeclareType('SDL_bool', 'SDL_bool', 'Bool',
 r.DeclareType_Pointer('const_Uint8_p', 'const Uint8*')
 
 r.DeclareType_Entity('SDL_Color', 'SDL_Color', 'SDL_Color')
+r.DeclareType_Entity('SDL_DisplayMode', 'const SDL_DisplayMode', 'SDL_DisplayMode')
 r.DeclareType_Entity('SDL_FPoint', 'SDL_FPoint', 'SDL_FPoint')
 r.DeclareType_Entity('SDL_FRect', 'SDL_FRect', 'SDL_FRect')
 r.DeclareType_Entity('SDL_JoystickGUID', 'SDL_JoystickGUID', 'SDL_JoystickGUID')
@@ -287,50 +288,58 @@ SDL_GetNumVideoDisplays() as int
 
 SDL_GetDisplayName(displayIndex as int) as const_char_p
 
-SDL_GetDisplayBounds(displayIndex as int) as any = \
+SDL_GetDisplayBounds(displayIndex as int, &rect:nilRef as SDL_Rect) as int = \
 	R'''
-	SDL_Rect rect;
-	if (SDL_GetDisplayBounds(displayIndex, &rect) != 0) return Value::nil();
-	return new Value_SDL_Rect(rect);
+	SDL_Rect rect_;
+	int rtn = SDL_GetDisplayBounds(displayIndex, &rect_);
+	rect->SetValue(new Value_SDL_Rect(rect_));
+	return new Value_Number(rtn);
 	'''
 
-SDL_GetDisplayUsableBounds(displayIndex as int) as any = \
+SDL_GetDisplayUsableBounds(displayIndex as int, &rect:nilRef as SDL_Rect) as int = \
 	R'''
-	SDL_Rect rect;
-	if (SDL_GetDisplayUsableBounds(displayIndex, &rect) != 0) return Value::nil();
-	return new Value_SDL_Rect(rect);
+	SDL_Rect rect_;
+	int rtn = SDL_GetDisplayUsableBounds(displayIndex, &rect_);
+	rect->SetValue(new Value_SDL_Rect(rect_));
+	return new Value_Number(rtn);
 	'''
 
-SDL_GetDisplayDPI(displayIndex as int) as any = \
+SDL_GetDisplayDPI(displayIndex as int, &ddpi:nilRef as float, &hdpi:nilRef as float, &vdpi:nilRef as float) as int = \
 	R'''
-	float ddpi, hdpi, vdpi;
-	if (SDL_GetDisplayDPI(displayIndex, &ddpi, &hdpi, &vdpi) != 0) return Value::nil();
-	return Value_Tuple::Create(new Value_Number(ddpi), new Value_Number(hdpi), new Value_Number(vdpi));
+	float ddpi_, hdpi_, vdpi_;
+	int rtn = SDL_GetDisplayDPI(displayIndex, &ddpi_, &hdpi_, &vdpi_);
+	ddpi->SetValue(new Value_Number(ddpi_));
+	hdpi->SetValue(new Value_Number(hdpi_));
+	vdpi->SetValue(new Value_Number(vdpi_));
+	return new Value_Number(rtn);
 	'''
 
 SDL_GetDisplayOrientation(displayIndex as int) as SDL_DisplayOrientation
 
 SDL_GetNumDisplayModes(displayIndex as int) as int
 
-SDL_GetDisplayMode(displayIndex as int, modeIndex as int) as any = \
+SDL_GetDisplayMode(displayIndex as int, modeIndex as int, &mode:nilRef as SDL_DisplayMode) as int = \
 	R'''
-	SDL_DisplayMode mode = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
-	if (SDL_GetDisplayMode(displayIndex, modeIndex, &mode) != 0) return Value::nil();
-	return new Value_SDL_DisplayMode(mode);
+	SDL_DisplayMode mode_ = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
+	int rtn = SDL_GetDisplayMode(displayIndex, modeIndex, &mode_);
+	mode->SetValue(new Value_SDL_DisplayMode(mode_));
+	return new Value_Number(rtn);
 	'''
 
-SDL_GetDesktopDisplayMode(displayIndex as int) as any = \
+SDL_GetDesktopDisplayMode(displayIndex as int, &mode:nilRef as SDL_DisplayMode) as int = \
 	R'''
-	SDL_DisplayMode mode = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
-	if (SDL_GetDesktopDisplayMode(displayIndex, &mode) != 0) return Value::nil();
-	return new Value_SDL_DisplayMode(mode);
+	SDL_DisplayMode mode_ = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
+	int rtn = SDL_GetDesktopDisplayMode(displayIndex, &mode_);
+	mode->SetValue(new Value_SDL_DisplayMode(mode_));
+	return new Value_Number(rtn);
 	'''
 
-SDL_GetCurrentDisplayMode(displayIndex as int) as any = \
+SDL_GetCurrentDisplayMode(displayIndex as int, &mode:nilRef as SDL_DisplayMode) as int = \
 	R'''
-	SDL_DisplayMode mode = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
-	if (SDL_GetCurrentDisplayMode(displayIndex, &mode) != 0) return Value::nil();
-	return new Value_SDL_DisplayMode(mode);
+	SDL_DisplayMode mode_ = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
+	int rtn = SDL_GetCurrentDisplayMode(displayIndex, &mode_);
+	mode->SetValue(new Value_SDL_DisplayMode(mode_));
+	return new Value_Number(rtn);
 	'''
 
 //SDL_GetClosestDisplayMode(displayIndex as int, mode as const_SDL_DisplayMode_p, closest as SDL_DisplayMode_p) as SDL_DisplayMode_p
@@ -365,27 +374,35 @@ SDL_SetWindowIcon(window as SDL_Window_p, icon as SDL_Surface_p):void
 
 SDL_SetWindowPosition(window as SDL_Window_p, x as int, y as int):void
 
-SDL_GetWindowPosition(window as SDL_Window_p) as any = \
+SDL_GetWindowPosition(window as SDL_Window_p, &x:nilRef as int, &y:nilRef as int):void = \
 	R'''
-	int x, y;
-	SDL_GetWindowPosition(window, &x, &y);
-	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+	int x_, y_;
+	SDL_GetWindowPosition(window, &x_, &y_);
+	x->SetValue(new Value_Number(x_));
+	y->SetValue(new Value_Number(y_));
+	return Value::nil();
 	'''
 
 SDL_SetWindowSize(window as SDL_Window_p, w as int, h as int):void
 
-SDL_GetWindowSize(window as SDL_Window_p) as any = \
+SDL_GetWindowSize(window as SDL_Window_p, &w:nilRef as int, &h:nilRef as int) as any = \
 	R'''
-	int w, h;
-	SDL_GetWindowSize(window, &w, &h);
-	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h));
+	int w_, h_;
+	SDL_GetWindowSize(window, &w_, &h_);
+	w->SetValue(new Value_Number(w_));
+	h->SetValue(new Value_Number(h_));
+	return Value::nil();
 	'''
 
-SDL_GetWindowBordersSize(window as SDL_Window_p) = \
+SDL_GetWindowBordersSize(window as SDL_Window_p, &top:nilRef as int, &left:nilRef as int, &bottom:nilRef as int, &right:nilRef as int) = \
 	R'''
-	int top, left, bottom, right;
-	if (SDL_GetWindowBordersSize(window, &top, &left, &bottom, &right) != 0) return Value::nil();
-	return Value_Tuple::Create(new Value_Number(top), new Value_Number(left), new Value_Number(bottom), new Value_Number(right));
+	int top_, left_, bottom_, right_;
+	int rtn = SDL_GetWindowBordersSize(window, &top_, &left_, &bottom_, &right_);
+	top->SetValue(new Value_Number(top_));
+	left->SetValue(new Value_Number(left_));
+	bottom->SetValue(new Value_Number(bottom_));
+	right->SetValue(new Value_Number(right_));
+	return new Value_Number(rtn);
 	'''
 
 SDL_SetWindowMinimumSize(window as SDL_Window_p, min_w as int, min_h as int):void
@@ -1136,25 +1153,31 @@ SDL_IsScreenKeyboardShown(window as SDL_Window_p) as SDL_bool
 
 SDL_GetMouseFocus() as SDL_Window_p
 
-SDL_GetMouseState() = \
+SDL_GetMouseState(&x:nilRef as int, &y:nilRef as int) = \
 	R'''
-	int x, y;
-	Uint32 state = SDL_GetMouseState(&x, &y);
-	return Value_Tuple::Create(new Value_Number(state), new Value_Number(x), new Value_Number(y));
+	int x_, y_;
+	Uint32 state = SDL_GetMouseState(&x_, &y_);
+	x->SetValue(new Value_Number(x_));
+	y->SetValue(new Value_Number(y_));
+	return new Value_Number(state);
 	'''
 
-SDL_GetGlobalMouseState() = \
+SDL_GetGlobalMouseState(&x:nilRef as int, &y:nilRef as int) = \
 	R'''
-	int x, y;
-	Uint32 state = SDL_GetGlobalMouseState(&x, &y);
-	return Value_Tuple::Create(new Value_Number(state), new Value_Number(x), new Value_Number(y));
+	int x_, y_;
+	Uint32 state = SDL_GetGlobalMouseState(&x_, &y_);
+	x->SetValue(new Value_Number(x_));
+	y->SetValue(new Value_Number(y_));
+	return new Value_Number(state);
 	'''
 
-SDL_GetRelativeMouseState() = \
+SDL_GetRelativeMouseState(&x:nilRef as int, &y:nilRef as int) = \
 	R'''
-	int x, y;
-	Uint32 state = SDL_GetRelativeMouseState(&x, &y);
-	return Value_Tuple::Create(new Value_Number(state), new Value_Number(x), new Value_Number(y));
+	int x_, y_;
+	Uint32 state = SDL_GetRelativeMouseState(&x_, &y_);
+	x->SetValue(new Value_Number(x_));
+	y->SetValue(new Value_Number(y_));
+	return new Value_Number(state);
 	'''
 
 SDL_WarpMouseInWindow(window as SDL_Window_p, x as int, y as int):void
@@ -1260,11 +1283,13 @@ SDL_JoystickGetAxis(joystick as SDL_Joystick_p, axis as int) as Sint16
 
 SDL_JoystickGetHat(joystick as SDL_Joystick_p, hat as int) as Uint8
 
-SDL_JoystickGetBall(joystick as SDL_Joystick_p, ball as int) = \
+SDL_JoystickGetBall(joystick as SDL_Joystick_p, ball as int, &dx:nilRef as int, &dy:nilRef as int) = \
 	R'''
-	int dx, dy;
-	if (SDL_JoystickGetBall(joystick, ball, &dx, &dy) != 0) return Value::nil();
-	return Value_Tuple::Create(new Value_Number(dx), new Value_Number(dy));
+	int dx_, dy_;
+	int rtn = SDL_JoystickGetBall(joystick, ball, &dx_, &dy_);
+	dx->SetValue(new Value_Number(dx_));
+	dy->SetValue(new Value_Number(dy_));
+	return new Value_Number(rtn);
 	'''
 
 SDL_JoystickGetButton(joystick as SDL_Joystick_p, button as int) as Uint8
@@ -1780,11 +1805,13 @@ SDL_SIMDFree(ptr:nil as void_p):void
 //======== Bit Manipulation (SDL_bits.h) ========
 
 //======== Power Management Status (SDL_power.h) ========
-SDL_GetPowerInfo() = \
+SDL_GetPowerInfo(&secs:nilRef as int, &pct:nilRef as int) = \
 	R'''
-	int secs, pct;
-	SDL_PowerState state = SDL_GetPowerInfo(&secs, &pct);
-	return Value_Tuple::Create(new Value_Number(state), new Value_Number(secs), new Value_Number(pct));
+	int secs_, pct_;
+	SDL_PowerState state = SDL_GetPowerInfo(&secs_, &pct_);
+	secs->SetValue(new Value_Number(secs_));
+	pct->SetValue(new Value_Number(pct_));
+	return new Value_Number(state);
 	'''
 
 //======== Platform-specific Functionality (SDL_system.h) ========
