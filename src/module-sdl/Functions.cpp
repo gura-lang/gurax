@@ -2403,11 +2403,13 @@ Gurax_ImplementFunctionEx(SDL_RenderSetLogicalSize_gurax, processor_gurax, argum
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RenderGetLogicalSize(renderer as SDL_Renderer)
+// sdl.SDL_RenderGetLogicalSize(renderer as SDL_Renderer, &w:nilRef as Number, &h:nilRef as Number)
 Gurax_DeclareFunctionAlias(SDL_RenderGetLogicalSize_gurax, "SDL_RenderGetLogicalSize")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("h", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_RenderGetLogicalSize_gurax, processor_gurax, argument_gurax)
@@ -2416,10 +2418,14 @@ Gurax_ImplementFunctionEx(SDL_RenderGetLogicalSize_gurax, processor_gurax, argum
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
 	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
+	RefPtr<Referencer> w(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> h(args_gurax.PickReferencer().Reference());
 	// Function body
-	int w, h;
-	SDL_RenderGetLogicalSize(renderer, &w, &h);
-	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h));
+	int w_, h_;
+	SDL_RenderGetLogicalSize(renderer, &w_, &h_);
+	w->SetValue(new Value_Number(w_));
+	h->SetValue(new Value_Number(h_));
+	return Value::nil();
 }
 
 // sdl.SDL_RenderSetIntegerScale(renderer as SDL_Renderer, enable as Bool)
@@ -2480,11 +2486,12 @@ Gurax_ImplementFunctionEx(SDL_RenderSetViewport_gurax, processor_gurax, argument
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RenderGetViewport(renderer as SDL_Renderer)
+// sdl.SDL_RenderGetViewport(renderer as SDL_Renderer, &rect:nilRef as SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_RenderGetViewport_gurax, "SDL_RenderGetViewport")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_RenderGetViewport_gurax, processor_gurax, argument_gurax)
@@ -2493,10 +2500,12 @@ Gurax_ImplementFunctionEx(SDL_RenderGetViewport_gurax, processor_gurax, argument
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
 	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
+	RefPtr<Referencer> rect(args_gurax.PickReferencer().Reference());
 	// Function body
-	SDL_Rect rect;
-	SDL_RenderGetViewport(renderer, &rect);
-	return new Value_SDL_Rect(rect);
+	SDL_Rect rect_;
+	SDL_RenderGetViewport(renderer, &rect_);
+	rect->SetValue(new Value_SDL_Rect(rect_));
+	return Value::nil();
 }
 
 // sdl.SDL_RenderSetClipRect(renderer as SDL_Renderer, rect:nil as SDL_Rect)
@@ -2519,11 +2528,12 @@ Gurax_ImplementFunctionEx(SDL_RenderSetClipRect_gurax, processor_gurax, argument
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RenderGetClipRect(renderer as SDL_Renderer)
+// sdl.SDL_RenderGetClipRect(renderer as SDL_Renderer, &rect:nilRef as SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_RenderGetClipRect_gurax, "SDL_RenderGetClipRect")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_RenderGetClipRect_gurax, processor_gurax, argument_gurax)
@@ -2532,10 +2542,12 @@ Gurax_ImplementFunctionEx(SDL_RenderGetClipRect_gurax, processor_gurax, argument
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
 	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
+	RefPtr<Referencer> rect(args_gurax.PickReferencer().Reference());
 	// Function body
-	SDL_Rect rect;
-	SDL_RenderGetClipRect(renderer, &rect);
-	return new Value_SDL_Rect(rect);
+	SDL_Rect rect_;
+	SDL_RenderGetClipRect(renderer, &rect_);
+	rect->SetValue(new Value_SDL_Rect(rect_));
+	return Value::nil();
 }
 
 // sdl.SDL_RenderIsClipEnabled(renderer as SDL_Renderer)
@@ -2578,11 +2590,13 @@ Gurax_ImplementFunctionEx(SDL_RenderSetScale_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RenderGetScale(renderer as SDL_Renderer)
+// sdl.SDL_RenderGetScale(renderer as SDL_Renderer, &scaleX:nilRef as Number, &scaleY:nilRef as Number)
 Gurax_DeclareFunctionAlias(SDL_RenderGetScale_gurax, "SDL_RenderGetScale")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("scaleX", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("scaleY", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_RenderGetScale_gurax, processor_gurax, argument_gurax)
@@ -2591,10 +2605,14 @@ Gurax_ImplementFunctionEx(SDL_RenderGetScale_gurax, processor_gurax, argument_gu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
 	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
+	RefPtr<Referencer> scaleX(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> scaleY(args_gurax.PickReferencer().Reference());
 	// Function body
-	float scaleX, scaleY;
-	SDL_RenderGetScale(renderer, &scaleX, &scaleY);
-	return Value_Tuple::Create(new Value_Number(scaleX), new Value_Number(scaleY));
+	float scaleX_, scaleY_;
+	SDL_RenderGetScale(renderer, &scaleX_, &scaleY_);
+	scaleX->SetValue(new Value_Number(scaleX_));
+	scaleY->SetValue(new Value_Number(scaleY_));
+	return Value::nil();
 }
 
 // sdl.SDL_SetRenderDrawColor(renderer as SDL_Renderer, r as Number, g as Number, b as Number, a as Number)

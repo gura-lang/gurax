@@ -690,7 +690,7 @@ SDL_RenderGetLogicalSize(renderer as SDL_Renderer_p, &w:nilRef as int, &h:nilRef
 	w->SetValue(new Value_Number(w_));
 	h->SetValue(new Value_Number(h_));
 	return Value::nil();
-\	'''
+	'''
 
 SDL_RenderSetIntegerScale(renderer as SDL_Renderer_p, enable as SDL_bool) as int
 
@@ -724,8 +724,8 @@ SDL_RenderGetScale(renderer as SDL_Renderer_p, &scaleX:nilRef as float, &scaleY:
 	R'''
 	float scaleX_, scaleY_;
 	SDL_RenderGetScale(renderer, &scaleX_, &scaleY_);
-	scaleX->SetValue(scaleX_);
-	scayeY->SetValue(scaleY_);
+	scaleX->SetValue(new Value_Number(scaleX_));
+	scaleY->SetValue(new Value_Number(scaleY_));
 	return Value::nil();
 	'''
 
