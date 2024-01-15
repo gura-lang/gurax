@@ -11,7 +11,7 @@ Gurax_BeginModule(opengl)
 //------------------------------------------------------------------------------
 // Function
 //------------------------------------------------------------------------------
-// opengl.glReadAsImage():[rgb,rgba]
+// opengl.glReadAsImage(x as Number, y as Number, width as Number, height as Number):[rgb,rgba]
 Gurax_DeclareFunction(glReadAsImage)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -35,8 +35,7 @@ Gurax_ImplementFunction(glReadAsImage)
 	GLint y = args.PickNumber<GLint>();
 	GLsizei width = args.PickNumberPos<GLsizei>();
 	GLsizei height = args.PickNumberPos<GLsizei>();
-	const Image::Format& format =
-		argument.IsSet(Gurax_Symbol(rgb))? Image::Format::RGB : Image::Format::RGBA;
+	const Image::Format& format = argument.IsSet(Gurax_Symbol(rgb))? Image::Format::RGB : Image::Format::RGBA;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	RefPtr<Image> pImage(new Image(format));
@@ -52,6 +51,7 @@ Gurax_ImplementFunction(glReadAsImage)
 	return argument.ReturnValue(processor, new Value_Image(pImage->Flip(false, true)));
 }
 
+#if 0
 // opengl.Test()
 Gurax_DeclareFunction(Test)
 {
@@ -77,6 +77,7 @@ Gurax_ImplementFunction(Test)
 #endif
 	return Value::nil();
 }
+#endif
 
 //------------------------------------------------------------------------------
 // Entries

@@ -127,6 +127,7 @@ r.DeclareType_Entity('SDL_FRect', 'SDL_FRect', 'SDL_FRect')
 r.DeclareType_Entity('SDL_JoystickGUID', 'SDL_JoystickGUID', 'SDL_JoystickGUID')
 r.DeclareType_Entity('SDL_Point', 'SDL_Point', 'SDL_Point')
 r.DeclareType_Entity('SDL_Rect', 'SDL_Rect', 'SDL_Rect')
+r.DeclareType_Entity('SDL_RendererInfo', 'SDL_RendererInfo', 'SDL_RendererInfo')
 
 r.DeclareType_EntityPtr('const_SDL_AudioSpec_p', 'const SDL_AudioSpec*', 'SDL_AudioSpec')
 r.DeclareType_EntityPtr('const_SDL_DisplayMode_p', 'const SDL_DisplayMode*', 'SDL_DisplayMode')
@@ -156,6 +157,7 @@ r.DeclareType_EntityPtr('SDL_Palette_p', 'SDL_Palette*', 'SDL_Palette')
 r.DeclareType_EntityPtr('SDL_PixelFormat_p', 'SDL_PixelFormat*', 'SDL_PixelFormat')
 r.DeclareType_EntityPtr('SDL_Rect_p', 'SDL_Rect*', 'SDL_Rect')
 r.DeclareType_EntityPtr('SDL_Renderer_p', 'SDL_Renderer*', 'SDL_Renderer')
+r.DeclareType_EntityPtr('SDL_RendererInfo_p', 'SDL_RendererInfo*', 'SDL_RendererInfo')
 r.DeclareType_EntityPtr('SDL_RWops_p', 'SDL_RWops*', 'SDL_RWops')
 r.DeclareType_EntityPtr('SDL_Sensor_p', 'SDL_Sensor*', 'SDL_Sensor')
 r.DeclareType_EntityPtr('SDL_Surface_p', 'SDL_Surface*', 'SDL_Surface')
@@ -445,11 +447,12 @@ SDL_GetWindowBrightness(window as SDL_Window_p) as float
 
 SDL_SetWindowOpacity(window as SDL_Window_p, opacity as float) as int
 
-SDL_GetWindowOpacity(window as SDL_Window_p) = \
+SDL_GetWindowOpacity(window as SDL_Window_p, &out_opacity:nilRef as float) as int = \
 	R'''
-	float out_opacity;
-	if (SDL_GetWindowOpacity(window, &out_opacity) != 0) return Value::nil();
-	return new Value_Number(out_opacity);
+	float out_opacity_;
+	int rtn = SDL_GetWindowOpacity(window, &out_opacity_);
+	out_opacity->SetValue(new Value_Number(out_opacity_));
+	return new Value_Number(rtn);
 	'''
 
 SDL_SetWindowModalFor(modal_window as SDL_Window_p, parent_window as SDL_Window_p) as int
@@ -482,11 +485,12 @@ SDL_GL_ResetAttributes():void
 
 SDL_GL_SetAttribute(attr as SDL_GLattr, value as int) as int
 
-SDL_GL_GetAttribute(attr as SDL_GLattr) = \
+SDL_GL_GetAttribute(attr as SDL_GLattr, &value:nilRef as int) as int = \
 	R'''
-	int value;
-	if (SDL_GL_GetAttribute(attr, &value) != 0) return Value::nil();
-	return new Value_Number(value);
+	int value_;
+	int rtn = SDL_GL_GetAttribute(attr, &value_);
+	value->SetValue(new Value_Number(value_));
+	return new Value_Number(rtn);
 	'''
 
 SDL_GL_CreateContext(window as SDL_Window_p) as SDL_GLContext
@@ -497,11 +501,13 @@ SDL_GL_GetCurrentWindow() as SDL_Window_p
 
 SDL_GL_GetCurrentContext() as SDL_GLContext
 
-SDL_GL_GetDrawableSize(window as SDL_Window_p) = \
+SDL_GL_GetDrawableSize(window as SDL_Window_p, &w:nilRef as int, &h:nilRef as int):void = \
 	R'''
-	int w, h;
-	SDL_GL_GetDrawableSize(window, &w, &h);
-	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h));
+	int w_, h_;
+	SDL_GL_GetDrawableSize(window, &w_, &h_);
+	w->SetValue(new Value_Number(w_));
+	h->SetValue(new Value_Number(h_));
+	return Value::nil();
 	'''
 
 SDL_GL_SetSwapInterval(interval as int) as int
@@ -516,19 +522,22 @@ SDL_GL_DeleteContext(context as SDL_GLContext):void
 
 SDL_GetNumRenderDrivers() as int
 
-SDL_GetRenderDriverInfo(index as int) = \
+SDL_GetRenderDriverInfo(index as int, &info:nilRef as SDL_RendererInfo) as int = \
 	R'''
-	SDL_RendererInfo info;
-	if (SDL_GetRenderDriverInfo(index, &info) != 0) return Value::nil();
-	return new Value_SDL_RendererInfo(info);
+	SDL_RendererInfo info_;
+	int rtn = SDL_GetRenderDriverInfo(index, &info_);
+	info->SetValue(new Value_SDL_RendererInfo(info_));
+	return new Value_Number(rtn);
 	'''
 
-SDL_CreateWindowAndRenderer(width as int, height as int, window_flags as Uint32) = \
+SDL_CreateWindowAndRenderer(width as int, height as int, window_flags as Uint32, &window:nilRef as SDL_Window_p, &renderer:nilRef as SDL_Renderer_p) as int = \
 	R'''
-	SDL_Window* window;
-	SDL_Renderer* renderer;
-	if (SDL_CreateWindowAndRenderer(width, height, window_flags, &window, &renderer) != 0) return Value::nil();
-	return Value_Tuple::Create(new Value_SDL_Window(window), new Value_SDL_Renderer(renderer));
+	SDL_Window* window_;
+	SDL_Renderer* renderer_;
+	int rtn = SDL_CreateWindowAndRenderer(width, height, window_flags, &window_, &renderer_);
+	window->SetValue(new Value_SDL_Window(window_));
+	renderer->SetValue(new Value_SDL_Renderer(renderer_));
+	return new Value_Number(rtn);
 	'''
 
 SDL_CreateRenderer(window as SDL_Window_p, index as int, flags as Uint32) as SDL_Renderer_p
@@ -537,95 +546,110 @@ SDL_CreateSoftwareRenderer(surface as SDL_Surface_p) as SDL_Renderer_p
 
 SDL_GetRenderer(window as SDL_Window_p) as SDL_Renderer_p
 
-SDL_GetRendererInfo(renderer as SDL_Renderer_p) = \
+SDL_GetRendererInfo(renderer as SDL_Renderer_p, &info:nilRef as SDL_RendererInfo) = \
 	R'''
-	SDL_RendererInfo info;
-	if (SDL_GetRendererInfo(renderer, &info) != 0) return Value::nil();
-	return new Value_SDL_RendererInfo(info);
+	SDL_RendererInfo info_;
+	int rtn = SDL_GetRendererInfo(renderer, &info_);
+	info->SetValue(new Value_SDL_RendererInfo(info_));
+	return new Value_Number(rtn);
 	'''
 
-SDL_GetRendererOutputSize(renderer as SDL_Renderer_p) = \
+SDL_GetRendererOutputSize(renderer as SDL_Renderer_p, &w:nilRef as int, &h:nilRef as int) as int = \
 	R'''
-	int w, h;
-	if (SDL_GetRendererOutputSize(renderer, &w, &h) != 0) return Value::nil();
-	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h));
+	int w_, h_;
+	int rtn = SDL_GetRendererOutputSize(renderer, &w_, &h_);
+	w->SetValue(new Value_Number(w_));
+	h->SetValue(new Value_Number(h_));
+	return new Value_Number(rtn);
 	'''
 
 SDL_CreateTexture(renderer as SDL_Renderer_p, format as Uint32, access as int, w as int, h as int) as SDL_Texture_p
 
 SDL_CreateTextureFromSurface(renderer as SDL_Renderer_p, surface as SDL_Surface_p) as SDL_Texture_p
 
-SDL_QueryTexture(texture as SDL_Texture_p) = \
+SDL_QueryTexture(texture as SDL_Texture_p, &format:nilRef as Uint32, &access:nilRef as int, &w:nilRef as int, &h:nilRef as int) = \
 	R'''
-	Uint32 format;
-	int access, w, h;
-	if (SDL_QueryTexture(texture, &format, &access, &w, &h) != 0) return Value::nil();
-	return Value_Tuple::Create(new Value_Number(format), new Value_Number(access), new Value_Number(w), new Value_Number(h));
+	Uint32 format_;
+	int access_, w_, h_;
+	int rtn = SDL_QueryTexture(texture, &format_, &access_, &w_, &h_);
+	format->SetValue(new Value_Number(format_));
+	access->SetValue(new Value_Number(access_));
+	w->SetValue(new Value_Number(w_));
+	h->SetValue(new Value_Number(h_));
+	return new Value_Number(rtn);
 	'''
 
 SDL_SetTextureColorMod(texture as SDL_Texture_p, r as Uint8, g as Uint8, b as Uint8) as int
 
-SDL_GetTextureColorMod(texture as SDL_Texture_p) = \
+SDL_GetTextureColorMod(texture as SDL_Texture_p, &r:nilRef as Uint8, &g:nilRef as Uint8, &b:nilRef as Uint8) = \
 	R'''
-	Uint8 r, g, b;
-	if (SDL_GetTextureColorMod(texture, &r, &g, &b) != 0) return Value::nil();
-	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b));
+	Uint8 r_, g_, b_;
+	int rtn = SDL_GetTextureColorMod(texture, &r_, &g_, &b_);
+	r->SetValue(new Value_Number(r_));
+	g->SetValue(new Value_Number(g_));
+	b->SetValue(new Value_Number(b_));
+	return new Value_Number(rtn);
 	'''
 
 SDL_SetTextureAlphaMod(texture as SDL_Texture_p, alpha as Uint8) as int
 
-SDL_GetTextureAlphaMod(texture as SDL_Texture_p) = \
+SDL_GetTextureAlphaMod(texture as SDL_Texture_p, &alpha:nilRef as Uint8) = \
 	R'''
-	Uint8 alpha;
-	if (SDL_GetTextureAlphaMod(texture, &alpha) != 0) return Value::nil();
-	return new Value_Number(alpha);
+	Uint8 alpha_;
+	int rtn = SDL_GetTextureAlphaMod(texture, &alpha_);
+	alpha->SetValue(new Value_Number(alpha_));
+	return new Value_Number(rtn);
 	'''
 
 SDL_SetTextureBlendMode(texture as SDL_Texture_p, blendMode as SDL_BlendMode) as int
 
-SDL_GetTextureBlendMode(texture as SDL_Texture_p) = \
+SDL_GetTextureBlendMode(texture as SDL_Texture_p, &blendMode:nilRef as SDL_BlendMode) as int = \
 	R'''
-	SDL_BlendMode blendMode;
-	if (SDL_GetTextureBlendMode(texture, &blendMode) != 0) return Value::nil();
-	return new Value_Number(blendMode);
+	SDL_BlendMode blendMode_;
+	int rtn = SDL_GetTextureBlendMode(texture, &blendMode_);
+	blendMode->SetValue(new Value_Number(blendMode_));
+	return new Value_Number(rtn);
 	'''
 
 SDL_SetTextureScaleMode(texture as SDL_Texture_p, scaleMode as SDL_ScaleMode) as int
 
-SDL_GetTextureScaleMode(texture as SDL_Texture_p) as int = \
+SDL_GetTextureScaleMode(texture as SDL_Texture_p, &scaleMode:nilRef as SDL_ScaleMode) as int = \
 	R'''
-	SDL_ScaleMode scaleMode;
-	if (SDL_GetTextureScaleMode(texture, &scaleMode) != 0) return Value::nil();
-	return new Value_Number(scaleMode);
+	SDL_ScaleMode scaleMode_;
+	int rtn = SDL_GetTextureScaleMode(texture, &scaleMode_);
+	scaleMode->SetValue(new Value_Number(scaleMode_));
+	return new Value_Number(rtn);
 	'''
 
 SDL_UpdateTexture(texture as SDL_Texture_p, rect:nil as const_SDL_Rect_p, pixels as const_void_p, pitch as int) as int
 
 SDL_UpdateYUVTexture(texture as SDL_Texture_p, rect:nil as const_SDL_Rect_p, Yplane as const_Uint8_p, Ypitch as int, Uplane as const_Uint8_p, Upitch as int, Vplane as const_Uint8_p, Vpitch as int) as int
 
-SDL_LockTexture(texture as SDL_Texture_p, rect:nil as const_SDL_Rect_p) = \
+SDL_LockTexture(texture as SDL_Texture_p, rect:nil as const_SDL_Rect_p, &pixels:nilRef as Pointer@gurax, &pitch:nilRef as int) as int = \
 	R'''
-	void* pixels;
-	int pitch;
-	if (SDL_LockTexture(texture, rect, &pixels, &pitch) != 0) return Value::nil();
+	void* pixels_;
+	int pitch_;
+	int rtn = SDL_LockTexture(texture, rect, &pixels_, &pitch_);
 	size_t bytes;
 	if (rect) {
-		bytes = pitch * rect->h;
+		bytes = pitch_ * rect->h;
 	} else {
 		int w, h;
 		if (SDL_QueryTexture(texture, nullptr, nullptr, &w, &h) != 0) return Value::nil();
-		bytes = pitch * h;
+		bytes = pitch_ * h;
 	}
-	RefPtr<Memory> pMemory(new MemorySloth(bytes, pixels));
-	RefPtr<Array> pArray(new Array(Array::ElemType::UInt8, pMemory.release(), DimSizes(bytes)));
-	return Value_Tuple::Create(new Value_Array(pArray.release()), new Value_Number(pitch));
+	RefPtr<Pointer> pPointer(new Pointer_Memory(new MemorySloth(bytes, pixels_)));
+	pixels->SetValue(new Value_Pointer(pPointer.release()));
+	pitch->SetValue(new Value_Number(pitch_));
+	return new Value_Number(rtn);
 	'''
 
-SDL_LockTextureToSurface(texture as SDL_Texture_p, rect:nil as const_SDL_Rect_p) = \
+SDL_LockTextureToSurface(texture as SDL_Texture_p, rect:nil as const_SDL_Rect_p, &surface:nilRef as SDL_Surface_p) = \
 	R'''
-	SDL_Surface* surface;
-	if (SDL_LockTextureToSurface(texture, rect, &surface) != 0) return Value::nil();
-	return new Value_SDL_Surface(surface);
+	SDL_Surface* surface_;
+	int rtn = SDL_LockTextureToSurface(texture, rect, &surface_);
+	surface->SetValue(new Value_SDL_Surface(surface_));
+	return new Value_Number(rtn);
 	'''
 
 SDL_UnlockTexture(texture as SDL_Texture_p):void
@@ -1072,9 +1096,8 @@ SDL_GetKeyboardState() = \
 	R'''
 	int numkeys;
 	const Uint8* rtn = SDL_GetKeyboardState(&numkeys);
-	RefPtr<Memory> pMemory(new MemorySloth(numkeys, const_cast<Uint8*>(rtn)));
-	RefPtr<Array> pArray(new Array(Array::ElemType::UInt8, pMemory.release(), DimSizes(numkeys)));
-	return new Value_Array(pArray.release());
+	RefPtr<Pointer> pPointer(new Pointer_Memory(new MemorySloth(numkeys, const_cast<Uint8*>(rtn))));
+	return new Value_Pointer(pPointer.release());
 	'''
 
 SDL_GetModState() as SDL_Keymod
