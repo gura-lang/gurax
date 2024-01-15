@@ -683,12 +683,14 @@ SDL_GetRenderTarget(renderer as SDL_Renderer_p) as SDL_Texture_p
 
 SDL_RenderSetLogicalSize(renderer as SDL_Renderer_p, w as int, h as int) as int
 
-SDL_RenderGetLogicalSize(renderer as SDL_Renderer_p) = \
+SDL_RenderGetLogicalSize(renderer as SDL_Renderer_p, &w:nilRef as int, &h:nilRef as int) = \
 	R'''
-	int w, h;
-	SDL_RenderGetLogicalSize(renderer, &w, &h);
-	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h));
-	'''
+	int w_, h_;
+	SDL_RenderGetLogicalSize(renderer, &w_, &h_);
+	w->SetValue(new Value_Number(w_));
+	h->SetValue(new Value_Number(h_));
+	return Value::nil();
+\	'''
 
 SDL_RenderSetIntegerScale(renderer as SDL_Renderer_p, enable as SDL_bool) as int
 
@@ -696,31 +698,35 @@ SDL_RenderGetIntegerScale(renderer as SDL_Renderer_p) as SDL_bool
 
 SDL_RenderSetViewport(renderer as SDL_Renderer_p, rect:nil as const_SDL_Rect_p) as int
 
-SDL_RenderGetViewport(renderer as SDL_Renderer_p) = \
+SDL_RenderGetViewport(renderer as SDL_Renderer_p, &rect:nilRef as SDL_Rect) = \
 	R'''
-	SDL_Rect rect;
-	SDL_RenderGetViewport(renderer, &rect);
-	return new Value_SDL_Rect(rect);
+	SDL_Rect rect_;
+	SDL_RenderGetViewport(renderer, &rect_);
+	rect->SetValue(new Value_SDL_Rect(rect_));
+	return Value::nil();
 	'''
 
 SDL_RenderSetClipRect(renderer as SDL_Renderer_p, rect:nil as const_SDL_Rect_p) as int
 
-SDL_RenderGetClipRect(renderer as SDL_Renderer_p) = \
+SDL_RenderGetClipRect(renderer as SDL_Renderer_p, &rect:nilRef as SDL_Rect) = \
 	R'''
-	SDL_Rect rect;
-	SDL_RenderGetClipRect(renderer, &rect);
-	return new Value_SDL_Rect(rect);
+	SDL_Rect rect_;
+	SDL_RenderGetClipRect(renderer, &rect_);
+	rect->SetValue(new Value_SDL_Rect(rect_));
+	return Value::nil();
 	'''
 
 SDL_RenderIsClipEnabled(renderer as SDL_Renderer_p) as SDL_bool
 
 SDL_RenderSetScale(renderer as SDL_Renderer_p, scaleX as float, scaleY as float) as int
 
-SDL_RenderGetScale(renderer as SDL_Renderer_p) = \
+SDL_RenderGetScale(renderer as SDL_Renderer_p, &scaleX:nilRef as float, &scaleY:nilRef as float) = \
 	R'''
-	float scaleX, scaleY;
-	SDL_RenderGetScale(renderer, &scaleX, &scaleY);
-	return Value_Tuple::Create(new Value_Number(scaleX), new Value_Number(scaleY));
+	float scaleX_, scaleY_;
+	SDL_RenderGetScale(renderer, &scaleX_, &scaleY_);
+	scaleX->SetValue(scaleX_);
+	scayeY->SetValue(scaleY_);
+	return Value::nil();
 	'''
 
 SDL_SetRenderDrawColor(renderer as SDL_Renderer_p, r as Uint8, g as Uint8, b as Uint8, a as Uint8) as int
