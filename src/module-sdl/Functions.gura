@@ -996,29 +996,32 @@ SDL_GetSurfaceColorMod(surface as SDL_Surface_p, &r:nilRef as Uint8, &g:nilRef a
 
 SDL_SetSurfaceAlphaMod(surface as SDL_Surface_p, alpha as Uint8) as int
 
-SDL_GetSurfaceAlphaMod(surface as SDL_Surface_p) = \
+SDL_GetSurfaceAlphaMod(surface as SDL_Surface_p, &alpha:nilRef as Uint8) as int = \
 	R'''
-	Uint8 alpha;
-	if (SDL_GetSurfaceAlphaMod(surface, &alpha) != 0) return Value::nil();
-	return new Value_Number(alpha);
+	Uint8 alpha_;
+	int rtn = SDL_GetSurfaceAlphaMod(surface, &alpha_);
+	alpha->SetValue(new Value_Number(alpha_));
+	return new Value_Number(rtn);
 	'''
 
 SDL_SetSurfaceBlendMode(surface as SDL_Surface_p, blendMode as SDL_BlendMode) as int
 
-SDL_GetSurfaceBlendMode(surface as SDL_Surface_p) = \
+SDL_GetSurfaceBlendMode(surface as SDL_Surface_p, &blendMode:nilRef as SDL_BlendMode) as int = \
 	R'''
-	SDL_BlendMode blendMode;
-	if (SDL_GetSurfaceBlendMode(surface, &blendMode) != 0) return Value::nil();
-	return new Value_Number(blendMode);
+	SDL_BlendMode blendMode_;
+	int rtn = SDL_GetSurfaceBlendMode(surface, &blendMode_);
+	blendMode->SetValue(new Value_Number(blendMode_));
+	return new Value_Number(rtn);
 	'''
 
 SDL_SetClipRect(surface as SDL_Surface_p, rect:nil as const_SDL_Rect_p) as SDL_bool
 
-SDL_GetClipRect(surface as SDL_Surface_p) = \
+SDL_GetClipRect(surface as SDL_Surface_p, &rect:nilRef as SDL_Rect):void = \
 	R'''
-	SDL_Rect rect;
-	SDL_GetClipRect(surface, &rect);
-	return new Value_SDL_Rect(rect);
+	SDL_Rect rect_;
+	SDL_GetClipRect(surface, &rect_);
+	rect->SetValue(new Value_SDL_Rect(rect_));
+	return Value::nil();
 	'''
 
 SDL_DuplicateSurface(surface as SDL_Surface_p) as SDL_Surface_p
@@ -1287,11 +1290,12 @@ SDL_JoystickGetProductVersion(joystick as SDL_Joystick_p) as Uint16
 
 SDL_JoystickGetType(joystick as SDL_Joystick_p) as SDL_JoystickType
 
-SDL_JoystickGetGUIDString(guid as SDL_JoystickGUID) = \
+SDL_JoystickGetGUIDString(guid as SDL_JoystickGUID, &szGUID:nilRef as String@gurax):void = \
 	R'''
-	char szGUID[64]; // requires at least 33 bytes
-	SDL_JoystickGetGUIDString(guid, szGUID, sizeof(szGUID));
-	return new Value_String(szGUID);
+	char szGUID_[64]; // requires at least 33 bytes
+	SDL_JoystickGetGUIDString(guid, szGUID_, sizeof(szGUID_));
+	szGUID->SetValue(new Value_String(szGUID_));
+	return Value::nil();
 	'''
 
 SDL_JoystickGetGUIDFromString(pchGUID as const_char_p) as SDL_JoystickGUID

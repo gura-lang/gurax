@@ -4099,11 +4099,12 @@ Gurax_ImplementFunctionEx(SDL_SetSurfaceAlphaMod_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetSurfaceAlphaMod(surface as SDL_Surface)
+// sdl.SDL_GetSurfaceAlphaMod(surface as SDL_Surface, &alpha:nilRef as Number)
 Gurax_DeclareFunctionAlias(SDL_GetSurfaceAlphaMod_gurax, "SDL_GetSurfaceAlphaMod")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("alpha", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_GetSurfaceAlphaMod_gurax, processor_gurax, argument_gurax)
@@ -4112,10 +4113,12 @@ Gurax_ImplementFunctionEx(SDL_GetSurfaceAlphaMod_gurax, processor_gurax, argumen
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_surface = args_gurax.Pick<Value_SDL_Surface>();
 	SDL_Surface* surface = value_surface.GetEntityPtr();
+	RefPtr<Referencer> alpha(args_gurax.PickReferencer().Reference());
 	// Function body
-	Uint8 alpha;
-	if (SDL_GetSurfaceAlphaMod(surface, &alpha) != 0) return Value::nil();
-	return new Value_Number(alpha);
+	Uint8 alpha_;
+	int rtn = SDL_GetSurfaceAlphaMod(surface, &alpha_);
+	alpha->SetValue(new Value_Number(alpha_));
+	return new Value_Number(rtn);
 }
 
 // sdl.SDL_SetSurfaceBlendMode(surface as SDL_Surface, blendMode as Number)
@@ -4138,11 +4141,12 @@ Gurax_ImplementFunctionEx(SDL_SetSurfaceBlendMode_gurax, processor_gurax, argume
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetSurfaceBlendMode(surface as SDL_Surface)
+// sdl.SDL_GetSurfaceBlendMode(surface as SDL_Surface, &blendMode:nilRef as Number)
 Gurax_DeclareFunctionAlias(SDL_GetSurfaceBlendMode_gurax, "SDL_GetSurfaceBlendMode")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("blendMode", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_GetSurfaceBlendMode_gurax, processor_gurax, argument_gurax)
@@ -4151,10 +4155,12 @@ Gurax_ImplementFunctionEx(SDL_GetSurfaceBlendMode_gurax, processor_gurax, argume
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_surface = args_gurax.Pick<Value_SDL_Surface>();
 	SDL_Surface* surface = value_surface.GetEntityPtr();
+	RefPtr<Referencer> blendMode(args_gurax.PickReferencer().Reference());
 	// Function body
-	SDL_BlendMode blendMode;
-	if (SDL_GetSurfaceBlendMode(surface, &blendMode) != 0) return Value::nil();
-	return new Value_Number(blendMode);
+	SDL_BlendMode blendMode_;
+	int rtn = SDL_GetSurfaceBlendMode(surface, &blendMode_);
+	blendMode->SetValue(new Value_Number(blendMode_));
+	return new Value_Number(rtn);
 }
 
 // sdl.SDL_SetClipRect(surface as SDL_Surface, rect:nil as SDL_Rect)
@@ -4177,11 +4183,12 @@ Gurax_ImplementFunctionEx(SDL_SetClipRect_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// sdl.SDL_GetClipRect(surface as SDL_Surface)
+// sdl.SDL_GetClipRect(surface as SDL_Surface, &rect:nilRef as SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_GetClipRect_gurax, "SDL_GetClipRect")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_GetClipRect_gurax, processor_gurax, argument_gurax)
@@ -4190,10 +4197,12 @@ Gurax_ImplementFunctionEx(SDL_GetClipRect_gurax, processor_gurax, argument_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_surface = args_gurax.Pick<Value_SDL_Surface>();
 	SDL_Surface* surface = value_surface.GetEntityPtr();
+	RefPtr<Referencer> rect(args_gurax.PickReferencer().Reference());
 	// Function body
-	SDL_Rect rect;
-	SDL_GetClipRect(surface, &rect);
-	return new Value_SDL_Rect(rect);
+	SDL_Rect rect_;
+	SDL_GetClipRect(surface, &rect_);
+	rect->SetValue(new Value_SDL_Rect(rect_));
+	return Value::nil();
 }
 
 // sdl.SDL_DuplicateSurface(surface as SDL_Surface)
@@ -5795,11 +5804,12 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetType_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_JoystickGetGUIDString(guid as SDL_JoystickGUID)
+// sdl.SDL_JoystickGetGUIDString(guid as SDL_JoystickGUID, &szGUID:nilRef as String)
 Gurax_DeclareFunctionAlias(SDL_JoystickGetGUIDString_gurax, "SDL_JoystickGetGUIDString")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("guid", VTYPE_SDL_JoystickGUID, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("szGUID", VTYPE_String, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_JoystickGetGUIDString_gurax, processor_gurax, argument_gurax)
@@ -5808,10 +5818,12 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetGUIDString_gurax, processor_gurax, argu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_guid = args_gurax.Pick<Value_SDL_JoystickGUID>();
 	SDL_JoystickGUID& guid = value_guid.GetEntity();
+	RefPtr<Referencer> szGUID(args_gurax.PickReferencer().Reference());
 	// Function body
-	char szGUID[64]; // requires at least 33 bytes
-	SDL_JoystickGetGUIDString(guid, szGUID, sizeof(szGUID));
-	return new Value_String(szGUID);
+	char szGUID_[64]; // requires at least 33 bytes
+	SDL_JoystickGetGUIDString(guid, szGUID_, sizeof(szGUID_));
+	szGUID->SetValue(new Value_String(szGUID_));
+	return Value::nil();
 }
 
 // sdl.SDL_JoystickGetGUIDFromString(pchGUID as String)
