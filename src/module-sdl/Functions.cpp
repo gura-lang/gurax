@@ -4051,11 +4051,14 @@ Gurax_ImplementFunctionEx(SDL_SetSurfaceColorMod_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetSurfaceColorMod(surface as SDL_Surface)
+// sdl.SDL_GetSurfaceColorMod(surface as SDL_Surface, &r:nilRef as Number, &g:nilRef as Number, &b:nilRef as Number)
 Gurax_DeclareFunctionAlias(SDL_GetSurfaceColorMod_gurax, "SDL_GetSurfaceColorMod")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("g", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("b", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_GetSurfaceColorMod_gurax, processor_gurax, argument_gurax)
@@ -4064,10 +4067,16 @@ Gurax_ImplementFunctionEx(SDL_GetSurfaceColorMod_gurax, processor_gurax, argumen
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_surface = args_gurax.Pick<Value_SDL_Surface>();
 	SDL_Surface* surface = value_surface.GetEntityPtr();
+	RefPtr<Referencer> r(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> g(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> b(args_gurax.PickReferencer().Reference());
 	// Function body
-	Uint8 r, g, b;
-	if (SDL_GetSurfaceColorMod(surface, &r, &g, &b) != 0) return Value::nil();
-	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b));
+	Uint8 r_, g_, b_;
+	int rtn = SDL_GetSurfaceColorMod(surface, &r_, &g_, &b_);
+	r->SetValue(new Value_Number(r_));
+	g->SetValue(new Value_Number(g_));
+	b->SetValue(new Value_Number(b_));
+	return new Value_Number(rtn);
 }
 
 // sdl.SDL_SetSurfaceAlphaMod(surface as SDL_Surface, alpha as Number)

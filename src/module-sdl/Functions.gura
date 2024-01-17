@@ -984,11 +984,14 @@ SDL_GetColorKey(surface as SDL_Surface_p) = \
 
 SDL_SetSurfaceColorMod(surface as SDL_Surface_p, r as Uint8, g as Uint8, b as Uint8) as int
 
-SDL_GetSurfaceColorMod(surface as SDL_Surface_p) = \
+SDL_GetSurfaceColorMod(surface as SDL_Surface_p, &r:nilRef as Uint8, &g:nilRef as Uint8, &b:nilRef as Uint8) = \
 	R'''
-	Uint8 r, g, b;
-	if (SDL_GetSurfaceColorMod(surface, &r, &g, &b) != 0) return Value::nil();
-	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b));
+	Uint8 r_, g_, b_;
+	int rtn = SDL_GetSurfaceColorMod(surface, &r_, &g_, &b_);
+	r->SetValue(new Value_Number(r_));
+	g->SetValue(new Value_Number(g_));
+	b->SetValue(new Value_Number(b_));
+	return new Value_Number(rtn);
 	'''
 
 SDL_SetSurfaceAlphaMod(surface as SDL_Surface_p, alpha as Uint8) as int
