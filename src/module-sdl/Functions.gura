@@ -129,6 +129,7 @@ r.DeclareType_Entity('SDL_JoystickGUID', 'SDL_JoystickGUID', 'SDL_JoystickGUID')
 r.DeclareType_Entity('SDL_Point', 'SDL_Point', 'SDL_Point')
 r.DeclareType_Entity('SDL_Rect', 'SDL_Rect', 'SDL_Rect')
 r.DeclareType_Entity('SDL_RendererInfo', 'SDL_RendererInfo', 'SDL_RendererInfo')
+r.DeclareType_Entity('SDL_SysWMinfo', 'SDL_SysWMinfo', 'SDL_SysWMinfo')
 
 r.DeclareType_EntityPtr('const_SDL_AudioSpec_p', 'const SDL_AudioSpec*', 'SDL_AudioSpec')
 r.DeclareType_EntityPtr('const_SDL_DisplayMode_p', 'const SDL_DisplayMode*', 'SDL_DisplayMode')
@@ -731,20 +732,25 @@ SDL_RenderGetScale(renderer as SDL_Renderer_p, &scaleX:nilRef as float, &scaleY:
 
 SDL_SetRenderDrawColor(renderer as SDL_Renderer_p, r as Uint8, g as Uint8, b as Uint8, a as Uint8) as int
 
-SDL_GetRenderDrawColor(renderer as SDL_Renderer_p) = \
+SDL_GetRenderDrawColor(renderer as SDL_Renderer_p, &r:nilRef as Uint8, &g:nilRef as Uint8, &b:nilRef as Uint8, &a:nilRef as Uint8) = \
 	R'''
-	Uint8 r, g, b, a;
-	if (SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a) != 0) return Value::nil();
-	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b), new Value_Number(a));
+	Uint8 r_, g_, b_, a_;
+	int rtn = SDL_GetRenderDrawColor(renderer, &r_, &g_, &b_, &a_);
+	r->SetValue(new Value_Number(r_));
+	g->SetValue(new Value_Number(g_));
+	b->SetValue(new Value_Number(b_));
+	a->SetValue(new Value_Number(a_));
+	return new Value_Number(rtn);
 	'''
 
 SDL_SetRenderDrawBlendMode(renderer as SDL_Renderer_p, blendMode as SDL_BlendMode) as int
 
-SDL_GetRenderDrawBlendMode(renderer as SDL_Renderer_p) = \
+SDL_GetRenderDrawBlendMode(renderer as SDL_Renderer_p, &blendMode:nilRef as SDL_BlendMode) = \
 	R'''
-	SDL_BlendMode blendMode;
-	if (SDL_GetRenderDrawBlendMode(renderer, &blendMode) != 0) return Value::nil();
-	return new Value_Number(blendMode);
+	SDL_BlendMode blendMode_;
+	int rtn = SDL_GetRenderDrawBlendMode(renderer, &blendMode_);
+	blendMode->SetValue(new Value_Number(blendMode_));
+	return new Value_Number(rtn);
 	'''
 
 SDL_RenderClear(renderer as SDL_Renderer_p) as int
@@ -872,18 +878,25 @@ SDL_MapRGB(format as const_SDL_PixelFormat_p, r as Uint8, g as Uint8, b as Uint8
 
 SDL_MapRGBA(format as const_SDL_PixelFormat_p, r as Uint8, g as Uint8, b as Uint8, a as Uint8) as Uint32
 
-SDL_GetRGB(pixel as Uint32, format as const_SDL_PixelFormat_p) = \
+SDL_GetRGB(pixel as Uint32, format as const_SDL_PixelFormat_p, &r:nilRef as Uint8, &g:nilRef as Uint8, &b:nilRef as Uint8):void = \
 	R'''
-	Uint8 r, g, b;
-	SDL_GetRGB(pixel, format, &r, &g, &b);
-	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b));
+	Uint8 r_, g_, b_;
+	SDL_GetRGB(pixel, format, &r_, &g_, &b_);
+	r->SetValue(new Value_Number(r_));
+	g->SetValue(new Value_Number(g_));
+	b->SetValue(new Value_Number(b_));
+	return Value::nil();
 	'''
 
-SDL_GetRGBA(pixel as Uint32, format as const_SDL_PixelFormat_p) = \
+SDL_GetRGBA(pixel as Uint32, format as const_SDL_PixelFormat_p, &r:nilRef as Uint8, &g:nilRef as Uint8, &b:nilRef as Uint8, &a:nilRef as Uint8):void = \
 	R'''
-	Uint8 r, g, b, a;
-	SDL_GetRGBA(pixel, format, &r, &g, &b, &a);
-	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b), new Value_Number(a));
+	Uint8 r_, g_, b_, a_;
+	SDL_GetRGBA(pixel, format, &r_, &g_, &b_, &a_);
+	r->SetValue(new Value_Number(r_));
+	g->SetValue(new Value_Number(g_));
+	b->SetValue(new Value_Number(b_));
+	a->SetValue(new Value_Number(a_));
+	return Value::nil();
 	'''
 
 //SDL_CalculateGammaRamp(gamma as float, ramp as Uint16_p):void
@@ -907,10 +920,18 @@ SDL_UnionRect(A as const_SDL_Rect_p, B as const_SDL_Rect_p) = \
 	'''
 //SDL_EnclosePoints(points as const_SDL_Point_p, count as int, clip as const_SDL_Rect_p, result as SDL_Rect_p) as SDL_bool
 
-SDL_IntersectRectAndLine(rect as const_SDL_Rect_p, X1 as int, Y1 as int, X2 as int, Y2 as int) = \
+SDL_IntersectRectAndLine(rect as const_SDL_Rect_p, &X1 as int, &Y1 as int, &X2 as int, &Y2 as int) = \
 	R'''
-	if (!SDL_IntersectRectAndLine(rect, &X1, &Y1, &X2, &Y2)) return Value::nil();
-	return Value_Tuple::Create(new Value_Number(X1), new Value_Number(Y1), new Value_Number(X2), new Value_Number(Y2));
+	int X1_ = Value_Number::GetNumber<int>(X1->GetValue());
+	int Y1_ = Value_Number::GetNumber<int>(Y1->GetValue());
+	int X2_ = Value_Number::GetNumber<int>(X1->GetValue());
+	int Y2_ = Value_Number::GetNumber<int>(Y2->GetValue());
+	int rtn = SDL_IntersectRectAndLine(rect, &X1_, &Y1_, &X2_, &Y2_);
+	X1->SetValue(new Value_Number(X1_));
+	Y1->SetValue(new Value_Number(Y1_));
+	X2->SetValue(new Value_Number(X1_));
+	Y2->SetValue(new Value_Number(X1_));
+	return new Value_Number(rtn);
 	'''
 
 //======== Surface Creation and Simple Drawing (SDL_surface.h) ========
@@ -1031,11 +1052,12 @@ SDL_GetYUVConversionModeForResolution(width as int, height as int) as SDL_YUV_CO
 
 //======== Platform-specific Window Management (SDL_syswm.h) ========
 
-SDL_GetWindowWMInfo(window as SDL_Window_p) = \
+SDL_GetWindowWMInfo(window as SDL_Window_p, &info:nilRef as SDL_SysWMinfo) = \
 	R'''
-	SDL_SysWMinfo info;
-	if (!SDL_GetWindowWMInfo(window, &info)) return Value::nil();
-	return new Value_SDL_SysWMinfo(info);
+	SDL_SysWMinfo info_;
+	int rtn = SDL_GetWindowWMInfo(window, &info_);
+	info->SetValue(new Value_SDL_SysWMinfo(info_));
+	return new Value_Number(rtn);
 	'''
 
 //======== Clipboard Handling (SDL_clipboard.h) ========
@@ -1066,7 +1088,7 @@ SDL_HasClipboardText() as SDL_bool
 
 //SDL_Vulkan_GetDrawableSize(window as SDL_Window_p) = \
 //	R'''
-//	int w, h;
+//	int W, h;
 //	SDL_Vulkan_GetDrawableSize(window, &w, &h);
 //	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h));
 //	'''
@@ -2200,16 +2222,16 @@ Mix_AllocateChannels(numchans as int) as int
 
 Mix_GetError() as const_char_p
 
-Mix_QuerySpec() = \
+Mix_QuerySpec(&frequency:nilRef as int, &format:nilRef as Uint16, &channels:nilRef as int) = \
 	R'''
-	int frequency;
-	Uint16 format;
-	int channels;
-	if (Mix_QuerySpec(&frequency, &format, &channels) == 0) {
-		return Value::nil();
-	}
-	return Value_Tuple::Create(new Value_Number(frequency),
-					new Value_Number(format), new Value_Number(channels));
+	int frequency_;
+	Uint16 format_;
+	int channels_;
+	int rtn = Mix_QuerySpec(&frequency_, &format_, &channels_);
+	frequency->SetValue(new Value_Number(frequency_));
+	format->SetValue(new Value_Number(format_));
+	channels->SetValue(new Value_Number(channels_));
+	return new Value_Number(rtn);
 	'''
 
 Mix_LoadWAV(file as const_char_p) as Mix_Chunk_p

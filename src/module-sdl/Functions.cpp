@@ -2641,11 +2641,15 @@ Gurax_ImplementFunctionEx(SDL_SetRenderDrawColor_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetRenderDrawColor(renderer as SDL_Renderer)
+// sdl.SDL_GetRenderDrawColor(renderer as SDL_Renderer, &r:nilRef as Number, &g:nilRef as Number, &b:nilRef as Number, &a:nilRef as Number)
 Gurax_DeclareFunctionAlias(SDL_GetRenderDrawColor_gurax, "SDL_GetRenderDrawColor")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("g", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("b", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("a", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_GetRenderDrawColor_gurax, processor_gurax, argument_gurax)
@@ -2654,10 +2658,18 @@ Gurax_ImplementFunctionEx(SDL_GetRenderDrawColor_gurax, processor_gurax, argumen
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
 	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
+	RefPtr<Referencer> r(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> g(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> b(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> a(args_gurax.PickReferencer().Reference());
 	// Function body
-	Uint8 r, g, b, a;
-	if (SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a) != 0) return Value::nil();
-	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b), new Value_Number(a));
+	Uint8 r_, g_, b_, a_;
+	int rtn = SDL_GetRenderDrawColor(renderer, &r_, &g_, &b_, &a_);
+	r->SetValue(new Value_Number(r_));
+	g->SetValue(new Value_Number(g_));
+	b->SetValue(new Value_Number(b_));
+	a->SetValue(new Value_Number(a_));
+	return new Value_Number(rtn);
 }
 
 // sdl.SDL_SetRenderDrawBlendMode(renderer as SDL_Renderer, blendMode as Number)
@@ -2680,11 +2692,12 @@ Gurax_ImplementFunctionEx(SDL_SetRenderDrawBlendMode_gurax, processor_gurax, arg
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetRenderDrawBlendMode(renderer as SDL_Renderer)
+// sdl.SDL_GetRenderDrawBlendMode(renderer as SDL_Renderer, &blendMode:nilRef as Number)
 Gurax_DeclareFunctionAlias(SDL_GetRenderDrawBlendMode_gurax, "SDL_GetRenderDrawBlendMode")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("blendMode", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_GetRenderDrawBlendMode_gurax, processor_gurax, argument_gurax)
@@ -2693,10 +2706,12 @@ Gurax_ImplementFunctionEx(SDL_GetRenderDrawBlendMode_gurax, processor_gurax, arg
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_renderer = args_gurax.Pick<Value_SDL_Renderer>();
 	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
+	RefPtr<Referencer> blendMode(args_gurax.PickReferencer().Reference());
 	// Function body
-	SDL_BlendMode blendMode;
-	if (SDL_GetRenderDrawBlendMode(renderer, &blendMode) != 0) return Value::nil();
-	return new Value_Number(blendMode);
+	SDL_BlendMode blendMode_;
+	int rtn = SDL_GetRenderDrawBlendMode(renderer, &blendMode_);
+	blendMode->SetValue(new Value_Number(blendMode_));
+	return new Value_Number(rtn);
 }
 
 // sdl.SDL_RenderClear(renderer as SDL_Renderer)
@@ -3471,12 +3486,15 @@ Gurax_ImplementFunctionEx(SDL_MapRGBA_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetRGB(pixel as Number, format as SDL_PixelFormat)
+// sdl.SDL_GetRGB(pixel as Number, format as SDL_PixelFormat, &r:nilRef as Number, &g:nilRef as Number, &b:nilRef as Number)
 Gurax_DeclareFunctionAlias(SDL_GetRGB_gurax, "SDL_GetRGB")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pixel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("format", VTYPE_SDL_PixelFormat, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("g", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("b", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_GetRGB_gurax, processor_gurax, argument_gurax)
@@ -3486,18 +3504,28 @@ Gurax_ImplementFunctionEx(SDL_GetRGB_gurax, processor_gurax, argument_gurax)
 	Uint32 pixel = args_gurax.PickNumber<Uint32>();
 	auto& value_format = args_gurax.Pick<Value_SDL_PixelFormat>();
 	const SDL_PixelFormat* format = value_format.GetEntityPtr();
+	RefPtr<Referencer> r(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> g(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> b(args_gurax.PickReferencer().Reference());
 	// Function body
-	Uint8 r, g, b;
-	SDL_GetRGB(pixel, format, &r, &g, &b);
-	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b));
+	Uint8 r_, g_, b_;
+	SDL_GetRGB(pixel, format, &r_, &g_, &b_);
+	r->SetValue(new Value_Number(r_));
+	g->SetValue(new Value_Number(g_));
+	b->SetValue(new Value_Number(b_));
+	return Value::nil();
 }
 
-// sdl.SDL_GetRGBA(pixel as Number, format as SDL_PixelFormat)
+// sdl.SDL_GetRGBA(pixel as Number, format as SDL_PixelFormat, &r:nilRef as Number, &g:nilRef as Number, &b:nilRef as Number, &a:nilRef as Number)
 Gurax_DeclareFunctionAlias(SDL_GetRGBA_gurax, "SDL_GetRGBA")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pixel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("format", VTYPE_SDL_PixelFormat, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("g", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("b", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("a", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_GetRGBA_gurax, processor_gurax, argument_gurax)
@@ -3507,10 +3535,18 @@ Gurax_ImplementFunctionEx(SDL_GetRGBA_gurax, processor_gurax, argument_gurax)
 	Uint32 pixel = args_gurax.PickNumber<Uint32>();
 	auto& value_format = args_gurax.Pick<Value_SDL_PixelFormat>();
 	const SDL_PixelFormat* format = value_format.GetEntityPtr();
+	RefPtr<Referencer> r(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> g(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> b(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> a(args_gurax.PickReferencer().Reference());
 	// Function body
-	Uint8 r, g, b, a;
-	SDL_GetRGBA(pixel, format, &r, &g, &b, &a);
-	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b), new Value_Number(a));
+	Uint8 r_, g_, b_, a_;
+	SDL_GetRGBA(pixel, format, &r_, &g_, &b_, &a_);
+	r->SetValue(new Value_Number(r_));
+	g->SetValue(new Value_Number(g_));
+	b->SetValue(new Value_Number(b_));
+	a->SetValue(new Value_Number(a_));
+	return Value::nil();
 }
 
 // sdl.SDL_HasIntersection(A as SDL_Rect, B as SDL_Rect)
@@ -3578,15 +3614,15 @@ Gurax_ImplementFunctionEx(SDL_UnionRect_gurax, processor_gurax, argument_gurax)
 	return new Value_SDL_Rect(result);
 }
 
-// sdl.SDL_IntersectRectAndLine(rect as SDL_Rect, X1 as Number, Y1 as Number, X2 as Number, Y2 as Number)
+// sdl.SDL_IntersectRectAndLine(rect as SDL_Rect, &X1 as Number, &Y1 as Number, &X2 as Number, &Y2 as Number)
 Gurax_DeclareFunctionAlias(SDL_IntersectRectAndLine_gurax, "SDL_IntersectRectAndLine")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("X1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("Y1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("X2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("Y2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("X1", VTYPE_Number, ArgOccur::Once, ArgFlag::Referencer);
+	DeclareArg("Y1", VTYPE_Number, ArgOccur::Once, ArgFlag::Referencer);
+	DeclareArg("X2", VTYPE_Number, ArgOccur::Once, ArgFlag::Referencer);
+	DeclareArg("Y2", VTYPE_Number, ArgOccur::Once, ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_IntersectRectAndLine_gurax, processor_gurax, argument_gurax)
@@ -3595,13 +3631,21 @@ Gurax_ImplementFunctionEx(SDL_IntersectRectAndLine_gurax, processor_gurax, argum
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_rect = args_gurax.Pick<Value_SDL_Rect>();
 	const SDL_Rect* rect = value_rect.GetEntityPtr();
-	int X1 = args_gurax.PickNumber<int>();
-	int Y1 = args_gurax.PickNumber<int>();
-	int X2 = args_gurax.PickNumber<int>();
-	int Y2 = args_gurax.PickNumber<int>();
+	RefPtr<Referencer> X1(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> Y1(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> X2(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> Y2(args_gurax.PickReferencer().Reference());
 	// Function body
-	if (!SDL_IntersectRectAndLine(rect, &X1, &Y1, &X2, &Y2)) return Value::nil();
-	return Value_Tuple::Create(new Value_Number(X1), new Value_Number(Y1), new Value_Number(X2), new Value_Number(Y2));
+	int X1_ = Value_Number::GetNumber<int>(X1->GetValue());
+	int Y1_ = Value_Number::GetNumber<int>(Y1->GetValue());
+	int X2_ = Value_Number::GetNumber<int>(X1->GetValue());
+	int Y2_ = Value_Number::GetNumber<int>(Y2->GetValue());
+	int rtn = SDL_IntersectRectAndLine(rect, &X1_, &Y1_, &X2_, &Y2_);
+	X1->SetValue(new Value_Number(X1_));
+	Y1->SetValue(new Value_Number(Y1_));
+	X2->SetValue(new Value_Number(X1_));
+	Y2->SetValue(new Value_Number(X1_));
+	return new Value_Number(rtn);
 }
 
 // sdl.SDL_CreateRGBSurface(flags as Number, width as Number, height as Number, depth as Number, Rmask as Number, Gmask as Number, Bmask as Number, Amask as Number)
@@ -4514,11 +4558,12 @@ Gurax_ImplementFunctionEx(SDL_GetYUVConversionModeForResolution_gurax, processor
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetWindowWMInfo(window as SDL_Window)
+// sdl.SDL_GetWindowWMInfo(window as SDL_Window, &info:nilRef as SDL_SysWMinfo)
 Gurax_DeclareFunctionAlias(SDL_GetWindowWMInfo_gurax, "SDL_GetWindowWMInfo")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("info", VTYPE_SDL_SysWMinfo, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_GetWindowWMInfo_gurax, processor_gurax, argument_gurax)
@@ -4527,10 +4572,12 @@ Gurax_ImplementFunctionEx(SDL_GetWindowWMInfo_gurax, processor_gurax, argument_g
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
 	SDL_Window* window = value_window.GetEntityPtr();
+	RefPtr<Referencer> info(args_gurax.PickReferencer().Reference());
 	// Function body
-	SDL_SysWMinfo info;
-	if (!SDL_GetWindowWMInfo(window, &info)) return Value::nil();
-	return new Value_SDL_SysWMinfo(info);
+	SDL_SysWMinfo info_;
+	int rtn = SDL_GetWindowWMInfo(window, &info_);
+	info->SetValue(new Value_SDL_SysWMinfo(info_));
+	return new Value_Number(rtn);
 }
 
 // sdl.SDL_SetClipboardText(text as String)
@@ -9547,23 +9594,31 @@ Gurax_ImplementFunctionEx(Mix_GetError_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_String(rtn);
 }
 
-// sdl.Mix_QuerySpec()
+// sdl.Mix_QuerySpec(&frequency:nilRef as Number, &format:nilRef as Number, &channels:nilRef as Number)
 Gurax_DeclareFunctionAlias(Mix_QuerySpec_gurax, "Mix_QuerySpec")
 {
 	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("frequency", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("channels", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(Mix_QuerySpec_gurax, processor_gurax, argument_gurax)
 {
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Referencer> frequency(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> format(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> channels(args_gurax.PickReferencer().Reference());
 	// Function body
-	int frequency;
-	Uint16 format;
-	int channels;
-	if (Mix_QuerySpec(&frequency, &format, &channels) == 0) {
-		return Value::nil();
-	}
-	return Value_Tuple::Create(new Value_Number(frequency),
-					new Value_Number(format), new Value_Number(channels));
+	int frequency_;
+	Uint16 format_;
+	int channels_;
+	int rtn = Mix_QuerySpec(&frequency_, &format_, &channels_);
+	frequency->SetValue(new Value_Number(frequency_));
+	format->SetValue(new Value_Number(format_));
+	channels->SetValue(new Value_Number(channels_));
+	return new Value_Number(rtn);
 }
 
 // sdl.Mix_LoadWAV(file as String)
