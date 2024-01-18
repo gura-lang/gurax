@@ -122,3 +122,4 @@ target_link_libraries(sdl.gurd PRIVATE guraxcore
 # Install
 #-------------------------------------------------------------------------------
 install(TARGETS sdl.gurd RUNTIME DESTINATION module/site)
+install(PROGRAMS script/sdl.gura DESTINATION module/site)

@@ -79,6 +79,4 @@ target_link_libraries(cairo.gurd PRIVATE guraxcore
 # Install
 #-------------------------------------------------------------------------------
 install(TARGETS cairo.gurd RUNTIME DESTINATION module/site)
-install(PROGRAMS
-	script/cairo.gura
-	DESTINATION module/site)
+install(PROGRAMS script/cairo.gura DESTINATION module/site)
