@@ -6,8 +6,8 @@ if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 	sys.Exit()
 }
 repeat (SDL_GetNumVideoDisplays()) {|i|
-	dispMode = SDL_GetCurrentDisplayMode(i)
-	if (!dispMode) {
+	dispMode = nil
+	if (SDL_GetCurrentDisplayMode(i, &dispMode) != 0) {
 		// In case of error...
 		Printf('Display #%d: %s\n', SDL_GetError());
 	} else {
