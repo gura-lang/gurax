@@ -297,18 +297,23 @@ Gurax_ImplementFunctionEx(SDL_ResetAssertionReport_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_GetVersion()
+// sdl.SDL_GetVersion(&ver:nilRef as SDL_version)
 Gurax_DeclareFunctionAlias(SDL_GetVersion_gurax, "SDL_GetVersion")
 {
 	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("ver", VTYPE_SDL_version, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_GetVersion_gurax, processor_gurax, argument_gurax)
 {
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	RefPtr<Referencer> ver(args_gurax.PickReferencer().Reference());
 	// Function body
-	SDL_version ver;
-	SDL_GetVersion(&ver);
-	return new Value_SDL_version(ver);
+	SDL_version ver_;
+	SDL_GetVersion(&ver_);
+	ver->SetValue(new Value_SDL_version(ver_));
+	return Value::nil();
 }
 
 // sdl.SDL_GetRevision()
@@ -3570,12 +3575,13 @@ Gurax_ImplementFunctionEx(SDL_HasIntersection_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// sdl.SDL_IntersectRect(A as SDL_Rect, B as SDL_Rect)
+// sdl.SDL_IntersectRect(A as SDL_Rect, B as SDL_Rect, &result:nilRef as SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_IntersectRect_gurax, "SDL_IntersectRect")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("A", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("B", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("result", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_IntersectRect_gurax, processor_gurax, argument_gurax)
@@ -3586,18 +3592,21 @@ Gurax_ImplementFunctionEx(SDL_IntersectRect_gurax, processor_gurax, argument_gur
 	const SDL_Rect* A = value_A.GetEntityPtr();
 	auto& value_B = args_gurax.Pick<Value_SDL_Rect>();
 	const SDL_Rect* B = value_B.GetEntityPtr();
+	RefPtr<Referencer> result(args_gurax.PickReferencer().Reference());
 	// Function body
-	SDL_Rect result;
-	if (!SDL_IntersectRect(A, B, &result)) return Value::nil();
-	return new Value_SDL_Rect(result);
+	SDL_Rect result_;
+	SDL_bool rtn = SDL_IntersectRect(A, B, &result_);
+	result->SetValue(new Value_SDL_Rect(result_));
+	return new Value_Bool(rtn);
 }
 
-// sdl.SDL_UnionRect(A as SDL_Rect, B as SDL_Rect)
+// sdl.SDL_UnionRect(A as SDL_Rect, B as SDL_Rect, &result:nilRef as SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_UnionRect_gurax, "SDL_UnionRect")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("A", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("B", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("result", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_UnionRect_gurax, processor_gurax, argument_gurax)
@@ -3608,10 +3617,12 @@ Gurax_ImplementFunctionEx(SDL_UnionRect_gurax, processor_gurax, argument_gurax)
 	const SDL_Rect* A = value_A.GetEntityPtr();
 	auto& value_B = args_gurax.Pick<Value_SDL_Rect>();
 	const SDL_Rect* B = value_B.GetEntityPtr();
+	RefPtr<Referencer> result(args_gurax.PickReferencer().Reference());
 	// Function body
-	SDL_Rect result;
-	SDL_UnionRect(A, B, &result);
-	return new Value_SDL_Rect(result);
+	SDL_Rect result_;
+	SDL_UnionRect(A, B, &result_);
+	result->SetValue(new Value_SDL_Rect(result_));
+	return Value::nil();
 }
 
 // sdl.SDL_IntersectRectAndLine(rect as SDL_Rect, &X1 as Number, &Y1 as Number, &X2 as Number, &Y2 as Number)
@@ -4008,11 +4019,12 @@ Gurax_ImplementFunctionEx(SDL_HasColorKey_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// sdl.SDL_GetColorKey(surface as SDL_Surface)
+// sdl.SDL_GetColorKey(surface as SDL_Surface, &key:nilRef as Number)
 Gurax_DeclareFunctionAlias(SDL_GetColorKey_gurax, "SDL_GetColorKey")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("key", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_GetColorKey_gurax, processor_gurax, argument_gurax)
@@ -4021,10 +4033,12 @@ Gurax_ImplementFunctionEx(SDL_GetColorKey_gurax, processor_gurax, argument_gurax
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_surface = args_gurax.Pick<Value_SDL_Surface>();
 	SDL_Surface* surface = value_surface.GetEntityPtr();
+	RefPtr<Referencer> key(args_gurax.PickReferencer().Reference());
 	// Function body
-	Uint32 key;
-	if (SDL_GetColorKey(surface, &key) != 0) return Value::nil();
-	return new Value_Number(key);
+	Uint32 key_;
+	int rtn = SDL_GetColorKey(surface, &key_);
+	key->SetValue(new Value_Number(key_));
+	return new Value_Number(rtn);
 }
 
 // sdl.SDL_SetSurfaceColorMod(surface as SDL_Surface, r as Number, g as Number, b as Number)

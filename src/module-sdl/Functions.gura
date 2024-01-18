@@ -130,6 +130,7 @@ r.DeclareType_Entity('SDL_Point', 'SDL_Point', 'SDL_Point')
 r.DeclareType_Entity('SDL_Rect', 'SDL_Rect', 'SDL_Rect')
 r.DeclareType_Entity('SDL_RendererInfo', 'SDL_RendererInfo', 'SDL_RendererInfo')
 r.DeclareType_Entity('SDL_SysWMinfo', 'SDL_SysWMinfo', 'SDL_SysWMinfo')
+r.DeclareType_Entity('SDL_version', 'SDL_version', 'SDL_version')
 
 r.DeclareType_EntityPtr('const_SDL_AudioSpec_p', 'const SDL_AudioSpec*', 'SDL_AudioSpec')
 r.DeclareType_EntityPtr('const_SDL_DisplayMode_p', 'const SDL_DisplayMode*', 'SDL_DisplayMode')
@@ -262,11 +263,12 @@ SDL_ResetAssertionReport():void
 
 //======== Querying SDL Version (SDL_version.h) ========
 
-SDL_GetVersion() = \
+SDL_GetVersion(&ver:nilRef as SDL_version) = \
 	R'''
-	SDL_version ver;
-	SDL_GetVersion(&ver);
-	return new Value_SDL_version(ver);
+	SDL_version ver_;
+	SDL_GetVersion(&ver_);
+	ver->SetValue(new Value_SDL_version(ver_));
+	return Value::nil();
 	'''
 
 SDL_GetRevision() as const_char_p
@@ -905,19 +907,22 @@ SDL_GetRGBA(pixel as Uint32, format as const_SDL_PixelFormat_p, &r:nilRef as Uin
 
 SDL_HasIntersection(A as const_SDL_Rect_p, B as const_SDL_Rect_p) as SDL_bool
 
-SDL_IntersectRect(A as const_SDL_Rect_p, B as const_SDL_Rect_p) = \
+SDL_IntersectRect(A as const_SDL_Rect_p, B as const_SDL_Rect_p, &result:nilRef as SDL_Rect) as SDL_bool = \
 	R'''
-	SDL_Rect result;
-	if (!SDL_IntersectRect(A, B, &result)) return Value::nil();
-	return new Value_SDL_Rect(result);
+	SDL_Rect result_;
+	SDL_bool rtn = SDL_IntersectRect(A, B, &result_);
+	result->SetValue(new Value_SDL_Rect(result_));
+	return new Value_Bool(rtn);
 	'''
 
-SDL_UnionRect(A as const_SDL_Rect_p, B as const_SDL_Rect_p) = \
+SDL_UnionRect(A as const_SDL_Rect_p, B as const_SDL_Rect_p, &result:nilRef as SDL_Rect):void = \
 	R'''
-	SDL_Rect result;
-	SDL_UnionRect(A, B, &result);
-	return new Value_SDL_Rect(result);
+	SDL_Rect result_;
+	SDL_UnionRect(A, B, &result_);
+	result->SetValue(new Value_SDL_Rect(result_));
+	return Value::nil();
 	'''
+
 //SDL_EnclosePoints(points as const_SDL_Point_p, count as int, clip as const_SDL_Rect_p, result as SDL_Rect_p) as SDL_bool
 
 SDL_IntersectRectAndLine(rect as const_SDL_Rect_p, &X1 as int, &Y1 as int, &X2 as int, &Y2 as int) = \
@@ -975,11 +980,12 @@ SDL_SetColorKey(surface as SDL_Surface_p, flag as bool, key as Uint32) as int
 
 SDL_HasColorKey(surface as SDL_Surface_p) as SDL_bool
 
-SDL_GetColorKey(surface as SDL_Surface_p) = \
+SDL_GetColorKey(surface as SDL_Surface_p, &key:nilRef as Uint32) as int = \
 	R'''
-	Uint32 key;
-	if (SDL_GetColorKey(surface, &key) != 0) return Value::nil();
-	return new Value_Number(key);
+	Uint32 key_;
+	int rtn = SDL_GetColorKey(surface, &key_);
+	key->SetValue(new Value_Number(key_));
+	return new Value_Number(rtn);
 	'''
 
 SDL_SetSurfaceColorMod(surface as SDL_Surface_p, r as Uint8, g as Uint8, b as Uint8) as int
