@@ -10,6 +10,50 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Iterator_Rewindable
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_Rewindable : public Iterator {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Iterator_Rewindable");
+private:
+	RefPtr<Iterator> _pIteratorSrc;
+public:
+	Iterator_Rewindable(Iterator* pIteratorSrc, Int cnt) : _pIteratorSrc(pIteratorSrc) {}
+public:
+	Iterator& GetIteratorSrc() { return *_pIteratorSrc; }
+	const Iterator& GetIteratorSrc() const { return *_pIteratorSrc; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return GetIteratorSrc().GetFlags(); }
+	virtual size_t GetLength() const override { return GetIteratorSrc().GetLength(); }
+	virtual void DoRewind() override;
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// Iterator_Rewindable
+//------------------------------------------------------------------------------
+void Iterator_Rewindable::DoRewind()
+{
+}
+
+Value* Iterator_Rewindable::DoNextValue()
+{
+	return Value::nil();
+}
+
+String Iterator_Rewindable::ToString(const StringStyle& ss) const
+{
+	return String().Format("Rewindable");
+}
+
+
+
+
+
+//------------------------------------------------------------------------------
 // Iterator_Empty
 //------------------------------------------------------------------------------
 String Iterator_Empty::ToString(const StringStyle& ss) const
