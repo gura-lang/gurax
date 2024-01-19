@@ -1218,6 +1218,30 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
+//------------------------------------------------------------------------------
+// Iterator_Rewindable
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_Rewindable : public Iterator {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Iterator_Rewindable");
+private:
+	RefPtr<Iterator> _pIteratorSrc;
+	RefPtr<ValueOwner> _pValueOwner;
+public:
+	Iterator_Rewindable(Iterator* pIteratorSrc, Int cnt) : _pIteratorSrc(pIteratorSrc), _pValueOwner(new ValueOwner()) {}
+public:
+	Iterator& GetIteratorSrc() { return *_pIteratorSrc; }
+	const Iterator& GetIteratorSrc() const { return *_pIteratorSrc; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return GetIteratorSrc().GetFlags() | Flag::Rewindable; }
+	virtual size_t GetLength() const override { return GetIteratorSrc().GetLength(); }
+	virtual void DoRewind() override {}
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
 }
 
 #endif

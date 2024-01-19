@@ -10,50 +10,6 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Iterator_Rewindable
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Iterator_Rewindable : public Iterator {
-public:
-	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Iterator_Rewindable");
-private:
-	RefPtr<Iterator> _pIteratorSrc;
-public:
-	Iterator_Rewindable(Iterator* pIteratorSrc, Int cnt) : _pIteratorSrc(pIteratorSrc) {}
-public:
-	Iterator& GetIteratorSrc() { return *_pIteratorSrc; }
-	const Iterator& GetIteratorSrc() const { return *_pIteratorSrc; }
-public:
-	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override { return GetIteratorSrc().GetFlags(); }
-	virtual size_t GetLength() const override { return GetIteratorSrc().GetLength(); }
-	virtual void DoRewind() override;
-	virtual Value* DoNextValue() override;
-	virtual String ToString(const StringStyle& ss) const override;
-};
-
-//------------------------------------------------------------------------------
-// Iterator_Rewindable
-//------------------------------------------------------------------------------
-void Iterator_Rewindable::DoRewind()
-{
-}
-
-Value* Iterator_Rewindable::DoNextValue()
-{
-	return Value::nil();
-}
-
-String Iterator_Rewindable::ToString(const StringStyle& ss) const
-{
-	return String().Format("Rewindable");
-}
-
-
-
-
-
-//------------------------------------------------------------------------------
 // Iterator_Empty
 //------------------------------------------------------------------------------
 String Iterator_Empty::ToString(const StringStyle& ss) const
@@ -1218,9 +1174,7 @@ Value* Iterator_FilterWithIter::DoNextValue()
 
 String Iterator_FilterWithIter::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("FilterWithIter");
-	return str;
+	return String().Format("FilterWithIter");
 }
 
 //------------------------------------------------------------------------------
@@ -1246,9 +1200,7 @@ Value* Iterator_SkipNil::DoNextValue()
 
 String Iterator_SkipNil::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("SkipNil");
-	return str;
+	return String().Format("SkipNil");
 }
 
 //------------------------------------------------------------------------------
@@ -1274,9 +1226,7 @@ Value* Iterator_SkipFalse::DoNextValue()
 
 String Iterator_SkipFalse::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("SkipFalse");
-	return str;
+	return String().Format("SkipFalse");
 }
 
 //------------------------------------------------------------------------------
@@ -1338,9 +1288,24 @@ Value* Iterator_Symbol::DoNextValue()
 
 String Iterator_Symbol::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("Symbol");
-	return str;
+	return String().Format("Symbol");
+}
+
+//------------------------------------------------------------------------------
+// Iterator_Rewindable
+//------------------------------------------------------------------------------
+Value* Iterator_Rewindable::DoNextValue()
+{
+	if (_idxCur < _pValueOwner->size()) return _pValueOwner->at(_idxCur)->GetValue().Reference();
+	RefPtr<Value> pValue(GetIteratorSrc().NextValue());
+	if (!pValue) return nullptr;
+	_pValueOwner->Add(pValue.Reference());
+	return pValue.release();
+}
+
+String Iterator_Rewindable::ToString(const StringStyle& ss) const
+{
+	return String().Format("Rewindable");
 }
 
 }
