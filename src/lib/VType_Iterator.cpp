@@ -114,6 +114,28 @@ Gurax_ImplementMethod(Iterator, IsRewindable)
 	return new Value_Bool(iteratorThis.IsRewindable());
 }
 
+// Iterator#MakeRewindable() {block?}
+Gurax_DeclareMethod(Iterator, MakeRewindable)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
+	AddHelp(Gurax_Symbol(ja), u8R"""(
+)""");
+}
+
+Gurax_ImplementMethod(Iterator, MakeRewindable)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Iterator& iteratorThis = valueThis.GetIterator();
+	// Function body
+	if (!iteratorThis.MustBeFinite()) return Value::nil();
+	RefPtr<Iterator> pIterator(new Iterator_Rewindable(iteratorThis.Reference()));
+	return argument.ReturnValue(processor, new Value_Iterator(pIterator.release()));
+}
+
 // Iterator#NextValue()
 Gurax_DeclareMethod(Iterator, NextValue)
 {
@@ -180,7 +202,6 @@ Gurax_ImplementMethod(Iterator, Skip)
 	size_t n = args.PickNumberNonNeg<size_t>();
 	// Function body
 	if (iterThis.Skip(n)) return Value::nil();
-
 	return Value::nil();
 }
 
@@ -1731,6 +1752,7 @@ void VType_Iterator::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Iterator, IsInfinite));
 	Assign(Gurax_CreateMethod(Iterator, IsLenDetermined));
 	Assign(Gurax_CreateMethod(Iterator, IsRewindable));
+	Assign(Gurax_CreateMethod(Iterator, MakeRewindable));
 	Assign(Gurax_CreateMethod(Iterator, NextValue));
 	Assign(Gurax_CreateMethod(Iterator, Rewind));
 	Assign(Gurax_CreateMethod(Iterator, Skip));

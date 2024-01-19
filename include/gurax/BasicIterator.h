@@ -1229,7 +1229,7 @@ private:
 	RefPtr<Iterator> _pIteratorSrc;
 	RefPtr<ValueOwner> _pValueOwner;
 public:
-	Iterator_Rewindable(Iterator* pIteratorSrc, Int cnt) : _pIteratorSrc(pIteratorSrc), _pValueOwner(new ValueOwner()) {}
+	Iterator_Rewindable(Iterator* pIteratorSrc) : _pIteratorSrc(pIteratorSrc), _pValueOwner(new ValueOwner()) {}
 public:
 	Iterator& GetIteratorSrc() { return *_pIteratorSrc; }
 	const Iterator& GetIteratorSrc() const { return *_pIteratorSrc; }
