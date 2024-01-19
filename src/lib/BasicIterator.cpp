@@ -1305,7 +1305,7 @@ Value* Iterator_Rewindable::DoNextValue()
 
 String Iterator_Rewindable::ToString(const StringStyle& ss) const
 {
-	return String().Format("Rewindable");
+	return String().Format("Rewindable(%s)", GetIteratorSrc().ToString(ss).c_str());
 }
 
 }
