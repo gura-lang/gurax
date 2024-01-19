@@ -113,6 +113,7 @@ public:
 	Value* Pop() { Value* pValue = back(); pop_back(); return pValue; }
 	void Remove(size_t offset);
 	void Remove(size_t offset, size_t cnt);
+	void Replace(size_t offset, Value* pValue);
 	void Shrink(size_t cnt);
 };
 

@@ -45,6 +45,20 @@ TestCase('Iterator#IsFinite() and Iterator#IsInfinite()') {
 	Tester(`(1..).IsInfinite())
 }
 
+TestCase('Iterator#MakeRewindable()') {
+	iter = Random(0).IntSeq(10, 20).MakeRewindable()
+	Println(iter.Join(','))
+	Println(iter.Rewind().Join(','))
+	Println(iter.Rewind().Join(','))
+	iter = Random(0).IntSeq(10, 20).MakeRewindable()
+	Println((repeat(8):iter {iter.NextValue()}).Join(','))
+	Println((repeat(8):iter {iter.NextValue()}).Join(','))
+	iter.Rewind()
+	Println((repeat(5):iter {iter.NextValue()}).Join(','))
+	iter.Rewind()
+	Println((repeat(20):iter {iter.NextValue()}).Join(','))
+}
+
 TestCase('Iterator#NextValue()') {
 	x = 1..10
 	while (a = x.NextValue()) {

@@ -218,6 +218,13 @@ void ValueStack::Remove(size_t offset, size_t cnt)
 	erase(ppValueBegin, ppValueEnd);
 }
 
+void ValueStack::Replace(size_t offset, Value* pValue)
+{
+	auto ppValue = rbegin() + offset;
+	Value::Delete(*ppValue);
+	*ppValue = pValue;
+}
+
 void ValueStack::Shrink(size_t cnt)
 {
 	if (cnt >= size()) return;
