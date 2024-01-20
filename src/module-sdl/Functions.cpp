@@ -652,12 +652,12 @@ Gurax_ImplementFunctionEx(SDL_SetWindowDisplayMode_gurax, processor_gurax, argum
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetWindowDisplayMode(window as SDL_Window, mode as SDL_DisplayMode)
+// sdl.SDL_GetWindowDisplayMode(window as SDL_Window, &mode:nilRef as SDL_DisplayMode)
 Gurax_DeclareFunctionAlias(SDL_GetWindowDisplayMode_gurax, "SDL_GetWindowDisplayMode")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("mode", VTYPE_SDL_DisplayMode, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("mode", VTYPE_SDL_DisplayMode, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_GetWindowDisplayMode_gurax, processor_gurax, argument_gurax)
@@ -666,11 +666,12 @@ Gurax_ImplementFunctionEx(SDL_GetWindowDisplayMode_gurax, processor_gurax, argum
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_window = args_gurax.Pick<Value_SDL_Window>();
 	SDL_Window* window = value_window.GetEntityPtr();
-	auto& value_mode = args_gurax.Pick<Value_SDL_DisplayMode>();
-	SDL_DisplayMode* mode = value_mode.GetEntityPtr();
+	RefPtr<Referencer> mode(args_gurax.PickReferencer().Reference());
 	// Function body
-	int rtn = SDL_GetWindowDisplayMode(window, mode);
-	return new Gurax::Value_Number(rtn);
+	SDL_DisplayMode mode_ = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
+	int rtn = SDL_GetWindowDisplayMode(window, &mode_);
+	mode->SetValue(new Value_SDL_DisplayMode(mode_));
+	return new Value_Number(rtn);
 }
 
 // sdl.SDL_GetWindowPixelFormat(window as SDL_Window)

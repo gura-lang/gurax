@@ -351,7 +351,13 @@ SDL_GetWindowDisplayIndex(window as SDL_Window_p) as int
 
 SDL_SetWindowDisplayMode(window as SDL_Window_p, mode as const_SDL_DisplayMode_p) as int
 
-SDL_GetWindowDisplayMode(window as SDL_Window_p, mode as SDL_DisplayMode_p) as int
+SDL_GetWindowDisplayMode(window as SDL_Window_p, &mode:nilRef as SDL_DisplayMode) as int = \
+	R'''
+	SDL_DisplayMode mode_ = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
+	int rtn = SDL_GetWindowDisplayMode(window, &mode_);
+	mode->SetValue(new Value_SDL_DisplayMode(mode_));
+	return new Value_Number(rtn);
+	'''
 
 SDL_GetWindowPixelFormat(window as SDL_Window_p) as Uint32
 
