@@ -193,9 +193,9 @@ public:
 		const PUnit* pPUnitBranchDest = nullptr;
 		SetFactory(new PUnitFactory_EvalIterator(offset, raiseFlag, pPUnitBranchDest, exprSrc.Reference()));
 	}
-	void Add_CheckIterator_Rewindable(size_t offset, size_t cnt, const Expr& exprSrc) {
+	void Add_PrepareForCross(size_t offset, size_t cnt, const Expr& exprSrc) {
 		const PUnit* pPUnitBranchDest = nullptr;
-		SetFactory(new PUnitFactory_CheckIterator_Rewindable(offset, cnt, exprSrc.Reference()));
+		SetFactory(new PUnitFactory_PrepareForCross(offset, cnt, exprSrc.Reference()));
 	}
 	void Add_CrossEach(size_t offset, DeclArgOwner* pDeclArgOwner, const Expr& exprSrc) {
 		const PUnit* pPUnitBranchDest = nullptr;

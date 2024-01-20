@@ -432,7 +432,7 @@ void ImplementStatement_for_cross(Composer& composer, Expr_Caller& exprCaller, b
 	}
 	size_t nIterators = pDeclArgOwner->size();
 	if (crossFlag) {
-		composer.Add_CheckIterator_Rewindable(0, nIterators, exprCaller);
+		composer.Add_PrepareForCross(0, nIterators, exprCaller);
 	}
 	bool iterFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(iter));
 	bool xiterFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(xiter));

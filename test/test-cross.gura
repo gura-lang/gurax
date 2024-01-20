@@ -150,8 +150,12 @@ TestCase('Create iterator') {
 	Tester(`n3)
 }
 
-TestCase('Reject Unrewindable') {
-	Tester(`cross (a in Random.IntSeq(10)) {})
+TestCase('Convert Unrewindable') {
+	cross (a in Range(5), b in Random(3).IntSeq(10, 5)) {
+		Printf('%d-%d\n', a, b)
+	}
+	x = cross (a in Range(5), b in Random(3).IntSeq(10, 5)):iter {Format('%d-%d', a, b)}
+	Println(x.Join(','))
 }
 
 TestCase('Cross iterator') {

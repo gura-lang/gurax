@@ -2,7 +2,7 @@
 cross (v in tbl) {}
   ##0  Lookup(`tbl)
   ##1  GenIterator()
-  ##2  CheckIterator_Rewindable(offsetToIterator=0,nIterators=1)
+  ##2  PrepareForCross(offsetToIterator=0,nIterators=1)
   ##3  PushFrame<Block>()
   ##4  Value(<Nil>)
   ##5  ForEach(offsetToIterator=1,branchDest=##11, decls=[v])
@@ -16,7 +16,7 @@ cross (v in tbl) {}
 cross (v in tbl):list {}
   ##0  Lookup(`tbl)
   ##1  GenIterator()
-  ##2  CheckIterator_Rewindable(offsetToIterator=0,nIterators=1)
+  ##2  PrepareForCross(offsetToIterator=0,nIterators=1)
   ##3  PushFrame<Block>()
   ##4  CreateList()
   ##5  ForEach(offsetToIterator=1,branchDest=##13, decls=[v])
@@ -32,7 +32,7 @@ cross (v in tbl):list {}
 cross (v in tbl):xlist {}
   ##0  Lookup(`tbl)
   ##1  GenIterator()
-  ##2  CheckIterator_Rewindable(offsetToIterator=0,nIterators=1)
+  ##2  PrepareForCross(offsetToIterator=0,nIterators=1)
   ##3  PushFrame<Block>()
   ##4  CreateList()
   ##5  ForEach(offsetToIterator=1,branchDest=##13, decls=[v])
@@ -52,7 +52,7 @@ cross (v1 in tbl1, v2 in tbl2, v3 in tbl3) {}
   ##3  GenIterator()
   ##4  Lookup(`tbl3)
   ##5  GenIterator()
-  ##6  CheckIterator_Rewindable(offsetToIterator=0,nIterators=1)
+  ##6  PrepareForCross(offsetToIterator=0,nIterators=1)
   ##7  PushFrame<Block>()
   ##8  Value(<Nil>)
   ##9  ForEach(offsetToIterator=1,branchDest=##15, decls=[v1,v2,v3])
@@ -66,7 +66,7 @@ cross (v1 in tbl1, v2 in tbl2, v3 in tbl3) {}
 cross (v in tbl) {|n|}
   ##0  Lookup(`tbl)
   ##1  GenIterator()
-  ##2  CheckIterator_Rewindable(offsetToIterator=0,nIterators=1)
+  ##2  PrepareForCross(offsetToIterator=0,nIterators=1)
   ##3  PushFrame<Block>()
   ##4  GenIterator_Counter()
   ##5  Value(<Nil>)
@@ -83,7 +83,7 @@ cross (v in tbl) {|n|}
 cross (v in tbl):list {|n|}
   ##0  Lookup(`tbl)
   ##1  GenIterator()
-  ##2  CheckIterator_Rewindable(offsetToIterator=0,nIterators=1)
+  ##2  PrepareForCross(offsetToIterator=0,nIterators=1)
   ##3  PushFrame<Block>()
   ##4  GenIterator_Counter()
   ##5  CreateList()
@@ -102,7 +102,7 @@ cross (v in tbl):list {|n|}
 cross (v in tbl):xlist {|n|}
   ##0  Lookup(`tbl)
   ##1  GenIterator()
-  ##2  CheckIterator_Rewindable(offsetToIterator=0,nIterators=1)
+  ##2  PrepareForCross(offsetToIterator=0,nIterators=1)
   ##3  PushFrame<Block>()
   ##4  GenIterator_Counter()
   ##5  CreateList()
@@ -125,7 +125,7 @@ cross (v1 in tbl1, v2 in tbl2, v3 in tbl3) {|n|}
   ##3  GenIterator()
   ##4  Lookup(`tbl3)
   ##5  GenIterator()
-  ##6  CheckIterator_Rewindable(offsetToIterator=0,nIterators=1)
+  ##6  PrepareForCross(offsetToIterator=0,nIterators=1)
   ##7  PushFrame<Block>()
   ##8  GenIterator_Counter()
   ##9  Value(<Nil>)
@@ -142,7 +142,7 @@ cross (v1 in tbl1, v2 in tbl2, v3 in tbl3) {|n|}
 cross (v in tbl) {1}
   ##0  Lookup(`tbl)
   ##1  GenIterator()
-  ##2  CheckIterator_Rewindable(offsetToIterator=0,nIterators=1)
+  ##2  PrepareForCross(offsetToIterator=0,nIterators=1)
   ##3  PushFrame<Block>()
   ##4  Value(<Nil>)
   ##5  ForEach(offsetToIterator=1,branchDest=##11, decls=[v])
@@ -156,7 +156,7 @@ cross (v in tbl) {1}
 cross (v in tbl):list {1}
   ##0  Lookup(`tbl)
   ##1  GenIterator()
-  ##2  CheckIterator_Rewindable(offsetToIterator=0,nIterators=1)
+  ##2  PrepareForCross(offsetToIterator=0,nIterators=1)
   ##3  PushFrame<Block>()
   ##4  CreateList()
   ##5  ForEach(offsetToIterator=1,branchDest=##13, decls=[v])
@@ -172,7 +172,7 @@ cross (v in tbl):list {1}
 cross (v in tbl):xlist {1}
   ##0  Lookup(`tbl)
   ##1  GenIterator()
-  ##2  CheckIterator_Rewindable(offsetToIterator=0,nIterators=1)
+  ##2  PrepareForCross(offsetToIterator=0,nIterators=1)
   ##3  PushFrame<Block>()
   ##4  CreateList()
   ##5  ForEach(offsetToIterator=1,branchDest=##13, decls=[v])
@@ -192,7 +192,7 @@ cross (v1 in tbl1, v2 in tbl2, v3 in tbl3) {1}
   ##3  GenIterator()
   ##4  Lookup(`tbl3)
   ##5  GenIterator()
-  ##6  CheckIterator_Rewindable(offsetToIterator=0,nIterators=1)
+  ##6  PrepareForCross(offsetToIterator=0,nIterators=1)
   ##7  PushFrame<Block>()
   ##8  Value(<Nil>)
   ##9  ForEach(offsetToIterator=1,branchDest=##15, decls=[v1,v2,v3])
@@ -206,7 +206,7 @@ cross (v1 in tbl1, v2 in tbl2, v3 in tbl3) {1}
 cross (v in tbl) {|n| 1}
   ##0  Lookup(`tbl)
   ##1  GenIterator()
-  ##2  CheckIterator_Rewindable(offsetToIterator=0,nIterators=1)
+  ##2  PrepareForCross(offsetToIterator=0,nIterators=1)
   ##3  PushFrame<Block>()
   ##4  GenIterator_Counter()
   ##5  Value(<Nil>)
@@ -223,7 +223,7 @@ cross (v in tbl) {|n| 1}
 cross (v in tbl):list {|n| 1}
   ##0  Lookup(`tbl)
   ##1  GenIterator()
-  ##2  CheckIterator_Rewindable(offsetToIterator=0,nIterators=1)
+  ##2  PrepareForCross(offsetToIterator=0,nIterators=1)
   ##3  PushFrame<Block>()
   ##4  GenIterator_Counter()
   ##5  CreateList()
@@ -242,7 +242,7 @@ cross (v in tbl):list {|n| 1}
 cross (v in tbl):xlist {|n| 1}
   ##0  Lookup(`tbl)
   ##1  GenIterator()
-  ##2  CheckIterator_Rewindable(offsetToIterator=0,nIterators=1)
+  ##2  PrepareForCross(offsetToIterator=0,nIterators=1)
   ##3  PushFrame<Block>()
   ##4  GenIterator_Counter()
   ##5  CreateList()
@@ -265,7 +265,7 @@ cross (v1 in tbl1, v2 in tbl2, v3 in tbl3) {|n| 1}
   ##3  GenIterator()
   ##4  Lookup(`tbl3)
   ##5  GenIterator()
-  ##6  CheckIterator_Rewindable(offsetToIterator=0,nIterators=1)
+  ##6  PrepareForCross(offsetToIterator=0,nIterators=1)
   ##7  PushFrame<Block>()
   ##8  GenIterator_Counter()
   ##9  Value(<Nil>)
@@ -282,7 +282,7 @@ cross (v1 in tbl1, v2 in tbl2, v3 in tbl3) {|n| 1}
 cross (v in tbl) {break, 1}
   ##0  Lookup(`tbl)
   ##1  GenIterator()
-  ##2  CheckIterator_Rewindable(offsetToIterator=0,nIterators=1)
+  ##2  PrepareForCross(offsetToIterator=0,nIterators=1)
   ##3  PushFrame<Block>()
   ##4  Value(<Nil>)
   ##5  ForEach(offsetToIterator=1,branchDest=##13, decls=[v])
@@ -298,7 +298,7 @@ cross (v in tbl) {break, 1}
 cross (v in tbl):list {break, 1}
   ##0  Lookup(`tbl)
   ##1  GenIterator()
-  ##2  CheckIterator_Rewindable(offsetToIterator=0,nIterators=1)
+  ##2  PrepareForCross(offsetToIterator=0,nIterators=1)
   ##3  PushFrame<Block>()
   ##4  CreateList()
   ##5  ForEach(offsetToIterator=1,branchDest=##15, decls=[v])
@@ -406,8 +406,33 @@ i .. symbol 'i' is not found
 n1 .. symbol 'n1' is not found
 n2 .. symbol 'n2' is not found
 n3 .. symbol 'n3' is not found
-======== Reject Unrewindable ========
-cross (a in Random.IntSeq(10)) {} .. iterator is not rewindable
+======== Convert Unrewindable ========
+0-0
+0-8
+0-1
+0-5
+0-4
+1-0
+1-8
+1-1
+1-5
+1-4
+2-0
+2-8
+2-1
+2-5
+2-4
+3-0
+3-8
+3-1
+3-5
+3-4
+4-0
+4-8
+4-1
+4-5
+4-4
+0-0,0-8,0-1,0-5,0-4,1-0,1-8,1-1,1-5,1-4,2-0,2-8,2-1,2-5,2-4,3-0,3-8,3-1,3-5,3-4,4-0,4-8,4-1,4-5,4-4
 ======== Cross iterator ========
 (1, 'a', 'A')
 (1, 'a', 'B')

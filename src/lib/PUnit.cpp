@@ -848,39 +848,37 @@ PUnit* PUnitFactory_EvalIterator::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
-// PUnit_CheckIterator_Rewindable
+// PUnit_PrepareForCross
 // Stack View: [Iterator1..n ..] -> [Iterator1..n ..] (continue)
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
-void PUnit_CheckIterator_Rewindable<discardValueFlag>::Exec(Processor& processor) const
+void PUnit_PrepareForCross<discardValueFlag>::Exec(Processor& processor) const
 {
 	size_t offset = GetOffset();
 	for (size_t i = 0; i < _nIterators; i++, offset++) {
 		Iterator& iterator = Value_Iterator::GetIterator(processor.PeekValue(offset));
-		if (!iterator.IsRewindable()) {
-			Error::Issue(ErrorType::IteratorError, "iterator is not rewindable");
-			processor.ErrorDone();
-			return;
+		if (!iterator.IsRewindable() && iterator.IsFinite()) {
+			processor.ReplaceValue(offset, new Value_Iterator(new Iterator_Rewindable(iterator.Reference())));
 		}
 	}
 	processor.SetPUnitCur(_GetPUnitCont());
 }
 
 template<bool discardValueFlag>
-String PUnit_CheckIterator_Rewindable<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+String PUnit_PrepareForCross<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("CheckIterator_Rewindable(offsetToIterator=%zu,nIterators=%zu)", GetOffset(), _nIterators);
+	str.Format("PrepareForCross(offsetToIterator=%zu,nIterators=%zu)", GetOffset(), _nIterators);
 	AppendInfoToString(str, ss);
 	return str;
 }
 
-PUnit* PUnitFactory_CheckIterator_Rewindable::Create(bool discardValueFlag)
+PUnit* PUnitFactory_PrepareForCross::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_CheckIterator_Rewindable<true>(_offset, _nIterators, _pExprSrc.Reference());
+		_pPUnitCreated = new PUnit_PrepareForCross<true>(_offset, _nIterators, _pExprSrc.Reference());
 	} else {
-		_pPUnitCreated = new PUnit_CheckIterator_Rewindable<false>(_offset, _nIterators, _pExprSrc.Reference());
+		_pPUnitCreated = new PUnit_PrepareForCross<false>(_offset, _nIterators, _pExprSrc.Reference());
 	}
 	return _pPUnitCreated;
 }

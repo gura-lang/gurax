@@ -906,10 +906,10 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_CheckIterator_Rewindable
+// PUnit_PrepareForCross
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
-class GURAX_DLLDECLARE PUnit_CheckIterator_Rewindable : public PUnit {
+class GURAX_DLLDECLARE PUnit_PrepareForCross : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
@@ -918,7 +918,7 @@ private:
 	bool _nIterators;
 public:
 	// Constructor
-	PUnit_CheckIterator_Rewindable(size_t offset, size_t nIterators, Expr* pExprSrc) :
+	PUnit_PrepareForCross(size_t offset, size_t nIterators, Expr* pExprSrc) :
 		PUnit(pExprSrc), _offset(offset), _nIterators(nIterators) {}
 public:
 	size_t GetOffset() const { return _offset; }
@@ -934,17 +934,17 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class GURAX_DLLDECLARE PUnitFactory_CheckIterator_Rewindable : public PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory_PrepareForCross : public PUnitFactory {
 public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_CheckIterator_Rewindable");
+	Gurax_MemoryPoolAllocator("PUnitFactory_PrepareForCross");
 private:
 	size_t _offset;
 	bool _nIterators;
 public:
-	PUnitFactory_CheckIterator_Rewindable(size_t offset, bool nIterators, Expr* pExprSrc) :
+	PUnitFactory_PrepareForCross(size_t offset, bool nIterators, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _offset(offset), _nIterators(nIterators) {}
 	virtual size_t GetPUnitSize() const override {
-		return sizeof(PUnit_CheckIterator_Rewindable<false>);
+		return sizeof(PUnit_PrepareForCross<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
