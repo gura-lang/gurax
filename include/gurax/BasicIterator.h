@@ -19,9 +19,7 @@ public:
 	Iterator_Empty() {}
 public:
 	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override {
-		return Flag::Finite | Flag::LenDetermined | Flag::Rewindable;
-	}
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined | Flag::Rewindable; }
 	virtual size_t GetLength() const override { return 0; }
 	virtual Value* DoNextValue() override { return nullptr; }
 	virtual String ToString(const StringStyle& ss) const override;
@@ -57,9 +55,7 @@ public:
 	Iterator_ConstN(Value* pValue, size_t num) : _pValue(pValue) , _num(num), _idx(0) {}
 public:
 	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override {
-		return Flag::Finite | Flag::LenDetermined | Flag::Rewindable;
-	}
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined | Flag::Rewindable; }
 	virtual size_t GetLength() const override { return _num; }
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
@@ -98,9 +94,7 @@ public:
 	Iterator_Counter() : Iterator_Counter(0, 1) {}
 public:
 	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override {
-		return Flag::Infinite | Flag::LenUndetermined | Flag::Rewindable;
-	}
+	virtual Flags GetFlags() const override { return Flag::Infinite | Flag::LenUndetermined | Flag::Rewindable; }
 	virtual size_t GetLength() const override { return -1; }
 	virtual void DoRewind() override { _idx = _idxBegin; }
 	virtual Value* DoNextValue() override;
@@ -211,9 +205,7 @@ public:
 	Iterator_Range(int n) : Iterator_Range(0, n, 1) {}
 public:
 	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override {
-		return Flag::Finite | Flag::LenDetermined | Flag::Rewindable;
-	}
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined | Flag::Rewindable; }
 	virtual size_t GetLength() const override { return (_idxEnd - _idxBegin) / _idxStep; }
 	virtual void DoRewind() override { _idx = _idxBegin; }
 	virtual Value* DoNextValue() override;
@@ -444,9 +436,7 @@ public:
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override {
-		return GetFiniteFlag()?
-			(Flag::Finite | Flag::LenDetermined) :
-			(Flag::Infinite | Flag::LenUndetermined);
+		return GetFiniteFlag()? (Flag::Finite | Flag::LenDetermined) : (Flag::Infinite | Flag::LenUndetermined);
 	}
 	virtual size_t GetLength() const override { return _cnt; }
 	virtual Value* DoNextValue() override;
@@ -897,10 +887,7 @@ public:
 	Argument& GetArgument() { return *_pArgument; }
 public:
 	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override {
-		//return GetIteratorSrc().GetFlags(Flag::Finite) | Flag::LenUndetermined;
-		return Flag::Finite | Flag::LenUndetermined;
-	}
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenUndetermined; }
 	virtual size_t GetLength() const override { return -1; }
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
@@ -926,10 +913,7 @@ public:
 	const Iterator& GetIteratorSrc() const { return *_pIteratorSrc; }
 public:
 	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override {
-		//return GetIteratorSrc().GetFlags(Flag::Finite) | Flag::LenUndetermined;
-		return Flag::Finite | Flag::LenUndetermined;
-	}
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenUndetermined; }
 	virtual size_t GetLength() const override { return -1; }
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
@@ -959,10 +943,7 @@ public:
 	Argument& GetArgument() { return *_pArgument; }
 public:
 	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override {
-		//return GetIteratorSrc().GetFlags(Flag::Finite) | Flag::LenUndetermined;
-		return Flag::Finite | Flag::LenUndetermined;
-	}
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenUndetermined; }
 	virtual size_t GetLength() const override { return -1; }
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
@@ -987,10 +968,7 @@ public:
 	const Iterator& GetIteratorSrc() const { return *_pIteratorSrc; }
 public:
 	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override {
-		//return GetIteratorSrc().GetFlags(Flag::Finite) | Flag::LenUndetermined;
-		return Flag::Finite | Flag::LenUndetermined;
-	}
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenUndetermined; }
 	virtual size_t GetLength() const override { return -1; }
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
