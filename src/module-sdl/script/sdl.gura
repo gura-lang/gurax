@@ -1,4 +1,286 @@
 #!/usr/bin/env gurax
 import(sdl):binary {*}
 
+SDL_Window.GetDisplayIndex() = SDL_GetWindowDisplayIndex(this)
 
+SDL_Window.SetDisplayMode() = SDL_SetWindowDisplayMode(this, mode as const_SDL_DisplayMode_p)
+
+SDL_Window.GetDisplayMode(&mode:nilRef as SDL_DisplayMode) = SDL_GetWindowDisplayMode(this, mode)
+
+SDL_Window.GetPixelFormat() = SDL_GetWindowPixelFormat(this)
+
+SDL_Window.GetID() = SDL_GetWindowID(this)
+
+SDL_Window.GetFlags() = SDL_GetWindowFlags(this)
+
+SDL_Window.SetTitle(title as String) = SDL_SetWindowTitle(this, title)
+
+SDL_Window.GetTitle() = SDL_GetWindowTitle(this)
+
+SDL_Window.SetIcon(icon as SDL_Surface) = SDL_SetWindowIcon(this, icon)
+
+//SDL_Window.SetData() = SDL_SetWindowData(this, name as const_char_p, userdata as void_p)
+
+//SDL_Window.GetData() = SDL_GetWindowData(this, name as const_char_p)
+
+SDL_Window.SetPosition(x as Number, y as Number) = SDL_SetWindowPosition(this, x, y)
+
+SDL_Window.GetPosition(&x:nilRef as Number, &y:nilRef as Number) = SDL_GetWindowPosition(this, x, y)
+
+SDL_Window.SetSize(w as Number, h as Number) = SDL_SetWindowSize(this, w, h)
+
+SDL_Window.GetSize(&w:nilRef as Number, &h:nilRef as Number) = SDL_GetWindowSize(this, w, h)
+
+SDL_Window.GetBordersSize(&top:nilRef as Number, &left:nilRef as Number, &bottom:nilRef as Number, &right:nilRef as Number) = SDL_GetWindowBordersSize(this, top, left, bottom, right)
+
+SDL_Window.SetMinimumSize(min_w as Number, min_h as Number) = SDL_SetWindowMinimumSize(this, min_w, min_h)
+
+SDL_Window.GetMinimumSize(&w:nilRef as Number, &h:nilRef as Number) = SDL_GetWindowMinimumSize(this, w, h)
+
+SDL_Window.SetMaximumSize(max_w as Number, max_h as Number) = SDL_SetWindowMaximumSize(this, max_w, max_h)
+
+SDL_Window.GetMaximumSize(&w:nilRef as Number, &h:nilRef as Number) = SDL_GetWindowMaximumSize(this, w, h)
+
+SDL_Window.SetBordered(bordered as Bool) = SDL_SetWindowBordered(this, bordered)
+
+SDL_Window.SetResizable(resizable as SDL_bool) = SDL_SetWindowResizable(this, resizable)
+
+SDL_Window.Show() = SDL_ShowWindow(this)
+
+SDL_Window.Hide() = SDL_HideWindow(this)
+
+SDL_Window.Raise() = SDL_RaiseWindow(this)
+
+SDL_Window.Maximize() = SDL_MaximizeWindow(this)
+
+SDL_Window.Minimize() = SDL_MinimizeWindow(this)
+
+SDL_Window.Restore() = SDL_RestoreWindow(this)
+
+SDL_Window.SetFullscreen(flags as Number) = SDL_SetWindowFullscreen(this, flags)
+
+SDL_Window.GetSurface() = SDL_GetWindowSurface(this)
+
+SDL_Window.UpdateSurface() = SDL_UpdateWindowSurface(this)
+
+SDL_Window.UpdateSurfaceRects(rects[] as SDL_Rect) = SDL_UpdateWindowSurfaceRects(this, rects)
+
+SDL_Window.SetGrab(grabbed as Bool) = SDL_SetWindowGrab(this, grabbed)
+
+SDL_Window.GetGrab() = SDL_GetWindowGrab(this)
+
+SDL_Window.SetBrightness(brightness as Number) = SDL_SetWindowBrightness(this)
+
+SDL_Window.GetBrightness() = SDL_GetWindowBrightness(this)
+
+SDL_Window.SetOpacity(opacity as Number) = SDL_SetWindowOpacity(this, opacity)
+
+SDL_Window.GetOpacity(&out_opacity:nilRef as Number) = SDL_GetWindowOpacity(this, out_opacity)
+
+SDL_Window.SetInputFocus() = SDL_SetWindowInputFocus(this)
+
+//SDL_Window.SetGammaRamp() = SDL_SetWindowGammaRamp(this, red as const_Uint16_p, green as const_Uint16_p, blue as const_Uint16_p)
+
+//SDL_Window.GetGammaRamp() = SDL_GetWindowGammaRamp(this, red as Uint16_p, green as Uint16_p, blue as Uint16_p)
+
+//SDL_Window.SetHitTest() = SDL_SetWindowHitTest(this, callback as SDL_HitTest, callback_data as void_p)
+
+SDL_Window.GL_CreateContext() = SDL_GL_CreateContext(this)
+
+SDL_Window.GL_MakeCurrent(context as SDL_GLContext) = SDL_GL_MakeCurrent(this, context)
+
+SDL_Window.GL_GetDrawableSize(&w:nilRef as Number, &h:nilRef as Number) = SDL_GL_GetDrawableSize(this, w, h)
+
+SDL_Window.GL_Swap() = SDL_GL_SwapWindow(this)
+
+SDL_Window.CreateRenderer(index as Number, flags as Number) = SDL_CreateRenderer(this, index, flags)
+
+SDL_Window.GetRenderer() = SDL_GetRenderer(this)
+
+SDL_Window.GetWMInfo(&info:nilRef as SDL_SysWMinfo) = SDL_GetWindowWMInfo(this, info)
+
+//SDL_Window.Vulkan_GetInstanceExtensions() = SDL_Vulkan_GetInstanceExtensions(this, pCount as unsigned_int_p, pNames as const_char_pp)
+
+//SDL_Window.Vulkan_CreateSurface() = SDL_Vulkan_CreateSurface(this, instance as VkInstance, surface as VkSurfaceKHR_p)
+
+//SDL_Window.Vulkan_GetDrawableSize() = SDL_Vulkan_GetDrawableSize(this)
+
+SDL_Window.IsScreenKeyboardShown() = SDL_IsScreenKeyboardShown(this)
+
+SDL_Window.WarpMouse(x as Number, y as Number) = SDL_WarpMouseInWindow(this, x, y)
+
+//SDL_Window.iPhoneSetAnimationCallback() = SDL_iPhoneSetAnimationCallback(this, interval as int, *:void_callback_void, callbackParam as void_p)
+
+SDL_Texture.Query(&format:nilRef as Number, &access:nilRef as Number, &w:nilRef as Number, &h:nilRef as Number) = SDL_QueryTexture(this, format, access, w, h)
+
+SDL_Texture.SetColorMod(r as Number, g as Number, b as Number) = SDL_SetTextureColorMod(this, r, g, b)
+
+SDL_Texture.GetColorMod(&r:nilRef as Number, &g:nilRef as Number, &b:nilRef as Number) = SDL_GetTextureColorMod(this, r, g, b)
+
+SDL_Texture.SetAlphaMod(alpha as Number) = SDL_SetTextureAlphaMod(this, alpha)
+
+SDL_Texture.GetAlphaMod(&alpha:nilRef as Number) = SDL_GetTextureAlphaMod(this, alpha)
+
+SDL_Texture.SetBlendMode(blendMode as Number) = SDL_SetTextureBlendMode(this, blendMode)
+
+SDL_Texture.GetBlendMode(&blendMode:nilRef as Number) = SDL_GetTextureBlendMode(this, blendMode)
+
+SDL_Texture.SetScaleMode(scaleMode as Number) = SDL_SetTextureScaleMode(this, scaleMode)
+
+SDL_Texture.GetScaleMode(&scaleMode:nilRef as Number) = SDL_GetTextureScaleMode(this, scaleMode)
+
+SDL_Texture.Update(rect:nil as SDL_Rect, pixels as Pointer, pitch as Number) = SDL_UpdateTexture(this, rect, pixels, pitch)
+
+SDL_Texture.UpdateYUV(rect:nil as SDL_Rect, Yplane as Pointer, Ypitch as Number, Uplane as Pointer, Upitch as Number, Vplane as Pointer, Vpitch as Number) = SDL_UpdateYUVTexture(this, rect, Yplane, Ypitch, Uplane, Upitch, Vplane, Vpitch)
+
+SDL_Texture.Lock(rect:nil as SDL_Rect, &pixels:nilRef as Pointer, &pitch:nilRef as Number) = SDL_LockTexture(this, rect, pixels, pitch)
+
+SDL_Texture.LockToSurface(rect:nil as SDL_Rect, &surface:nilRef as SDL_Surface) = SDL_LockTextureToSurface(this, rect, surface)
+
+SDL_Texture.Unlock() = SDL_UnlockTexture(this)
+
+//SDL_Texture.GL_Bind() = SDL_GL_BindTexture(this, texw as float_p, texh as float_p)
+
+SDL_Texture.GL_Unbind() = SDL_GL_UnbindTexture(this)
+
+SDL_Renderer.CreateTexture(format as Number, access as Number, w as Number, h as Number) = SDL_CreateTexture(this, format, access, w, h)
+
+SDL_Renderer.CreateTextureFromSurface(surface as SDL_Surface) = SDL_CreateTextureFromSurface(this, surface)
+
+SDL_Renderer.TargetSupported() = SDL_RenderTargetSupported(this)
+
+SDL_Renderer.SetTarget(texture as SDL_Texture) = SDL_SetRenderTarget(this, texture)
+
+SDL_Renderer.GetTarget() = SDL_GetRenderTarget(this)
+
+SDL_Renderer.SetLogicalSize(w as Number, h as Number) = SDL_RenderSetLogicalSize(this, w, h)
+
+SDL_Renderer.GetLogicalSize(&w:nilRef as Number, &h:nilRef as Number) = SDL_RenderGetLogicalSize(this, w, h)
+
+SDL_Renderer.SetIntegerScale(enable as Bool) = SDL_RenderSetIntegerScale(this, enable)
+
+SDL_Renderer.GetIntegerScale() = SDL_RenderGetIntegerScale(this)
+
+SDL_Renderer.SetViewport(rect:nil as SDL_Rect) = SDL_RenderSetViewport(this, rect)
+
+SDL_Renderer.GetViewport(&rect:nilRef as SDL_Rect) = SDL_RenderGetViewport(this, rect)
+
+SDL_Renderer.SetClipRect(rect:nil as SDL_Rect) = SDL_RenderSetClipRect(this, rect)
+
+SDL_Renderer.GetClipRect(&rect:nilRef as SDL_Rect) = SDL_RenderGetClipRect(this, rect)
+
+SDL_Renderer.IsClipEnabled() = SDL_RenderIsClipEnabled(this)
+
+SDL_Renderer.SetScale(scaldX as Number, scaleY as Number) = SDL_RenderSetScale(this, scaleX, scaleY)
+
+SDL_Renderer.GetScale(&scaleX:nilRef as Number, &scaleY:nilRef as Number) = SDL_RenderGetScale(this, scaleX, scaleY)
+
+SDL_Renderer.SetDrawColor(r as Number, g as Number, b as Number, a as Number) = SDL_SetRenderDrawColor(this, r, g, b, a)
+
+SDL_Renderer.GetDrawColor(&r:nilRef as Number, &g:nilRef as Number, &b:nilRef as Number, &a:nilRef as Number) = SDL_GetRenderDrawColor(this, r, g, b, a)
+
+SDL_Renderer.SetDrawBlendMode(blendMode as Number) = SDL_SetRenderDrawBlendMode(this, blendMode)
+
+SDL_Renderer.GetDrawBlendMode(&blendMode:nilRef as Number) = SDL_GetRenderDrawBlendMode(this, blendMode)
+
+SDL_Renderer.Clear() = SDL_RenderClear(this)
+
+SDL_Renderer.DrawPoint(x as Number, y as Number) = SDL_RenderDrawPoint(this, x, y)
+
+SDL_Renderer.DrawPoints(points[] as SDL_Point) = SDL_RenderDrawPoints(this, points)
+
+SDL_Renderer.DrawLine(x1 as Number, y1 as Number, x2 as Number, y2 as Number) = SDL_RenderDrawLine(this, x1, y1, x2, y2)
+
+SDL_Renderer.DrawLines(points[] as SDL_Point) = SDL_RenderDrawLines(this, points)
+
+SDL_Renderer.DrawRect(rect:nil as SDL_Rect) = SDL_RenderDrawRect(this, rect)
+
+SDL_Renderer.DrawRects(rects[] as SDL_Rect) = SDL_RenderDrawRects(this, rects)
+
+SDL_Renderer.FillRect(rect:nil as SDL_Rect) = SDL_RenderFillRect(this, rect)
+
+SDL_Renderer.FillRects(rects[] as SDL_Rect) = SDL_RenderFillRects(this, rects)
+
+SDL_Renderer.Copy(texture as SDL_Texture, srcrect:nil as SDL_Rect, dstrect:nil as SDL_Rect) = SDL_RenderCopy(this, texture, srcrect, dstrect)
+
+SDL_Renderer.CopyEx(texture as SDL_Texture, srcrect:nil as SDL_Rect, dstrect:nil as SDL_Rect, angle as Number, center:nil as SDL_Point, flip as Number) = SDL_RenderCopyEx(this, texture, srcrect, dstrect, angle, center, flip)
+
+SDL_Renderer.DrawPointF(x as Number, y as Number) = SDL_RenderDrawPointF(this, x, y)
+
+//SDL_Renderer.DrawPointsF(points as SDL_FPoint, count as Number) = SDL_RenderDrawPointsF(this, points, count)
+
+SDL_Renderer.DrawLineF(x1 as Number, y1 as Number, x2 as Number, y2 as Number) = SDL_RenderDrawLineF(this, x1, y1, x2, y2)
+
+SDL_Renderer.DrawLinesF(points[] as SDL_FPoint) = SDL_RenderDrawLinesF(this, points)
+
+SDL_Renderer.DrawRectF(rect as SDL_FRect) = SDL_RenderDrawRectF(this, rect)
+
+SDL_Renderer.DrawRectsF(rects[] as SDL_FRect) = SDL_RenderDrawRectsF(this, rects)
+
+SDL_Renderer.FillRectF(rect as SDL_FRect) = SDL_RenderFillRectF(this, rect)
+
+SDL_Renderer.FillRectsF(rects[] as SDL_FRect) = SDL_RenderFillRectsF(this, rects)
+
+SDL_Renderer.CopyF(texture as SDL_Texture, srcrect:nil as SDL_Rect, dstrect as SDL_FRect) = SDL_RenderCopyF(this, texture, srcrect, dstrect)
+
+//SDL_Renderer.CopyExF() = SDL_RenderCopyExF(this, texture as SDL_Texture_p, srcrect:nil as const_SDL_Rect_p, dstrect as const_SDL_FRect_p, angle as const_double, center as const_SDL_FPoint_p, flip as const_SDL_RendererFlip)
+
+SDL_Renderer.ReadPixels(rect:nil as SDL_Rect, format as Number, pixels as Pointer, pitch as Number) = SDL_RenderReadPixels(this, rect, format, pixels, pitch)
+
+SDL_Renderer.Present() = SDL_RenderPresent(this)
+
+//SDL_Renderer.Destroy() = SDL_DestroyRenderer(this)
+
+SDL_Renderer.Flush() = SDL_RenderFlush(this)
+
+//SDL_Renderer.GetMetalLayer() = SDL_RenderGetMetalLayer(this)
+
+//SDL_Renderer.GetMetalCommandEncoder() = SDL_RenderGetMetalCommandEncoder(this)
+
+SDL_Surface.CreateSoftwareRenderer() = SDL_CreateSoftwareRenderer(this)
+
+SDL_Surface.SetSurfacePalette(palette as SDL_Palette) = SDL_SetSurfacePalette(this, palette)
+
+SDL_Surface.LockSurface() = SDL_LockSurface(this)
+
+SDL_Surface.UnlockSurface() = SDL_UnlockSurface(this)
+
+SDL_Surface.SaveBMP(file as String) = SDL_SaveBMP(this, file)
+
+SDL_Surface.SaveBMP_RW(dst as SDL_RWops, freedst as Bool) = SDL_SaveBMP_RW(this, dst, freedst)
+
+SDL_Surface.SetSurfaceRLE(flag as Bool) = SDL_SetSurfaceRLE(this, flag)
+
+SDL_Surface.SetColorKey(flag as Bool, key as Number) = SDL_SetColorKey(this, flag, key)
+
+SDL_Surface.HasColorKey() = SDL_HasColorKey(this)
+
+SDL_Surface.GetColorKey(&key:nilRef as Number) = SDL_GetColorKey(this, key)
+
+SDL_Surface.SetSurfaceColorMod(r as Number, g as Number, b as Number) = SDL_SetSurfaceColorMod(this, r, g, b)
+
+SDL_Surface.GetSurfaceColorMod(&r:nilRef as Number, &g:nilRef as Number, &b:nilRef as Number) = SDL_GetSurfaceColorMod(this, r, g, b)
+
+SDL_Surface.SetSurfaceAlphaMod(alpha as Number) = SDL_SetSurfaceAlphaMod(this, alpha)
+
+SDL_Surface.GetSurfaceAlphaMod(&alpha:nilRef as Number) = SDL_GetSurfaceAlphaMod(this, alpha)
+
+SDL_Surface.SetSurfaceBlendMode(blendMode as Number) = SDL_SetSurfaceBlendMode(this, blendMode)
+
+SDL_Surface.GetSurfaceBlendMode(&blendMode:nilRef as Number) = SDL_GetSurfaceBlendMode(this, blendMode)
+
+SDL_Surface.SetClipRect(rect:nil as SDL_Rect) = SDL_SetClipRect(this, rect)
+
+SDL_Surface.GetClipRect(&rect:nilRef as SDL_Rect) = SDL_GetClipRect(this, rect)
+
+SDL_Surface.DuplicateSurface() = SDL_DuplicateSurface(this)
+
+SDL_Surface.CreateColorCursor(hot_x as Number, hot_y as Number) = SDL_CreateColorCursor(this, hot_x, hot_y)
+
+SDL_Event.Poll() = SDL_PollEvent(this)
+
+SDL_Event.Wait() = SDL_WaitEvent(this)
+
+SDL_Event.WaitTimeout(timeout as Number) = SDL_WaitEventTimeout(this, timeout)
+
+SDL_Event.Push() = SDL_PushEvent(this)

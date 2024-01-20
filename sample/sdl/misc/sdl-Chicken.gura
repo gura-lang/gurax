@@ -16,7 +16,8 @@ Chicken = struct {
 	Render(renderer as SDL_Renderer):void = {
 		texture = cond(this.dir == `left, this.texturesL, this.texturesR).NextValue()
 		ht = texture.ht * this.wd / texture.wd
-		SDL_RenderCopy(renderer, texture.entity, nil, SDL_Rect(this.x, this.y - ht, this.wd, ht))
+		//SDL_RenderCopy(renderer, texture.entity, nil, SDL_Rect(this.x, this.y - ht, this.wd, ht))
+		renderer.Copy(texture.entity, nil, SDL_Rect(this.x, this.y - ht, this.wd, ht))
 	}
 	Move(wdScreen as Number):void = {
 		xStep = this.wd * .2
@@ -36,7 +37,8 @@ Texture = class {
 	wd as Number
 	ht as Number
 	__init__(renderer as SDL_Renderer, surface as SDL_Surface):map = {
-		this.entity = SDL_CreateTextureFromSurface(renderer, surface)
+		//this.entity = SDL_CreateTextureFromSurface(renderer, surface)
+		this.entity = renderer.CreateTextureFromSurface(surface)
 		this.wd = surface.w
 		this.ht = surface.h
 		SDL_FreeSurface(surface)
@@ -64,17 +66,20 @@ iSize = 0
 repeat {
 	timeCur = SDL_GetTicks()
 	if (timePrev > timeCur || timeCur > timePrev + 100) {
-		SDL_RenderCopy(renderer, textureBg.entity, nil, nil)
+		//SDL_RenderCopy(renderer, textureBg.entity, nil, nil)
+		renderer.Copy(textureBg.entity, nil, nil)
 		chickens:*Render(renderer)
 		chickens:*Move(wdScreen)
-		SDL_RenderPresent(renderer)
+		//SDL_RenderPresent(renderer)
+		renderer.Present()
 		if (!chickenLast.moveFlag) {
 			chickenLast.wd = Min(iSize * 10 + wdInit, 400)
 			iSize += 1
 		}
 		timePrev = timeCur
 	}
-	rtn = SDL_WaitEventTimeout(event, 10) // 10msec
+	//rtn = SDL_WaitEventTimeout(event, 10) // 10msec
+	rtn = event.WaitTimeout(10) // 10msec
 	chickenLast = chickens.last
 	if (rtn == 0) {
 		// nothing to do
