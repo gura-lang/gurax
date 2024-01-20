@@ -1,6 +1,8 @@
 #!/usr/bin/env gurax
 import(sdl):binary {*}
 
+SDL_Window.Destroy() = SDL_DestroyWindow(this)
+
 SDL_Window.GetDisplayIndex() = SDL_GetWindowDisplayIndex(this)
 
 SDL_Window.SetDisplayMode() = SDL_SetWindowDisplayMode(this, mode as const_SDL_DisplayMode_p)
@@ -111,6 +113,8 @@ SDL_Window.WarpMouse(x as Number, y as Number) = SDL_WarpMouseInWindow(this, x, 
 
 //SDL_Window.iPhoneSetAnimationCallback() = SDL_iPhoneSetAnimationCallback(this, interval as int, *:void_callback_void, callbackParam as void_p)
 
+SDL_Texture.Destroy() = SDL_DestroyTexture(this)
+
 SDL_Texture.Query(&format:nilRef as Number, &access:nilRef as Number, &w:nilRef as Number, &h:nilRef as Number) = SDL_QueryTexture(this, format, access, w, h)
 
 SDL_Texture.SetColorMod(r as Number, g as Number, b as Number) = SDL_SetTextureColorMod(this, r, g, b)
@@ -142,6 +146,8 @@ SDL_Texture.Unlock() = SDL_UnlockTexture(this)
 //SDL_Texture.GL_Bind() = SDL_GL_BindTexture(this, texw as float_p, texh as float_p)
 
 SDL_Texture.GL_Unbind() = SDL_GL_UnbindTexture(this)
+
+SDL_Renderer.Destroy() = SDL_DestroyRenderer(this)
 
 SDL_Renderer.CreateTexture(format as Number, access as Number, w as Number, h as Number) = SDL_CreateTexture(this, format, access, w, h)
 
@@ -277,6 +283,8 @@ SDL_Surface.DuplicateSurface() = SDL_DuplicateSurface(this)
 
 SDL_Surface.CreateColorCursor(hot_x as Number, hot_y as Number) = SDL_CreateColorCursor(this, hot_x, hot_y)
 
+SDL_Surface.Free() = SDL_FreeSurface(this)
+
 SDL_Event.Poll() = SDL_PollEvent(this)
 
 SDL_Event.Wait() = SDL_WaitEvent(this)
@@ -284,3 +292,7 @@ SDL_Event.Wait() = SDL_WaitEvent(this)
 SDL_Event.WaitTimeout(timeout as Number) = SDL_WaitEventTimeout(this, timeout)
 
 SDL_Event.Push() = SDL_PushEvent(this)
+
+SDL_Palette.SetColors(colors[] as SDL_Color, firstcolor as Number) = SDL_SetPaletteColors(this, colors, firstcolor)
+
+SDL_Palette.Free() = SDL_FreePalette(this)
