@@ -147,7 +147,8 @@ LButton = class {
 		//If mouse event happened
 		if (e.type == SDL_MOUSEMOTION || e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP) {
 			//Get mouse position
-			[button, x, y] = SDL_GetMouseState();
+			x = y = nil
+			button = SDL_GetMouseState(&x, &y);
 
 			//Check if mouse is in button
 			inside = true;

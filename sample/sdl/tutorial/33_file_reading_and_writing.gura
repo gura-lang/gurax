@@ -261,7 +261,7 @@ loadMedia() = {
 		//Load data
 		Printf("Reading file...!\n");
 		repeat (TOTAL_DATA) {|i|
-			gData[i] = @int32 {|v| SDL_RWread(file, v, Number.int32.bytes, 1), v[0]}
+			gData[i] = @int32 {|v| SDL_RWread(file, v, Number.int32.bytes, 1), v.@}
 		}
 
 		//Close file handler

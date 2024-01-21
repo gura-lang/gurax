@@ -24,7 +24,7 @@ LTexture = class {
 	//Deallocates memory
 	__del__() = {
 		this.free()
-	};
+	}
 
 	//Loads image at specified path
 	loadFromFile(path as String) = {

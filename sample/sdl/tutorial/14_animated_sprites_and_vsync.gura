@@ -205,7 +205,7 @@ loadMedia() = {
 
 close() = {
 	//Free loaded images
-	gSpliteSheetTexture.free();
+	//gSpliteSheetTexture.free();
 
 	//Destroy window
 	SDL_DestroyRenderer(gRenderer);
