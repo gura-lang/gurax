@@ -75,7 +75,7 @@ repeat {
 		}
 		timePrev = timeCur
 	}
-	rtn = event.WaitTimeout(10) // 10msec
+	rtn = SDL_WaitEventTimeout(event, 10) // 10msec
 	chickenLast = chickens.last
 	if (rtn == 0) {
 		// nothing to do

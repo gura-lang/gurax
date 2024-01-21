@@ -285,14 +285,6 @@ SDL_Surface.CreateColorCursor(hot_x as Number, hot_y as Number) = SDL_CreateColo
 
 SDL_Surface.Free() = SDL_FreeSurface(this)
 
-SDL_Event.Poll() = SDL_PollEvent(this)
-
-SDL_Event.Wait() = SDL_WaitEvent(this)
-
-SDL_Event.WaitTimeout(timeout as Number) = SDL_WaitEventTimeout(this, timeout)
-
-SDL_Event.Push() = SDL_PushEvent(this)
-
 SDL_Palette.SetColors(colors[] as SDL_Color, firstcolor as Number) = SDL_SetPaletteColors(this, colors, firstcolor)
 
 SDL_Palette.Free() = SDL_FreePalette(this)
