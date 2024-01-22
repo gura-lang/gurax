@@ -849,4 +849,36 @@ String Value_Pointer::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, GetPointer().ToString(ss));
 }
 
+bool Value_Pointer::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const
+{
+	if (!valueIndex.IsInstanceOf(VTYPE_Number)) {
+		Error::Issue(ErrorType::IndexError,
+			"invalid value for indexing");
+		return false;
+	}
+	const Value_Number& valueIndexEx = dynamic_cast<const Value_Number&>(valueIndex);
+	Int idx = valueIndexEx.GetNumber<Int>();
+	RefPtr<Pointer> pPointer(GetPointer().Clone());
+	if (!pPointer->Advance(idx)) return false;
+	RefPtr<Value> pValue;
+	pPointer->Get(pPointer->GetElemType(), pValue, *Attribute::Empty);
+	*ppValue = pValue.release();
+	return true;
+}
+
+bool Value_Pointer::DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue)
+{
+	if (!valueIndex.IsInstanceOf(VTYPE_Number)) {
+		Error::Issue(ErrorType::IndexError,
+			"invalid value for indexing");
+		return false;
+	}
+	const Value_Number& valueIndexEx = dynamic_cast<const Value_Number&>(valueIndex);
+	Int idx = valueIndexEx.GetNumber<Int>();
+	RefPtr<Pointer> pPointer(GetPointer().Clone());
+	if (!pPointer->Advance(idx)) return false;
+	pPointer->Put(pPointer->GetElemType(), *pValue, *Attribute::Empty);
+	return true;
+}
+
 }
