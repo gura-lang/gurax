@@ -231,6 +231,18 @@ TestCase('Operators') {
 	Tester(`(p1 - p2))
 	Tester(`(p2 - p1))
 	Tester(`(p3 - p1))
+	Tester(`(@bool([true, true, true, false, false, true, false, false, true, false]).p + 1).offset)
+	Tester(`(@int8([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).p + 1).offset)
+	Tester(`(@uint8([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).p + 1).offset)
+	Tester(`(@int16([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).p + 1).offset)
+	Tester(`(@uint16([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).p + 1).offset)
+	Tester(`(@int32([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).p + 1).offset)
+	Tester(`(@uint32([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).p + 1).offset)
+	Tester(`(@int64([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).p + 1).offset)
+	Tester(`(@uint64([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).p + 1).offset)
+	Tester(`(@float([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).p + 1).offset)
+	Tester(`(@double([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).p + 1).offset)
+	Tester(`(@complex([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).p + 1).offset)
 }
 
 TestCase('Pointer#Append()') {
@@ -257,4 +269,25 @@ TestCase('Pointer.HasSame()') {
 	Tester(`Pointer.HasSame(b'abcdefghij'.p, b'abcdefghij'.p))
 	Tester(`Pointer.HasSame(b'abcdefghij'.p, b'Aabcdefghij'.p))
 	Tester(`Pointer.HasSame(b'abcdefghij'.p, b'Aabcdefghij'.p + 1))
+}
+
+TestCase('Index Access') {
+	Printf('[bool]\n')
+	array = Array(`bool, [false, true, false, false, true, false, true, true])
+	Tester(`array)
+	Tester(`array.p[0])
+	Tester(`array.p[1])
+	Tester(`array.p[7])
+	array.p[0] = true, array.p[2] = true, array.p[7] = false
+	Tester(`array)
+	[`int8, `uint8, `int16, `uint16, `int32, `uint32, `int64, `uint64, `float, `double, `complex].Each {|elemType|
+		Printf('[%s]\n', elemType)
+		array = Array(elemType, [11, 22, 33, 44, 55, 66, 77, 88])
+		Tester(`array)
+		Tester(`array.p[0])
+		Tester(`array.p[1])
+		Tester(`array.p[7])
+		array.p[0] = 1, array.p[2] = 3, array.p[7] = 8
+		Tester(`array)
+	}
 }

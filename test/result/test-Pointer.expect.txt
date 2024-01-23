@@ -736,6 +736,18 @@ p1 - 11 .. pointer offset is out of range
 p1 - p2 .. -13
 p2 - p1 .. 13
 p3 - p1 .. pointers must have the same target when the offset difference is calculated
+(@bool([true, true, true, false, false, true, false, false, true, false]).p + 1).offset .. 1
+(@int8([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).p + 1).offset .. 1
+(@uint8([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).p + 1).offset .. 1
+(@int16([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).p + 1).offset .. 2
+(@uint16([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).p + 1).offset .. 2
+(@int32([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).p + 1).offset .. 4
+(@uint32([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).p + 1).offset .. 4
+(@int64([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).p + 1).offset .. 8
+(@uint64([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).p + 1).offset .. 8
+(@float([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).p + 1).offset .. 4
+(@double([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).p + 1).offset .. 8
+(@complex([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).p + 1).offset .. 16
 ======== Pointer#Append() ========
 The source is Binary
 61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f 70  abcdefghijklmnop
@@ -763,3 +775,76 @@ Pointer.HasSame(b''.p, b'A'.p) .. false
 Pointer.HasSame(b'abcdefghij'.p, b'abcdefghij'.p) .. true
 Pointer.HasSame(b'abcdefghij'.p, b'Aabcdefghij'.p) .. false
 Pointer.HasSame(b'abcdefghij'.p, b'Aabcdefghij'.p + 1) .. true
+======== Index Access ========
+[bool]
+array .. [false, true, false, false, true, false, true, true]
+array.p[0] .. false
+array.p[1] .. true
+array.p[7] .. true
+array .. [true, true, true, false, true, false, true, false]
+[int8]
+array .. [11, 22, 33, 44, 55, 66, 77, 88]
+array.p[0] .. 11
+array.p[1] .. 22
+array.p[7] .. 88
+array .. [1, 22, 3, 44, 55, 66, 77, 8]
+[uint8]
+array .. [11, 22, 33, 44, 55, 66, 77, 88]
+array.p[0] .. 11
+array.p[1] .. 22
+array.p[7] .. 88
+array .. [1, 22, 3, 44, 55, 66, 77, 8]
+[int16]
+array .. [11, 22, 33, 44, 55, 66, 77, 88]
+array.p[0] .. 11
+array.p[1] .. 22
+array.p[7] .. 88
+array .. [1, 22, 3, 44, 55, 66, 77, 8]
+[uint16]
+array .. [11, 22, 33, 44, 55, 66, 77, 88]
+array.p[0] .. 11
+array.p[1] .. 22
+array.p[7] .. 88
+array .. [1, 22, 3, 44, 55, 66, 77, 8]
+[int32]
+array .. [11, 22, 33, 44, 55, 66, 77, 88]
+array.p[0] .. 11
+array.p[1] .. 22
+array.p[7] .. 88
+array .. [1, 22, 3, 44, 55, 66, 77, 8]
+[uint32]
+array .. [11, 22, 33, 44, 55, 66, 77, 88]
+array.p[0] .. 11
+array.p[1] .. 22
+array.p[7] .. 88
+array .. [1, 22, 3, 44, 55, 66, 77, 8]
+[int64]
+array .. [11, 22, 33, 44, 55, 66, 77, 88]
+array.p[0] .. 11
+array.p[1] .. 22
+array.p[7] .. 88
+array .. [1, 22, 3, 44, 55, 66, 77, 8]
+[uint64]
+array .. [11, 22, 33, 44, 55, 66, 77, 88]
+array.p[0] .. 11
+array.p[1] .. 22
+array.p[7] .. 88
+array .. [1, 22, 3, 44, 55, 66, 77, 8]
+[float]
+array .. [11, 22, 33, 44, 55, 66, 77, 88]
+array.p[0] .. 11
+array.p[1] .. 22
+array.p[7] .. 88
+array .. [1, 22, 3, 44, 55, 66, 77, 8]
+[double]
+array .. [11, 22, 33, 44, 55, 66, 77, 88]
+array.p[0] .. 11
+array.p[1] .. 22
+array.p[7] .. 88
+array .. [1, 22, 3, 44, 55, 66, 77, 8]
+[complex]
+array .. [11, 22, 33, 44, 55, 66, 77, 88]
+array.p[0] .. 11
+array.p[1] .. 22
+array.p[7] .. 88
+array .. [1, 22, 3, 44, 55, 66, 77, 8]

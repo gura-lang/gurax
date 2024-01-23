@@ -745,7 +745,7 @@ Gurax_ImplementOpBinary(Add, Pointer, Number)
 {
 	RefPtr<Pointer> pPointer(Value_Pointer::GetPointer(valueL).Clone());
 	long offset = Value_Number::GetNumber<long>(valueR);
-	if (!pPointer->Advance(offset)) return Value::nil();
+	if (!pPointer->AdvanceByElem(offset)) return Value::nil();
 	return new Value_Pointer(pPointer.release());
 }
 
@@ -754,7 +754,7 @@ Gurax_ImplementOpBinary(Add, Number, Pointer)
 {
 	long offset = Value_Number::GetNumber<long>(valueL);
 	RefPtr<Pointer> pPointer(Value_Pointer::GetPointer(valueR).Clone());
-	if (!pPointer->Advance(offset)) return Value::nil();
+	if (!pPointer->AdvanceByElem(offset)) return Value::nil();
 	return new Value_Pointer(pPointer.release());
 }
 
@@ -763,7 +763,7 @@ Gurax_ImplementOpBinary(Sub, Pointer, Number)
 {
 	RefPtr<Pointer> pPointer(Value_Pointer::GetPointer(valueL).Clone());
 	long offset = Value_Number::GetNumber<long>(valueR);
-	if (!pPointer->Advance(-offset)) return Value::nil();
+	if (!pPointer->AdvanceByElem(-offset)) return Value::nil();
 	return new Value_Pointer(pPointer.release());
 }
 
@@ -859,7 +859,7 @@ bool Value_Pointer::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) c
 	const Value_Number& valueIndexEx = dynamic_cast<const Value_Number&>(valueIndex);
 	Int idx = valueIndexEx.GetNumber<Int>();
 	RefPtr<Pointer> pPointer(GetPointer().Clone());
-	if (!pPointer->Advance(idx)) return false;
+	if (!pPointer->AdvanceByElem(idx)) return false;
 	RefPtr<Value> pValue;
 	pPointer->Get(pPointer->GetElemType(), pValue, *Attribute::Empty);
 	*ppValue = pValue.release();
@@ -876,7 +876,7 @@ bool Value_Pointer::DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pVal
 	const Value_Number& valueIndexEx = dynamic_cast<const Value_Number&>(valueIndex);
 	Int idx = valueIndexEx.GetNumber<Int>();
 	RefPtr<Pointer> pPointer(GetPointer().Clone());
-	if (!pPointer->Advance(idx)) return false;
+	if (!pPointer->AdvanceByElem(idx)) return false;
 	pPointer->Put(pPointer->GetElemType(), *pValue, *Attribute::Empty);
 	return true;
 }

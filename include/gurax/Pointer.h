@@ -36,11 +36,13 @@ public:
 	const ElemType& GetElemType() const { return _elemType; }
 	void SetOffset(size_t offset) { _offset = offset; }
 	size_t GetOffset() const { return _offset; }
+	size_t GetBytesElem() const { return _elemType.bytes; }
 	size_t GetBytesAvailable() const {
 		size_t bytesEntire = GetBytesEntire();
 		return (_offset < bytesEntire)? bytesEntire - _offset : 0;
 	}
-	bool Advance(int distance);
+	bool AdvanceByByte(int distance);
+	bool AdvanceByElem(int distance) { return AdvanceByByte(distance * GetBytesElem()); }
 	bool PutValue(const ElemType& elemType, bool bigEndianFlag, const Value& value);
 	bool PutValues(const ElemType& elemType, bool bigEndianFlag, const ValueList& valList);
 	bool PutValues(const ElemType& elemType, bool bigEndianFlag, Iterator& iterator);

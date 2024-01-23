@@ -36,6 +36,7 @@ public:
 		static ElemType Complex;
 	public:
 		const Symbol* pSymbol;
+		size_t bytes;
 		std::function<bool (Packer& packer, const Value& value, bool bigEndianFlag, bool forwardFlag)> putFunc;
 		std::function<bool (Packer& packer, RefPtr<Value>& pValue, bool exceedErrorFlag, bool bigEndianFlag, bool forwardFlag)> getFunc;
 	public:

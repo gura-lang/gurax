@@ -12,7 +12,7 @@ void Pointer::Bootup()
 {
 }
 
-bool Pointer::Advance(int distance)
+bool Pointer::AdvanceByByte(int distance)
 {
 	if (distance >= 0) {
 		_offset += distance;
