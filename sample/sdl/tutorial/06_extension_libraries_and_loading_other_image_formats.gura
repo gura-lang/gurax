@@ -119,14 +119,11 @@ main() = {
 					}
 				}
 
-				//Clear screen
-				SDL_RenderClear(gRenderer);
-
-				//Render texture to screen
-				SDL_RenderCopy(gRenderer, gTexture, nil, nil);
-
-				//Update screen
-				SDL_RenderPresent(gRenderer);
+				//Apply the PNG image
+				SDL_BlitSurface(gPNGSurface, nil, gScreenSurface, nil);
+			
+				//Update the surface
+				SDL_UpdateWindowSurface(gWindow);
 			}
 		}
 	}
