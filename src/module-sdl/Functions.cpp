@@ -4904,10 +4904,10 @@ Gurax_ImplementFunctionEx(SDL_GetKeyboardState_gurax, processor_gurax, argument_
 	// Function body
 	int numkeys;
 	const Uint8* rtn = SDL_GetKeyboardState(&numkeys);
-	RefPtr<Pointer> pPointer(new Pointer_Memory(new MemorySloth(numkeys, const_cast<Uint8*>(rtn))));
-	return new Value_Pointer(pPointer.release());
-	//RefPtr<Array> pArray(Array::Create(Array::ElemType::UInt8, DimSizes(numkeys), new MemorySloth(numkeys, const_cast<Uint8*>(rtn))));
-	//return new Value_Array(pArray.release());
+	//RefPtr<Pointer> pPointer(new Pointer_Memory(new MemorySloth(numkeys, const_cast<Uint8*>(rtn))));
+	//return new Value_Pointer(pPointer.release());
+	RefPtr<Array> pArray(Array::Create(Array::ElemType::UInt8, DimSizes(numkeys), new MemorySloth(numkeys, const_cast<Uint8*>(rtn))));
+	return new Value_Array(pArray.release());
 }
 
 // sdl.SDL_GetModState()
