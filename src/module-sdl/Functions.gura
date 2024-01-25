@@ -205,6 +205,9 @@ SDL_GetHintBoolean(name as const_char_p, default_value as SDL_bool) as SDL_bool
 
 SDL_ClearHints():void
 
+//======== SDL_BlendMode enumeration (SDL_blendmode.h) ========
+SDL_ComposeCustomBlendMode(srcColorFactor as SDL_BlendFactor, dstColorFactor as SDL_BlendFactor, colorOperation as SDL_BlendOperation, srcAlphaFactor as SDL_BlendFactor, dstAlphaFactor as SDL_BlendFactor, alphaOperation as SDL_BlendOperation) as SDL_BlendMode
+
 //======== Error Handling (SDL_error.h) ========
 
 //SDL_SetError(fmt as SDL_PRINTF_FORMAT_STRING_const_char_p, 1 as SDL_PRINTF_VARARG_FUNC) as int

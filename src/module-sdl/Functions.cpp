@@ -175,6 +175,33 @@ Gurax_ImplementFunctionEx(SDL_ClearHints_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
+// sdl.SDL_ComposeCustomBlendMode(srcColorFactor as Number, dstColorFactor as Number, colorOperation as Number, srcAlphaFactor as Number, dstAlphaFactor as Number, alphaOperation as Number)
+Gurax_DeclareFunctionAlias(SDL_ComposeCustomBlendMode_gurax, "SDL_ComposeCustomBlendMode")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("srcColorFactor", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dstColorFactor", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("colorOperation", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("srcAlphaFactor", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dstAlphaFactor", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("alphaOperation", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementFunctionEx(SDL_ComposeCustomBlendMode_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	SDL_BlendFactor srcColorFactor = args_gurax.PickNumber<SDL_BlendFactor>();
+	SDL_BlendFactor dstColorFactor = args_gurax.PickNumber<SDL_BlendFactor>();
+	SDL_BlendOperation colorOperation = args_gurax.PickNumber<SDL_BlendOperation>();
+	SDL_BlendFactor srcAlphaFactor = args_gurax.PickNumber<SDL_BlendFactor>();
+	SDL_BlendFactor dstAlphaFactor = args_gurax.PickNumber<SDL_BlendFactor>();
+	SDL_BlendOperation alphaOperation = args_gurax.PickNumber<SDL_BlendOperation>();
+	// Function body
+	SDL_BlendMode rtn = SDL_ComposeCustomBlendMode(srcColorFactor, dstColorFactor, colorOperation, srcAlphaFactor, dstAlphaFactor, alphaOperation);
+	return new Gurax::Value_Number(rtn);
+}
+
 // sdl.SDL_GetError()
 Gurax_DeclareFunctionAlias(SDL_GetError_gurax, "SDL_GetError")
 {
@@ -11473,6 +11500,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(SDL_GetHint_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetHintBoolean_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_ClearHints_gurax));
+	frame.Assign(Gurax_CreateFunction(SDL_ComposeCustomBlendMode_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_GetError_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_ClearError_gurax));
 	frame.Assign(Gurax_CreateFunction(SDL_Error_gurax));
