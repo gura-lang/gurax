@@ -243,6 +243,10 @@ SDL_Renderer.Flush() = SDL_RenderFlush(this)
 
 //SDL_Renderer.GetMetalCommandEncoder() = SDL_RenderGetMetalCommandEncoder(this)
 
+
+
+
+
 SDL_Surface.CreateSoftwareRenderer() = SDL_CreateSoftwareRenderer(this)
 
 SDL_Surface.SetSurfacePalette(palette as SDL_Palette) = SDL_SetSurfacePalette(this, palette)
@@ -280,6 +284,28 @@ SDL_Surface.SetClipRect(rect:nil as SDL_Rect) = SDL_SetClipRect(this, rect)
 SDL_Surface.GetClipRect(&rect:nilRef as SDL_Rect) = SDL_GetClipRect(this, rect)
 
 SDL_Surface.DuplicateSurface() = SDL_DuplicateSurface(this)
+
+SDL_Surface.ConvertSurface(fmt as SDL_PixelFormat, flags as Number) = SDL_ConvertSurface(this, fmt as SDL_PixelFormat, flags as Number)
+
+SDL_Surface.ConvertSurfaceFormat(pixel_format as Number, flags as Number) = SDL_ConvertSurfaceFormat(this, pixel_format as Number, flags as Number)
+
+SDL_Surface.FillRect(rect:nil as SDL_Rect, color as Number) = SDL_FillRect(this, rect, color)
+
+SDL_Surface.FillRects(rects:nil as SDL_Rect, count as Number, color as Number) = SDL_FillRects(this, rects, count, color)
+
+SDL_Surface.BlitSurface(srcrect:nil as SDL_Rect, dst as SDL_Surface, dstrect:nil as SDL_Rect) = SDL_BlitSurface(this, srcrect, dst, dstrect)
+
+SDL_Surface.UpperBlit(srcrect:nil as SDL_Rect, dst as SDL_Surface, dstrect:nil as SDL_Rect) = SDL_UpperBlit(this, srcrect, dst, dstrect)
+
+SDL_Surface.LowerBlit(srcrect:nil as SDL_Rect, dst as SDL_Surface, dstrect:nil as SDL_Rect) = SDL_LowerBlit(this, srcrect, dst, dstrect)
+
+SDL_Surface.SoftStretch(srcrect:nil as SDL_Rect, dst as SDL_Surface, dstrect:nil as SDL_Rect) = SDL_SoftStretch(this, srcrect, dst, dstrect)
+
+SDL_Surface.BlitScaled(srcrect:nil as SDL_Rect, dst as SDL_Surface, dstrect:nil as SDL_Rect) = SDL_BlitScaled(this, srcrect, dst, dstrect)
+
+SDL_Surface.UpperBlitScaled(srcrect:nil as SDL_Rect, dst as SDL_Surface, dstrect:nil as SDL_Rect) = SDL_UpperBlitScaled(this, srcrect, dst, dstrect)
+
+SDL_Surface.LowerBlitScaled(srcrect:nil as SDL_Rect, dst as SDL_Surface, dstrect:nil as SDL_Rect) = SDL_LowerBlitScaled(this, srcrect, dst, dstrect)
 
 SDL_Surface.CreateColorCursor(hot_x as Number, hot_y as Number) = SDL_CreateColorCursor(this, hot_x, hot_y)
 
