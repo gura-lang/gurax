@@ -600,15 +600,15 @@ SDL_CreateTexture(renderer as SDL_Renderer_p, format as Uint32, access as int, w
 
 SDL_CreateTextureFromSurface(renderer as SDL_Renderer_p, surface as SDL_Surface_p) as SDL_Texture_p
 
-SDL_QueryTexture(texture as SDL_Texture_p, &format:nilRef as Uint32, &access:nilRef as int, &w:nilRef as int, &h:nilRef as int) = \
+SDL_QueryTexture(texture as SDL_Texture_p, &format:nil:nilRef as Uint32, &access:nil:nilRef as int, &w:nil:nilRef as int, &h:nil:nilRef as int) = \
 	R'''
 	Uint32 format_;
 	int access_, w_, h_;
 	int rtn = SDL_QueryTexture(texture, &format_, &access_, &w_, &h_);
-	format->SetValue(new Value_Number(format_));
-	access->SetValue(new Value_Number(access_));
-	w->SetValue(new Value_Number(w_));
-	h->SetValue(new Value_Number(h_));
+	if (format) format->SetValue(new Value_Number(format_));
+	if (access) access->SetValue(new Value_Number(access_));
+	if (w) w->SetValue(new Value_Number(w_));
+	if (h) h->SetValue(new Value_Number(h_));
 	return new Value_Number(rtn);
 	'''
 

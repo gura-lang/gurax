@@ -2011,15 +2011,15 @@ Gurax_ImplementFunctionEx(SDL_CreateTextureFromSurface_gurax, processor_gurax, a
 	return new Value_SDL_Texture(rtn);
 }
 
-// sdl.SDL_QueryTexture(texture as SDL_Texture, &format:nilRef as Number, &access:nilRef as Number, &w:nilRef as Number, &h:nilRef as Number)
+// sdl.SDL_QueryTexture(texture as SDL_Texture, &format:nil:nilRef as Number, &access:nil:nilRef as Number, &w:nil:nilRef as Number, &h:nil:nilRef as Number)
 Gurax_DeclareFunctionAlias(SDL_QueryTexture_gurax, "SDL_QueryTexture")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
-	DeclareArg("access", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
-	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
-	DeclareArg("h", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil | ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("access", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil | ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil | ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("h", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil | ArgFlag::NilRef | ArgFlag::Referencer);
 }
 
 Gurax_ImplementFunctionEx(SDL_QueryTexture_gurax, processor_gurax, argument_gurax)
@@ -2028,18 +2028,18 @@ Gurax_ImplementFunctionEx(SDL_QueryTexture_gurax, processor_gurax, argument_gura
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	auto& value_texture = args_gurax.Pick<Value_SDL_Texture>();
 	SDL_Texture* texture = value_texture.GetEntityPtr();
-	RefPtr<Referencer> format(args_gurax.PickReferencer().Reference());
-	RefPtr<Referencer> access(args_gurax.PickReferencer().Reference());
-	RefPtr<Referencer> w(args_gurax.PickReferencer().Reference());
-	RefPtr<Referencer> h(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> format(args_gurax.IsValid()? args_gurax.PickReferencer().Reference() : nullptr);
+	RefPtr<Referencer> access(args_gurax.IsValid()? args_gurax.PickReferencer().Reference() : nullptr);
+	RefPtr<Referencer> w(args_gurax.IsValid()? args_gurax.PickReferencer().Reference() : nullptr);
+	RefPtr<Referencer> h(args_gurax.IsValid()? args_gurax.PickReferencer().Reference() : nullptr);
 	// Function body
 	Uint32 format_;
 	int access_, w_, h_;
 	int rtn = SDL_QueryTexture(texture, &format_, &access_, &w_, &h_);
-	format->SetValue(new Value_Number(format_));
-	access->SetValue(new Value_Number(access_));
-	w->SetValue(new Value_Number(w_));
-	h->SetValue(new Value_Number(h_));
+	if (format) format->SetValue(new Value_Number(format_));
+	if (access) access->SetValue(new Value_Number(access_));
+	if (w) w->SetValue(new Value_Number(w_));
+	if (h) h->SetValue(new Value_Number(h_));
 	return new Value_Number(rtn);
 }
 

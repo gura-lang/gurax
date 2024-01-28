@@ -243,10 +243,6 @@ SDL_Renderer.Flush() = SDL_RenderFlush(this)
 
 //SDL_Renderer.GetMetalCommandEncoder() = SDL_RenderGetMetalCommandEncoder(this)
 
-
-
-
-
 SDL_Surface.CreateSoftwareRenderer() = SDL_CreateSoftwareRenderer(this)
 
 SDL_Surface.SetSurfacePalette(palette as SDL_Palette) = SDL_SetSurfacePalette(this, palette)
