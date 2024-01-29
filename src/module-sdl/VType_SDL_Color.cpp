@@ -50,6 +50,7 @@ Gurax_ImplementConstructor(SDL_Color)
 	color.g = args.IsValid()? args.PickNumberRanged<Uint8>(0, 255) : 0;
 	color.b = args.IsValid()? args.PickNumberRanged<Uint8>(0, 255) : 0;
 	color.a = args.IsValid()? args.PickNumberRanged<Uint8>(0, 255) : 0;
+	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	return argument.ReturnValue(processor, new Value_SDL_Color(color));
 }
@@ -157,6 +158,30 @@ void VType_SDL_Color::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(SDL_Color, g));
 	Assign(Gurax_CreateProperty(SDL_Color, b));
 	Assign(Gurax_CreateProperty(SDL_Color, a));
+}
+
+Value* VType_SDL_Color::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+{
+	if (value.IsType(VTYPE_Tuple)) {
+		const ValueOwner& values = Value_Tuple::GetValueOwner(value);
+		SDL_Color color;
+		color.r = color.g = color.b = color.a = 0;
+		if (values.size() > 0) {
+			VType& vtype = values.GetVTypeOfElems();
+			if (!vtype.IsIdentical(VTYPE_Number)) {
+				Error::Issue(ErrorType::TypeError, "the tuple must contain Number elements");
+				return nullptr;
+			}
+			//color.r = dynamic_cast<Value_Number&>(values[0]).GetNumberRanged<Uint8>(0, 255);
+
+			//color.r = Value_Number::GetNumberRanged<Uint8>(values[0], 0, 255);
+			//Value_Number::GetNumber<Uint8>;
+		}
+
+		//return Value_SDL_Surface::Create(Value_Image::GetImage(value).Reference());
+		return Value::nil();
+	}
+	return nullptr;
 }
 
 //------------------------------------------------------------------------------
