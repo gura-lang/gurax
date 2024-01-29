@@ -26,10 +26,10 @@ event = SDL_Event()
 textureBg = renderer.CreateTextureFromSurface(Image(I('rural-garden.jpg')))
 pointTbl = repeat (100):list { Point(Random.Int(wdWindow), Random.Int(htWindow), Random.Int(2) * 4 - 2, Random.Int(2) * 4 - 2) }
 repeat {
-	renderer.SetDrawColor(240, 255, 240, 255)
-	renderer.Clear()
 	renderer.SetDrawBlendMode(SDL_BLENDMODE_BLEND)
-	//renderer.Copy(textureBg, nil, nil)
+	renderer.Copy(textureBg, nil, nil)
+	renderer.SetDrawColor(240, 255, 240, 128)
+	renderer.FillRect(nil)
 	renderer.SetDrawColor(255, 0, 0, 50)
 	renderer.SetDrawBlendMode(SDL_BLENDMODE_BLEND)
 	pointTbl.Each {|point|

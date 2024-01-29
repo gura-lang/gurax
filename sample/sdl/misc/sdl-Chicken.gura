@@ -66,6 +66,9 @@ repeat {
 	timeCur = SDL_GetTicks()
 	if (timePrev > timeCur || timeCur > timePrev + 100) {
 		renderer.Copy(textureBg.entity, nil, nil)
+		renderer.SetDrawBlendMode(SDL_BLENDMODE_BLEND)
+		renderer.SetDrawColor(240, 255, 240, 128)
+		renderer.FillRect(nil)
 		chickens:*Render(renderer)
 		chickens:*Move(wdScreen)
 		renderer.Present()
