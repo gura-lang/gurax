@@ -1,0 +1,51 @@
+#!/usr/bin/env gurax
+import(sdl) {*}
+import(jpeg)
+
+I(fileName as String) = path.Join('../../resource', fileName)
+
+Point = struct {
+	x as Number
+	y as Number
+	xDir as Number
+	yDir as Number
+	Move(wdWindow as Number, htWindow as Number) = {
+		if (this.x < 0) { this.xDir = 4 }
+		if (this.y < 0) { this.yDir = 4 }
+		if (this.x + 100 > wdWindow) { this.xDir = -4 }
+		if (this.y + 100 > htWindow) { this.yDir = -4 }
+		this.x += this.xDir, this.y += this.yDir
+	}
+}
+
+SDL_Init(SDL_INIT_EVERYTHING)
+[wdWindow, htWindow] = [800, 600]
+window = SDL_CreateWindow(path.FileName(sys.argv[0]), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, wdWindow, htWindow, 0)
+renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)
+event = SDL_Event()
+textureBg = renderer.CreateTextureFromSurface(Image(I('rural-garden.jpg')))
+pointTbl = repeat (100):list { Point(Random.Int(wdWindow), Random.Int(htWindow), Random.Int(2) * 4 - 2, Random.Int(2) * 4 - 2) }
+repeat {
+	renderer.SetDrawBlendMode(SDL_BLENDMODE_BLEND)
+	renderer.Copy(textureBg, nil, nil)
+	renderer.SetDrawColor(240, 255, 240, 128)
+	renderer.FillRect(nil)
+	renderer.SetDrawColor(255, 0, 0, 50)
+	renderer.SetDrawBlendMode(SDL_BLENDMODE_BLEND)
+	pointTbl.Each {|point|
+		renderer.FillRect(SDL_Rect(point.x, point.y, 100, 100))
+		point.Move(wdWindow, htWindow)
+	}
+	rtn = SDL_WaitEventTimeout(event, 10) // 10msec
+	if (rtn == 0) {
+		// nothing to do
+	} elsif (event.type == SDL_KEYDOWN) {
+		(event.key.keysym.sym == SDLK_ESCAPE) && break
+	} elsif (event.type == SDL_QUIT) {
+		break
+	}
+	renderer.Present()
+}
+renderer.Destroy()
+window.Destroy()
+SDL_Quit()
