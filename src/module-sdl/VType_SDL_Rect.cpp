@@ -159,15 +159,6 @@ void VType_SDL_Rect::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(SDL_Rect, h));
 }
 
-Value* VType_SDL_Rect::DoCastFrom(const Value& value, DeclArg::Flags flags) const
-{
-	if (value.IsType(VTYPE_Tuple)) {
-		//return Value_SDL_Surface::Create(Value_Image::GetImage(value).Reference());
-		return Value::nil();
-	}
-	return nullptr;
-}
-
 //------------------------------------------------------------------------------
 // Value_SDL_Rect
 //------------------------------------------------------------------------------
