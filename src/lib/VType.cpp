@@ -70,8 +70,7 @@ String VType::ToString(const StringStyle& ss) const
 	String str;
 	str += "VType:";
 	const Function& constructor = GetConstructor();
-	String name = constructor.IsEmpty()?
-			MakeFullName() : constructor.ToString(StringStyle().SetCram());
+	String name = constructor.IsEmpty()? MakeFullName() : constructor.ToString(StringStyle().SetCram());
 	if (name.empty()) {
 		str += "(noname)";
 	} else {
@@ -195,6 +194,13 @@ Value* VType::Cast(const Value& value, const Symbol* pSymbol, DeclArg::Flags fla
 	} else if (flags & DeclArg::Flag::NoCast) {
 		IssueError(*this, pSymbol, value);
 		return nullptr;
+	//} else if (value.IsInstanceOf(VTYPE_Tuple)) {
+	//	const Function& constructor = GetConstructor();
+	//	if (constructor.IsEmpty()) {
+	//		Error::Issue(ErrorType::CastError, "%s doesn't have a constructor", MakeFullName().c_str());
+	//		return nullptr;
+	//	}
+	//	return constructor.EvalEasy(processor, Value_Tuple::GetValueOwner(value));
 	} else {
 		RefPtr<Value> pValueCasted(DoCastFrom(value, flags));
 		if (!pValueCasted) {
