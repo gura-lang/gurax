@@ -32,12 +32,12 @@ public:
 public:
 	bool IsValid() const { return _pArgSlot != nullptr; }
 public:
-	bool FeedValue(Value* pValue);
-	bool FeedValues(const ValueList& values);
-	bool FeedValues() { return true; }
+	bool FeedValue(Processor& processor, Value* pValue);
+	bool FeedValues(Processor& processor, const ValueList& values);
+	bool FeedValues(Processor& processor) { return true; }
 	template<typename T_Head, typename... T_Tail>
-	bool FeedValues(T_Head pValue, T_Tail... pValueTail) {
-		return FeedValue(pValue) && FeedValues(pValueTail...);
+	bool FeedValues(Processor& processor, T_Head pValue, T_Tail... pValueTail) {
+		return FeedValue(processor, pValue) && FeedValues(processor, pValueTail...);
 	}
 };
 

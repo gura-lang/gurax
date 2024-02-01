@@ -74,7 +74,7 @@ Value* Value_Module::DoGetProperty(const Symbol* pSymbol, const Attribute& attr,
 	return nullptr;
 }
 
-bool Value_Module::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
+bool Value_Module::DoSetProperty(Processor& processor, const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
 	const PropSlot* pPropSlot = GetModule().LookupPropSlot(pSymbol);
 	if (!pPropSlot) {
@@ -86,7 +86,7 @@ bool Value_Module::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, co
 		Error::Issue(ErrorType::PropertyError, "property '%s' is not writable", pSymbol->GetName());
 		return false;
 	}
-	return pPropSlot->SetValue(*this, *pValue, attr);
+	return pPropSlot->SetValue(processor, *this, *pValue, attr);
 }
 
 }

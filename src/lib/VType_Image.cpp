@@ -989,9 +989,9 @@ void VType_Image::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Image, width));
 }
 
-Value* VType_Image::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_Image::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
-	RefPtr<Value_Stream> pValueCasted(value.Cast<Value_Stream>(flags));
+	RefPtr<Value_Stream> pValueCasted(value.Cast<Value_Stream>(processor, flags));
 	if (!pValueCasted) return nullptr;
 	RefPtr<Image> pImage(new Image(Image::Format::RGBA));
 	if (!pImage->Read(pValueCasted->GetStream())) return nullptr;

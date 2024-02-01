@@ -95,7 +95,7 @@ public:
 	virtual bool DoEmptyIndexGet(Value** ppValue) const override;
 	virtual bool DoEmptyIndexSet(RefPtr<Value> pValue) override;
 	virtual bool DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const override;
-	virtual bool DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue) override;
+	virtual bool DoSingleIndexSet(Processor& processor, const Value& valueIndex, RefPtr<Value> pValue) override;
 	virtual bool DoSerialize(Stream& stream) const override;
 };
 

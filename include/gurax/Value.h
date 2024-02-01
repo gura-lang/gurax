@@ -146,8 +146,8 @@ protected:
 	virtual ~Value() = default;
 public:
 	template<typename T_Value>
-	T_Value* Cast(DeclArg::Flags flags = DeclArg::Flag::None) const {
-		return dynamic_cast<T_Value*>(T_Value::vtype.Cast(*this, nullptr, flags));
+	T_Value* Cast(Processor& processor, DeclArg::Flags flags = DeclArg::Flag::None) const {
+		return dynamic_cast<T_Value*>(T_Value::vtype.Cast(processor, *this, nullptr, flags));
 	}
 	VType& GetVTypeOfEntity() const { return *_pVType; }
 	VType& GetVTypeCustom() const;
@@ -207,12 +207,12 @@ public:
 	Value* EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2,
 						RefPtr<Value> pValueArg3, RefPtr<Value> pValueArg4, DeclCallable::Flags flags = DeclCallable::Flag::None);
 	Value* IndexGet(const Index& index) const { return DoIndexGet(index); }
-	void IndexSet(const Index& index, Value* pValue) { return DoIndexSet(index, pValue); }
+	void IndexSet(Processor& processor, const Index& index, Value* pValue) { return DoIndexSet(processor, index, pValue); }
 	Value* GetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag) {
 		return DoGetProperty(pSymbol, attr, notFoundErrorFlag);
 	}
-	bool SetProperty(const Symbol* pSymbol, Value* pValue, const Attribute& attr) {
-		return DoSetProperty(pSymbol, pValue, attr);
+	bool SetProperty(Processor& processor, const Symbol* pSymbol, Value* pValue, const Attribute& attr) {
+		return DoSetProperty(processor, pSymbol, pValue, attr);
 	}
 	bool AssignCustomMethod(Function* pFunction) { return DoAssignCustomMethod(pFunction); }
 	Iterator* GenIterator() const { return DoGenIterator(); }
@@ -254,8 +254,8 @@ public:
 	virtual bool IsMappable(const DeclArg& declArg, DeclCallable::Flags flags) const { return false; }
 	virtual bool IsAsDictKey() const { return false; }
 	virtual void UpdateMapMode(Argument& argument) const {}
-	virtual bool FeedExpandToArgument(Frame& frame, Argument& argument);
-	virtual bool ReadyToPickValue(Frame& frame, DeclArg& declArg) { return true; }
+	virtual bool FeedExpandToArgument(Processor& processor, Frame& frame, Argument& argument);
+	virtual bool ReadyToPickValue(Processor& processor, Frame& frame, DeclArg& declArg) { return true; }
 	virtual bool ReadyToPickValueWithoutCast() { return true; }
 	virtual Value* PickValue() { return Reference(); }
 	virtual void UpdateIteratorInfo(Iterator::Flags& flags, size_t& len) const {}
@@ -271,13 +271,13 @@ public:
 	virtual void DoCall(Processor& processor, Argument& argument);
 	virtual Value* DoEval(Processor& processor, Argument& argument) const { return Value::nil(); }
 	virtual Value* DoIndexGet(const Index& index) const;
-	virtual void DoIndexSet(const Index& index, RefPtr<Value> pValue);
+	virtual void DoIndexSet(Processor& processor, const Index& index, RefPtr<Value> pValue);
 	virtual bool DoEmptyIndexGet(Value** ppValue) const;
 	virtual bool DoEmptyIndexSet(RefPtr<Value> pValue);
 	virtual bool DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const;
-	virtual bool DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue);
+	virtual bool DoSingleIndexSet(Processor& processor, const Value& valueIndex, RefPtr<Value> pValue);
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag);
-	virtual bool DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr);
+	virtual bool DoSetProperty(Processor& processor, const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr);
 	virtual bool DoAssignCustomMethod(RefPtr<Function> pFunction);
 	virtual Iterator* DoGenIterator() const;
 public:

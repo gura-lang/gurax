@@ -289,7 +289,7 @@ Gurax_ImplementMethod(Template, call)
 	RefPtr<Argument> pArgument(new Argument(processor, function));
 	do {
 		ArgFeeder args(*pArgument, processor.GetFrameCur());
-		if (!args.FeedValues(values)) return Value::nil();
+		if (!args.FeedValues(processor, values)) return Value::nil();
 	} while (0);
 	tmpl.ClearLastChar();
 	Value::Delete(function.Eval(processor, *pArgument));
@@ -642,15 +642,15 @@ void VType_Template::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Template, exprForInit));
 }
 
-Value* VType_Template::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_Template::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
-	RefPtr<Value_Stream> pValueCasted(value.Cast<Value_Stream>(flags));
+	RefPtr<Value_Stream> pValueCasted(value.Cast<Value_Stream>(processor, flags));
 	if (!pValueCasted) return nullptr;
 	RefPtr<Template> pTmpl(new Template());
 	bool autoIndentFlag = true;
 	bool appendLastEOLFlag = false;
 	if ((!pTmpl->ParseStream(pValueCasted->GetStream(), autoIndentFlag, appendLastEOLFlag) ||
-		 !pTmpl->PrepareAndCompose())) return Value::nil();
+		!pTmpl->PrepareAndCompose())) return Value::nil();
 	return new Value_Template(pTmpl.release());
 }
 

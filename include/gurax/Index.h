@@ -37,10 +37,10 @@ public:
 	const ValueOwner& GetValueOwner() const { return *_pValueOwner; }
 	void FeedValue(Value* pValue) { GetValueOwner().push_back(pValue); }
 	Value* IndexGet() const { return GetValueCar().DoIndexGet(*this); }
-	void IndexSet(RefPtr<Value> pValue) { GetValueCar().DoIndexSet(*this, pValue.release()); }
+	void IndexSet(Processor& processor, RefPtr<Value> pValue) { GetValueCar().DoIndexSet(processor, *this, pValue.release()); }
 	Value* IndexOpApply(Value& value, Processor& processor, Operator& op);
 	bool EachIndexGet(const Value& valueIndex, Value** ppValue) const;
-	bool EachIndexSet(const Value& valueIndex, RefPtr<Value> pValue) const;
+	bool EachIndexSet(Processor& processor, const Value& valueIndex, RefPtr<Value> pValue) const;
 public:
 	static bool GetIndexNumber(const Value& valueIndex, size_t size, size_t* pIdx);
 public:

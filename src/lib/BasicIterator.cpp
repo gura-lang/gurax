@@ -104,7 +104,7 @@ Iterator_UnaryOpImpMap::Iterator_UnaryOpImpMap(Processor* pProcessor, Operator* 
 Value* Iterator_UnaryOpImpMap::DoNextValue()
 {
 	Frame& frame = GetProcessor().GetFrameCur();
-	if (!GetValue().ReadyToPickValue(frame, *DeclArg::Any)) return nullptr;
+	if (!GetValue().ReadyToPickValue(GetProcessor(), frame, *DeclArg::Any)) return nullptr;
 	RefPtr<Value> pValueEach(GetValue().PickValue());
 	const VType& vtype = pValueEach->GetVTypeCustom();
 	if (!vtype.IsIdentical(*_pVTypePrev)) {
@@ -136,8 +136,8 @@ Iterator_BinaryOpImpMap::Iterator_BinaryOpImpMap(Processor* pProcessor, Operator
 Value* Iterator_BinaryOpImpMap::DoNextValue()
 {
 	Frame& frame = GetProcessor().GetFrameCur();
-	if (!GetValueL().ReadyToPickValue(frame, *DeclArg::Any) ||
-		!GetValueR().ReadyToPickValue(frame, *DeclArg::Any)) return nullptr;
+	if (!GetValueL().ReadyToPickValue(GetProcessor(), frame, *DeclArg::Any) ||
+		!GetValueR().ReadyToPickValue(GetProcessor(), frame, *DeclArg::Any)) return nullptr;
 	RefPtr<Value> pValueEachL(GetValueL().PickValue());
 	RefPtr<Value> pValueEachR(GetValueR().PickValue());
 	const VType& vtypeL = pValueEachL->GetVTypeCustom();
@@ -177,13 +177,13 @@ Value* Iterator_FunctionImpMap<skipNilFlag>::DoNextValue()
 	Frame& frame = GetProcessor().GetFrameCur();
 	if (skipNilFlag) {
 		for (;;) {
-			if (!GetArgument().ReadyToPickValue(frame)) break;
+			if (!GetArgument().ReadyToPickValue(GetProcessor(), frame)) break;
 			RefPtr<Value> pValueRtn(GetFunction().Eval(GetProcessor(), GetArgument()));
 			if (pValueRtn->IsValid()) return pValueRtn.release();
 		}
 		return nullptr;
 	} else {
-		if (!GetArgument().ReadyToPickValue(frame)) return nullptr;
+		if (!GetArgument().ReadyToPickValue(GetProcessor(), frame)) return nullptr;
 		RefPtr<Value> pValueRtn(GetFunction().Eval(GetProcessor(), GetArgument()));
 		if (Error::IsIssued()) return nullptr;
 		return pValueRtn.release();
@@ -289,7 +289,7 @@ Value* Iterator_cross::DoNextValue()
 					_contFlag = false;
 					goto done;
 				}
-				if (!GetFrame().AssignWithCast(declArg, *pValue)) {
+				if (!GetFrame().AssignWithCast(GetProcessor(), declArg, *pValue)) {
 					_contFlag = false;
 					goto done;
 				}
@@ -301,7 +301,7 @@ Value* Iterator_cross::DoNextValue()
 				Iterator& iterator = **ppIterator;
 				RefPtr<Value> pValue(iterator.NextValue());
 				if (pValue) {
-					if (!GetFrame().AssignWithCast(declArg, *pValue)) {
+					if (!GetFrame().AssignWithCast(GetProcessor(), declArg, *pValue)) {
 						_contFlag = false;
 						goto done;
 					}
@@ -313,7 +313,7 @@ Value* Iterator_cross::DoNextValue()
 					_contFlag = false;
 					goto done;
 				}
-				if (!GetFrame().AssignWithCast(declArg, *pValue)) {
+				if (!GetFrame().AssignWithCast(GetProcessor(), declArg, *pValue)) {
 					_contFlag = false;
 					goto done;
 				}
@@ -325,7 +325,7 @@ Value* Iterator_cross::DoNextValue()
 		}
 		if (GetArgument().HasArgSlot()) {
 			ArgFeeder args(GetArgument(), GetFrame());
-			if (!args.FeedValue(new Value_Number(_idx))) {
+			if (!args.FeedValue(GetProcessor(), new Value_Number(_idx))) {
 				_contFlag = false;
 				break;
 			}
@@ -380,14 +380,14 @@ Value* Iterator_for::DoNextValue()
 				_contFlag = false;
 				goto done;
 			}
-			if (!GetFrame().AssignWithCast(declArg, *pValue)) {
+			if (!GetFrame().AssignWithCast(GetProcessor(), declArg, *pValue)) {
 				_contFlag = false;
 				goto done;
 			}
 		}
 		if (GetArgument().HasArgSlot()) {
 			ArgFeeder args(GetArgument(), GetFrame());
-			if (!args.FeedValue(new Value_Number(_idx))) {
+			if (!args.FeedValue(GetProcessor(), new Value_Number(_idx))) {
 				_contFlag = false;
 				break;
 			}
@@ -439,7 +439,7 @@ Value* Iterator_while::DoNextValue()
 		}
 		if (GetArgument().HasArgSlot()) {
 			ArgFeeder args(GetArgument(), GetFrame());
-			if (!args.FeedValue(new Value_Number(_idx))) {
+			if (!args.FeedValue(GetProcessor(), new Value_Number(_idx))) {
 				_contFlag = false;
 				break;
 			}
@@ -484,7 +484,7 @@ Value* Iterator_repeat::DoNextValue()
 		if (GetFiniteFlag() && _idx >= _cnt) break;
 		if (GetArgument().HasArgSlot()) {
 			ArgFeeder args(GetArgument(), GetFrame());
-			if (!args.FeedValue(new Value_Number(_idx))) {
+			if (!args.FeedValue(GetProcessor(), new Value_Number(_idx))) {
 				_contFlag = false;
 				break;
 			}
@@ -529,8 +529,8 @@ Value* Iterator_DoEach::DoNextValue()
 		if (!pValue) return nullptr;
 		if (GetArgument().HasArgSlot()) {
 			ArgFeeder args(GetArgument(), GetFrame());
-			if (!args.FeedValue(pValue.Reference())) return Value::nil();
-			if (args.IsValid() && !args.FeedValue(new Value_Number(_idx))) return Value::nil();
+			if (!args.FeedValue(GetProcessor(), pValue.Reference())) return Value::nil();
+			if (args.IsValid() && !args.FeedValue(GetProcessor(), new Value_Number(_idx))) return Value::nil();
 		}
 		_idx++;
 		Event event;
@@ -907,8 +907,8 @@ Value* Iterator_SinceWithFunc::DoNextValue()
 		if (_triggeredFlag) return pValue.release();
 		if (GetArgument().HasArgSlot()) {
 			ArgFeeder args(GetArgument(), *pFrame);
-			if (!args.FeedValue(pValue.Reference())) return Value::nil();
-			if (args.IsValid() && !args.FeedValue(new Value_Number(_idx))) return Value::nil();
+			if (!args.FeedValue(GetProcessor(), pValue.Reference())) return Value::nil();
+			if (args.IsValid() && !args.FeedValue(GetProcessor(), new Value_Number(_idx))) return Value::nil();
 		}
 		_idx++;
 		RefPtr<Value> pValueRtn(GetFunction().Eval(GetProcessor(), GetArgument()));
@@ -985,8 +985,8 @@ Value* Iterator_UntilWithFunc::DoNextValue()
 	}
 	if (GetArgument().HasArgSlot()) {
 		ArgFeeder args(GetArgument(), *pFrame);
-		if (!args.FeedValue(pValue.Reference())) return Value::nil();
-		if (args.IsValid() && !args.FeedValue(new Value_Number(_idx))) return Value::nil();
+		if (!args.FeedValue(GetProcessor(), pValue.Reference())) return Value::nil();
+		if (args.IsValid() && !args.FeedValue(GetProcessor(), new Value_Number(_idx))) return Value::nil();
 	}
 	_idx++;
 	RefPtr<Value> pValueRtn(GetFunction().Eval(GetProcessor(), GetArgument()));
@@ -1059,8 +1059,8 @@ Value* Iterator_WhileWithFunc::DoNextValue()
 	}
 	if (GetArgument().HasArgSlot()) {
 		ArgFeeder args(GetArgument(), *pFrame);
-		if (!args.FeedValue(pValue.Reference())) return Value::nil();
-		if (args.IsValid() && !args.FeedValue(new Value_Number(_idx))) return Value::nil();
+		if (!args.FeedValue(GetProcessor(), pValue.Reference())) return Value::nil();
+		if (args.IsValid() && !args.FeedValue(GetProcessor(), new Value_Number(_idx))) return Value::nil();
 	}
 	_idx++;
 	RefPtr<Value> pValueRtn(GetFunction().Eval(GetProcessor(), GetArgument()));
@@ -1129,8 +1129,8 @@ Value* Iterator_FilterWithFunc::DoNextValue()
 		}
 		if (GetArgument().HasArgSlot()) {
 			ArgFeeder args(GetArgument(), *pFrame);
-			if (!args.FeedValue(pValue.Reference())) return Value::nil();
-			if (args.IsValid() && !args.FeedValue(new Value_Number(_idx))) return Value::nil();
+			if (!args.FeedValue(GetProcessor(), pValue.Reference())) return Value::nil();
+			if (args.IsValid() && !args.FeedValue(GetProcessor(), new Value_Number(_idx))) return Value::nil();
 		}
 		_idx++;
 		RefPtr<Value> pValueRtn(GetFunction().Eval(GetProcessor(), GetArgument()));

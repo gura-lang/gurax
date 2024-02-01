@@ -200,7 +200,7 @@ Gurax_ImplementOpBinary(Mul, Function, Any)
 {
 	Function& func = Value_Function::GetFunction(valueL);
 	RefPtr<Argument> pArgument(new Argument(processor, func, DeclCallable::Flag::None));
-	pArgument->FeedValue(processor.GetFrameCur(), valueR.Reference());
+	pArgument->FeedValue(processor, processor.GetFrameCur(), valueR.Reference());
 	return func.Eval(processor, *pArgument);
 }
 
@@ -210,7 +210,7 @@ Gurax_ImplementOpBinary(Mul, Function, Tuple)
 	Function& func = Value_Function::GetFunction(valueL);
 	ValueOwner& values = Value_Tuple::GetValueOwner(valueR);
 	RefPtr<Argument> pArgument(new Argument(processor, func, DeclCallable::Flag::None));
-	pArgument->FeedValues(processor.GetFrameCur(), values);
+	pArgument->FeedValues(processor, processor.GetFrameCur(), values);
 	return func.Eval(processor, *pArgument);
 }
 
@@ -220,7 +220,7 @@ Gurax_ImplementOpBinary(Mul, CallableMember, Any)
 	const DeclCallable* pDeclCallable = valueL.GetDeclCallableWithError();
 	if (!pDeclCallable) return Value::nil();
 	RefPtr<Argument> pArgument(new Argument(processor, pDeclCallable->Reference(), DeclCallable::Flag::None));
-	pArgument->FeedValue(processor.GetFrameCur(), valueR.Reference());
+	pArgument->FeedValue(processor, processor.GetFrameCur(), valueR.Reference());
 	return valueL.Eval(processor, *pArgument);
 }
 
@@ -231,7 +231,7 @@ Gurax_ImplementOpBinary(Mul, CallableMember, Tuple)
 	if (!pDeclCallable) return Value::nil();
 	ValueOwner& values = Value_Tuple::GetValueOwner(valueR);
 	RefPtr<Argument> pArgument(new Argument(processor, pDeclCallable->Reference(), DeclCallable::Flag::None));
-	pArgument->FeedValues(processor.GetFrameCur(), values);
+	pArgument->FeedValues(processor, processor.GetFrameCur(), values);
 	return valueL.Eval(processor, *pArgument);
 }
 
@@ -241,7 +241,7 @@ Gurax_ImplementOpBinary(Mul, VType, Any)
 	const DeclCallable* pDeclCallable = valueL.GetDeclCallableWithError();
 	if (!pDeclCallable) return Value::nil();
 	RefPtr<Argument> pArgument(new Argument(processor, pDeclCallable->Reference(), DeclCallable::Flag::None));
-	pArgument->FeedValue(processor.GetFrameCur(), valueR.Reference());
+	pArgument->FeedValue(processor, processor.GetFrameCur(), valueR.Reference());
 	return valueL.Eval(processor, *pArgument);
 }
 
@@ -252,7 +252,7 @@ Gurax_ImplementOpBinary(Mul, VType, Tuple)
 	if (!pDeclCallable) return Value::nil();
 	ValueOwner& values = Value_Tuple::GetValueOwner(valueR);
 	RefPtr<Argument> pArgument(new Argument(processor, pDeclCallable->Reference(), DeclCallable::Flag::None));
-	pArgument->FeedValues(processor.GetFrameCur(), values);
+	pArgument->FeedValues(processor, processor.GetFrameCur(), values);
 	return valueL.Eval(processor, *pArgument);
 }
 
@@ -285,7 +285,7 @@ void VType_Function::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpBinary(Mul, VType, Tuple);
 }
 
-Value* VType_Function::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_Function::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_VType)) {
 		const VType& vtype = Value_VType::GetVTypeThis(value);

@@ -1607,7 +1607,7 @@ void VType_List::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpBinary(Concat, List, Any);
 }
 
-Value* VType_List::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_List::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_Iterator)) {
 		Iterator& iterator = Value_Iterator::GetIterator(value);
@@ -1647,12 +1647,12 @@ void Value_List::UpdateMapMode(Argument& argument) const
 	if (argument.IsMapNone()) argument.SetMapMode(Argument::MapMode::ToList);
 }
 
-bool Value_List::FeedExpandToArgument(Frame& frame, Argument& argument)
+bool Value_List::FeedExpandToArgument(Processor& processor, Frame& frame, Argument& argument)
 {
 	const ValueOwner& valueOwner = GetValueOwner();
 	for (const Value* pValueElem : valueOwner) {
 		if (!argument.CheckArgSlotToFeed()) return false;
-		argument.FeedValue(frame, pValueElem->Reference());
+		argument.FeedValue(processor, frame, pValueElem->Reference());
 		if (Error::IsIssued()) return false;
 	}
 	return true;
@@ -1706,7 +1706,7 @@ bool Value_List::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) cons
 	return true;
 }
 
-bool Value_List::DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue)
+bool Value_List::DoSingleIndexSet(Processor& processor, const Value& valueIndex, RefPtr<Value> pValue)
 {
 	ValueTypedOwner& valueTypedOwner = GetValueTypedOwner();
 	size_t idx = 0;

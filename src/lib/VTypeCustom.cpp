@@ -42,7 +42,7 @@ bool VTypeCustom::AssignPropSlot(Processor& processor, const Symbol* pSymbol, VT
 	size_t iProp = valuesProp.size();
 	if (pVType) {
 		if (!pValueInit->IsNil()) {
-			pValueInit.reset(pVType->Cast(*pValueInit, pSymbol, flags));
+			pValueInit.reset(pVType->Cast(processor, *pValueInit, pSymbol, flags));
 			if (!pValueInit) return false;
 		}
 	} else if (flags & PropSlot::Flag::ListVar) {
@@ -97,7 +97,7 @@ void VTypeCustom::PrepareForAssignment(Processor& processor, const Symbol* pSymb
 	GetConstructor().SetSymbol(pSymbol);
 }
 
-Value* VTypeCustom::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VTypeCustom::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	//if (GetCastFunction().IsEmpty()) return nullptr;
 	//GetCastFunction().EvalEasy(GetProcessor(), value.Reference(), new Value_DeclArg());
@@ -163,7 +163,7 @@ Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& arg
 	}
 	bool dynamicScopeFlag = false;
 	Frame& frame = processor.BeginFunction(*this, dynamicScopeFlag);
-	argument.AssignToFrame(frame, processor.GetFrameCur());
+	argument.AssignToFrame(processor, frame, processor.GetFrameCur());
 	RefPtr<Argument> pArgumentInh(new Argument(processor, constructorInh));
 	processor.PushValue(new Value_Argument(pArgumentInh.Reference()));
 	Value::Delete(processor.ProcessPUnit(GetExprBody().GetPUnitSubFirst()));
@@ -184,7 +184,7 @@ Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& arg
 		processor.EndFunction(true);
 		return Value::nil();
 	}
-	argument.AssignThisToFrame(frame, pValueThis->PickValue());
+	argument.AssignThisToFrame(processor, frame, pValueThis->PickValue());
 	Value::Delete(processor.ProcessPUnit(GetPUnitBody()));
 	processor.EndFunction(true);
 	processor.ClearEvent();
@@ -258,7 +258,7 @@ Value* VTypeCustom::ConstructorStruct::DoEval(Processor& processor, Argument& ar
 		}
 		const Value& value = args.PickValue();
 		if (!pPropSlot->IsSet(PropSlot::Flag::Nil) && value.IsNil()) continue;
-		if (!pPropSlot->SetValue(*pValueThis, value, *Attribute::Empty)) {
+		if (!pPropSlot->SetValue(processor, *pValueThis, value, *Attribute::Empty)) {
 			return Value::nil();
 		}
 	}

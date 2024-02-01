@@ -183,7 +183,7 @@ Value* Value_OLE::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bo
 	return pValue.release();
 }
 
-bool Value_OLE::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
+bool Value_OLE::DoSetProperty(Processor& processor, const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
 	HRESULT hr;
 	DISPID dispid;

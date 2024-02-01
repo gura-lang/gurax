@@ -125,7 +125,7 @@ const PropSlot* VType::LookupPropSlot(const Symbol* pSymbol) const
 	return nullptr;
 }
 
-Value* VType::Cast(const Value& value, const Symbol* pSymbol, DeclArg::Flags flags) const
+Value* VType::Cast(Processor& processor, const Value& value, const Symbol* pSymbol, DeclArg::Flags flags) const
 {
 	auto IssueError = [](const VType& vtype, const Symbol* pSymbol, const Value& value) {
 		if (Error::IsIssued()) {
@@ -156,7 +156,7 @@ Value* VType::Cast(const Value& value, const Symbol* pSymbol, DeclArg::Flags fla
 				if (pValueElem->IsInstanceOf(*this)) {
 					pValuesCasted->push_back(pValueElem->Reference());
 				} else {
-					RefPtr<Value> pValueElemCasted(DoCastFrom(*pValueElem, flags));
+					RefPtr<Value> pValueElemCasted(DoCastFrom(processor, *pValueElem, flags));
 					if (!pValueElemCasted) {
 						IssueError(*this, pSymbol, *pValueElem);
 						return nullptr;
@@ -172,7 +172,7 @@ Value* VType::Cast(const Value& value, const Symbol* pSymbol, DeclArg::Flags fla
 				if (pValueElem->IsInstanceOf(*this)) {
 					pValuesCasted->push_back(pValueElem->Reference());
 				} else {
-					RefPtr<Value> pValueElemCasted(DoCastFrom(*pValueElem, flags));
+					RefPtr<Value> pValueElemCasted(DoCastFrom(processor, *pValueElem, flags));
 					if (!pValueElemCasted) {
 						IssueError(*this, pSymbol, *pValueElem);
 						return nullptr;
@@ -202,7 +202,7 @@ Value* VType::Cast(const Value& value, const Symbol* pSymbol, DeclArg::Flags fla
 	//	}
 	//	return constructor.EvalEasy(processor, Value_Tuple::GetValueOwner(value));
 	} else {
-		RefPtr<Value> pValueCasted(DoCastFrom(value, flags));
+		RefPtr<Value> pValueCasted(DoCastFrom(processor, value, flags));
 		if (!pValueCasted) {
 			IssueError(*this, pSymbol, value);
 			return nullptr;
@@ -211,7 +211,7 @@ Value* VType::Cast(const Value& value, const Symbol* pSymbol, DeclArg::Flags fla
 	}
 }
 
-Value* VType::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	return nullptr;
 }

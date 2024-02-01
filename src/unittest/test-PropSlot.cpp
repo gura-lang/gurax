@@ -10,7 +10,7 @@ public:
 	using PropSlot::PropSlot;
 protected:
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override { return nullptr; }
-	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override {}
+	virtual void DoSetValue(Processor& processor, Value& valueTarget, const Value& value, const Attribute& attr) const override {}
 };
 
 Gurax_TesterEntry(PropSlot)

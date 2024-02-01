@@ -99,9 +99,9 @@ void VType_LabelSet::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(LabelSet, nClasses));
 }
 
-Value* VType_LabelSet::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_LabelSet::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
-	RefPtr<Value_Stream> pValueCasted(value.Cast<Value_Stream>(flags));
+	RefPtr<Value_Stream> pValueCasted(value.Cast<Value_Stream>(processor, flags));
 	if (!pValueCasted) return nullptr;
 	RefPtr<LabelSet> pLabelSet(new LabelSet());
 	if (!pLabelSet->Read(pValueCasted->GetStream())) return nullptr;

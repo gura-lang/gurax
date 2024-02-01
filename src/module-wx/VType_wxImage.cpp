@@ -1380,7 +1380,7 @@ void VType_wxImage::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxImage, GetImageCount_gurax));
 }
 
-Value* VType_wxImage::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_wxImage::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	RefPtr<Value_Image> pValueCasted(value.Cast<Value_Image>(flags));
 	if (pValueCasted) {

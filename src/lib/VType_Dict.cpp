@@ -436,7 +436,7 @@ bool Value_Dict::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) cons
 	return false;
 }
 
-bool Value_Dict::DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue)
+bool Value_Dict::DoSingleIndexSet(Processor& processor, const Value& valueIndex, RefPtr<Value> pValue)
 {
 	GetValueDict().Assign(valueIndex.Reference(), pValue.release());
 	return true;

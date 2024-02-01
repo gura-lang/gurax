@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // BasicVType
 //------------------------------------------------------------------------------
-void BasicVType::Prepare(Frame& frame)
+void BasicVType::Prepare(Processor& processor, Frame& frame)
 {
 	frame.Assign(VTYPE_Object);
 	frame.Assign(VTYPE_Any);

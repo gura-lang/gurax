@@ -257,7 +257,7 @@ Gurax_ImplementHybridPropertyGetter(VType, __symbol__)
 Gurax_ImplementOpBinary(As, Any, VType)
 {
 	const VType& vtype = Value_VType::GetVTypeThis(valueR);
-	RefPtr<Value> pValueResult(vtype.Cast(valueL, nullptr, DeclArg::Flag::ExplicitCast));
+	RefPtr<Value> pValueResult(vtype.Cast(processor, valueL, nullptr, DeclArg::Flag::ExplicitCast));
 	if (!pValueResult) return Value::undefined();
 	return pValueResult.release();
 }
@@ -382,7 +382,7 @@ Value* Value_VType::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, 
 	return pPropSlot->GetValue(*this, attr);
 }
 
-bool Value_VType::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
+bool Value_VType::DoSetProperty(Processor& processor, const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
 	const PropSlot* pPropSlot = GetVTypeThis().LookupPropSlot(pSymbol);
 	if (!pPropSlot) {
@@ -399,7 +399,7 @@ bool Value_VType::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, con
 			"property '%s' belongs to an instance", pSymbol->GetName());
 		return false;
 	}
-	return pPropSlot->SetValue(*this, *pValue, attr);
+	return pPropSlot->SetValue(processor, *this, *pValue, attr);
 }
 
 bool Value_VType::DoAssignCustomMethod(RefPtr<Function> pFunction)

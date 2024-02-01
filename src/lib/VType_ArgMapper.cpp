@@ -52,11 +52,11 @@ Iterator* Value_ArgMapper::DoGenIterator() const
 	return GetIterator().Reference();
 }
 
-bool Value_ArgMapper::ReadyToPickValue(Frame& frame, DeclArg& declArg)
+bool Value_ArgMapper::ReadyToPickValue(Processor& processor, Frame& frame, DeclArg& declArg)
 {
 	RefPtr<Value> pValue(GetIterator().NextValue());
 	if (!pValue) return false;
-	_pValue.reset(declArg.Cast(frame, *pValue));
+	_pValue.reset(declArg.Cast(processor, frame, *pValue));
 	return !!_pValue;
 }
 

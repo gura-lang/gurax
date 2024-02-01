@@ -97,7 +97,7 @@ Gurax_ImplementPropertyGetter(Referencer, at_)
 Gurax_ImplementPropertySetter(Referencer, at_)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	valueThis.GetReferencer().SetValue(value.Reference());
+	valueThis.GetReferencer().SetValue(processor, value.Reference());
 }
 
 //------------------------------------------------------------------------------

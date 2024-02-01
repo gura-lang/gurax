@@ -271,7 +271,7 @@ void VType_Palette::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Palette, len));
 }
 
-Value* VType_Palette::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_Palette::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_Expr)) {
 		const Symbol* pSymbol = Value_Expr::GetExpr(value).GetPureSymbol();
@@ -330,9 +330,9 @@ bool Value_Palette::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) c
 	return true;
 }
 
-bool Value_Palette::DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue)
+bool Value_Palette::DoSingleIndexSet(Processor& processor, const Value& valueIndex, RefPtr<Value> pValue)
 {
-	RefPtr<Value_Color> pValueCasted(pValue->Cast<Value_Color>());
+	RefPtr<Value_Color> pValueCasted(pValue->Cast<Value_Color>(processor));
 	if (!pValueCasted) return false;
 	const Color& color = pValueCasted->GetColor();
 	Palette& palette = GetPalette();

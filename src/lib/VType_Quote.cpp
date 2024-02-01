@@ -37,7 +37,7 @@ void VType_Quote::DoPrepare(Frame& frameOuter)
 	Declare(VType::Invalid, Flag::Immutable);
 }
 
-Value* VType_Quote::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_Quote::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	return value.IsInstanceOf(VTYPE_Expr)? value.Reference() : nullptr;
 }

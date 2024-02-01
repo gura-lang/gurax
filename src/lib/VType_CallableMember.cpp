@@ -74,9 +74,9 @@ Value* Value_CallableMember::DoIndexGet(const Index& index) const
 	return GetValueProp().IndexGet(index);
 }
 
-void Value_CallableMember::DoIndexSet(const Index& index, RefPtr<Value> pValue)
+void Value_CallableMember::DoIndexSet(Processor& processor, const Index& index, RefPtr<Value> pValue)
 {
-	GetValueProp().IndexSet(index, pValue.release());
+	GetValueProp().IndexSet(processor, index, pValue.release());
 }		
 
 bool Value_CallableMember::DoEmptyIndexGet(Value** ppValue) const
@@ -94,9 +94,9 @@ bool Value_CallableMember::DoSingleIndexGet(const Value& valueIndex, Value** ppV
 	return GetValueProp().DoSingleIndexGet(valueIndex, ppValue);
 }
 
-bool Value_CallableMember::DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue)
+bool Value_CallableMember::DoSingleIndexSet(Processor& processor, const Value& valueIndex, RefPtr<Value> pValue)
 {
-	return GetValueProp().DoSingleIndexSet(valueIndex, pValue.release());
+	return GetValueProp().DoSingleIndexSet(processor, valueIndex, pValue.release());
 }
 
 Value* Value_CallableMember::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
@@ -104,9 +104,9 @@ Value* Value_CallableMember::DoGetProperty(const Symbol* pSymbol, const Attribut
 	return GetValueProp().GetProperty(pSymbol, attr, notFoundErrorFlag);
 }
 
-bool Value_CallableMember::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
+bool Value_CallableMember::DoSetProperty(Processor& processor, const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
-	return GetValueProp().SetProperty(pSymbol, pValue.release(), attr);
+	return GetValueProp().SetProperty(processor, pSymbol, pValue.release(), attr);
 }
 
 }

@@ -132,7 +132,7 @@ String Pattern::ReplaceByFunction(const char* str, Processor& processor, const F
 		RefPtr<Match> pMatch(new Match(Reference(), region.release(), str));
 		RefPtr<Argument> pArgument(new Argument(processor, func));
 		ArgFeeder args(*pArgument, *pFrame);
-		if (!args.FeedValue(new Value_Match(pMatch.release()))) return String::Empty;
+		if (!args.FeedValue(processor, new Value_Match(pMatch.release()))) return String::Empty;
 		RefPtr<Value> pValueRtn(func.DoEval(processor, *pArgument));
 		if (Error::IsIssued()) return String::Empty;
 		strRtn += String(str + idx, rtn - idx);

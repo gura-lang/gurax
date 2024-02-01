@@ -745,7 +745,7 @@ void VType_Stream::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpBinary(Shl, Stream, String);
 }
 
-Value* VType_Stream::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_Stream::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_String)) {
 		const char* pathName = Value_String::GetString(value);

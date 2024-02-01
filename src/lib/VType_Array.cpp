@@ -1635,7 +1635,7 @@ Value* Value_Array::DoIndexGet(const Index& index) const
 					byteOffset, array.GetMemory().Reference()));
 }
 
-void Value_Array::DoIndexSet(const Index& index, RefPtr<Value> pValue)
+void Value_Array::DoIndexSet(Processor& processor, const Index& index, RefPtr<Value> pValue)
 {
 	Array& array = GetArray();
 	const ValueList& valuesIndex = index.GetValueOwner();

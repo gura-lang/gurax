@@ -175,7 +175,7 @@ void VType_SDL_Surface::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(SDL_Surface, refcount));
 }
 
-Value* VType_SDL_Surface::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_SDL_Surface::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_Image)) {
 		return Value_SDL_Surface::Create(Value_Image::GetImage(value).Reference());

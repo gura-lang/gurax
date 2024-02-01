@@ -458,7 +458,7 @@ void VType_Complex::DoPrepare(Frame& frameOuter)
 	Gurax_AssignSuffixMgr(Number, j);
 }
 
-Value* VType_Complex::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_Complex::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_Number)) {
 		return new Value_Complex(Complex(Value_Number::GetNumber<Double>(value)));

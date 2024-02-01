@@ -354,7 +354,7 @@ bool Value_Binary::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) co
 	return true;
 }
 
-bool Value_Binary::DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue)
+bool Value_Binary::DoSingleIndexSet(Processor& processor, const Value& valueIndex, RefPtr<Value> pValue)
 {
 	Error::Issue(ErrorType::IndexError, "modification by index access is not permitted");
 	return false;

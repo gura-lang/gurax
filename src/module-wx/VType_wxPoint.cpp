@@ -159,7 +159,7 @@ void VType_wxPoint::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(wxPoint, y));
 }
 
-Value* VType_wxPoint::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_wxPoint::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsInstanceOf(VTYPE_wxRealPoint)) {
 		const wxRealPoint& pt = Value_wxRealPoint::GetEntity(value);

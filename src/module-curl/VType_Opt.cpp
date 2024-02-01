@@ -95,7 +95,7 @@ String Value_Opt::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, GetOpt().ToString(ss));
 }
 
-bool Value_Opt::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
+bool Value_Opt::DoSetProperty(Processor& processor, const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
 	return GetOpt().SetProperty(pSymbol, *pValue);
 }

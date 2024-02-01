@@ -823,7 +823,7 @@ void VType_Pointer::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpBinary(Sub, Pointer, Pointer);
 }
 
-Value* VType_Pointer::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_Pointer::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_Binary)) {
 		const BinaryReferable& buff = Value_Binary::GetBinaryReferable(value);
@@ -866,7 +866,7 @@ bool Value_Pointer::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) c
 	return true;
 }
 
-bool Value_Pointer::DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue)
+bool Value_Pointer::DoSingleIndexSet(Processor& processor, const Value& valueIndex, RefPtr<Value> pValue)
 {
 	if (!valueIndex.IsInstanceOf(VTYPE_Number)) {
 		Error::Issue(ErrorType::IndexError,

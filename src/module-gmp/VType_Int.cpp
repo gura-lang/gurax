@@ -136,7 +136,7 @@ void VType_Int::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Int, sign));
 }
 
-Value* VType_Int::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_Int::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	mpz_t num;
 	mpz_init(num);

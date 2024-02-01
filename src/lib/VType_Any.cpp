@@ -76,7 +76,7 @@ void VType_Any::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpBinary(Pair, Any, Any);
 }
 
-Value* VType_Any::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_Any::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	return value.Reference();
 }

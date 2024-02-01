@@ -76,30 +76,30 @@ void Frame::Assign(const Symbol* pSymbol, Value* pValue)
 	pFrame->DoAssign(pSymbol, pValue);
 }
 
-bool Frame::Assign(const DottedSymbol& dottedSymbol, Value* pValue)
+bool Frame::Assign(Processor& processor, const DottedSymbol& dottedSymbol, Value* pValue)
 {
 	if (dottedSymbol.IsEmpty()) return false;
 	if (dottedSymbol.IsDotted()) {
 		RefPtr<Value> pValueTarget(Retrieve(dottedSymbol, 1));
 		if (!pValueTarget) return false;
-		return pValueTarget->SetProperty(dottedSymbol.GetSymbolLast(), pValue, *Attribute::Empty);
+		return pValueTarget->SetProperty(processor, dottedSymbol.GetSymbolLast(), pValue, *Attribute::Empty);
 	} else {
 		Assign(dottedSymbol.GetSymbolLast(), pValue);
 		return true;
 	}
 }
 
-bool Frame::AssignWithCast(DeclArg& declArg, const Value& value)
+bool Frame::AssignWithCast(Processor& processor, DeclArg& declArg, const Value& value)
 {
-	RefPtr<Value> pValueCasted(declArg.Cast(*this, value));
+	RefPtr<Value> pValueCasted(declArg.Cast(processor, *this, value));
 	if (!pValueCasted) return false;
-	AssignFromArgument(declArg.GetSymbol(), pValueCasted.release());
+	AssignFromArgument(processor, declArg.GetSymbol(), pValueCasted.release());
 	return true;
 }
 
-bool Frame::Assign(Module* pModule)
+bool Frame::Assign(Processor& processor, Module* pModule)
 {
-	return Assign(pModule->GetDottedSymbol(), new Value_Module(pModule));
+	return Assign(processor, pModule->GetDottedSymbol(), new Value_Module(pModule));
 }
 
 void Frame::Assign(VType& vtype)
@@ -197,7 +197,7 @@ void Frame_ValueMap::DoAssign(const Symbol* pSymbol, Value* pValue)
 	_pValueMap->Assign(pSymbol, pValue);
 }
 
-void Frame_ValueMap::DoAssignFromArgument(const Symbol* pSymbol, Value* pValue)
+void Frame_ValueMap::DoAssignFromArgument(Processor& processor, const Symbol* pSymbol, Value* pValue)
 {
 	_pValueMap->Assign(pSymbol, pValue);
 }
@@ -223,9 +223,9 @@ Value* Frame_ValueMap::DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc
 	return nullptr;
 }
 
-bool Frame_ValueMap::ExportTo(Frame& frameDst, bool overwriteFlag) const
+bool Frame_ValueMap::ExportTo(Processor& processor, Frame& frameDst, bool overwriteFlag) const
 {
-	return _pValueMap->ExportTo(frameDst, overwriteFlag);
+	return _pValueMap->ExportTo(processor, frameDst, overwriteFlag);
 }
 
 void Frame_ValueMap::GatherSymbol(SymbolList& symbolList) const
@@ -259,7 +259,7 @@ void Frame_OfMember::DoAssign(const Symbol* pSymbol, Value* pValue)
 	_pValueMap->Assign(pSymbol, pValue);
 }
 
-void Frame_OfMember::DoAssignFromArgument(const Symbol* pSymbol, Value* pValue)
+void Frame_OfMember::DoAssignFromArgument(Processor& processor, const Symbol* pSymbol, Value* pValue)
 {
 	Value::Delete(pValue);
 }
@@ -284,9 +284,9 @@ Value* Frame_OfMember::DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc
 	return nullptr;
 }
 
-bool Frame_OfMember::ExportTo(Frame& frameDst, bool overwriteFlag) const
+bool Frame_OfMember::ExportTo(Processor& processor, Frame& frameDst, bool overwriteFlag) const
 {
-	return _pValueMap->ExportTo(frameDst, overwriteFlag);
+	return _pValueMap->ExportTo(processor, frameDst, overwriteFlag);
 }
 
 void Frame_OfMember::GatherSymbol(SymbolList& symbolList) const
@@ -327,7 +327,7 @@ void Frame_Basement::DoAssign(const Symbol* pSymbol, Value* pValue)
 	_pFrameOuter->DoAssign(pSymbol, pValue);
 }
 
-void Frame_Basement::DoAssignFromArgument(const Symbol* pSymbol, Value* pValue)
+void Frame_Basement::DoAssignFromArgument(Processor& processor, const Symbol* pSymbol, Value* pValue)
 {
 	Value::Delete(pValue);
 }
@@ -369,7 +369,7 @@ void Frame_Module::DoAssign(const Symbol* pSymbol, Value* pValue)
 	_pFrameLocal->DoAssign(pSymbol, pValue);
 }
 
-void Frame_Module::DoAssignFromArgument(const Symbol* pSymbol, Value* pValue)
+void Frame_Module::DoAssignFromArgument(Processor& processor, const Symbol* pSymbol, Value* pValue)
 {
 	if (!_pFrameLocal) _pFrameLocal.reset(new Frame_ValueMap());
 	_pFrameLocal->DoAssign(pSymbol, pValue);
@@ -416,7 +416,7 @@ void Frame_Scope::DoAssign(const Symbol* pSymbol, Value* pValue)
 	_pFrameLocal->DoAssign(pSymbol, pValue);
 }
 
-void Frame_Scope::DoAssignFromArgument(const Symbol* pSymbol, Value* pValue)
+void Frame_Scope::DoAssignFromArgument(Processor& processor, const Symbol* pSymbol, Value* pValue)
 {
 	if (!_pFrameLocal) _pFrameLocal.reset(new Frame_ValueMap());
 	_pFrameLocal->DoAssign(pSymbol, pValue);
@@ -471,7 +471,7 @@ void Frame_Block::DoAssign(const Symbol* pSymbol, Value* pValue)
 	_pFrameOuter->DoAssign(pSymbol, pValue);
 }
 
-void Frame_Block::DoAssignFromArgument(const Symbol* pSymbol, Value* pValue)
+void Frame_Block::DoAssignFromArgument(Processor& processor, const Symbol* pSymbol, Value* pValue)
 {
 	_pFrameLocal->DoAssign(pSymbol, pValue);
 	if (!_pFrameMap) _pFrameMap.reset(new FrameMap());

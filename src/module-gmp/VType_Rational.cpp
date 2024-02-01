@@ -146,7 +146,7 @@ void VType_Rational::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Rational, sign));
 }
 
-Value* VType_Rational::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_Rational::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	mpq_t num;
 	mpq_init(num);

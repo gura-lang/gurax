@@ -100,7 +100,7 @@ Value* Expr::Eval(Processor& processor, Argument& argument) const
 	if (!GetPUnitFirst()) return Value::nil();
 	if (!argument.CompleteFeedValue(processor)) return Value::nil();
 	Frame& frameCur = processor.GetFrameCur();
-	argument.AssignToFrame(processor.PushFrame<Frame_Block>(), frameCur);
+	argument.AssignToFrame(processor, processor.PushFrame<Frame_Block>(), frameCur);
 	RefPtr<Value> pValue(processor.ProcessPUnit(GetPUnitFirst()));
 	processor.PopFrame();
 	processor.ClearEvent();
@@ -112,7 +112,7 @@ Value* Expr::Eval(Processor& processor, Argument& argument, Event& event) const
 	if (!GetPUnitFirst()) return Value::nil();
 	if (!argument.CompleteFeedValue(processor)) return Value::nil();
 	Frame& frameCur = processor.GetFrameCur();
-	argument.AssignToFrame(processor.PushFrame<Frame_Block>(), frameCur);
+	argument.AssignToFrame(processor, processor.PushFrame<Frame_Block>(), frameCur);
 	RefPtr<Value> pValue(processor.ProcessPUnit(GetPUnitFirst()));
 	event = processor.GetEvent();
 	processor.PopFrame();
@@ -1083,7 +1083,7 @@ Value* Expr_Block::EvalEasy(Processor& processor, RefPtr<Value> pValueArg) const
 {
 	RefPtr<Argument> pArgument(Argument::CreateForBlockCall(processor, *this));
 	ArgFeeder args(*pArgument, processor.GetFrameCur());
-	if (!args.FeedValue(pValueArg.release())) return Value::nil();
+	if (!args.FeedValue(processor, pValueArg.release())) return Value::nil();
 	return Eval(processor, *pArgument);
 }
 
@@ -1091,8 +1091,8 @@ Value* Expr_Block::EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefP
 {
 	RefPtr<Argument> pArgument(Argument::CreateForBlockCall(processor, *this));
 	ArgFeeder args(*pArgument, processor.GetFrameCur());
-	if (!args.FeedValue(pValueArg1.release())) return Value::nil();
-	if (!args.FeedValue(pValueArg2.release())) return Value::nil();
+	if (!args.FeedValue(processor, pValueArg1.release())) return Value::nil();
+	if (!args.FeedValue(processor, pValueArg2.release())) return Value::nil();
 	return Eval(processor, *pArgument);
 }
 

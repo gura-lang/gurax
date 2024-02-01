@@ -11,6 +11,7 @@ class DeclArg;
 class Frame;
 class Function;
 class Module;
+class Processor;
 class PropSlotMap;
 class Stream;
 class StringStyle;
@@ -97,11 +98,11 @@ public:
 		RefPtr<Value> pValue(RetrieveLocal(pSymbol)); return !!pValue;
 	}
 	void Assign(const Symbol* pSymbol, Value* pValue);
-	void AssignFromArgument(const Symbol* pSymbol, Value* pValue) { DoAssignFromArgument(pSymbol, pValue); }
-	bool Assign(const DottedSymbol& dottedSymbol, Value* pValue);
+	void AssignFromArgument(Processor& processor, const Symbol* pSymbol, Value* pValue) { DoAssignFromArgument(processor, pSymbol, pValue); }
+	bool Assign(Processor& processor, const DottedSymbol& dottedSymbol, Value* pValue);
 	void Assign(const char* name, Value* pValue) { Assign(Symbol::Add(name), pValue); }
-	bool AssignWithCast(DeclArg& declArg, const Value& value);
-	bool Assign(Module* pModule);
+	bool AssignWithCast(Processor& processor, DeclArg& declArg, const Value& value);
+	bool Assign(Processor& processor, Module* pModule);
 	void Assign(VType& vtype);
 	void Assign(Function* pFunction);
 	static String MakeFullName(const Frame* pFrame, const char* name);
@@ -115,10 +116,10 @@ public:
 	virtual bool IsFrameOfFunction() const { return false; }
 	virtual bool IsFrameOfBlock() const { return false; }
 	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) = 0;
-	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) = 0;
+	virtual void DoAssignFromArgument(Processor& processor, const Symbol* pSymbol, Value* pValue) = 0;
 	virtual Value* DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc) = 0;
 	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc) = 0;
-	virtual bool ExportTo(Frame& frameDst, bool overwriteFlag) const { return true; }
+	virtual bool ExportTo(Processor& processor, Frame& frameDst, bool overwriteFlag) const { return true; }
 	virtual const DottedSymbol& GetDottedSymbol() const { return DottedSymbol::Empty; }
 	virtual void GatherSymbol(SymbolList& symbolList) const {}
 	virtual void GatherSymbolIf(SymbolList& symbolList, const GatherCriteria& gatherCriteria) const {}
@@ -186,10 +187,10 @@ protected:
 public:
 	// Virtual functions of Frame
 	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) override;
-	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
+	virtual void DoAssignFromArgument(Processor& processor, const Symbol* pSymbol, Value* pValue) override;
 	virtual Value* DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc) override;
-	virtual bool ExportTo(Frame& frameDst, bool overwriteFlag) const override;
+	virtual bool ExportTo(Processor& processor, Frame& frameDst, bool overwriteFlag) const override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
 	virtual void GatherSymbolIf(SymbolList& symbolList, const GatherCriteria& gatherCriteria) const override;
 	virtual const char* GetTypeName() const override { return name; }
@@ -222,10 +223,10 @@ public:
 	// Virtual functions of Frame
 	virtual bool IsFrameOfMember() const override { return true; }
 	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) override;
-	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
+	virtual void DoAssignFromArgument(Processor& processor, const Symbol* pSymbol, Value* pValue) override;
 	virtual Value* DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc) override;
-	virtual bool ExportTo(Frame& frameDst, bool overwriteFlag) const override;
+	virtual bool ExportTo(Processor& processor, Frame& frameDst, bool overwriteFlag) const override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
 	virtual void GatherSymbolIf(SymbolList& symbolList, const GatherCriteria& gatherCriteria) const override;
 	virtual const char* GetTypeName() const override { return name; }
@@ -247,8 +248,8 @@ public:
 	void SetFrameLocal(Frame* pFrame) { _pFrameLocal.reset(pFrame); }
 	Frame* GetFrameLocal() { return _pFrameLocal.get(); }
 	const Frame* GetFrameLocal() const { return _pFrameLocal.get(); }
-	virtual bool ExportTo(Frame& frameDst, bool overwriteFlag) const override {
-		return GetFrameLocal()? GetFrameLocal()->ExportTo(frameDst, overwriteFlag) : true;
+	virtual bool ExportTo(Processor& processor, Frame& frameDst, bool overwriteFlag) const override {
+		return GetFrameLocal()? GetFrameLocal()->ExportTo(processor, frameDst, overwriteFlag) : true;
 	}
 	Value* RetrieveLocal(const Symbol* pSymbol) {
 		return _pFrameLocal? _pFrameLocal->Retrieve(pSymbol) : nullptr;
@@ -276,7 +277,7 @@ public:
 	// Virtual functions of Frame
 	virtual bool IsFrameOfBasement() const override { return true; }
 	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) override;
-	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
+	virtual void DoAssignFromArgument(Processor& processor, const Symbol* pSymbol, Value* pValue) override;
 	virtual Value* DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
@@ -306,7 +307,7 @@ public:
 	// Virtual functions of Frame
 	virtual bool IsFrameOfModule() const override { return true; }
 	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) override;
-	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
+	virtual void DoAssignFromArgument(Processor& processor, const Symbol* pSymbol, Value* pValue) override;
 	virtual Value* DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual const DottedSymbol& GetDottedSymbol() const override { return *_pDottedSymbol; }
@@ -333,7 +334,7 @@ public:
 	// Virtual functions of Frame
 	virtual bool IsFrameOfScope() const override { return true; }
 	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) override;
-	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
+	virtual void DoAssignFromArgument(Processor& processor, const Symbol* pSymbol, Value* pValue) override;
 	virtual Value* DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
@@ -379,7 +380,7 @@ public:
 	// Virtual functions of Frame
 	virtual bool IsFrameOfBlock() const override { return true; }
 	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) override;
-	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
+	virtual void DoAssignFromArgument(Processor& processor, const Symbol* pSymbol, Value* pValue) override;
 	virtual Value* DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;

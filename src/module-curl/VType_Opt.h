@@ -76,7 +76,7 @@ public:
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 public:
-	virtual bool DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr);
+	virtual bool DoSetProperty(Processor& processor, const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr);
 };
 
 Gurax_EndModuleScope(curl)

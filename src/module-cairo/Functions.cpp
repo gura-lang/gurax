@@ -646,8 +646,8 @@ Gurax_ImplementFunctionEx(cairo_user_to_device_gurax, processor_gurax, argument_
 	double x_ = x->Get<Value_Number>().GetNumber<double>();
 	double y_ = y->Get<Value_Number>().GetNumber<double>();
 	cairo_user_to_device(cr, &x_, &y_);
-	x->SetValue(new Value_Number(x_));
-	y->SetValue(new Value_Number(y_));
+	x->SetValue(processor_gurax, new Value_Number(x_));
+	y->SetValue(processor_gurax, new Value_Number(y_));
 	return Value::nil();
 }
 
@@ -672,8 +672,8 @@ Gurax_ImplementFunctionEx(cairo_user_to_device_distance_gurax, processor_gurax, 
 	double dx_ = dx->Get<Value_Number>().GetNumber<double>();
 	double dy_ = dy->Get<Value_Number>().GetNumber<double>();
 	cairo_user_to_device_distance(cr, &dx_, &dy_);
-	dx->SetValue(new Value_Number(dx_));
-	dy->SetValue(new Value_Number(dy_));
+	dx->SetValue(processor_gurax, new Value_Number(dx_));
+	dy->SetValue(processor_gurax, new Value_Number(dy_));
 	return Value::nil();
 }
 
@@ -698,8 +698,8 @@ Gurax_ImplementFunctionEx(cairo_device_to_user_gurax, processor_gurax, argument_
 	double x_ = x->Get<Value_Number>().GetNumber<double>();
 	double y_ = y->Get<Value_Number>().GetNumber<double>();
 	cairo_device_to_user(cr, &x_, &y_);
-	x->SetValue(new Value_Number(x_));
-	y->SetValue(new Value_Number(y_));
+	x->SetValue(processor_gurax, new Value_Number(x_));
+	y->SetValue(processor_gurax, new Value_Number(y_));
 	return Value::nil();
 }
 
@@ -724,8 +724,8 @@ Gurax_ImplementFunctionEx(cairo_device_to_user_distance_gurax, processor_gurax, 
 	double dx_ = dx->Get<Value_Number>().GetNumber<double>();
 	double dy_ = dy->Get<Value_Number>().GetNumber<double>();
 	cairo_device_to_user_distance(cr, &dx_, &dy_);
-	dx->SetValue(new Value_Number(dx_));
-	dy->SetValue(new Value_Number(dy_));
+	dx->SetValue(processor_gurax, new Value_Number(dx_));
+	dy->SetValue(processor_gurax, new Value_Number(dy_));
 	return Value::nil();
 }
 
@@ -1037,10 +1037,10 @@ Gurax_ImplementFunctionEx(cairo_path_extents_gurax, processor_gurax, argument_gu
 	// Function body
 	double x1_, y1_, x2_, y2_;
 	cairo_path_extents(cr, &x1_, &y1_, &x2_, &y2_);
-	x1->SetValue(new Value_Number(x1_));
-	y1->SetValue(new Value_Number(y1_));
-	x2->SetValue(new Value_Number(x2_));
-	y2->SetValue(new Value_Number(y2_));
+	x1->SetValue(processor_gurax, new Value_Number(x1_));
+	y1->SetValue(processor_gurax, new Value_Number(y1_));
+	x2->SetValue(processor_gurax, new Value_Number(x2_));
+	y2->SetValue(processor_gurax, new Value_Number(y2_));
 	return Value::nil();
 }
 
@@ -1326,10 +1326,10 @@ Gurax_ImplementFunctionEx(cairo_stroke_extents_gurax, processor_gurax, argument_
 	// Function body
 	double x1_, y1_, x2_, y2_;
 	cairo_stroke_extents(cr, &x1_, &y1_, &x2_, &y2_);
-	x1->SetValue(new Value_Number(x1_));
-	y1->SetValue(new Value_Number(y1_));
-	x2->SetValue(new Value_Number(x2_));
-	y2->SetValue(new Value_Number(y2_));
+	x1->SetValue(processor_gurax, new Value_Number(x1_));
+	y1->SetValue(processor_gurax, new Value_Number(y1_));
+	x2->SetValue(processor_gurax, new Value_Number(x2_));
+	y2->SetValue(processor_gurax, new Value_Number(y2_));
 	return Value::nil();
 }
 
@@ -1357,10 +1357,10 @@ Gurax_ImplementFunctionEx(cairo_fill_extents_gurax, processor_gurax, argument_gu
 	// Function body
 	double x1_, y1_, x2_, y2_;
 	cairo_fill_extents(cr, &x1_, &y1_, &x2_, &y2_);
-	x1->SetValue(new Value_Number(x1_));
-	y1->SetValue(new Value_Number(y1_));
-	x2->SetValue(new Value_Number(x2_));
-	y2->SetValue(new Value_Number(y2_));
+	x1->SetValue(processor_gurax, new Value_Number(x1_));
+	y1->SetValue(processor_gurax, new Value_Number(y1_));
+	x2->SetValue(processor_gurax, new Value_Number(x2_));
+	y2->SetValue(processor_gurax, new Value_Number(y2_));
 	return Value::nil();
 }
 
@@ -1442,10 +1442,10 @@ Gurax_ImplementFunctionEx(cairo_clip_extents_gurax, processor_gurax, argument_gu
 	// Function body
 	double x1_, y1_, x2_, y2_;
 	cairo_clip_extents(cr, &x1_, &y1_, &x2_, &y2_);
-	x1->SetValue(new Value_Number(x1_));
-	y1->SetValue(new Value_Number(y1_));
-	x2->SetValue(new Value_Number(x2_));
-	y2->SetValue(new Value_Number(y2_));
+	x1->SetValue(processor_gurax, new Value_Number(x1_));
+	y1->SetValue(processor_gurax, new Value_Number(y1_));
+	x2->SetValue(processor_gurax, new Value_Number(x2_));
+	y2->SetValue(processor_gurax, new Value_Number(y2_));
 	return Value::nil();
 }
 
@@ -3053,8 +3053,8 @@ Gurax_ImplementFunctionEx(cairo_get_current_point_gurax, processor_gurax, argume
 	// Function body
 	double x_, y_;
 	cairo_get_current_point(cr, &x_, &y_);
-	x->SetValue(new Value_Number(x_));
-	y->SetValue(new Value_Number(y_));
+	x->SetValue(processor_gurax, new Value_Number(x_));
+	y->SetValue(processor_gurax, new Value_Number(y_));
 	return Value::nil();
 }
 
@@ -3188,8 +3188,8 @@ Gurax_ImplementFunctionEx(cairo_get_dash_gurax, processor_gurax, argument_gurax)
 	int dash_count_ = cairo_get_dash_count(cr);
 	std::unique_ptr<double []> dashes_(new double [dash_count_]);
 	cairo_get_dash(cr, dashes_.get(), &offset_);
-	dashes->SetValue(Value_Tuple::Create(dashes_.get(), dash_count_));
-	offset->SetValue(new Value_Number(offset_));
+	dashes->SetValue(processor_gurax, Value_Tuple::Create(dashes_.get(), dash_count_));
+	offset->SetValue(processor_gurax, new Value_Number(offset_));
 	return Value::nil();
 }
 
@@ -4347,8 +4347,8 @@ Gurax_ImplementFunctionEx(cairo_surface_get_device_scale_gurax, processor_gurax,
 	// Function body
 	double x_scale_, y_scale_;
 	cairo_surface_get_device_scale(surface, &x_scale_, &y_scale_);
-	x_scale->SetValue(new Value_Number(x_scale_));
-	y_scale->SetValue(new Value_Number(y_scale_));
+	x_scale->SetValue(processor_gurax, new Value_Number(x_scale_));
+	y_scale->SetValue(processor_gurax, new Value_Number(y_scale_));
 	return Value::nil();
 }
 
@@ -4394,8 +4394,8 @@ Gurax_ImplementFunctionEx(cairo_surface_get_device_offset_gurax, processor_gurax
 	// Function body
 	double x_offset_, y_offset_;
 	cairo_surface_get_device_offset(surface, &x_offset_, &y_offset_);
-	x_offset->SetValue(new Value_Number(x_offset_));
-	y_offset->SetValue(new Value_Number(y_offset_));
+	x_offset->SetValue(processor_gurax, new Value_Number(x_offset_));
+	y_offset->SetValue(processor_gurax, new Value_Number(y_offset_));
 	return Value::nil();
 }
 
@@ -4441,8 +4441,8 @@ Gurax_ImplementFunctionEx(cairo_surface_get_fallback_resolution_gurax, processor
 	// Function body
 	double x_pixels_per_inch_, y_pixels_per_inch_;
 	cairo_surface_get_device_offset(surface, &x_pixels_per_inch_, &y_pixels_per_inch_);
-	x_pixels_per_inch->SetValue(new Value_Number(x_pixels_per_inch_));
-	y_pixels_per_inch->SetValue(new Value_Number(y_pixels_per_inch_));
+	x_pixels_per_inch->SetValue(processor_gurax, new Value_Number(x_pixels_per_inch_));
+	y_pixels_per_inch->SetValue(processor_gurax, new Value_Number(y_pixels_per_inch_));
 	return Value::nil();
 }
 
@@ -5331,10 +5331,10 @@ Gurax_ImplementFunctionEx(cairo_pattern_get_rgba_gurax, processor_gurax, argumen
 	// Function body
 	double red_, green_, blue_, alpha_;
 	cairo_status_t rtn = cairo_pattern_get_rgba(pattern, &red_, &green_, &blue_, &alpha_);
-	red->SetValue(new Value_Number(red_));
-	green->SetValue(new Value_Number(green_));
-	blue->SetValue(new Value_Number(blue_));
-	alpha->SetValue(new Value_Number(alpha_));
+	red->SetValue(processor_gurax, new Value_Number(red_));
+	green->SetValue(processor_gurax, new Value_Number(green_));
+	blue->SetValue(processor_gurax, new Value_Number(blue_));
+	alpha->SetValue(processor_gurax, new Value_Number(alpha_));
 	return new Value_Number(rtn);
 }
 
@@ -5356,7 +5356,7 @@ Gurax_ImplementFunctionEx(cairo_pattern_get_surface_gurax, processor_gurax, argu
 	// Function body
 	cairo_surface_t* surface_;
 	cairo_status_t rtn = cairo_pattern_get_surface(pattern, &surface_);
-	surface->SetValue(new Value_cairo_surface_t(surface_));
+	surface->SetValue(processor_gurax, new Value_cairo_surface_t(surface_));
 	return new Value_Number(rtn);
 }
 
@@ -5388,11 +5388,11 @@ Gurax_ImplementFunctionEx(cairo_pattern_get_color_stop_rgba_gurax, processor_gur
 	// Function body
 	double offset_, red_, green_, blue_, alpha_;
 	cairo_status_t rtn = cairo_pattern_get_color_stop_rgba(pattern, index, &offset_, &red_, &green_, &blue_, &alpha_);
-	offset->SetValue(new Value_Number(offset_));
-	red->SetValue(new Value_Number(red_));
-	green->SetValue(new Value_Number(green_));
-	blue->SetValue(new Value_Number(blue_));
-	alpha->SetValue(new Value_Number(alpha_));
+	offset->SetValue(processor_gurax, new Value_Number(offset_));
+	red->SetValue(processor_gurax, new Value_Number(red_));
+	green->SetValue(processor_gurax, new Value_Number(green_));
+	blue->SetValue(processor_gurax, new Value_Number(blue_));
+	alpha->SetValue(processor_gurax, new Value_Number(alpha_));
 	return new Value_Number(rtn);
 }
 
@@ -5414,7 +5414,7 @@ Gurax_ImplementFunctionEx(cairo_pattern_get_color_stop_count_gurax, processor_gu
 	// Function body
 	int count_;
 	cairo_status_t rtn = cairo_pattern_get_color_stop_count(pattern, &count_);
-	count->SetValue(new Value_Number(count_));
+	count->SetValue(processor_gurax, new Value_Number(count_));
 	return new Value_Number(rtn);
 }
 
@@ -5442,10 +5442,10 @@ Gurax_ImplementFunctionEx(cairo_pattern_get_linear_points_gurax, processor_gurax
 	// Function body
 	double x0_, y0_, x1_, y1_;
 	cairo_status_t rtn = cairo_pattern_get_linear_points(pattern, &x0_, &y0_, &x1_, &y1_);
-	x0->SetValue(new Value_Number(x0_));
-	y0->SetValue(new Value_Number(y0_));
-	x1->SetValue(new Value_Number(x1_));
-	y1->SetValue(new Value_Number(y1_));
+	x0->SetValue(processor_gurax, new Value_Number(x0_));
+	y0->SetValue(processor_gurax, new Value_Number(y0_));
+	x1->SetValue(processor_gurax, new Value_Number(x1_));
+	y1->SetValue(processor_gurax, new Value_Number(y1_));
 	return new Value_Number(rtn);
 }
 
@@ -5477,12 +5477,12 @@ Gurax_ImplementFunctionEx(cairo_pattern_get_radial_circles_gurax, processor_gura
 	// Function body
 	double x0_, y0_, r0_, x1_, y1_, r1_;
 	cairo_status_t rtn = cairo_pattern_get_radial_circles(pattern, &x0_, &y0_, &r0_, &x1_, &y1_, &r1_);
-	x0->SetValue(new Value_Number(x0_));
-	y0->SetValue(new Value_Number(y0_));
-	r0->SetValue(new Value_Number(r0_));
-	x1->SetValue(new Value_Number(x1_));
-	y1->SetValue(new Value_Number(y1_));
-	r1->SetValue(new Value_Number(r1_));
+	x0->SetValue(processor_gurax, new Value_Number(x0_));
+	y0->SetValue(processor_gurax, new Value_Number(y0_));
+	r0->SetValue(processor_gurax, new Value_Number(r0_));
+	x1->SetValue(processor_gurax, new Value_Number(x1_));
+	y1->SetValue(processor_gurax, new Value_Number(y1_));
+	r1->SetValue(processor_gurax, new Value_Number(r1_));
 	return new Value_Number(rtn);
 }
 
@@ -5504,7 +5504,7 @@ Gurax_ImplementFunctionEx(cairo_mesh_pattern_get_patch_count_gurax, processor_gu
 	// Function body
 	unsigned int count_;
 	cairo_status_t rtn = cairo_mesh_pattern_get_patch_count(pattern, &count_);
-	count->SetValue(new Value_Number(count_));
+	count->SetValue(processor_gurax, new Value_Number(count_));
 	return new Value_Number(rtn);
 }
 
@@ -5557,10 +5557,10 @@ Gurax_ImplementFunctionEx(cairo_mesh_pattern_get_corner_color_rgba_gurax, proces
 	// Function body
 	double red_, green_, blue_, alpha_;
 	cairo_status_t rtn = cairo_mesh_pattern_get_corner_color_rgba(pattern, patch_num, corner_num, &red_, &green_, &blue_, &alpha_);
-	red->SetValue(new Value_Number(red_));
-	green->SetValue(new Value_Number(green_));
-	blue->SetValue(new Value_Number(blue_));
-	alpha->SetValue(new Value_Number(alpha_));
+	red->SetValue(processor_gurax, new Value_Number(red_));
+	green->SetValue(processor_gurax, new Value_Number(green_));
+	blue->SetValue(processor_gurax, new Value_Number(blue_));
+	alpha->SetValue(processor_gurax, new Value_Number(alpha_));
 	return new Value_Number(rtn);
 }
 
@@ -5588,8 +5588,8 @@ Gurax_ImplementFunctionEx(cairo_mesh_pattern_get_control_point_gurax, processor_
 	// Function body
 	double x_, y_;
 	cairo_status_t rtn = cairo_mesh_pattern_get_control_point(pattern, patch_num, point_num, &x_, &y_);
-	x->SetValue(new Value_Number(x_));
-	y->SetValue(new Value_Number(y_));
+	x->SetValue(processor_gurax, new Value_Number(x_));
+	y->SetValue(processor_gurax, new Value_Number(y_));
 	return new Value_Number(rtn);
 }
 
@@ -5832,8 +5832,8 @@ Gurax_ImplementFunctionEx(cairo_matrix_transform_distance_gurax, processor_gurax
 	double dx_ = dx->Get<Value_Number>().GetNumber<double>();
 	double dy_ = dy->Get<Value_Number>().GetNumber<double>();
 	cairo_matrix_transform_distance(matrix, &dx_, &dy_);
-	dx->SetValue(new Value_Number(dx_));
-	dy->SetValue(new Value_Number(dy_));
+	dx->SetValue(processor_gurax, new Value_Number(dx_));
+	dy->SetValue(processor_gurax, new Value_Number(dy_));
 	return Value::nil();
 }
 
@@ -5858,8 +5858,8 @@ Gurax_ImplementFunctionEx(cairo_matrix_transform_point_gurax, processor_gurax, a
 	double x_ = x->Get<Value_Number>().GetNumber<double>();
 	double y_ = y->Get<Value_Number>().GetNumber<double>();
 	cairo_matrix_transform_distance(matrix, &x_, &y_);
-	x->SetValue(new Value_Number(x_));
-	y->SetValue(new Value_Number(y_));
+	x->SetValue(processor_gurax, new Value_Number(x_));
+	y->SetValue(processor_gurax, new Value_Number(y_));
 	return Value::nil();
 }
 
@@ -6417,7 +6417,7 @@ Gurax_ImplementFunctionEx(cairo_pdf_get_versions_gurax, processor_gurax, argumen
 	const cairo_pdf_version_t* versions_;
 	int num_version_;
 	cairo_pdf_get_versions(&versions_, &num_version_);
-	versions->SetValue(Value_Tuple::Create(reinterpret_cast<const int*>(versions_), num_version_));
+	versions->SetValue(processor_gurax, Value_Tuple::Create(reinterpret_cast<const int*>(versions_), num_version_));
 	return Value::nil();
 }
 
@@ -6629,7 +6629,7 @@ Gurax_ImplementFunctionEx(cairo_ps_get_levels_gurax, processor_gurax, argument_g
 	const cairo_ps_level_t* levels_;
 	int num_levels_;
 	cairo_ps_get_levels(&levels_, &num_levels_);
-	levels->SetValue(Value_Tuple::Create(reinterpret_cast<const int*>(levels_), num_levels_));
+	levels->SetValue(processor_gurax, Value_Tuple::Create(reinterpret_cast<const int*>(levels_), num_levels_));
 	return Value::nil();
 }
 
@@ -7008,7 +7008,7 @@ Gurax_ImplementFunctionEx(cairo_svg_get_versions_gurax, processor_gurax, argumen
 	const cairo_svg_version_t* versions_;
 	int num_version_;
 	cairo_svg_get_versions(&versions_, &num_version_);
-	versions->SetValue(Value_Tuple::Create(reinterpret_cast<const int*>(versions_), num_version_));
+	versions->SetValue(processor_gurax, Value_Tuple::Create(reinterpret_cast<const int*>(versions_), num_version_));
 	return Value::nil();
 }
 

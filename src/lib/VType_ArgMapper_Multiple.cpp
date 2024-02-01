@@ -47,12 +47,12 @@ String Value_ArgMapper_Multiple::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, GetValueOwner().ToString(StringStyle(ss).SetWithSquare()));
 }
 
-bool Value_ArgMapper_Multiple::ReadyToPickValue(Frame& frame, DeclArg& declArg)
+bool Value_ArgMapper_Multiple::ReadyToPickValue(Processor& processor, Frame& frame, DeclArg& declArg)
 {
 	ValueTypedOwner& valueTypedOwner = _pValuePicked->GetValueTypedOwner();
 	valueTypedOwner.Clear();
 	for (Value* pValue : GetValueOwner()) {
-		if (!pValue->ReadyToPickValue(frame, declArg)) return false;
+		if (!pValue->ReadyToPickValue(processor, frame, declArg)) return false;
 		valueTypedOwner.Add(pValue->PickValue());
 	}
 	return true;

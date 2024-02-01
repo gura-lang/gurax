@@ -80,7 +80,7 @@ size_t Iterator::CountIf(Processor& processor, const Function& function)
 		RefPtr<Value> pValueElem(NextValue());
 		if (!pValueElem) break;
 		ArgFeeder args(*pArgument, frame);
-		args.FeedValue(pValueElem.release());
+		args.FeedValue(processor, pValueElem.release());
 		RefPtr<Value> pValueRtn(function.Eval(processor, *pArgument));
 		if (pValueRtn->GetBool()) cnt++;
 	}
@@ -111,10 +111,10 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 				RefPtr<Value> pValueElem(NextValue());
 				if (!pValueElem) break;
 				if (nArgs > 0) {
-					if (!frame.AssignWithCast(*declArgOwner[0], *pValueElem)) break;
+					if (!frame.AssignWithCast(processor, *declArgOwner[0], *pValueElem)) break;
 					if (nArgs > 1) {
 						RefPtr<Value> pValueIdx(new Value_Number(idx));
-						if (!frame.AssignWithCast(*declArgOwner[1], *pValueIdx)) break;
+						if (!frame.AssignWithCast(processor, *declArgOwner[1], *pValueIdx)) break;
 					}
 				}
 				idx++;
@@ -138,10 +138,10 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 				RefPtr<Value> pValueElem(NextValue());
 				if (!pValueElem) break;
 				if (nArgs > 0) {
-					if (!frame.AssignWithCast(*declArgOwner[0], *pValueElem)) break;
+					if (!frame.AssignWithCast(processor, *declArgOwner[0], *pValueElem)) break;
 					if (nArgs > 1) {
 						RefPtr<Value> pValueIdx(new Value_Number(idx));
-						if (!frame.AssignWithCast(*declArgOwner[1], *pValueIdx)) break;
+						if (!frame.AssignWithCast(processor, *declArgOwner[1], *pValueIdx)) break;
 					}
 				}
 				idx++;

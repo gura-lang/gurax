@@ -986,7 +986,7 @@ void VType_Number::DoPrepare(Frame& frameOuter)
 	Gurax_AssignSuffixMgr(Number, f);
 }
 
-Value* VType_Number::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_Number::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_Rational)) {
 		return new Value_Number(Value_Rational::GetRational(value).ToDouble());

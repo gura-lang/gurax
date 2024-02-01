@@ -166,7 +166,7 @@ void VType_Directory::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Directory, type));
 }
 
-Value* VType_Directory::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_Directory::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_String)) {
 		const char* pathName = Value_String::GetString(value);

@@ -260,7 +260,7 @@ void VType_Tuple::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpBinary(Concat, Tuple, Any);
 }
 
-Value* VType_Tuple::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_Tuple::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	if (value.HasCustomProp()) {
 		return new Value_Tuple(value.GetCustomProps().Reference());
@@ -269,7 +269,7 @@ Value* VType_Tuple::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 }
 
 #if 0
-Value* VType_Tuple::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_Tuple::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_Iterator)) {
 		Iterator& iterator = Value_Iterator::GetIterator(value);
@@ -296,12 +296,12 @@ String Value_Tuple::ToString(const StringStyle& ss) const
 				StringStyle::Flag::NilVisible | StringStyle::Flag::WithParenthesis));
 }
 
-bool Value_Tuple::FeedExpandToArgument(Frame& frame, Argument& argument)
+bool Value_Tuple::FeedExpandToArgument(Processor& processor, Frame& frame, Argument& argument)
 {
 	const ValueOwner& valueOwner = GetValueOwner();
 	for (const Value* pValueElem : valueOwner) {
 		if (!argument.CheckArgSlotToFeed()) return false;
-		argument.FeedValue(frame, pValueElem->Reference());
+		argument.FeedValue(processor, frame, pValueElem->Reference());
 		if (Error::IsIssued()) return false;
 	}
 	return true;
@@ -329,7 +329,7 @@ bool Value_Tuple::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) con
 	return true;
 }
 
-bool Value_Tuple::DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue)
+bool Value_Tuple::DoSingleIndexSet(Processor& processor, const Value& valueIndex, RefPtr<Value> pValue)
 {
 	ValueOwner& valueOwner = GetValueOwner();
 	size_t idx = 0;

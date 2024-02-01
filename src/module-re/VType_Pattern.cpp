@@ -231,7 +231,7 @@ void VType_Pattern::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Pattern, Scan));
 }
 
-Value* VType_Pattern::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_Pattern::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_String)) {
 		const char* pattern = Value_String::GetString(value);

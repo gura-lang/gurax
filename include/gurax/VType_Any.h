@@ -14,7 +14,7 @@ class GURAX_DLLDECLARE VType_Any : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
-	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
+	virtual Value* DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const override;
 };
 
 extern GURAX_DLLDECLARE VType_Any VTYPE_Any;

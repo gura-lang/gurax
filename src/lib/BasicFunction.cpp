@@ -82,7 +82,7 @@ ValueTypedOwner* DimSub(Processor& processor, NumList<Int>& cntList, NumList<Int
 			pArgSub->ResetAllValues();
 			ArgFeeder args(*pArgSub, frame);
 			for (Int idx : idxList) {
-				if (!args.FeedValue(new Value_Number(idx))) return nullptr;
+				if (!args.FeedValue(processor, new Value_Number(idx))) return nullptr;
 			}
 			RefPtr<Value> pValue(pExprOfBlock->Eval(processor, *pArgSub));
 			if (Error::IsIssued()) return nullptr;
@@ -518,7 +518,7 @@ Gurax_ImplementFunction(hex)
 //------------------------------------------------------------------------------
 // BasicFunction
 //------------------------------------------------------------------------------
-void BasicFunction::Prepare(Frame& frame)
+void BasicFunction::Prepare(Processor& processor, Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(Chr));
 	frame.Assign(Gurax_CreateFunction(Dim));

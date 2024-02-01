@@ -13,7 +13,7 @@ Value* PropSlotCustom_Instance::DoGetValue(Value& valueTarget, const Attribute& 
 	return valueTarget.GetCustomProp(_iProp);
 }
 
-void PropSlotCustom_Instance::DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const
+void PropSlotCustom_Instance::DoSetValue(Processor& processor, Value& valueTarget, const Value& value, const Attribute& attr) const
 {
 	valueTarget.SetCustomProp(_iProp, value.Reference());
 }
@@ -29,7 +29,7 @@ Value* PropSlotCustom_Class::DoGetValue(Value& valueTarget, const Attribute& att
 	return vtype.GetCustomPropOfClass(_iProp);
 }
 
-void PropSlotCustom_Class::DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const
+void PropSlotCustom_Class::DoSetValue(Processor& processor, Value& valueTarget, const Value& value, const Attribute& attr) const
 {
 	VTypeCustom& vtype = valueTarget.IsType(VTYPE_VType)?
 		dynamic_cast<VTypeCustom&>(dynamic_cast<Value_VType&>(valueTarget).GetVTypeThis()) :

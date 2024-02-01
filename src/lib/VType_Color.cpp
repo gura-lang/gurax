@@ -309,7 +309,7 @@ void VType_Color::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Color, grayScale));
 }
 
-Value* VType_Color::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_Color::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_String)) {
 		const char* name = Value_String::GetString(value);

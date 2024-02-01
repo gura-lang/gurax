@@ -61,7 +61,7 @@ Value* Value::EvalEasy(Processor& processor, RefPtr<Value> pValueArg, DeclCallab
 	if (!pDeclCallable) return Value::nil();
 	RefPtr<Argument> pArg(new Argument(processor, pDeclCallable->Reference(), flags));
 	ArgFeeder args(*pArg, processor.GetFrameCur());
-	if (!args.FeedValue(pValueArg.release())) return Value::nil();
+	if (!args.FeedValue(processor, pValueArg.release())) return Value::nil();
 	return Eval(processor, *pArg);
 }
 
@@ -71,7 +71,7 @@ Value* Value::EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Va
 	if (!pDeclCallable) return Value::nil();
 	RefPtr<Argument> pArg(new Argument(processor, pDeclCallable->Reference(), flags));
 	ArgFeeder args(*pArg, processor.GetFrameCur());
-	if (!args.FeedValues(pValueArg1.release(), pValueArg2.release())) return Value::nil();
+	if (!args.FeedValues(processor, pValueArg1.release(), pValueArg2.release())) return Value::nil();
 	return Eval(processor, *pArg);
 }
 
@@ -82,7 +82,7 @@ Value* Value::EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Va
 	if (!pDeclCallable) return Value::nil();
 	RefPtr<Argument> pArg(new Argument(processor, pDeclCallable->Reference(), flags));
 	ArgFeeder args(*pArg, processor.GetFrameCur());
-	if (!args.FeedValues(pValueArg1.release(),
+	if (!args.FeedValues(processor, pValueArg1.release(),
 			pValueArg2.release(), pValueArg3.release())) return Value::nil();
 	return Eval(processor, *pArg);
 }
@@ -94,7 +94,7 @@ Value* Value::EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Va
 	if (!pDeclCallable) return Value::nil();
 	RefPtr<Argument> pArg(new Argument(processor, pDeclCallable->Reference(), flags));
 	ArgFeeder args(*pArg, processor.GetFrameCur());
-	if (!args.FeedValues(pValueArg1.release(),
+	if (!args.FeedValues(processor, pValueArg1.release(),
 			pValueArg2.release(), pValueArg3.release(), pValueArg4.release())) return Value::nil();
 	return Eval(processor, *pArg);
 }
@@ -134,9 +134,9 @@ void Value::PresentHelp(Processor& processor, const Symbol* pLangCode) const
 	Stream::COut->Println("no help");
 }
 
-bool Value::FeedExpandToArgument(Frame& frame, Argument& argument)
+bool Value::FeedExpandToArgument(Processor& processor, Frame& frame, Argument& argument)
 {
-	argument.FeedValue(frame, Reference());
+	argument.FeedValue(processor, frame, Reference());
 	return !Error::IsIssued();
 }
 
@@ -201,24 +201,24 @@ Value* Value::DoIndexGet(const Index& index) const
 	}
 }
 
-void Value::DoIndexSet(const Index& index, RefPtr<Value> pValue)
+void Value::DoIndexSet(Processor& processor, const Index& index, RefPtr<Value> pValue)
 {
 	const ValueList& valuesIndex = index.GetValueOwner();
 	if (valuesIndex.empty()) {
 		DoEmptyIndexSet(pValue.release());
 	} else if (valuesIndex.size() == 1) {
 		const Value& valueIndex = *valuesIndex.front();
-		index.EachIndexSet(valueIndex, pValue.release());
+		index.EachIndexSet(processor, valueIndex, pValue.release());
 	} else if (pValue->IsIterable()) {
 		RefPtr<Iterator> pIteratorSrc(pValue->GenIterator());
 		for (const Value* pValueIndexEach : valuesIndex) {
 			RefPtr<Value> pValueEach(pIteratorSrc->NextValue());
 			if (!pValueIndexEach) break;
-			if (!index.EachIndexSet(*pValueIndexEach, pValueEach.release())) return;
+			if (!index.EachIndexSet(processor, *pValueIndexEach, pValueEach.release())) return;
 		}
 	} else {
 		for (const Value* pValueIndex : valuesIndex) {
-			if (!index.EachIndexSet(*pValueIndex, pValue->Reference())) return;
+			if (!index.EachIndexSet(processor, *pValueIndex, pValue->Reference())) return;
 		}
 	}
 }
@@ -244,7 +244,7 @@ bool Value::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const
 	return Value::undefined();
 }
 
-bool Value::DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue)
+bool Value::DoSingleIndexSet(Processor& processor, const Value& valueIndex, RefPtr<Value> pValue)
 {
 	Error::Issue(ErrorType::IndexError,
 				"value type %s can not be accessed by indexing", GetVTypeCustom().MakeFullName().c_str());
@@ -273,7 +273,7 @@ Value* Value::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool n
 	return nullptr;
 }
 
-bool Value::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
+bool Value::DoSetProperty(Processor& processor, const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
 	VType& vtype = GetVTypeCustom();
 	const PropSlot* pPropSlot = vtype.LookupPropSlot(pSymbol);
@@ -287,7 +287,7 @@ bool Value::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Att
 		Error::Issue(ErrorType::PropertyError, "property '%s' is not writable", pSymbol->GetName());
 		return false;
 	}
-	return pPropSlot->SetValue(*this, *pValue, attr);
+	return pPropSlot->SetValue(processor, *this, *pValue, attr);
 }
 
 bool Value::DoAssignCustomMethod(RefPtr<Function> pFunction)
@@ -416,8 +416,8 @@ bool Value::CustomCompare::operator()(const Value* pValue1, const Value* pValue2
 	if (Error::IsIssued()) return false;
 	RefPtr<Frame> pFrame(_function.LockFrameOuter());
 	ArgFeeder args(_argument, *pFrame);
-	if (!args.FeedValue(pValue1->Reference()) ||
-		!args.FeedValue(pValue2->Reference())) return false;
+	if (!args.FeedValue(_processor, pValue1->Reference()) ||
+		!args.FeedValue(_processor, pValue2->Reference())) return false;
 	RefPtr<Value> pValueRtn(_function.Eval(_processor, _argument));
 	return pValueRtn->GetBool();
 }
@@ -430,8 +430,8 @@ bool Value::KeyCustomCompare::operator()(const Value* pValue1, const Value* pVal
 	if (Error::IsIssued()) return false;
 	RefPtr<Frame> pFrame(_function.LockFrameOuter());
 	ArgFeeder args(_argument, *pFrame);
-	if (!args.FeedValue(pValue1->GetValueKey().Reference()) ||
-		!args.FeedValue(pValue2->GetValueKey().Reference())) return false;
+	if (!args.FeedValue(_processor, pValue1->GetValueKey().Reference()) ||
+		!args.FeedValue(_processor, pValue2->GetValueKey().Reference())) return false;
 	RefPtr<Value> pValueRtn(_function.Eval(_processor, _argument));
 	return pValueRtn->GetBool();
 }

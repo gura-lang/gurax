@@ -617,7 +617,7 @@ void VType_DateTime::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpBinary(Ge, DateTime, DateTime);
 }
 
-Value* VType_DateTime::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_DateTime::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_String)) {
 		const char* str = Value_String::GetString(value);

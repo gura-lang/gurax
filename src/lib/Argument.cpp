@@ -75,7 +75,7 @@ void Argument::ResetAllValues()
 	if (_pValueOfDict) _pValueOfDict->GetValueDict().Clear();
 }
 
-bool Argument::FeedValues(Frame& frameForVType, const ValueList& values)
+bool Argument::FeedValues(Processor& processor, Frame& frameForVType, const ValueList& values)
 {
 	for (const Value* pValue : values) {
 		if (!_pArgSlotToFeed) {
@@ -84,7 +84,7 @@ bool Argument::FeedValues(Frame& frameForVType, const ValueList& values)
 				return false;
 			}
 		}
-		FeedValue(frameForVType, pValue->Reference());
+		FeedValue(processor, frameForVType, pValue->Reference());
 		if (Error::IsIssued()) return false;
 	}
 	return true;
@@ -98,7 +98,7 @@ bool Argument::CompleteFeedValue(Processor& processor)
 		} else if (const Expr* pExprDefault = pArgSlot->GetDeclArg().GetExprDefault()) {
 			RefPtr<Value> pValue(processor.ProcessPUnit(pExprDefault->GetPUnitFirst()));
 			if (Error::IsIssued()) return false;
-			pArgSlot->FeedValue(*this, processor.GetFrameCur(), pValue.release());
+			pArgSlot->FeedValue(processor, *this, processor.GetFrameCur(), pValue.release());
 		} else {
 			Error::Issue(ErrorType::ArgumentError, "lacking value for argument '%s'",
 						pArgSlot->GetDeclArg().GetSymbol()->GetName());
@@ -128,32 +128,32 @@ void Argument::DoCall(Processor& processor)
 	GetValueCar().Call(processor, *this);
 }
 
-bool Argument::ReadyToPickValue(Frame& frame)
+bool Argument::ReadyToPickValue(Processor& processor, Frame& frame)
 {
 	for (ArgSlot* pArgSlot = GetArgSlotFirst(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
-		if (!pArgSlot->ReadyToPickValue(frame)) return false;
+		if (!pArgSlot->ReadyToPickValue(processor, frame)) return false;
 	}
 	return _pValueThis->ReadyToPickValueWithoutCast();
 }
 
-void Argument::AssignToFrame(Frame& frame, Frame& frameOuter) const
+void Argument::AssignToFrame(Processor& processor, Frame& frame, Frame& frameOuter) const
 {
 	for (const ArgSlot* pArgSlot = GetArgSlotFirst(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
-		pArgSlot->AssignToFrame(frame);
+		pArgSlot->AssignToFrame(processor, frame);
 	}
 	if (GetValueThis().IsValid()) {
 		// assign to symbol "this"
-		AssignThisToFrame(frame, _pValueThis->PickValue());
+		AssignThisToFrame(processor, frame, _pValueThis->PickValue());
 	}
 	do {
 		// assign to symbol declared as dict%
 		const Symbol* pSymbol = GetDeclCallable().GetSymbolOfDict();
-		if (!pSymbol->IsEmpty()) frame.AssignFromArgument(pSymbol, GetValueOfDict()->Reference());
+		if (!pSymbol->IsEmpty()) frame.AssignFromArgument(processor, pSymbol, GetValueOfDict()->Reference());
 	} while (0);
 	do {
 		// assign to symbol declared as arg%%
 		const Symbol* pSymbol = GetDeclCallable().GetSymbolOfAccessor();
-		if (!pSymbol->IsEmpty()) frame.AssignFromArgument(pSymbol, new Value_Argument(Reference()));
+		if (!pSymbol->IsEmpty()) frame.AssignFromArgument(processor, pSymbol, new Value_Argument(Reference()));
 	} while (0);
 	do {
 		// assign to symbol declared as {block}

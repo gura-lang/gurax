@@ -18,7 +18,7 @@ public:
 	explicit VType_Symbol(const Symbol* pSymbol) : VType(serialId) {}
 	explicit VType_Symbol(const char* name) : VType(name, serialId) {}
 	virtual void DoPrepare(Frame& frameOuter) override;
-	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
+	virtual Value* DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const override;
 	virtual Value* DoDeserialize(Stream& stream) const override;
 };
 

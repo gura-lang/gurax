@@ -31,7 +31,7 @@ public:
 	}
 	bool DoesExist(const Symbol* pSymbol) const { return _map.find(pSymbol) != _map.end(); }
 	SymbolList GetKeys() const { return SymbolList::CollectKeys(*this); }
-	bool ExportTo(Frame& frameDst, bool overwriteFlag) const;
+	bool ExportTo(Processor& processor, Frame& frameDst, bool overwriteFlag) const;
 	void GatherSymbol(SymbolList& symbolList) const;
 	void GatherSymbolIf(SymbolList& symbolList, const Frame::GatherCriteria& gatherCriteria) const;
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;

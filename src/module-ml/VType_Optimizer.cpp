@@ -200,10 +200,10 @@ Value* Value_Optimizer::DoGetProperty(const Symbol* pSymbol, const Attribute& at
 	return DoGetProperty(pSymbol, attr, notFoundErrorFlag);
 }
 
-bool Value_Optimizer::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
+bool Value_Optimizer::DoSetProperty(Processor& processor, const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
 	if (_pOptimizer->DoSetProperty(pSymbol, pValue.Reference(), attr)) return true;
-	return Value::DoSetProperty(pSymbol, pValue.release(), attr);
+	return Value::DoSetProperty(processor, pSymbol, pValue.release(), attr);
 }
 
 Gurax_EndModuleScope(ml)

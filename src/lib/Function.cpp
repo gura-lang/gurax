@@ -80,7 +80,7 @@ Value* Function::EvalEasy(Processor& processor, const ValueList& valuesArg, Decl
 {
 	RefPtr<Argument> pArg(new Argument(processor, *this, flags));
 	ArgFeeder args(*pArg, processor.GetFrameCur());
-	if (!args.FeedValues(valuesArg)) return Value::nil();
+	if (!args.FeedValues(processor, valuesArg)) return Value::nil();
 	return Eval(processor, *pArg);
 }
 
@@ -88,7 +88,7 @@ Value* Function::EvalEasy(Processor& processor, RefPtr<Value> pValueArg, DeclCal
 {
 	RefPtr<Argument> pArg(new Argument(processor, *this, flags));
 	ArgFeeder args(*pArg, processor.GetFrameCur());
-	if (!args.FeedValue(pValueArg.release())) return Value::nil();
+	if (!args.FeedValue(processor, pValueArg.release())) return Value::nil();
 	return Eval(processor, *pArg);
 }
 
@@ -96,7 +96,7 @@ Value* Function::EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr
 {
 	RefPtr<Argument> pArg(new Argument(processor, *this, flags));
 	ArgFeeder args(*pArg, processor.GetFrameCur());
-	if (!args.FeedValues(pValueArg1.release(), pValueArg2.release())) return Value::nil();
+	if (!args.FeedValues(processor, pValueArg1.release(), pValueArg2.release())) return Value::nil();
 	return Eval(processor, *pArg);
 }
 
@@ -104,7 +104,7 @@ Value* Function::EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr
 {
 	RefPtr<Argument> pArg(new Argument(processor, *this, flags));
 	ArgFeeder args(*pArg, processor.GetFrameCur());
-	if (!args.FeedValues(pValueArg1.release(),
+	if (!args.FeedValues(processor, pValueArg1.release(),
 			pValueArg2.release(), pValueArg3.release())) return Value::nil();
 	return Eval(processor, *pArg);
 }
@@ -114,7 +114,7 @@ Value* Function::EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr
 {
 	RefPtr<Argument> pArg(new Argument(processor, *this, flags));
 	ArgFeeder args(*pArg, processor.GetFrameCur());
-	if (!args.FeedValues(pValueArg1.release(),
+	if (!args.FeedValues(processor, pValueArg1.release(),
 			pValueArg2.release(), pValueArg3.release(), pValueArg4.release())) return Value::nil();
 	return Eval(processor, *pArg);
 }
@@ -124,7 +124,7 @@ Value* Function::EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr
 {
 	RefPtr<Argument> pArg(new Argument(processor, *this, flags));
 	ArgFeeder args(*pArg, processor.GetFrameCur());
-	if (!args.FeedValues(pValueArg1.release(),
+	if (!args.FeedValues(processor, pValueArg1.release(),
 			pValueArg2.release(), pValueArg3.release(), pValueArg4.release(), pValueArg5.release())) return Value::nil();
 	return Eval(processor, *pArg);
 }
@@ -135,7 +135,7 @@ Value* Function::EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr
 {
 	RefPtr<Argument> pArg(new Argument(processor, *this, flags));
 	ArgFeeder args(*pArg, processor.GetFrameCur());
-	if (!args.FeedValues(pValueArg1.release(),
+	if (!args.FeedValues(processor, pValueArg1.release(),
 			pValueArg2.release(), pValueArg3.release(), pValueArg4.release(), pValueArg5.release(), pValueArg6.release())) return Value::nil();
 	return Eval(processor, *pArg);
 }
@@ -148,7 +148,7 @@ void Function::Call(Processor& processor, Argument& argument) const
 		RefPtr<Value_List> pValueRtn(new Value_List());
 		ValueTypedOwner& valueTypedOwner = pValueRtn->GetValueTypedOwner();
 		bool flatFlag = argument.IsSet(DeclCallable::Flag::Flat);
-		while (argument.ReadyToPickValue(frame)) {
+		while (argument.ReadyToPickValue(processor, frame)) {
 			RefPtr<Value> pValueRtn(Eval(processor, argument));
 			if (Error::IsIssued()) {
 				//processor.ErrorDone();
@@ -173,7 +173,7 @@ void Function::Call(Processor& processor, Argument& argument) const
 		RefPtr<Value_List> pValueRtn(new Value_List());
 		ValueTypedOwner& valueTypedOwner = pValueRtn->GetValueTypedOwner();
 		bool flatFlag = argument.IsSet(DeclCallable::Flag::Flat);
-		while (argument.ReadyToPickValue(frame)) {
+		while (argument.ReadyToPickValue(processor, frame)) {
 			RefPtr<Value> pValueRtn(Eval(processor, argument));
 			if (Error::IsIssued()) {
 				//processor.ErrorDone();
@@ -211,7 +211,7 @@ void Function::Call(Processor& processor, Argument& argument) const
 	if (argument.IsMapNone()) {
 		Exec(processor, argument);
 	} else if (pPUnitOfCaller->GetDiscardValueFlag()) {
-		while (argument.ReadyToPickValue(frame)) {
+		while (argument.ReadyToPickValue(processor, frame)) {
 			Value::Delete(Eval(processor, argument));
 		}
 		if (Error::IsIssued()) {
@@ -220,7 +220,7 @@ void Function::Call(Processor& processor, Argument& argument) const
 		}
 		processor.SetPUnitCur(pPUnitOfCaller->GetPUnitCont());
 	} else if (GetDeclCallable().IsResultVoid()) {
-		while (argument.ReadyToPickValue(frame)) {
+		while (argument.ReadyToPickValue(processor, frame)) {
 			Value::Delete(Eval(processor, argument));
 		}
 		if (Error::IsIssued()) {
@@ -231,7 +231,7 @@ void Function::Call(Processor& processor, Argument& argument) const
 		processor.SetPUnitCur(pPUnitOfCaller->GetPUnitCont());
 	} else if (GetDeclCallable().IsResultReduce()) {
 		RefPtr<Value> pValueRtn(Value::nil());
-		while (argument.ReadyToPickValue(frame)) {
+		while (argument.ReadyToPickValue(processor, frame)) {
 			pValueRtn.reset(Eval(processor, argument));
 		}
 		if (Error::IsIssued()) {

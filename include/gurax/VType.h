@@ -108,7 +108,7 @@ public:
 	const PropSlot* LookupPropSlot(const Symbol* pSymbol) const;
 	Constructor& GetConstructor() { return *_pConstructor; }
 	const Constructor& GetConstructor() const { return *_pConstructor; }
-	Value* Cast(const Value& value, const Symbol* pSymbol = nullptr, DeclArg::Flags flags = DeclArg::Flag::None) const;
+	Value* Cast(Processor& processor, const Value& value, const Symbol* pSymbol = nullptr, DeclArg::Flags flags = DeclArg::Flag::None) const;
 	void Assign(const Symbol* pSymbol, Value* pValue) { GetFrameOfMember().Assign(pSymbol, pValue); }
 	void Assign(const char* name, Value* pValue) { GetFrameOfMember().Assign(name, pValue); }
 	void Assign(VType& vtype) { GetFrameOfMember().Assign(vtype); }
@@ -135,7 +135,7 @@ public:
 	virtual bool IsIterator() const { return false; }
 	virtual bool IsListOrIterator() const { return false; }
 	virtual void DoPrepare(Frame& frameOuter) {};
-	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const;
+	virtual Value* DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const;
 	virtual bool DoAssignCustomMethod(RefPtr<Function> pFunction);
 };
 

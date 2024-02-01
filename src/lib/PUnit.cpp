@@ -310,10 +310,10 @@ void PUnit_AssignToDeclArg<discardValueFlag>::Exec(Processor& processor) const
 	Frame& frame = processor.GetFrameCur();
 	if constexpr (discardValueFlag) {
 		RefPtr<Value> pValueAssigned(processor.PopValue());
-		frame.AssignWithCast(*_pDeclArg, *pValueAssigned);
+		frame.AssignWithCast(processor, *_pDeclArg, *pValueAssigned);
 	} else {
 		Value& valueAssigned = processor.PeekValue(0);
-		frame.AssignWithCast(*_pDeclArg, valueAssigned);
+		frame.AssignWithCast(processor, *_pDeclArg, valueAssigned);
 	}
 	processor.SetPUnitCur(_GetPUnitCont());
 }
@@ -500,7 +500,7 @@ template<bool discardValueFlag>
 void PUnit_Cast<discardValueFlag>::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValue(processor.PopValue());
-	RefPtr<Value> pValueCasted(GetVType().Cast(*pValue, nullptr, GetFlags()));
+	RefPtr<Value> pValueCasted(GetVType().Cast(processor, *pValue, nullptr, GetFlags()));
 	if (!pValueCasted) {
 		processor.ErrorDone();
 		return;
@@ -898,14 +898,14 @@ void PUnit_CrossEach<discardValueFlag>::Exec(Processor& processor) const
 		Iterator& iterator = Value_Iterator::GetIterator(processor.PeekValue(offset));
 		RefPtr<Value> pValueElem(iterator.NextValue());
 		if (pValueElem) {
-			frame.AssignWithCast(*pDeclArg, *pValueElem);
+			frame.AssignWithCast(processor, *pDeclArg, *pValueElem);
 			processor.SetPUnitCur(_GetPUnitCont());
 			return;
 		}
 		iterator.Rewind();
 		pValueElem.reset(iterator.NextValue());
 		if (!pValueElem) break;
-		frame.AssignWithCast(*pDeclArg, *pValueElem);
+		frame.AssignWithCast(processor, *pDeclArg, *pValueElem);
 		offset++;
 	}
 	processor.SetPUnitCur(GetPUnitBranchDest());
@@ -950,7 +950,7 @@ void PUnit_ForEach<discardValueFlag>::Exec(Processor& processor) const
 			processor.SetPUnitCur(GetPUnitBranchDest());
 			return;
 		}
-		frame.AssignWithCast(*pDeclArg, *pValueElem);
+		frame.AssignWithCast(processor, *pDeclArg, *pValueElem);
 		offset--;
 	}
 	processor.SetPUnitCur(_GetPUnitCont());
@@ -1071,7 +1071,7 @@ void PUnit_Import<discardValueFlag>::Exec(Processor& processor) const
 		return;
 	}
 	if (GetMixInFlag()) {
-		if (!pModule->GetFrame().ExportTo(processor.GetFrameCur(), GetOverwriteFlag())) {
+		if (!pModule->GetFrame().ExportTo(processor, processor.GetFrameCur(), GetOverwriteFlag())) {
 			processor.ErrorDone();
 			return;
 		}
@@ -1693,7 +1693,7 @@ void PUnit_IndexSet<discardValueFlag, valueFirstFlag>::Exec(Processor& processor
 		pValueIndex.reset(dynamic_cast<Value_Index*>(processor.PopValue()));
 	}
 	Index& index = pValueIndex->GetIndex();
-	index.IndexSet(pValueElems->Reference());
+	index.IndexSet(processor, pValueElems->Reference());
 	if (Error::IsIssued()) {
 		processor.ErrorDone();
 		return;
@@ -1806,7 +1806,7 @@ void PUnit_MemberSet_Normal<discardValueFlag, valueFirstFlag>::Exec(Processor& p
 		pValueAssigned.reset(processor.PopValue());
 		pValueTarget.reset(processor.PopValue());
 	}
-	if (!pValueTarget->SetProperty(GetSymbol(), pValueAssigned->Reference(), GetAttr())) {
+	if (!pValueTarget->SetProperty(processor, GetSymbol(), pValueAssigned->Reference(), GetAttr())) {
 		processor.ErrorDone();
 		return;
 	}
@@ -1879,7 +1879,7 @@ void PUnit_MemberSet_Map<discardValueFlag, valueFirstFlag>::Exec(Processor& proc
 			if (!pValueTargetEach) break;
 			RefPtr<Value> pValueAssignedEach(pIteratorAssigned->NextValue());
 			if (!pValueAssignedEach) break;
-			if (!pValueTargetEach->SetProperty(GetSymbol(), pValueAssignedEach->Reference(), GetAttr())) {
+			if (!pValueTargetEach->SetProperty(processor, GetSymbol(), pValueAssignedEach->Reference(), GetAttr())) {
 				processor.ErrorDone();
 				return;
 			}
@@ -1897,7 +1897,7 @@ void PUnit_MemberSet_Map<discardValueFlag, valueFirstFlag>::Exec(Processor& proc
 		for (;;) {
 			RefPtr<Value> pValueTargetEach(pIteratorTarget->NextValue());
 			if (!pValueTargetEach) break;
-			if (!pValueTargetEach->SetProperty(GetSymbol(), pValueAssigned->Reference(), GetAttr())) {
+			if (!pValueTargetEach->SetProperty(processor, GetSymbol(), pValueAssigned->Reference(), GetAttr())) {
 				processor.ErrorDone();
 				return;
 			}
@@ -1965,7 +1965,7 @@ void PUnit_MemberOpApply_Normal<discardValueFlag, valueFirstFlag>::Exec(Processo
 		return;
 	}
 	RefPtr<Value> pValueAssigned(GetOperator().EvalBinary(processor, *pValueProp, *pValueApplied));
-	if (!pValueTarget->SetProperty(GetSymbol(), pValueAssigned->Reference(), GetAttr())) {
+	if (!pValueTarget->SetProperty(processor, GetSymbol(), pValueAssigned->Reference(), GetAttr())) {
 		processor.ErrorDone();
 		return;
 	}
@@ -2027,7 +2027,7 @@ void PUnit_MemberOpApply_Map<discardValueFlag, valueFirstFlag>::Exec(Processor& 
 		return;
 	}
 	RefPtr<Value> pValueAssigned(GetOperator().EvalBinary(processor, *pValueProp, *pValueApplied));
-	if (!pValueTarget->SetProperty(GetSymbol(), pValueAssigned->Reference(), GetAttr())) {
+	if (!pValueTarget->SetProperty(processor, GetSymbol(), pValueAssigned->Reference(), GetAttr())) {
 		processor.ErrorDone();
 		return;
 	}
@@ -2361,7 +2361,7 @@ void PUnit_ArgumentDelegation<discardValueFlag>::Exec(Processor& processor) cons
 	}
 	RefPtr<Expr_Block> pExprOfBlock;
 	if (pValueExpr->IsValid()) {
-		RefPtr<Value_Expr> pValueExprCasted(pValueExpr->Cast<Value_Expr>());
+		RefPtr<Value_Expr> pValueExprCasted(pValueExpr->Cast<Value_Expr>(processor));
 		if (!pValueExprCasted) {
 			processor.ErrorDone();
 			return;
@@ -2424,9 +2424,9 @@ void PUnit_ArgSlot_Value<discardValueFlag>::Exec(Processor& processor) const
 		processor.ErrorDone();
 		return;
 	} else if (pArgSlot->IsVType(VTYPE_Quote)) {
-		argument.FeedValue(frameForVType, new Value_Expr(GetExprSrc().Reference()));
+		argument.FeedValue(processor, frameForVType, new Value_Expr(GetExprSrc().Reference()));
 	} else {
-		argument.FeedValue(frameForVType, GetValue().Reference());
+		argument.FeedValue(processor, frameForVType, GetValue().Reference());
 	}
 	if (Error::IsIssued()) {
 		processor.ErrorDone();
@@ -2485,7 +2485,7 @@ void PUnit_ArgSlot_Lookup<discardValueFlag>::Exec(Processor& processor) const
 		processor.ErrorDone();
 		return;
 	} else if (pArgSlot->IsVType(VTYPE_Quote)) {
-		argument.FeedValue(frameForVType, new Value_Expr(GetExprSrc().Reference()));
+		argument.FeedValue(processor, frameForVType, new Value_Expr(GetExprSrc().Reference()));
 	} else {
 		RefPtr<Value> pValue(processor.GetFrameCur().Retrieve(GetSymbol()));
 		if (!pValue) {
@@ -2493,7 +2493,7 @@ void PUnit_ArgSlot_Lookup<discardValueFlag>::Exec(Processor& processor) const
 			processor.ErrorDone();
 			return;
 		}
-		argument.FeedValue(frameForVType, pValue.release());
+		argument.FeedValue(processor, frameForVType, pValue.release());
 	}
 	if (Error::IsIssued()) {
 		processor.ErrorDone();
@@ -2551,7 +2551,7 @@ void PUnit_ArgSlotBegin<discardValueFlag>::Exec(Processor& processor) const
 		return;
 	} else if (pArgSlot->IsVType(VTYPE_Quote)) {
 		Frame& frameForVType = argument.GetFrameForVType();
-		argument.FeedValue(frameForVType, new Value_Expr(GetExprSrc().Reference()));
+		argument.FeedValue(processor, frameForVType, new Value_Expr(GetExprSrc().Reference()));
 		if (Error::IsIssued()) {
 			processor.ErrorDone();
 			return;
@@ -2598,7 +2598,7 @@ void PUnit_ArgSlotEnd<discardValueFlag>::Exec(Processor& processor) const
 	RefPtr<Value> pValue(processor.PopValue());
 	Argument& argument = Value_Argument::GetArgument(processor.PeekValue(0));
 	Frame& frameForVType = argument.GetFrameForVType();
-	argument.FeedValue(frameForVType, pValue.release());
+	argument.FeedValue(processor, frameForVType, pValue.release());
 	if (Error::IsIssued()) {
 		processor.ErrorDone();
 		return;
@@ -2635,7 +2635,7 @@ void PUnit_ArgSlotEnd_Expand<discardValueFlag>::Exec(Processor& processor) const
 	RefPtr<Value> pValue(processor.PopValue());
 	Argument& argument = Value_Argument::GetArgument(processor.PeekValue(0));
 	Frame& frameForVType = argument.GetFrameForVType();
-	if (!pValue->FeedExpandToArgument(frameForVType, argument)) {
+	if (!pValue->FeedExpandToArgument(processor, frameForVType, argument)) {
 		processor.ErrorDone();
 		return;
 	}
@@ -2688,7 +2688,7 @@ void PUnit_NamedArgSlotBegin<discardValueFlag>::Exec(Processor& processor) const
 		processor.ErrorDone();
 	} else if (pArgSlot->IsVType(VTYPE_Quote)) {
 		Frame& frameForVType = argument.GetFrameForVType();
-		pArgSlot->FeedValue(argument, frameForVType, new Value_Expr(GetExprAssigned()->Reference()));
+		pArgSlot->FeedValue(processor, argument, frameForVType, new Value_Expr(GetExprAssigned()->Reference()));
 		if (Error::IsIssued()) {
 			processor.ErrorDone();
 			return;
@@ -2736,7 +2736,7 @@ void PUnit_NamedArgSlotEnd<discardValueFlag>::Exec(Processor& processor) const
 	Argument& argument = Value_Argument::GetArgument(processor.PeekValue(0));
 	Frame& frameForVType = argument.GetFrameForVType();
 	ArgSlot& argSlot = Value_ArgSlot::GetArgSlot(*pValueArgSlot);
-	argSlot.FeedValue(argument, frameForVType, pValue.release());
+	argSlot.FeedValue(processor, argument, frameForVType, pValue.release());
 	if (Error::IsIssued()) {
 		processor.ErrorDone();
 		return;

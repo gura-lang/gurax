@@ -19,7 +19,7 @@ public:
 	size_t GetIndex() const { return _iProp; }
 protected:
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override;
-	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override;
+	virtual void DoSetValue(Processor& processor, Value& valueTarget, const Value& value, const Attribute& attr) const override;
 };
 
 //------------------------------------------------------------------------------
@@ -34,7 +34,7 @@ public:
 	size_t GetIndex() const { return _iProp; }
 protected:
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override;
-	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override;
+	virtual void DoSetValue(Processor& processor, Value& valueTarget, const Value& value, const Attribute& attr) const override;
 };
 
 }

@@ -45,7 +45,7 @@ bool Index::EachIndexGet(const Value& valueIndex, Value** ppValue) const
 	return GetValueCar().DoSingleIndexGet(valueIndex, ppValue);
 }
 
-bool Index::EachIndexSet(const Value& valueIndex, RefPtr<Value> pValue) const
+bool Index::EachIndexSet(Processor& processor, const Value& valueIndex, RefPtr<Value> pValue) const
 {
 	if (valueIndex.IsInstanceOf(VTYPE_List)) {
 		const Value_List& valueIndexEx = dynamic_cast<const Value_List&>(valueIndex);
@@ -54,11 +54,11 @@ bool Index::EachIndexSet(const Value& valueIndex, RefPtr<Value> pValue) const
 			for (const Value* pValueIndexEach : valueIndexEx.GetValueOwner()) {
 				RefPtr<Value> pValueEach(pIteratorSrc->NextValue());
 				if (!pValueIndexEach) break;
-				if (!EachIndexSet(*pValueIndexEach, pValueEach.release())) return false;
+				if (!EachIndexSet(processor, *pValueIndexEach, pValueEach.release())) return false;
 			}
 		} else {
 			for (const Value* pValueIndexEach : valueIndexEx.GetValueOwner()) {
-				if (!EachIndexSet(*pValueIndexEach, pValue->Reference())) return false;
+				if (!EachIndexSet(processor, *pValueIndexEach, pValue->Reference())) return false;
 			}
 		}
 		return true;
@@ -76,7 +76,7 @@ bool Index::EachIndexSet(const Value& valueIndex, RefPtr<Value> pValue) const
 				if (!pValueIndexEach) break;
 				RefPtr<Value> pValueEach(pIteratorSrc->NextValue());
 				if (!pValueIndexEach) break;
-				if (!EachIndexSet(*pValueIndexEach, pValueEach.release())) return false;
+				if (!EachIndexSet(processor, *pValueIndexEach, pValueEach.release())) return false;
 			}
 		} else {
 			if (iteratorIndex.IsInfinite()) {
@@ -86,12 +86,12 @@ bool Index::EachIndexSet(const Value& valueIndex, RefPtr<Value> pValue) const
 			for (;;) {
 				RefPtr<Value> pValueIndexEach(iteratorIndex.NextValue());
 				if (!pValueIndexEach) break;
-				if (!EachIndexSet(*pValueIndexEach, pValue->Reference())) return false;
+				if (!EachIndexSet(processor, *pValueIndexEach, pValue->Reference())) return false;
 			}
 		}
 		return true;
 	}
-	return GetValueCar().DoSingleIndexSet(valueIndex, pValue.release());
+	return GetValueCar().DoSingleIndexSet(processor, valueIndex, pValue.release());
 }
 
 Value* Index::IndexOpApply(Value& value, Processor& processor, Operator& op)
@@ -106,7 +106,7 @@ Value* Index::IndexOpApply(Value& value, Processor& processor, Operator& op)
 		if (!EachIndexGet(valueIndex, &pValueL)) return Value::nil();
 		RefPtr<Value> pValueRtn(op.EvalBinary(processor, *pValueL, value));
 		if (pValueRtn->IsUndefined()) return Value::nil();
-		EachIndexSet(valueIndex, pValueRtn.Reference());
+		EachIndexSet(processor, valueIndex, pValueRtn.Reference());
 		return pValueRtn.release();
 	} else if (value.IsIterable()) {
 		Error::Issue_UnimplementedOperation();

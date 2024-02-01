@@ -57,7 +57,7 @@ Value* Optimizer_GradientDescent::DoGetProperty(const Symbol* pSymbol, const Att
 	return nullptr;
 }
 
-bool Optimizer_GradientDescent::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
+bool Optimizer_GradientDescent::DoSetProperty(Processor& processor, const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
 	if (pSymbol->IsIdentical(Gurax_Symbol(learningRate))) {
 		if (!pValue->IsType(VTYPE_Number)) {

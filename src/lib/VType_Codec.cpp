@@ -236,7 +236,7 @@ void VType_Codec::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Codec, name));
 }
 
-Value* VType_Codec::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_Codec::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_String)) {
 		const char* name = Value_String::GetString(value);

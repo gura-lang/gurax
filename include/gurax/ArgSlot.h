@@ -51,13 +51,13 @@ public:
 	ArgSlot* GetNext() { return _pArgSlotNext.get(); }
 	const ArgSlot* GetNext() const { return _pArgSlotNext.get(); }
 	const ArgSlot* Advance() const { return const_cast<ArgSlot*>(this)->Advance(); }
-	bool ReadyToPickValue(Frame& frame) const { return _pValue->ReadyToPickValue(frame, *_pDeclArg); }
+	bool ReadyToPickValue(Processor& processor, Frame& frame) const { return _pValue->ReadyToPickValue(processor, frame, *_pDeclArg); }
 	Value* PickValue() const { return _pValue->PickValue(); }
 	void UpdateIteratorInfo(Iterator::Flags& flags, size_t& len) const {
 		_pValue->UpdateIteratorInfo(flags, len);
 	}
-	void AssignToFrame(Frame& frame) const {
-		frame.AssignFromArgument(GetDeclArg().GetSymbol(), PickValue());;
+	void AssignToFrame(Processor& processor, Frame& frame) const {
+		frame.AssignFromArgument(processor, GetDeclArg().GetSymbol(), PickValue());;
 	}
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
@@ -67,7 +67,7 @@ public:
 public:
 	// Virtual functions
 	virtual void ResetValue() = 0;
-	virtual void FeedValue(Argument& argument, Frame& frameForVType, RefPtr<Value> pValue) = 0;
+	virtual void FeedValue(Processor& processor, Argument& argument, Frame& frameForVType, RefPtr<Value> pValue) = 0;
 	virtual bool HasValidValue() const = 0;
 	virtual ArgSlot* Advance() { return _pArgSlotNext.get(); }
 	virtual bool IsDefined() const = 0;
@@ -93,7 +93,7 @@ public:
 public:
 	// Virtual functions of ArgSlot
 	virtual void ResetValue() override;
-	virtual void FeedValue(Argument& argument, Frame& frame, RefPtr<Value> pValue) override;
+	virtual void FeedValue(Processor& processor, Argument& argument, Frame& frame, RefPtr<Value> pValue) override;
 	virtual bool IsDefined() const override { return !_pValue->IsUndefined(); }
 	virtual bool IsVacant() const override { return _pValue->IsUndefined(); }
 	virtual String ToString(const StringStyle& ss) const override;
@@ -112,7 +112,7 @@ protected:
 public:
 	// Virtual functions of ArgSlot
 	virtual void ResetValue() override;
-	virtual void FeedValue(Argument& argument, Frame& frame, RefPtr<Value> pValue) override;
+	virtual void FeedValue(Processor& processor, Argument& argument, Frame& frame, RefPtr<Value> pValue) override;
 	virtual ArgSlot* Advance() override { return this; }
 	virtual bool IsDefined() const override { return true; }
 	virtual bool IsVacant() const override { return true; }
@@ -134,7 +134,7 @@ protected:
 public:
 	// Virtual functions of ArgSlot
 	virtual void ResetValue() override;
-	virtual void FeedValue(Argument& argument, Frame& frame, RefPtr<Value> pValue) override;
+	virtual void FeedValue(Processor& processor, Argument& argument, Frame& frame, RefPtr<Value> pValue) override;
 	virtual bool IsDefined() const override { return true; }
 	virtual bool IsVacant() const override { return true; }
 	virtual bool HasValidValue() const override { return true; }

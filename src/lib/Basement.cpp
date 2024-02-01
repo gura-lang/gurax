@@ -32,9 +32,9 @@ bool Basement::Initialize(int argc, char** argv)
 	}
 	_pProcessor.reset(Processor::Create(_cmdLine.GetBool("debug")));
 	Processor& processor = *_pProcessor;
-	BasicVType::Prepare(frame);
-	BasicStatement::Prepare(frame);
-	BasicFunction::Prepare(frame);
+	BasicVType::Prepare(processor, frame);
+	BasicStatement::Prepare(processor, frame);
+	BasicFunction::Prepare(processor, frame);
 	PrepareValue();
 	PreparePathList();
 	PrepareConsoleStream();
@@ -60,6 +60,7 @@ bool Basement::Initialize(int argc, char** argv)
 void Basement::PrepareValue()
 {
 	Frame& frame = GetFrame();
+	Processor& processor = *_pProcessor;
 	Value::CreateConstant();
 	frame.Assign(Gurax_Symbol(__name__),	new Value_String("__main__"));
 	frame.Assign(Gurax_Symbol(__root__),	new Value_Frame(GetFrame().Reference()));

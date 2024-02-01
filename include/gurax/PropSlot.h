@@ -21,7 +21,7 @@ public: \
 	} \
 protected: \
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
-	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override {} \
+	virtual void DoSetValue(Processor& processor, Value& valueTarget, const Value& value, const Attribute& attr) const override {} \
 }; \
 PropSlot_##nameVType##_##name::PropSlot_##nameVType##_##name(const char* name_) : \
 	PropSlot(name_, Flag::OfInstance | Flag::Readable)
@@ -38,7 +38,7 @@ public: \
 	} \
 protected: \
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override { return Value::nil(); } \
-	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override; \
+	virtual void DoSetValue(Processor& processor, Value& valueTarget, const Value& value, const Attribute& attr) const override; \
 }; \
 PropSlot_##nameVType##_##name::PropSlot_##nameVType##_##name(const char* name_) : \
 	PropSlot(name_, Flag::OfInstance | Flag::Writable)
@@ -55,7 +55,7 @@ public: \
 	} \
 protected: \
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
-	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override; \
+	virtual void DoSetValue(Processor& processor, Value& valueTarget, const Value& value, const Attribute& attr) const override; \
 }; \
 PropSlot_##nameVType##_##name::PropSlot_##nameVType##_##name(const char* name_) : \
 	PropSlot(name_, Flag::OfInstance | Flag::Readable | Flag::Writable)
@@ -67,7 +67,7 @@ PropSlot_##nameVType##_##name::PropSlot_##nameVType##_##name(const char* name_) 
 Value* PropSlot_##nameVType##_##name::DoGetValue(Value& valueTarget, const Attribute& attr) const
 
 #define Gurax_ImplementPropertySetter(nameVType, name) \
-void PropSlot_##nameVType##_##name::DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const
+void PropSlot_##nameVType##_##name::DoSetValue(Processor& processor, Value& valueTarget, const Value& value, const Attribute& attr) const
 
 // Creation
 #define Gurax_CreateProperty(nameVType, name) (new PropSlot_##nameVType##_##name())
@@ -85,7 +85,7 @@ public: \
 	} \
 protected: \
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
-	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override {} \
+	virtual void DoSetValue(Processor& processor, Value& valueTarget, const Value& value, const Attribute& attr) const override {} \
 }; \
 PropSlot_##nameVType##_##name::PropSlot_##nameVType##_##name(const char* name_) : \
 	PropSlot(name_, Flag::OfClass | Flag::Readable)
@@ -102,7 +102,7 @@ public: \
 	} \
 protected: \
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override { return Value::nil(); } \
-	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override; \
+	virtual void DoSetValue(Processor& processor, Value& valueTarget, const Value& value, const Attribute& attr) const override; \
 }; \
 PropSlot_##nameVType##_##name::PropSlot_##nameVType##_##name(const char* name_) : \
 	PropSlot(name_, Flag::OfClass | Flag::Writable)
@@ -119,7 +119,7 @@ public: \
 	} \
 protected: \
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
-	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override; \
+	virtual void DoSetValue(Processor& processor, Value& valueTarget, const Value& value, const Attribute& attr) const override; \
 }; \
 PropSlot_##nameVType##_##name::PropSlot_##nameVType##_##name(const char* name_) : \
 	PropSlot(name_, Flag::OfClass | Flag::Readable | Flag::Writable)
@@ -131,7 +131,7 @@ PropSlot_##nameVType##_##name::PropSlot_##nameVType##_##name(const char* name_) 
 Value* PropSlot_##nameVType##_##name::DoGetValue(Value& valueTarget, const Attribute& attr) const
 
 #define Gurax_ImplementClassPropertySetter(nameVType, name) \
-void PropSlot_##nameVType##_##name::DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const
+void PropSlot_##nameVType##_##name::DoSetValue(Processor& processor, Value& valueTarget, const Value& value, const Attribute& attr) const
 
 // Creation
 #define Gurax_CreateClassProperty(nameVType, name) (new PropSlot_##nameVType##_##name())
@@ -149,7 +149,7 @@ public: \
 	} \
 protected: \
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
-	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override {} \
+	virtual void DoSetValue(Processor& processor, Value& valueTarget, const Value& value, const Attribute& attr) const override {} \
 }; \
 PropSlot_##nameVType##_##name::PropSlot_##nameVType##_##name(const char* name_) : \
 	PropSlot(name_, Flag::OfClass | Flag::OfInstance | Flag::Readable)
@@ -166,7 +166,7 @@ public: \
 	} \
 protected: \
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override { return Value::nil(); } \
-	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override; \
+	virtual void DoSetValue(Processor& processor, Value& valueTarget, const Value& value, const Attribute& attr) const override; \
 }; \
 PropSlot_##nameVType##_##name::PropSlot_##nameVType##_##name(const char* name_) : \
 	PropSlot(name_, Flag::OfClass | Flag::OfInstance | Flag::Writable)
@@ -183,7 +183,7 @@ public: \
 	} \
 protected: \
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
-	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override; \
+	virtual void DoSetValue(Processor& processor, Value& valueTarget, const Value& value, const Attribute& attr) const override; \
 }; \
 PropSlot_##nameVType##_##name::PropSlot_##nameVType##_##name(const char* name_) : \
 	PropSlot(name_, Flag::OfClass | Flag::OfInstance | Flag::Readable | Flag::Writable)
@@ -195,7 +195,7 @@ PropSlot_##nameVType##_##name::PropSlot_##nameVType##_##name(const char* name_) 
 Value* PropSlot_##nameVType##_##name::DoGetValue(Value& valueTarget, const Attribute& attr) const
 
 #define Gurax_ImplementHybridPropertySetter(nameVType, name) \
-void PropSlot_##nameVType##_##name::DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const
+void PropSlot_##nameVType##_##name::DoSetValue(Processor& processor, Value& valueTarget, const Value& value, const Attribute& attr) const
 
 // Creation
 #define Gurax_CreateHybridProperty(nameVType, name) (new PropSlot_##nameVType##_##name())
@@ -210,7 +210,7 @@ public: \
 	PropSlot_##name(const char* name_ = strName); \
 protected: \
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
-	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override {} \
+	virtual void DoSetValue(Processor& processor, Value& valueTarget, const Value& value, const Attribute& attr) const override {} \
 }; \
 PropSlot_##name::PropSlot_##name(const char* name_) : \
 	PropSlot(name_, Flag::OfInstance | Flag::Readable)
@@ -224,7 +224,7 @@ public: \
 	PropSlot_##name(const char* name_ = strName); \
 protected: \
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override { return Value::nil(); } \
-	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override; \
+	virtual void DoSetValue(Processor& processor, Value& valueTarget, const Value& value, const Attribute& attr) const override; \
 }; \
 PropSlot_##name::PropSlot_##name(const char* name_) : \
 	PropSlot(name_, Flag::OfInstance | Flag::Writable)
@@ -238,7 +238,7 @@ public: \
 	PropSlot_##name(const char* name_ = strName); \
 protected: \
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
-	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override; \
+	virtual void DoSetValue(Processor& processor, Value& valueTarget, const Value& value, const Attribute& attr) const override; \
 }; \
 PropSlot_##name::PropSlot_##name(const char* name_) : \
 	PropSlot(name_, Flag::OfInstance | Flag::Readable | Flag::Writable)
@@ -250,7 +250,7 @@ PropSlot_##name::PropSlot_##name(const char* name_) : \
 Value* PropSlot_##name::DoGetValue(Value& valueTarget, const Attribute& attr) const
 
 #define Gurax_ImplementModulePropertySetter(name) \
-void PropSlot_##name::DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const
+void PropSlot_##name::DoSetValue(Processor& processor, Value& valueTarget, const Value& value, const Attribute& attr) const
 
 // Creation
 #define Gurax_CreateModuleProperty(name) (new PropSlot_##name())
@@ -348,7 +348,7 @@ public:
 	Value* GetValue(Value& valueTarget, const Attribute& attr) const {
 		return DoGetValue(valueTarget, attr);
 	}
-	bool SetValue(Value& valueTarget, const Value& value, const Attribute& attr) const;
+	bool SetValue(Processor& processor, Value& valueTarget, const Value& value, const Attribute& attr) const;
 	static Flags SymbolToFlag(const Symbol* pSymbol) {
 		return SymbolAssoc_Flag::GetInstance().ToAssociated(pSymbol);
 	}
@@ -358,7 +358,7 @@ public:
 protected:
 	// Virtual functions
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const = 0;
-	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const = 0;
+	virtual void DoSetValue(Processor& processor, Value& valueTarget, const Value& value, const Attribute& attr) const = 0;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const PropSlot& PropSlot) const { return this == &PropSlot; }

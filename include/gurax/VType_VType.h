@@ -94,7 +94,7 @@ public:
 	virtual void DoCall(Processor& processor, Argument& argument) override;
 	virtual Value* DoEval(Processor& processor, Argument& argument) const override;
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag) override;
-	virtual bool DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr) override;
+	virtual bool DoSetProperty(Processor& processor, const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr) override;
 	virtual bool DoAssignCustomMethod(RefPtr<Function> pFunction) override;
 };
 

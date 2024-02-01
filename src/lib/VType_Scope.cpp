@@ -59,12 +59,12 @@ Value* Value_Scope::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, 
 	if (pValue) return pValue.release();
 	if (notFoundErrorFlag) {
 		Error::Issue(ErrorType::PropertyError,
-					 "the scope doesn't have a property '%s'", pSymbol->GetName());
+					"the scope doesn't have a property '%s'", pSymbol->GetName());
 	}
 	return nullptr;
 }
 
-bool Value_Scope::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
+bool Value_Scope::DoSetProperty(Processor& processor, const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
 	GetFrame().Assign(pSymbol, pValue.release());
 	return true;

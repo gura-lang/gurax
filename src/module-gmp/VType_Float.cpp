@@ -162,7 +162,7 @@ void VType_Float::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Float, sign));
 }
 
-Value* VType_Float::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_Float::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	mpf_t num;
 	mpf_init(num);

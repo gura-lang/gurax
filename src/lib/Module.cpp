@@ -49,7 +49,7 @@ bool Module::ImportAllBuiltIns(Processor& processor)
 	Frame& frame = processor.GetFrameCur();
 	ModuleBuiltInFactory::list.SortByName();
 	for (const ModuleBuiltInFactory* pFactory : ModuleBuiltInFactory::list) {
-		if (!pFactory->Import(frame)) return false;
+		if (!pFactory->Import(processor, frame)) return false;
 	}
 	return true;
 }
@@ -224,13 +224,13 @@ bool Module::AssignToFrame(Processor& processor, const SymbolList* pSymbolList, 
 		if (frameCur.IsAssigned(*pDottedSymbol)) continue;
 		RefPtr<Module> pModule(Import(processor, *pDottedSymbol, false, false));
 		if (!pModule) return false;
-		if (!frameCur.Assign(pModule.release())) {
+		if (!frameCur.Assign(processor, pModule.release())) {
 			Error::Issue(ErrorType::ImportError,
 						"failed to assign module %s", pDottedSymbol->ToString().c_str());
 			return false;
 		}
 	}			
-	if (!frameCur.Assign(Reference())) {
+	if (!frameCur.Assign(processor, Reference())) {
 		Error::Issue(ErrorType::ImportError,
 					"failed to assign module %s", GetDottedSymbol().ToString().c_str());
 		return false;
@@ -279,13 +279,13 @@ ModuleBuiltInFactoryList& ModuleBuiltInFactoryList::SortByName()
 //------------------------------------------------------------------------------
 ModuleBuiltInFactoryList ModuleBuiltInFactory::list;
 
-bool ModuleBuiltInFactory::Import(Frame& frame) const
+bool ModuleBuiltInFactory::Import(Processor& processor, Frame& frame) const
 {
 	RefPtr<Module> pModule(DoCreate(frame.Reference()));
 	if (!pModule) return false;
 	pModule->SetPathName(Module::MakePathNameForBuiltIn(_name.c_str()));
 	pModule->AssignToMap();
-	frame.Assign(pModule.release());
+	frame.Assign(processor, pModule.release());
 	return true;
 }
 

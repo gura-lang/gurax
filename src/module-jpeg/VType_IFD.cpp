@@ -207,7 +207,7 @@ void VType_IFD::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(IFD, symbol));
 }
 
-Value* VType_IFD::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_IFD::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsList()) {
 		const ValueList& valueList = Value_List::GetValueOwner(value);
@@ -229,11 +229,11 @@ Value* Value_IFD::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bo
 	return pTag? pTag->GetValue().Reference() : Value_Object::DoGetProperty(pSymbol, attr, notFoundErrorFlag);
 }
 
-bool Value_IFD::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
+bool Value_IFD::DoSetProperty(Processor& processor, const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
 	if (GetIFD().AssignTagValue(pSymbol, pValue.Reference())) return true;
 	if (Error::IsIssued()) return false;
-	return Value_Object::DoSetProperty(pSymbol, pValue.release(), attr);
+	return Value_Object::DoSetProperty(processor, pSymbol, pValue.release(), attr);
 }
 
 String Value_IFD::ToString(const StringStyle& ss) const

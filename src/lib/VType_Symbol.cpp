@@ -109,7 +109,7 @@ void VType_Symbol::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpBinary(Eq, Symbol, Symbol);
 }
 
-Value* VType_Symbol::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_Symbol::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_Expr)) {
 		const Symbol* pSymbol = dynamic_cast<const Value_Expr&>(value).GetExpr().GetPureSymbol();

@@ -92,15 +92,15 @@ public:
 public:
 	size_t CountArgSlot() const;
 	void ResetAllValues();
-	void FeedValue(Frame& frameForVType, RefPtr<Value> pValue) {
+	void FeedValue(Processor& processor, Frame& frameForVType, RefPtr<Value> pValue) {
 		if (!_pArgSlotToFeed) return;
-		_pArgSlotToFeed->FeedValue(*this, frameForVType, pValue.release());
+		_pArgSlotToFeed->FeedValue(processor, *this, frameForVType, pValue.release());
 		_pArgSlotToFeed = _pArgSlotToFeed->Advance();
 	}
-	bool FeedValues(Frame& frameForVType, const ValueList& values);
+	bool FeedValues(Processor& processor, Frame& frameForVType, const ValueList& values);
 	bool CompleteFeedValue(Processor& processor);
 	bool FeedValuesAndComplete(Processor& processor, Frame& frameForVType, const ValueList& values) {
-		return FeedValues(frameForVType, values) && CompleteFeedValue(processor);
+		return FeedValues(processor, frameForVType, values) && CompleteFeedValue(processor);
 	}
 	bool FeedValuesAndComplete(Processor& processor, const ValueList& values) {
 		return FeedValuesAndComplete(processor, processor.GetFrameCur(), values);
@@ -111,15 +111,15 @@ public:
 	const ArgSlot* FindArgSlot(const Symbol* pSymbol) const {
 		return const_cast<Argument*>(this)->FindArgSlot(pSymbol);
 	}
-	bool ReadyToPickValue(Frame& frame);
-	void AssignToFrame(Frame& frame, Frame& frameOuter) const;
+	bool ReadyToPickValue(Processor& processor, Frame& frame);
+	void AssignToFrame(Processor& processor, Frame& frame, Frame& frameOuter) const;
 	void DoCall(Processor& processor);
 	Value* ReturnValue(Processor& processor, RefPtr<Value> pValueRtn) {
 		return _pExprOfBlock? _pExprOfBlock->EvalEasy(processor, pValueRtn.release()) : pValueRtn.release();
 	}
 	Value* ReturnIterator(Processor& processor, RefPtr<Iterator> pIterator);
-	static void AssignThisToFrame(Frame& frame, Value* pValueThis) {
-		frame.AssignFromArgument(Gurax_Symbol(this_), pValueThis);
+	static void AssignThisToFrame(Processor& processor, Frame& frame, Value* pValueThis) {
+		frame.AssignFromArgument(processor, Gurax_Symbol(this_), pValueThis);
 	}
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

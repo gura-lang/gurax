@@ -21,7 +21,7 @@ Referencer_Lookup::Referencer_Lookup(Frame* pFrame, const Symbol* pSymbol, Value
 {
 }
 
-void Referencer_Lookup::SetValue(Value* pValue)
+void Referencer_Lookup::SetValue(Processor& processor, Value* pValue)
 {
 	_pValue.reset(pValue->Reference());
 	GetFrame().Assign(GetSymbol(), pValue);

@@ -115,9 +115,9 @@ void VType_ImageSet::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(ImageSet, nCols));
 }
 
-Value* VType_ImageSet::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_ImageSet::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
-	RefPtr<Value_Stream> pValueCasted(value.Cast<Value_Stream>(flags));
+	RefPtr<Value_Stream> pValueCasted(value.Cast<Value_Stream>(processor, flags));
 	if (!pValueCasted) return nullptr;
 	RefPtr<ImageSet> pImageSet(new ImageSet());
 	if (!pImageSet->Read(pValueCasted->GetStream())) return nullptr;

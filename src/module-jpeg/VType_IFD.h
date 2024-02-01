@@ -15,7 +15,7 @@ class GURAX_DLLDECLARE VType_IFD : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
-	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const;
+	virtual Value* DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const;
 };
 
 extern GURAX_DLLDECLARE VType_IFD VTYPE_IFD;
@@ -77,7 +77,7 @@ public:
 public:
 	// Virtual functions for runtime process
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag) override;
-	virtual bool DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr) override;
+	virtual bool DoSetProperty(Processor& processor, const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr) override;
 };
 
 Gurax_EndModuleScope(jpeg)

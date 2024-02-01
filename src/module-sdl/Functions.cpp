@@ -339,7 +339,7 @@ Gurax_ImplementFunctionEx(SDL_GetVersion_gurax, processor_gurax, argument_gurax)
 	// Function body
 	SDL_version ver_;
 	SDL_GetVersion(&ver_);
-	ver->SetValue(new Value_SDL_version(ver_));
+	ver->SetValue(processor_gurax, new Value_SDL_version(ver_));
 	return Value::nil();
 }
 
@@ -489,7 +489,7 @@ Gurax_ImplementFunctionEx(SDL_GetDisplayBounds_gurax, processor_gurax, argument_
 	// Function body
 	SDL_Rect rect_;
 	int rtn = SDL_GetDisplayBounds(displayIndex, &rect_);
-	rect->SetValue(new Value_SDL_Rect(rect_));
+	rect->SetValue(processor_gurax, new Value_SDL_Rect(rect_));
 	return new Value_Number(rtn);
 }
 
@@ -510,7 +510,7 @@ Gurax_ImplementFunctionEx(SDL_GetDisplayUsableBounds_gurax, processor_gurax, arg
 	// Function body
 	SDL_Rect rect_;
 	int rtn = SDL_GetDisplayUsableBounds(displayIndex, &rect_);
-	rect->SetValue(new Value_SDL_Rect(rect_));
+	rect->SetValue(processor_gurax, new Value_SDL_Rect(rect_));
 	return new Value_Number(rtn);
 }
 
@@ -535,9 +535,9 @@ Gurax_ImplementFunctionEx(SDL_GetDisplayDPI_gurax, processor_gurax, argument_gur
 	// Function body
 	float ddpi_, hdpi_, vdpi_;
 	int rtn = SDL_GetDisplayDPI(displayIndex, &ddpi_, &hdpi_, &vdpi_);
-	ddpi->SetValue(new Value_Number(ddpi_));
-	hdpi->SetValue(new Value_Number(hdpi_));
-	vdpi->SetValue(new Value_Number(vdpi_));
+	ddpi->SetValue(processor_gurax, new Value_Number(ddpi_));
+	hdpi->SetValue(processor_gurax, new Value_Number(hdpi_));
+	vdpi->SetValue(processor_gurax, new Value_Number(vdpi_));
 	return new Value_Number(rtn);
 }
 
@@ -594,7 +594,7 @@ Gurax_ImplementFunctionEx(SDL_GetDisplayMode_gurax, processor_gurax, argument_gu
 	// Function body
 	SDL_DisplayMode mode_ = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
 	int rtn = SDL_GetDisplayMode(displayIndex, modeIndex, &mode_);
-	mode->SetValue(new Value_SDL_DisplayMode(mode_));
+	mode->SetValue(processor_gurax, new Value_SDL_DisplayMode(mode_));
 	return new Value_Number(rtn);
 }
 
@@ -615,7 +615,7 @@ Gurax_ImplementFunctionEx(SDL_GetDesktopDisplayMode_gurax, processor_gurax, argu
 	// Function body
 	SDL_DisplayMode mode_ = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
 	int rtn = SDL_GetDesktopDisplayMode(displayIndex, &mode_);
-	mode->SetValue(new Value_SDL_DisplayMode(mode_));
+	mode->SetValue(processor_gurax, new Value_SDL_DisplayMode(mode_));
 	return new Value_Number(rtn);
 }
 
@@ -636,7 +636,7 @@ Gurax_ImplementFunctionEx(SDL_GetCurrentDisplayMode_gurax, processor_gurax, argu
 	// Function body
 	SDL_DisplayMode mode_ = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
 	int rtn = SDL_GetCurrentDisplayMode(displayIndex, &mode_);
-	mode->SetValue(new Value_SDL_DisplayMode(mode_));
+	mode->SetValue(processor_gurax, new Value_SDL_DisplayMode(mode_));
 	return new Value_Number(rtn);
 }
 
@@ -697,7 +697,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowDisplayMode_gurax, processor_gurax, argum
 	// Function body
 	SDL_DisplayMode mode_ = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
 	int rtn = SDL_GetWindowDisplayMode(window, &mode_);
-	mode->SetValue(new Value_SDL_DisplayMode(mode_));
+	mode->SetValue(processor_gurax, new Value_SDL_DisplayMode(mode_));
 	return new Value_Number(rtn);
 }
 
@@ -902,8 +902,8 @@ Gurax_ImplementFunctionEx(SDL_GetWindowPosition_gurax, processor_gurax, argument
 	// Function body
 	int x_, y_;
 	SDL_GetWindowPosition(window, &x_, &y_);
-	x->SetValue(new Value_Number(x_));
-	y->SetValue(new Value_Number(y_));
+	x->SetValue(processor_gurax, new Value_Number(x_));
+	y->SetValue(processor_gurax, new Value_Number(y_));
 	return Value::nil();
 }
 
@@ -949,8 +949,8 @@ Gurax_ImplementFunctionEx(SDL_GetWindowSize_gurax, processor_gurax, argument_gur
 	// Function body
 	int w_, h_;
 	SDL_GetWindowSize(window, &w_, &h_);
-	w->SetValue(new Value_Number(w_));
-	h->SetValue(new Value_Number(h_));
+	w->SetValue(processor_gurax, new Value_Number(w_));
+	h->SetValue(processor_gurax, new Value_Number(h_));
 	return Value::nil();
 }
 
@@ -978,10 +978,10 @@ Gurax_ImplementFunctionEx(SDL_GetWindowBordersSize_gurax, processor_gurax, argum
 	// Function body
 	int top_, left_, bottom_, right_;
 	int rtn = SDL_GetWindowBordersSize(window, &top_, &left_, &bottom_, &right_);
-	top->SetValue(new Value_Number(top_));
-	left->SetValue(new Value_Number(left_));
-	bottom->SetValue(new Value_Number(bottom_));
-	right->SetValue(new Value_Number(right_));
+	top->SetValue(processor_gurax, new Value_Number(top_));
+	left->SetValue(processor_gurax, new Value_Number(left_));
+	bottom->SetValue(processor_gurax, new Value_Number(bottom_));
+	right->SetValue(processor_gurax, new Value_Number(right_));
 	return new Value_Number(rtn);
 }
 
@@ -1027,8 +1027,8 @@ Gurax_ImplementFunctionEx(SDL_GetWindowMinimumSize_gurax, processor_gurax, argum
 	// Function body
 	int w_, h_;
 	SDL_GetWindowMinimumSize(window, &w_, &h_);
-	w->SetValue(new Value_Number(w_));
-	h->SetValue(new Value_Number(h_));
+	w->SetValue(processor_gurax, new Value_Number(w_));
+	h->SetValue(processor_gurax, new Value_Number(h_));
 	return Value::nil();
 }
 
@@ -1074,8 +1074,8 @@ Gurax_ImplementFunctionEx(SDL_GetWindowMaximumSize_gurax, processor_gurax, argum
 	// Function body
 	int w_, h_;
 	SDL_GetWindowMaximumSize(window, &w_, &h_);
-	w->SetValue(new Value_Number(w_));
-	h->SetValue(new Value_Number(h_));
+	w->SetValue(processor_gurax, new Value_Number(w_));
+	h->SetValue(processor_gurax, new Value_Number(h_));
 	return Value::nil();
 }
 
@@ -1433,7 +1433,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowOpacity_gurax, processor_gurax, argument_
 	// Function body
 	float out_opacity_;
 	int rtn = SDL_GetWindowOpacity(window, &out_opacity_);
-	out_opacity->SetValue(new Value_Number(out_opacity_));
+	out_opacity->SetValue(processor_gurax, new Value_Number(out_opacity_));
 	return new Value_Number(rtn);
 }
 
@@ -1628,7 +1628,7 @@ Gurax_ImplementFunctionEx(SDL_GL_GetAttribute_gurax, processor_gurax, argument_g
 	// Function body
 	int value_;
 	int rtn = SDL_GL_GetAttribute(attr, &value_);
-	value->SetValue(new Value_Number(value_));
+	value->SetValue(processor_gurax, new Value_Number(value_));
 	return new Value_Number(rtn);
 }
 
@@ -1720,8 +1720,8 @@ Gurax_ImplementFunctionEx(SDL_GL_GetDrawableSize_gurax, processor_gurax, argumen
 	// Function body
 	int w_, h_;
 	SDL_GL_GetDrawableSize(window, &w_, &h_);
-	w->SetValue(new Value_Number(w_));
-	h->SetValue(new Value_Number(h_));
+	w->SetValue(processor_gurax, new Value_Number(w_));
+	h->SetValue(processor_gurax, new Value_Number(h_));
 	return Value::nil();
 }
 
@@ -1821,7 +1821,7 @@ Gurax_ImplementFunctionEx(SDL_GetRenderDriverInfo_gurax, processor_gurax, argume
 	// Function body
 	SDL_RendererInfo info_;
 	int rtn = SDL_GetRenderDriverInfo(index, &info_);
-	info->SetValue(new Value_SDL_RendererInfo(info_));
+	info->SetValue(processor_gurax, new Value_SDL_RendererInfo(info_));
 	return new Value_Number(rtn);
 }
 
@@ -1849,8 +1849,8 @@ Gurax_ImplementFunctionEx(SDL_CreateWindowAndRenderer_gurax, processor_gurax, ar
 	SDL_Window* window_;
 	SDL_Renderer* renderer_;
 	int rtn = SDL_CreateWindowAndRenderer(width, height, window_flags, &window_, &renderer_);
-	window->SetValue(new Value_SDL_Window(window_));
-	renderer->SetValue(new Value_SDL_Renderer(renderer_));
+	window->SetValue(processor_gurax, new Value_SDL_Window(window_));
+	renderer->SetValue(processor_gurax, new Value_SDL_Renderer(renderer_));
 	return new Value_Number(rtn);
 }
 
@@ -1933,7 +1933,7 @@ Gurax_ImplementFunctionEx(SDL_GetRendererInfo_gurax, processor_gurax, argument_g
 	// Function body
 	SDL_RendererInfo info_;
 	int rtn = SDL_GetRendererInfo(renderer, &info_);
-	info->SetValue(new Value_SDL_RendererInfo(info_));
+	info->SetValue(processor_gurax, new Value_SDL_RendererInfo(info_));
 	return new Value_Number(rtn);
 }
 
@@ -1957,8 +1957,8 @@ Gurax_ImplementFunctionEx(SDL_GetRendererOutputSize_gurax, processor_gurax, argu
 	// Function body
 	int w_, h_;
 	int rtn = SDL_GetRendererOutputSize(renderer, &w_, &h_);
-	w->SetValue(new Value_Number(w_));
-	h->SetValue(new Value_Number(h_));
+	w->SetValue(processor_gurax, new Value_Number(w_));
+	h->SetValue(processor_gurax, new Value_Number(h_));
 	return new Value_Number(rtn);
 }
 
@@ -2036,10 +2036,10 @@ Gurax_ImplementFunctionEx(SDL_QueryTexture_gurax, processor_gurax, argument_gura
 	Uint32 format_;
 	int access_, w_, h_;
 	int rtn = SDL_QueryTexture(texture, &format_, &access_, &w_, &h_);
-	if (format) format->SetValue(new Value_Number(format_));
-	if (access) access->SetValue(new Value_Number(access_));
-	if (w) w->SetValue(new Value_Number(w_));
-	if (h) h->SetValue(new Value_Number(h_));
+	if (format) format->SetValue(processor_gurax, new Value_Number(format_));
+	if (access) access->SetValue(processor_gurax, new Value_Number(access_));
+	if (w) w->SetValue(processor_gurax, new Value_Number(w_));
+	if (h) h->SetValue(processor_gurax, new Value_Number(h_));
 	return new Value_Number(rtn);
 }
 
@@ -2089,9 +2089,9 @@ Gurax_ImplementFunctionEx(SDL_GetTextureColorMod_gurax, processor_gurax, argumen
 	// Function body
 	Uint8 r_, g_, b_;
 	int rtn = SDL_GetTextureColorMod(texture, &r_, &g_, &b_);
-	r->SetValue(new Value_Number(r_));
-	g->SetValue(new Value_Number(g_));
-	b->SetValue(new Value_Number(b_));
+	r->SetValue(processor_gurax, new Value_Number(r_));
+	g->SetValue(processor_gurax, new Value_Number(g_));
+	b->SetValue(processor_gurax, new Value_Number(b_));
 	return new Value_Number(rtn);
 }
 
@@ -2133,7 +2133,7 @@ Gurax_ImplementFunctionEx(SDL_GetTextureAlphaMod_gurax, processor_gurax, argumen
 	// Function body
 	Uint8 alpha_;
 	int rtn = SDL_GetTextureAlphaMod(texture, &alpha_);
-	alpha->SetValue(new Value_Number(alpha_));
+	alpha->SetValue(processor_gurax, new Value_Number(alpha_));
 	return new Value_Number(rtn);
 }
 
@@ -2175,7 +2175,7 @@ Gurax_ImplementFunctionEx(SDL_GetTextureBlendMode_gurax, processor_gurax, argume
 	// Function body
 	SDL_BlendMode blendMode_;
 	int rtn = SDL_GetTextureBlendMode(texture, &blendMode_);
-	blendMode->SetValue(new Value_Number(blendMode_));
+	blendMode->SetValue(processor_gurax, new Value_Number(blendMode_));
 	return new Value_Number(rtn);
 }
 
@@ -2217,7 +2217,7 @@ Gurax_ImplementFunctionEx(SDL_GetTextureScaleMode_gurax, processor_gurax, argume
 	// Function body
 	SDL_ScaleMode scaleMode_;
 	int rtn = SDL_GetTextureScaleMode(texture, &scaleMode_);
-	scaleMode->SetValue(new Value_Number(scaleMode_));
+	scaleMode->SetValue(processor_gurax, new Value_Number(scaleMode_));
 	return new Value_Number(rtn);
 }
 
@@ -2309,8 +2309,8 @@ Gurax_ImplementFunctionEx(SDL_LockTexture_gurax, processor_gurax, argument_gurax
 		bytes = pitch_ * h;
 	}
 	RefPtr<Pointer> pPointer(new Pointer_Memory(new MemorySloth(bytes, pixels_)));
-	pixels->SetValue(new Value_Pointer(pPointer.release()));
-	pitch->SetValue(new Value_Number(pitch_));
+	pixels->SetValue(processor_gurax, new Value_Pointer(pPointer.release()));
+	pitch->SetValue(processor_gurax, new Value_Number(pitch_));
 	return new Value_Number(rtn);
 }
 
@@ -2334,7 +2334,7 @@ Gurax_ImplementFunctionEx(SDL_LockTextureToSurface_gurax, processor_gurax, argum
 	// Function body
 	SDL_Surface* surface_;
 	int rtn = SDL_LockTextureToSurface(texture, rect, &surface_);
-	surface->SetValue(new Value_SDL_Surface(surface_));
+	surface->SetValue(processor_gurax, new Value_SDL_Surface(surface_));
 	return new Value_Number(rtn);
 }
 
@@ -2456,8 +2456,8 @@ Gurax_ImplementFunctionEx(SDL_RenderGetLogicalSize_gurax, processor_gurax, argum
 	// Function body
 	int w_, h_;
 	SDL_RenderGetLogicalSize(renderer, &w_, &h_);
-	w->SetValue(new Value_Number(w_));
-	h->SetValue(new Value_Number(h_));
+	w->SetValue(processor_gurax, new Value_Number(w_));
+	h->SetValue(processor_gurax, new Value_Number(h_));
 	return Value::nil();
 }
 
@@ -2537,7 +2537,7 @@ Gurax_ImplementFunctionEx(SDL_RenderGetViewport_gurax, processor_gurax, argument
 	// Function body
 	SDL_Rect rect_;
 	SDL_RenderGetViewport(renderer, &rect_);
-	rect->SetValue(new Value_SDL_Rect(rect_));
+	rect->SetValue(processor_gurax, new Value_SDL_Rect(rect_));
 	return Value::nil();
 }
 
@@ -2579,7 +2579,7 @@ Gurax_ImplementFunctionEx(SDL_RenderGetClipRect_gurax, processor_gurax, argument
 	// Function body
 	SDL_Rect rect_;
 	SDL_RenderGetClipRect(renderer, &rect_);
-	rect->SetValue(new Value_SDL_Rect(rect_));
+	rect->SetValue(processor_gurax, new Value_SDL_Rect(rect_));
 	return Value::nil();
 }
 
@@ -2643,8 +2643,8 @@ Gurax_ImplementFunctionEx(SDL_RenderGetScale_gurax, processor_gurax, argument_gu
 	// Function body
 	float scaleX_, scaleY_;
 	SDL_RenderGetScale(renderer, &scaleX_, &scaleY_);
-	scaleX->SetValue(new Value_Number(scaleX_));
-	scaleY->SetValue(new Value_Number(scaleY_));
+	scaleX->SetValue(processor_gurax, new Value_Number(scaleX_));
+	scaleY->SetValue(processor_gurax, new Value_Number(scaleY_));
 	return Value::nil();
 }
 
@@ -2698,10 +2698,10 @@ Gurax_ImplementFunctionEx(SDL_GetRenderDrawColor_gurax, processor_gurax, argumen
 	// Function body
 	Uint8 r_, g_, b_, a_;
 	int rtn = SDL_GetRenderDrawColor(renderer, &r_, &g_, &b_, &a_);
-	r->SetValue(new Value_Number(r_));
-	g->SetValue(new Value_Number(g_));
-	b->SetValue(new Value_Number(b_));
-	a->SetValue(new Value_Number(a_));
+	r->SetValue(processor_gurax, new Value_Number(r_));
+	g->SetValue(processor_gurax, new Value_Number(g_));
+	b->SetValue(processor_gurax, new Value_Number(b_));
+	a->SetValue(processor_gurax, new Value_Number(a_));
 	return new Value_Number(rtn);
 }
 
@@ -2743,7 +2743,7 @@ Gurax_ImplementFunctionEx(SDL_GetRenderDrawBlendMode_gurax, processor_gurax, arg
 	// Function body
 	SDL_BlendMode blendMode_;
 	int rtn = SDL_GetRenderDrawBlendMode(renderer, &blendMode_);
-	blendMode->SetValue(new Value_Number(blendMode_));
+	blendMode->SetValue(processor_gurax, new Value_Number(blendMode_));
 	return new Value_Number(rtn);
 }
 
@@ -3543,9 +3543,9 @@ Gurax_ImplementFunctionEx(SDL_GetRGB_gurax, processor_gurax, argument_gurax)
 	// Function body
 	Uint8 r_, g_, b_;
 	SDL_GetRGB(pixel, format, &r_, &g_, &b_);
-	r->SetValue(new Value_Number(r_));
-	g->SetValue(new Value_Number(g_));
-	b->SetValue(new Value_Number(b_));
+	r->SetValue(processor_gurax, new Value_Number(r_));
+	g->SetValue(processor_gurax, new Value_Number(g_));
+	b->SetValue(processor_gurax, new Value_Number(b_));
 	return Value::nil();
 }
 
@@ -3575,10 +3575,10 @@ Gurax_ImplementFunctionEx(SDL_GetRGBA_gurax, processor_gurax, argument_gurax)
 	// Function body
 	Uint8 r_, g_, b_, a_;
 	SDL_GetRGBA(pixel, format, &r_, &g_, &b_, &a_);
-	r->SetValue(new Value_Number(r_));
-	g->SetValue(new Value_Number(g_));
-	b->SetValue(new Value_Number(b_));
-	a->SetValue(new Value_Number(a_));
+	r->SetValue(processor_gurax, new Value_Number(r_));
+	g->SetValue(processor_gurax, new Value_Number(g_));
+	b->SetValue(processor_gurax, new Value_Number(b_));
+	a->SetValue(processor_gurax, new Value_Number(a_));
 	return Value::nil();
 }
 
@@ -3624,7 +3624,7 @@ Gurax_ImplementFunctionEx(SDL_IntersectRect_gurax, processor_gurax, argument_gur
 	// Function body
 	SDL_Rect result_;
 	SDL_bool rtn = SDL_IntersectRect(A, B, &result_);
-	result->SetValue(new Value_SDL_Rect(result_));
+	result->SetValue(processor_gurax, new Value_SDL_Rect(result_));
 	return new Value_Bool(rtn);
 }
 
@@ -3649,7 +3649,7 @@ Gurax_ImplementFunctionEx(SDL_UnionRect_gurax, processor_gurax, argument_gurax)
 	// Function body
 	SDL_Rect result_;
 	SDL_UnionRect(A, B, &result_);
-	result->SetValue(new Value_SDL_Rect(result_));
+	result->SetValue(processor_gurax, new Value_SDL_Rect(result_));
 	return Value::nil();
 }
 
@@ -3680,10 +3680,10 @@ Gurax_ImplementFunctionEx(SDL_IntersectRectAndLine_gurax, processor_gurax, argum
 	int X2_ = Value_Number::GetNumber<int>(X1->GetValue());
 	int Y2_ = Value_Number::GetNumber<int>(Y2->GetValue());
 	int rtn = SDL_IntersectRectAndLine(rect, &X1_, &Y1_, &X2_, &Y2_);
-	X1->SetValue(new Value_Number(X1_));
-	Y1->SetValue(new Value_Number(Y1_));
-	X2->SetValue(new Value_Number(X1_));
-	Y2->SetValue(new Value_Number(X1_));
+	X1->SetValue(processor_gurax, new Value_Number(X1_));
+	Y1->SetValue(processor_gurax, new Value_Number(Y1_));
+	X2->SetValue(processor_gurax, new Value_Number(X1_));
+	Y2->SetValue(processor_gurax, new Value_Number(X1_));
 	return new Value_Number(rtn);
 }
 
@@ -4065,7 +4065,7 @@ Gurax_ImplementFunctionEx(SDL_GetColorKey_gurax, processor_gurax, argument_gurax
 	// Function body
 	Uint32 key_;
 	int rtn = SDL_GetColorKey(surface, &key_);
-	key->SetValue(new Value_Number(key_));
+	key->SetValue(processor_gurax, new Value_Number(key_));
 	return new Value_Number(rtn);
 }
 
@@ -4115,9 +4115,9 @@ Gurax_ImplementFunctionEx(SDL_GetSurfaceColorMod_gurax, processor_gurax, argumen
 	// Function body
 	Uint8 r_, g_, b_;
 	int rtn = SDL_GetSurfaceColorMod(surface, &r_, &g_, &b_);
-	r->SetValue(new Value_Number(r_));
-	g->SetValue(new Value_Number(g_));
-	b->SetValue(new Value_Number(b_));
+	r->SetValue(processor_gurax, new Value_Number(r_));
+	g->SetValue(processor_gurax, new Value_Number(g_));
+	b->SetValue(processor_gurax, new Value_Number(b_));
 	return new Value_Number(rtn);
 }
 
@@ -4159,7 +4159,7 @@ Gurax_ImplementFunctionEx(SDL_GetSurfaceAlphaMod_gurax, processor_gurax, argumen
 	// Function body
 	Uint8 alpha_;
 	int rtn = SDL_GetSurfaceAlphaMod(surface, &alpha_);
-	alpha->SetValue(new Value_Number(alpha_));
+	alpha->SetValue(processor_gurax, new Value_Number(alpha_));
 	return new Value_Number(rtn);
 }
 
@@ -4201,7 +4201,7 @@ Gurax_ImplementFunctionEx(SDL_GetSurfaceBlendMode_gurax, processor_gurax, argume
 	// Function body
 	SDL_BlendMode blendMode_;
 	int rtn = SDL_GetSurfaceBlendMode(surface, &blendMode_);
-	blendMode->SetValue(new Value_Number(blendMode_));
+	blendMode->SetValue(processor_gurax, new Value_Number(blendMode_));
 	return new Value_Number(rtn);
 }
 
@@ -4243,7 +4243,7 @@ Gurax_ImplementFunctionEx(SDL_GetClipRect_gurax, processor_gurax, argument_gurax
 	// Function body
 	SDL_Rect rect_;
 	SDL_GetClipRect(surface, &rect_);
-	rect->SetValue(new Value_SDL_Rect(rect_));
+	rect->SetValue(processor_gurax, new Value_SDL_Rect(rect_));
 	return Value::nil();
 }
 
@@ -4636,7 +4636,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowWMInfo_gurax, processor_gurax, argument_g
 	// Function body
 	SDL_SysWMinfo info_;
 	int rtn = SDL_GetWindowWMInfo(window, &info_);
-	info->SetValue(new Value_SDL_SysWMinfo(info_));
+	info->SetValue(processor_gurax, new Value_SDL_SysWMinfo(info_));
 	return new Value_Number(rtn);
 }
 
@@ -5187,8 +5187,8 @@ Gurax_ImplementFunctionEx(SDL_GetMouseState_gurax, processor_gurax, argument_gur
 	// Function body
 	int x_, y_;
 	Uint32 state = SDL_GetMouseState(&x_, &y_);
-	x->SetValue(new Value_Number(x_));
-	y->SetValue(new Value_Number(y_));
+	x->SetValue(processor_gurax, new Value_Number(x_));
+	y->SetValue(processor_gurax, new Value_Number(y_));
 	return new Value_Number(state);
 }
 
@@ -5209,8 +5209,8 @@ Gurax_ImplementFunctionEx(SDL_GetGlobalMouseState_gurax, processor_gurax, argume
 	// Function body
 	int x_, y_;
 	Uint32 state = SDL_GetGlobalMouseState(&x_, &y_);
-	x->SetValue(new Value_Number(x_));
-	y->SetValue(new Value_Number(y_));
+	x->SetValue(processor_gurax, new Value_Number(x_));
+	y->SetValue(processor_gurax, new Value_Number(y_));
 	return new Value_Number(state);
 }
 
@@ -5231,8 +5231,8 @@ Gurax_ImplementFunctionEx(SDL_GetRelativeMouseState_gurax, processor_gurax, argu
 	// Function body
 	int x_, y_;
 	Uint32 state = SDL_GetRelativeMouseState(&x_, &y_);
-	x->SetValue(new Value_Number(x_));
-	y->SetValue(new Value_Number(y_));
+	x->SetValue(processor_gurax, new Value_Number(x_));
+	y->SetValue(processor_gurax, new Value_Number(y_));
 	return new Value_Number(state);
 }
 
@@ -5866,7 +5866,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetGUIDString_gurax, processor_gurax, argu
 	// Function body
 	char szGUID_[64]; // requires at least 33 bytes
 	SDL_JoystickGetGUIDString(guid, szGUID_, sizeof(szGUID_));
-	szGUID->SetValue(new Value_String(szGUID_));
+	szGUID->SetValue(processor_gurax, new Value_String(szGUID_));
 	return Value::nil();
 }
 
@@ -6087,8 +6087,8 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetBall_gurax, processor_gurax, argument_g
 	// Function body
 	int dx_, dy_;
 	int rtn = SDL_JoystickGetBall(joystick, ball, &dx_, &dy_);
-	dx->SetValue(new Value_Number(dx_));
-	dy->SetValue(new Value_Number(dy_));
+	dx->SetValue(processor_gurax, new Value_Number(dx_));
+	dy->SetValue(processor_gurax, new Value_Number(dy_));
 	return new Value_Number(rtn);
 }
 
@@ -8913,8 +8913,8 @@ Gurax_ImplementFunctionEx(SDL_GetPowerInfo_gurax, processor_gurax, argument_gura
 	// Function body
 	int secs_, pct_;
 	SDL_PowerState state = SDL_GetPowerInfo(&secs_, &pct_);
-	secs->SetValue(new Value_Number(secs_));
-	pct->SetValue(new Value_Number(pct_));
+	secs->SetValue(processor_gurax, new Value_Number(secs_));
+	pct->SetValue(processor_gurax, new Value_Number(pct_));
 	return new Value_Number(state);
 }
 
@@ -9680,9 +9680,9 @@ Gurax_ImplementFunctionEx(Mix_QuerySpec_gurax, processor_gurax, argument_gurax)
 	Uint16 format_;
 	int channels_;
 	int rtn = Mix_QuerySpec(&frequency_, &format_, &channels_);
-	frequency->SetValue(new Value_Number(frequency_));
-	format->SetValue(new Value_Number(format_));
-	channels->SetValue(new Value_Number(channels_));
+	frequency->SetValue(processor_gurax, new Value_Number(frequency_));
+	format->SetValue(processor_gurax, new Value_Number(format_));
+	channels->SetValue(processor_gurax, new Value_Number(channels_));
 	return new Value_Number(rtn);
 }
 

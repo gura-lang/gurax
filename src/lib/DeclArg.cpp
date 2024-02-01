@@ -137,7 +137,7 @@ bool DeclArg::FixVType(Frame& frame)
 	return false;
 }
 
-Value* DeclArg::Cast(Frame& frame, const Value& value)
+Value* DeclArg::Cast(Processor& processor, Frame& frame, const Value& value)
 {
 	if (GetVType().IsIdentical(VTYPE_Undefined) && !FixVType(frame)) {
 		Error::Issue(ErrorType::TypeError,
@@ -153,12 +153,12 @@ Value* DeclArg::Cast(Frame& frame, const Value& value)
 		const Referencer& referencer = dynamic_cast<const Value_Referencer&>(value).GetReferencer();
 		const Value& valueContent = referencer.GetValue();
 		if (IsSet(Flag::NilRef) && valueContent.IsNil()) return value.Reference();
-		RefPtr<Value> pValueContentCasted(GetVType().Cast(valueContent, GetSymbol(), GetFlags()));
+		RefPtr<Value> pValueContentCasted(GetVType().Cast(processor, valueContent, GetSymbol(), GetFlags()));
 		if (!pValueContentCasted) return nullptr;
 		if (valueContent.IsIdentical(pValueContentCasted.get())) return value.Reference();
 		return new Value_Referencer(referencer.CloneWithCastedValue(pValueContentCasted.release()));
 	}
-	return GetVType().Cast(value, GetSymbol(), GetFlags());
+	return GetVType().Cast(processor, value, GetSymbol(), GetFlags());
 }
 
 bool DeclArg::CheckFlagConfliction(Flags flags)

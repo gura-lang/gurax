@@ -1478,7 +1478,7 @@ void VType_String::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpBinary(Ne, String, String);
 }
 
-Value* VType_String::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_String::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	return new Value_String(value.ToString());
 }
@@ -1660,7 +1660,7 @@ bool Value_String::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) co
 	return true;
 }
 
-bool Value_String::DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue)
+bool Value_String::DoSingleIndexSet(Processor& processor, const Value& valueIndex, RefPtr<Value> pValue)
 {
 	Error::Issue(ErrorType::IndexError, "modification by index access is not permitted");
 	return false;

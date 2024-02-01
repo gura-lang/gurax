@@ -1156,7 +1156,7 @@ Gurax_ImplementStatement(struct_)
 	composer.Add_VTypeEnd_Struct(exprCaller);									// [VType]
 }
 
-void BasicStatement::Prepare(Frame& frame)
+void BasicStatement::Prepare(Processor& processor, Frame& frame)
 {
 	frame.Assign(Gurax_CreateStatement(cond));
 	frame.Assign(Gurax_CreateStatement(if_));

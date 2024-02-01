@@ -90,7 +90,7 @@ void VType_wxVariant::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 }
 
-Value* VType_wxVariant::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_wxVariant::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_String)) {
 		return new Value_wxVariant(wxVariant(Value_String::GetString(value)));

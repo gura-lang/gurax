@@ -511,7 +511,7 @@ void VType_wxColour::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxColour, ChangeLightnessRGB_gurax));
 }
 
-Value* VType_wxColour::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_wxColour::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	RefPtr<Value_Color> pValueCasted(value.Cast<Value_Color>(flags));
 	if (pValueCasted) {

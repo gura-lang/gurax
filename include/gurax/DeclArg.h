@@ -10,6 +10,7 @@ namespace Gurax {
 
 class VType;
 class ArgSlotFactory;
+class Processor;
 
 //------------------------------------------------------------------------------
 // DeclArg
@@ -142,7 +143,7 @@ public:
 	const Expr* GetExprDefault() const { return _pExprDefault.get(); }
 	static DeclArg* CreateFromExpr(const Expr& expr);
 	bool FixVType(Frame& frame);
-	Value* Cast(Frame& frame, const Value& value);
+	Value* Cast(Processor& processor, Frame& frame, const Value& value);
 	static bool CheckFlagConfliction(Flags flags);
 	static Flags SymbolToFlag(const Symbol* pSymbol) {
 		return SymbolAssoc_Flag::GetInstance().ToAssociated(pSymbol);

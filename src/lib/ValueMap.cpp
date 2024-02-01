@@ -25,7 +25,7 @@ void ValueMap::Assign(const Symbol* pSymbol, Value* pValue)
 	}
 }
 
-bool ValueMap::ExportTo(Frame& frameDst, bool overwriteFlag) const
+bool ValueMap::ExportTo(Processor& processor, Frame& frameDst, bool overwriteFlag) const
 {
 	for (auto pair : _map) {
 		const Symbol* pSymbol = pair.first;

@@ -9,7 +9,7 @@ namespace Gurax {
 
 class GURAX_DLLDECLARE BasicStatement {
 public:
-	static void Prepare(Frame& frame);
+	static void Prepare(Processor& processor, Frame& frame);
 };
 
 }

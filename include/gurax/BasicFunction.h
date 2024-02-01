@@ -32,7 +32,7 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE BasicFunction {
 public:
-	static void Prepare(Frame& frame);
+	static void Prepare(Processor& processor, Frame& frame);
 };
 
 }

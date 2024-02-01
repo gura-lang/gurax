@@ -27,28 +27,28 @@ bool PropSlot::CheckValidAttribute(const Attribute& attr) const
 	if (symbols.empty()) return true;
 	if (!_pAttributeOpt) {
 		Error::Issue(ErrorType::PropertyError, "the property '%s' doesn't accept any attributes",
-					 GetSymbol()->GetName());
+					GetSymbol()->GetName());
 		return false;
 	}
 	for (const Symbol* pSymbol : symbols) {
 		if (!_pAttributeOpt->symbolSet.IsSet(pSymbol)) {
 			Error::Issue(ErrorType::PropertyError, "the property '%s' doesn't accept attribute '%s'",
-						 GetSymbol()->GetName(), pSymbol->GetName());
+						GetSymbol()->GetName(), pSymbol->GetName());
 			return false;
 		}
 	}
 	return true;
 }
 
-bool PropSlot::SetValue(Value& valueTarget, const Value& value, const Attribute& attr) const
+bool PropSlot::SetValue(Processor& processor, Value& valueTarget, const Value& value, const Attribute& attr) const
 {
 	if (value.IsNil() && IsSet(Flag::Nil)) {
-		DoSetValue(valueTarget, value, attr);
+		DoSetValue(processor, valueTarget, value, attr);
 		return true;
 	}
-	RefPtr<Value> pValueCasted(GetVType().Cast(value, GetSymbol(), GetFlags()));
+	RefPtr<Value> pValueCasted(GetVType().Cast(processor, value, GetSymbol(), GetFlags()));
 	if (!pValueCasted) return false;
-	DoSetValue(valueTarget, *pValueCasted, attr);
+	DoSetValue(processor, valueTarget, *pValueCasted, attr);
 	return true;
 }
 

@@ -75,7 +75,7 @@ public:
 	virtual Iterator* DoGenIterator() const override;
 public:
 	// Virtual functions for runtime process
-	virtual bool ReadyToPickValue(Frame& frame, DeclArg& declArg) override;
+	virtual bool ReadyToPickValue(Processor& processor, Frame& frame, DeclArg& declArg) override;
 	virtual bool ReadyToPickValueWithoutCast() override;
 	virtual Value* PickValue() override { return _pValue.Reference(); }
 	virtual void UpdateIteratorInfo(Iterator::Flags& flags, size_t& len) const override;

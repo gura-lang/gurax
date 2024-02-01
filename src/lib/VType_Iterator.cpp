@@ -706,8 +706,8 @@ Value* VType_Iterator::Method_Find(Processor& processor, Argument& argument, Ite
 			if (!pValueSrc) break;
 			if (pArgument->HasArgSlot()) {
 				ArgFeeder args(*pArgument, *pFrame);
-				if (!args.FeedValue(pValueSrc.Reference())) return Value::nil();
-				if (args.IsValid() && !args.FeedValue(new Value_Number(idx))) return Value::nil();
+				if (!args.FeedValue(processor, pValueSrc.Reference())) return Value::nil();
+				if (args.IsValid() && !args.FeedValue(processor, new Value_Number(idx))) return Value::nil();
 			}
 			RefPtr<Value> pValueResult(func.Eval(processor, *pArgument));
 			if (pValueResult->GetBool()) {
@@ -1459,7 +1459,7 @@ Value* VType_Iterator::Method_Sort(
 			pValueOwner->Sort(SortOrder::Ascend);
 		}
 	} else if (directive.IsType(VTYPE_Expr)) {
-		RefPtr<Value_Symbol> pValueCasted(directive.Cast<Value_Symbol>());
+		RefPtr<Value_Symbol> pValueCasted(directive.Cast<Value_Symbol>(processor));
 		if (!pValueCasted) return Value::nil();
 		const Symbol* pSymbol = dynamic_cast<const Value_Symbol&>(*pValueCasted).GetSymbol();
 		SortOrder sortOrder =
@@ -1813,7 +1813,7 @@ void VType_Iterator::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpBinary(Concat, Iterator, Iterator);
 }
 
-Value* VType_Iterator::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_Iterator::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_List)) {
 		return new Value_Iterator(Value_List::GetValueTypedOwner(value).GenerateIterator());
@@ -1843,14 +1843,14 @@ void Value_Iterator::UpdateMapMode(Argument& argument) const
 	argument.SetMapMode(Argument::MapMode::ToIter);
 }
 
-bool Value_Iterator::FeedExpandToArgument(Frame& frame, Argument& argument)
+bool Value_Iterator::FeedExpandToArgument(Processor& processor, Frame& frame, Argument& argument)
 {
 	Iterator& iterator = GetIterator();
 	for (;;) {
 		RefPtr<Value> pValueElem(iterator.NextValue());
 		if (!pValueElem) break;
 		if (!argument.CheckArgSlotToFeed()) return false;
-		argument.FeedValue(frame, pValueElem.release());
+		argument.FeedValue(processor, frame, pValueElem.release());
 		if (Error::IsIssued()) return false;
 	}
 	return !Error::IsIssued();
@@ -1908,7 +1908,7 @@ bool Value_Iterator::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) 
 	return false;
 }
 
-bool Value_Iterator::DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue)
+bool Value_Iterator::DoSingleIndexSet(Processor& processor, const Value& valueIndex, RefPtr<Value> pValue)
 {
 	Error::Issue(ErrorType::IndexError, "index-access is not supported");
 	return false;

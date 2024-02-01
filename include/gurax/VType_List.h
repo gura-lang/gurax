@@ -22,7 +22,7 @@ public:
 	virtual bool IsList() const override { return true; }
 	virtual bool IsListOrIterator() const override { return true; }
 	virtual void DoPrepare(Frame& frameOuter) override;
-	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
+	virtual Value* DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const override;
 	virtual Value* DoDeserialize(Stream& stream) const override;
 };
 
@@ -120,13 +120,13 @@ public:
 	virtual bool IsList() const override { return true; }
 	virtual bool IsMappable(const DeclArg& declArg, DeclCallable::Flags flags) const override;
 	virtual void UpdateMapMode(Argument& argument) const override;
-	virtual bool FeedExpandToArgument(Frame& frame, Argument& argument) override;
+	virtual bool FeedExpandToArgument(Processor& processor, Frame& frame, Argument& argument) override;
 	virtual const DeclCallable* GetDeclCallable() override;
 	virtual Value* DoEval(Processor& processor, Argument& argument) const override;
 	virtual bool DoEmptyIndexGet(Value** ppValue) const override;
 	virtual bool DoEmptyIndexSet(RefPtr<Value> pValue) override;
 	virtual bool DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const override;
-	virtual bool DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue) override;
+	virtual bool DoSingleIndexSet(Processor& processor, const Value& valueIndex, RefPtr<Value> pValue) override;
 	virtual Iterator* DoGenIterator() const override;
 	virtual bool DoSerialize(Stream& stream) const override;
 };

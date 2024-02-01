@@ -270,7 +270,7 @@ SDL_GetVersion(&ver:nilRef as SDL_version) = \
 	R'''
 	SDL_version ver_;
 	SDL_GetVersion(&ver_);
-	ver->SetValue(new Value_SDL_version(ver_));
+	ver->SetValue(processor_gurax, new Value_SDL_version(ver_));
 	return Value::nil();
 	'''
 
@@ -298,7 +298,7 @@ SDL_GetDisplayBounds(displayIndex as int, &rect:nilRef as SDL_Rect) as int = \
 	R'''
 	SDL_Rect rect_;
 	int rtn = SDL_GetDisplayBounds(displayIndex, &rect_);
-	rect->SetValue(new Value_SDL_Rect(rect_));
+	rect->SetValue(processor_gurax, new Value_SDL_Rect(rect_));
 	return new Value_Number(rtn);
 	'''
 
@@ -306,7 +306,7 @@ SDL_GetDisplayUsableBounds(displayIndex as int, &rect:nilRef as SDL_Rect) as int
 	R'''
 	SDL_Rect rect_;
 	int rtn = SDL_GetDisplayUsableBounds(displayIndex, &rect_);
-	rect->SetValue(new Value_SDL_Rect(rect_));
+	rect->SetValue(processor_gurax, new Value_SDL_Rect(rect_));
 	return new Value_Number(rtn);
 	'''
 
@@ -314,9 +314,9 @@ SDL_GetDisplayDPI(displayIndex as int, &ddpi:nilRef as float, &hdpi:nilRef as fl
 	R'''
 	float ddpi_, hdpi_, vdpi_;
 	int rtn = SDL_GetDisplayDPI(displayIndex, &ddpi_, &hdpi_, &vdpi_);
-	ddpi->SetValue(new Value_Number(ddpi_));
-	hdpi->SetValue(new Value_Number(hdpi_));
-	vdpi->SetValue(new Value_Number(vdpi_));
+	ddpi->SetValue(processor_gurax, new Value_Number(ddpi_));
+	hdpi->SetValue(processor_gurax, new Value_Number(hdpi_));
+	vdpi->SetValue(processor_gurax, new Value_Number(vdpi_));
 	return new Value_Number(rtn);
 	'''
 
@@ -328,7 +328,7 @@ SDL_GetDisplayMode(displayIndex as int, modeIndex as int, &mode:nilRef as SDL_Di
 	R'''
 	SDL_DisplayMode mode_ = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
 	int rtn = SDL_GetDisplayMode(displayIndex, modeIndex, &mode_);
-	mode->SetValue(new Value_SDL_DisplayMode(mode_));
+	mode->SetValue(processor_gurax, new Value_SDL_DisplayMode(mode_));
 	return new Value_Number(rtn);
 	'''
 
@@ -336,7 +336,7 @@ SDL_GetDesktopDisplayMode(displayIndex as int, &mode:nilRef as SDL_DisplayMode) 
 	R'''
 	SDL_DisplayMode mode_ = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
 	int rtn = SDL_GetDesktopDisplayMode(displayIndex, &mode_);
-	mode->SetValue(new Value_SDL_DisplayMode(mode_));
+	mode->SetValue(processor_gurax, new Value_SDL_DisplayMode(mode_));
 	return new Value_Number(rtn);
 	'''
 
@@ -344,7 +344,7 @@ SDL_GetCurrentDisplayMode(displayIndex as int, &mode:nilRef as SDL_DisplayMode) 
 	R'''
 	SDL_DisplayMode mode_ = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
 	int rtn = SDL_GetCurrentDisplayMode(displayIndex, &mode_);
-	mode->SetValue(new Value_SDL_DisplayMode(mode_));
+	mode->SetValue(processor_gurax, new Value_SDL_DisplayMode(mode_));
 	return new Value_Number(rtn);
 	'''
 
@@ -358,7 +358,7 @@ SDL_GetWindowDisplayMode(window as SDL_Window_p, &mode:nilRef as SDL_DisplayMode
 	R'''
 	SDL_DisplayMode mode_ = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
 	int rtn = SDL_GetWindowDisplayMode(window, &mode_);
-	mode->SetValue(new Value_SDL_DisplayMode(mode_));
+	mode->SetValue(processor_gurax, new Value_SDL_DisplayMode(mode_));
 	return new Value_Number(rtn);
 	'''
 
@@ -390,8 +390,8 @@ SDL_GetWindowPosition(window as SDL_Window_p, &x:nilRef as int, &y:nilRef as int
 	R'''
 	int x_, y_;
 	SDL_GetWindowPosition(window, &x_, &y_);
-	x->SetValue(new Value_Number(x_));
-	y->SetValue(new Value_Number(y_));
+	x->SetValue(processor_gurax, new Value_Number(x_));
+	y->SetValue(processor_gurax, new Value_Number(y_));
 	return Value::nil();
 	'''
 
@@ -401,8 +401,8 @@ SDL_GetWindowSize(window as SDL_Window_p, &w:nilRef as int, &h:nilRef as int) as
 	R'''
 	int w_, h_;
 	SDL_GetWindowSize(window, &w_, &h_);
-	w->SetValue(new Value_Number(w_));
-	h->SetValue(new Value_Number(h_));
+	w->SetValue(processor_gurax, new Value_Number(w_));
+	h->SetValue(processor_gurax, new Value_Number(h_));
 	return Value::nil();
 	'''
 
@@ -410,10 +410,10 @@ SDL_GetWindowBordersSize(window as SDL_Window_p, &top:nilRef as int, &left:nilRe
 	R'''
 	int top_, left_, bottom_, right_;
 	int rtn = SDL_GetWindowBordersSize(window, &top_, &left_, &bottom_, &right_);
-	top->SetValue(new Value_Number(top_));
-	left->SetValue(new Value_Number(left_));
-	bottom->SetValue(new Value_Number(bottom_));
-	right->SetValue(new Value_Number(right_));
+	top->SetValue(processor_gurax, new Value_Number(top_));
+	left->SetValue(processor_gurax, new Value_Number(left_));
+	bottom->SetValue(processor_gurax, new Value_Number(bottom_));
+	right->SetValue(processor_gurax, new Value_Number(right_));
 	return new Value_Number(rtn);
 	'''
 
@@ -423,8 +423,8 @@ SDL_GetWindowMinimumSize(window as SDL_Window_p, &w:nilRef as int, &h:nilRef as 
 	R'''
 	int w_, h_;
 	SDL_GetWindowMinimumSize(window, &w_, &h_);
-	w->SetValue(new Value_Number(w_));
-	h->SetValue(new Value_Number(h_));
+	w->SetValue(processor_gurax, new Value_Number(w_));
+	h->SetValue(processor_gurax, new Value_Number(h_));
 	return Value::nil();
 	'''
 
@@ -434,8 +434,8 @@ SDL_GetWindowMaximumSize(window as SDL_Window_p, &w:nilRef as int, &h:nilRef as 
 	R'''
 	int w_, h_;
 	SDL_GetWindowMaximumSize(window, &w_, &h_);
-	w->SetValue(new Value_Number(w_));
-	h->SetValue(new Value_Number(h_));
+	w->SetValue(processor_gurax, new Value_Number(w_));
+	h->SetValue(processor_gurax, new Value_Number(h_));
 	return Value::nil();
 	'''
 
@@ -484,7 +484,7 @@ SDL_GetWindowOpacity(window as SDL_Window_p, &out_opacity:nilRef as float) as in
 	R'''
 	float out_opacity_;
 	int rtn = SDL_GetWindowOpacity(window, &out_opacity_);
-	out_opacity->SetValue(new Value_Number(out_opacity_));
+	out_opacity->SetValue(processor_gurax, new Value_Number(out_opacity_));
 	return new Value_Number(rtn);
 	'''
 
@@ -522,7 +522,7 @@ SDL_GL_GetAttribute(attr as SDL_GLattr, &value:nilRef as int) as int = \
 	R'''
 	int value_;
 	int rtn = SDL_GL_GetAttribute(attr, &value_);
-	value->SetValue(new Value_Number(value_));
+	value->SetValue(processor_gurax, new Value_Number(value_));
 	return new Value_Number(rtn);
 	'''
 
@@ -538,8 +538,8 @@ SDL_GL_GetDrawableSize(window as SDL_Window_p, &w:nilRef as int, &h:nilRef as in
 	R'''
 	int w_, h_;
 	SDL_GL_GetDrawableSize(window, &w_, &h_);
-	w->SetValue(new Value_Number(w_));
-	h->SetValue(new Value_Number(h_));
+	w->SetValue(processor_gurax, new Value_Number(w_));
+	h->SetValue(processor_gurax, new Value_Number(h_));
 	return Value::nil();
 	'''
 
@@ -559,7 +559,7 @@ SDL_GetRenderDriverInfo(index as int, &info:nilRef as SDL_RendererInfo) as int =
 	R'''
 	SDL_RendererInfo info_;
 	int rtn = SDL_GetRenderDriverInfo(index, &info_);
-	info->SetValue(new Value_SDL_RendererInfo(info_));
+	info->SetValue(processor_gurax, new Value_SDL_RendererInfo(info_));
 	return new Value_Number(rtn);
 	'''
 
@@ -568,8 +568,8 @@ SDL_CreateWindowAndRenderer(width as int, height as int, window_flags as Uint32,
 	SDL_Window* window_;
 	SDL_Renderer* renderer_;
 	int rtn = SDL_CreateWindowAndRenderer(width, height, window_flags, &window_, &renderer_);
-	window->SetValue(new Value_SDL_Window(window_));
-	renderer->SetValue(new Value_SDL_Renderer(renderer_));
+	window->SetValue(processor_gurax, new Value_SDL_Window(window_));
+	renderer->SetValue(processor_gurax, new Value_SDL_Renderer(renderer_));
 	return new Value_Number(rtn);
 	'''
 
@@ -583,7 +583,7 @@ SDL_GetRendererInfo(renderer as SDL_Renderer_p, &info:nilRef as SDL_RendererInfo
 	R'''
 	SDL_RendererInfo info_;
 	int rtn = SDL_GetRendererInfo(renderer, &info_);
-	info->SetValue(new Value_SDL_RendererInfo(info_));
+	info->SetValue(processor_gurax, new Value_SDL_RendererInfo(info_));
 	return new Value_Number(rtn);
 	'''
 
@@ -591,8 +591,8 @@ SDL_GetRendererOutputSize(renderer as SDL_Renderer_p, &w:nilRef as int, &h:nilRe
 	R'''
 	int w_, h_;
 	int rtn = SDL_GetRendererOutputSize(renderer, &w_, &h_);
-	w->SetValue(new Value_Number(w_));
-	h->SetValue(new Value_Number(h_));
+	w->SetValue(processor_gurax, new Value_Number(w_));
+	h->SetValue(processor_gurax, new Value_Number(h_));
 	return new Value_Number(rtn);
 	'''
 
@@ -605,10 +605,10 @@ SDL_QueryTexture(texture as SDL_Texture_p, &format:nil:nilRef as Uint32, &access
 	Uint32 format_;
 	int access_, w_, h_;
 	int rtn = SDL_QueryTexture(texture, &format_, &access_, &w_, &h_);
-	if (format) format->SetValue(new Value_Number(format_));
-	if (access) access->SetValue(new Value_Number(access_));
-	if (w) w->SetValue(new Value_Number(w_));
-	if (h) h->SetValue(new Value_Number(h_));
+	if (format) format->SetValue(processor_gurax, new Value_Number(format_));
+	if (access) access->SetValue(processor_gurax, new Value_Number(access_));
+	if (w) w->SetValue(processor_gurax, new Value_Number(w_));
+	if (h) h->SetValue(processor_gurax, new Value_Number(h_));
 	return new Value_Number(rtn);
 	'''
 
@@ -618,9 +618,9 @@ SDL_GetTextureColorMod(texture as SDL_Texture_p, &r:nilRef as Uint8, &g:nilRef a
 	R'''
 	Uint8 r_, g_, b_;
 	int rtn = SDL_GetTextureColorMod(texture, &r_, &g_, &b_);
-	r->SetValue(new Value_Number(r_));
-	g->SetValue(new Value_Number(g_));
-	b->SetValue(new Value_Number(b_));
+	r->SetValue(processor_gurax, new Value_Number(r_));
+	g->SetValue(processor_gurax, new Value_Number(g_));
+	b->SetValue(processor_gurax, new Value_Number(b_));
 	return new Value_Number(rtn);
 	'''
 
@@ -630,7 +630,7 @@ SDL_GetTextureAlphaMod(texture as SDL_Texture_p, &alpha:nilRef as Uint8) = \
 	R'''
 	Uint8 alpha_;
 	int rtn = SDL_GetTextureAlphaMod(texture, &alpha_);
-	alpha->SetValue(new Value_Number(alpha_));
+	alpha->SetValue(processor_gurax, new Value_Number(alpha_));
 	return new Value_Number(rtn);
 	'''
 
@@ -640,7 +640,7 @@ SDL_GetTextureBlendMode(texture as SDL_Texture_p, &blendMode:nilRef as SDL_Blend
 	R'''
 	SDL_BlendMode blendMode_;
 	int rtn = SDL_GetTextureBlendMode(texture, &blendMode_);
-	blendMode->SetValue(new Value_Number(blendMode_));
+	blendMode->SetValue(processor_gurax, new Value_Number(blendMode_));
 	return new Value_Number(rtn);
 	'''
 
@@ -650,7 +650,7 @@ SDL_GetTextureScaleMode(texture as SDL_Texture_p, &scaleMode:nilRef as SDL_Scale
 	R'''
 	SDL_ScaleMode scaleMode_;
 	int rtn = SDL_GetTextureScaleMode(texture, &scaleMode_);
-	scaleMode->SetValue(new Value_Number(scaleMode_));
+	scaleMode->SetValue(processor_gurax, new Value_Number(scaleMode_));
 	return new Value_Number(rtn);
 	'''
 
@@ -672,8 +672,8 @@ SDL_LockTexture(texture as SDL_Texture_p, rect:nil as const_SDL_Rect_p, &pixels:
 		bytes = pitch_ * h;
 	}
 	RefPtr<Pointer> pPointer(new Pointer_Memory(new MemorySloth(bytes, pixels_)));
-	pixels->SetValue(new Value_Pointer(pPointer.release()));
-	pitch->SetValue(new Value_Number(pitch_));
+	pixels->SetValue(processor_gurax, new Value_Pointer(pPointer.release()));
+	pitch->SetValue(processor_gurax, new Value_Number(pitch_));
 	return new Value_Number(rtn);
 	'''
 
@@ -681,7 +681,7 @@ SDL_LockTextureToSurface(texture as SDL_Texture_p, rect:nil as const_SDL_Rect_p,
 	R'''
 	SDL_Surface* surface_;
 	int rtn = SDL_LockTextureToSurface(texture, rect, &surface_);
-	surface->SetValue(new Value_SDL_Surface(surface_));
+	surface->SetValue(processor_gurax, new Value_SDL_Surface(surface_));
 	return new Value_Number(rtn);
 	'''
 
@@ -699,8 +699,8 @@ SDL_RenderGetLogicalSize(renderer as SDL_Renderer_p, &w:nilRef as int, &h:nilRef
 	R'''
 	int w_, h_;
 	SDL_RenderGetLogicalSize(renderer, &w_, &h_);
-	w->SetValue(new Value_Number(w_));
-	h->SetValue(new Value_Number(h_));
+	w->SetValue(processor_gurax, new Value_Number(w_));
+	h->SetValue(processor_gurax, new Value_Number(h_));
 	return Value::nil();
 	'''
 
@@ -714,7 +714,7 @@ SDL_RenderGetViewport(renderer as SDL_Renderer_p, &rect:nilRef as SDL_Rect) = \
 	R'''
 	SDL_Rect rect_;
 	SDL_RenderGetViewport(renderer, &rect_);
-	rect->SetValue(new Value_SDL_Rect(rect_));
+	rect->SetValue(processor_gurax, new Value_SDL_Rect(rect_));
 	return Value::nil();
 	'''
 
@@ -724,7 +724,7 @@ SDL_RenderGetClipRect(renderer as SDL_Renderer_p, &rect:nilRef as SDL_Rect) = \
 	R'''
 	SDL_Rect rect_;
 	SDL_RenderGetClipRect(renderer, &rect_);
-	rect->SetValue(new Value_SDL_Rect(rect_));
+	rect->SetValue(processor_gurax, new Value_SDL_Rect(rect_));
 	return Value::nil();
 	'''
 
@@ -736,8 +736,8 @@ SDL_RenderGetScale(renderer as SDL_Renderer_p, &scaleX:nilRef as float, &scaleY:
 	R'''
 	float scaleX_, scaleY_;
 	SDL_RenderGetScale(renderer, &scaleX_, &scaleY_);
-	scaleX->SetValue(new Value_Number(scaleX_));
-	scaleY->SetValue(new Value_Number(scaleY_));
+	scaleX->SetValue(processor_gurax, new Value_Number(scaleX_));
+	scaleY->SetValue(processor_gurax, new Value_Number(scaleY_));
 	return Value::nil();
 	'''
 
@@ -747,10 +747,10 @@ SDL_GetRenderDrawColor(renderer as SDL_Renderer_p, &r:nilRef as Uint8, &g:nilRef
 	R'''
 	Uint8 r_, g_, b_, a_;
 	int rtn = SDL_GetRenderDrawColor(renderer, &r_, &g_, &b_, &a_);
-	r->SetValue(new Value_Number(r_));
-	g->SetValue(new Value_Number(g_));
-	b->SetValue(new Value_Number(b_));
-	a->SetValue(new Value_Number(a_));
+	r->SetValue(processor_gurax, new Value_Number(r_));
+	g->SetValue(processor_gurax, new Value_Number(g_));
+	b->SetValue(processor_gurax, new Value_Number(b_));
+	a->SetValue(processor_gurax, new Value_Number(a_));
 	return new Value_Number(rtn);
 	'''
 
@@ -760,7 +760,7 @@ SDL_GetRenderDrawBlendMode(renderer as SDL_Renderer_p, &blendMode:nilRef as SDL_
 	R'''
 	SDL_BlendMode blendMode_;
 	int rtn = SDL_GetRenderDrawBlendMode(renderer, &blendMode_);
-	blendMode->SetValue(new Value_Number(blendMode_));
+	blendMode->SetValue(processor_gurax, new Value_Number(blendMode_));
 	return new Value_Number(rtn);
 	'''
 
@@ -893,9 +893,9 @@ SDL_GetRGB(pixel as Uint32, format as const_SDL_PixelFormat_p, &r:nilRef as Uint
 	R'''
 	Uint8 r_, g_, b_;
 	SDL_GetRGB(pixel, format, &r_, &g_, &b_);
-	r->SetValue(new Value_Number(r_));
-	g->SetValue(new Value_Number(g_));
-	b->SetValue(new Value_Number(b_));
+	r->SetValue(processor_gurax, new Value_Number(r_));
+	g->SetValue(processor_gurax, new Value_Number(g_));
+	b->SetValue(processor_gurax, new Value_Number(b_));
 	return Value::nil();
 	'''
 
@@ -903,10 +903,10 @@ SDL_GetRGBA(pixel as Uint32, format as const_SDL_PixelFormat_p, &r:nilRef as Uin
 	R'''
 	Uint8 r_, g_, b_, a_;
 	SDL_GetRGBA(pixel, format, &r_, &g_, &b_, &a_);
-	r->SetValue(new Value_Number(r_));
-	g->SetValue(new Value_Number(g_));
-	b->SetValue(new Value_Number(b_));
-	a->SetValue(new Value_Number(a_));
+	r->SetValue(processor_gurax, new Value_Number(r_));
+	g->SetValue(processor_gurax, new Value_Number(g_));
+	b->SetValue(processor_gurax, new Value_Number(b_));
+	a->SetValue(processor_gurax, new Value_Number(a_));
 	return Value::nil();
 	'''
 
@@ -920,7 +920,7 @@ SDL_IntersectRect(A as const_SDL_Rect_p, B as const_SDL_Rect_p, &result:nilRef a
 	R'''
 	SDL_Rect result_;
 	SDL_bool rtn = SDL_IntersectRect(A, B, &result_);
-	result->SetValue(new Value_SDL_Rect(result_));
+	result->SetValue(processor_gurax, new Value_SDL_Rect(result_));
 	return new Value_Bool(rtn);
 	'''
 
@@ -928,7 +928,7 @@ SDL_UnionRect(A as const_SDL_Rect_p, B as const_SDL_Rect_p, &result:nilRef as SD
 	R'''
 	SDL_Rect result_;
 	SDL_UnionRect(A, B, &result_);
-	result->SetValue(new Value_SDL_Rect(result_));
+	result->SetValue(processor_gurax, new Value_SDL_Rect(result_));
 	return Value::nil();
 	'''
 
@@ -941,10 +941,10 @@ SDL_IntersectRectAndLine(rect as const_SDL_Rect_p, &X1 as int, &Y1 as int, &X2 a
 	int X2_ = Value_Number::GetNumber<int>(X1->GetValue());
 	int Y2_ = Value_Number::GetNumber<int>(Y2->GetValue());
 	int rtn = SDL_IntersectRectAndLine(rect, &X1_, &Y1_, &X2_, &Y2_);
-	X1->SetValue(new Value_Number(X1_));
-	Y1->SetValue(new Value_Number(Y1_));
-	X2->SetValue(new Value_Number(X1_));
-	Y2->SetValue(new Value_Number(X1_));
+	X1->SetValue(processor_gurax, new Value_Number(X1_));
+	Y1->SetValue(processor_gurax, new Value_Number(Y1_));
+	X2->SetValue(processor_gurax, new Value_Number(X1_));
+	Y2->SetValue(processor_gurax, new Value_Number(X1_));
 	return new Value_Number(rtn);
 	'''
 
@@ -993,7 +993,7 @@ SDL_GetColorKey(surface as SDL_Surface_p, &key:nilRef as Uint32) as int = \
 	R'''
 	Uint32 key_;
 	int rtn = SDL_GetColorKey(surface, &key_);
-	key->SetValue(new Value_Number(key_));
+	key->SetValue(processor_gurax, new Value_Number(key_));
 	return new Value_Number(rtn);
 	'''
 
@@ -1003,9 +1003,9 @@ SDL_GetSurfaceColorMod(surface as SDL_Surface_p, &r:nilRef as Uint8, &g:nilRef a
 	R'''
 	Uint8 r_, g_, b_;
 	int rtn = SDL_GetSurfaceColorMod(surface, &r_, &g_, &b_);
-	r->SetValue(new Value_Number(r_));
-	g->SetValue(new Value_Number(g_));
-	b->SetValue(new Value_Number(b_));
+	r->SetValue(processor_gurax, new Value_Number(r_));
+	g->SetValue(processor_gurax, new Value_Number(g_));
+	b->SetValue(processor_gurax, new Value_Number(b_));
 	return new Value_Number(rtn);
 	'''
 
@@ -1015,7 +1015,7 @@ SDL_GetSurfaceAlphaMod(surface as SDL_Surface_p, &alpha:nilRef as Uint8) as int 
 	R'''
 	Uint8 alpha_;
 	int rtn = SDL_GetSurfaceAlphaMod(surface, &alpha_);
-	alpha->SetValue(new Value_Number(alpha_));
+	alpha->SetValue(processor_gurax, new Value_Number(alpha_));
 	return new Value_Number(rtn);
 	'''
 
@@ -1025,7 +1025,7 @@ SDL_GetSurfaceBlendMode(surface as SDL_Surface_p, &blendMode:nilRef as SDL_Blend
 	R'''
 	SDL_BlendMode blendMode_;
 	int rtn = SDL_GetSurfaceBlendMode(surface, &blendMode_);
-	blendMode->SetValue(new Value_Number(blendMode_));
+	blendMode->SetValue(processor_gurax, new Value_Number(blendMode_));
 	return new Value_Number(rtn);
 	'''
 
@@ -1035,7 +1035,7 @@ SDL_GetClipRect(surface as SDL_Surface_p, &rect:nilRef as SDL_Rect):void = \
 	R'''
 	SDL_Rect rect_;
 	SDL_GetClipRect(surface, &rect_);
-	rect->SetValue(new Value_SDL_Rect(rect_));
+	rect->SetValue(processor_gurax, new Value_SDL_Rect(rect_));
 	return Value::nil();
 	'''
 
@@ -1077,7 +1077,7 @@ SDL_GetWindowWMInfo(window as SDL_Window_p, &info:nilRef as SDL_SysWMinfo) = \
 	R'''
 	SDL_SysWMinfo info_;
 	int rtn = SDL_GetWindowWMInfo(window, &info_);
-	info->SetValue(new Value_SDL_SysWMinfo(info_));
+	info->SetValue(processor_gurax, new Value_SDL_SysWMinfo(info_));
 	return new Value_Number(rtn);
 	'''
 
@@ -1212,8 +1212,8 @@ SDL_GetMouseState(&x:nilRef as int, &y:nilRef as int) = \
 	R'''
 	int x_, y_;
 	Uint32 state = SDL_GetMouseState(&x_, &y_);
-	x->SetValue(new Value_Number(x_));
-	y->SetValue(new Value_Number(y_));
+	x->SetValue(processor_gurax, new Value_Number(x_));
+	y->SetValue(processor_gurax, new Value_Number(y_));
 	return new Value_Number(state);
 	'''
 
@@ -1221,8 +1221,8 @@ SDL_GetGlobalMouseState(&x:nilRef as int, &y:nilRef as int) = \
 	R'''
 	int x_, y_;
 	Uint32 state = SDL_GetGlobalMouseState(&x_, &y_);
-	x->SetValue(new Value_Number(x_));
-	y->SetValue(new Value_Number(y_));
+	x->SetValue(processor_gurax, new Value_Number(x_));
+	y->SetValue(processor_gurax, new Value_Number(y_));
 	return new Value_Number(state);
 	'''
 
@@ -1230,8 +1230,8 @@ SDL_GetRelativeMouseState(&x:nilRef as int, &y:nilRef as int) = \
 	R'''
 	int x_, y_;
 	Uint32 state = SDL_GetRelativeMouseState(&x_, &y_);
-	x->SetValue(new Value_Number(x_));
-	y->SetValue(new Value_Number(y_));
+	x->SetValue(processor_gurax, new Value_Number(x_));
+	y->SetValue(processor_gurax, new Value_Number(y_));
 	return new Value_Number(state);
 	'''
 
@@ -1311,7 +1311,7 @@ SDL_JoystickGetGUIDString(guid as SDL_JoystickGUID, &szGUID:nilRef as String@gur
 	R'''
 	char szGUID_[64]; // requires at least 33 bytes
 	SDL_JoystickGetGUIDString(guid, szGUID_, sizeof(szGUID_));
-	szGUID->SetValue(new Value_String(szGUID_));
+	szGUID->SetValue(processor_gurax, new Value_String(szGUID_));
 	return Value::nil();
 	'''
 
@@ -1343,8 +1343,8 @@ SDL_JoystickGetBall(joystick as SDL_Joystick_p, ball as int, &dx:nilRef as int, 
 	R'''
 	int dx_, dy_;
 	int rtn = SDL_JoystickGetBall(joystick, ball, &dx_, &dy_);
-	dx->SetValue(new Value_Number(dx_));
-	dy->SetValue(new Value_Number(dy_));
+	dx->SetValue(processor_gurax, new Value_Number(dx_));
+	dy->SetValue(processor_gurax, new Value_Number(dy_));
 	return new Value_Number(rtn);
 	'''
 
@@ -1865,8 +1865,8 @@ SDL_GetPowerInfo(&secs:nilRef as int, &pct:nilRef as int) = \
 	R'''
 	int secs_, pct_;
 	SDL_PowerState state = SDL_GetPowerInfo(&secs_, &pct_);
-	secs->SetValue(new Value_Number(secs_));
-	pct->SetValue(new Value_Number(pct_));
+	secs->SetValue(processor_gurax, new Value_Number(secs_));
+	pct->SetValue(processor_gurax, new Value_Number(pct_));
 	return new Value_Number(state);
 	'''
 
@@ -2252,9 +2252,9 @@ Mix_QuerySpec(&frequency:nilRef as int, &format:nilRef as Uint16, &channels:nilR
 	Uint16 format_;
 	int channels_;
 	int rtn = Mix_QuerySpec(&frequency_, &format_, &channels_);
-	frequency->SetValue(new Value_Number(frequency_));
-	format->SetValue(new Value_Number(format_));
-	channels->SetValue(new Value_Number(channels_));
+	frequency->SetValue(processor_gurax, new Value_Number(frequency_));
+	format->SetValue(processor_gurax, new Value_Number(format_));
+	channels->SetValue(processor_gurax, new Value_Number(channels_));
 	return new Value_Number(rtn);
 	'''
 

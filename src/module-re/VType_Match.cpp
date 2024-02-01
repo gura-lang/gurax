@@ -207,7 +207,7 @@ bool Value_Match::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) con
 	return *ppValue != nullptr;
 }
 
-bool Value_Match::DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue)
+bool Value_Match::DoSingleIndexSet(Processor& processor, const Value& valueIndex, RefPtr<Value> pValue)
 {
 	Error::Issue(ErrorType::IndexError, "modification by index access is not permitted");
 	return false;

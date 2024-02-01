@@ -25,13 +25,13 @@ void ArgSlot_Single::ResetValue()
 	_pValue.reset(Value::undefined());
 }
 
-void ArgSlot_Single::FeedValue(Argument& argument, Frame& frameForVType, RefPtr<Value> pValue)
+void ArgSlot_Single::FeedValue(Processor& processor, Argument& argument, Frame& frameForVType, RefPtr<Value> pValue)
 {
 	if (pValue->IsMappable(GetDeclArg(), argument.GetFlags())) {
 		pValue->UpdateMapMode(argument);
 		_pValue.reset(new Value_ArgMapper(pValue->GenIterator()));
 	} else {
-		pValue.reset(GetDeclArg().Cast(frameForVType, *pValue));
+		pValue.reset(GetDeclArg().Cast(processor, frameForVType, *pValue));
 		if (Error::IsIssued()) return;
 		_pValue.reset(pValue.release());
 	}
@@ -51,7 +51,7 @@ void ArgSlot_Multiple::ResetValue()
 	GetValue().GetValueTypedOwner().Clear();
 }
 
-void ArgSlot_Multiple::FeedValue(Argument& argument, Frame& frame, RefPtr<Value> pValue)
+void ArgSlot_Multiple::FeedValue(Processor& processor, Argument& argument, Frame& frame, RefPtr<Value> pValue)
 {
 	if (pValue->IsMappable(GetDeclArg(), argument.GetFlags())) {
 		if (GetValue().IsList()) {
@@ -61,7 +61,7 @@ void ArgSlot_Multiple::FeedValue(Argument& argument, Frame& frame, RefPtr<Value>
 		pValue->UpdateMapMode(argument);
 		GetValue().GetValueTypedOwner().Add(new Value_ArgMapper(pValue->GenIterator()));
 	} else {
-		pValue.reset(GetDeclArg().Cast(frame, *pValue));
+		pValue.reset(GetDeclArg().Cast(processor, frame, *pValue));
 		if (Error::IsIssued()) return;
 		GetValue().GetValueTypedOwner().Add(pValue.release());
 	}
@@ -82,7 +82,7 @@ void ArgSlot_Dict::ResetValue()
 	GetValue().GetValueDict().Clear();
 }
 
-void ArgSlot_Dict::FeedValue(Argument& argument, Frame& frame, RefPtr<Value> pValue)
+void ArgSlot_Dict::FeedValue(Processor& processor, Argument& argument, Frame& frame, RefPtr<Value> pValue)
 {
 	GetValue().GetValueDict().Assign(new Value_Symbol(_pSymbol), pValue.release());
 }

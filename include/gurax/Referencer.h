@@ -37,7 +37,7 @@ public:
 	virtual Frame& GetFrame() = 0;
 	virtual const Frame& GetFrame() const = 0;
 	virtual const Symbol* GetSymbol() const = 0;
-	virtual void SetValue(Value* pValue) = 0;
+	virtual void SetValue(Processor& processor, Value* pValue) = 0;
 	virtual Value& GetValue() = 0;
 	virtual const Value& GetValue() const = 0;
 	virtual Referencer* CloneWithCastedValue(Value* pValueCasted) const = 0;
@@ -80,7 +80,7 @@ public:
 	virtual Frame& GetFrame() override { return *_pFrame; }
 	virtual const Frame& GetFrame() const override { return *_pFrame; }
 	virtual const Symbol* GetSymbol() const override { return _pSymbol; }
-	virtual void SetValue(Value* pValue) override;
+	virtual void SetValue(Processor& processor, Value* pValue) override;
 	virtual Value& GetValue() override { return *_pValue; }
 	virtual const Value& GetValue() const override { return *_pValue; }
 	virtual Referencer* CloneWithCastedValue(Value* pValueCasted) const override {

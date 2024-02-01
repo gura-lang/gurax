@@ -156,10 +156,8 @@ public:
 	static bool ImportAllBuiltIns(Processor& processor);
 	static bool ImportByNameList(Processor& processor, const StringList& strs);
 	static bool ImportByName(Processor& processor, const char* moduleName);
-	static Module* ImportHierarchy(Processor& processor, const DottedSymbol& dottedSymbol,
-								   bool binaryFlag, bool overwriteFlag);
-	static Module* Import(Processor& processor, const DottedSymbol& dottedSymbol,
-						  bool binaryFlag, bool overwriteFlag);
+	static Module* ImportHierarchy(Processor& processor, const DottedSymbol& dottedSymbol, bool binaryFlag, bool overwriteFlag);
+	static Module* Import(Processor& processor, const DottedSymbol& dottedSymbol, bool binaryFlag, bool overwriteFlag);
 	static Module* ImportScript(Processor& processor, const DottedSymbol& dottedSymbol, const char* pathName);
 	static Module* ImportCompressed(Processor& processor, const DottedSymbol& dottedSymbol, const char* pathName);
 	static Module* ImportBinary(Processor& processor, const DottedSymbol& dottedSymbol, const char* pathName);
@@ -201,7 +199,7 @@ private:
 public:
 	ModuleBuiltInFactory(String name) : _name(name) { list.push_back(this); }
 	const char* GetName() const { return _name.c_str(); }
-	bool Import(Frame& frame) const;
+	bool Import(Processor& processor, Frame& frame) const;
 	virtual Module* DoCreate(Frame* pFrame) const = 0;
 };
 
