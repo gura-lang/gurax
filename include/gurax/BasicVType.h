@@ -12,7 +12,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE BasicVType {
 public:
-	static void Prepare(Processor& processor, Frame& frame);
+	static void Prepare(Frame& frame);
 };
 
 }

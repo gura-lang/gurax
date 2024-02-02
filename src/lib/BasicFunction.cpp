@@ -518,7 +518,7 @@ Gurax_ImplementFunction(hex)
 //------------------------------------------------------------------------------
 // BasicFunction
 //------------------------------------------------------------------------------
-void BasicFunction::Prepare(Processor& processor, Frame& frame)
+void BasicFunction::Prepare(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(Chr));
 	frame.Assign(Gurax_CreateFunction(Dim));
