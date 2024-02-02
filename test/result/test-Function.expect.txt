@@ -369,3 +369,12 @@ Format('%s %d %s', p.name, p.age, p.mobile) .. hoge 23 xxx-yyyy-zzzz
 ======== stringCast attribute ========
 f('1234') .. a can't cast from String to Number
 g('1234') .. 1234
+======== Tuple Casting ========
+Hayasaka Hiroko, hayasaka_hiroko@example.com, 33, hayasaka_hiroko@example.com, 1976/8/27
+Hayasaka Hiroko, hayasaka_hiroko@example.com, 33, hayasaka_hiroko@example.com, 1976/8/27
+Hayasaka Hiroko, hayasaka_hiroko@example.com, 33, hayasaka_hiroko@example.com, 1976/8/27
+Hannda Yumiko, hannda_yumiko@example.com, 75, hannda_yumiko@example.com, 1934/10/20
+Honma Chise, honma_chise@example.com, 46, honma_chise@example.com, 1964/3/9
+Kawahata Nana, kawahata_nana@example.com, 47, kawahata_nana@example.com, 1962/4/23
+<Person>
+('Hayasaka Hiroko', 'hayasaka_hiroko@example.com', 33, '1976/8/27', '090-9134-30BF')

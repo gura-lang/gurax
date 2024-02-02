@@ -194,13 +194,14 @@ Value* VType::Cast(Processor& processor, const Value& value, const Symbol* pSymb
 	} else if (flags & DeclArg::Flag::NoCast) {
 		IssueError(*this, pSymbol, value);
 		return nullptr;
-	//} else if (value.IsInstanceOf(VTYPE_Tuple)) {
-	//	const Function& constructor = GetConstructor();
-	//	if (constructor.IsEmpty()) {
-	//		Error::Issue(ErrorType::CastError, "%s doesn't have a constructor", MakeFullName().c_str());
-	//		return nullptr;
-	//	}
-	//	return constructor.EvalEasy(processor, Value_Tuple::GetValueOwner(value));
+	} else if (!IsAny() && value.IsInstanceOf(VTYPE_Tuple)) {
+		const Function& constructor = GetConstructor();
+		if (constructor.IsEmpty()) {
+			Error::Issue(ErrorType::CastError, "%s doesn't have a constructor", MakeFullName().c_str());
+			return nullptr;
+		}
+		RefPtr<Value> pValueCasted(constructor.EvalEasy(processor, Value_Tuple::GetValueOwner(value)));
+		return Error::IsIssued()? nullptr : pValueCasted.release();
 	} else {
 		RefPtr<Value> pValueCasted(DoCastFrom(processor, value, flags));
 		if (!pValueCasted) {

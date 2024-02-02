@@ -128,6 +128,7 @@ public:
 public:
 	// Virtual functions
 	virtual void PrepareForAssignment(Processor& processor, const Symbol* pSymbol) {};
+	virtual bool IsAny() const { return false; }
 	virtual bool IsCustom() const { return false; }
 	virtual bool IsNil() const { return false; }
 	virtual bool IsUndefined() const { return false; }

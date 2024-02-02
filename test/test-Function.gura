@@ -357,3 +357,30 @@ TestCase('stringCast attribute') {
 	Tester(`f('1234'))
 	Tester(`g('1234'))
 }
+
+TestCase('Tuple Casting') {
+	Person = struct {
+		name as String
+		email as String
+		age as Number
+		birthDay as String
+		mobile as String
+	}
+	f(person as Person):map = {
+		Printf('%s, %s, %d, %s, %s\n', person.name, person.email, person.age, person.email, person.birthDay, person.mobile)
+	}
+	g(value):map = {
+		Println(value)
+	}
+	f(Person('Hayasaka Hiroko','hayasaka_hiroko@example.com',33,'1976/8/27','090-9134-30BF'))
+	f(('Hayasaka Hiroko','hayasaka_hiroko@example.com',33,'1976/8/27','090-9134-30BF'))
+	f([
+		('Hayasaka Hiroko','hayasaka_hiroko@example.com',33,'1976/8/27','090-9134-30BF')
+		('Hannda Yumiko','hannda_yumiko@example.com',75,'1934/10/20','080-6713-87BI')
+		('Honma Chise','honma_chise@example.com',46,'1964/3/9','090-5237-82FJ')
+		('Kawahata Nana','kawahata_nana@example.com',47,'1962/4/23','090-4760-51JA')
+	])
+	g(Person('Hayasaka Hiroko','hayasaka_hiroko@example.com',33,'1976/8/27','090-9134-30BF'))
+	g(('Hayasaka Hiroko','hayasaka_hiroko@example.com',33,'1976/8/27','090-9134-30BF'))
+}
+

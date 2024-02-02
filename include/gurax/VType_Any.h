@@ -13,6 +13,7 @@ namespace Gurax {
 class GURAX_DLLDECLARE VType_Any : public VType {
 public:
 	using VType::VType;
+	virtual bool IsAny() const override { return true; }
 	virtual void DoPrepare(Frame& frameOuter) override;
 	virtual Value* DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const override;
 };
