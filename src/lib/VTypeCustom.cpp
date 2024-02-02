@@ -99,9 +99,13 @@ void VTypeCustom::PrepareForAssignment(Processor& processor, const Symbol* pSymb
 
 Value* VTypeCustom::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
-	//if (GetCastFunction().IsEmpty()) return nullptr;
-	//GetCastFunction().EvalEasy(GetProcessor(), value.Reference(), new Value_DeclArg());
-	return value.Reference();
+	if (GetCastFunction().IsEmpty()) return nullptr;
+	RefPtr<Value> pValue(GetCastFunction().EvalEasy(processor, value.Reference())); // new Value_DeclArg(new DeclArg())
+	if (!pValue->IsInstanceOf(*this)) {
+		Error::Issue(ErrorType::CastError, "the returned value must be of %s", MakeFullName().c_str());
+		return nullptr;
+	}
+	return pValue.release();
 }
 
 bool VTypeCustom::DoAssignCustomMethod(RefPtr<Function> pFunction)

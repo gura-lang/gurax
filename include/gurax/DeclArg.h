@@ -111,10 +111,8 @@ public:
 	static DeclArg* Any;
 public:
 	// Constructor
-	DeclArg(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,
-			const Occur& occur, Flags flags, Expr* pExprDefault);
-	DeclArg(const Symbol* pSymbol, const VType& vtype,
-			const Occur& occur, Flags flags, Expr* pExprDefault);
+	DeclArg(const Symbol* pSymbol, DottedSymbol* pDottedSymbol, const Occur& occur, Flags flags, Expr* pExprDefault);
+	DeclArg(const Symbol* pSymbol, const VType& vtype, const Occur& occur, Flags flags, Expr* pExprDefault);
 	// Copy constructor/operator
 	DeclArg(const DeclArg& src) = delete;
 	DeclArg& operator=(const DeclArg& src) = delete;
