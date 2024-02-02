@@ -33,7 +33,7 @@ repeat {
 	renderer.SetDrawColor(255, 0, 0, 50)
 	renderer.SetDrawBlendMode(SDL_BLENDMODE_BLEND)
 	pointTbl.Each {|point|
-		renderer.FillRect(SDL_Rect(point.x, point.y, 100, 100))
+		renderer.FillRect((point.x, point.y, 100, 100))
 		point.Move(wdWindow, htWindow)
 	}
 	rtn = SDL_WaitEventTimeout(event, 10) // 10msec
