@@ -286,3 +286,6 @@ a.f2 .. <CallableMember:A.f2()>
 a.f3 .. <Function:Println(values* as Any):map>
 ======== Cast to Tuple ========
 c as Tuple .. ('value1', 'value2', 'value3', 'value4', 'value5', 'value6', 'value7')
+======== __cast__ ========
+f(3) .. <A>
+g(3) .. b can't cast from Number to B

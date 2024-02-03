@@ -610,3 +610,16 @@ TestCase('Cast to Tuple') {
 	c = C()
 	Tester(`(c as Tuple))
 }
+
+TestCase('__cast__') {
+	A = class {
+		__cast__(value) = {
+			A()
+		}
+	}
+	B = class {}
+	f(a as A) = {a}
+	Tester(`f(3))
+	g(b as B) = {b}
+	Tester(`g(3))
+}

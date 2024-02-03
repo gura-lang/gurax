@@ -134,6 +134,9 @@ public:
 	const VType& GetVTypeResult() const { return *_pVTypeResult; }
 	void SetFlags(Flags flags) { _flags = flags; }
 	Flags GetFlags() const { return _flags; }
+	void SetFlagsAsClass() { _flags = _flags & ~Flag::OfInstance | Flag::OfClass; }
+	void SetFlagsAsInstance() { _flags = _flags & ~Flag::OfClass | Flag::OfInstance; }
+	void SetFlagsAsHybrid() { _flags |= Flag::OfInstance | Flag::OfClass; }
 	void OrFlags(Flags flags) { _flags |= flags; }
 	void SetExprSrc(Expr* pExprSrc) { _pExprSrc.reset(pExprSrc); }
 	const Expr* GetExprSrc() const { return _pExprSrc.get(); }

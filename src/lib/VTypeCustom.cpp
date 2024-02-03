@@ -109,6 +109,7 @@ Value* VTypeCustom::DoCastFrom(Processor& processor, const Value& value, DeclArg
 		if (!args.FeedValue(processor, new Value_DeclArg(pDeclArg.release()))) return nullptr;
 	}
 	RefPtr<Value> pValue(func.Eval(processor, *pArg));
+	if (Error::IsIssued()) return nullptr;
 	if (!pValue->IsInstanceOf(*this)) {
 		Error::Issue(ErrorType::CastError, "the returned value must be of %s", MakeFullName().c_str());
 		return nullptr;
@@ -140,6 +141,7 @@ bool VTypeCustom::DoAssignCustomMethod(RefPtr<Function> pFunction)
 		SetDestructor(pFunction.release());
 		return true;
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(__cast__))) {
+		pFunction->GetDeclCallable().SetFlagsAsClass();
 		pFunction->SetFrameOuter(GetFrame());
 		SetCastFunction(pFunction.release());
 		return true;
