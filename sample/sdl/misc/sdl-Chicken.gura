@@ -58,7 +58,7 @@ texturesChickenL = Texture(renderer, imgs):list
 texturesChickenR = Texture(renderer, imgs:*Flip(`horz)):list
 wdInit = 40
 chickens = []
-AddChicken(10, 100, 80, `right, true)
+AddChicken(10, 300, 80, `right, true)
 timePrev = SDL_GetTicks()
 event = SDL_Event()
 iSize = 0
