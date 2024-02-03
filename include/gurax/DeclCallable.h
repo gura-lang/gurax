@@ -139,8 +139,7 @@ public:
 	const Expr* GetExprSrc() const { return _pExprSrc.get(); }
 public:
 	void Declare(VType& vtype, Flags flags) { _pVTypeResult = &vtype; _flags |= flags; }
-	void DeclareArg(const Symbol* pSymbol, const VType& vtype,
-					const DeclArg::Occur& occur = DeclArg::Occur::Once,
+	void DeclareArg(const Symbol* pSymbol, const VType& vtype, const DeclArg::Occur& occur = DeclArg::Occur::Once,
 					DeclArg::Flags flags = DeclArg::Flag::None, Expr* pExprDefault = nullptr) {
 		GetDeclArgOwner().push_back(new DeclArg(pSymbol, vtype, occur, flags, pExprDefault));
 	}
@@ -155,18 +154,17 @@ public:
 	void DeclareAttrOpt(const char* name) {
 		DeclareAttrOpt(Symbol::Add(name));
 	}
-	void DeclareBlock(const Symbol* pSymbol, const DeclBlock::Occur& occur,
-					  DeclBlock::Flags flags = DeclBlock::Flag::None) {
+	void DeclareBlock(const Symbol* pSymbol, const DeclBlock::Occur& occur, DeclBlock::Flags flags = DeclBlock::Flag::None) {
 		GetDeclBlock().SetSymbol(pSymbol).SetOccur(occur).SetFlags(flags);
 	}
-	void DeclareBlock(const char* name, const DeclBlock::Occur& occur,
-					  DeclBlock::Flags flags = DeclBlock::Flag::None) {
+	void DeclareBlock(const char* name, const DeclBlock::Occur& occur, DeclBlock::Flags flags = DeclBlock::Flag::None) {
 		DeclareBlock(Symbol::Add(name), occur, flags);
 	}
 	void DeclareBlock(const DeclBlock::Occur& occur, DeclBlock::Flags flags = DeclBlock::Flag::None) {
 		DeclareBlock(Gurax_Symbol(block), occur, flags);
 	}
 public:
+	size_t CountDeclArgs() const { return GetDeclArgOwner().size(); }
 	Attribute& GetAttr() { return *_pAttr; }
 	const Attribute& GetAttr() const { return *_pAttr; }
 	bool HasAttr() const { return GetFlags() != 0 || !GetAttr().IsEmpty(); }

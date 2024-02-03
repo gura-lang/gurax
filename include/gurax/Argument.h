@@ -38,7 +38,7 @@ private:
 public:
 	// Constructor
 	Argument(Processor& processor, Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAttr,
-			DeclCallable::Flags flags, Value* pValueThis, Expr_Block* pExprOfBlock);
+		DeclCallable::Flags flags, Value* pValueThis, Expr_Block* pExprOfBlock);
 	Argument(Processor& processor, DeclCallable* pDeclCallable, DeclCallable::Flags flags = DeclCallable::Flag::None) :
 		Argument(processor, Value::nil(), pDeclCallable, Attribute::Empty->Reference(), flags, Value::undefined(), nullptr) {}
 	Argument(Processor& processor, const Function& function, DeclCallable::Flags flags = DeclCallable::Flag::None);

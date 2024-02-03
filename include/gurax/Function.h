@@ -223,13 +223,11 @@ public:
 	void Declare(VType& vtypeResult, Flags flags) {
 		GetDeclCallable().Declare(vtypeResult, flags);
 	}
-	void DeclareArg(const Symbol* pSymbol, const VType& vtype,
-					const DeclArg::Occur& occur = DeclArg::Occur::Once,
+	void DeclareArg(const Symbol* pSymbol, const VType& vtype, const DeclArg::Occur& occur = DeclArg::Occur::Once,
 					DeclArg::Flags flags = DeclArg::Flag::None, Expr* pExprDefault = nullptr) {
 		GetDeclCallable().DeclareArg(pSymbol, vtype, occur, flags, pExprDefault);
 	}
-	void DeclareArg(const char* name, const VType& vtype,
-					const DeclArg::Occur& occur = DeclArg::Occur::Once,
+	void DeclareArg(const char* name, const VType& vtype, const DeclArg::Occur& occur = DeclArg::Occur::Once,
 					DeclArg::Flags flags = DeclArg::Flag::None, Expr* pExprDefault = nullptr) {
 		GetDeclCallable().DeclareArg(name, vtype, occur, flags, pExprDefault);
 	}
@@ -239,18 +237,17 @@ public:
 	void DeclareAttrOpt(const char* name) {
 		GetDeclCallable().DeclareAttrOpt(name);
 	}
-	void DeclareBlock(const Symbol* pSymbol, const DeclBlock::Occur& occur,
-					  DeclBlock::Flags flags = DeclBlock::Flag::None) {
+	void DeclareBlock(const Symbol* pSymbol, const DeclBlock::Occur& occur, DeclBlock::Flags flags = DeclBlock::Flag::None) {
 		GetDeclCallable().DeclareBlock(pSymbol, occur, flags);
 	}
-	void DeclareBlock(const char* name, const DeclBlock::Occur& occur,
-					  DeclBlock::Flags flags = DeclBlock::Flag::None) {
+	void DeclareBlock(const char* name, const DeclBlock::Occur& occur, DeclBlock::Flags flags = DeclBlock::Flag::None) {
 		GetDeclCallable().DeclareBlock(name, occur, flags);
 	}
 	void DeclareBlock(const DeclBlock::Occur& occur, DeclBlock::Flags flags = DeclBlock::Flag::None) {
 		GetDeclCallable().DeclareBlock(occur, flags);
 	}
 public:
+	size_t CountDeclArgs() const { return GetDeclCallable().CountDeclArgs(); }
 	Flags GetFlags() const { return GetDeclCallable().GetFlags(); }
 	bool IsSet(Flags flags) const { return GetDeclCallable().IsSet(flags); }
 	HelpHolder& GetHelpHolder() { return *_pHelpHolder; }
