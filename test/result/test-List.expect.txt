@@ -876,3 +876,14 @@ b .. [1, 2, 3, 4, 5, 6, 7]
 [('The', 'quick', 'brown')*, 'fox', ('jumps', 'over')*, ('the', 'lazy', 'dog')*] .. ['The', 'quick', 'brown', 'fox', 'jumps', 'over', 'the', 'lazy', 'dog']
 [Range(6), 6, 7, Range(8, 11)] .. [<Iterator:Range:begin=0:end=6:step=1>, 6, 7, <Iterator:Range:begin=8:end=11:step=1>]
 [Range(6)*, 6, 7, Range(8, 11)*] .. [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+======== List#RandomGet() ========
+Format('%s,%d', tbl.RandomGet(r1), r2.Int(6)) .. peach,3
+Format('%s,%d', tbl.RandomGet(r1), r2.Int(6)) .. kiwi,5
+Format('%s,%d', tbl.RandomGet(r1), r2.Int(6)) .. kiwi,5
+Format('%s,%d', tbl.RandomGet(r1), r2.Int(6)) .. kiwi,5
+Format('%s,%d', tbl.RandomGet(r1), r2.Int(6)) .. peach,3
+Format('%s,%d', tbl.RandomGet(r1), r2.Int(6)) .. apple,2
+Format('%s,%d', tbl.RandomGet(r1), r2.Int(6)) .. grape,1
+Format('%s,%d', tbl.RandomGet(r1), r2.Int(6)) .. orange,0
+Format('%s,%d', tbl.RandomGet(r1), r2.Int(6)) .. grape,1
+Format('%s,%d', tbl.RandomGet(r1), r2.Int(6)) .. apple,2

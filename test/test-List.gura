@@ -901,3 +901,19 @@ TestCase('Expansion') {
 	Tester(`[Range(6), 6, 7, Range(8, 11)])
 	Tester(`[Range(6)*, 6, 7, Range(8, 11)*])
 }
+
+TestCase('List#RandomGet()') {
+	r1 = Random(0)	
+	r2 = Random(0)	
+	tbl = ['orange', 'grape', 'apple', 'peach', 'melon', 'kiwi']
+	Tester(`Format('%s,%d', tbl.RandomGet(r1), r2.Int(6)))
+	Tester(`Format('%s,%d', tbl.RandomGet(r1), r2.Int(6)))
+	Tester(`Format('%s,%d', tbl.RandomGet(r1), r2.Int(6)))
+	Tester(`Format('%s,%d', tbl.RandomGet(r1), r2.Int(6)))
+	Tester(`Format('%s,%d', tbl.RandomGet(r1), r2.Int(6)))
+	Tester(`Format('%s,%d', tbl.RandomGet(r1), r2.Int(6)))
+	Tester(`Format('%s,%d', tbl.RandomGet(r1), r2.Int(6)))
+	Tester(`Format('%s,%d', tbl.RandomGet(r1), r2.Int(6)))
+	Tester(`Format('%s,%d', tbl.RandomGet(r1), r2.Int(6)))
+	Tester(`Format('%s,%d', tbl.RandomGet(r1), r2.Int(6)))
+}

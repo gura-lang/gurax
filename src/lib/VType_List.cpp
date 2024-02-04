@@ -379,29 +379,6 @@ Gurax_ImplementMethod(List, Put)
 	return argument.GetValueThis().Reference();
 }
 
-// List#Shuffle(random? as Random):reduce
-Gurax_DeclareMethod(List, Shuffle)
-{
-	Declare(VTYPE_List, Flag::Reduce);
-	DeclareArg("random", VTYPE_Random, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"""(
-Shuffle the order of the list content based on random numbers.
-)""");
-}
-
-Gurax_ImplementMethod(List, Shuffle)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
-	Random& random = args.IsValid()? args.PickRandom() : Random::Global();
-	// Function body
-	valueTypedOwner.GetValueOwnerToSort().Shuffle(random);
-	return argument.GetValueThis().Reference();
-}
-
 // List#Shift():[raise]
 Gurax_DeclareMethod(List, Shift)
 {
@@ -430,6 +407,51 @@ Gurax_ImplementMethod(List, Shift)
 	}
 	RefPtr<Value> pValue(valueTypedOwner.Shift());
 	return pValue.release();
+}
+
+// List#RandomGet(random? as Random):reduce
+Gurax_DeclareMethod(List, RandomGet)
+{
+	Declare(VTYPE_List, Flag::Reduce);
+	DeclareArg("random", VTYPE_Random, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Get a value randomly from the list.
+)""");
+}
+
+Gurax_ImplementMethod(List, RandomGet)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	const ValueOwner& valueOwner = valueThis.GetValueOwner();
+	// Arguments
+	ArgPicker args(argument);
+	Random& random = args.IsValid()? args.PickRandom() : Random::Global();
+	// Function body
+	return valueOwner[random.GenInt(valueOwner.size())]->Reference();
+}
+
+// List#Shuffle(random? as Random):reduce
+Gurax_DeclareMethod(List, Shuffle)
+{
+	Declare(VTYPE_List, Flag::Reduce);
+	DeclareArg("random", VTYPE_Random, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Shuffle the order of the list content based on random numbers.
+)""");
+}
+
+Gurax_ImplementMethod(List, Shuffle)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	// Arguments
+	ArgPicker args(argument);
+	Random& random = args.IsValid()? args.PickRandom() : Random::Global();
+	// Function body
+	valueTypedOwner.GetValueOwnerToSort().Shuffle(random);
+	return argument.GetValueThis().Reference();
 }
 
 //-----------------------------------------------------------------------------
@@ -1541,6 +1563,7 @@ void VType_List::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(List, Insert));
 	Assign(Gurax_CreateMethod(List, IsEmpty));
 	Assign(Gurax_CreateMethod(List, Put));
+	Assign(Gurax_CreateMethod(List, RandomGet));
 	Assign(Gurax_CreateMethod(List, Shift));
 	Assign(Gurax_CreateMethod(List, Shuffle));
 	// Assignment of method common to both Iterator and List

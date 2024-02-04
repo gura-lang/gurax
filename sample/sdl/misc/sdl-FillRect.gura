@@ -7,14 +7,18 @@ I(fileName as String) = path.Join('../../resource', fileName)
 Object = struct {
 	x as Number
 	y as Number
-	xDir as Number
-	yDir as Number
+	xDir as Symbol
+	yDir as Symbol
+	color as Color
+	xAdvance = 2
+	yAdvance = 2
 	Move(wdWindow as Number, htWindow as Number) = {
-		if (this.x < 0) { this.xDir = 4 }
-		if (this.y < 0) { this.yDir = 4 }
-		if (this.x + 100 > wdWindow) { this.xDir = -4 }
-		if (this.y + 100 > htWindow) { this.yDir = -4 }
-		this.x += this.xDir, this.y += this.yDir
+		if (this.x < 0) { this.xDir = `right }
+		if (this.y < 0) { this.yDir = `down }
+		if (this.x + 100 > wdWindow) { this.xDir = `left }
+		if (this.y + 100 > htWindow) { this.yDir = `up}
+		this.x += cond(this.xDir == `left, -this.xAdvance, +this.xAdvance)
+		this.y += cond(this.yDir == `up, -this.yAdvance, +this.yAdvance)
 	}
 }
 
@@ -24,17 +28,17 @@ window = SDL_CreateWindow(path.FileName(sys.argv[0]), SDL_WINDOWPOS_CENTERED, SD
 renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)
 event = SDL_Event()
 textureBg = renderer.CreateTextureFromSurface(Image(I('rural-garden.jpg')))
+xDirTbl = [`left, `right], yDirTbl = [`up, `down]
+colorTbl = [Color.red, Color.green, Color.blue, Color.yellow]
 objTbl = repeat (100):list {
-	Object(Random.Int(wdWindow), Random.Int(htWindow), Random.Int(2) * 4 - 2, Random.Int(2) * 4 - 2)
+	Object(Random.Int(wdWindow), Random.Int(htWindow), xDirTbl[Random.Int(2)], yDirTbl[Random.Int(2)], colorTbl[Random.Int(colorTbl.len)])
 }
 repeat {
-	renderer.SetDrawBlendMode(SDL_BLENDMODE_BLEND)
-	renderer.Copy(textureBg, nil, nil)
-	renderer.SetDrawColor(240, 255, 240, 128)
-	renderer.FillRect(nil)
-	renderer.SetDrawColor(255, 0, 0, 50)
+	renderer.SetDrawColor(255, 255, 255, 0)
+	renderer.Clear()
 	renderer.SetDrawBlendMode(SDL_BLENDMODE_BLEND)
 	objTbl.Each {|obj|
+		renderer.SetDrawColor(obj.color.tupleRGB*, 128)
 		renderer.FillRect((obj.x, obj.y, 100, 100))
 		obj.Move(wdWindow, htWindow)
 	}

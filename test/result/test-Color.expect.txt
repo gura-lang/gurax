@@ -5,6 +5,8 @@ Color
   #g                Number       R/W
   #grayScale        Number       R
   #r                Number       R/W
+  #tupleRGB         Tuple        R
+  #tupleRGBA        Tuple        R
 ======== Constructor ========
 Color('aliceblue') .. <Color:#f0f8ff,ff>
 Color('antiquewhite') .. <Color:#faebd7,ff>
@@ -238,3 +240,43 @@ Color('aqua').grayScale .. 178
 Color('red', 0).grayScale .. 76
 Color('red', 128).grayScale .. 76
 Color('red', 255).grayScale .. 76
+======== Color#tupleRGB ========
+Color('black').tupleRGB .. (0, 0, 0)
+Color('silver').tupleRGB .. (192, 192, 192)
+Color('gray').tupleRGB .. (128, 128, 128)
+Color('white').tupleRGB .. (255, 255, 255)
+Color('maroon').tupleRGB .. (128, 0, 0)
+Color('red').tupleRGB .. (255, 0, 0)
+Color('purple').tupleRGB .. (128, 0, 128)
+Color('fuchsia').tupleRGB .. (255, 0, 255)
+Color('green').tupleRGB .. (0, 128, 0)
+Color('lime').tupleRGB .. (0, 255, 0)
+Color('olive').tupleRGB .. (128, 128, 0)
+Color('yellow').tupleRGB .. (255, 255, 0)
+Color('navy').tupleRGB .. (0, 0, 128)
+Color('blue').tupleRGB .. (0, 0, 255)
+Color('teal').tupleRGB .. (0, 128, 128)
+Color('aqua').tupleRGB .. (0, 255, 255)
+Color('red', 0).tupleRGB .. (255, 0, 0)
+Color('red', 128).tupleRGB .. (255, 0, 0)
+Color('red', 255).tupleRGB .. (255, 0, 0)
+======== Color#tupleRGBA ========
+Color('black').tupleRGBA .. (0, 0, 0, 255)
+Color('silver').tupleRGBA .. (192, 192, 192, 255)
+Color('gray').tupleRGBA .. (128, 128, 128, 255)
+Color('white').tupleRGBA .. (255, 255, 255, 255)
+Color('maroon').tupleRGBA .. (128, 0, 0, 255)
+Color('red').tupleRGBA .. (255, 0, 0, 255)
+Color('purple').tupleRGBA .. (128, 0, 128, 255)
+Color('fuchsia').tupleRGBA .. (255, 0, 255, 255)
+Color('green').tupleRGBA .. (0, 128, 0, 255)
+Color('lime').tupleRGBA .. (0, 255, 0, 255)
+Color('olive').tupleRGBA .. (128, 128, 0, 255)
+Color('yellow').tupleRGBA .. (255, 255, 0, 255)
+Color('navy').tupleRGBA .. (0, 0, 128, 255)
+Color('blue').tupleRGBA .. (0, 0, 255, 255)
+Color('teal').tupleRGBA .. (0, 128, 128, 255)
+Color('aqua').tupleRGBA .. (0, 255, 255, 255)
+Color('red', 0).tupleRGBA .. (255, 0, 0, 0)
+Color('red', 128).tupleRGBA .. (255, 0, 0, 128)
+Color('red', 255).tupleRGBA .. (255, 0, 0, 255)
