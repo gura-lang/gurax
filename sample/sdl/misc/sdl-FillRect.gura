@@ -28,10 +28,9 @@ window = SDL_CreateWindow(path.FileName(sys.argv[0]), SDL_WINDOWPOS_CENTERED, SD
 renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)
 event = SDL_Event()
 textureBg = renderer.CreateTextureFromSurface(Image(I('rural-garden.jpg')))
-xDirTbl = [`left, `right], yDirTbl = [`up, `down]
-colorTbl = [Color.red, Color.green, Color.blue, Color.yellow]
+xDirTbl = [`left, `right], yDirTbl = [`up, `down], colorTbl = [Color.red, Color.green, Color.blue, Color.yellow]
 objTbl = repeat (100):list {
-	Object(Random.Int(wdWindow), Random.Int(htWindow), xDirTbl[Random.Int(2)], yDirTbl[Random.Int(2)], colorTbl[Random.Int(colorTbl.len)])
+	Object(Random.Int(wdWindow), Random.Int(htWindow), xDirTbl.RandomGet(), yDirTbl.RandomGet(), colorTbl.RandomGet())
 }
 repeat {
 	renderer.SetDrawColor(255, 255, 255, 0)
