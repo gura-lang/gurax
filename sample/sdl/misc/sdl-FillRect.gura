@@ -4,7 +4,7 @@ import(jpeg)
 
 I(fileName as String) = path.Join('../../resource', fileName)
 
-Point = struct {
+Object = struct {
 	x as Number
 	y as Number
 	xDir as Number
@@ -24,7 +24,9 @@ window = SDL_CreateWindow(path.FileName(sys.argv[0]), SDL_WINDOWPOS_CENTERED, SD
 renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)
 event = SDL_Event()
 textureBg = renderer.CreateTextureFromSurface(Image(I('rural-garden.jpg')))
-pointTbl = repeat (100):list { Point(Random.Int(wdWindow), Random.Int(htWindow), Random.Int(2) * 4 - 2, Random.Int(2) * 4 - 2) }
+objTbl = repeat (100):list {
+	Object(Random.Int(wdWindow), Random.Int(htWindow), Random.Int(2) * 4 - 2, Random.Int(2) * 4 - 2)
+}
 repeat {
 	renderer.SetDrawBlendMode(SDL_BLENDMODE_BLEND)
 	renderer.Copy(textureBg, nil, nil)
@@ -32,9 +34,9 @@ repeat {
 	renderer.FillRect(nil)
 	renderer.SetDrawColor(255, 0, 0, 50)
 	renderer.SetDrawBlendMode(SDL_BLENDMODE_BLEND)
-	pointTbl.Each {|point|
-		renderer.FillRect((point.x, point.y, 100, 100))
-		point.Move(wdWindow, htWindow)
+	objTbl.Each {|obj|
+		renderer.FillRect((obj.x, obj.y, 100, 100))
+		obj.Move(wdWindow, htWindow)
 	}
 	rtn = SDL_WaitEventTimeout(event, 10) // 10msec
 	if (rtn == 0) {

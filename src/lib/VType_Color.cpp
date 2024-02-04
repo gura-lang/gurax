@@ -267,6 +267,42 @@ Gurax_ImplementPropertyGetter(Color, grayScale)
 	return new Value_Number(valueThis.GetColor().CalcGray());
 }
 
+// Color#tupleRGB
+Gurax_DeclareProperty_R(Color, tupleRGB)
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Returns a tuple in an order of red, green, and blue.
+)""");
+}
+
+Gurax_ImplementPropertyGetter(Color, tupleRGB)
+{
+	// Target
+	auto& color = GetValueThis(valueTarget).GetColor();
+	// Function body
+	return new Value_Tuple(ValueOwner::Create(
+		new Value_Number(color.GetR()), new Value_Number(color.GetG()), new Value_Number(color.GetB())));
+}
+
+// Color#tupleRGBA
+Gurax_DeclareProperty_R(Color, tupleRGBA)
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Returns a tuple in an order of red, green, blue, and alpha.
+)""");
+}
+
+Gurax_ImplementPropertyGetter(Color, tupleRGBA)
+{
+	// Target
+	auto& color = GetValueThis(valueTarget).GetColor();
+	// Function body
+	return new Value_Tuple(ValueOwner::Create(
+		new Value_Number(color.GetR()), new Value_Number(color.GetG()), new Value_Number(color.GetB()), new Value_Number(color.GetA())));
+}
+
 //------------------------------------------------------------------------------
 // VType_Color
 //------------------------------------------------------------------------------
@@ -307,6 +343,8 @@ void VType_Color::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Color, b));
 	Assign(Gurax_CreateProperty(Color, a));
 	Assign(Gurax_CreateProperty(Color, grayScale));
+	Assign(Gurax_CreateProperty(Color, tupleRGB));
+	Assign(Gurax_CreateProperty(Color, tupleRGBA));
 }
 
 Value* VType_Color::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
