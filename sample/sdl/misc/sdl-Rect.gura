@@ -9,6 +9,7 @@ Object = struct {
 	y as Number
 	xDir as Symbol
 	yDir as Symbol
+	fillFlag as Bool
 	color as Color
 	xAdvance = 2
 	yAdvance = 2
@@ -28,17 +29,23 @@ window = SDL_CreateWindow(path.FileName(sys.argv[0]), SDL_WINDOWPOS_CENTERED, SD
 renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)
 event = SDL_Event()
 textureBg = renderer.CreateTextureFromSurface(Image(I('rural-garden.jpg')))
-xDirTbl = [`left, `right], yDirTbl = [`up, `down], colorTbl = [Color.red, Color.green, Color.blue, Color.yellow]
+xDirTbl = [`left, `right], yDirTbl = [`up, `down]
+fillFlagTbl = [false, true], colorTbl = [Color.red, Color.green, Color.blue, Color.yellow]
 objTbl = repeat (100):list {
-	Object(Random.Int(wdWindow), Random.Int(htWindow), xDirTbl.RandomGet(), yDirTbl.RandomGet(), colorTbl.RandomGet())
+	Object(Random.Int(wdWindow), Random.Int(htWindow), xDirTbl.RandomGet(), yDirTbl.RandomGet(), fillFlagTbl.RandomGet(), colorTbl.RandomGet())
 }
+//renderer.SetClipRect((100, 100, 600, 400))
 repeat {
 	renderer.SetDrawColor(255, 255, 255, 0)
 	renderer.Clear()
 	renderer.SetDrawBlendMode(SDL_BLENDMODE_BLEND)
 	objTbl.Each {|obj|
 		renderer.SetDrawColor(obj.color.tupleRGB*, 128)
-		renderer.FillRect((obj.x, obj.y, 100, 100))
+		if (obj.fillFlag) {
+			renderer.FillRect((obj.x, obj.y, 100, 100))
+		} else {
+			renderer.DrawRect((obj.x, obj.y, 100, 100))
+		}
 		obj.Move(wdWindow, htWindow)
 	}
 	rtn = SDL_WaitEventTimeout(event, 10) // 10msec
