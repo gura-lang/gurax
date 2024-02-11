@@ -245,17 +245,17 @@ SDL_Renderer.Flush() = SDL_RenderFlush(this)
 
 SDL_Surface.CreateSoftwareRenderer() = SDL_CreateSoftwareRenderer(this)
 
-SDL_Surface.SetSurfacePalette(palette as SDL_Palette) = SDL_SetSurfacePalette(this, palette)
+SDL_Surface.SetPalette(palette as SDL_Palette) = SDL_SetSurfacePalette(this, palette)
 
-SDL_Surface.LockSurface() = SDL_LockSurface(this)
+SDL_Surface.Lock() = SDL_LockSurface(this)
 
-SDL_Surface.UnlockSurface() = SDL_UnlockSurface(this)
+SDL_Surface.Unlock() = SDL_UnlockSurface(this)
 
 SDL_Surface.SaveBMP(file as String) = SDL_SaveBMP(this, file)
 
 SDL_Surface.SaveBMP_RW(dst as SDL_RWops, freedst as Bool) = SDL_SaveBMP_RW(this, dst, freedst)
 
-SDL_Surface.SetSurfaceRLE(flag as Bool) = SDL_SetSurfaceRLE(this, flag)
+SDL_Surface.SetRLE(flag as Bool) = SDL_SetSurfaceRLE(this, flag)
 
 SDL_Surface.SetColorKey(flag as Bool, key as Number) = SDL_SetColorKey(this, flag, key)
 
@@ -263,17 +263,17 @@ SDL_Surface.HasColorKey() = SDL_HasColorKey(this)
 
 SDL_Surface.GetColorKey(&key:nilRef as Number) = SDL_GetColorKey(this, key)
 
-SDL_Surface.SetSurfaceColorMod(r as Number, g as Number, b as Number) = SDL_SetSurfaceColorMod(this, r, g, b)
+SDL_Surface.SetColorMod(r as Number, g as Number, b as Number) = SDL_SetSurfaceColorMod(this, r, g, b)
 
-SDL_Surface.GetSurfaceColorMod(&r:nilRef as Number, &g:nilRef as Number, &b:nilRef as Number) = SDL_GetSurfaceColorMod(this, r, g, b)
+SDL_Surface.GetColorMod(&r:nilRef as Number, &g:nilRef as Number, &b:nilRef as Number) = SDL_GetSurfaceColorMod(this, r, g, b)
 
-SDL_Surface.SetSurfaceAlphaMod(alpha as Number) = SDL_SetSurfaceAlphaMod(this, alpha)
+SDL_Surface.SetAlphaMod(alpha as Number) = SDL_SetSurfaceAlphaMod(this, alpha)
 
-SDL_Surface.GetSurfaceAlphaMod(&alpha:nilRef as Number) = SDL_GetSurfaceAlphaMod(this, alpha)
+SDL_Surface.GetAlphaMod(&alpha:nilRef as Number) = SDL_GetSurfaceAlphaMod(this, alpha)
 
-SDL_Surface.SetSurfaceBlendMode(blendMode as Number) = SDL_SetSurfaceBlendMode(this, blendMode)
+SDL_Surface.SetBlendMode(blendMode as Number) = SDL_SetSurfaceBlendMode(this, blendMode)
 
-SDL_Surface.GetSurfaceBlendMode(&blendMode:nilRef as Number) = SDL_GetSurfaceBlendMode(this, blendMode)
+SDL_Surface.GetBlendMode(&blendMode:nilRef as Number) = SDL_GetSurfaceBlendMode(this, blendMode)
 
 SDL_Surface.SetClipRect(rect:nil as SDL_Rect) = SDL_SetClipRect(this, rect)
 
@@ -281,15 +281,15 @@ SDL_Surface.GetClipRect(&rect:nilRef as SDL_Rect) = SDL_GetClipRect(this, rect)
 
 SDL_Surface.DuplicateSurface() = SDL_DuplicateSurface(this)
 
-SDL_Surface.ConvertSurface(fmt as SDL_PixelFormat, flags as Number) = SDL_ConvertSurface(this, fmt as SDL_PixelFormat, flags as Number)
+SDL_Surface.Convert(fmt as SDL_PixelFormat, flags as Number) = SDL_ConvertSurface(this, fmt as SDL_PixelFormat, flags as Number)
 
-SDL_Surface.ConvertSurfaceFormat(pixel_format as Number, flags as Number) = SDL_ConvertSurfaceFormat(this, pixel_format as Number, flags as Number)
+SDL_Surface.ConvertFormat(pixel_format as Number, flags as Number) = SDL_ConvertSurfaceFormat(this, pixel_format as Number, flags as Number)
 
 SDL_Surface.FillRect(rect:nil as SDL_Rect, color as Number) = SDL_FillRect(this, rect, color)
 
 SDL_Surface.FillRects(rects:nil as SDL_Rect, count as Number, color as Number) = SDL_FillRects(this, rects, count, color)
 
-SDL_Surface.BlitSurface(srcrect:nil as SDL_Rect, dst as SDL_Surface, dstrect:nil as SDL_Rect) = SDL_BlitSurface(this, srcrect, dst, dstrect)
+SDL_Surface.Blit(srcrect:nil as SDL_Rect, dst as SDL_Surface, dstrect:nil as SDL_Rect) = SDL_BlitSurface(this, srcrect, dst, dstrect)
 
 SDL_Surface.UpperBlit(srcrect:nil as SDL_Rect, dst as SDL_Surface, dstrect:nil as SDL_Rect) = SDL_UpperBlit(this, srcrect, dst, dstrect)
 
