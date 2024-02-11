@@ -311,7 +311,6 @@ SDL_Palette.SetColors(colors[] as SDL_Color, firstcolor as Number) = SDL_SetPale
 
 SDL_Palette.Free() = SDL_FreePalette(this)
 
-/*
 TTF_Font.GetFontStyle() = TTF_GetFontStyle(this)
 
 TTF_Font.SetFontStyle(style as Number):void = TTF_SetFontStyle(this, style)
@@ -334,56 +333,54 @@ TTF_Font.FontLineSkip() = TTF_FontLineSkip(this)
 
 TTF_Font.GetFontKerning() = TTF_GetFontKerning(this)
 
-TTF_Font.SetFontKerning(allowed as int):void = TTF_SetFontKerning(this)
+TTF_Font.SetFontKerning(allowed as Number):void = TTF_SetFontKerning(this, allowed)
 
 TTF_Font.FontFaces() as Number = TTF_FontFaces(this)
 
 TTF_Font.FontFaceIsFixedWidth() = TTF_FontFaceIsFixedWidth(this)
 
-//TTF_Font.FontFaceFamilyName() as char_p = TTF_FontFaceFamilyName(this)
+TTF_Font.FontFaceFamilyName() = TTF_FontFaceFamilyName(this)
 
-//TTF_Font.FontFaceStyleName() as char_p = TTF_FontFaceStyleName(this)
+TTF_Font.FontFaceStyleName() = TTF_FontFaceStyleName(this)
 
 TTF_Font.GlyphIsProvided(ch as Number) = TTF_GlyphIsProvided(this)
 
-//TTF_Font.GlyphMetrics(ch as Number, minx as int_p, maxx as int_p, miny as int_p, maxy as int_p, advance as int_p) = TTF_GlyphMetrics(this)
+TTF_Font.GlyphMetrics(ch as Number, &minx:nilRef as Number, &maxx:nilRef as Number, &miny:nilRef as Number, &maxy:nilRef as Number, &advance:nilRef as Number) = TTF_GlyphMetrics(this, ch, minx, maxx, miny, maxy, advance)
 
-//TTF_Font.SizeText(text as String, w as int_p, h as int_p) = TTF_SizeText(this)
+TTF_Font.SizeText(text as String, &w:nilRef as Number, &h:nilRef as Number) = TTF_SizeText(this, text, w, h)
 
-//TTF_Font.SizeUTF8(text as String, w as int_p, h as int_p) = TTF_SizeUTF8(this)
+TTF_Font.SizeUTF8(text as String, &w:nilRef as Number, &h:nilRef as Number) = TTF_SizeUTF8(this, text, w, h)
 
 //TTF_Font.SizeUNICODE(text as const_Uint16_p, w as int_p, h as int_p) = TTF_SizeUNICODE(this)
 
-TTF_Font.RenderText_Solid(text as String, fg as SDL_Color) as SDL_Surface_p = TTF_RenderText_Solid(this, text, fg)
+TTF_Font.RenderText_Solid(text as String, fg as SDL_Color) as SDL_Surface = TTF_RenderText_Solid(this, text, fg)
 
-TTF_Font.RenderUTF8_Solid(text as String, fg as SDL_Color) as SDL_Surface_p = TTF_RenderUTF8_Solid(this, text, fg)
+TTF_Font.RenderUTF8_Solid(text as String, fg as SDL_Color) as SDL_Surface = TTF_RenderUTF8_Solid(this, text, fg)
 
-//TTF_Font.RenderUNICODE_Solid(text as const_Uint16_p, fg as SDL_Color) as SDL_Surface_p = TTF_RenderUNICODE_Solid(this)
+//TTF_Font.RenderUNICODE_Solid(text as const_Uint16_p, fg as SDL_Color) as SDL_Surface = TTF_RenderUNICODE_Solid(this)
 
-TTF_Font.RenderGlyph_Solid(ch as Number, fg as SDL_Color) as SDL_Surface_p = TTF_RenderGlyph_Solid(this, ch, fg)
+TTF_Font.RenderGlyph_Solid(ch as Number, fg as SDL_Color) as SDL_Surface = TTF_RenderGlyph_Solid(this, ch, fg)
 
-TTF_Font.RenderText_Shaded(text as String, fg as SDL_Color, bg as SDL_Color) as SDL_Surface_p = TTF_RenderText_Shaded(this, text, fg, bg)
+TTF_Font.RenderText_Shaded(text as String, fg as SDL_Color, bg as SDL_Color) as SDL_Surface = TTF_RenderText_Shaded(this, text, fg, bg)
 
-TTF_Font.RenderUTF8_Shaded(text as String, fg as SDL_Color, bg as SDL_Color) as SDL_Surface_p = TTF_RenderUTF8_Shaded(this, text, fg, bg)
+TTF_Font.RenderUTF8_Shaded(text as String, fg as SDL_Color, bg as SDL_Color) as SDL_Surface = TTF_RenderUTF8_Shaded(this, text, fg, bg)
 
-//TTF_Font.RenderUNICODE_Shaded(text as const_Uint16_p, fg as SDL_Color, bg as SDL_Color) as SDL_Surface_p = TTF_RenderUNICODE_Shaded(this)
+//TTF_Font.RenderUNICODE_Shaded(text as const_Uint16_p, fg as SDL_Color, bg as SDL_Color) as SDL_Surface = TTF_RenderUNICODE_Shaded(this)
 
-TTF_Font.RenderGlyph_Shaded(ch as Number, fg as SDL_Color, bg as SDL_Color) as SDL_Surface_p = TTF_RenderGlyph_Shaded(this, ch, fg, bg)
+TTF_Font.RenderGlyph_Shaded(ch as Number, fg as SDL_Color, bg as SDL_Color) as SDL_Surface = TTF_RenderGlyph_Shaded(this, ch, fg, bg)
 
-TTF_Font.RenderText_Blended(text as String, fg as SDL_Color) as SDL_Surface_p = TTF_RenderText_Blended(this, text, fg)
+TTF_Font.RenderText_Blended(text as String, fg as SDL_Color) as SDL_Surface = TTF_RenderText_Blended(this, text, fg)
 
-TTF_Font.RenderUTF8_Blended(text as String, fg as SDL_Color) as SDL_Surface_p = TTF_RenderUTF8_Blended(this, text, fg)
+TTF_Font.RenderUTF8_Blended(text as String, fg as SDL_Color) as SDL_Surface = TTF_RenderUTF8_Blended(this, text, fg)
 
-//TTF_Font.RenderUNICODE_Blended(text as const_Uint16_p, fg as SDL_Color) as SDL_Surface_p = TTF_RenderUNICODE_Blended(this, text, fg)
+//TTF_Font.RenderUNICODE_Blended(text as const_Uint16_p, fg as SDL_Color) as SDL_Surface = TTF_RenderUNICODE_Blended(this, text, fg)
 
-TTF_Font.RenderText_Blended_Wrapped(text as String, fg as SDL_Color, wrapLength as Number) as SDL_Surface_p = TTF_RenderText_Blended_Wrapped(this, text, fg, wrapLength)
+TTF_Font.RenderText_Blended_Wrapped(text as String, fg as SDL_Color, wrapLength as Number) as SDL_Surface = TTF_RenderText_Blended_Wrapped(this, text, fg, wrapLength)
 
-TTF_Font.RenderUTF8_Blended_Wrapped(text as String, fg as SDL_Color, wrapLength as Number) as SDL_Surface_p = TTF_RenderUTF8_Blended_Wrapped(this, text, fg, wrapLength)
+TTF_Font.RenderUTF8_Blended_Wrapped(text as String, fg as SDL_Color, wrapLength as Number) as SDL_Surface = TTF_RenderUTF8_Blended_Wrapped(this, text, fg, wrapLength)
 
-//TTF_Font.RenderUNICODE_Blended_Wrapped(text as const_Uint16_p, fg as SDL_Color, wrapLength as Number) as SDL_Surface_p = TTF_RenderUNICODE_Blended_Wrapped(this)
+//TTF_Font.RenderUNICODE_Blended_Wrapped(text as const_Uint16_p, fg as SDL_Color, wrapLength as Number) as SDL_Surface = TTF_RenderUNICODE_Blended_Wrapped(this)
 
-TTF_Font.RenderGlyph_Blended(ch as Number, fg as SDL_Color) as SDL_Surface_p = TTF_RenderGlyph_Blended(this, ch, fg)
+TTF_Font.RenderGlyph_Blended(ch as Number, fg as SDL_Color) as SDL_Surface = TTF_RenderGlyph_Blended(this, ch, fg)
 
 TTF_Font.CloseFont():void = TTF_CloseFont(this)
-
-*/

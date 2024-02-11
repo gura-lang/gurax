@@ -2457,17 +2457,44 @@ TTF_FontFaces(font as const_TTF_Font_p) as long
 
 TTF_FontFaceIsFixedWidth(font as const_TTF_Font_p) as int
 
-//TTF_FontFaceFamilyName(font as const_TTF_Font_p) as char_p
+TTF_FontFaceFamilyName(font as const_TTF_Font_p) as const_char_p
 
-//TTF_FontFaceStyleName(font as const_TTF_Font_p) as char_p
+TTF_FontFaceStyleName(font as const_TTF_Font_p) as const_char_p
 
 TTF_GlyphIsProvided(font as const_TTF_Font_p, ch as Uint16) as int
 
 //TTF_GlyphMetrics(font as TTF_Font_p, ch as Uint16, minx as int_p, maxx as int_p, miny as int_p, maxy as int_p, advance as int_p) as int
+TTF_GlyphMetrics(font as TTF_Font_p, ch as Uint16, &minx:nilRef as int, &maxx:nilRef as int, &miny:nilRef as int, &maxy:nilRef as int, &advance:nilRef as int) as int = \
+	R'''
+	int minx_, maxx_, miny_, maxy_, advance_;
+	int rtn = TTF_GlyphMetrics(font, ch, &minx_, &maxx_, &miny_, &maxy_, &advance_);
+	minx->SetValue(processor_gurax, new Value_Number(minx_));
+	maxx->SetValue(processor_gurax, new Value_Number(maxx_));
+	miny->SetValue(processor_gurax, new Value_Number(miny_));
+	maxy->SetValue(processor_gurax, new Value_Number(maxy_));
+	advance->SetValue(processor_gurax, new Value_Number(advance_));
+	return new Value_Number(rtn);
+	'''
 
 //TTF_SizeText(font as TTF_Font_p, text as const_char_p, w as int_p, h as int_p) as int
+TTF_SizeText(font as TTF_Font_p, text as const_char_p, &w:nilRef as int, &h:nilRef as int) as int =	\
+	R'''
+	int w_, h_;
+	int rtn = TTF_SizeText(font, text, &w_, &h_);
+	w->SetValue(processor_gurax, new Value_Number(w_));
+	h->SetValue(processor_gurax, new Value_Number(h_));
+	return new Value_Number(rtn);
+	'''
 
 //TTF_SizeUTF8(font as TTF_Font_p, text as const_char_p, w as int_p, h as int_p) as int
+TTF_SizeUTF8(font as TTF_Font_p, text as const_char_p, &w:nilRef as int, &h:nilRef as int) as int = \
+	R'''
+	int w_, h_;
+	int rtn = TTF_SizeUTF8(font, text, &w_, &h_);
+	w->SetValue(processor_gurax, new Value_Number(w_));
+	h->SetValue(processor_gurax, new Value_Number(h_));
+	return new Value_Number(rtn);
+	'''
 
 //TTF_SizeUNICODE(font as TTF_Font_p, text as const_Uint16_p, w as int_p, h as int_p) as int
 

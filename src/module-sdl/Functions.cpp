@@ -11147,6 +11147,42 @@ Gurax_ImplementFunctionEx(TTF_FontFaceIsFixedWidth_gurax, processor_gurax, argum
 	return new Gurax::Value_Number(rtn);
 }
 
+// sdl.TTF_FontFaceFamilyName(font as TTF_Font)
+Gurax_DeclareFunctionAlias(TTF_FontFaceFamilyName_gurax, "TTF_FontFaceFamilyName")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementFunctionEx(TTF_FontFaceFamilyName_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	const TTF_Font* font = value_font.GetEntityPtr();
+	// Function body
+	const char* rtn = TTF_FontFaceFamilyName(font);
+	return new Gurax::Value_String(rtn);
+}
+
+// sdl.TTF_FontFaceStyleName(font as TTF_Font)
+Gurax_DeclareFunctionAlias(TTF_FontFaceStyleName_gurax, "TTF_FontFaceStyleName")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementFunctionEx(TTF_FontFaceStyleName_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	const TTF_Font* font = value_font.GetEntityPtr();
+	// Function body
+	const char* rtn = TTF_FontFaceStyleName(font);
+	return new Gurax::Value_String(rtn);
+}
+
 // sdl.TTF_GlyphIsProvided(font as TTF_Font, ch as Number)
 Gurax_DeclareFunctionAlias(TTF_GlyphIsProvided_gurax, "TTF_GlyphIsProvided")
 {
@@ -11165,6 +11201,96 @@ Gurax_ImplementFunctionEx(TTF_GlyphIsProvided_gurax, processor_gurax, argument_g
 	// Function body
 	int rtn = TTF_GlyphIsProvided(font, ch);
 	return new Gurax::Value_Number(rtn);
+}
+
+// sdl.TTF_GlyphMetrics(font as TTF_Font, ch as Number, &minx:nilRef as Number, &maxx:nilRef as Number, &miny:nilRef as Number, &maxy:nilRef as Number, &advance:nilRef as Number)
+Gurax_DeclareFunctionAlias(TTF_GlyphMetrics_gurax, "TTF_GlyphMetrics")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ch", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("minx", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("maxx", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("miny", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("maxy", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("advance", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+}
+
+Gurax_ImplementFunctionEx(TTF_GlyphMetrics_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	TTF_Font* font = value_font.GetEntityPtr();
+	Uint16 ch = args_gurax.PickNumber<Uint16>();
+	RefPtr<Referencer> minx(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> maxx(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> miny(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> maxy(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> advance(args_gurax.PickReferencer().Reference());
+	// Function body
+	int minx_, maxx_, miny_, maxy_, advance_;
+	int rtn = TTF_GlyphMetrics(font, ch, &minx_, &maxx_, &miny_, &maxy_, &advance_);
+	minx->SetValue(processor_gurax, new Value_Number(minx_));
+	maxx->SetValue(processor_gurax, new Value_Number(maxx_));
+	miny->SetValue(processor_gurax, new Value_Number(miny_));
+	maxy->SetValue(processor_gurax, new Value_Number(maxy_));
+	advance->SetValue(processor_gurax, new Value_Number(advance_));
+	return new Value_Number(rtn);
+}
+
+// sdl.TTF_SizeText(font as TTF_Font, text as String, &w:nilRef as Number, &h:nilRef as Number)
+Gurax_DeclareFunctionAlias(TTF_SizeText_gurax, "TTF_SizeText")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("h", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+}
+
+Gurax_ImplementFunctionEx(TTF_SizeText_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	TTF_Font* font = value_font.GetEntityPtr();
+	const char* text = args_gurax.PickString();
+	RefPtr<Referencer> w(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> h(args_gurax.PickReferencer().Reference());
+	// Function body
+	int w_, h_;
+	int rtn = TTF_SizeText(font, text, &w_, &h_);
+	w->SetValue(processor_gurax, new Value_Number(w_));
+	h->SetValue(processor_gurax, new Value_Number(h_));
+	return new Value_Number(rtn);
+}
+
+// sdl.TTF_SizeUTF8(font as TTF_Font, text as String, &w:nilRef as Number, &h:nilRef as Number)
+Gurax_DeclareFunctionAlias(TTF_SizeUTF8_gurax, "TTF_SizeUTF8")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+	DeclareArg("h", VTYPE_Number, ArgOccur::Once, ArgFlag::NilRef | ArgFlag::Referencer);
+}
+
+Gurax_ImplementFunctionEx(TTF_SizeUTF8_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_font = args_gurax.Pick<Value_TTF_Font>();
+	TTF_Font* font = value_font.GetEntityPtr();
+	const char* text = args_gurax.PickString();
+	RefPtr<Referencer> w(args_gurax.PickReferencer().Reference());
+	RefPtr<Referencer> h(args_gurax.PickReferencer().Reference());
+	// Function body
+	int w_, h_;
+	int rtn = TTF_SizeUTF8(font, text, &w_, &h_);
+	w->SetValue(processor_gurax, new Value_Number(w_));
+	h->SetValue(processor_gurax, new Value_Number(h_));
+	return new Value_Number(rtn);
 }
 
 // sdl.TTF_RenderText_Solid(font as TTF_Font, text as String, fg as SDL_Color)
@@ -12080,7 +12206,12 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(TTF_SetFontKerning_gurax));
 	frame.Assign(Gurax_CreateFunction(TTF_FontFaces_gurax));
 	frame.Assign(Gurax_CreateFunction(TTF_FontFaceIsFixedWidth_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_FontFaceFamilyName_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_FontFaceStyleName_gurax));
 	frame.Assign(Gurax_CreateFunction(TTF_GlyphIsProvided_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_GlyphMetrics_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_SizeText_gurax));
+	frame.Assign(Gurax_CreateFunction(TTF_SizeUTF8_gurax));
 	frame.Assign(Gurax_CreateFunction(TTF_RenderText_Solid_gurax));
 	frame.Assign(Gurax_CreateFunction(TTF_RenderUTF8_Solid_gurax));
 	frame.Assign(Gurax_CreateFunction(TTF_RenderGlyph_Solid_gurax));
