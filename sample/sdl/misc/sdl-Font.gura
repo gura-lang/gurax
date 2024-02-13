@@ -1,6 +1,20 @@
 #!/usr/bin/env gurax
 import(sdl) {*}
 
+Texture = class {
+	w as Number
+	h as Number
+	entity as SDL_Texture
+	__init__(renderer as SDL_Renderer, surface as SDL_Surface) = {
+		this.w = surface.w, this.h = surface.h
+		this.entity = renderer.CreateTextureFromSurface(surface)
+		surface.Free()
+	}
+	__del__() = {
+		this.entity.Destroy()
+	}
+}
+
 SDL_Init(SDL_INIT_EVERYTHING)
 TTF_Init()
 [wdWindow, htWindow] = [800, 600]
@@ -12,12 +26,11 @@ i = 0
 repeat {
 	renderer.SetDrawColor(240, 255, 240, 255)
 	renderer.Clear()
-	surface = font.RenderText_Solid(Format('Hello World %d', i), (255, 0, 0, 255))
+	texture = Texture(renderer, font.RenderText_Solid(Format('Hello World %d', i), (255, 0, 0, 128)))
+	//texture = Texture(renderer, font.RenderText_Shaded(Format('Hello World %d', i), (255, 0, 0, 255), (0, 255, 0, 255)))
+	//texture = Texture(renderer, font.RenderText_Blended(Format('Hello World %d', i), (255, 0, 0, 128)))
 	i += 1
-	wd = surface.w, ht = surface.h
-	texture = renderer.CreateTextureFromSurface(surface)
-	surface.Free()
-	renderer.Copy(texture, nil, SDL_Rect(0, 0, wd, ht))
+	renderer.Copy(texture.entity, nil, SDL_Rect(0, 0, texture.w, texture.h))
 	rtn = SDL_WaitEventTimeout(event, 10) // 10msec
 	if (rtn == 0) {
 		// nothing to do
