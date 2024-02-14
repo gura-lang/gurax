@@ -2,11 +2,11 @@
 import(sdl) {*}
 
 Texture = class {
-	w as Number
-	h as Number
+	wd as Number
+	ht as Number
 	entity as SDL_Texture
 	__init__(renderer as SDL_Renderer, surface as SDL_Surface) = {
-		this.w = surface.w, this.h = surface.h
+		this.wd = surface.w, this.ht = surface.h
 		this.entity = renderer.CreateTextureFromSurface(surface)
 		surface.Free()
 	}
@@ -26,11 +26,16 @@ i = 0
 repeat {
 	renderer.SetDrawColor(240, 255, 240, 255)
 	renderer.Clear()
-	texture = Texture(renderer, font.RenderText_Solid(Format('Hello World %d', i), (255, 0, 0, 128)))
-	//texture = Texture(renderer, font.RenderText_Shaded(Format('Hello World %d', i), (255, 0, 0, 255), (0, 255, 0, 255)))
-	//texture = Texture(renderer, font.RenderText_Blended(Format('Hello World %d', i), (255, 0, 0, 128)))
+	Texture(renderer, font.RenderText_Solid('Solid', (255, 0, 0, 128))) {|texture|
+		renderer.Copy(texture.entity, nil, SDL_Rect(0, 0, texture.wd, texture.ht))
+	}
+	Texture(renderer, font.RenderText_Shaded('Shaded', (255, 0, 0, 128), (0, 255, 0, 0))) {|texture|
+		renderer.Copy(texture.entity, nil, SDL_Rect(0, 40, texture.wd, texture.ht))
+	}
+	Texture(renderer, font.RenderText_Blended('Blended', (255, 0, 0, 128))) {|texture|
+		renderer.Copy(texture.entity, nil, SDL_Rect(0, 80, texture.wd, texture.ht))
+	}
 	i += 1
-	renderer.Copy(texture.entity, nil, SDL_Rect(0, 0, texture.w, texture.h))
 	rtn = SDL_WaitEventTimeout(event, 10) // 10msec
 	if (rtn == 0) {
 		// nothing to do

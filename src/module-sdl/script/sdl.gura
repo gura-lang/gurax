@@ -311,37 +311,37 @@ SDL_Palette.SetColors(colors[] as SDL_Color, firstcolor as Number) = SDL_SetPale
 
 SDL_Palette.Free() = SDL_FreePalette(this)
 
-TTF_Font.GetFontStyle() = TTF_GetFontStyle(this)
+TTF_Font.GetStyle() = TTF_GetFontStyle(this)
 
-TTF_Font.SetFontStyle(style as Number):void = TTF_SetFontStyle(this, style)
+TTF_Font.SetStyle(style as Number):void = TTF_SetFontStyle(this, style)
 
-TTF_Font.GetFontOutline() = TTF_GetFontOutline(this)
+TTF_Font.GetOutline() = TTF_GetFontOutline(this)
 
-TTF_Font.SetFontOutline(outline as Number):void = TTF_SetFontOutline(this, outline)
+TTF_Font.SetOutline(outline as Number):void = TTF_SetFontOutline(this, outline)
 
-TTF_Font.GetFontHinting() = TTF_GetFontHinting(this)
+TTF_Font.GetHinting() = TTF_GetFontHinting(this)
 
-TTF_Font.SetFontHinting(hinting as Number):void = TTF_SetFontHinting(this, hinting)
+TTF_Font.SetHinting(hinting as Number):void = TTF_SetFontHinting(this, hinting)
 
-TTF_Font.FontHeight() = TTF_FontHeight(this)
+TTF_Font.Height() = TTF_FontHeight(this)
 
-TTF_Font.FontAscent() = TTF_FontAscent(this)
+TTF_Font.Ascent() = TTF_FontAscent(this)
 
-TTF_Font.FontDescent() = TTF_FontDescent(this)
+TTF_Font.Descent() = TTF_FontDescent(this)
 
-TTF_Font.FontLineSkip() = TTF_FontLineSkip(this)
+TTF_Font.LineSkip() = TTF_FontLineSkip(this)
 
-TTF_Font.GetFontKerning() = TTF_GetFontKerning(this)
+TTF_Font.GetKerning() = TTF_GetFontKerning(this)
 
-TTF_Font.SetFontKerning(allowed as Number):void = TTF_SetFontKerning(this, allowed)
+TTF_Font.SetKerning(allowed as Number):void = TTF_SetFontKerning(this, allowed)
 
-TTF_Font.FontFaces() as Number = TTF_FontFaces(this)
+TTF_Font.Faces() as Number = TTF_FontFaces(this)
 
-TTF_Font.FontFaceIsFixedWidth() = TTF_FontFaceIsFixedWidth(this)
+TTF_Font.FaceIsFixedWidth() = TTF_FontFaceIsFixedWidth(this)
 
-TTF_Font.FontFaceFamilyName() = TTF_FontFaceFamilyName(this)
+TTF_Font.FaceFamilyName() = TTF_FontFaceFamilyName(this)
 
-TTF_Font.FontFaceStyleName() = TTF_FontFaceStyleName(this)
+TTF_Font.FaceStyleName() = TTF_FontFaceStyleName(this)
 
 TTF_Font.GlyphIsProvided(ch as Number) = TTF_GlyphIsProvided(this)
 
@@ -383,4 +383,4 @@ TTF_Font.RenderUTF8_Blended_Wrapped(text as String, fg as SDL_Color, wrapLength 
 
 TTF_Font.RenderGlyph_Blended(ch as Number, fg as SDL_Color) as SDL_Surface = TTF_RenderGlyph_Blended(this, ch, fg)
 
-TTF_Font.CloseFont():void = TTF_CloseFont(this)
+TTF_Font.Close():void = TTF_CloseFont(this)
