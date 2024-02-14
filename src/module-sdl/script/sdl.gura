@@ -1,6 +1,9 @@
 #!/usr/bin/env gurax
 import(sdl):binary {*}
 
+//------------------------------------------------------------------------------
+// SDL_Window
+//------------------------------------------------------------------------------
 SDL_Window.Destroy() = SDL_DestroyWindow(this)
 
 SDL_Window.GetDisplayIndex() = SDL_GetWindowDisplayIndex(this)
@@ -113,6 +116,9 @@ SDL_Window.WarpMouse(x as Number, y as Number) = SDL_WarpMouseInWindow(this, x, 
 
 //SDL_Window.iPhoneSetAnimationCallback() = SDL_iPhoneSetAnimationCallback(this, interval as int, *:void_callback_void, callbackParam as void_p)
 
+//------------------------------------------------------------------------------
+// SDL_Texture
+//------------------------------------------------------------------------------
 SDL_Texture.Destroy() = SDL_DestroyTexture(this)
 
 SDL_Texture.Query(&format:nilRef as Number, &access:nilRef as Number, &w:nilRef as Number, &h:nilRef as Number) = SDL_QueryTexture(this, format, access, w, h)
@@ -147,6 +153,9 @@ SDL_Texture.Unlock() = SDL_UnlockTexture(this)
 
 SDL_Texture.GL_Unbind() = SDL_GL_UnbindTexture(this)
 
+//------------------------------------------------------------------------------
+// SDL_Renderer
+//------------------------------------------------------------------------------
 SDL_Renderer.Destroy() = SDL_DestroyRenderer(this)
 
 SDL_Renderer.CreateTexture(format as Number, access as Number, w as Number, h as Number) = SDL_CreateTexture(this, format, access, w, h)
@@ -243,6 +252,9 @@ SDL_Renderer.Flush() = SDL_RenderFlush(this)
 
 //SDL_Renderer.GetMetalCommandEncoder() = SDL_RenderGetMetalCommandEncoder(this)
 
+//------------------------------------------------------------------------------
+// SDL_Surface
+//------------------------------------------------------------------------------
 SDL_Surface.CreateSoftwareRenderer() = SDL_CreateSoftwareRenderer(this)
 
 SDL_Surface.SetPalette(palette as SDL_Palette) = SDL_SetSurfacePalette(this, palette)
@@ -307,10 +319,16 @@ SDL_Surface.CreateColorCursor(hot_x as Number, hot_y as Number) = SDL_CreateColo
 
 SDL_Surface.Free() = SDL_FreeSurface(this)
 
+//------------------------------------------------------------------------------
+// SDL_Palette
+//------------------------------------------------------------------------------
 SDL_Palette.SetColors(colors[] as SDL_Color, firstcolor as Number) = SDL_SetPaletteColors(this, colors, firstcolor)
 
 SDL_Palette.Free() = SDL_FreePalette(this)
 
+//------------------------------------------------------------------------------
+// TTF_Font
+//------------------------------------------------------------------------------
 TTF_Font.GetStyle() = TTF_GetFontStyle(this)
 
 TTF_Font.SetStyle(style as Number):void = TTF_SetFontStyle(this, style)
