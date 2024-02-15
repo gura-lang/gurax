@@ -82,6 +82,7 @@ public:
 	virtual bool IsCustom() const override { return true; }
 	virtual void PrepareForAssignment(Processor& processor, const Symbol* pSymbol) override;
 	virtual Value* DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const override;
+	virtual Value* DoCastTo(Processor& processor, const Value& value, const VType& vtype, DeclArg::Flags flags) const override;
 	virtual bool DoAssignCustomMethod(RefPtr<Function> pFunction) override;
 };
 

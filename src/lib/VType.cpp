@@ -204,17 +204,12 @@ Value* VType::Cast(Processor& processor, const Value& value, const Symbol* pSymb
 		return Error::IsIssued()? nullptr : pValueCasted.release();
 	} else {
 		RefPtr<Value> pValueCasted(DoCastFrom(processor, value, flags));
-		if (!pValueCasted) {
-			IssueError(*this, pSymbol, value);
-			return nullptr;
-		}
-		return pValueCasted.release();
+		if (pValueCasted) return pValueCasted.release();
+		pValueCasted.reset(value.GetVTypeCustom().DoCastTo(processor, value, *this, flags));
+		if (pValueCasted) return pValueCasted.release();
+		IssueError(*this, pSymbol, value);
+		return nullptr;
 	}
-}
-
-Value* VType::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
-{
-	return nullptr;
 }
 
 bool VType::DoAssignCustomMethod(RefPtr<Function> pFunction)

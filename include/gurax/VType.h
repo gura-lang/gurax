@@ -136,7 +136,8 @@ public:
 	virtual bool IsIterator() const { return false; }
 	virtual bool IsListOrIterator() const { return false; }
 	virtual void DoPrepare(Frame& frameOuter) {};
-	virtual Value* DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const;
+	virtual Value* DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const { return nullptr; }
+	virtual Value* DoCastTo(Processor& processor, const Value& value, const VType& vtype, DeclArg::Flags flags) const { return nullptr; }
 	virtual bool DoAssignCustomMethod(RefPtr<Function> pFunction);
 };
 

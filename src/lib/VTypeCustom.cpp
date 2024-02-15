@@ -105,7 +105,7 @@ Value* VTypeCustom::DoCastFrom(Processor& processor, const Value& value, DeclArg
 	ArgFeeder args(*pArg, processor.GetFrameCur());
 	if (!args.FeedValue(processor, value.Reference())) return nullptr;
 	if (func.CountDeclArgs() >= 2) {
-		RefPtr<DeclArg> pDeclArg(new DeclArg(Symbol::Empty, VTYPE_Undefined, DeclArg::Occur::Once, flags, nullptr));
+		RefPtr<DeclArg> pDeclArg(new DeclArg(Symbol::Empty, value.GetVTypeCustom(), DeclArg::Occur::Once, flags, nullptr));
 		if (!args.FeedValue(processor, new Value_DeclArg(pDeclArg.release()))) return nullptr;
 	}
 	RefPtr<Value> pValue(func.Eval(processor, *pArg));
@@ -115,6 +115,11 @@ Value* VTypeCustom::DoCastFrom(Processor& processor, const Value& value, DeclArg
 		return nullptr;
 	}
 	return pValue.release();
+}
+
+Value* VTypeCustom::DoCastTo(Processor& processor, const Value& value, const VType& vtype, DeclArg::Flags flags) const
+{
+	return nullptr;
 }
 
 bool VTypeCustom::DoAssignCustomMethod(RefPtr<Function> pFunction)
