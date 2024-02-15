@@ -53,19 +53,53 @@ Gurax_ImplementMethod(DeclArg, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// DeclArg#propSkeleton
-Gurax_DeclareProperty_R(DeclArg, propSkeleton)
+// DeclArg#occur
+Gurax_DeclareProperty_R(DeclArg, occur)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Symbol, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
 
 )""");
 }
 
-Gurax_ImplementPropertyGetter(DeclArg, propSkeleton)
+Gurax_ImplementPropertyGetter(DeclArg, occur)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	const DeclArg& declArg = GetValueThis(valueTarget).GetDeclArg();
+	return new Value_Symbol(
+		declArg.IsOccurZeroOrOnce()? Gurax_SymbolMark(Question) :
+		declArg.IsOccurZeroOrMore()? Gurax_SymbolMark(Mul) :
+		declArg.IsOccurOnceOrMore()? Gurax_SymbolMark(Add) : Symbol::Empty);
+}
+
+// DeclArg#symbol
+Gurax_DeclareProperty_R(DeclArg, symbol)
+{
+	Declare(VTYPE_Symbol, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+
+)""");
+}
+
+Gurax_ImplementPropertyGetter(DeclArg, symbol)
+{
+	const DeclArg& declArg = GetValueThis(valueTarget).GetDeclArg();
+	return new Value_Symbol(declArg.GetSymbol());
+}
+
+// DeclArg#vtype
+Gurax_DeclareProperty_R(DeclArg, vtype)
+{
+	Declare(VTYPE_VType, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+
+)""");
+}
+
+Gurax_ImplementPropertyGetter(DeclArg, vtype)
+{
+	//DeclArg& declArg = GetValueThis(valueTarget).GetDeclArg();
+	//return new Value_VType(declArg.GetVType());
+	return Value::nil();
 }
 
 //------------------------------------------------------------------------------
@@ -82,7 +116,9 @@ void VType_DeclArg::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(DeclArg, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(DeclArg, propSkeleton));
+	Assign(Gurax_CreateProperty(DeclArg, occur));
+	Assign(Gurax_CreateProperty(DeclArg, symbol));
+	Assign(Gurax_CreateProperty(DeclArg, vtype));
 }
 
 //------------------------------------------------------------------------------
