@@ -120,7 +120,20 @@ Value* VTypeCustom::DoCastFrom(Processor& processor, const Value& value, DeclArg
 
 Value* VTypeCustom::DoCastTo(Processor& processor, const Value& value, const VType& vtype, DeclArg::Flags flags) const
 {
-	return nullptr;
+	const Function& func = GetFuncCastTo();
+	if (func.IsEmpty()) return nullptr;
+	RefPtr<Argument> pArg(new Argument(processor, func));
+	ArgFeeder args(*pArg, processor.GetFrameCur());
+	if (!args.FeedValue(processor, value.Reference())) return nullptr;
+	RefPtr<DeclArg> pDeclArg(new DeclArg(Symbol::Empty, vtype, DeclArg::Occur::Once, flags, nullptr));
+	if (!args.FeedValue(processor, new Value_DeclArg(pDeclArg.release()))) return nullptr;
+	RefPtr<Value> pValue(func.Eval(processor, *pArg));
+	if (Error::IsIssued()) return nullptr;
+	if (!pValue->IsInstanceOf(*this)) {
+		Error::Issue(ErrorType::CastError, "the returned value must be of %s", MakeFullName().c_str());
+		return nullptr;
+	}
+	return pValue.release();
 }
 
 bool VTypeCustom::DoAssignCustomMethod(RefPtr<Function> pFunction)
