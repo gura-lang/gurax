@@ -9,6 +9,7 @@ namespace Gurax {
 // Predefined Symbols
 //------------------------------------------------------------------------------
 Gurax_RealizeSymbol(__cast__);
+Gurax_RealizeSymbol(__castTo__);
 Gurax_RealizeSymbol(__del__);
 Gurax_RealizeSymbol(__file__);
 Gurax_RealizeSymbol(__init__);

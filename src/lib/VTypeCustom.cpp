@@ -11,10 +11,11 @@ namespace Gurax {
 VTypeCustom::VTypeCustom() :
 	VType(Symbol::Empty), _pValuesPropOfInstInit(new ValueOwner()), _pValuesPropOfClass(new ValueOwner())
 {
-	// _pConstructor, _pDestructor and _pCastFunction must be initialized.
+	// _pConstructor, _pDestructor and _pFuncCastFrom must be initialized.
 	_pConstructor.reset(Constructor::Empty.Reference());
 	_pDestructor.reset(Function::Empty.Reference());
-	_pCastFunction.reset(Function::Empty.Reference());
+	_pFuncCastFrom.reset(Function::Empty.Reference());
+	_pFuncCastTo.reset(Function::Empty.Reference());
 }
 
 void VTypeCustom::Inherit()
@@ -99,7 +100,7 @@ void VTypeCustom::PrepareForAssignment(Processor& processor, const Symbol* pSymb
 
 Value* VTypeCustom::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
-	const Function& func = GetCastFunction();
+	const Function& func = GetFuncCastFrom();
 	if (func.IsEmpty()) return nullptr;
 	RefPtr<Argument> pArg(new Argument(processor, func));
 	ArgFeeder args(*pArg, processor.GetFrameCur());
@@ -148,7 +149,12 @@ bool VTypeCustom::DoAssignCustomMethod(RefPtr<Function> pFunction)
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(__cast__))) {
 		pFunction->GetDeclCallable().SetFlagsAsClass();
 		pFunction->SetFrameOuter(GetFrame());
-		SetCastFunction(pFunction.release());
+		SetFuncCastFrom(pFunction.release());
+		return true;
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(__castTo__))) {
+		pFunction->GetDeclCallable().SetFlagsAsClass();
+		pFunction->SetFrameOuter(GetFrame());
+		SetFuncCastTo(pFunction.release());
 		return true;
 	}
 	return VType::DoAssignCustomMethod(pFunction.release());
