@@ -623,3 +623,24 @@ TestCase('__cast__') {
 	g(b as B) = {b}
 	Tester(`g(3))
 }
+
+TestCase('__castTo__') {
+	A = class {
+		__castTo__(value as Any, declArg as DeclArg) = {
+			//Println(declArg.vtype)
+			if (declArg.vtype == Number) {
+				12345678
+			} elsif (declArg.vtype == DateTime) {
+				DateTime.Create(2011, 12, 23, 12, 34, 56)
+			} else {
+				nil
+			}
+		}
+	}
+	f(a as Number) = Format('a = %d', a)
+	g(a as DateTime) = Format('a = %s', a)
+	h(a as Color) = Format('a = %s', a)
+	Tester(`f(A()))
+	Tester(`g(A()))
+	Tester(`h(A()))
+}

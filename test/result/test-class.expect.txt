@@ -289,3 +289,7 @@ c as Tuple .. ('value1', 'value2', 'value3', 'value4', 'value5', 'value6', 'valu
 ======== __cast__ ========
 f(3) .. <A>
 g(3) .. b can't cast from Number to B
+======== __castTo__ ========
+f(A()) .. a = 12345678
+g(A()) .. a = 2011-12-23 12:34:56.000
+h(A()) .. a can't cast from A to Color

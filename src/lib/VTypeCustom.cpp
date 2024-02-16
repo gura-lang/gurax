@@ -127,7 +127,7 @@ Value* VTypeCustom::DoCastTo(Processor& processor, const Value& value, const VTy
 	if (!args.FeedValue(processor, new Value_DeclArg(pDeclArg.release()))) return nullptr;
 	RefPtr<Value> pValue(func.Eval(processor, *pArg));
 	if (Error::IsIssued() || pValue->IsNil()) return nullptr;
-	if (pValue->IsInstanceOf(*this)) return pValue.release();
+	if (pValue->IsInstanceOf(vtype)) return pValue.release();
 	Error::Issue(ErrorType::CastError, "the returned value must be of %s", vtype.MakeFullName().c_str());
 	return nullptr;
 }
