@@ -5,15 +5,13 @@ Texture = class {
 	wd as Number
 	ht as Number
 	entity as SDL_Texture
-	__init__(renderer as SDL_Renderer, surface as SDL_Surface) = {
+	__init__(renderer as SDL_Renderer, surface as SDL_Surface):map = {
 		this.wd = surface.w, this.ht = surface.h
 		this.entity = renderer.CreateTextureFromSurface(surface)
 		surface.Free()
 	}
-	__del__() = {
-		this.entity.Destroy()
-	}
-	__castTo__(value, vtype as VType) = value.entity
+	__del__() = this.entity.Destroy()
+	__castTo__(declArg as DeclArg) = if (declArg.vtype == SDL_Texture) { this.entity }
 }
 
 SDL_Init(SDL_INIT_EVERYTHING)
@@ -28,13 +26,13 @@ repeat {
 	renderer.SetDrawColor(240, 255, 240, 255)
 	renderer.Clear()
 	Texture(renderer, font.RenderText_Solid('Solid', (255, 0, 0, 128))) {|texture|
-		renderer.Copy(texture.entity, nil, SDL_Rect(0, 0, texture.wd, texture.ht))
+		renderer.Copy(texture, nil, SDL_Rect(0, 0, texture.wd, texture.ht))
 	}
 	Texture(renderer, font.RenderText_Shaded('Shaded', (255, 0, 0, 128), (0, 255, 0, 0))) {|texture|
-		renderer.Copy(texture.entity, nil, SDL_Rect(0, 40, texture.wd, texture.ht))
+		renderer.Copy(texture, nil, SDL_Rect(0, 40, texture.wd, texture.ht))
 	}
 	Texture(renderer, font.RenderText_Blended('Blended', (255, 0, 0, 128))) {|texture|
-		renderer.Copy(texture.entity, nil, SDL_Rect(0, 80, texture.wd, texture.ht))
+		renderer.Copy(texture, nil, SDL_Rect(0, 80, texture.wd, texture.ht))
 	}
 	i += 1
 	rtn = SDL_WaitEventTimeout(event, 10) // 10msec
