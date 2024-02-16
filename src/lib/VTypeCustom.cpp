@@ -121,8 +121,9 @@ Value* VTypeCustom::DoCastTo(Processor& processor, const Value& value, const VTy
 	const Function& func = GetFuncCastTo();
 	if (func.IsEmpty()) return nullptr;
 	RefPtr<Argument> pArg(new Argument(processor, func));
+	pArg->SetValueThis(value.Reference());
 	ArgFeeder args(*pArg, processor.GetFrameCur());
-	if (!args.FeedValue(processor, value.Reference())) return nullptr;
+	//if (!args.FeedValue(processor, value.Reference())) return nullptr;
 	RefPtr<DeclArg> pDeclArg(new DeclArg(Symbol::Empty, vtype, DeclArg::Occur::Once, flags, nullptr));
 	if (!args.FeedValue(processor, new Value_DeclArg(pDeclArg.release()))) return nullptr;
 	RefPtr<Value> pValue(func.Eval(processor, *pArg));
@@ -161,7 +162,6 @@ bool VTypeCustom::DoAssignCustomMethod(RefPtr<Function> pFunction)
 		SetFuncCastFrom(pFunction.release());
 		return true;
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(__castTo__))) {
-		pFunction->GetDeclCallable().SetFlagsAsClass();
 		pFunction->SetFrameOuter(GetFrame());
 		SetFuncCastTo(pFunction.release());
 		return true;

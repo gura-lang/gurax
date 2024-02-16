@@ -626,12 +626,14 @@ TestCase('__cast__') {
 
 TestCase('__castTo__') {
 	A = class {
-		__castTo__(value as Any, declArg as DeclArg) = {
+		entityNumber = 12345678
+		entityDateTime = DateTime.Create(2011, 12, 23, 12, 34, 56)
+		__castTo__(declArg as DeclArg) = {
 			//Println(declArg.vtype)
 			if (declArg.vtype == Number) {
-				12345678
+				this.entityNumber
 			} elsif (declArg.vtype == DateTime) {
-				DateTime.Create(2011, 12, 23, 12, 34, 56)
+				this.entityDateTime
 			} else {
 				nil
 			}
