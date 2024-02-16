@@ -110,12 +110,10 @@ Value* VTypeCustom::DoCastFrom(Processor& processor, const Value& value, DeclArg
 		if (!args.FeedValue(processor, new Value_DeclArg(pDeclArg.release()))) return nullptr;
 	}
 	RefPtr<Value> pValue(func.Eval(processor, *pArg));
-	if (Error::IsIssued()) return nullptr;
-	if (!pValue->IsInstanceOf(*this)) {
-		Error::Issue(ErrorType::CastError, "the returned value must be of %s", MakeFullName().c_str());
-		return nullptr;
-	}
-	return pValue.release();
+	if (Error::IsIssued() || pValue->IsNil()) return nullptr;
+	if (pValue->IsInstanceOf(*this)) return pValue.release();
+	Error::Issue(ErrorType::CastError, "the returned value must be of %s", MakeFullName().c_str());
+	return nullptr;
 }
 
 Value* VTypeCustom::DoCastTo(Processor& processor, const Value& value, const VType& vtype, DeclArg::Flags flags) const
@@ -128,12 +126,10 @@ Value* VTypeCustom::DoCastTo(Processor& processor, const Value& value, const VTy
 	RefPtr<DeclArg> pDeclArg(new DeclArg(Symbol::Empty, vtype, DeclArg::Occur::Once, flags, nullptr));
 	if (!args.FeedValue(processor, new Value_DeclArg(pDeclArg.release()))) return nullptr;
 	RefPtr<Value> pValue(func.Eval(processor, *pArg));
-	if (Error::IsIssued()) return nullptr;
-	if (!pValue->IsInstanceOf(*this)) {
-		Error::Issue(ErrorType::CastError, "the returned value must be of %s", MakeFullName().c_str());
-		return nullptr;
-	}
-	return pValue.release();
+	if (Error::IsIssued() || pValue->IsNil()) return nullptr;
+	if (pValue->IsInstanceOf(*this)) return pValue.release();
+	Error::Issue(ErrorType::CastError, "the returned value must be of %s", vtype.MakeFullName().c_str());
+	return nullptr;
 }
 
 bool VTypeCustom::DoAssignCustomMethod(RefPtr<Function> pFunction)

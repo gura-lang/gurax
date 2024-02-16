@@ -97,9 +97,8 @@ Gurax_DeclareProperty_R(DeclArg, vtype)
 
 Gurax_ImplementPropertyGetter(DeclArg, vtype)
 {
-	//DeclArg& declArg = GetValueThis(valueTarget).GetDeclArg();
-	//return new Value_VType(declArg.GetVType());
-	return Value::nil();
+	DeclArg& declArg = GetValueThis(valueTarget).GetDeclArg();
+	return new Value_VType(const_cast<VType&>(declArg.GetVType()));
 }
 
 //------------------------------------------------------------------------------
