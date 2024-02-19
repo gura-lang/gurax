@@ -19,20 +19,28 @@ TTF_Init()
 [wdWindow, htWindow] = [800, 600]
 window = SDL_CreateWindow(path.FileName(sys.argv[0]), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, wdWindow, htWindow, 0)
 renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)
-font = TTF_OpenFont(path.Join(sys.dirBase, 'sample/resource/LeroyLetteringLightBeta01.ttf'), 30)
+pathNameFont = path.Join(sys.dirBase, 'sample/resource/LeroyLetteringLightBeta01.ttf')
+fonts = TTF_OpenFont(pathNameFont, [10, 30, 50, 70, 90]):map
 event = SDL_Event()
 i = 0
+colorBg = (240, 255, 240, 255)
 repeat {
-	renderer.SetDrawColor(240, 255, 240, 255)
+	renderer.SetDrawColor(colorBg*)
 	renderer.Clear()
-	Texture(renderer, font.RenderText_Solid('Solid', (255, 0, 0, 128))) {|texture|
-		renderer.Copy(texture, nil, SDL_Rect(0, 0, texture.wd, texture.ht))
-	}
-	Texture(renderer, font.RenderText_Shaded('Shaded', (255, 0, 0, 128), (0, 255, 0, 0))) {|texture|
-		renderer.Copy(texture, nil, SDL_Rect(0, 40, texture.wd, texture.ht))
-	}
-	Texture(renderer, font.RenderText_Blended('Blended', (255, 0, 0, 128))) {|texture|
-		renderer.Copy(texture, nil, SDL_Rect(0, 80, texture.wd, texture.ht))
+	y = 10
+	fonts.Each {|font|
+		Texture(renderer, font.RenderText_Solid('Solid: ABCDEFG abcdefg 0123456789', (255, 0, 0, 128))) {|texture|
+			renderer.Copy(texture, nil, SDL_Rect(10, y, texture.wd, texture.ht))
+			y += texture.ht
+		}
+		Texture(renderer, font.RenderText_Shaded('Shaded: ABCDEFG abcdefg 0123456789', (255, 0, 0, 128), colorBg)) {|texture|
+			renderer.Copy(texture, nil, SDL_Rect(10, y, texture.wd, texture.ht))
+			y += texture.ht
+		}
+		Texture(renderer, font.RenderText_Blended('Blended: ABCDEFG abcdefg 0123456789', (255, 0, 0, 128))) {|texture|
+			renderer.Copy(texture, nil, SDL_Rect(10, y, texture.wd, texture.ht))
+			y += texture.ht
+		}
 	}
 	i += 1
 	rtn = SDL_WaitEventTimeout(event, 10) // 10msec
