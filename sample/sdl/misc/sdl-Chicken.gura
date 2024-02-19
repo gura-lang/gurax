@@ -11,10 +11,10 @@ Chicken = struct {
 	wd as Number
 	dir:nil as Symbol
 	moveFlag as Bool
-	texturesL as Iterator
-	texturesR as Iterator
+	texturesChickenL as Iterator
+	texturesChickenR as Iterator
 	Render(renderer as SDL_Renderer):void = {
-		texture = cond(this.dir == `left, this.texturesL, this.texturesR).NextValue()
+		texture = cond(this.dir == `left, this.texturesChickenL, this.texturesChickenR).NextValue()
 		ht = texture.ht * this.wd / texture.wd
 		renderer.Copy(texture, nil, SDL_Rect(this.x, this.y - ht, this.wd, ht))
 	}
@@ -65,7 +65,7 @@ iSize = 0
 repeat {
 	timeCur = SDL_GetTicks()
 	if (timePrev > timeCur || timeCur > timePrev + 100) {
-		renderer.Copy(textureBg.entity, nil, nil)
+		renderer.Copy(textureBg, nil, nil)
 		renderer.SetDrawBlendMode(SDL_BLENDMODE_BLEND)
 		renderer.SetDrawColor(240, 255, 240, 128)
 		renderer.FillRect(nil)
