@@ -20,7 +20,8 @@ TTF_Init()
 window = SDL_CreateWindow(path.FileName(sys.argv[0]), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, wdWindow, htWindow, 0)
 renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)
 pathNameFont = path.Join(sys.dirBase, 'sample/resource/LeroyLetteringLightBeta01.ttf')
-fonts = TTF_OpenFont(pathNameFont, [10, 30, 50, 70, 90]):map
+fonts = TTF_OpenFont(pathNameFont, [10, 20, 50, 90]):map
+[font10, font20, font50, font90] = fonts
 event = SDL_Event()
 i = 0
 colorBg = (240, 255, 240, 255)
@@ -29,6 +30,10 @@ repeat {
 	renderer.Clear()
 	y = 10
 	fonts.Each {|font|
+		Texture(renderer, font20.RenderText_Solid(Format('Font Size: %d', , (255, 0, 0, 128))) {|texture|
+			renderer.Copy(texture, nil, SDL_Rect(10, y, texture.wd, texture.ht))
+			y += texture.ht
+		}
 		Texture(renderer, font.RenderText_Solid('Solid: ABCDEFG abcdefg 0123456789', (255, 0, 0, 128))) {|texture|
 			renderer.Copy(texture, nil, SDL_Rect(10, y, texture.wd, texture.ht))
 			y += texture.ht
