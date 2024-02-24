@@ -1,0 +1,68 @@
+#!/usr/bin/env gurax
+
+import(sdl) {*}
+
+if (SDL_Init(SDL_INIT_AUDIO) < 0) {
+	sys.cerr.Printf('SDL could not initialize! SDL_Error: %s\n', SDL_GetError())
+	sys.Exit()
+}
+nAudioDevices = SDL_GetNumAudioDevices(SDL_TRUE)
+repeat (nAudioDevices) {|i|
+	//Printf('%d: "%s"\n', i, SDL_GetAudioDeviceName(i, SDL_TRUE))
+	str = SDL_GetAudioDeviceName(i, SDL_TRUE)
+	Println(str)
+	str.ToBinary().Dump()
+}
+UserdataAudio = class {
+	buff as Binary
+	pBuff as Pointer
+	__init__(buff as Binary) = {
+		this.buff = buff
+		this.pBuff = this.buff.p
+	}
+}
+CallbackRecord(userdata, stream as Pointer) = {
+	//Println(userdata.pBuff)
+	userdata.pBuff.Append(stream)
+}
+CallbackPlay(userdata, stream as Pointer) = {
+	//Println(userdata.pBuff)
+	stream.Append(userdata.pBuff, 32768)
+	userdata.pBuff += 32768
+}
+iDevice = 0
+buff = Binary()
+scope {
+	audioSpecDesired = SDL_AudioSpec()
+	audioSpecObtained = SDL_AudioSpec()
+	audioSpecDesired.freq = 44100
+	audioSpecDesired.format = AUDIO_F32
+	audioSpecDesired.channels = 2
+	audioSpecDesired.samples = 4096
+	audioSpecDesired.callback = CallbackRecord
+	audioSpecDesired.userdata = UserdataAudio(buff)
+	audioDeviceId = SDL_OpenAudioDevice(SDL_GetAudioDeviceName(iDevice, SDL_TRUE), iscapture = true,
+		desired = audioSpecDesired, obtained = audioSpecObtained, allowed_changes = SDL_AUDIO_ALLOW_FORMAT_CHANGE)
+	SDL_PauseAudioDevice(audioDeviceId, SDL_FALSE)
+	Println('record')
+	os.Sleep(3)
+	SDL_PauseAudioDevice(audioDeviceId, SDL_TRUE)
+}
+scope {
+	audioSpecDesired = SDL_AudioSpec()
+	audioSpecObtained = SDL_AudioSpec()
+	audioSpecDesired.freq = 44100
+	audioSpecDesired.format = AUDIO_F32
+	audioSpecDesired.channels = 2
+	audioSpecDesired.samples = 4096
+	audioSpecDesired.callback = CallbackPlay
+	audioSpecDesired.userdata = UserdataAudio(buff)
+	audioDeviceId = SDL_OpenAudioDevice(SDL_GetAudioDeviceName(iDevice, SDL_FALSE), iscapture = false,
+		desired = audioSpecDesired, obtained = audioSpecObtained, allowed_changes = SDL_AUDIO_ALLOW_FORMAT_CHANGE)
+	SDL_PauseAudioDevice(audioDeviceId, SDL_FALSE)
+	Println('play')
+	os.Sleep(3)
+	SDL_PauseAudioDevice(audioDeviceId, SDL_TRUE)
+}
+Println(buff.bytes)
+SDL_Quit()
