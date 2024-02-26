@@ -94,6 +94,10 @@ curl_easy_duphandle(curl as CURL_p) as CURL_p
 curl_easy_reset(curl as CURL_p):void
 
 //CURLcode curl_easy_recv(curl as CURL_p, void *buffer, size_t buflen, size_t *n);
+curl_easy_recv(curl as CURL_p, buffer as void_p, buflen as size_t, &n:nilRef as size_t) as CURLcode = \
+	R'''
+	buffer->
+	'''
 
 //CURLcode curl_easy_send(curl as CURL_p, const void *buffer, size_t buflen, size_t *n);
 

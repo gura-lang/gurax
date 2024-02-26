@@ -283,7 +283,8 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 			exprAssigned = exprAssigned.left
 		}
 		if (exprAssigned.IsString()) {
-			codeFunctionBody = exprAssigned.string
+			codeFunctionBody = Format('#line %d "../%s"\n', exprAssigned.lineNoTop + 1,
+							path.FileName(exprAssigned.pathNameSrc)) + exprAssigned.string
 		} elsif (exprAssigned.IsIdentifier()) {
 			symbolNameOnCall = exprAssigned.symbolName
 		} else {

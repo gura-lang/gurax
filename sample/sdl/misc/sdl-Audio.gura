@@ -64,5 +64,5 @@ scope {
 	os.Sleep(3)
 	SDL_PauseAudioDevice(audioDeviceId, SDL_TRUE)
 }
-Println(buff.bytes)
+//Println(buff.bytes)
 SDL_Quit()

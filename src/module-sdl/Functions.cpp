@@ -337,6 +337,7 @@ Gurax_ImplementFunctionEx(SDL_GetVersion_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	RefPtr<Referencer> ver(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 271 "../Functions.gura"
 	SDL_version ver_;
 	SDL_GetVersion(&ver_);
 	ver->SetValue(processor_gurax, new Value_SDL_version(ver_));
@@ -487,6 +488,7 @@ Gurax_ImplementFunctionEx(SDL_GetDisplayBounds_gurax, processor_gurax, argument_
 	int displayIndex = args_gurax.PickNumber<int>();
 	RefPtr<Referencer> rect(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 299 "../Functions.gura"
 	SDL_Rect rect_;
 	int rtn = SDL_GetDisplayBounds(displayIndex, &rect_);
 	rect->SetValue(processor_gurax, new Value_SDL_Rect(rect_));
@@ -508,6 +510,7 @@ Gurax_ImplementFunctionEx(SDL_GetDisplayUsableBounds_gurax, processor_gurax, arg
 	int displayIndex = args_gurax.PickNumber<int>();
 	RefPtr<Referencer> rect(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 307 "../Functions.gura"
 	SDL_Rect rect_;
 	int rtn = SDL_GetDisplayUsableBounds(displayIndex, &rect_);
 	rect->SetValue(processor_gurax, new Value_SDL_Rect(rect_));
@@ -533,6 +536,7 @@ Gurax_ImplementFunctionEx(SDL_GetDisplayDPI_gurax, processor_gurax, argument_gur
 	RefPtr<Referencer> hdpi(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> vdpi(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 315 "../Functions.gura"
 	float ddpi_, hdpi_, vdpi_;
 	int rtn = SDL_GetDisplayDPI(displayIndex, &ddpi_, &hdpi_, &vdpi_);
 	ddpi->SetValue(processor_gurax, new Value_Number(ddpi_));
@@ -592,6 +596,7 @@ Gurax_ImplementFunctionEx(SDL_GetDisplayMode_gurax, processor_gurax, argument_gu
 	int modeIndex = args_gurax.PickNumber<int>();
 	RefPtr<Referencer> mode(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 329 "../Functions.gura"
 	SDL_DisplayMode mode_ = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
 	int rtn = SDL_GetDisplayMode(displayIndex, modeIndex, &mode_);
 	mode->SetValue(processor_gurax, new Value_SDL_DisplayMode(mode_));
@@ -613,6 +618,7 @@ Gurax_ImplementFunctionEx(SDL_GetDesktopDisplayMode_gurax, processor_gurax, argu
 	int displayIndex = args_gurax.PickNumber<int>();
 	RefPtr<Referencer> mode(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 337 "../Functions.gura"
 	SDL_DisplayMode mode_ = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
 	int rtn = SDL_GetDesktopDisplayMode(displayIndex, &mode_);
 	mode->SetValue(processor_gurax, new Value_SDL_DisplayMode(mode_));
@@ -634,6 +640,7 @@ Gurax_ImplementFunctionEx(SDL_GetCurrentDisplayMode_gurax, processor_gurax, argu
 	int displayIndex = args_gurax.PickNumber<int>();
 	RefPtr<Referencer> mode(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 345 "../Functions.gura"
 	SDL_DisplayMode mode_ = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
 	int rtn = SDL_GetCurrentDisplayMode(displayIndex, &mode_);
 	mode->SetValue(processor_gurax, new Value_SDL_DisplayMode(mode_));
@@ -695,6 +702,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowDisplayMode_gurax, processor_gurax, argum
 	SDL_Window* window = value_window.GetEntityPtr();
 	RefPtr<Referencer> mode(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 359 "../Functions.gura"
 	SDL_DisplayMode mode_ = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
 	int rtn = SDL_GetWindowDisplayMode(window, &mode_);
 	mode->SetValue(processor_gurax, new Value_SDL_DisplayMode(mode_));
@@ -900,6 +908,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowPosition_gurax, processor_gurax, argument
 	RefPtr<Referencer> x(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> y(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 391 "../Functions.gura"
 	int x_, y_;
 	SDL_GetWindowPosition(window, &x_, &y_);
 	x->SetValue(processor_gurax, new Value_Number(x_));
@@ -947,6 +956,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowSize_gurax, processor_gurax, argument_gur
 	RefPtr<Referencer> w(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> h(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 402 "../Functions.gura"
 	int w_, h_;
 	SDL_GetWindowSize(window, &w_, &h_);
 	w->SetValue(processor_gurax, new Value_Number(w_));
@@ -976,6 +986,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowBordersSize_gurax, processor_gurax, argum
 	RefPtr<Referencer> bottom(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> right(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 411 "../Functions.gura"
 	int top_, left_, bottom_, right_;
 	int rtn = SDL_GetWindowBordersSize(window, &top_, &left_, &bottom_, &right_);
 	top->SetValue(processor_gurax, new Value_Number(top_));
@@ -1025,6 +1036,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowMinimumSize_gurax, processor_gurax, argum
 	RefPtr<Referencer> w(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> h(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 424 "../Functions.gura"
 	int w_, h_;
 	SDL_GetWindowMinimumSize(window, &w_, &h_);
 	w->SetValue(processor_gurax, new Value_Number(w_));
@@ -1072,6 +1084,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowMaximumSize_gurax, processor_gurax, argum
 	RefPtr<Referencer> w(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> h(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 435 "../Functions.gura"
 	int w_, h_;
 	SDL_GetWindowMaximumSize(window, &w_, &h_);
 	w->SetValue(processor_gurax, new Value_Number(w_));
@@ -1300,6 +1313,7 @@ Gurax_ImplementFunctionEx(SDL_UpdateWindowSurfaceRects_gurax, processor_gurax, a
 	SDL_Window* window = value_window.GetEntityPtr();
 	auto rects = args_gurax.PickListT<SDL_Rect>(Value_SDL_Rect::ValueForVector);
 	// Function body
+	#line 466 "../Functions.gura"
 	int numrects = rects.sizeT<int>();
 	int rtn = SDL_UpdateWindowSurfaceRects(window, rects, numrects);
 	return new Value_Number(rtn);
@@ -1431,6 +1445,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowOpacity_gurax, processor_gurax, argument_
 	SDL_Window* window = value_window.GetEntityPtr();
 	RefPtr<Referencer> out_opacity(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 485 "../Functions.gura"
 	float out_opacity_;
 	int rtn = SDL_GetWindowOpacity(window, &out_opacity_);
 	out_opacity->SetValue(processor_gurax, new Value_Number(out_opacity_));
@@ -1626,6 +1641,7 @@ Gurax_ImplementFunctionEx(SDL_GL_GetAttribute_gurax, processor_gurax, argument_g
 	SDL_GLattr attr = args_gurax.PickNumber<SDL_GLattr>();
 	RefPtr<Referencer> value(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 523 "../Functions.gura"
 	int value_;
 	int rtn = SDL_GL_GetAttribute(attr, &value_);
 	value->SetValue(processor_gurax, new Value_Number(value_));
@@ -1718,6 +1734,7 @@ Gurax_ImplementFunctionEx(SDL_GL_GetDrawableSize_gurax, processor_gurax, argumen
 	RefPtr<Referencer> w(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> h(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 539 "../Functions.gura"
 	int w_, h_;
 	SDL_GL_GetDrawableSize(window, &w_, &h_);
 	w->SetValue(processor_gurax, new Value_Number(w_));
@@ -1819,6 +1836,7 @@ Gurax_ImplementFunctionEx(SDL_GetRenderDriverInfo_gurax, processor_gurax, argume
 	int index = args_gurax.PickNumber<int>();
 	RefPtr<Referencer> info(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 560 "../Functions.gura"
 	SDL_RendererInfo info_;
 	int rtn = SDL_GetRenderDriverInfo(index, &info_);
 	info->SetValue(processor_gurax, new Value_SDL_RendererInfo(info_));
@@ -1846,6 +1864,7 @@ Gurax_ImplementFunctionEx(SDL_CreateWindowAndRenderer_gurax, processor_gurax, ar
 	RefPtr<Referencer> window(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> renderer(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 568 "../Functions.gura"
 	SDL_Window* window_;
 	SDL_Renderer* renderer_;
 	int rtn = SDL_CreateWindowAndRenderer(width, height, window_flags, &window_, &renderer_);
@@ -1931,6 +1950,7 @@ Gurax_ImplementFunctionEx(SDL_GetRendererInfo_gurax, processor_gurax, argument_g
 	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	RefPtr<Referencer> info(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 584 "../Functions.gura"
 	SDL_RendererInfo info_;
 	int rtn = SDL_GetRendererInfo(renderer, &info_);
 	info->SetValue(processor_gurax, new Value_SDL_RendererInfo(info_));
@@ -1955,6 +1975,7 @@ Gurax_ImplementFunctionEx(SDL_GetRendererOutputSize_gurax, processor_gurax, argu
 	RefPtr<Referencer> w(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> h(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 592 "../Functions.gura"
 	int w_, h_;
 	int rtn = SDL_GetRendererOutputSize(renderer, &w_, &h_);
 	w->SetValue(processor_gurax, new Value_Number(w_));
@@ -2033,6 +2054,7 @@ Gurax_ImplementFunctionEx(SDL_QueryTexture_gurax, processor_gurax, argument_gura
 	RefPtr<Referencer> w(args_gurax.IsValid()? args_gurax.PickReferencer().Reference() : nullptr);
 	RefPtr<Referencer> h(args_gurax.IsValid()? args_gurax.PickReferencer().Reference() : nullptr);
 	// Function body
+	#line 605 "../Functions.gura"
 	Uint32 format_;
 	int access_, w_, h_;
 	int rtn = SDL_QueryTexture(texture, &format_, &access_, &w_, &h_);
@@ -2087,6 +2109,7 @@ Gurax_ImplementFunctionEx(SDL_GetTextureColorMod_gurax, processor_gurax, argumen
 	RefPtr<Referencer> g(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> b(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 619 "../Functions.gura"
 	Uint8 r_, g_, b_;
 	int rtn = SDL_GetTextureColorMod(texture, &r_, &g_, &b_);
 	r->SetValue(processor_gurax, new Value_Number(r_));
@@ -2131,6 +2154,7 @@ Gurax_ImplementFunctionEx(SDL_GetTextureAlphaMod_gurax, processor_gurax, argumen
 	SDL_Texture* texture = value_texture.GetEntityPtr();
 	RefPtr<Referencer> alpha(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 631 "../Functions.gura"
 	Uint8 alpha_;
 	int rtn = SDL_GetTextureAlphaMod(texture, &alpha_);
 	alpha->SetValue(processor_gurax, new Value_Number(alpha_));
@@ -2173,6 +2197,7 @@ Gurax_ImplementFunctionEx(SDL_GetTextureBlendMode_gurax, processor_gurax, argume
 	SDL_Texture* texture = value_texture.GetEntityPtr();
 	RefPtr<Referencer> blendMode(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 641 "../Functions.gura"
 	SDL_BlendMode blendMode_;
 	int rtn = SDL_GetTextureBlendMode(texture, &blendMode_);
 	blendMode->SetValue(processor_gurax, new Value_Number(blendMode_));
@@ -2215,6 +2240,7 @@ Gurax_ImplementFunctionEx(SDL_GetTextureScaleMode_gurax, processor_gurax, argume
 	SDL_Texture* texture = value_texture.GetEntityPtr();
 	RefPtr<Referencer> scaleMode(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 651 "../Functions.gura"
 	SDL_ScaleMode scaleMode_;
 	int rtn = SDL_GetTextureScaleMode(texture, &scaleMode_);
 	scaleMode->SetValue(processor_gurax, new Value_Number(scaleMode_));
@@ -2297,6 +2323,7 @@ Gurax_ImplementFunctionEx(SDL_LockTexture_gurax, processor_gurax, argument_gurax
 	RefPtr<Referencer> pixels(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> pitch(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 663 "../Functions.gura"
 	void* pixels_;
 	int pitch_;
 	int rtn = SDL_LockTexture(texture, rect, &pixels_, &pitch_);
@@ -2332,6 +2359,7 @@ Gurax_ImplementFunctionEx(SDL_LockTextureToSurface_gurax, processor_gurax, argum
 	const SDL_Rect* rect = args_gurax.IsValid()? args_gurax.Pick<Value_SDL_Rect>().GetEntityPtr() : nullptr;
 	RefPtr<Referencer> surface(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 682 "../Functions.gura"
 	SDL_Surface* surface_;
 	int rtn = SDL_LockTextureToSurface(texture, rect, &surface_);
 	surface->SetValue(processor_gurax, new Value_SDL_Surface(surface_));
@@ -2454,6 +2482,7 @@ Gurax_ImplementFunctionEx(SDL_RenderGetLogicalSize_gurax, processor_gurax, argum
 	RefPtr<Referencer> w(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> h(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 700 "../Functions.gura"
 	int w_, h_;
 	SDL_RenderGetLogicalSize(renderer, &w_, &h_);
 	w->SetValue(processor_gurax, new Value_Number(w_));
@@ -2535,6 +2564,7 @@ Gurax_ImplementFunctionEx(SDL_RenderGetViewport_gurax, processor_gurax, argument
 	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	RefPtr<Referencer> rect(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 715 "../Functions.gura"
 	SDL_Rect rect_;
 	SDL_RenderGetViewport(renderer, &rect_);
 	rect->SetValue(processor_gurax, new Value_SDL_Rect(rect_));
@@ -2577,6 +2607,7 @@ Gurax_ImplementFunctionEx(SDL_RenderGetClipRect_gurax, processor_gurax, argument
 	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	RefPtr<Referencer> rect(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 725 "../Functions.gura"
 	SDL_Rect rect_;
 	SDL_RenderGetClipRect(renderer, &rect_);
 	rect->SetValue(processor_gurax, new Value_SDL_Rect(rect_));
@@ -2641,6 +2672,7 @@ Gurax_ImplementFunctionEx(SDL_RenderGetScale_gurax, processor_gurax, argument_gu
 	RefPtr<Referencer> scaleX(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> scaleY(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 737 "../Functions.gura"
 	float scaleX_, scaleY_;
 	SDL_RenderGetScale(renderer, &scaleX_, &scaleY_);
 	scaleX->SetValue(processor_gurax, new Value_Number(scaleX_));
@@ -2696,6 +2728,7 @@ Gurax_ImplementFunctionEx(SDL_GetRenderDrawColor_gurax, processor_gurax, argumen
 	RefPtr<Referencer> b(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> a(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 748 "../Functions.gura"
 	Uint8 r_, g_, b_, a_;
 	int rtn = SDL_GetRenderDrawColor(renderer, &r_, &g_, &b_, &a_);
 	r->SetValue(processor_gurax, new Value_Number(r_));
@@ -2741,6 +2774,7 @@ Gurax_ImplementFunctionEx(SDL_GetRenderDrawBlendMode_gurax, processor_gurax, arg
 	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	RefPtr<Referencer> blendMode(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 761 "../Functions.gura"
 	SDL_BlendMode blendMode_;
 	int rtn = SDL_GetRenderDrawBlendMode(renderer, &blendMode_);
 	blendMode->SetValue(processor_gurax, new Value_Number(blendMode_));
@@ -2803,6 +2837,7 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawPoints_gurax, processor_gurax, argument_
 	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	auto points = args_gurax.PickListT<SDL_Point>(Value_SDL_Point::ValueForVector);
 	// Function body
+	#line 773 "../Functions.gura"
 	int count = points.sizeT<int>();
 	int rtn = SDL_RenderDrawPoints(renderer, points, count);
 	return new Value_Number(rtn);
@@ -2850,6 +2885,7 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawLines_gurax, processor_gurax, argument_g
 	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	auto points = args_gurax.PickListT<SDL_Point>(Value_SDL_Point::ValueForVector);
 	// Function body
+	#line 782 "../Functions.gura"
 	int count = points.sizeT<int>();
 	int rtn = SDL_RenderDrawLines(renderer, points, count);
 	return new Value_Number(rtn);
@@ -2891,6 +2927,7 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawRects_gurax, processor_gurax, argument_g
 	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	auto rects = args_gurax.PickListT<SDL_Rect>(Value_SDL_Rect::ValueForVector);
 	// Function body
+	#line 791 "../Functions.gura"
 	int count = rects.sizeT<int>();
 	int rtn = SDL_RenderDrawRects(renderer, rects, count);
 	return new Value_Number(rtn);
@@ -2932,6 +2969,7 @@ Gurax_ImplementFunctionEx(SDL_RenderFillRects_gurax, processor_gurax, argument_g
 	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	auto rects = args_gurax.PickListT<SDL_Rect>(Value_SDL_Rect::ValueForVector);
 	// Function body
+	#line 800 "../Functions.gura"
 	int count = rects.sizeT<int>();
 	int rtn = SDL_RenderFillRects(renderer, rects, count);
 	return new Value_Number(rtn);
@@ -3080,6 +3118,7 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawLinesF_gurax, processor_gurax, argument_
 	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	auto points = args_gurax.PickListT<SDL_FPoint>(Value_SDL_FPoint::ValueForVector);
 	// Function body
+	#line 817 "../Functions.gura"
 	int count = points.sizeT<int>();
 	int rtn = SDL_RenderDrawLinesF(renderer, points, count);
 	return new Value_Number(rtn);
@@ -3122,6 +3161,7 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawRectsF_gurax, processor_gurax, argument_
 	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	auto rects = args_gurax.PickListT<SDL_FRect>(Value_SDL_FRect::ValueForVector);
 	// Function body
+	#line 826 "../Functions.gura"
 	int count = rects.sizeT<int>();
 	int rtn = SDL_RenderDrawRectsF(renderer, rects, count);
 	return new Value_Number(rtn);
@@ -3164,6 +3204,7 @@ Gurax_ImplementFunctionEx(SDL_RenderFillRectsF_gurax, processor_gurax, argument_
 	SDL_Renderer* renderer = value_renderer.GetEntityPtr();
 	auto rects = args_gurax.PickListT<SDL_FRect>(Value_SDL_FRect::ValueForVector);
 	// Function body
+	#line 835 "../Functions.gura"
 	int count = rects.sizeT<int>();
 	int rtn = SDL_RenderFillRectsF(renderer, rects, count);
 	return new Value_Number(rtn);
@@ -3447,6 +3488,7 @@ Gurax_ImplementFunctionEx(SDL_SetPaletteColors_gurax, processor_gurax, argument_
 	auto colors = args_gurax.PickListT<SDL_Color>(Value_SDL_Color::ValueForVector);
 	int firstcolor = args_gurax.PickNumber<int>();
 	// Function body
+	#line 881 "../Functions.gura"
 	int ncolors = colors.sizeT<int>();
 	int rtn = SDL_SetPaletteColors(palette, colors, firstcolor, ncolors);
 	return new Value_Number(rtn);
@@ -3541,6 +3583,7 @@ Gurax_ImplementFunctionEx(SDL_GetRGB_gurax, processor_gurax, argument_gurax)
 	RefPtr<Referencer> g(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> b(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 894 "../Functions.gura"
 	Uint8 r_, g_, b_;
 	SDL_GetRGB(pixel, format, &r_, &g_, &b_);
 	r->SetValue(processor_gurax, new Value_Number(r_));
@@ -3573,6 +3616,7 @@ Gurax_ImplementFunctionEx(SDL_GetRGBA_gurax, processor_gurax, argument_gurax)
 	RefPtr<Referencer> b(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> a(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 904 "../Functions.gura"
 	Uint8 r_, g_, b_, a_;
 	SDL_GetRGBA(pixel, format, &r_, &g_, &b_, &a_);
 	r->SetValue(processor_gurax, new Value_Number(r_));
@@ -3622,6 +3666,7 @@ Gurax_ImplementFunctionEx(SDL_IntersectRect_gurax, processor_gurax, argument_gur
 	const SDL_Rect* B = value_B.GetEntityPtr();
 	RefPtr<Referencer> result(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 921 "../Functions.gura"
 	SDL_Rect result_;
 	SDL_bool rtn = SDL_IntersectRect(A, B, &result_);
 	result->SetValue(processor_gurax, new Value_SDL_Rect(result_));
@@ -3647,6 +3692,7 @@ Gurax_ImplementFunctionEx(SDL_UnionRect_gurax, processor_gurax, argument_gurax)
 	const SDL_Rect* B = value_B.GetEntityPtr();
 	RefPtr<Referencer> result(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 929 "../Functions.gura"
 	SDL_Rect result_;
 	SDL_UnionRect(A, B, &result_);
 	result->SetValue(processor_gurax, new Value_SDL_Rect(result_));
@@ -3675,6 +3721,7 @@ Gurax_ImplementFunctionEx(SDL_IntersectRectAndLine_gurax, processor_gurax, argum
 	RefPtr<Referencer> X2(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> Y2(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 939 "../Functions.gura"
 	int X1_ = Value_Number::GetNumber<int>(X1->GetValue());
 	int Y1_ = Value_Number::GetNumber<int>(Y1->GetValue());
 	int X2_ = Value_Number::GetNumber<int>(X1->GetValue());
@@ -3828,6 +3875,7 @@ Gurax_ImplementFunctionEx(SDL_CreateRGBSurfaceFromImage_gurax, processor_gurax, 
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Gurax::Image& image = args_gurax.Pick<Value_Image>().GetImage();
 	// Function body
+	#line 963 "../Functions.gura"
 	return Value_SDL_Surface::Create(image.Reference());
 }
 
@@ -3983,6 +4031,7 @@ Gurax_ImplementFunctionEx(SDL_SaveBMP_RW_gurax, processor_gurax, argument_gurax)
 	SDL_RWops* dst = value_dst.GetEntityPtr();
 	bool freedst = args_gurax.PickBool();
 	// Function body
+	#line 982 "../Functions.gura"
 	int rtn = SDL_SaveBMP_RW(surface, dst, freedst? 1 : 0);
 	return new Gurax::Value_Number(rtn);
 }
@@ -4063,6 +4112,7 @@ Gurax_ImplementFunctionEx(SDL_GetColorKey_gurax, processor_gurax, argument_gurax
 	SDL_Surface* surface = value_surface.GetEntityPtr();
 	RefPtr<Referencer> key(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 994 "../Functions.gura"
 	Uint32 key_;
 	int rtn = SDL_GetColorKey(surface, &key_);
 	key->SetValue(processor_gurax, new Value_Number(key_));
@@ -4113,6 +4163,7 @@ Gurax_ImplementFunctionEx(SDL_GetSurfaceColorMod_gurax, processor_gurax, argumen
 	RefPtr<Referencer> g(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> b(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 1004 "../Functions.gura"
 	Uint8 r_, g_, b_;
 	int rtn = SDL_GetSurfaceColorMod(surface, &r_, &g_, &b_);
 	r->SetValue(processor_gurax, new Value_Number(r_));
@@ -4157,6 +4208,7 @@ Gurax_ImplementFunctionEx(SDL_GetSurfaceAlphaMod_gurax, processor_gurax, argumen
 	SDL_Surface* surface = value_surface.GetEntityPtr();
 	RefPtr<Referencer> alpha(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 1016 "../Functions.gura"
 	Uint8 alpha_;
 	int rtn = SDL_GetSurfaceAlphaMod(surface, &alpha_);
 	alpha->SetValue(processor_gurax, new Value_Number(alpha_));
@@ -4199,6 +4251,7 @@ Gurax_ImplementFunctionEx(SDL_GetSurfaceBlendMode_gurax, processor_gurax, argume
 	SDL_Surface* surface = value_surface.GetEntityPtr();
 	RefPtr<Referencer> blendMode(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 1026 "../Functions.gura"
 	SDL_BlendMode blendMode_;
 	int rtn = SDL_GetSurfaceBlendMode(surface, &blendMode_);
 	blendMode->SetValue(processor_gurax, new Value_Number(blendMode_));
@@ -4241,6 +4294,7 @@ Gurax_ImplementFunctionEx(SDL_GetClipRect_gurax, processor_gurax, argument_gurax
 	SDL_Surface* surface = value_surface.GetEntityPtr();
 	RefPtr<Referencer> rect(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 1036 "../Functions.gura"
 	SDL_Rect rect_;
 	SDL_GetClipRect(surface, &rect_);
 	rect->SetValue(processor_gurax, new Value_SDL_Rect(rect_));
@@ -4634,6 +4688,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowWMInfo_gurax, processor_gurax, argument_g
 	SDL_Window* window = value_window.GetEntityPtr();
 	RefPtr<Referencer> info(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 1078 "../Functions.gura"
 	SDL_SysWMinfo info_;
 	int rtn = SDL_GetWindowWMInfo(window, &info_);
 	info->SetValue(processor_gurax, new Value_SDL_SysWMinfo(info_));
@@ -4666,6 +4721,7 @@ Gurax_DeclareFunctionAlias(SDL_GetClipboardText_gurax, "SDL_GetClipboardText")
 Gurax_ImplementFunctionEx(SDL_GetClipboardText_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
+	#line 1090 "../Functions.gura"
 	char* rtn = SDL_GetClipboardText();
 	RefPtr<Value> pValue(new Value_String(rtn));
 	SDL_free(rtn);
@@ -4828,6 +4884,7 @@ Gurax_ImplementFunctionEx(SDL_WaitEvent_gurax, processor_gurax, argument_gurax)
 	auto& value_event = args_gurax.Pick<Value_SDL_Event>();
 	SDL_Event* event = value_event.GetEntityPtr();
 	// Function body
+	#line 1135 "../Functions.gura"
 	int rtn = SDL_WaitEvent(event);
 	return new Value_Number(rtn);
 }
@@ -4848,6 +4905,7 @@ Gurax_ImplementFunctionEx(SDL_WaitEventTimeout_gurax, processor_gurax, argument_
 	SDL_Event* event = value_event.GetEntityPtr();
 	int timeout = args_gurax.PickNumber<int>();
 	// Function body
+	#line 1141 "../Functions.gura"
 	int rtn = SDL_WaitEventTimeout(event, timeout);
 	return new Value_Number(rtn);
 }
@@ -4929,6 +4987,7 @@ Gurax_DeclareFunctionAlias(SDL_GetKeyboardState_gurax, "SDL_GetKeyboardState")
 Gurax_ImplementFunctionEx(SDL_GetKeyboardState_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
+	#line 1167 "../Functions.gura"
 	int numkeys;
 	const Uint8* rtn = SDL_GetKeyboardState(&numkeys);
 	//RefPtr<Pointer> pPointer(new Pointer_Memory(new MemorySloth(numkeys, const_cast<Uint8*>(rtn))));
@@ -5185,6 +5244,7 @@ Gurax_ImplementFunctionEx(SDL_GetMouseState_gurax, processor_gurax, argument_gur
 	RefPtr<Referencer> x(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> y(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 1213 "../Functions.gura"
 	int x_, y_;
 	Uint32 state = SDL_GetMouseState(&x_, &y_);
 	x->SetValue(processor_gurax, new Value_Number(x_));
@@ -5207,6 +5267,7 @@ Gurax_ImplementFunctionEx(SDL_GetGlobalMouseState_gurax, processor_gurax, argume
 	RefPtr<Referencer> x(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> y(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 1222 "../Functions.gura"
 	int x_, y_;
 	Uint32 state = SDL_GetGlobalMouseState(&x_, &y_);
 	x->SetValue(processor_gurax, new Value_Number(x_));
@@ -5229,6 +5290,7 @@ Gurax_ImplementFunctionEx(SDL_GetRelativeMouseState_gurax, processor_gurax, argu
 	RefPtr<Referencer> x(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> y(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 1231 "../Functions.gura"
 	int x_, y_;
 	Uint32 state = SDL_GetRelativeMouseState(&x_, &y_);
 	x->SetValue(processor_gurax, new Value_Number(x_));
@@ -5864,6 +5926,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetGUIDString_gurax, processor_gurax, argu
 	SDL_JoystickGUID& guid = value_guid.GetEntity();
 	RefPtr<Referencer> szGUID(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 1312 "../Functions.gura"
 	char szGUID_[64]; // requires at least 33 bytes
 	SDL_JoystickGetGUIDString(guid, szGUID_, sizeof(szGUID_));
 	szGUID->SetValue(processor_gurax, new Value_String(szGUID_));
@@ -6085,6 +6148,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetBall_gurax, processor_gurax, argument_g
 	RefPtr<Referencer> dx(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> dy(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 1344 "../Functions.gura"
 	int dx_, dy_;
 	int rtn = SDL_JoystickGetBall(joystick, ball, &dx_, &dy_);
 	dx->SetValue(processor_gurax, new Value_Number(dx_));
@@ -6235,6 +6299,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerMappingForIndex_gurax, processor_gur
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int mapping_index = args_gurax.PickNumber<int>();
 	// Function body
+	#line 1369 "../Functions.gura"
 	char* rtn = SDL_GameControllerMappingForIndex(mapping_index);
 	if (!rtn) return Value::nil();
 	RefPtr<Value> pValue(new Value_String(rtn));
@@ -6256,6 +6321,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerMappingForGUID_gurax, processor_gura
 	auto& value_guid = args_gurax.Pick<Value_SDL_JoystickGUID>();
 	SDL_JoystickGUID& guid = value_guid.GetEntity();
 	// Function body
+	#line 1378 "../Functions.gura"
 	char* rtn = SDL_GameControllerMappingForGUID(guid);
 	if (!rtn) return Value::nil();
 	RefPtr<Value> pValue(new Value_String(rtn));
@@ -6277,6 +6343,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerMapping_gurax, processor_gurax, argu
 	auto& value_gamecontroller = args_gurax.Pick<Value_SDL_GameController>();
 	SDL_GameController* gamecontroller = value_gamecontroller.GetEntityPtr();
 	// Function body
+	#line 1387 "../Functions.gura"
 	char* rtn = SDL_GameControllerMapping(gamecontroller);
 	if (!rtn) return Value::nil();
 	RefPtr<Value> pValue(new Value_String(rtn));
@@ -6348,6 +6415,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerMappingForDeviceIndex_gurax, process
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int joystick_index = args_gurax.PickNumber<int>();
 	// Function body
+	#line 1402 "../Functions.gura"
 	char* rtn = SDL_GameControllerMappingForDeviceIndex(joystick_index);
 	if (!rtn) return Value::nil();
 	RefPtr<Value> pValue(new Value_String(rtn));
@@ -7698,6 +7766,7 @@ Gurax_ImplementFunctionEx(SDL_OpenAudioDevice_gurax, processor_gurax, argument_g
 	SDL_AudioSpec* obtained = value_obtained.GetEntityPtr();
 	int allowed_changes = args_gurax.PickNumber<int>();
 	// Function body
+	#line 1571 "../Functions.gura"
 	value_obtained.SetFuncAudioCallback(Function::Reference(value_desired.GetFuncAudioCallback()));
 	value_obtained.SetValueUserdata(value_desired.GetValueUserdata().Reference());
 	SDL_AudioDeviceID rtn = SDL_OpenAudioDevice(device, iscapture, desired, obtained, allowed_changes);
@@ -8911,6 +8980,7 @@ Gurax_ImplementFunctionEx(SDL_GetPowerInfo_gurax, processor_gurax, argument_gura
 	RefPtr<Referencer> secs(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> pct(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 1866 "../Functions.gura"
 	int secs_, pct_;
 	SDL_PowerState state = SDL_GetPowerInfo(&secs_, &pct_);
 	secs->SetValue(processor_gurax, new Value_Number(secs_));
@@ -8927,6 +8997,7 @@ Gurax_DeclareFunctionAlias(IMG_Linked_Version_gurax, "IMG_Linked_Version")
 Gurax_ImplementFunctionEx(IMG_Linked_Version_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
+	#line 2146 "../Functions.gura"
 	const SDL_version* ver = IMG_Linked_Version();
 	return new Value_SDL_version(*ver);
 }
@@ -8944,6 +9015,7 @@ Gurax_ImplementFunctionEx(IMG_Init_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int flags = args_gurax.PickNumber<int>();
 	// Function body
+	#line 2152 "../Functions.gura"
 	int rtn = IMG_Init(flags);
 	return new Value_Number(rtn);
 }
@@ -9545,6 +9617,7 @@ Gurax_DeclareFunctionAlias(Mix_Linked_Version_gurax, "Mix_Linked_Version")
 Gurax_ImplementFunctionEx(Mix_Linked_Version_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
+	#line 2233 "../Functions.gura"
 	const SDL_version* ver = Mix_Linked_Version();
 	return new Value_SDL_version(*ver);
 }
@@ -9676,6 +9749,7 @@ Gurax_ImplementFunctionEx(Mix_QuerySpec_gurax, processor_gurax, argument_gurax)
 	RefPtr<Referencer> format(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> channels(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 2251 "../Functions.gura"
 	int frequency_;
 	Uint16 format_;
 	int channels_;
@@ -10750,6 +10824,7 @@ Gurax_DeclareFunctionAlias(TTF_Linked_Version_gurax, "TTF_Linked_Version")
 Gurax_ImplementFunctionEx(TTF_Linked_Version_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
+	#line 2414 "../Functions.gura"
 	const SDL_version* ver = TTF_Linked_Version();
 	return new Value_SDL_version(*ver);
 }
@@ -11229,6 +11304,7 @@ Gurax_ImplementFunctionEx(TTF_GlyphMetrics_gurax, processor_gurax, argument_gura
 	RefPtr<Referencer> maxy(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> advance(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 2469 "../Functions.gura"
 	int minx_, maxx_, miny_, maxy_, advance_;
 	int rtn = TTF_GlyphMetrics(font, ch, &minx_, &maxx_, &miny_, &maxy_, &advance_);
 	minx->SetValue(processor_gurax, new Value_Number(minx_));
@@ -11259,6 +11335,7 @@ Gurax_ImplementFunctionEx(TTF_SizeText_gurax, processor_gurax, argument_gurax)
 	RefPtr<Referencer> w(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> h(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 2482 "../Functions.gura"
 	int w_, h_;
 	int rtn = TTF_SizeText(font, text, &w_, &h_);
 	w->SetValue(processor_gurax, new Value_Number(w_));
@@ -11286,6 +11363,7 @@ Gurax_ImplementFunctionEx(TTF_SizeUTF8_gurax, processor_gurax, argument_gurax)
 	RefPtr<Referencer> w(args_gurax.PickReferencer().Reference());
 	RefPtr<Referencer> h(args_gurax.PickReferencer().Reference());
 	// Function body
+	#line 2492 "../Functions.gura"
 	int w_, h_;
 	int rtn = TTF_SizeUTF8(font, text, &w_, &h_);
 	w->SetValue(processor_gurax, new Value_Number(w_));
