@@ -90,6 +90,7 @@ private:
 	int _cntCol = 0;
 	int _commentNestLevel = 0;
 	int _lineNoTop = 0;
+	int _lineNoBodyTop = 0;
 	bool _verboseFlag = false;
 	String _segment;
 	String _source;
@@ -122,7 +123,7 @@ public:
 	template<typename... Args>
 	void IssueError(const ErrorType& errorType, const char* format, const Args&... args) {
 		Error::IssueAt(errorType, GetPathNameSrcReferable().Reference(),
-					   GetLineNo(), GetLineNo(), format, args...);
+					GetLineNo(), GetLineNo(), format, args...);
 	}
 	TokenStack& GetTokenStack() { return *_pTokenStack; }
 	static bool CheckStringPrefix(StringInfo& stringInfo, const String& field);

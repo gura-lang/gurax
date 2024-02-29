@@ -68,7 +68,7 @@ void Tokenizer::FeedChar(char ch)
 		break;
 	}
 	case Stat::Start: {
-		_lineNoTop = GetLineNo();
+		_lineNoTop = _lineNoBodyTop = GetLineNo();
 		if (ch == '0') {
 			_segment.clear();
 			_segment.push_back(ch);
