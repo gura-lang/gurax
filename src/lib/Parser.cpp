@@ -173,6 +173,8 @@ bool Parser::ReduceOneToken()
 	RefPtr<Token> pToken(tokenStack.Pop());
 	int lineNoTop = pToken->GetLineNoTop();
 	int lineNoBtm = pToken->GetLineNoBtm();
+	int lineNoBodyTop = pToken->GetLineNoBodyTop();
+	int lineNoBodyBtm = pToken->GetLineNoBodyBtm();
 	RefPtr<Expr> pExprGen;
 	if (pToken->IsType(TokenType::Number)) {
 		DBGPARSER(::printf("Reduce: Expr(Value) -> Number\n"));
@@ -227,7 +229,7 @@ bool Parser::ReduceOneToken()
 		IssueError(ErrorType::SyntaxError, pToken, "unexpected token: %s", pToken->GetSymbol());
 		return false;
 	}
-	SetSourceInfo(pExprGen, lineNoTop, lineNoBtm);
+	SetSourceInfo(pExprGen, lineNoTop, lineNoBtm, lineNoBodyTop, lineNoBodyBtm);
 	tokenStack.Push(new Token(pExprGen.release()));
 	return true;
 }
@@ -240,6 +242,8 @@ bool Parser::ReduceTwoTokens()
 	RefPtr<Expr> pExprGen;
 	int lineNoTop = pToken1->GetLineNoTop();
 	int lineNoBtm = pToken2->GetLineNoBtm();
+	int lineNoBodyTop = pToken1->GetLineNoBodyTop();
+	int lineNoBodyBtm = pToken2->GetLineNoBodyBtm();
 	if (pToken1->IsType(TokenType::LParenthesis)) {
 		if (pToken2->IsType(TokenType::RParenthesis)) {
 			DBGPARSER(::printf("Reduce: Expr(Tuple) -> '(' ')'\n"));
@@ -396,7 +400,7 @@ bool Parser::ReduceTwoTokens()
 		IssueError(ErrorType::SyntaxError, pToken1, pToken2, "syntax error (%d)", __LINE__);
 		return false;
 	}
-	SetSourceInfo(pExprGen, lineNoTop, lineNoBtm);
+	SetSourceInfo(pExprGen, lineNoTop, lineNoBtm, lineNoBodyTop, lineNoBodyBtm);
 	tokenStack.Push(new Token(pExprGen.release()));
 	return true;
 }
@@ -409,6 +413,8 @@ bool Parser::ReduceThreeTokens()
 	RefPtr<Token> pToken1(tokenStack.Pop());
 	int lineNoTop = pToken1->GetLineNoTop();
 	int lineNoBtm = pToken3->GetLineNoBtm();
+	int lineNoBodyTop = pToken1->GetLineNoBodyTop();
+	int lineNoBodyBtm = pToken3->GetLineNoBodyBtm();
 	MemberMode memberMode;
 	RefPtr<Expr> pExprGen;
 	if (pToken1->IsType(TokenType::Expr) && pToken3->IsType(TokenType::Expr)) {
@@ -751,7 +757,7 @@ bool Parser::ReduceThreeTokens()
 		IssueError(ErrorType::SyntaxError, pToken1, pToken3, "syntax error (%d)", __LINE__);
 		return false;
 	}
-	SetSourceInfo(pExprGen, lineNoTop, lineNoBtm);
+	SetSourceInfo(pExprGen, lineNoTop, lineNoBtm, lineNoBodyTop, lineNoBodyBtm);
 	tokenStack.Push(new Token(pExprGen.release()));
 	return true;
 }
@@ -765,6 +771,8 @@ bool Parser::ReduceFourTokens()
 	RefPtr<Token> pToken1(tokenStack.Pop());
 	int lineNoTop = pToken1->GetLineNoTop();
 	int lineNoBtm = pToken4->GetLineNoBtm();
+	int lineNoBodyTop = pToken1->GetLineNoBodyTop();
+	int lineNoBodyBtm = pToken4->GetLineNoBodyBtm();
 	RefPtr<Expr> pExprGen;
 	if (pToken1->IsType(TokenType::Expr) && pToken2->IsType(TokenType::Expr) &&
 		pToken3->IsType(TokenType::LParenthesis)) {
@@ -893,7 +901,7 @@ bool Parser::ReduceFourTokens()
 		IssueError(ErrorType::SyntaxError, pToken1, pToken4, "syntax error (%d)", __LINE__);
 		return false;
 	}
-	SetSourceInfo(pExprGen, lineNoTop, lineNoBtm);
+	SetSourceInfo(pExprGen, lineNoTop, lineNoBtm, lineNoBodyTop, lineNoBodyBtm);
 	tokenStack.Push(new Token(pExprGen.release()));
 	return true;
 }
