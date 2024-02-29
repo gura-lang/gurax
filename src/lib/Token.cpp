@@ -162,7 +162,7 @@ void Token::Bootup()
 void TokenStack::Initialize()
 {
 	Clear();
-	push_back(new Token(TokenType::Begin, 0, 0));
+	push_back(new Token(TokenType::Begin, 0, 0, 0, 0));
 }
 
 TokenStack::reverse_iterator TokenStack::SeekTerminal(reverse_iterator ppToken)

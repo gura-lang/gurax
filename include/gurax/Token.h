@@ -142,32 +142,32 @@ public:
 	explicit Token(Expr* pExpr) :
 		_tokenType(TokenType::Expr), _lineNoTop(pExpr->GetLineNoTop()), _lineNoBtm(pExpr->GetLineNoBtm()),
 		_lineNoBodyTop(pExpr->GetLineNoBodyTop()), _lineNoBodyBtm(pExpr->GetLineNoBodyBtm()), _pExpr(pExpr), _tupleFlag(false) {}
-	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm) :
-		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm), _lineNoBodyTop(lineNoTop), _lineNoBodyBtm(lineNoBtm), _tupleFlag(false) {}
-	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, ExprLink* pExprLink) :
-		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm), _lineNoBodyTop(lineNoTop), _lineNoBodyBtm(lineNoBtm),
+	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, int lineNoBodyTop, int lineNoBodyBtm) :
+		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm), _lineNoBodyTop(lineNoBodyTop), _lineNoBodyBtm(lineNoBodyBtm), _tupleFlag(false) {}
+	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, int lineNoBodyTop, int lineNoBodyBtm, ExprLink* pExprLink) :
+		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm), _lineNoBodyTop(lineNoBodyTop), _lineNoBodyBtm(lineNoBodyBtm),
 		_pExprLink(pExprLink), _tupleFlag(false) {}
-	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, StringReferable* pSegment) :
-		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm), _lineNoBodyTop(lineNoTop), _lineNoBodyBtm(lineNoBtm),
+	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, int lineNoBodyTop, int lineNoBodyBtm, StringReferable* pSegment) :
+		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBodyBtm), _lineNoBodyTop(lineNoBodyTop), _lineNoBodyBtm(lineNoBtm),
 		_pSegment(pSegment), _tupleFlag(false) {}
-	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, String segment) :
-		Token(tokenType, lineNoTop, lineNoBtm, new StringReferable(std::move(segment))) {}
-	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm,
+	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, int lineNoBodyTop, int lineNoBodyBtm, String segment) :
+		Token(tokenType, lineNoTop, lineNoBtm, lineNoBodyTop, lineNoBodyBtm, new StringReferable(std::move(segment))) {}
+	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, int lineNoBodyTop, int lineNoBodyBtm,
 		StringReferable* pSegment, StringReferable* pSuffix) :
-		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm), _lineNoBodyTop(lineNoTop), _lineNoBodyBtm(lineNoBtm),
+		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm), _lineNoBodyTop(lineNoBodyTop), _lineNoBodyBtm(lineNoBodyBtm),
 		_pSegment(pSegment), _pSuffix(pSuffix), _tupleFlag(false) {}
-	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, String segment, String suffix) :
-		Token(tokenType, lineNoTop, lineNoBtm, new StringReferable(std::move(segment)),
-		new StringReferable(std::move(suffix))) {}
-	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm,
+	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, int lineNoBodyTop, int lineNoBodyBtm, String segment, String suffix) :
+		Token(tokenType, lineNoTop, lineNoBtm, lineNoBodyTop, lineNoBodyBtm, new StringReferable(std::move(segment)),
+			new StringReferable(std::move(suffix))) {}
+	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, int lineNoBodyTop, int lineNoBodyBtm,
 		StringReferable* pSegment, StringReferable* pSuffix, StringReferable* pSource) :
-		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm), _lineNoBodyTop(lineNoTop), _lineNoBodyBtm(lineNoBtm),
+		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm), _lineNoBodyTop(lineNoBodyTop), _lineNoBodyBtm(lineNoBodyBtm),
 		_pSegment(pSegment), _pSuffix(pSuffix), _pSource(pSource), _tupleFlag(false) {}
-	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, String segment, String suffix, String source) :
-		Token(tokenType, lineNoTop, lineNoBtm, new StringReferable(std::move(segment)),
-		new StringReferable(std::move(suffix)), new StringReferable(std::move(source))) {}
-	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm,  BinaryReferable* pBinary, String source) :
-		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm), _lineNoBodyTop(lineNoTop), _lineNoBodyBtm(lineNoBtm),
+	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, int lineNoBodyTop, int lineNoBodyBtm, String segment, String suffix, String source) :
+		Token(tokenType, lineNoTop, lineNoBtm, lineNoBodyTop, lineNoBodyBtm, new StringReferable(std::move(segment)),
+			new StringReferable(std::move(suffix)), new StringReferable(std::move(source))) {}
+	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, int lineNoBodyTop, int lineNoBodyBtm, BinaryReferable* pBinary, String source) :
+		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm), _lineNoBodyTop(lineNoBodyTop), _lineNoBodyBtm(lineNoBodyBtm),
 		_pBinary(pBinary), _pSource(new StringReferable(std::move(source))), _tupleFlag(false) {}
 	// Copy constructor/operator
 	Token(const Token& src) = delete;
