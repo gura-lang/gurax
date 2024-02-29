@@ -560,6 +560,36 @@ Gurax_ImplementPropertyGetter(Expr, left)
 	return new Value_Expr(pExpr->Reference());
 }
 
+// Expr#lineNoBodyBtm
+Gurax_DeclareProperty_R(Expr, lineNoBodyBtm)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Line number of the bottom of the Expr's source code.
+)""");
+}
+
+Gurax_ImplementPropertyGetter(Expr, lineNoBodyBtm)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetExpr().GetLineNoBodyBtm());
+}
+
+// Expr#lineNoBodyTop
+Gurax_DeclareProperty_R(Expr, lineNoBodyTop)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Line number of the top of the Expr's source code.
+)""");
+}
+
+Gurax_ImplementPropertyGetter(Expr, lineNoBodyTop)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetExpr().GetLineNoBodyTop());
+}
+
 // Expr#lineNoBtm
 Gurax_DeclareProperty_R(Expr, lineNoBtm)
 {
@@ -922,6 +952,8 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Expr, car));
 	Assign(Gurax_CreateProperty(Expr, child));
 	Assign(Gurax_CreateProperty(Expr, left));
+	Assign(Gurax_CreateProperty(Expr, lineNoBodyBtm));
+	Assign(Gurax_CreateProperty(Expr, lineNoBodyTop));
 	Assign(Gurax_CreateProperty(Expr, lineNoBtm));
 	Assign(Gurax_CreateProperty(Expr, lineNoTop));
 	Assign(Gurax_CreateProperty(Expr, mode));

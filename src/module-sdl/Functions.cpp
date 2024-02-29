@@ -11336,7 +11336,7 @@ Gurax_ImplementFunctionEx(TTF_SizeText_gurax, processor_gurax, argument_gurax)
 	RefPtr<Referencer> h(args_gurax.PickReferencer().Reference());
 	// Function body
 	#line 2482 "Functions.gura"
-	int w2_, h_;
+	int w_, h_;
 	int rtn = TTF_SizeText(font, text, &w_, &h_);
 	w->SetValue(processor_gurax, new Value_Number(w_));
 	h->SetValue(processor_gurax, new Value_Number(h_));

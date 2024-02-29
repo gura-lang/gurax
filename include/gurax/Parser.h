@@ -75,6 +75,12 @@ private:
 	void SetSourceInfo(RefPtr<Expr>& pExpr, int lineNoTop, int lineNoBtm) const {
 		SetSourceInfo(pExpr.get(), lineNoTop, lineNoBtm);
 	}
+	void SetSourceInfo(Expr* pExpr, int lineNoTop, int lineNoBtm, int lineNoBodyTop, int lineNoBodyBtm) const {
+		pExpr->SetSourceInfo(_pTokenizer->GetPathNameSrcReferable().Reference(), lineNoTop, lineNoBtm, lineNoBodyTop, lineNoBodyBtm);
+	}
+	void SetSourceInfo(RefPtr<Expr>& pExpr, int lineNoTop, int lineNoBtm, int lineNoBodyTop, int lineNoBodyBtm) const {
+		SetSourceInfo(pExpr.get(), lineNoTop, lineNoBtm, lineNoBodyTop, lineNoBodyBtm);
+	}
 };
 
 }

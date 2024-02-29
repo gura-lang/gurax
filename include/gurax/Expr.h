@@ -127,6 +127,8 @@ protected:
 	RefPtr<StringReferable> _pPathNameSrc;
 	int _lineNoTop = 0;
 	int _lineNoBtm = 0;
+	int _lineNoBodyTop = 0;
+	int _lineNoBodyBtm = 0;
 	RefPtr<Expr> _pExprNext;
 	RefPtr<WeakPtr> _pwExprPrev;
 	RefPtr<WeakPtr> _pwExprParent;
@@ -153,12 +155,19 @@ public:
 	static void Bootup();
 	void SetSourceInfo(StringReferable *pPathNameSrc, int lineNoTop, int lineNoBtm) {
 		_pPathNameSrc.reset(pPathNameSrc);
+		_lineNoTop = _lineNoBodyTop = lineNoTop, _lineNoBtm = _lineNoBodyBtm = lineNoBtm;
+	}
+	void SetSourceInfo(StringReferable *pPathNameSrc, int lineNoTop, int lineNoBtm, int lineNoBodyTop, int lineNoBodyBtm) {
+		_pPathNameSrc.reset(pPathNameSrc);
 		_lineNoTop = lineNoTop, _lineNoBtm = lineNoBtm;
+		_lineNoBodyTop = lineNoBodyTop, _lineNoBodyBtm = lineNoBodyBtm;
 	}
 	const char* GetPathNameSrc() const { return _pPathNameSrc->GetString(); }
 	const StringReferable& GetPathNameSrcReferable() const { return *_pPathNameSrc; }
 	int GetLineNoTop() const { return _lineNoTop; }
 	int GetLineNoBtm() const { return _lineNoBtm; }
+	int GetLineNoBodyTop() const { return _lineNoBodyTop; }
+	int GetLineNoBodyBtm() const { return _lineNoBodyBtm; }
 	void SetSilentFlag(bool silentFlag) { _silentFlag = silentFlag; }
 	bool GetSilentFlag() const { return _silentFlag; }
 	void SetExprNext(Expr* pExprNext) {

@@ -725,10 +725,10 @@ void Tokenizer::FeedChar(char ch)
 			int lineNo = GetLineNo();
 			if (_verboseFlag) {
 				_tokenWatcher.FeedToken(new Token(TokenType::NumberSuffixed, _lineNoTop, lineNo,
-												  _segment, _suffix, _segment + _suffix));
+												_segment, _suffix, _segment + _suffix));
 			} else {
 				_tokenWatcher.FeedToken(new Token(TokenType::NumberSuffixed, _lineNoTop, lineNo,
-												  _segment, _suffix));
+												_segment, _suffix));
 			}
 			Gurax_PushbackEx(ch);
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
@@ -915,19 +915,19 @@ void Tokenizer::FeedChar(char ch)
 				RefPtr<BinaryReferable> pBuff(new BinaryReferable(_segment));
 				pBuff->GetBinary().SetWritableFlag(false);
 				_tokenWatcher.FeedToken(new Token(TokenType::Binary, _lineNoTop, lineNo,
-												  pBuff.release(), _source));
+												pBuff.release(), _source));
 			} else if (_stringInfo.type == StringType::BinaryWritable) {
 				_tokenWatcher.FeedToken(new Token(TokenType::Binary, _lineNoTop, lineNo,
-												  new BinaryReferable(_segment), _source));
+												new BinaryReferable(_segment), _source));
 			} else if (_stringInfo.type == StringType::Template) {
 				_tokenWatcher.FeedToken(new Token(TokenType::Template, _lineNoTop, lineNo,
-												  _segment, "", _source));
+												_segment, "", _source));
 			} else if (_stringInfo.type == StringType::TmplEmbedded) {
 				_tokenWatcher.FeedToken(new Token(TokenType::TmplEmbedded, _lineNoTop, lineNo,
-												  _segment, "", _source));
+												_segment, "", _source));
 			} else {
 				_tokenWatcher.FeedToken(new Token(TokenType::String, _lineNoTop, lineNo,
-												  _segment, "", _source));
+												_segment, "", _source));
 			}
 			Gurax_PushbackEx(ch);
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
@@ -1135,19 +1135,19 @@ void Tokenizer::FeedChar(char ch)
 				RefPtr<BinaryReferable> pBuff(new BinaryReferable(_segment));
 				pBuff->GetBinary().SetWritableFlag(false);
 				_tokenWatcher.FeedToken(new Token(TokenType::Binary, _lineNoTop, lineNo,
-												  pBuff.release(), _source));
+												pBuff.release(), _source));
 			} else if (_stringInfo.type == StringType::BinaryWritable) {
 				_tokenWatcher.FeedToken(new Token(TokenType::Binary, _lineNoTop, lineNo,
-												  new BinaryReferable(_segment), _source));
+												new BinaryReferable(_segment), _source));
 			} else if (_stringInfo.type == StringType::Template) {
 				_tokenWatcher.FeedToken(new Token(TokenType::Template, _lineNoTop, lineNo,
-												  _segment, "", _source));
+												_segment, "", _source));
 			} else if (_stringInfo.type == StringType::TmplEmbedded) {
 				_tokenWatcher.FeedToken(new Token(TokenType::TmplEmbedded, _lineNoTop, lineNo,
-												  _segment, "", _source));
+												_segment, "", _source));
 			} else {
 				_tokenWatcher.FeedToken(new Token(TokenType::String, _lineNoTop, lineNo,
-												  _segment, "", _source));
+												_segment, "", _source));
 			}
 			Gurax_PushbackEx(ch);
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
@@ -1161,7 +1161,7 @@ void Tokenizer::FeedChar(char ch)
 		} else if (_stringInfo.type == StringType::Binary) {
 			int lineNo = GetLineNo();
 			_tokenWatcher.FeedToken(new Token(TokenType::BinarySuffixed, _lineNoTop, lineNo,
-											  _segment, _suffix, _source));
+											_segment, _suffix, _source));
 			Gurax_PushbackEx(ch);
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
 		} else if (_stringInfo.type == StringType::BinaryWritable) {
@@ -1176,7 +1176,7 @@ void Tokenizer::FeedChar(char ch)
 		} else {
 			int lineNo = GetLineNo();
 			_tokenWatcher.FeedToken(new Token(TokenType::StringSuffixed, _lineNoTop, lineNo,
-											  _segment, _suffix, _source));
+											_segment, _suffix, _source));
 			Gurax_PushbackEx(ch);
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
 		}
