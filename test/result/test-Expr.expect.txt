@@ -40,6 +40,8 @@ Expr
   #car              Expr         R
   #child            Expr         R
   #left             Expr         R
+  #lineNoBodyBtm    Number       R
+  #lineNoBodyTop    Number       R
   #lineNoBtm        Number       R
   #lineNoTop        Number       R
   #mode             Symbol       R
