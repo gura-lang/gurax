@@ -8,11 +8,16 @@ add_library(diff.gurd SHARED)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
+if(EXISTS ${PROJECT_SOURCE_DIR}/../gurax/gurax.cpp)
+set(GURAX_BASEDIR ${PROJECT_SOURCE_DIR}/../..)
+else()
+execute_process(COMMAND gurax -p "sys.dirBase.Chop()" OUTPUT_VARIABLE GURAX_BASEDIR)
+endif()
 target_include_directories(diff.gurd PRIVATE
-	${PROJECT_SOURCE_DIR}/../../include
+	${GURAX_BASEDIR}/include
 	${PROJECT_SOURCE_DIR}/dtl-1.19-gurax)
-target_link_directories(diff.gurd PRIVATE ${PROJECT_SOURCE_DIR}/../../lib)
-set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
+target_link_directories(diff.gurd PRIVATE ${GURAX_BASEDIR}/lib)
+set(CMAKE_INSTALL_PREFIX ${GURAX_BASEDIR})
 #-------------------------------------------------------------------------------
 # Compile
 #-------------------------------------------------------------------------------

@@ -10,19 +10,24 @@ add_library(wx.gurd SHARED)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
+if(EXISTS ${PROJECT_SOURCE_DIR}/../gurax/gurax.cpp)
+set(GURAX_BASEDIR ${PROJECT_SOURCE_DIR}/../..)
+else()
+execute_process(COMMAND gurax -p "sys.dirBase.Chop()" OUTPUT_VARIABLE GURAX_BASEDIR)
+endif()
 target_include_directories(wx.gurd PRIVATE
-	${PROJECT_SOURCE_DIR}/../../include
-	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/wxWidgets-3.1.5/include>
-	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Release>>:${PROJECT_SOURCE_DIR}/../../guest/wxWidgets-3.1.5/lib/vc_x64_dll/mswu>
-	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:${PROJECT_SOURCE_DIR}/../../guest/wxWidgets-3.1.5/lib/vc_x64_dll/mswud>
-	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/../../guest>
-	$<$<PLATFORM_ID:Darwin>:${PROJECT_SOURCE_DIR}/../../guest>)
+	${GURAX_BASEDIR}/include
+	$<$<PLATFORM_ID:Windows>:${GURAX_BASEDIR}/guest/wxWidgets-3.1.5/include>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Release>>:${GURAX_BASEDIR}/guest/wxWidgets-3.1.5/lib/vc_x64_dll/mswu>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:${GURAX_BASEDIR}/guest/wxWidgets-3.1.5/lib/vc_x64_dll/mswud>
+	$<$<PLATFORM_ID:Linux>:${GURAX_BASEDIR}/guest>
+	$<$<PLATFORM_ID:Darwin>:${GURAX_BASEDIR}/guest>)
 target_link_directories(wx.gurd PRIVATE
-	${PROJECT_SOURCE_DIR}/../../lib
-	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/wxWidgets-3.1.5/lib/vc_x64_dll>
-	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/../../guest>
-	$<$<PLATFORM_ID:Darwin>:${PROJECT_SOURCE_DIR}/../../guest>)
-set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
+	${GURAX_BASEDIR}/lib
+	$<$<PLATFORM_ID:Windows>:${GURAX_BASEDIR}/guest/wxWidgets-3.1.5/lib/vc_x64_dll>
+	$<$<PLATFORM_ID:Linux>:${GURAX_BASEDIR}/guest>
+	$<$<PLATFORM_ID:Darwin>:${GURAX_BASEDIR}/guest>)
+set(CMAKE_INSTALL_PREFIX ${GURAX_BASEDIR})
 #-------------------------------------------------------------------------------
 # Compile
 #-------------------------------------------------------------------------------

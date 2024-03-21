@@ -8,17 +8,22 @@ add_library(curl.gurd SHARED)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
+if(EXISTS ${PROJECT_SOURCE_DIR}/../gurax/gurax.cpp)
+set(GURAX_BASEDIR ${PROJECT_SOURCE_DIR}/../..)
+else()
+execute_process(COMMAND gurax -p "sys.dirBase.Chop()" OUTPUT_VARIABLE GURAX_BASEDIR)
+endif()
 target_include_directories(curl.gurd PRIVATE
-	${PROJECT_SOURCE_DIR}/../../include
-	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/curl-7.73.0/include>
-	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/../../guest>
-	$<$<PLATFORM_ID:Darwin>:${PROJECT_SOURCE_DIR}/../../guest>)
+	${GURAX_BASEDIR}/include
+	$<$<PLATFORM_ID:Windows>:${GURAX_BASEDIR}/guest/curl-7.73.0/include>
+	$<$<PLATFORM_ID:Linux>:${GURAX_BASEDIR}/guest>
+	$<$<PLATFORM_ID:Darwin>:${GURAX_BASEDIR}/guest>)
 target_link_directories(curl.gurd PRIVATE
-	${PROJECT_SOURCE_DIR}/../../lib
-	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/curl-7.73.0/builds/libcurl-vc-x64-release-static-ipv6-sspi-schannel/lib>
-	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/../../guest>
-	$<$<PLATFORM_ID:Darwin>:${PROJECT_SOURCE_DIR}/../../guest>)
-set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
+	${GURAX_BASEDIR}/lib
+	$<$<PLATFORM_ID:Windows>:${GURAX_BASEDIR}/guest/curl-7.73.0/builds/libcurl-vc-x64-release-static-ipv6-sspi-schannel/lib>
+	$<$<PLATFORM_ID:Linux>:${GURAX_BASEDIR}/guest>
+	$<$<PLATFORM_ID:Darwin>:${GURAX_BASEDIR}/guest>)
+set(CMAKE_INSTALL_PREFIX ${GURAX_BASEDIR})
 #-------------------------------------------------------------------------------
 # Compile
 #-------------------------------------------------------------------------------

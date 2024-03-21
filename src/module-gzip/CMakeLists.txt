@@ -8,13 +8,18 @@ add_library(gzip.gurd SHARED)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
+if(EXISTS ${PROJECT_SOURCE_DIR}/../gurax/gurax.cpp)
+set(GURAX_BASEDIR ${PROJECT_SOURCE_DIR}/../..)
+else()
+execute_process(COMMAND gurax -p "sys.dirBase.Chop()" OUTPUT_VARIABLE GURAX_BASEDIR)
+endif()
 target_include_directories(gzip.gurd PRIVATE
-	${PROJECT_SOURCE_DIR}/../../include
-	${PROJECT_SOURCE_DIR}/../../guest/zlib-1.2.11)
+	${GURAX_BASEDIR}/include
+	${GURAX_BASEDIR}/guest/zlib-1.2.11)
 target_link_directories(gzip.gurd PRIVATE
-	${PROJECT_SOURCE_DIR}/../../lib
-	${PROJECT_SOURCE_DIR}/../../guest/zlib-1.2.11)
-set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
+	${GURAX_BASEDIR}/lib
+	${GURAX_BASEDIR}/guest/zlib-1.2.11)
+set(CMAKE_INSTALL_PREFIX ${GURAX_BASEDIR})
 #-------------------------------------------------------------------------------
 # Compile
 #-------------------------------------------------------------------------------

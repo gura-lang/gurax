@@ -12,17 +12,22 @@ add_library(re.gurd SHARED)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
+if(EXISTS ${PROJECT_SOURCE_DIR}/../gurax/gurax.cpp)
+set(GURAX_BASEDIR ${PROJECT_SOURCE_DIR}/../..)
+else()
+execute_process(COMMAND gurax -p "sys.dirBase.Chop()" OUTPUT_VARIABLE GURAX_BASEDIR)
+endif()
 target_include_directories(re.gurd PRIVATE
-	${PROJECT_SOURCE_DIR}/../../include
-	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/onigmo-6.2.0>
-	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/../../guest/include/onigmo>
-	$<$<PLATFORM_ID:Darwin>:${PROJECT_SOURCE_DIR}/../../guest/include/onigmo>)
+	${GURAX_BASEDIR}/include
+	$<$<PLATFORM_ID:Windows>:${GURAX_BASEDIR}/guest/onigmo-6.2.0>
+	$<$<PLATFORM_ID:Linux>:${GURAX_BASEDIR}/guest/include/onigmo>
+	$<$<PLATFORM_ID:Darwin>:${GURAX_BASEDIR}/guest/include/onigmo>)
 target_link_directories(re.gurd PRIVATE
-	${PROJECT_SOURCE_DIR}/../../lib
-	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/onigmo-6.2.0/build_x86>
-	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/../../guest/lib>
-	$<$<PLATFORM_ID:Darwin>:${PROJECT_SOURCE_DIR}/../../guest/lib>)
-set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
+	${GURAX_BASEDIR}/lib
+	$<$<PLATFORM_ID:Windows>:${GURAX_BASEDIR}/guest/onigmo-6.2.0/build_x86>
+	$<$<PLATFORM_ID:Linux>:${GURAX_BASEDIR}/guest/lib>
+	$<$<PLATFORM_ID:Darwin>:${GURAX_BASEDIR}/guest/lib>)
+set(CMAKE_INSTALL_PREFIX ${GURAX_BASEDIR})
 #-------------------------------------------------------------------------------
 # Compile
 #-------------------------------------------------------------------------------

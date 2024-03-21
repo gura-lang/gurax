@@ -8,17 +8,22 @@ add_library(jpeg.gurd SHARED)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
+if(EXISTS ${PROJECT_SOURCE_DIR}/../gurax/gurax.cpp)
+set(GURAX_BASEDIR ${PROJECT_SOURCE_DIR}/../..)
+else()
+execute_process(COMMAND gurax -p "sys.dirBase.Chop()" OUTPUT_VARIABLE GURAX_BASEDIR)
+endif()
 target_include_directories(jpeg.gurd PRIVATE
-	${PROJECT_SOURCE_DIR}/../../include
-	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/jpeg-9d>
-	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/../../guest/include/libjpeg>
-	$<$<PLATFORM_ID:Darwin>:${PROJECT_SOURCE_DIR}/../../guest/include/libjpeg>)
+	${GURAX_BASEDIR}/include
+	$<$<PLATFORM_ID:Windows>:${GURAX_BASEDIR}/guest/jpeg-9d>
+	$<$<PLATFORM_ID:Linux>:${GURAX_BASEDIR}/guest/include/libjpeg>
+	$<$<PLATFORM_ID:Darwin>:${GURAX_BASEDIR}/guest/include/libjpeg>)
 target_link_directories(jpeg.gurd PRIVATE
-	${PROJECT_SOURCE_DIR}/../../lib
-	$<$<PLATFORM_ID:Windows>:${PROJECT_SOURCE_DIR}/../../guest/jpeg-9d>
-	$<$<PLATFORM_ID:Linux>:${PROJECT_SOURCE_DIR}/../../guest/lib>
-	$<$<PLATFORM_ID:Darwin>:${PROJECT_SOURCE_DIR}/../../guest/lib>)
-set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
+	${GURAX_BASEDIR}/lib
+	$<$<PLATFORM_ID:Windows>:${GURAX_BASEDIR}/guest/jpeg-9d>
+	$<$<PLATFORM_ID:Linux>:${GURAX_BASEDIR}/guest/lib>
+	$<$<PLATFORM_ID:Darwin>:${GURAX_BASEDIR}/guest/lib>)
+set(CMAKE_INSTALL_PREFIX ${GURAX_BASEDIR})
 #-------------------------------------------------------------------------------
 # Compile
 #-------------------------------------------------------------------------------

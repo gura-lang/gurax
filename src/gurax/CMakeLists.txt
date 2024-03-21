@@ -8,9 +8,10 @@ add_executable(gurax)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
-target_include_directories(gurax PRIVATE ${PROJECT_SOURCE_DIR}/../../include)
-target_link_directories(gurax PRIVATE ${PROJECT_SOURCE_DIR}/../../lib)
-set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../..)
+set(GURAX_BASEDIR ${PROJECT_SOURCE_DIR}/../..)
+target_include_directories(gurax PRIVATE ${GURAX_BASEDIR}/include)
+target_link_directories(gurax PRIVATE ${GURAX_BASEDIR}/lib)
+set(CMAKE_INSTALL_PREFIX ${GURAX_BASEDIR})
 #-------------------------------------------------------------------------------
 # Compile
 #-------------------------------------------------------------------------------
