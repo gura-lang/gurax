@@ -34,6 +34,7 @@ add_subdirectory(module-ml_cifar)
 add_subdirectory(module-ml_mnist)
 add_subdirectory(module-model_obj)
 add_subdirectory(module-model_stl)
+add_subdirectory(module-mswin)
 add_subdirectory(module-mtp)
 add_subdirectory(module-opengl)
 #add_subdirectory(module-os)				# built-in module
