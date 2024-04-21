@@ -239,12 +239,12 @@ public:
 	static int ExecProgram(
 		const char* pathName, StringPicker&& args,
 		Stream* pStreamCIn, Stream* pStreamCOut, Stream* pStreamCErr, bool forkFlag);
-	static int ExecProgram(
-		const char* pathName, const ValueList& args,
-		Stream* pStreamCIn, Stream* pStreamCOut, Stream* pStreamCErr, bool forkFlag) {
-		return ExecProgram(pathName, StringPicker_ValueList(args, StringStyle::Quote_NilVisible),
-						pStreamCIn, pStreamCOut, pStreamCErr, forkFlag);
-	}
+	//static int ExecProgram(
+	//	const char* pathName, const ValueList& args,
+	//	Stream* pStreamCIn, Stream* pStreamCOut, Stream* pStreamCErr, bool forkFlag) {
+	//	return ExecProgram(pathName, StringPicker_ValueList(args, StringStyle::Quote_NilVisible),
+	//					pStreamCIn, pStreamCOut, pStreamCErr, forkFlag);
+	//}
 	static int ExecProgram(
 		const char* pathName, const StringList& args,
 		Stream* pStreamCIn, Stream* pStreamCOut, Stream* pStreamCErr, bool forkFlag) {

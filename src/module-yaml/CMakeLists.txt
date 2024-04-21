@@ -61,3 +61,4 @@ target_link_libraries(yaml.gurd PRIVATE guraxcore
 # Install
 #-------------------------------------------------------------------------------
 install(TARGETS yaml.gurd RUNTIME DESTINATION module/site)
+install(PROGRAMS script/json.gura DESTINATION module/site)

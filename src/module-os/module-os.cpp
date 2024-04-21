@@ -60,7 +60,9 @@ Gurax_ImplementFunction(Exec)
 	const ValueList& valList = Value_List::GetValueOwner(args.PickValue());
 	bool forkFlag = argument.IsSet(Gurax_Symbol(fork));
 	// Function body
-	int rtn = OAL::ExecProgram(pathName, valList, g_pStreamCIn, g_pStreamCOut, g_pStreamCErr, forkFlag);
+	
+	int rtn = OAL::ExecProgram(pathName, StringPicker_ValueList(valList, StringStyle::Empty),
+		g_pStreamCIn, g_pStreamCOut, g_pStreamCErr, forkFlag);
 	if (Error::IsIssued()) return Value::nil();
 	return new Value_Number(rtn);
 }
