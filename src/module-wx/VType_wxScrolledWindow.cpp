@@ -841,7 +841,7 @@ void Value_wxScrolledWindow::EntityT::OnDraw(wxDC& dc)
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxDC(dc))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Value_wxDC(dc))) {
 			Util::ExitMainLoop();
 			break;
 		}

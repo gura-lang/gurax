@@ -5259,11 +5259,11 @@ void Value_wxGrid::EntityT::DrawRowLabel(wxDC& dc, int row)
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxDC(dc))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Value_wxDC(dc))) {
 			Util::ExitMainLoop();
 			break;
 		}
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(row))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Number(row))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -5288,11 +5288,11 @@ void Value_wxGrid::EntityT::DrawColLabel(wxDC& dc, int col)
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxDC(dc))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Value_wxDC(dc))) {
 			Util::ExitMainLoop();
 			break;
 		}
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(col))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Number(col))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -5317,7 +5317,7 @@ void Value_wxGrid::EntityT::DrawCornerLabel(wxDC& dc)
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxDC(dc))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Value_wxDC(dc))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -5342,7 +5342,7 @@ wxPen Value_wxGrid::EntityT::GetColGridLinePen(int col)
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(col))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Number(col))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -5404,7 +5404,7 @@ wxPen Value_wxGrid::EntityT::GetRowGridLinePen(int row)
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(row))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Number(row))) {
 			Util::ExitMainLoop();
 			break;
 		}

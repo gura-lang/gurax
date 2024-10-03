@@ -145,9 +145,9 @@ Gurax_ImplementMethodEx(wxTimePickerCtrl, GetTime_gurax, processor_gurax, argume
 	// Function body
 	int hour_, min_, sec_;
 	bool rtn = pEntity_gurax->GetTime(&hour_, &min_, &sec_);
-	hour->SetValue(new Value_Number(hour_));
-	min->SetValue(new Value_Number(min_));
-	sec->SetValue(new Value_Number(sec_));
+	hour->SetValue(processor_gurax, new Value_Number(hour_));
+	min->SetValue(processor_gurax, new Value_Number(min_));
+	sec->SetValue(processor_gurax, new Value_Number(sec_));
 	return new Value_Bool(rtn);
 }
 
@@ -291,7 +291,7 @@ void Value_wxTimePickerCtrl::EntityT::SetValue(const wxDateTime& dt)
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxDateTime(dt))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Value_wxDateTime(dt))) {
 			Util::ExitMainLoop();
 			break;
 		}

@@ -169,7 +169,7 @@ Gurax_ImplementMethodEx(wxVListBox, GetFirstSelected_gurax, processor_gurax, arg
 	// Function body
 	unsigned long cookie_ = cookie->Get<Value_Number>().GetNumber<unsigned long>();
 	int rtn = pEntity_gurax->GetFirstSelected(cookie_);
-	cookie->SetValue(new Value_Number(cookie_));
+	cookie->SetValue(processor_gurax, new Value_Number(cookie_));
 	return new Value_Number(rtn);
 }
 
@@ -247,7 +247,7 @@ Gurax_ImplementMethodEx(wxVListBox, GetNextSelected_gurax, processor_gurax, argu
 	// Function body
 	unsigned long cookie_ = cookie->Get<Value_Number>().GetNumber<unsigned long>();
 	int rtn = pEntity_gurax->GetNextSelected(cookie_);
-	cookie->SetValue(new Value_Number(cookie_));
+	cookie->SetValue(processor_gurax, new Value_Number(cookie_));
 	return new Value_Number(rtn);
 }
 
@@ -732,15 +732,15 @@ void Value_wxVListBox::EntityT::OnDrawItem(wxDC& dc, const wxRect& rect, size_t 
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxDC(dc))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Value_wxDC(dc))) {
 			Util::ExitMainLoop();
 			break;
 		}
-		if (!args_gurax.FeedValue(new Value_wxRect(rect))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Value_wxRect(rect))) {
 			Util::ExitMainLoop();
 			break;
 		}
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(n))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Number(n))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -765,15 +765,15 @@ void Value_wxVListBox::EntityT::OnDrawBackground(wxDC& dc, const wxRect& rect, s
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxDC(dc))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Value_wxDC(dc))) {
 			Util::ExitMainLoop();
 			break;
 		}
-		if (!args_gurax.FeedValue(new Value_wxRect(rect))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Value_wxRect(rect))) {
 			Util::ExitMainLoop();
 			break;
 		}
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(n))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Number(n))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -798,15 +798,15 @@ void Value_wxVListBox::EntityT::OnDrawSeparator(wxDC& dc, wxRect& rect, size_t n
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxDC(dc))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Value_wxDC(dc))) {
 			Util::ExitMainLoop();
 			break;
 		}
-		if (!args_gurax.FeedValue(new Value_wxRect(rect))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Value_wxRect(rect))) {
 			Util::ExitMainLoop();
 			break;
 		}
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(n))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Number(n))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -831,7 +831,7 @@ wxCoord Value_wxVListBox::EntityT::OnMeasureItem(size_t n) const
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(n))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Number(n))) {
 			Util::ExitMainLoop();
 			break;
 		}

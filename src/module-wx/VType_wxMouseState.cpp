@@ -374,8 +374,8 @@ Gurax_ImplementMethodEx(wxMouseState, GetPositionXY_gurax, processor_gurax, argu
 	// Function body
 	int x_, y_;
 	pEntity_gurax->GetPosition(&x_, &y_);
-	x->SetValue(new Value_Number(x_));
-	y->SetValue(new Value_Number(y_));
+	x->SetValue(processor_gurax, new Value_Number(x_));
+	y->SetValue(processor_gurax, new Value_Number(y_));
 	return Value::nil();
 }
 

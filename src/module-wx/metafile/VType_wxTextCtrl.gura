@@ -16,15 +16,15 @@ TextCtrl = Class(Control) {
 		R'''
 		long pos_;
 		wxTextCtrlHitTestResult rtn = pEntity_gurax->HitTest(pt, &pos_);
-		pos->SetValue(new Value_Number(pos_));
+		pos->SetValue(processor_gurax, new Value_Number(pos_));
 		return new Value_Number(rtn);
 		'''
 	HitTestCoord(pt as const_Point_r, &col:nilRef as TextCoord, &row:nilRef as TextCoord) as TextCtrlHitTestResult = \
 		R'''
 		wxTextCoord col_, row_;
 		wxTextCtrlHitTestResult rtn = pEntity_gurax->HitTest(pt, &col_, &row_);
-		col->SetValue(new Value_Number(col_));
-		row->SetValue(new Value_Number(row_));
+		col->SetValue(processor_gurax, new Value_Number(col_));
+		row->SetValue(processor_gurax, new Value_Number(row_));
 		return new Value_Number(rtn);
 		'''
 	IsModified() as bool
@@ -37,8 +37,8 @@ TextCtrl = Class(Control) {
 		R'''
 		long x_, y_;
 		bool rtn = pEntity_gurax->PositionToXY(pos, &x_, &y_);
-		x->SetValue(new Value_Number(x_));
-		y->SetValue(new Value_Number(y_));
+		x->SetValue(processor_gurax, new Value_Number(x_));
+		y->SetValue(processor_gurax, new Value_Number(y_));
 		return new Value_Bool(rtn);
 		'''
 	PositionToCoords(pos as long) as Point

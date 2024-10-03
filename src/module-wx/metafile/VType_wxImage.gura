@@ -98,7 +98,7 @@ Image = Class(Object) {
 	//GetImageCount(stream as InputStream_r, type as BitmapType = wxBITMAP_TYPE_ANY):static as int
 	__cast__() = \
 		R'''
-		RefPtr<Value_Image> pValueCasted(value.Cast<Value_Image>(flags));
+		RefPtr<Value_Image> pValueCasted(value.Cast<Value_Image>(processor, flags));
 		if (pValueCasted) {
 			return new Value_wxImage(Util::CreateImage(pValueCasted->GetImage()));
 		}

@@ -103,8 +103,8 @@ Gurax_ImplementMethodEx(wxGridCellAttr, GetAlignment_gurax, processor_gurax, arg
 	// Function body
 	int hAlign_, vAlign_;
 	pEntity_gurax->GetAlignment(&hAlign_, &vAlign_);
-	hAlign->SetValue(new Value_Number(&hAlign_));
-	vAlign->SetValue(new Value_Number(&vAlign_));
+	hAlign->SetValue(processor_gurax, new Value_Number(&hAlign_));
+	vAlign->SetValue(processor_gurax, new Value_Number(&vAlign_));
 	return Value::nil();
 }
 
@@ -189,8 +189,8 @@ Gurax_ImplementMethodEx(wxGridCellAttr, GetNonDefaultAlignment_gurax, processor_
 	// Function body
 	int hAlign_, vAlign_;
 	pEntity_gurax->GetNonDefaultAlignment(&hAlign_, &vAlign_);
-	hAlign->SetValue(new Value_Number(&hAlign_));
-	vAlign->SetValue(new Value_Number(&vAlign_));
+	hAlign->SetValue(processor_gurax, new Value_Number(&hAlign_));
+	vAlign->SetValue(processor_gurax, new Value_Number(&vAlign_));
 	return Value::nil();
 }
 
@@ -687,8 +687,8 @@ Gurax_ImplementMethodEx(wxGridCellAttr, GetSize_gurax, processor_gurax, argument
 	// Function body
 	int num_rows_, num_cols_;
 	pEntity_gurax->GetSize(&num_rows_, &num_cols_);
-	num_rows->SetValue(new Value_Number(&num_rows_));
-	num_cols->SetValue(new Value_Number(&num_cols_));
+	num_rows->SetValue(processor_gurax, new Value_Number(&num_rows_));
+	num_cols->SetValue(processor_gurax, new Value_Number(&num_cols_));
 	return Value::nil();
 }
 

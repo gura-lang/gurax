@@ -226,8 +226,8 @@ Gurax_ImplementMethodEx(wxKeyEvent, GetPositionXY_gurax, processor_gurax, argume
 	// Function body
 	wxCoord x_, y_;
 	pEntity_gurax->GetPosition(&x_, &y_);
-	x->SetValue(new Value_Number(x_));
-	y->SetValue(new Value_Number(y_));
+	x->SetValue(processor_gurax, new Value_Number(x_));
+	y->SetValue(processor_gurax, new Value_Number(y_));
 	return Value::nil();
 }
 

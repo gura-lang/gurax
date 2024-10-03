@@ -246,7 +246,7 @@ Gurax_ImplementMethodEx(wxTextCtrl, HitTestPos_gurax, processor_gurax, argument_
 	// Function body
 	long pos_;
 	wxTextCtrlHitTestResult rtn = pEntity_gurax->HitTest(pt, &pos_);
-	pos->SetValue(new Value_Number(pos_));
+	pos->SetValue(processor_gurax, new Value_Number(pos_));
 	return new Value_Number(rtn);
 }
 
@@ -274,8 +274,8 @@ Gurax_ImplementMethodEx(wxTextCtrl, HitTestCoord_gurax, processor_gurax, argumen
 	// Function body
 	wxTextCoord col_, row_;
 	wxTextCtrlHitTestResult rtn = pEntity_gurax->HitTest(pt, &col_, &row_);
-	col->SetValue(new Value_Number(col_));
-	row->SetValue(new Value_Number(row_));
+	col->SetValue(processor_gurax, new Value_Number(col_));
+	row->SetValue(processor_gurax, new Value_Number(row_));
 	return new Value_Number(rtn);
 }
 
@@ -416,8 +416,8 @@ Gurax_ImplementMethodEx(wxTextCtrl, PositionToXY_gurax, processor_gurax, argumen
 	// Function body
 	long x_, y_;
 	bool rtn = pEntity_gurax->PositionToXY(pos, &x_, &y_);
-	x->SetValue(new Value_Number(x_));
-	y->SetValue(new Value_Number(y_));
+	x->SetValue(processor_gurax, new Value_Number(x_));
+	y->SetValue(processor_gurax, new Value_Number(y_));
 	return new Value_Bool(rtn);
 }
 
@@ -891,8 +891,8 @@ Gurax_ImplementMethodEx(wxTextCtrl, GetSelection_gurax, processor_gurax, argumen
 	// Function body
 	long from_, to_;
 	pEntity_gurax->GetSelection(&from_, &to_);
-	from->SetValue(new Value_Number(from_));
-	to->SetValue(new Value_Number(to_));
+	from->SetValue(processor_gurax, new Value_Number(from_));
+	to->SetValue(processor_gurax, new Value_Number(to_));
 	return Value::nil();
 }
 

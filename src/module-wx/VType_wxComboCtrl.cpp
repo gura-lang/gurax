@@ -1315,8 +1315,8 @@ Gurax_ImplementMethodEx(wxComboCtrl, GetSelection_gurax, processor_gurax, argume
 	// Function body
 	long from_, to_;
 	pEntity_gurax->GetSelection(&from_, &to_);
-	from->SetValue(new Value_Number(from_));
-	to->SetValue(new Value_Number(to_));
+	from->SetValue(processor_gurax, new Value_Number(from_));
+	to->SetValue(processor_gurax, new Value_Number(to_));
 	return Value::nil();
 }
 

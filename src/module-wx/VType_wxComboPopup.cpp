@@ -142,7 +142,7 @@ Gurax_ImplementMethodEx(wxComboPopup, FindItem_gurax, processor_gurax, argument_
 	if (trueItem) {
 		wxString trueItem_;
 		rtn = pEntity_gurax->FindItem(item, &trueItem_);
-		trueItem->SetValue(new Value_String(trueItem_.ToUTF8().data()));
+		trueItem->SetValue(processor_gurax, new Value_String(trueItem_.ToUTF8().data()));
 	} else {
 		rtn = pEntity_gurax->FindItem(item);
 	}
@@ -431,7 +431,7 @@ bool Value_wxComboPopup::EntityT::Create(wxWindow* parent)
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxWindow(parent))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Value_wxWindow(parent))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -485,15 +485,15 @@ wxSize Value_wxComboPopup::EntityT::GetAdjustedSize(int minWidth, int prefHeight
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(minWidth))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Number(minWidth))) {
 			Util::ExitMainLoop();
 			break;
 		}
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(prefHeight))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Number(prefHeight))) {
 			Util::ExitMainLoop();
 			break;
 		}
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(maxHeight))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Number(maxHeight))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -697,11 +697,11 @@ void Value_wxComboPopup::EntityT::PaintComboControl(wxDC& dc, const wxRect& rect
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxDC(dc))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Value_wxDC(dc))) {
 			Util::ExitMainLoop();
 			break;
 		}
-		if (!args_gurax.FeedValue(new Value_wxRect(rect))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Value_wxRect(rect))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -726,7 +726,7 @@ void Value_wxComboPopup::EntityT::SetStringValue(const wxString& value)
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Gurax::Value_String(value.utf8_str().data()))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_String(value.utf8_str().data()))) {
 			Util::ExitMainLoop();
 			break;
 		}

@@ -92,7 +92,7 @@ Gurax_ImplementMethodEx(wxBookCtrlBase, HitTest_gurax, processor_gurax, argument
 	// Function body
 	long flags_;
 	int rtn = pEntity_gurax->HitTest(pt, &flags_);
-	if (flags) flags->SetValue(new Value_Number(flags_));
+	if (flags) flags->SetValue(processor_gurax, new Value_Number(flags_));
 	return new Value_Number(rtn);
 }
 

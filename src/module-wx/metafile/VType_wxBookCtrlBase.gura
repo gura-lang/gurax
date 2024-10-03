@@ -10,7 +10,7 @@ BookCtrlBase = Class(Control) {
 		R'''
 		long flags_;
 		int rtn = pEntity_gurax->HitTest(pt, &flags_);
-		if (flags) flags->SetValue(new Value_Number(flags_));
+		if (flags) flags->SetValue(processor_gurax, new Value_Number(flags_));
 		return new Value_Number(rtn);
 		'''
 	GetPageImage(nPage as size_t) as int

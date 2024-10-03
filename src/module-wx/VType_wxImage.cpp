@@ -1382,7 +1382,7 @@ void VType_wxImage::DoPrepare(Frame& frameOuter)
 
 Value* VType_wxImage::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
-	RefPtr<Value_Image> pValueCasted(value.Cast<Value_Image>(flags));
+	RefPtr<Value_Image> pValueCasted(value.Cast<Value_Image>(processor, flags));
 	if (pValueCasted) {
 		return new Value_wxImage(Util::CreateImage(pValueCasted->GetImage()));
 	}

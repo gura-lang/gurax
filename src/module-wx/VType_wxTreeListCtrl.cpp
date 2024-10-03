@@ -1083,8 +1083,8 @@ Gurax_ImplementMethodEx(wxTreeListCtrl, GetSortColumn_gurax, processor_gurax, ar
 	unsigned col_;
 	bool ascendingOrder_;
 	bool rtn = pEntity_gurax->GetSortColumn(&col_, &ascendingOrder_);
-	col->SetValue(new Value_Number(col_));
-	ascendingOrder->SetValue(new Value_Bool(ascendingOrder_));
+	col->SetValue(processor_gurax, new Value_Number(col_));
+	ascendingOrder->SetValue(processor_gurax, new Value_Bool(ascendingOrder_));
 	return new Value_Bool(rtn);
 }
 

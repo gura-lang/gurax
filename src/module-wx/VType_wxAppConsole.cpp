@@ -896,7 +896,7 @@ bool Value_wxAppConsole::EntityT::OnCmdLineError(wxCmdLineParser& parser)
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxCmdLineParser(parser))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Value_wxCmdLineParser(parser))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -929,7 +929,7 @@ bool Value_wxAppConsole::EntityT::OnCmdLineHelp(wxCmdLineParser& parser)
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxCmdLineParser(parser))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Value_wxCmdLineParser(parser))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -962,7 +962,7 @@ bool Value_wxAppConsole::EntityT::OnCmdLineParsed(wxCmdLineParser& parser)
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxCmdLineParser(parser))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Value_wxCmdLineParser(parser))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -995,7 +995,7 @@ void Value_wxAppConsole::EntityT::OnEventLoopEnter(wxEventLoopBase* loop)
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxEventLoopBase(loop))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Value_wxEventLoopBase(loop))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -1020,7 +1020,7 @@ void Value_wxAppConsole::EntityT::OnEventLoopExit(wxEventLoopBase* loop)
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxEventLoopBase(loop))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Value_wxEventLoopBase(loop))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -1124,7 +1124,7 @@ void Value_wxAppConsole::EntityT::OnInitCmdLine(wxCmdLineParser& parser)
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxCmdLineParser(parser))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Value_wxCmdLineParser(parser))) {
 			Util::ExitMainLoop();
 			break;
 		}

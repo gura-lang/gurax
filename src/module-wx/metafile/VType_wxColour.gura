@@ -86,7 +86,7 @@ Colour = Class {
 		'''
 	__cast__() = \
 		R'''
-		RefPtr<Value_Color> pValueCasted(value.Cast<Value_Color>(flags));
+		RefPtr<Value_Color> pValueCasted(value.Cast<Value_Color>(processor, flags));
 		if (pValueCasted) {
 			const Color& color = pValueCasted->GetColor();
 			return new Value_wxColour(wxColour(color.GetR(), color.GetG(), color.GetB(), color.GetA()));

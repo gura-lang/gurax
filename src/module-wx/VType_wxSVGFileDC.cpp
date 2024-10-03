@@ -332,10 +332,10 @@ Gurax_ImplementMethodEx(wxSVGFileDC, GetClippingBox_gurax, processor_gurax, argu
 	// Function body
 	wxCoord x_, y_, width_, height_;
 	pEntity_gurax->GetClippingBox(&x_, &y_, &width_, &height_);
-	x->SetValue(new Value_Number(x_));
-	y->SetValue(new Value_Number(y_));
-	width->SetValue(new Value_Number(width_));
-	height->SetValue(new Value_Number(height_));
+	x->SetValue(processor_gurax, new Value_Number(x_));
+	y->SetValue(processor_gurax, new Value_Number(y_));
+	width->SetValue(processor_gurax, new Value_Number(width_));
+	height->SetValue(processor_gurax, new Value_Number(height_));
 	return Value::nil();
 }
 
@@ -362,7 +362,7 @@ Gurax_ImplementMethodEx(wxSVGFileDC, GetPixel_gurax, processor_gurax, argument_g
 	// Function body
 	wxColour colour_;
 	bool rtn = pEntity_gurax->GetPixel(x, y, &colour_);
-	colour->SetValue(new Value_wxColour(colour_));
+	colour->SetValue(processor_gurax, new Value_wxColour(colour_));
 	return new Value_Bool(rtn);
 }
 

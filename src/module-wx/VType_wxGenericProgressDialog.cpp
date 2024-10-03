@@ -150,7 +150,7 @@ Gurax_ImplementMethodEx(wxGenericProgressDialog, Pulse_gurax, processor_gurax, a
 	// Function body
 	bool skip_;
 	bool cont = pEntity_gurax->Pulse(newmsg, &skip_);
-	if (skip) skip->SetValue(new Value_Bool(skip_));
+	if (skip) skip->SetValue(processor_gurax, new Value_Bool(skip_));
 	return new Value_Bool(cont);
 }
 
@@ -250,7 +250,7 @@ Gurax_ImplementMethodEx(wxGenericProgressDialog, Update_gurax, processor_gurax, 
 	// Function body
 	bool skip_;
 	bool cont = pEntity_gurax->Update(value, newmsg, &skip_);
-	if (skip) skip->SetValue(new Value_Bool(skip_));
+	if (skip) skip->SetValue(processor_gurax, new Value_Bool(skip_));
 	return new Value_Bool(cont);
 }
 

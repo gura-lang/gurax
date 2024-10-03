@@ -287,8 +287,8 @@ Gurax_ImplementMethodEx(wxGBSizerItem, GetPosRowCol_gurax, processor_gurax, argu
 	// Function body
 	int row_, col_;
 	pEntity_gurax->GetPos(row_, col_);
-	row->SetValue(new Value_Number(row_));
-	col->SetValue(new Value_Number(col_));
+	row->SetValue(processor_gurax, new Value_Number(row_));
+	col->SetValue(processor_gurax, new Value_Number(col_));
 	return Value::nil();
 }
 

@@ -992,8 +992,8 @@ Gurax_ImplementMethodEx(wxListCtrl, HitTest_gurax, processor_gurax, argument_gur
 	int flags_;
 	long ptrSubItem_;
 	long rtn = pEntity_gurax->HitTest(point, flags_, &ptrSubItem_);
-	flags->SetValue(new Value_Number(flags_));
-	ptrSubItem->SetValue(new Value_Number(ptrSubItem_));
+	flags->SetValue(processor_gurax, new Value_Number(flags_));
+	ptrSubItem->SetValue(processor_gurax, new Value_Number(ptrSubItem_));
 	return new Value_Number(rtn);
 }
 
@@ -1976,7 +1976,7 @@ wxListItemAttr* Value_wxListCtrl::EntityT::OnGetItemAttr(long item) const
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(item))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Number(item))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -2010,11 +2010,11 @@ wxListItemAttr* Value_wxListCtrl::EntityT::OnGetItemColumnAttr(long item, long c
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(item))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Number(item))) {
 			Util::ExitMainLoop();
 			break;
 		}
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(column))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Number(column))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -2048,11 +2048,11 @@ int Value_wxListCtrl::EntityT::OnGetItemColumnImage(long item, long column) cons
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(item))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Number(item))) {
 			Util::ExitMainLoop();
 			break;
 		}
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(column))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Number(column))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -2085,7 +2085,7 @@ int Value_wxListCtrl::EntityT::OnGetItemImage(long item) const
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(item))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Number(item))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -2118,11 +2118,11 @@ wxString Value_wxListCtrl::EntityT::OnGetItemText(long item, long column) const
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(item))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Number(item))) {
 			Util::ExitMainLoop();
 			break;
 		}
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(column))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Number(column))) {
 			Util::ExitMainLoop();
 			break;
 		}

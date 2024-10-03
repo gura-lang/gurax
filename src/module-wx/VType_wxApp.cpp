@@ -395,11 +395,11 @@ bool Value_wxApp::EntityT::SafeYield(wxWindow* win, bool onlyIfNeeded)
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxWindow(win))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Value_wxWindow(win))) {
 			Util::ExitMainLoop();
 			break;
 		}
-		if (!args_gurax.FeedValue(new Gurax::Value_Bool(onlyIfNeeded))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Bool(onlyIfNeeded))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -432,11 +432,11 @@ bool Value_wxApp::EntityT::SafeYieldFor(wxWindow* win, long eventsToProcess)
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxWindow(win))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Value_wxWindow(win))) {
 			Util::ExitMainLoop();
 			break;
 		}
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(eventsToProcess))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Number(eventsToProcess))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -469,7 +469,7 @@ bool Value_wxApp::EntityT::SetDisplayMode(const wxVideoMode& info)
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxVideoMode(info))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Value_wxVideoMode(info))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -502,7 +502,7 @@ bool Value_wxApp::EntityT::SetNativeTheme(const wxString& theme)
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Gurax::Value_String(theme.utf8_str().data()))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_String(theme.utf8_str().data()))) {
 			Util::ExitMainLoop();
 			break;
 		}

@@ -94,8 +94,8 @@ ListCtrl = Class(Control) {
 		int flags_;
 		long ptrSubItem_;
 		long rtn = pEntity_gurax->HitTest(point, flags_, &ptrSubItem_);
-		flags->SetValue(new Value_Number(flags_));
-		ptrSubItem->SetValue(new Value_Number(ptrSubItem_));
+		flags->SetValue(processor_gurax, new Value_Number(flags_));
+		ptrSubItem->SetValue(processor_gurax, new Value_Number(ptrSubItem_));
 		return new Value_Number(rtn);
 		'''
 	InReportView() as bool

@@ -470,11 +470,11 @@ bool Value_wxHtmlHelpController::EntityT::KeywordSearch(const wxString& keyword,
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Gurax::Value_String(keyword.utf8_str().data()))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_String(keyword.utf8_str().data()))) {
 			Util::ExitMainLoop();
 			break;
 		}
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(mode))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Number(mode))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -507,11 +507,11 @@ void Value_wxHtmlHelpController::EntityT::ReadCustomization(wxConfigBase* cfg, c
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxConfigBase(cfg))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Value_wxConfigBase(cfg))) {
 			Util::ExitMainLoop();
 			break;
 		}
-		if (!args_gurax.FeedValue(new Gurax::Value_String(path.utf8_str().data()))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_String(path.utf8_str().data()))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -536,11 +536,11 @@ void Value_wxHtmlHelpController::EntityT::WriteCustomization(wxConfigBase* cfg, 
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxConfigBase(cfg))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Value_wxConfigBase(cfg))) {
 			Util::ExitMainLoop();
 			break;
 		}
-		if (!args_gurax.FeedValue(new Gurax::Value_String(path.utf8_str().data()))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_String(path.utf8_str().data()))) {
 			Util::ExitMainLoop();
 			break;
 		}

@@ -10,9 +10,9 @@ TimePickerCtrl = Class(Control) {
 		R'''
 		int hour_, min_, sec_;
 		bool rtn = pEntity_gurax->GetTime(&hour_, &min_, &sec_);
-		hour->SetValue(new Value_Number(hour_));
-		min->SetValue(new Value_Number(min_));
-		sec->SetValue(new Value_Number(sec_));
+		hour->SetValue(processor_gurax, new Value_Number(hour_));
+		min->SetValue(processor_gurax, new Value_Number(min_));
+		sec->SetValue(processor_gurax, new Value_Number(sec_));
 		return new Value_Bool(rtn);
 		'''
 	GetValue():const:virtual as DateTime

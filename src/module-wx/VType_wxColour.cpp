@@ -513,7 +513,7 @@ void VType_wxColour::DoPrepare(Frame& frameOuter)
 
 Value* VType_wxColour::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
-	RefPtr<Value_Color> pValueCasted(value.Cast<Value_Color>(flags));
+	RefPtr<Value_Color> pValueCasted(value.Cast<Value_Color>(processor, flags));
 	if (pValueCasted) {
 		const Color& color = pValueCasted->GetColor();
 		return new Value_wxColour(wxColour(color.GetR(), color.GetG(), color.GetB(), color.GetA()));

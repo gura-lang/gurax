@@ -1006,8 +1006,8 @@ Gurax_ImplementMethodEx(wxWindow, GetClientSizeWH_gurax, processor_gurax, argume
 	// Function body
 	int width_, height_;
 	pEntity_gurax->GetClientSize(&width_, &height_);
-	width->SetValue(new Value_Number(width_));
-	height->SetValue(new Value_Number(height_));
+	width->SetValue(processor_gurax, new Value_Number(width_));
+	height->SetValue(processor_gurax, new Value_Number(height_));
 	return Value::nil();
 }
 
@@ -1202,8 +1202,8 @@ Gurax_ImplementMethodEx(wxWindow, GetSizeWH_gurax, processor_gurax, argument_gur
 	// Function body
 	int width_, height_;
 	pEntity_gurax->GetSize(&width_, &height_);
-	width->SetValue(new Value_Number(width_));
-	height->SetValue(new Value_Number(height_));
+	width->SetValue(processor_gurax, new Value_Number(width_));
+	height->SetValue(processor_gurax, new Value_Number(height_));
 	return Value::nil();
 }
 
@@ -1245,8 +1245,8 @@ Gurax_ImplementMethodEx(wxWindow, GetVirtualSizeWH_gurax, processor_gurax, argum
 	// Function body
 	int width_, height_;
 	pEntity_gurax->GetVirtualSize(&width_, &height_);
-	width->SetValue(new Value_Number(width_));
-	height->SetValue(new Value_Number(height_));
+	width->SetValue(processor_gurax, new Value_Number(width_));
+	height->SetValue(processor_gurax, new Value_Number(height_));
 	return Value::nil();
 }
 
@@ -1932,8 +1932,8 @@ Gurax_ImplementMethodEx(wxWindow, GetPositionXY_gurax, processor_gurax, argument
 	// Function body
 	int x_, y_;
 	pEntity_gurax->GetPosition(&x_, &y_);
-	x->SetValue(new Value_Number(x_));
-	y->SetValue(new Value_Number(y_));
+	x->SetValue(processor_gurax, new Value_Number(x_));
+	y->SetValue(processor_gurax, new Value_Number(y_));
 	return Value::nil();
 }
 
@@ -1992,8 +1992,8 @@ Gurax_ImplementMethodEx(wxWindow, GetScreenPositionXY_gurax, processor_gurax, ar
 	// Function body
 	int x_, y_;
 	pEntity_gurax->GetScreenPosition(&x_, &y_);
-	x->SetValue(new Value_Number(x_));
-	y->SetValue(new Value_Number(y_));
+	x->SetValue(processor_gurax, new Value_Number(x_));
+	y->SetValue(processor_gurax, new Value_Number(y_));
 	return Value::nil();
 }
 
@@ -2175,8 +2175,8 @@ Gurax_ImplementMethodEx(wxWindow, ClientToScreen_gurax, processor_gurax, argumen
 		int x_ = x->Get<Value_Number>().GetNumber<int>();
 		int y_ = y->Get<Value_Number>().GetNumber<int>();
 		pEntity_gurax->ClientToScreen(&x_, &y_);
-		x->SetValue(new Value_Number(x_));
-		y->SetValue(new Value_Number(y_));
+		x->SetValue(processor_gurax, new Value_Number(x_));
+		y->SetValue(processor_gurax, new Value_Number(y_));
 		return Value::nil();
 	} while (0);
 	Error::ClearIssuedFlag();
@@ -2328,8 +2328,8 @@ Gurax_ImplementMethodEx(wxWindow, ScreenToClient_gurax, processor_gurax, argumen
 		int x_ = x->Get<Value_Number>().GetNumber<int>();
 		int y_ = y->Get<Value_Number>().GetNumber<int>();
 		pEntity_gurax->ScreenToClient(&x_, &y_);
-		x->SetValue(new Value_Number(x_));
-		y->SetValue(new Value_Number(y_));
+		x->SetValue(processor_gurax, new Value_Number(x_));
+		y->SetValue(processor_gurax, new Value_Number(y_));
 		return Value::nil();
 	} while (0);
 	Error::ClearIssuedFlag();
@@ -2566,10 +2566,10 @@ Gurax_ImplementMethodEx(wxWindow, GetTextExtentWH_gurax, processor_gurax, argume
 	// Function body
 	int w_, h_, descent_, externalLeading_;
 	pEntity_gurax->GetTextExtent(string, &w_, &h_, &descent_, &externalLeading_, font);
-	w->SetValue(new Value_Number(w_));
-	h->SetValue(new Value_Number(h_));
-	descent->SetValue(new Value_Number(descent_));
-	externalLeading->SetValue(new Value_Number(externalLeading_));
+	w->SetValue(processor_gurax, new Value_Number(w_));
+	h->SetValue(processor_gurax, new Value_Number(h_));
+	descent->SetValue(processor_gurax, new Value_Number(descent_));
+	externalLeading->SetValue(processor_gurax, new Value_Number(externalLeading_));
 	return Value::nil();
 }
 
@@ -2773,7 +2773,7 @@ Gurax_ImplementMethodEx(wxWindow, IsTransparentBackgroundSupported_gurax, proces
 	if (reason) {
 		wxString reason_;
 		rtn = pEntity_gurax->IsTransparentBackgroundSupported(&reason_);
-		reason->SetValue(new Value_String(reason_.utf8_str().data()));
+		reason->SetValue(processor_gurax, new Value_String(reason_.utf8_str().data()));
 	} else {
 		rtn = pEntity_gurax->IsTransparentBackgroundSupported();
 	}
@@ -5622,7 +5622,7 @@ void Value_wxWindow::EntityT::SetCanFocus(bool canFocus)
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Gurax::Value_Bool(canFocus))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Bool(canFocus))) {
 			Util::ExitMainLoop();
 			break;
 		}

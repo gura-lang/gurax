@@ -292,11 +292,11 @@ void Value_wxHtmlListBox::EntityT::OnLinkClicked(size_t n, const wxHtmlLinkInfo&
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(n))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Number(n))) {
 			Util::ExitMainLoop();
 			break;
 		}
-		if (!args_gurax.FeedValue(new Value_wxHtmlLinkInfo(link))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Value_wxHtmlLinkInfo(link))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -321,7 +321,7 @@ wxColour Value_wxHtmlListBox::EntityT::GetSelectedTextBgColour(const wxColour& c
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxColour(colBg))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Value_wxColour(colBg))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -354,7 +354,7 @@ wxColour Value_wxHtmlListBox::EntityT::GetSelectedTextColour(const wxColour& col
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxColour(colFg))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Value_wxColour(colFg))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -387,7 +387,7 @@ wxString Value_wxHtmlListBox::EntityT::OnGetItemMarkup(size_t n) const
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(n))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Number(n))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -420,7 +420,7 @@ wxString Value_wxHtmlListBox::EntityT::OnGetItem(size_t n) const
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(n))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Number(n))) {
 			Util::ExitMainLoop();
 			break;
 		}

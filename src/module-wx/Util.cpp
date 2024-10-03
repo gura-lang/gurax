@@ -53,7 +53,7 @@ void EventUserData::Eval(wxEvent& event)
 	if (!pDeclCallable) return;
 	RefPtr<Argument> pArg(new Argument(*_pProcessor, pDeclCallable->Reference()));
 	ArgFeeder args(*pArg, _pProcessor->GetFrameCur());
-	if (!args.FeedValue(_eventValueFactory.CreateValue(event, _pValueUserData.Reference()))) return;
+	if (!args.FeedValue(*_pProcessor, _eventValueFactory.CreateValue(event, _pValueUserData.Reference()))) return;
 	Value::Delete(_pValueFunct->Eval(*_pProcessor, *pArg));
 	if (Error::IsIssued()) Util::ExitMainLoop();
 }
@@ -67,7 +67,7 @@ Value* ListCtrlSortItems::Eval(const Value& valueItem1, const Value& valueItem2)
 	if (!pDeclCallable) return Value::nil();
 	RefPtr<Argument> pArg(new Argument(GetProcessor(), pDeclCallable->Reference(), DeclCallable::Flag::CutExtraArgs));
 	ArgFeeder args(*pArg, GetProcessor().GetFrameCur());
-	if (!args.FeedValues(valueItem1.Reference(), valueItem2.Reference(), GetValue().Reference())) return Value::nil();
+	if (!args.FeedValues(*_pProcessor, valueItem1.Reference(), valueItem2.Reference(), GetValue().Reference())) return Value::nil();
 	return GetCallable().Eval(GetProcessor(), *pArg);
 }
 

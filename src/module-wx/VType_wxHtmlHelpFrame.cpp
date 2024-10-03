@@ -271,11 +271,11 @@ void Value_wxHtmlHelpFrame::EntityT::AddToolbarButtons(wxToolBar* toolBar, int s
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxToolBar(toolBar))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Value_wxToolBar(toolBar))) {
 			Util::ExitMainLoop();
 			break;
 		}
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(style))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Number(style))) {
 			Util::ExitMainLoop();
 			break;
 		}

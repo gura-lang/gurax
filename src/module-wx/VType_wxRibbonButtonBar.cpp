@@ -779,7 +779,7 @@ int Value_wxRibbonButtonBar::EntityT::GetItemId(wxRibbonButtonBarButtonBase* ite
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxRibbonButtonBarButtonBase(item))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Value_wxRibbonButtonBarButtonBase(item))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -862,7 +862,7 @@ bool Value_wxRibbonButtonBar::EntityT::DeleteButton(int button_id)
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(button_id))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Number(button_id))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -895,11 +895,11 @@ void Value_wxRibbonButtonBar::EntityT::EnableButton(int button_id, bool enable)
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(button_id))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Number(button_id))) {
 			Util::ExitMainLoop();
 			break;
 		}
-		if (!args_gurax.FeedValue(new Gurax::Value_Bool(enable))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Bool(enable))) {
 			Util::ExitMainLoop();
 			break;
 		}
@@ -924,11 +924,11 @@ void Value_wxRibbonButtonBar::EntityT::ToggleButton(int button_id, bool checked)
 		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(button_id))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Number(button_id))) {
 			Util::ExitMainLoop();
 			break;
 		}
-		if (!args_gurax.FeedValue(new Gurax::Value_Bool(checked))) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), new Gurax::Value_Bool(checked))) {
 			Util::ExitMainLoop();
 			break;
 		}

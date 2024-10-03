@@ -633,7 +633,7 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetCurLine_gurax, processor_gurax, arg
 	// Function body
 	int linePos_;
 	wxString rtn = pEntity_gurax->GetCurLine(&linePos_);
-	if (linePos) linePos->SetValue(new Value_Number(linePos_));
+	if (linePos) linePos->SetValue(processor_gurax, new Value_Number(linePos_));
 	return new Value_String(rtn.utf8_str().data());
 }
 
@@ -12512,8 +12512,8 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetSelection_gurax, processor_gurax, a
 	// Function body
 	long from_, to_;
 	pEntity_gurax->GetSelection(&from_, &to_);
-	from->SetValue(new Value_Number(from_));
-	to->SetValue(new Value_Number(to_));
+	from->SetValue(processor_gurax, new Value_Number(from_));
+	to->SetValue(processor_gurax, new Value_Number(to_));
 	return Value::nil();
 }
 
@@ -12783,8 +12783,8 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, PositionToXY_gurax, processor_gurax, a
 	// Function body
 	long x_, y_;
 	bool rtn = pEntity_gurax->PositionToXY(pos, &x_, &y_);
-	x->SetValue(new Value_Number(x_));
-	y->SetValue(new Value_Number(y_));
+	x->SetValue(processor_gurax, new Value_Number(x_));
+	y->SetValue(processor_gurax, new Value_Number(y_));
 	return new Value_Bool(rtn);
 }
 

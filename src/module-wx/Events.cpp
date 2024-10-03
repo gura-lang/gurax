@@ -49,8 +49,8 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_COMMAND_RIGHT_CLICK,					wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_RIGHT_DCLICK,					wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_SET_FOCUS,					wxCommandEvent);
-	Gurax_AssignEvent(EVT_CONTEXT_MENU,							wxCommandEvent);
 	Gurax_AssignEvent(EVT_CONTEXT_MENU,							wxContextMenuEvent);
+	Gurax_AssignEvent(EVT_CONTEXT_MENU,							wxCommandEvent);
 	Gurax_AssignEvent(EVT_DATAVIEW_CACHE_HINT,					wxDataViewEvent);
 	Gurax_AssignEvent(EVT_DATAVIEW_COLUMN_HEADER_CLICK,			wxDataViewEvent);
 	Gurax_AssignEvent(EVT_DATAVIEW_COLUMN_HEADER_RIGHT_CLICK,	wxDataViewEvent);

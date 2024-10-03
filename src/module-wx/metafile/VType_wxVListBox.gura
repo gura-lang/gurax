@@ -11,7 +11,7 @@ VListBox = Class(VScrolledWindow) {
 		R'''
 		unsigned long cookie_ = cookie->Get<Value_Number>().GetNumber<unsigned long>();
 		int rtn = pEntity_gurax->GetFirstSelected(cookie_);
-		cookie->SetValue(new Value_Number(cookie_));
+		cookie->SetValue(processor_gurax, new Value_Number(cookie_));
 		return new Value_Number(rtn);
 		'''
 	GetItemCount() as size_t
@@ -21,7 +21,7 @@ VListBox = Class(VScrolledWindow) {
 		R'''
 		unsigned long cookie_ = cookie->Get<Value_Number>().GetNumber<unsigned long>();
 		int rtn = pEntity_gurax->GetNextSelected(cookie_);
-		cookie->SetValue(new Value_Number(cookie_));
+		cookie->SetValue(processor_gurax, new Value_Number(cookie_));
 		return new Value_Number(rtn);
 		'''
 	GetSelectedCount() as size_t

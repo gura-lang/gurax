@@ -104,8 +104,8 @@ Window = Class(EvtHandler) {
 		R'''
 		int width_, height_;
 		pEntity_gurax->GetClientSize(&width_, &height_);
-		width->SetValue(new Value_Number(width_));
-		height->SetValue(new Value_Number(height_));
+		width->SetValue(processor_gurax, new Value_Number(width_));
+		height->SetValue(processor_gurax, new Value_Number(height_));
 		return Value::nil();
 		'''
 	GetEffectiveMinSize() as Size
@@ -122,8 +122,8 @@ Window = Class(EvtHandler) {
 		R'''
 		int width_, height_;
 		pEntity_gurax->GetSize(&width_, &height_);
-		width->SetValue(new Value_Number(width_));
-		height->SetValue(new Value_Number(height_));
+		width->SetValue(processor_gurax, new Value_Number(width_));
+		height->SetValue(processor_gurax, new Value_Number(height_));
 		return Value::nil();
 		'''
 	GetVirtualSize() as Size
@@ -131,8 +131,8 @@ Window = Class(EvtHandler) {
 		R'''
 		int width_, height_;
 		pEntity_gurax->GetVirtualSize(&width_, &height_);
-		width->SetValue(new Value_Number(width_));
-		height->SetValue(new Value_Number(height_));
+		width->SetValue(processor_gurax, new Value_Number(width_));
+		height->SetValue(processor_gurax, new Value_Number(height_));
 		return Value::nil();
 		'''
 	GetBestVirtualSize() as Size
@@ -368,8 +368,8 @@ Window = Class(EvtHandler) {
 		R'''
 		int x_, y_;
 		pEntity_gurax->GetPosition(&x_, &y_);
-		x->SetValue(new Value_Number(x_));
-		y->SetValue(new Value_Number(y_));
+		x->SetValue(processor_gurax, new Value_Number(x_));
+		y->SetValue(processor_gurax, new Value_Number(y_));
 		return Value::nil();
 		'''
 	GetPosition() as Point
@@ -378,8 +378,8 @@ Window = Class(EvtHandler) {
 		R'''
 		int x_, y_;
 		pEntity_gurax->GetScreenPosition(&x_, &y_);
-		x->SetValue(new Value_Number(x_));
-		y->SetValue(new Value_Number(y_));
+		x->SetValue(processor_gurax, new Value_Number(x_));
+		y->SetValue(processor_gurax, new Value_Number(y_));
 		return Value::nil();
 		'''
 	GetScreenPosition() as Point
@@ -447,8 +447,8 @@ Window = Class(EvtHandler) {
 			int x_ = x->Get<Value_Number>().GetNumber<int>();
 			int y_ = y->Get<Value_Number>().GetNumber<int>();
 			pEntity_gurax->ClientToScreen(&x_, &y_);
-			x->SetValue(new Value_Number(x_));
-			y->SetValue(new Value_Number(y_));
+			x->SetValue(processor_gurax, new Value_Number(x_));
+			y->SetValue(processor_gurax, new Value_Number(y_));
 			return Value::nil();
 		} while (0);
 		Error::ClearIssuedFlag();
@@ -552,8 +552,8 @@ Window = Class(EvtHandler) {
 			int x_ = x->Get<Value_Number>().GetNumber<int>();
 			int y_ = y->Get<Value_Number>().GetNumber<int>();
 			pEntity_gurax->ScreenToClient(&x_, &y_);
-			x->SetValue(new Value_Number(x_));
-			y->SetValue(new Value_Number(y_));
+			x->SetValue(processor_gurax, new Value_Number(x_));
+			y->SetValue(processor_gurax, new Value_Number(y_));
 			return Value::nil();
 		} while (0);
 		Error::ClearIssuedFlag();
@@ -591,10 +591,10 @@ Window = Class(EvtHandler) {
 		R'''
 		int w_, h_, descent_, externalLeading_;
 		pEntity_gurax->GetTextExtent(string, &w_, &h_, &descent_, &externalLeading_, font);
-		w->SetValue(new Value_Number(w_));
-		h->SetValue(new Value_Number(h_));
-		descent->SetValue(new Value_Number(descent_));
-		externalLeading->SetValue(new Value_Number(externalLeading_));
+		w->SetValue(processor_gurax, new Value_Number(w_));
+		h->SetValue(processor_gurax, new Value_Number(h_));
+		descent->SetValue(processor_gurax, new Value_Number(descent_));
+		externalLeading->SetValue(processor_gurax, new Value_Number(externalLeading_));
 		return Value::nil();
 		'''
 	GetTextExtent(string as const_String_r) as Size
@@ -612,7 +612,7 @@ Window = Class(EvtHandler) {
 		if (reason) {
 			wxString reason_;
 			rtn = pEntity_gurax->IsTransparentBackgroundSupported(&reason_);
-			reason->SetValue(new Value_String(reason_.utf8_str().data()));
+			reason->SetValue(processor_gurax, new Value_String(reason_.utf8_str().data()));
 		} else {
 			rtn = pEntity_gurax->IsTransparentBackgroundSupported();
 		}

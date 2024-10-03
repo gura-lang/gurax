@@ -287,8 +287,8 @@ Gurax_ImplementMethodEx(wxImageList, GetSize_gurax, processor_gurax, argument_gu
 	// Function body
 	int width_, height_;
 	bool rtn = pEntity_gurax->GetSize(index, width_, height_);
-	width->SetValue(new Value_Number(width_));
-	height->SetValue(new Value_Number(height_));
+	width->SetValue(processor_gurax, new Value_Number(width_));
+	height->SetValue(processor_gurax, new Value_Number(height_));
 	return new Value_Number(rtn);
 }
 

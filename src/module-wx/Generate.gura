@@ -252,7 +252,7 @@ public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
 ${if (funcInfoCast)}
-	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
+	virtual Value* DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const override;
 ${end}
 };
 
@@ -517,7 +517,7 @@ ${end}
 }
 
 ${if (funcInfoCast)}
-Value* VType_wx${className}::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+Value* VType_wx${className}::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
 	${if (funcInfoCast.tmplFunctionBody)}
 	${funcInfoCast.tmplFunctionBody.Eval()}
@@ -563,7 +563,7 @@ ${funcInfo.ComposeCDecl('Value_wx' + className + '::EntityT::')}
 		${else}
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
 		${funcInfo.argInfoTbl.Each {|argInfo|}}
-		if (!args_gurax.FeedValue(${argInfo.ComposeConvToGurax()})) {
+		if (!args_gurax.FeedValue(core_gurax.GetProcessor(), ${argInfo.ComposeConvToGurax()})) {
 			Util::ExitMainLoop();
 			break;
 		}

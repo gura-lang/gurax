@@ -624,7 +624,7 @@ void VType_wxBitmap::DoPrepare(Frame& frameOuter)
 
 Value* VType_wxBitmap::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const
 {
-	RefPtr<Value_Image> pValueCasted(value.Cast<Value_Image>(flags));
+	RefPtr<Value_Image> pValueCasted(value.Cast<Value_Image>(processor, flags));
 	if (pValueCasted) {
 		return new Value_wxBitmap(wxBitmap(Util::CreateImage(pValueCasted->GetImage())));
 	}

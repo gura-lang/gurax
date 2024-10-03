@@ -14,7 +14,7 @@ ComboPopup = Class():loosePointer {
 		if (trueItem) {
 			wxString trueItem_;
 			rtn = pEntity_gurax->FindItem(item, &trueItem_);
-			trueItem->SetValue(new Value_String(trueItem_.ToUTF8().data()));
+			trueItem->SetValue(processor_gurax, new Value_String(trueItem_.ToUTF8().data()));
 		} else {
 			rtn = pEntity_gurax->FindItem(item);
 		}

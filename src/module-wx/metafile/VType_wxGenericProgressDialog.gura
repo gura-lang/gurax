@@ -12,7 +12,7 @@ GenericProgressDialog = Class(Dialog) {
 		R'''
 		bool skip_;
 		bool cont = pEntity_gurax->Pulse(newmsg, &skip_);
-		if (skip) skip->SetValue(new Value_Bool(skip_));
+		if (skip) skip->SetValue(processor_gurax, new Value_Bool(skip_));
 		return new Value_Bool(cont);
 		'''
 	Resume() as void
@@ -24,7 +24,7 @@ GenericProgressDialog = Class(Dialog) {
 		R'''
 		bool skip_;
 		bool cont = pEntity_gurax->Update(value, newmsg, &skip_);
-		if (skip) skip->SetValue(new Value_Bool(skip_));
+		if (skip) skip->SetValue(processor_gurax, new Value_Bool(skip_));
 		return new Value_Bool(cont);
 		'''
 } %% R'''

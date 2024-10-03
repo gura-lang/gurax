@@ -236,8 +236,8 @@ Gurax_ImplementMethodEx(wxDC, GetUserScale_gurax, processor_gurax, argument_gura
 	// Function body
 	double x_, y_;
 	pEntity_gurax->GetUserScale(&x_, &y_);
-	x->SetValue(new Value_Number(x_));
-	y->SetValue(new Value_Number(y_));
+	x->SetValue(processor_gurax, new Value_Number(x_));
+	y->SetValue(processor_gurax, new Value_Number(y_));
 	return Value::nil();
 }
 
@@ -456,8 +456,8 @@ Gurax_ImplementMethodEx(wxDC, GetLogicalScale_gurax, processor_gurax, argument_g
 	// Function body
 	double x_, y_;
 	pEntity_gurax->GetLogicalScale(&x_, &y_);
-	x->SetValue(new Value_Number(x_));
-	y->SetValue(new Value_Number(y_));
+	x->SetValue(processor_gurax, new Value_Number(x_));
+	y->SetValue(processor_gurax, new Value_Number(y_));
 	return Value::nil();
 }
 
@@ -1149,7 +1149,7 @@ Gurax_ImplementMethodEx(wxDC, DrawLabel_gurax, processor_gurax, argument_gurax)
 		RefPtr<Referencer> rectBounding(args_gurax.PickReferencer().Reference());
 		wxRect rectBounding_;
 		pEntity_gurax->DrawLabel(text, bitmap, rect, alignment, indexAccel, &rectBounding_);
-		if (rectBounding) rectBounding->SetValue(new Value_wxRect(rectBounding_));
+		if (rectBounding) rectBounding->SetValue(processor_gurax, new Value_wxRect(rectBounding_));
 		return Value::nil();
 	} while (0);
 	Error::ClearIssuedFlag();
@@ -1939,10 +1939,10 @@ Gurax_ImplementMethodEx(wxDC, GetClippingBox_gurax, processor_gurax, argument_gu
 	// Function body
 	wxCoord x_, y_, width_, height_;
 	pEntity_gurax->GetClippingBox(&x_, &y_, &width_, &height_);
-	x->SetValue(new Value_Number(x_));
-	y->SetValue(new Value_Number(y_));
-	width->SetValue(new Value_Number(width_));
-	height->SetValue(new Value_Number(height_));
+	x->SetValue(processor_gurax, new Value_Number(x_));
+	y->SetValue(processor_gurax, new Value_Number(y_));
+	width->SetValue(processor_gurax, new Value_Number(width_));
+	height->SetValue(processor_gurax, new Value_Number(height_));
 	return Value::nil();
 }
 
@@ -2121,9 +2121,9 @@ Gurax_ImplementMethodEx(wxDC, GetMultiLineTextExtentWH_gurax, processor_gurax, a
 	// Function body
 	wxCoord w_, h_, heightLine_;
 	pEntity_gurax->GetMultiLineTextExtent(string, &w_, &h_, &heightLine_, font);
-	w->SetValue(new Value_Number(w_));
-	h->SetValue(new Value_Number(h_));
-	if (heightLine) heightLine->SetValue(new Value_Number(heightLine_));
+	w->SetValue(processor_gurax, new Value_Number(w_));
+	h->SetValue(processor_gurax, new Value_Number(h_));
+	if (heightLine) heightLine->SetValue(processor_gurax, new Value_Number(heightLine_));
 	return Value::nil();
 }
 
@@ -2177,10 +2177,10 @@ Gurax_ImplementMethodEx(wxDC, GetTextExtentWH_gurax, processor_gurax, argument_g
 	// Function body
 	wxCoord w_, h_, descent_, externalLeading_;
 	pEntity_gurax->GetTextExtent(string, &w_, &h_, &descent_, &externalLeading_, font);
-	w->SetValue(new Value_Number(w_));
-	h->SetValue(new Value_Number(h_));
-	if (descent) descent->SetValue(new Value_Number(descent_));
-	if (externalLeading) externalLeading->SetValue(new Value_Number(externalLeading_));
+	w->SetValue(processor_gurax, new Value_Number(w_));
+	h->SetValue(processor_gurax, new Value_Number(h_));
+	if (descent) descent->SetValue(processor_gurax, new Value_Number(descent_));
+	if (externalLeading) externalLeading->SetValue(processor_gurax, new Value_Number(externalLeading_));
 	return Value::nil();
 }
 
@@ -2917,8 +2917,8 @@ Gurax_ImplementMethodEx(wxDC, GetLogicalOriginXY_gurax, processor_gurax, argumen
 	// Function body
 	wxCoord x_, y_;
 	pEntity_gurax->GetLogicalOrigin(&x_, &y_);
-	x->SetValue(new Value_Number(x_));
-	y->SetValue(new Value_Number(y_));
+	x->SetValue(processor_gurax, new Value_Number(x_));
+	y->SetValue(processor_gurax, new Value_Number(y_));
 	return Value::nil();
 }
 
