@@ -10,7 +10,7 @@ Build for Windows
 -----------------
 1. Clone the Gurax source code from GitHub repository.
 
-        $ git clone https://github.com/gura-lang/gurax.git
+        $ git clone --depth 1 https://github.com/gura-lang/gurax.git
 
 2. Run the PowerShell script `gurax\guest\prepare-for-mswin.ps1` to create all the necessary guest libraries.
 
