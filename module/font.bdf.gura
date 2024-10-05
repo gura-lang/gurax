@@ -1,0 +1,172 @@
+#!/usr/bin/env gurax
+//==============================================================================
+// font.bdf.gura
+// Read a file in BDF file format
+//==============================================================================
+import(re)
+
+CharEntry = class {
+	name as String
+	bytesPerLine as Number
+	ENCODING as Number
+	SWIDTH as Tuple
+	DWIDTH as Tuple
+	BBX as Tuple
+	BITMAP[] as Number = []
+	__init__(name as String) = { this.name = name }
+	ScanBitmapVert() = {
+		!this.bytesPerLine && return([].Each())
+		bitMask = 1 << (this.bytesPerLine * 8 - 1)
+		[width, height] = this.BBX
+		repeat (width):iter {
+			bits = 0
+			this.BITMAP.Reverse {|data|
+				bits <<= 1
+				if ((data & bitMask) != 0) { bits |= 1 }
+			}
+			bitMask >>= 1
+			bits
+		}
+	}
+}
+
+Context = class {
+	STARTFONT as String
+	FONT as String
+	SIZE as Tuple
+	FONTBOUNDINGBOX as Tuple
+	FONTNAME_REGISTRY as String
+	FOUNDRY as String
+	FAMILY_NAME as String
+	WEIGHT_NAME as String
+	SLANT as String
+	SETWIDTH_NAME as String
+	ADD_STYLE_NAME as String
+	PIXEL_SIZE as Number
+	POINT_SIZE as Number
+	RESOLUTION_X as Number
+	RESOLUTION_Y as Number
+	SPACING as String
+	AVERAGE_WIDTH as Number
+	CHARSET_REGISTRY as String
+	CHARSET_ENCODING as String
+	DEFAULT_CHAR as Number
+	FONT_DESCENT as Number
+	FONT_ASCENT as Number
+	COPYRIGHT as String
+	_XMBDFED_INFO as String
+	CHARS as Number
+	charEntryTbl[] as CharEntry = []
+	charEntryDict = %{}
+	__init__(stream as Stream) = {
+		stat = `init
+		stream.ReadLines {|line|
+			if (stat == `init) {
+				if (m = line.Match(r'^STARTFONT\s+(.*)')) {
+					this.STARTFONT = m[1]
+				} elsif (m = line.Match(r'^FONT\s+(.*)')) {
+					this.FONT = m[1]
+				} elsif (m = line.Match(r'^SIZE\s+(.*)')) {
+					this.SIZE = m[1].SplitReg(r'\s+'):*ToNumber().tuple
+				} elsif (m = line.Match(r'^FONTBOUNDINGBOX\s+(.*)')) {
+					this.FONTBOUNDINGBOX = m[1].SplitReg(r'\s+'):*ToNumber().tuple
+				} elsif (m = line.Match(r'^FONTNAME_REGISTRY\s+"(.*)"')) {
+					this.FONTNAME_REGISTRY = m[1]
+				} elsif (m = line.Match(r'^FOUNDRY\s+"(.*)"')) {
+					this.FOUNDRY = m[1]
+				} elsif (m = line.Match(r'^FAMILY_NAME\s+"(.*)"')) {
+					this.FAMILY_NAME = m[1]
+				} elsif (m = line.Match(r'^WEIGHT_NAME\s+"(.*)"')) {
+					this.WEIGHT_NAME = m[1]
+				} elsif (m = line.Match(r'^SLANT\s+"(.*)"')) {
+					this.SLANT = m[1]
+				} elsif (m = line.Match(r'^SETWIDTH_NAME\s+"(.*)"')) {
+					this.SETWIDTH_NAME = m[1]
+				} elsif (m = line.Match(r'^ADD_STYLE_NAME\s+"(.*)"')) {
+					this.ADD_STYLE_NAME = m[1]
+				} elsif (m = line.Match(r'^PIXEL_SIZE\s+(.*)')) {
+					this.PIXEL_SIZE = m[1].ToNumber()
+				} elsif (m = line.Match(r'^POINT_SIZE\s+(.*)')) {
+					this.POINT_SIZE = m[1].ToNumber()
+				} elsif (m = line.Match(r'^RESOLUTION_X\s+(.*)')) {
+					this.RESOLUTION_X = m[1].ToNumber()
+				} elsif (m = line.Match(r'^RESOLUTION_Y\s+(.*)')) {
+					this.RESOLUTION_Y = m[1].ToNumber()
+				} elsif (m = line.Match(r'^SPACING\s+"(.*)"')) {
+					this.SPACING = m[1]
+				} elsif (m = line.Match(r'^AVERAGE_WIDTH\s+(.*)')) {
+					this.AVERAGE_WIDTH = m[1].ToNumber()
+				} elsif (m = line.Match(r'^CHARSET_REGISTRY\s+"(.*)"')) {
+					this.CHARSET_REGISTRY = m[1]
+				} elsif (m = line.Match(r'^CHARSET_ENCODING\s+"(.*)"')) {
+					this.CHARSET_ENCODING = m[1]
+				} elsif (m = line.Match(r'^DEFAULT_CHAR\s+(.*)')) {
+					this.DEFAULT_CHAR = m[1].ToNumber()
+				} elsif (m = line.Match(r'^FONT_DESCENT\s+(.*)')) {
+					this.FONT_DESCENT = m[1].ToNumber()
+				} elsif (m = line.Match(r'^FONT_ASCENT\s+(.*)')) {
+					this.FONT_ASCENT = m[1].ToNumber()
+				} elsif (m = line.Match(r'^COPYRIGHT\s+"(.*)"')) {
+					this.COPYRIGHT = m[1]
+				} elsif (m = line.Match(r'^_XMBDFED_INFO\s+"(.*)"')) {
+					this._XMBDFED_INFO = m[1]
+				} elsif (m = line.Match(r'^CHARS\s+(.*)')) {
+					stat = `chars
+				}
+			} elsif (stat == `chars) {
+				if (m = line.Match(r'^STARTCHAR\s+(.*)')) {
+					charEntry = CharEntry(m[1])
+					stat = `charEntry
+				}
+			} elsif (stat == `charEntry) {
+				if (m = line.Match(r'^ENCODING\s+(.*)')) {
+					charEntry.ENCODING = m[1].ToNumber()
+				} elsif (m = line.Match(r'^SWIDTH\s+(.*)')) {
+					charEntry.SWIDTH = m[1].SplitReg(r'\s+'):*ToNumber().tuple
+				} elsif (m = line.Match(r'^DWIDTH\s+(.*)')) {
+					charEntry.DWIDTH = m[1].SplitReg(r'\s+'):*ToNumber().tuple
+				} elsif (m = line.Match(r'^BBX\s+(.*)')) {
+					charEntry.BBX = m[1].SplitReg(r'\s+'):*ToNumber().tuple
+				} elsif (m = line.Match(r'^BITMAP')) {
+					stat = `charEntryBitmap
+				}
+			} elsif (stat == `charEntryBitmap) {
+				if (m = line.Match(r'^ENDCHAR')) {
+					this.charEntryTbl.Add(charEntry)
+					this.charEntryDict[charEntry.ENCODING] = charEntry
+					stat = `chars
+				} else {
+					line = line.Chop()
+					if (!charEntry.bytesPerLine) {
+						charEntry.bytesPerLine = line.len / 2
+					}
+					charEntry.BITMAP.Add(('0x' + line).ToNumber())
+				}
+			}
+		}
+	}
+	Print() = {
+		[`STARTFONT, `FONT, `SIZE, `FONTBOUNDINGBOX, `FONTNAME_REGISTRY, `FOUNDRY,
+		 `FAMILY_NAME, `WEIGHT_NAME, `SLANT, `SETWIDTH_NAME, `ADD_STYLE_NAME,
+		 `PIXEL_SIZE, `POINT_SIZE, `RESOLUTION_X, `RESOLUTION_Y, `SPACING,
+		 `AVERAGE_WIDTH, `CHARSET_REGISTRY, `CHARSET_ENCODING, `DEFAULT_CHAR,
+		 `FONT_DESCENT, `FONT_ASCENT, `COPYRIGHT, `_XMBDFED_INFO].Each {|symbol|
+			Printf('%-20s %s\n', symbol, this.__prop__(symbol))
+		}
+		this.charEntryTbl.Each {|charEntry|
+			Printf('name:"%s" ENCODING:0x%x BBX:%s\n', charEntry.name, charEntry.ENCODING, charEntry.BBX)
+			charEntry.BITMAP.Each {|data|
+				Printf('%08b\n', data)
+			}
+			//charEntry.ScanBitmapVert().Each {|data|
+			//	Printf('%016b\n', data)
+			//}
+		}
+	}
+
+}
+
+if (__name__ == '__main__') {
+	//ctx = Context('k8x12.bdf').Print()
+	Context('shinonome-0.9.11/bdf/shnm8x16r.bdf').Print()
+}
