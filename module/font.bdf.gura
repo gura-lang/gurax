@@ -24,8 +24,7 @@ CharEntry = class {
 	ScanBitmapVert() = {
 		!this.bytesPerLine && return([].Each())
 		bitMask = 1 << (this.bytesPerLine * 8 - 1)
-		[width, height] = this.BBX
-		repeat (width):iter {
+		repeat (this.BBX.w):iter {
 			bits = 0
 			this.BITMAP.Reverse {|data|
 				bits <<= 1
