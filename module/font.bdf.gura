@@ -5,13 +5,20 @@
 //==============================================================================
 import(re)
 
+BoundingBox = struct {
+	w as Number
+	h as Number
+	ox as Number
+	oy as Number
+}
+
 CharEntry = class {
 	name as String
 	bytesPerLine as Number
 	ENCODING as Number
 	SWIDTH as Tuple
 	DWIDTH as Tuple
-	BBX as Tuple
+	BBX as BoundingBox
 	BITMAP[] as Number = []
 	__init__(name as String) = { this.name = name }
 	ScanBitmapVert() = {
@@ -28,13 +35,26 @@ CharEntry = class {
 			bits
 		}
 	}
+	Print() = {
+		Printf('name:"%s" ENCODING:0x%x BBX:{w:%d,h:%d,ox:%d,oy:%d}\n', this.name, this.ENCODING,
+			this.BBX.w, this.BBX.h, this.BBX.ox, this.BBX.oy)
+		this.BITMAP.Each {|data|
+			Printf('%0*b\n', this.bytesPerLine * 8, data)
+		}
+	}
+}
+
+Size = struct {
+	pointSize as Number
+	xResolution as Number
+	yResolution as Number
 }
 
 Context = class {
 	version as String
 	XLogicalFontDescription as String
-	SIZE as Tuple
-	FONTBOUNDINGBOX as Tuple
+	SIZE as Size
+	FONTBOUNDINGBOX as BondingBox
 	FONTNAME_REGISTRY as String
 	//--------
 	FOUNDRY as String
@@ -69,9 +89,9 @@ Context = class {
 				} elsif (m = line.Match(r'^FONT\s+(.*)')) {
 					this.XLogicalFontDescription = m[1]
 				} elsif (m = line.Match(r'^SIZE\s+(.*)')) {
-					this.SIZE = m[1].SplitReg(r'\s+'):*ToNumber().tuple
+					this.SIZE = Size(m[1].SplitReg(r'\s+'):*ToNumber()*)
 				} elsif (m = line.Match(r'^FONTBOUNDINGBOX\s+(.*)')) {
-					this.FONTBOUNDINGBOX = m[1].SplitReg(r'\s+'):*ToNumber().tuple
+					this.FONTBOUNDINGBOX = BoundingBox(m[1].SplitReg(r'\s+'):*ToNumber()*)
 				} elsif (m = line.Match(r'^FONTNAME_REGISTRY\s+"(.*)"')) {
 					this.FONTNAME_REGISTRY = m[1]
 				} elsif (m = line.Match(r'^FOUNDRY\s+"(.*)"')) {
@@ -128,7 +148,7 @@ Context = class {
 				} elsif (m = line.Match(r'^DWIDTH\s+(.*)')) {
 					charEntry.DWIDTH = m[1].SplitReg(r'\s+'):*ToNumber().tuple
 				} elsif (m = line.Match(r'^BBX\s+(.*)')) {
-					charEntry.BBX = m[1].SplitReg(r'\s+'):*ToNumber().tuple
+					charEntry.BBX = BoundingBox(m[1].SplitReg(r'\s+'):*ToNumber()*)
 				} elsif (m = line.Match(r'^BITMAP')) {
 					stat = `charEntryBitmap
 				}
@@ -153,15 +173,22 @@ Context = class {
 		 `PIXEL_SIZE, `POINT_SIZE, `RESOLUTION_X, `RESOLUTION_Y, `SPACING,
 		 `AVERAGE_WIDTH, `CHARSET_REGISTRY, `CHARSET_ENCODING, `DEFAULT_CHAR,
 		 `FONT_DESCENT, `FONT_ASCENT, `COPYRIGHT, `_XMBDFED_INFO].Each {|symbol|
-			Printf('%-24s %s\n', symbol, this.__prop__(symbol))
+			value = this.__prop__(symbol)
+			Printf('%-24s ', symbol)
+			if (value.__instanceOf__(Size)) {
+				Printf('pointSize:%d, xResolution:%d, yResolution:%d\n', value.pointSize, value.xResolution, value.yResolution)
+			} elsif (value.__instanceOf__(BoundingBox)) {
+				Printf('w:%d, h:%d, ox:%d, oy:%d\n', value.w, value.h, value.ox, value.oy)
+			} elsif (value.__instanceOf__(String)) {
+				Printf('"%s"\n', value)
+			} else {
+				Printf('%s\n', value)
+			}
 		}
 	}
 	PrintEntries() = {
 		this.charEntryTbl.Each {|charEntry|
-			Printf('name:"%s" ENCODING:0x%x BBX:%s\n', charEntry.name, charEntry.ENCODING, charEntry.BBX)
-			charEntry.BITMAP.Each {|data|
-				Printf('%08b\n', data)
-			}
+			charEntry.Print()
 			//charEntry.ScanBitmapVert().Each {|data|
 			//	Printf('%016b\n', data)
 			//}
