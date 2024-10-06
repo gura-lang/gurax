@@ -8,7 +8,7 @@ Gurax_BeginModule(fs)
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
-// fs.ChangeDir(dirName:String) {block?}
+// fs.ChangeDir(dirName as String) {block?}
 Gurax_DeclareFunction(ChangeDir)
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -50,7 +50,7 @@ Gurax_ImplementFunction(ChangeDir)
 	}
 }
 
-// fs.ChangeMode(pathname:String, mode):map:void:[followLink]
+// fs.ChangeMode(pathname as String, mode):map:void:[followLink]
 Gurax_DeclareFunction(ChangeMode)
 {
 	Declare(VTYPE_Nil, Flag::Map);
@@ -126,7 +126,7 @@ Gurax_ImplementFunction(ChangeMode)
 	return Value::nil();
 }
 
-// fs.Copy(pathNameSrc:String, pathNameDst:String):map:void:[overwrite]
+// fs.Copy(pathNameSrc as String, pathNameDst as String):map:void:[overwrite]
 Gurax_DeclareFunction(Copy)
 {
 	Declare(VTYPE_Nil, Flag::Map);
@@ -162,7 +162,7 @@ Gurax_ImplementFunction(Copy)
 	return Value::nil();
 }
 
-// fs.CopyDir(dirNameSrc:string, dirNameDst:string):map:void[:tree]
+// fs.CopyDir(dirNameSrc as String, dirNameDst as String):map:void[:tree]
 Gurax_DeclareFunction(CopyDir)
 {
 	Declare(VTYPE_Nil, Flag::Map);
@@ -192,7 +192,7 @@ Gurax_ImplementFunction(CopyDir)
 	return Value::nil();
 }
 
-// fs.CreateDir(dirName:string):map:void[:tree]
+// fs.CreateDir(dirName as String):map:void[:tree]
 Gurax_DeclareFunction(CreateDir)
 {
 	Declare(VTYPE_Nil, Flag::Map);
@@ -219,7 +219,7 @@ Gurax_ImplementFunction(CreateDir)
 	return Value::nil();
 }
 
-// fs.CreateLink(pathNameSrc:String, pathNameDst:String):map:void
+// fs.CreateLink(pathNameSrc as String, pathNameDst as String):map:void
 Gurax_DeclareFunction(CreateLink)
 {
 	Declare(VTYPE_Nil, Flag::Map);
@@ -243,7 +243,7 @@ Gurax_ImplementFunction(CreateLink)
 	return Value::nil();
 }
 
-// fs.Exists(pathName:String):map
+// fs.Exists(pathName as String):map
 Gurax_DeclareFunction(Exists)
 {
 	Declare(VTYPE_Bool, Flag::Map);
@@ -278,7 +278,7 @@ Gurax_ImplementFunction(GetCurDir)
 	return new Value_String(OAL::GetCurDir());
 }
 
-// fs.Remove(pathName:String):map:void
+// fs.Remove(pathName as String):map:void
 Gurax_DeclareFunction(Remove)
 {
 	Declare(VTYPE_Nil, Flag::Map);
@@ -301,7 +301,7 @@ Gurax_ImplementFunction(Remove)
 	return Value::nil();
 }
 
-// fs.RemoveDir(dirName:String):map:void[:tree]
+// fs.RemoveDir(dirName as String):map:void[:tree]
 Gurax_DeclareFunction(RemoveDir)
 {
 	Declare(VTYPE_Nil, Flag::Map);
@@ -328,7 +328,7 @@ Gurax_ImplementFunction(RemoveDir)
 	return Value::nil();
 }
 
-// fs.Rename(pathNameSrc:string, pathNameDst:string):map:void
+// fs.Rename(pathNameSrc as String, pathNameDst as String):map:void
 Gurax_DeclareFunction(Rename)
 {
 	Declare(VTYPE_Nil, Flag::Map);

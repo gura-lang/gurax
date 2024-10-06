@@ -28,6 +28,30 @@ TestCase('Japanese') {
 	}
 }
 
+TestCase('codecs.japanese.Conv*') {
+	buff = Stream('test-Codec/chars-cp932.txt', 'r', 'cp932').Read()
+	p = buff.p
+	repeat {
+		chHigh = p.uint8:fwd
+		!chHigh && break
+		if (0xa1 <= chHigh && chHigh <= 0xdf) {
+			codeSJIS = chHigh
+		} elsif ((0x81 <= chHigh && chHigh <= 0x9f) || (0xe0 <= chHigh && chHigh <= 0xef)) {
+			chLow = p.uint8:fwd
+			codeSJIS = (chHigh << 8) + chLow
+		} else {
+			continue
+		}
+		codeUTF32 = codecs.japanese.ConvSJISToUTF32(codeSJIS)
+		codeSJISRev = codecs.japanese.ConvUTF32ToSJIS(codeUTF32)
+		if (codeSJIS == codeSJISRev) {
+			Printf('%04x %04x OK\n', codeSJIS, codeUTF32)
+		} else {
+			Printf('%04x %04x *NG* %04x\n', codeSJIS, codeUTF32, codeSJISRev)
+		}
+	}
+}
+
 TestCase('Handling of Zero in the input data') {
 	b'ABCDEF\x00\x00\x00\x00'.Reader('sjis').ReadText().ToBinary().Dump()
 	b'ABCDEF\x00\x00\x00\x00'.p.Unpack('10s')[0].ToBinary().Dump()

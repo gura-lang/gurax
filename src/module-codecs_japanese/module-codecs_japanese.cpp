@@ -254,6 +254,124 @@ Codec::Result Codec_JIS::Encoder::FeedUTF32(UInt32 codeUTF32, UInt8* buffRtn, si
 }
 
 //------------------------------------------------------------------------------
+// Implementation of function
+//------------------------------------------------------------------------------
+// codecs.japanese.ConvUTF32ToSJIS(code as Number):map
+Gurax_DeclareFunction(ConvUTF32ToSJIS)
+{
+	Declare(VTYPE_Number, Flag::Map);
+	DeclareArg("code", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Convert a code of UTF32 to Shift JIS.
+)""");
+}
+
+Gurax_ImplementFunction(ConvUTF32ToSJIS)
+{
+	// Arguments
+	ArgPicker args(argument);
+	UInt32 code = args.PickNumber<UInt32>();
+	// Function body
+	return new Value_Number(UTF16ToCP932(code));
+}
+
+// codecs.japanese.ConvUTF32ToJIS(code as Number):map
+Gurax_DeclareFunction(ConvUTF32ToJIS)
+{
+	Declare(VTYPE_Number, Flag::Map);
+	DeclareArg("code", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Convert a code of UTF32 to JIS.
+)""");
+}
+
+Gurax_ImplementFunction(ConvUTF32ToJIS)
+{
+	// Arguments
+	ArgPicker args(argument);
+	UInt32 code = args.PickNumber<UInt32>();
+	// Function body
+	return new Value_Number(CP932ToJIS(UTF16ToCP932(code)));
+}
+
+// codecs.japanese.ConvUTF32ToEUCJP(code as Number):map
+Gurax_DeclareFunction(ConvUTF32ToEUCJP)
+{
+	Declare(VTYPE_Number, Flag::Map);
+	DeclareArg("code", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Convert a code of UTF32 to EUC-JP.
+)""");
+}
+
+Gurax_ImplementFunction(ConvUTF32ToEUCJP)
+{
+	// Arguments
+	ArgPicker args(argument);
+	UInt32 code = args.PickNumber<UInt32>();
+	// Function body
+	return new Value_Number(CP932ToEUCJP(UTF16ToCP932(code)));
+}
+
+// codecs.japanese.ConvSJISToUTF32(code as Number):map
+Gurax_DeclareFunction(ConvSJISToUTF32)
+{
+	Declare(VTYPE_Number, Flag::Map);
+	DeclareArg("code", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Convert a code of Shift JIS to UTF32.
+)""");
+}
+
+Gurax_ImplementFunction(ConvSJISToUTF32)
+{
+	// Arguments
+	ArgPicker args(argument);
+	UInt32 code = args.PickNumber<UInt32>();
+	// Function body
+	return new Value_Number(CP932ToUTF16(code));
+}
+
+
+// codecs.japanese.ConvJISToUTF32(code as Number):map
+Gurax_DeclareFunction(ConvJISToUTF32)
+{
+	Declare(VTYPE_Number, Flag::Map);
+	DeclareArg("code", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Convert a code of JIS to UTF32.
+)""");
+}
+
+Gurax_ImplementFunction(ConvJISToUTF32)
+{
+	// Arguments
+	ArgPicker args(argument);
+	UInt32 code = args.PickNumber<UInt32>();
+	// Function body
+	return new Value_Number(CP932ToUTF16(JISToCP932(code)));
+}
+
+// codecs.japanese.ConvEUCJPToUTF32(code as Number):map
+Gurax_DeclareFunction(ConvEUCJPToUTF32)
+{
+	Declare(VTYPE_Number, Flag::Map);
+	DeclareArg("code", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Convert a code of EUC-JP to UTF32.
+)""");
+}
+
+Gurax_ImplementFunction(ConvEUCJPToUTF32)
+{
+	// Arguments
+	ArgPicker args(argument);
+	UInt32 code = args.PickNumber<UInt32>();
+	// Function body
+	return new Value_Number(CP932ToUTF16(EUCJPToCP932(code)));
+}
+
+//------------------------------------------------------------------------------
 // Entries
 //------------------------------------------------------------------------------
 Gurax_ModuleValidate()
@@ -263,6 +381,13 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
+	// Assignment of function
+	Assign(Gurax_CreateFunction(ConvUTF32ToSJIS));
+	Assign(Gurax_CreateFunction(ConvUTF32ToJIS));
+	Assign(Gurax_CreateFunction(ConvUTF32ToEUCJP));
+	Assign(Gurax_CreateFunction(ConvSJISToUTF32));
+	Assign(Gurax_CreateFunction(ConvJISToUTF32));
+	Assign(Gurax_CreateFunction(ConvEUCJPToUTF32));
 	// Registration of CodecFactory
 	CodecFactory::Register(new CodecFactory_Generic<Codec_CP932>("cp932"));
 	CodecFactory::Register(new CodecFactory_Generic<Codec_CP932>("sjis"));
