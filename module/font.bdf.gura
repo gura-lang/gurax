@@ -31,11 +31,12 @@ CharEntry = class {
 }
 
 Context = class {
-	STARTFONT as String
-	FONT as String
+	version as String
+	XLogicalFontDescription as String
 	SIZE as Tuple
 	FONTBOUNDINGBOX as Tuple
 	FONTNAME_REGISTRY as String
+	//--------
 	FOUNDRY as String
 	FAMILY_NAME as String
 	WEIGHT_NAME as String
@@ -50,6 +51,7 @@ Context = class {
 	AVERAGE_WIDTH as Number
 	CHARSET_REGISTRY as String
 	CHARSET_ENCODING as String
+	//--------
 	DEFAULT_CHAR as Number
 	FONT_DESCENT as Number
 	FONT_ASCENT as Number
@@ -63,9 +65,9 @@ Context = class {
 		stream.ReadLines {|line|
 			if (stat == `init) {
 				if (m = line.Match(r'^STARTFONT\s+(.*)')) {
-					this.STARTFONT = m[1]
+					this.version = m[1]
 				} elsif (m = line.Match(r'^FONT\s+(.*)')) {
-					this.FONT = m[1]
+					this.XLogicalFontDescription = m[1]
 				} elsif (m = line.Match(r'^SIZE\s+(.*)')) {
 					this.SIZE = m[1].SplitReg(r'\s+'):*ToNumber().tuple
 				} elsif (m = line.Match(r'^FONTBOUNDINGBOX\s+(.*)')) {
@@ -145,14 +147,16 @@ Context = class {
 			}
 		}
 	}
-	Print() = {
-		[`STARTFONT, `FONT, `SIZE, `FONTBOUNDINGBOX, `FONTNAME_REGISTRY, `FOUNDRY,
+	PrintHeader() = {
+		[`version, `XLogicalFontDescription, `SIZE, `FONTBOUNDINGBOX, `FONTNAME_REGISTRY, `FOUNDRY,
 		 `FAMILY_NAME, `WEIGHT_NAME, `SLANT, `SETWIDTH_NAME, `ADD_STYLE_NAME,
 		 `PIXEL_SIZE, `POINT_SIZE, `RESOLUTION_X, `RESOLUTION_Y, `SPACING,
 		 `AVERAGE_WIDTH, `CHARSET_REGISTRY, `CHARSET_ENCODING, `DEFAULT_CHAR,
 		 `FONT_DESCENT, `FONT_ASCENT, `COPYRIGHT, `_XMBDFED_INFO].Each {|symbol|
-			Printf('%-20s %s\n', symbol, this.__prop__(symbol))
+			Printf('%-24s %s\n', symbol, this.__prop__(symbol))
 		}
+	}
+	PrintEntries() = {
 		this.charEntryTbl.Each {|charEntry|
 			Printf('name:"%s" ENCODING:0x%x BBX:%s\n', charEntry.name, charEntry.ENCODING, charEntry.BBX)
 			charEntry.BITMAP.Each {|data|
@@ -163,10 +167,9 @@ Context = class {
 			//}
 		}
 	}
-
 }
 
 if (__name__ == '__main__') {
 	//ctx = Context('k8x12.bdf').Print()
-	Context('shinonome-0.9.11/bdf/shnm8x16r.bdf').Print()
+	Context('shinonome-0.9.11/bdf/shnm8x16r.bdf').PrintHeader()
 }
