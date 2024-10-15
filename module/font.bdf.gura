@@ -15,6 +15,7 @@ BoundingBox = struct {
 CharEntry = class {
 	name as String
 	bytesPerLine as Number
+	codeUTF32 as Number
 	ENCODING as Number
 	SWIDTH as Tuple
 	DWIDTH as Tuple
@@ -141,7 +142,9 @@ Context = class {
 				}
 			} elsif (stat == `charEntry) {
 				if (m = line.Match(r'^ENCODING\s+(.*)')) {
-					charEntry.ENCODING = m[1].ToNumber()
+					code = m[1].ToNumber()
+					charEntry.ENCODING = code
+					charEntry.codeUTF32 = cond(code < 0x100, code, codecs.japanese.ConvJISToUTF32(code))
 				} elsif (m = line.Match(r'^SWIDTH\s+(.*)')) {
 					charEntry.SWIDTH = m[1].SplitReg(r'\s+'):*ToNumber().tuple
 				} elsif (m = line.Match(r'^DWIDTH\s+(.*)')) {
