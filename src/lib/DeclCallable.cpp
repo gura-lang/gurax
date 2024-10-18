@@ -92,7 +92,7 @@ void DeclCallable::Bootup()
 }
 
 DeclCallable::DeclCallable(Flags flags) :
-	_pVTypeResult(&VTYPE_Any), _pDottedSymbol(DottedSymbol::Empty.Reference()),
+	_pVTypeResult(&VTYPE_Any), _pDottedSymbol(DottedSymbol::Empty->Reference()),
 	_flags(flags), _pAttr(new Attribute()), _pDeclArgOwner(new DeclArgOwner()),
 	_pSymbolOfDict(Symbol::Empty), _pSymbolOfAccessor(Symbol::Empty)
 {

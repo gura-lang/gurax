@@ -117,7 +117,7 @@ private:
 public:
 	// Constructor
 	Module() = delete;
-	Module(Frame* pFrameOuter) : Module(pFrameOuter, DottedSymbol::Empty.Reference()) {}
+	Module(Frame* pFrameOuter) : Module(pFrameOuter, DottedSymbol::Empty->Reference()) {}
 	Module(Frame* pFrameOuter, DottedSymbol* pDottedSymbol);
 	// Copy constructor/operator
 	Module(const Module& src) = delete;

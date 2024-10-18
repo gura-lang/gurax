@@ -35,7 +35,7 @@ void DeclArg::Bootup()
 
 DeclArg* DeclArg::CreateFromExpr(const Expr& expr)
 {
-	RefPtr<DottedSymbol> pDottedSymbol(DottedSymbol::Empty.Reference());
+	RefPtr<DottedSymbol> pDottedSymbol(DottedSymbol::Empty->Reference());
 	const VType* pVType = nullptr;
 	const Occur* pOccur = &Occur::Once;
 	Flags flags = 0;

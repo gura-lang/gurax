@@ -14,7 +14,7 @@ class GURAX_DLLDECLARE DottedSymbol : public Referable {
 private:
 	SymbolList _symbolList;
 public:
-	static const DottedSymbol Empty;
+	static const DottedSymbol* Empty;
 public:
 	// Referable accessor
 	Gurax_DeclareReferable(DottedSymbol);
@@ -97,6 +97,7 @@ protected:
 	// Destructor
 	~DottedSymbol() = default;
 public:
+	static void Bootup();
 	const SymbolList& GetSymbolList() const { return _symbolList; }
 	const Symbol* GetSymbolFirst() const { return _symbolList.front(); }
 	const Symbol* GetSymbolLast() const { return _symbolList.back(); }

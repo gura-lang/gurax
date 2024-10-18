@@ -120,7 +120,7 @@ public:
 	virtual Value* DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc) = 0;
 	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc) = 0;
 	virtual bool ExportTo(Processor& processor, Frame& frameDst, bool overwriteFlag) const { return true; }
-	virtual const DottedSymbol& GetDottedSymbol() const { return DottedSymbol::Empty; }
+	virtual const DottedSymbol& GetDottedSymbol() const { return *DottedSymbol::Empty; }
 	virtual void GatherSymbol(SymbolList& symbolList) const {}
 	virtual void GatherSymbolIf(SymbolList& symbolList, const GatherCriteria& gatherCriteria) const {}
 	virtual const char* GetTypeName() const = 0;

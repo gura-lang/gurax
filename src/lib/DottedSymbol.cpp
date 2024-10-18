@@ -8,7 +8,12 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // DottedSymbol
 //------------------------------------------------------------------------------
-const DottedSymbol DottedSymbol::Empty;
+const DottedSymbol* DottedSymbol::Empty;
+
+void DottedSymbol::Bootup()
+{
+	Empty = new DottedSymbol();
+}
 
 // Append symbols from a list of Exprs.
 bool DottedSymbol::AppendFromExprList(const ExprList& exprList)
