@@ -16,14 +16,22 @@ Int8 Half::_shiftTable[512];
 
 Float Half::HalfToFloat(UInt16 num)
 {
-	UInt32 result = _mantissaTable[_offsetTable[num >> 10] + (num & 0x3ff)] +
-		_exponentTable[num >> 10];
-	return *reinterpret_cast<const Float*>(&result);
+	union {
+		UInt32 v1;
+		Float v2;
+	} value;
+	value.v1 = _mantissaTable[_offsetTable[num >> 10] + (num & 0x3ff)] + _exponentTable[num >> 10];
+	return value.v2;
 }
 
 UInt16 Half::FloatToHalf(Float num)
 {
-	UInt32 t = *reinterpret_cast<UInt32 *>(&num);
+	union {
+		UInt32 v1;
+		Float v2;
+	} value;
+	value.v2 = num;
+	UInt32 t = value.v1;
 	return (UInt16)(_baseTable[(t >> 23) & 0x1ff] + ((t & 0x007fffff) >> _shiftTable[t >> 23]));
 }
 
