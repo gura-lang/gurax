@@ -43,52 +43,21 @@ public:
 	static String ToString(T_Num num) { String str; return ToString(str, num); }
 };
 
-template<> String& Number<Int64>::ToString(String& str, Int64 num)
-{
-	return str.Format(formatterFormat_Int64.c_str(), num);
-}
-
-template<> String& Number<UInt64>::ToString(String& str, UInt64 num)
-{
-	return str.Format(formatterFormat_Int64.c_str(), num);
-}
-
-template<> String& Number<Half>::ToString(String& str, Half num)
-{
-	Float numFloat = static_cast<Float>(num);
-	Int64 numInt = static_cast<Int64>(numFloat);
-	if (numFloat == numInt) {
-		return str.Format(formatterFormat_Int64.c_str(), numInt);
-	} else {
-		return str.Format(formatterFormat_Float.c_str(), numFloat);
-	}
-}
-
-template<> String& Number<Float>::ToString(String& str, Float num)
-{
-	Int64 numInt = static_cast<Int64>(num);
-	if (num == numInt) {
-		return str.Format(formatterFormat_Int64.c_str(), numInt);
-	} else {
-		return str.Format(formatterFormat_Float.c_str(), num);
-	}
-}
-
-template<> String& Number<Double>::ToString(String& str, Double num)
-{
-	Int64 numInt = static_cast<Int64>(num);
-	if (num == numInt) {
-		return str.Format(formatterFormat_Int64.c_str(), numInt);
-	} else {
-		return str.Format(formatterFormat_Float.c_str(), num);
-	}
-}
-
 //------------------------------------------------------------------------------
 // NumList
 //------------------------------------------------------------------------------
 template<typename T_Num>
 class NumList : public ListBase<T_Num> {
+public:
+	using pointer = typename ListBase<T_Num>::pointer;
+	using const_pointer = typename ListBase<T_Num>::const_pointer;
+	using reference = typename ListBase<T_Num>::reference;
+	using const_reference = typename ListBase<T_Num>::const_reference;
+	using value_type = typename ListBase<T_Num>::value_type;
+	using iterator = typename ListBase<T_Num>::iterator;
+	using const_iterator = typename ListBase<T_Num>::const_iterator;
+	using reverse_iterator = typename ListBase<T_Num>::reverse_iterator;
+	using const_reverse_iterator = typename ListBase<T_Num>::const_reverse_iterator;
 public:
 	NumList() {}
 	NumList(size_t n) : ListBase<T_Num>(n) {}

@@ -154,12 +154,12 @@ template<typename T_Elem> Value* FindMax_T(const Array& array, size_t axis, cons
 	if (Error::IsIssued()) return Value::nil();
 	size_t dimSize = array.GetDimSizes()[axis];
 	if (dimSize == 0) return Value::nil();
-	int idx = 0;
+	size_t idx = 0;
 	T_Elem numMax = *pElem;
 	pElem += strides;
 	idx++;
 	if (pairFlag) {
-		int idxMax = 0;
+		size_t idxMax = 0;
 		for ( ; idx < dimSize; pElem += strides, idx++) {
 			if (numMax < *pElem) {
 				numMax = *pElem;
@@ -184,12 +184,12 @@ template<typename T_Elem> Value* FindMin_T(const Array& array, size_t axis, cons
 	if (Error::IsIssued()) return Value::nil();
 	size_t dimSize = array.GetDimSizes()[axis];
 	if (dimSize == 0) return Value::nil();
-	int idx = 0;
+	size_t idx = 0;
 	T_Elem numMin = *pElem;
 	pElem += strides;
 	idx++;
 	if (pairFlag) {
-		int idxMin = 0;
+		size_t idxMin = 0;
 		for ( ; idx < dimSize; pElem += strides, idx++) {
 			if (numMin > *pElem) {
 				numMin = *pElem;
@@ -214,7 +214,7 @@ template<typename T_Elem> Value* ArgMax_T(const Array& array, size_t axis, const
 	if (Error::IsIssued()) return Value::nil();
 	size_t dimSize = array.GetDimSizes()[axis];
 	if (dimSize == 0) return Value::nil();
-	int idx = 0, idxMax = 0;
+	size_t idx = 0, idxMax = 0;
 	T_Elem numMax = *pElem;
 	pElem += strides;
 	idx++;
@@ -236,7 +236,7 @@ template<typename T_Elem> Value* ArgMin_T(const Array& array, size_t axis, const
 	if (Error::IsIssued()) return Value::nil();
 	size_t dimSize = array.GetDimSizes()[axis];
 	if (dimSize == 0) return Value::nil();
-	int idx = 0, idxMin = 0;
+	size_t idx = 0, idxMin = 0;
 	T_Elem numMin = *pElem;
 	pElem += strides;
 	idx++;
@@ -878,7 +878,7 @@ void Eq_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
 	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
 	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
 	for( ; pRtn != pRtnEnd; pRtn++, pL++, pR++) {
-		*pRtn = (*pL == *pR);
+		*pRtn = (*pL == static_cast<T_ElemL>(*pR));
 	}
 }
 
@@ -915,7 +915,7 @@ void Ne_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
 	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
 	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
 	for( ; pRtn != pRtnEnd; pRtn++, pL++, pR++) {
-		*pRtn = (*pL != *pR);
+		*pRtn = (*pL != static_cast<T_ElemL>(*pR));
 	}
 }
 
@@ -952,7 +952,7 @@ void Lt_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
 	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
 	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
 	for( ; pRtn != pRtnEnd; pRtn++, pL++, pR++) {
-		*pRtn = (*pL < *pR);
+		*pRtn = (*pL < static_cast<T_ElemL>(*pR));
 	}
 }
 
@@ -989,7 +989,7 @@ void Le_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
 	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
 	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
 	for( ; pRtn != pRtnEnd; pRtn++, pL++, pR++) {
-		*pRtn = (*pL <= *pR);
+		*pRtn = (*pL <= static_cast<T_ElemL>(*pR));
 	}
 }
 
@@ -1026,7 +1026,7 @@ void Cmp_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
 	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
 	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
 	for( ; pRtn != pRtnEnd; pRtn++, pL++, pR++) {
-		*pRtn = (*pL < *pR)? -1 : (*pL > *pR)? + 1 : 0;
+		*pRtn = (*pL < static_cast<T_ElemL>(*pR))? -1 : (*pL > static_cast<T_ElemL>(*pR))? + 1 : 0;
 	}
 }
 
@@ -2397,7 +2397,7 @@ bool Array::Cross(RefPtr<Array>& pArrayRtn, const Array& arrayL, const Array& ar
 	if (dimSizesL.size() != 1 || dimSizesR.size() != 1 || dimSizesL[0] != 3 || dimSizesR[0] != 3) {
 		Error::Issue(ErrorType::SizeError, "unmatched array size: %s |^| %s",
 				arrayL.ToString(StringStyle::BriefCram).c_str(), arrayR.ToString(StringStyle::BriefCram).c_str());
-		return nullptr;
+		return false;
 	}
 	size_t n = 3;
 	if (!pArrayRtn) pArrayRtn.reset(Create(GetElemTypeRtnForArithm(arrayL, arrayR), DimSizes(n)));
@@ -2572,7 +2572,7 @@ size_t DimSizes::CalcOffset(size_t axis, const ValueList& valuesDim, size_t* pSt
 	size_t axisEach = size() - 1;
 	size_t strides = 1;
 	for (auto pDimSize = rbegin(); pDimSize != rend(); pDimSize++, axisEach--) {
-		size_t dimSize = *pDimSize;
+		int dimSize = static_cast<int>(*pDimSize);
 		if (axis == axisEach) {
 			*pStrides = strides;
 		} else {
@@ -2706,7 +2706,7 @@ bool DimSizes::Flatten(DimSizes& dimSizesRtn, const ValueList& values) const
 bool DimSizes::RegulateAxis(int *pAxis) const
 {
 	if (*pAxis < 0) *pAxis += size();
-	if (*pAxis < 0 || *pAxis >= size()) {
+	if (*pAxis < 0 || *pAxis >= static_cast<int>(size())) {
 		Error::Issue(ErrorType::RangeError, "specified axis is out of range");
 		return false;
 	}

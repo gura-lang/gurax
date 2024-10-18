@@ -28,13 +28,13 @@ DateTime* DateTime::Deserialize(Stream& stream)
 	UInt32 secPacked;
 	UInt32 usecPacked;
 	DateTime::TimeZone tz;
-	if (!stream.DeserializeNumber<UInt16>(year)) return false;
-	if (!stream.DeserializeNumber<UInt8>(month)) return false;
-	if (!stream.DeserializeNumber<UInt8>(day)) return false;
-	if (!stream.DeserializeNumber<UInt32>(secPacked)) return false;
-	if (!stream.DeserializeNumber<UInt32>(usecPacked)) return false;
-	if (!stream.DeserializeNumber<bool>(tz.validFlag)) return false;
-	if (!stream.DeserializeNumber<Int32>(tz.secsOffset)) return false;
+	if (!stream.DeserializeNumber<UInt16>(year)) return nullptr;
+	if (!stream.DeserializeNumber<UInt8>(month)) return nullptr;
+	if (!stream.DeserializeNumber<UInt8>(day)) return nullptr;
+	if (!stream.DeserializeNumber<UInt32>(secPacked)) return nullptr;
+	if (!stream.DeserializeNumber<UInt32>(usecPacked)) return nullptr;
+	if (!stream.DeserializeNumber<bool>(tz.validFlag)) return nullptr;
+	if (!stream.DeserializeNumber<Int32>(tz.secsOffset)) return nullptr;
 	return new DateTime(year, month, day, secPacked, usecPacked, tz);
 }
 

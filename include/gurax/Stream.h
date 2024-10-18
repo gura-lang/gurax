@@ -284,7 +284,7 @@ template<typename T_Num> bool Stream::SerializeNumList(const NumList<T_Num>& num
 template<typename T_Num> bool Stream::DeserializeNumList(NumList<T_Num>& numList)
 {
 	UInt64 n = 0;
-	if (!DeserializePackedNumber(static_cast<UInt64>(n))) return false;
+	if (!DeserializePackedNumber<UInt64>(n)) return false;
 	if (n == 0) return true;
 	numList.reserve(n);
 	for (size_t i = 0; i < n; i++) {
@@ -307,7 +307,7 @@ template<typename T_Num> bool Stream::SerializePackedNumList(const NumList<T_Num
 template<typename T_Num> bool Stream::DeserializePackedNumList(NumList<T_Num>& numList)
 {
 	UInt64 n = 0;
-	if (!DeserializePackedNumber(static_cast<UInt64>(n))) return false;
+	if (!DeserializePackedNumber<UInt64>(n)) return false;
 	if (n == 0) return true;
 	numList.reserve(n);
 	for (size_t i = 0; i < n; i++) {

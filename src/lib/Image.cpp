@@ -805,19 +805,19 @@ Image* Image::Deserialize(Stream& stream)
 	bool validFlag;
 	RefPtr<Palette> pPalette;
 	RefPtr<Memory> pMemory;
-	if (!stream.DeserializeNumber<UInt8>(iFormat)) return false;
-	if (!stream.DeserializePackedNumber<size_t>(width)) return false;
-	if (!stream.DeserializePackedNumber<size_t>(height)) return false;
-	if (!stream.DeserializeNumber<UInt8>(alphaDefault)) return false;
-	if (!stream.DeserializeNumber<bool>(validFlag)) return false;
+	if (!stream.DeserializeNumber<UInt8>(iFormat)) return nullptr;
+	if (!stream.DeserializePackedNumber<size_t>(width)) return nullptr;
+	if (!stream.DeserializePackedNumber<size_t>(height)) return nullptr;
+	if (!stream.DeserializeNumber<UInt8>(alphaDefault)) return nullptr;
+	if (!stream.DeserializeNumber<bool>(validFlag)) return nullptr;
 	if (validFlag) {
 		pPalette.reset(Palette::Deserialize(stream));
-		if (!pPalette) return false;
+		if (!pPalette) return nullptr;
 	}
-	if (!stream.DeserializeNumber<bool>(validFlag)) return false;
+	if (!stream.DeserializeNumber<bool>(validFlag)) return nullptr;
 	if (validFlag) {
 		pMemory.reset(Memory::Deserialize(stream));
-		if (!pMemory) return false;
+		if (!pMemory) return nullptr;
 	}
 	const Format& format = (iFormat == 1)? Format::RGB : (iFormat == 2)? Format::RGBA : Format::None;
 	return new Image(format, width, height, alphaDefault, pPalette.release(), pMemory.release(), Value::nil());

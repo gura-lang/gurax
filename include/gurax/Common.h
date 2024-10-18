@@ -6,6 +6,9 @@
 #if defined(_MSC_VER)
 #include <windows.h>
 #endif
+#include <stdio.h>
+#include <stdlib.h>
+#include <memory.h>
 #include <array>
 #include <algorithm>
 #include <complex>

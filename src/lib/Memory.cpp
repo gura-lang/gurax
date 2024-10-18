@@ -32,7 +32,7 @@ Memory* Memory::Deserialize(Stream& stream)
 {
 	const char* errMsg = "invalid format of serialized memory";
 	size_t bytes = 0;
-	if (!stream.DeserializePackedNumber<size_t>(bytes)) return false;
+	if (!stream.DeserializePackedNumber<size_t>(bytes)) return nullptr;
 	if (bytes == 0) return new MemoryHeap(1);
 	RefPtr<Memory> pMemory(new MemoryHeap(bytes));
 	if (stream.Read(pMemory->GetPointerC<void>(), bytes) != bytes) {

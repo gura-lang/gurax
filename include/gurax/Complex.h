@@ -20,7 +20,7 @@ public:
 public:
 	using std::complex<Double>::complex;
 	Complex() {}
-	Complex(std::complex<Double>& num) : std::complex<Double>(num) {}
+	Complex(const std::complex<Double>& num) : std::complex<Double>(num) {}
 public:
 	bool IsZero() const { return real() == 0. && imag() == 0.; }
 	String& ToString(String& str) const;

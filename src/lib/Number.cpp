@@ -42,4 +42,45 @@ template<> const Float Number<Float>::Max	= 0;
 template<> const Double Number<Double>::Min	= 0;
 template<> const Double Number<Double>::Max	= 0;
 
+template<> String& Number<Int64>::ToString(String& str, Int64 num)
+{
+	return str.Format(formatterFormat_Int64.c_str(), num);
+}
+
+template<> String& Number<UInt64>::ToString(String& str, UInt64 num)
+{
+	return str.Format(formatterFormat_Int64.c_str(), num);
+}
+
+template<> String& Number<Half>::ToString(String& str, Half num)
+{
+	Float numFloat = static_cast<Float>(num);
+	Int64 numInt = static_cast<Int64>(numFloat);
+	if (numFloat == numInt) {
+		return str.Format(formatterFormat_Int64.c_str(), numInt);
+	} else {
+		return str.Format(formatterFormat_Float.c_str(), numFloat);
+	}
+}
+
+template<> String& Number<Float>::ToString(String& str, Float num)
+{
+	Int64 numInt = static_cast<Int64>(num);
+	if (num == numInt) {
+		return str.Format(formatterFormat_Int64.c_str(), numInt);
+	} else {
+		return str.Format(formatterFormat_Float.c_str(), num);
+	}
+}
+
+template<> String& Number<Double>::ToString(String& str, Double num)
+{
+	Int64 numInt = static_cast<Int64>(num);
+	if (num == numInt) {
+		return str.Format(formatterFormat_Int64.c_str(), numInt);
+	} else {
+		return str.Format(formatterFormat_Float.c_str(), num);
+	}
+}
+
 }
