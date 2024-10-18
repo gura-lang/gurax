@@ -134,7 +134,7 @@ bool Decoder::Decode(const void* buff, size_t bytes)
 			return false;
 		}
 		_nCharsAccum++;
-		if (_nCharsAccum == _info.nCharsPerGroup) {
+		if (_nCharsAccum == static_cast<int>(_info.nCharsPerGroup)) {
 			UInt8 buffOut[8];
 			size_t bytesOut = _info.bytesOutTbl[_nPaddings];
 			for (size_t i = 0; i < _info.bytesPerGroup; i++, _accum >>= 8) {

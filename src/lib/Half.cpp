@@ -18,7 +18,7 @@ Float Half::HalfToFloat(UInt16 num)
 {
 	UInt32 result = _mantissaTable[_offsetTable[num >> 10] + (num & 0x3ff)] +
 		_exponentTable[num >> 10];
-	return *reinterpret_cast<Float *>(&result);
+	return *reinterpret_cast<const Float*>(&result);
 }
 
 UInt16 Half::FloatToHalf(Float num)

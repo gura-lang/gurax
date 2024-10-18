@@ -613,7 +613,7 @@ String Iterator_Cycle_List::ToString(const StringStyle& ss) const
 //-----------------------------------------------------------------------------
 Value* Iterator_Align::DoNextValue()
 {
-	if (_idxCur >= _cnt) return nullptr;
+	if (_idxCur >= static_cast<int>(_cnt)) return nullptr;
 	if (_stuffFlag) return _pValueStuff.Reference();
 	RefPtr<Value> pValueElem(GetIteratorSrc().NextValue());
 	if (pValueElem) return pValueElem.release();
@@ -1296,7 +1296,7 @@ String Iterator_Symbol::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 Value* Iterator_Rewindable::DoNextValue()
 {
-	if (_idxCur < _pValueOwner->size()) return _pValueOwner->at(_idxCur)->GetValue().Reference();
+	if (_idxCur < static_cast<int>(_pValueOwner->size())) return _pValueOwner->at(_idxCur)->GetValue().Reference();
 	RefPtr<Value> pValue(GetIteratorSrc().NextValue());
 	if (!pValue) return nullptr;
 	_pValueOwner->Add(pValue.Reference());

@@ -90,7 +90,7 @@ bool ImageMgrEx::Write(Stream& stream, const Image& image) const
 		}
 	} while (0);
 	RefPtr<Palette> pPalette(Palette::Reference(image.GetPalette()));
-	if (pPalette && pPalette->GetSize() == (1LL << biBitCount)) {
+	if (pPalette && pPalette->GetSize() == static_cast<size_t>(1LL << biBitCount)) {
 		// nothing to do
 	} else if (biBitCount == 2) {
 		pPalette.reset(Palette::Mono()->Reference());
@@ -533,7 +533,7 @@ bool ImageMgrEx::WriteDIB(Stream& stream, const Image& image, const Palette* pPa
 		} else {
 			std::unique_ptr<UInt8[]> buff(new UInt8 [bytesPerLineAligned]);
 			::memset(buff.get(), 0x00, bytesPerLineAligned);
-			for (size_t y = 0; y < biHeight; y++) {
+			for (size_t y = 0; y < static_cast<size_t>(biHeight); y++) {
 				if (!stream.Write(buff.get(), bytesPerLineAligned)) {
 					IssueError_FailToWrite();
 					return false;

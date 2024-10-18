@@ -101,7 +101,6 @@ Gurax_ImplementClassMethod(Image, Create)
 		pImage->Fill(Color::black);
 	} else if (content.IsType(VTYPE_Color)) {
 		if (!pImage->Allocate(width, height)) return Value::nil();
-		const Color& color = Value_Color::GetColor(content);
 		pImage->Fill(Value_Color::GetColor(content));
 	} else if (content.IsType(VTYPE_Array)) {
 		if (!pImage->SetMemory(Value_Array::GetArray(content).GetMemory().Reference(), width, height)) {

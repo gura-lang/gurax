@@ -529,7 +529,7 @@ void Image::ResizePasteT(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
 			pLineSrc += pixelSrc.GetBytesPerLine();
 		}
 	} else if (wdDst > wdSrc && htDst > htSrc) {
-		size_t yAccum = 0, yOffset = 0;
+		size_t yAccum = 0;
 		for (size_t yDst = 0; yDst < htDst; yDst++) {
 			size_t xAccum = 0;
 			UInt8* pDst = pLineDst;

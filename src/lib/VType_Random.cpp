@@ -377,7 +377,7 @@ String Value_Random::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 Value* VType_Random::Iterator_BoolSeq::DoNextValue()
 {
-	if (_cnt != -1) {
+	if (_cnt != static_cast<size_t>(-1)) {
 		if (_idx >= _cnt) return nullptr;
 		_idx++;
 	}
@@ -388,7 +388,7 @@ String VType_Random::Iterator_BoolSeq::ToString(const StringStyle& ss) const
 {
 	String str;
 	str.Format("Random.BoolSeq");
-	if (_cnt != -1) str.Format(":n=%zu", _cnt);
+	if (_cnt != static_cast<size_t>(-1)) str.Format(":n=%zu", _cnt);
 	return str;
 }
 
@@ -397,7 +397,7 @@ String VType_Random::Iterator_BoolSeq::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 Value* VType_Random::Iterator_FloatSeq::DoNextValue()
 {
-	if (_cnt != -1) {
+	if (_cnt != static_cast<size_t>(-1)) {
 		if (_idx >= _cnt) return nullptr;
 		_idx++;
 	}
@@ -407,7 +407,7 @@ Value* VType_Random::Iterator_FloatSeq::DoNextValue()
 String VType_Random::Iterator_FloatSeq::ToString(const StringStyle& ss) const
 {
 	String str = "Random.FloatSeq";
-	if (_cnt != -1) str.Format(":n=%zu", _cnt);
+	if (_cnt != static_cast<size_t>(-1)) str.Format(":n=%zu", _cnt);
 	return str;
 }
 
@@ -416,7 +416,7 @@ String VType_Random::Iterator_FloatSeq::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 Value* VType_Random::Iterator_IntSeq::DoNextValue()
 {
-	if (_cnt != -1) {
+	if (_cnt != static_cast<size_t>(-1)) {
 		if (_idx >= _cnt) return nullptr;
 		_idx++;
 	}
@@ -427,7 +427,7 @@ String VType_Random::Iterator_IntSeq::ToString(const StringStyle& ss) const
 {
 	String str;
 	str.Format("Random.IntSeq:range=%zu", _range);
-	if (_cnt != -1) str.Format(":n=%zu", _cnt);
+	if (_cnt != static_cast<size_t>(-1)) str.Format(":n=%zu", _cnt);
 	return str;
 }
 
@@ -436,7 +436,7 @@ String VType_Random::Iterator_IntSeq::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 Value* VType_Random::Iterator_NormalSeq::DoNextValue()
 {
-	if (_cnt != -1) {
+	if (_cnt != static_cast<size_t>(-1)) {
 		if (_idx >= _cnt) return nullptr;
 		_idx++;
 	}
@@ -447,7 +447,7 @@ String VType_Random::Iterator_NormalSeq::ToString(const StringStyle& ss) const
 {
 	String str;
 	str.Format("Random.NormalSeq:mean=%g,stddev=%g", _mean, _stddev);
-	if (_cnt != -1) str.Format(":n=%zu", _cnt);
+	if (_cnt != static_cast<size_t>(-1)) str.Format(":n=%zu", _cnt);
 	return str;
 }
 

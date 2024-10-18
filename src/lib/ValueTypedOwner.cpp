@@ -188,7 +188,7 @@ bool ValueTypedOwner::Append(const ValueList& values)
 bool ValueTypedOwner::Insert(Int pos, const ValueList& values)
 {
 	ValueOwner& valueOwner = GetValueOwnerToModify();
-	if (valueOwner.size() == pos) {
+	if (valueOwner.size() == static_cast<size_t>(pos)) {
 		Add(values);
 		return true;
 	}
@@ -201,7 +201,7 @@ bool ValueTypedOwner::Insert(Int pos, const ValueList& values)
 bool ValueTypedOwner::Insert(Int pos, const ValueTypedOwner& values)
 {
 	ValueOwner& valueOwner = GetValueOwnerToModify();
-	if (valueOwner.size() == pos) {
+	if (valueOwner.size() == static_cast<size_t>(pos)) {
 		Add(values);
 		return true;
 	}
@@ -215,7 +215,7 @@ bool ValueTypedOwner::Insert(Int pos, Iterator& iterator)
 {
 	if (!iterator.MustBeFinite()) return false;
 	ValueOwner& valueOwner = GetValueOwnerToModify();
-	if (valueOwner.size() == pos) return Add(iterator);
+	if (valueOwner.size() == static_cast<size_t>(pos)) return Add(iterator);
 	if (!valueOwner.FixPosition(&pos, true)) return false;
 	for (;;) {
 		RefPtr<Value> pValue(iterator.NextValue());
