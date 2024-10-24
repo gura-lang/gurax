@@ -4,7 +4,7 @@
 // The markdown module consists of the binary and script part, and this is
 // the script part that mainly provides rendering functions.
 //=============================================================================
-import(re)
+//import(re)
 import(markdown):binary {*}
 import(markdown.html)
 import(markdown.console)

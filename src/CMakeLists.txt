@@ -61,7 +61,7 @@ add_subdirectory(module-bzip2)
 #add_subdirectory(module-codecs_chinese)		# built-in module
 #add_subdirectory(module-codecs_iso8859)		# built-in module
 #add_subdirectory(module-codecs_japanese)		# built-in module
-#add_subdirectory(module-conio)
+add_subdirectory(module-conio)
 #add_subdirectory(module-csv)
 #add_subdirectory(module-curl)
 #add_subdirectory(module-diff)
