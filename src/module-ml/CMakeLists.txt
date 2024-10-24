@@ -4,7 +4,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(gurax_module_ml)
 
-add_library(ml.gurd SHARED)
+add_library(ml.gurd MODULE)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
@@ -82,8 +82,8 @@ target_sources(ml.gurd PRIVATE
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
-set(CMAKE_SHARED_LIBRARY_PREFIX)
-set(CMAKE_SHARED_LIBRARY_SUFFIX)
+set(CMAKE_SHARED_MODULE_PREFIX)
+set(CMAKE_SHARED_MODULE_SUFFIX)
 target_link_options(ml.gurd PRIVATE
 	$<$<PLATFORM_ID:Windows>:>
 	$<$<PLATFORM_ID:Linux>:>
@@ -95,5 +95,5 @@ target_link_libraries(ml.gurd PRIVATE guraxcore
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------
-install(TARGETS ml.gurd RUNTIME DESTINATION module/site)
+install(TARGETS ml.gurd LIBRARY DESTINATION module/site)
 install(PROGRAMS script/ml.gura DESTINATION module/site)

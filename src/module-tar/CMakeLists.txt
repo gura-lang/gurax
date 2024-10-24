@@ -4,7 +4,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(gurax_module_tar)
 
-add_library(tar.gurd SHARED)
+add_library(tar.gurd MODULE)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
@@ -58,8 +58,8 @@ target_sources(tar.gurd PRIVATE
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
-set(CMAKE_SHARED_LIBRARY_PREFIX)
-set(CMAKE_SHARED_LIBRARY_SUFFIX)
+set(CMAKE_SHARED_MODULE_PREFIX)
+set(CMAKE_SHARED_MODULE_SUFFIX)
 target_link_options(tar.gurd PRIVATE
 	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:-NODEFAULTLIB:MSVCRT>
 	$<$<PLATFORM_ID:Linux>:>
@@ -74,4 +74,4 @@ target_link_libraries(tar.gurd PRIVATE guraxcore
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------
-install(TARGETS tar.gurd RUNTIME DESTINATION module/site)
+install(TARGETS tar.gurd LIBRARY DESTINATION module/site)

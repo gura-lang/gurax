@@ -4,7 +4,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(gurax_module_hash)
 
-add_library(hash.gurd SHARED)
+add_library(hash.gurd MODULE)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
@@ -41,13 +41,13 @@ target_sources(hash.gurd PRIVATE
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
-set(CMAKE_SHARED_LIBRARY_PREFIX)
-set(CMAKE_SHARED_LIBRARY_SUFFIX)
+set(CMAKE_SHARED_MODULE_PREFIX)
+set(CMAKE_SHARED_MODULE_SUFFIX)
 target_link_libraries(hash.gurd PRIVATE guraxcore guest)
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------
-install(TARGETS hash.gurd RUNTIME DESTINATION module/site)
+install(TARGETS hash.gurd LIBRARY DESTINATION module/site)
 #-------------------------------------------------------------------------------
 # Dependency
 #-------------------------------------------------------------------------------

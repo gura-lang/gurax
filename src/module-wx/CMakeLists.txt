@@ -6,7 +6,7 @@ project(gurax_module_wx)
 
 include(VTypes.cmake)
 
-add_library(wx.gurd SHARED)
+add_library(wx.gurd MODULE)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
@@ -60,8 +60,8 @@ target_sources(wx.gurd PRIVATE
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
-set(CMAKE_SHARED_LIBRARY_PREFIX)
-set(CMAKE_SHARED_LIBRARY_SUFFIX)
+set(CMAKE_SHARED_MODULE_PREFIX)
+set(CMAKE_SHARED_MODULE_SUFFIX)
 target_link_options(wx.gurd PRIVATE
 	$<$<PLATFORM_ID:Windows>:>
 	$<$<PLATFORM_ID:Linux>:>
@@ -118,7 +118,7 @@ target_link_libraries(wx.gurd PRIVATE guraxcore
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------
-install(TARGETS wx.gurd RUNTIME DESTINATION module/site)
+install(TARGETS wx.gurd LIBRARY DESTINATION module/site)
 install(PROGRAMS
 	script/wx.show.gura
 	DESTINATION module/site)

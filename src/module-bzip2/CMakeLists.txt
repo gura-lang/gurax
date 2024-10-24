@@ -4,7 +4,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(gurax_module_bzip2)
 
-add_library(bzip2.gurd SHARED)
+add_library(bzip2.gurd MODULE)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
@@ -39,8 +39,8 @@ target_sources(bzip2.gurd PRIVATE
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
-set(CMAKE_SHARED_LIBRARY_PREFIX)
-set(CMAKE_SHARED_LIBRARY_SUFFIX)
+set(CMAKE_SHARED_MODULE_PREFIX)
+set(CMAKE_SHARED_MODULE_SUFFIX)
 target_link_options(bzip2.gurd PRIVATE
 	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:-NODEFAULTLIB:MSVCRT>)
 target_link_libraries(bzip2.gurd PRIVATE guraxcore
@@ -50,4 +50,4 @@ target_link_libraries(bzip2.gurd PRIVATE guraxcore
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------
-install(TARGETS bzip2.gurd RUNTIME DESTINATION module/site)
+install(TARGETS bzip2.gurd LIBRARY DESTINATION module/site)

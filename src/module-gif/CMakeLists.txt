@@ -4,7 +4,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(gurax_module_gif)
 
-add_library(gif.gurd SHARED)
+add_library(gif.gurd MODULE)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
@@ -54,8 +54,8 @@ target_sources(gif.gurd PRIVATE
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
-set(CMAKE_SHARED_LIBRARY_PREFIX)
-set(CMAKE_SHARED_LIBRARY_SUFFIX)
+set(CMAKE_SHARED_MODULE_PREFIX)
+set(CMAKE_SHARED_MODULE_SUFFIX)
 target_link_options(gif.gurd PRIVATE
 	$<$<PLATFORM_ID:Windows>:>
 	$<$<PLATFORM_ID:Linux>:>
@@ -67,4 +67,4 @@ target_link_libraries(gif.gurd PRIVATE guraxcore
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------
-install(TARGETS gif.gurd RUNTIME DESTINATION module/site)
+install(TARGETS gif.gurd LIBRARY DESTINATION module/site)

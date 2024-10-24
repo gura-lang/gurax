@@ -4,7 +4,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(gurax_module_ml_mnist)
 
-add_library(ml.mnist.gurd SHARED)
+add_library(ml.mnist.gurd MODULE)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
@@ -53,8 +53,8 @@ target_sources(ml.mnist.gurd PRIVATE
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
-set(CMAKE_SHARED_LIBRARY_PREFIX)
-set(CMAKE_SHARED_LIBRARY_SUFFIX)
+set(CMAKE_SHARED_MODULE_PREFIX)
+set(CMAKE_SHARED_MODULE_SUFFIX)
 target_link_options(ml.mnist.gurd PRIVATE
 	$<$<PLATFORM_ID:Windows>:>
 	$<$<PLATFORM_ID:Linux>:>
@@ -66,7 +66,7 @@ target_link_libraries(ml.mnist.gurd PRIVATE guraxcore
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------
-install(TARGETS ml.mnist.gurd RUNTIME DESTINATION module/site)
+install(TARGETS ml.mnist.gurd LIBRARY DESTINATION module/site)
 install(PROGRAMS
 	script/ml.mnist_common.gura
 	script/ml.mnist.gura

@@ -4,7 +4,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(gurax_module_yaml)
 
-add_library(yaml.gurd SHARED)
+add_library(yaml.gurd MODULE)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
@@ -47,8 +47,8 @@ target_sources(yaml.gurd PRIVATE
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
-set(CMAKE_SHARED_LIBRARY_PREFIX)
-set(CMAKE_SHARED_LIBRARY_SUFFIX)
+set(CMAKE_SHARED_MODULE_PREFIX)
+set(CMAKE_SHARED_MODULE_SUFFIX)
 target_link_options(yaml.gurd PRIVATE
 	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Release>>:-NODEFAULTLIB:MSVCRTD>
 	$<$<PLATFORM_ID:Linux>:>
@@ -60,5 +60,5 @@ target_link_libraries(yaml.gurd PRIVATE guraxcore
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------
-install(TARGETS yaml.gurd RUNTIME DESTINATION module/site)
+install(TARGETS yaml.gurd LIBRARY DESTINATION module/site)
 install(PROGRAMS script/json.gura DESTINATION module/site)

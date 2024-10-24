@@ -4,7 +4,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(gurax_module_sdl)
 
-add_library(sdl.gurd SHARED)
+add_library(sdl.gurd MODULE)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
@@ -114,8 +114,8 @@ target_sources(sdl.gurd PRIVATE
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
-set(CMAKE_SHARED_LIBRARY_PREFIX)
-set(CMAKE_SHARED_LIBRARY_SUFFIX)
+set(CMAKE_SHARED_MODULE_PREFIX)
+set(CMAKE_SHARED_MODULE_SUFFIX)
 target_link_libraries(sdl.gurd PRIVATE guraxcore
 	$<$<PLATFORM_ID:Windows>:SDL2.lib>
 	$<$<PLATFORM_ID:Windows>:SDL2_image.lib>
@@ -126,5 +126,5 @@ target_link_libraries(sdl.gurd PRIVATE guraxcore
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------
-install(TARGETS sdl.gurd RUNTIME DESTINATION module/site)
+install(TARGETS sdl.gurd LIBRARY DESTINATION module/site)
 install(PROGRAMS script/sdl.gura DESTINATION module/site)

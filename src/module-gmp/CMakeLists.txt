@@ -4,7 +4,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(gurax_module_gmp)
 
-add_library(gmp.gurd SHARED)
+add_library(gmp.gurd MODULE)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
@@ -51,8 +51,8 @@ target_sources(gmp.gurd PRIVATE
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
-set(CMAKE_SHARED_LIBRARY_PREFIX)
-set(CMAKE_SHARED_LIBRARY_SUFFIX)
+set(CMAKE_SHARED_MODULE_PREFIX)
+set(CMAKE_SHARED_MODULE_SUFFIX)
 target_link_options(gmp.gurd PRIVATE
 	$<$<PLATFORM_ID:Windows>:/NODEFAULTLIB:LIBCMT>
 	$<$<PLATFORM_ID:Linux>:>
@@ -64,4 +64,4 @@ target_link_libraries(gmp.gurd PRIVATE guraxcore
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------
-install(TARGETS gmp.gurd RUNTIME DESTINATION module/site)
+install(TARGETS gmp.gurd LIBRARY DESTINATION module/site)

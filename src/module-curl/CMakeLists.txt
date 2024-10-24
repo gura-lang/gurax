@@ -4,7 +4,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(gurax_module_curl)
 
-add_library(curl.gurd SHARED)
+add_library(curl.gurd MODULE)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
@@ -55,8 +55,8 @@ target_sources(curl.gurd PRIVATE
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
-set(CMAKE_SHARED_LIBRARY_PREFIX)
-set(CMAKE_SHARED_LIBRARY_SUFFIX)
+set(CMAKE_SHARED_MODULE_PREFIX)
+set(CMAKE_SHARED_MODULE_SUFFIX)
 target_link_options(curl.gurd PRIVATE
 	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:-NODEFAULTLIB:MSVCRT>
 	$<$<PLATFORM_ID:Linux>:>
@@ -72,5 +72,5 @@ target_link_libraries(curl.gurd PRIVATE guraxcore
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------
-install(TARGETS curl.gurd RUNTIME DESTINATION module/site)
+install(TARGETS curl.gurd LIBRARY DESTINATION module/site)
 install(PROGRAMS script/curl.util.gura DESTINATION module/site)

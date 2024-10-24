@@ -4,7 +4,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(gurax_module_ml_cifar)
 
-add_library(ml.cifar.gurd SHARED)
+add_library(ml.cifar.gurd MODULE)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
@@ -54,8 +54,8 @@ target_sources(ml.cifar.gurd PRIVATE
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
-set(CMAKE_SHARED_LIBRARY_PREFIX)
-set(CMAKE_SHARED_LIBRARY_SUFFIX)
+set(CMAKE_SHARED_MODULE_PREFIX)
+set(CMAKE_SHARED_MODULE_SUFFIX)
 target_link_options(ml.cifar.gurd PRIVATE
 	$<$<PLATFORM_ID:Windows>:>
 	$<$<PLATFORM_ID:Linux>:>
@@ -67,5 +67,5 @@ target_link_libraries(ml.cifar.gurd PRIVATE guraxcore
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------
-install(TARGETS ml.cifar.gurd RUNTIME DESTINATION module/site)
+install(TARGETS ml.cifar.gurd LIBRARY DESTINATION module/site)
 install(PROGRAMS script/ml.cifar.gura script/ml.cifar10.gura script/ml.cifar100.gura DESTINATION module/site)

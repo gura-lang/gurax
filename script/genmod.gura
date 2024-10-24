@@ -12,7 +12,7 @@ tmpl_CMakeLists = tR'''
 cmake_minimum_required(VERSION 3.16)
 project(gurax_module_${ubarModuleName})
 
-add_library(${fileName_gurd} SHARED)
+add_library(${fileName_gurd} MODULE)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
@@ -53,8 +53,8 @@ target_sources(${fileName_gurd} PRIVATE
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
-set(CMAKE_SHARED_LIBRARY_PREFIX)
-set(CMAKE_SHARED_LIBRARY_SUFFIX)
+set(CMAKE_SHARED_MODULE_PREFIX)
+set(CMAKE_SHARED_MODULE_SUFFIX)
 target_link_options(${fileName_gurd} PRIVATE
 	$<$<PLATFORM_ID:Windows>:>
 	$<$<PLATFORM_ID:Linux>:>
@@ -66,7 +66,7 @@ target_link_libraries(${fileName_gurd} PRIVATE guraxcore
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------
-install(TARGETS ${fileName_gurd} RUNTIME DESTINATION module/site)
+install(TARGETS ${fileName_gurd} LIBRARY DESTINATION module/site)
 '''
 
 //------------------------------------------------------------------------------

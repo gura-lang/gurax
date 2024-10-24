@@ -61,4 +61,4 @@ target_link_libraries(unittest guraxcore)
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------
-install(TARGETS unittest RUNTIME DESTINATION bin)
+install(TARGETS unittest LIBRARY DESTINATION bin)

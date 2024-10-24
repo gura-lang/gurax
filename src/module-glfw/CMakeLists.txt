@@ -4,7 +4,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(gurax_module_glfw)
 
-add_library(glfw.gurd SHARED)
+add_library(glfw.gurd MODULE)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
@@ -50,8 +50,8 @@ target_sources(glfw.gurd PRIVATE
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
-set(CMAKE_SHARED_LIBRARY_PREFIX)
-set(CMAKE_SHARED_LIBRARY_SUFFIX)
+set(CMAKE_SHARED_MODULE_PREFIX)
+set(CMAKE_SHARED_MODULE_SUFFIX)
 target_link_libraries(glfw.gurd PRIVATE guraxcore
 	$<$<PLATFORM_ID:Windows>:glfw3>
 	$<$<PLATFORM_ID:Linux>:glfw3>
@@ -59,7 +59,7 @@ target_link_libraries(glfw.gurd PRIVATE guraxcore
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------
-install(TARGETS glfw.gurd RUNTIME DESTINATION module/site)
+install(TARGETS glfw.gurd LIBRARY DESTINATION module/site)
 install(PROGRAMS
 	script/glfw.gura
 	DESTINATION module/site)

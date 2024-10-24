@@ -4,7 +4,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(gurax_module_gzip)
 
-add_library(gzip.gurd SHARED)
+add_library(gzip.gurd MODULE)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
@@ -39,8 +39,8 @@ target_sources(gzip.gurd PRIVATE
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
-set(CMAKE_SHARED_LIBRARY_PREFIX)
-set(CMAKE_SHARED_LIBRARY_SUFFIX)
+set(CMAKE_SHARED_MODULE_PREFIX)
+set(CMAKE_SHARED_MODULE_SUFFIX)
 target_link_options(gzip.gurd PRIVATE
 	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:-NODEFAULTLIB:MSVCRT>)
 target_link_libraries(gzip.gurd PRIVATE guraxcore
@@ -50,4 +50,4 @@ target_link_libraries(gzip.gurd PRIVATE guraxcore
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------
-install(TARGETS gzip.gurd RUNTIME DESTINATION module/site)
+install(TARGETS gzip.gurd LIBRARY DESTINATION module/site)

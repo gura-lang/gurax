@@ -4,7 +4,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(gurax_module_jpeg)
 
-add_library(jpeg.gurd SHARED)
+add_library(jpeg.gurd MODULE)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
@@ -58,8 +58,8 @@ target_sources(jpeg.gurd PRIVATE
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
-set(CMAKE_SHARED_LIBRARY_PREFIX)
-set(CMAKE_SHARED_LIBRARY_SUFFIX)
+set(CMAKE_SHARED_MODULE_PREFIX)
+set(CMAKE_SHARED_MODULE_SUFFIX)
 target_link_options(jpeg.gurd PRIVATE
 	$<$<PLATFORM_ID:Windows>:-NODEFAULTLIB:LIBCMT>)
 target_link_libraries(jpeg.gurd PRIVATE guraxcore
@@ -69,6 +69,6 @@ target_link_libraries(jpeg.gurd PRIVATE guraxcore
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------
-install(TARGETS jpeg.gurd RUNTIME DESTINATION module/site)
+install(TARGETS jpeg.gurd LIBRARY DESTINATION module/site)
 install(PROGRAMS script/jpeg.gura DESTINATION module/site)
 install(PROGRAMS script/jpeg-editexif.gura script/jpeg-printexif.gura DESTINATION script)
