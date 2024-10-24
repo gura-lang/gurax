@@ -8,7 +8,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(gurax_module_re)
 
-add_library(re.gurd SHARED)
+add_library(re.gurd MODULE)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
@@ -20,7 +20,7 @@ else()
 endif()
 set(GURAX_BASEDIR ${PROJECT_SOURCE_DIR}/../..)
 if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
-	set(GURAX_MODULEDIR ${GURAX_BASEDIR}/module/site)
+	set(GURAX_MODULEDIR ${CMAKE_INSTALL_PREFIX}/module/site)
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
 	set(GURAX_MODULEDIR ${CMAKE_INSTALL_PREFIX}/lib/gurax/${GURAX_VERSION}/module/site)
 endif()
@@ -61,8 +61,8 @@ target_sources(re.gurd PRIVATE
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
-set(CMAKE_SHARED_LIBRARY_PREFIX)
-set(CMAKE_SHARED_LIBRARY_SUFFIX)
+set(CMAKE_SHARED_MODULE_PREFIX)
+set(CMAKE_SHARED_MODULE_SUFFIX)
 target_link_options(re.gurd PRIVATE
 	$<$<PLATFORM_ID:Windows>:-NODEFAULTLIB:LIBCMT -LTCG -INCREMENTAL:NO>)
 target_link_libraries(re.gurd PRIVATE guraxcore
