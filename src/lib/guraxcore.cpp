@@ -7,8 +7,7 @@ namespace Gurax {
 
 bool Initialize(int& argc, char** argv)
 {
-	Symbol::Bootup(); String::Bootup();	// must be at first
-	DottedSymbol::Bootup();
+	Symbol::Bootup(); String::Bootup();	DottedSymbol::Bootup(); // must be at first
 	Array::Bootup();
 	Attribute::Bootup();
 	Binary::Bootup();

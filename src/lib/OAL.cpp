@@ -250,41 +250,53 @@ String OAL::GetDirName_Data()
 #if defined(GURAX_ON_MSWIN)
 	return GetDirName_Base();
 #else
-	return PathName(GetDirName_Base()).JoinAfter("share/gurax/" GURAX_VERSION);
+	return PathName(GetDirName_Base()).JoinAfter("share/gurax/" GURAX_VERSION "/");
 #endif
 }
 
 String OAL::GetDirName_Module()
 {
 #if defined(GURAX_ON_MSWIN)
-	return PathName(GetDirName_Base()).JoinAfter("module");
+	return PathName(GetDirName_Base()).JoinAfter("module\\");
 #else
-	return PathName(GetDirName_Base()).JoinAfter("lib/gurax/" GURAX_VERSION "/module");
+	return PathName(GetDirName_Base()).JoinAfter("lib/gurax/" GURAX_VERSION "/module/");
 #endif
 }
 
 String OAL::GetDirName_Include()
 {
 #if defined(GURAX_ON_MSWIN)
-	return PathName(GetDirName_Base()).JoinAfter("include");
+	return PathName(GetDirName_Base()).JoinAfter("include\\");
 #else
-	return PathName(GetDirName_Base()).JoinAfter("include/gurax/" GURAX_VERSION);
+	return PathName(GetDirName_Base()).JoinAfter("include/gurax/" GURAX_VERSION "/");
 #endif
 }
 
 String OAL::GetDirName_Library()
 {
-	return PathName(GetDirName_Base()).JoinAfter("lib");
+#if defined(GURAX_ON_MSWIN)
+	return PathName(GetDirName_Base()).JoinAfter("lib\\");
+#else
+	return PathName(GetDirName_Base()).JoinAfter("lib/");
+#endif
 }
 
 String OAL::GetDirName_Font()
 {
-	return PathName(GetDirName_Data()).JoinAfter("font");
+#if defined(GURAX_ON_MSWIN)
+	return PathName(GetDirName_Data()).JoinAfter("font\\");
+#else
+	return PathName(GetDirName_Base()).JoinAfter("font/");
+#endif
 }
 
 String OAL::GetDirName_Script()
 {
-	return PathName(GetDirName_Data()).JoinAfter("script");
+#if defined(GURAX_ON_MSWIN)
+	return PathName(GetDirName_Data()).JoinAfter("script\\");
+#else
+	return PathName(GetDirName_Base()).JoinAfter("script/");
+#endif
 }
 	
 String OAL::GetDirName_Local()
@@ -293,13 +305,15 @@ String OAL::GetDirName_Local()
 	char dirNameN[MAX_PATH];
 	::SHGetSpecialFolderPath(nullptr, dirNameN, CSIDL_LOCAL_APPDATA, FALSE);
 	String dirName = FromNativeString(dirNameN);
-	dirName += "\\Gura\\";
+	dirName += "\\Gurax\\";
 	dirName += Version::GetVersion();
+	dirName += "\\";
 	return dirName;
 #else
 	String dirName = FromNativeString(GetEnv("HOME").c_str());
 	dirName += "/.gurax/";
 	dirName += Version::GetVersion();
+	dirName += "/";
 	return dirName;
 #endif
 }

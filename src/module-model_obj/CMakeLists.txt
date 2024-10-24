@@ -11,7 +11,7 @@ add_library(model.obj.gurd SHARED)
 if(EXISTS ${PROJECT_SOURCE_DIR}/../gurax/gurax.cpp)
 set(GURAX_BASEDIR ${PROJECT_SOURCE_DIR}/../..)
 else()
-execute_process(COMMAND gurax -p "sys.dirBase.Chop()" OUTPUT_VARIABLE GURAX_BASEDIR)
+execute_process(COMMAND gurax --naked -p "sys.dirBase.Chop()" OUTPUT_VARIABLE GURAX_BASEDIR)
 endif()
 target_include_directories(model.obj.gurd PRIVATE
 	${GURAX_BASEDIR}/include
