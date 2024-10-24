@@ -12,10 +12,17 @@ add_library(re.gurd SHARED)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
-if(EXISTS ${PROJECT_SOURCE_DIR}/../gurax/gurax.cpp)
-set(GURAX_BASEDIR ${PROJECT_SOURCE_DIR}/../..)
+if (PROJECT_IS_TOP_LEVEL)
+	execute_process(COMMAND gurax --naked -p "sys.dirModule.Chop()" OUTPUT_VARIABLE GURAX_MODULEDIR)
+	execute_process(COMMAND gurax --naked -p "sys.version" OUTPUT_VARIABLE GURAX_VERSION)
 else()
-execute_process(COMMAND gurax --naked -p "sys.dirBase.Chop()" OUTPUT_VARIABLE GURAX_BASEDIR)
+	set(GURAX_VERSION ${CMAKE_PROJECT_VERSION})
+endif()
+set(GURAX_BASEDIR ${PROJECT_SOURCE_DIR}/../..)
+if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
+	set(GURAX_MODULEDIR ${GURAX_BASEDIR}/module/site)
+elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+	set(GURAX_MODULEDIR ${CMAKE_INSTALL_PREFIX}/lib/gurax/${GURAX_VERSION}/module/site)
 endif()
 target_include_directories(re.gurd PRIVATE
 	${GURAX_BASEDIR}/include
@@ -27,7 +34,6 @@ target_link_directories(re.gurd PRIVATE
 	$<$<PLATFORM_ID:Windows>:${GURAX_BASEDIR}/guest/onigmo-6.2.0/build_x86>
 	$<$<PLATFORM_ID:Linux>:${GURAX_BASEDIR}/guest/lib>
 	$<$<PLATFORM_ID:Darwin>:${GURAX_BASEDIR}/guest/lib>)
-set(CMAKE_INSTALL_PREFIX ${GURAX_BASEDIR})
 #-------------------------------------------------------------------------------
 # Compile
 #-------------------------------------------------------------------------------
@@ -61,15 +67,16 @@ target_link_options(re.gurd PRIVATE
 	$<$<PLATFORM_ID:Windows>:-NODEFAULTLIB:LIBCMT -LTCG -INCREMENTAL:NO>)
 target_link_libraries(re.gurd PRIVATE guraxcore
 	$<$<PLATFORM_ID:Windows>:onigmo_s>
-	$<$<PLATFORM_ID:Linx>:onigmo>
-	$<$<PLATFORM_ID:Darwin>:onigmo>)
+	$<$<PLATFORM_ID:Linx>:onig>
+	$<$<PLATFORM_ID:Darwin>:onig>)
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------
-install(TARGETS re.gurd RUNTIME DESTINATION module/site)
-install(PROGRAMS
+install(TARGETS re.gurd LIBRARY DESTINATION ${GURAX_MODULEDIR})
+install(FILES
     script/sed.doc.gura
     script/sed.gura
     script/tokenizer.doc.gura
     script/tokenizer.gura
-    DESTINATION module/site)
+    DESTINATION ${GURAX_MODULEDIR}
+	PERMISSIONS OWNER_READ GROUP_READ WORLD_READ OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE)

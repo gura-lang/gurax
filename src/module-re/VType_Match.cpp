@@ -225,7 +225,7 @@ Value* Value_Match::GetValueOfGroup(const Value& valueIndex) const
 		return new Value_Group(GetMatch().CreateGroup(iGroup));
 	}
 	size_t iGroup = 0;
-	if (!Index::GetIndexNumber(valueIndex, GetMatch().CountGroups(), &iGroup)) return false;
+	if (!Index::GetIndexNumber(valueIndex, GetMatch().CountGroups(), &iGroup)) return nullptr;
 	return new Value_Group(GetMatch().CreateGroup(iGroup));
 }
 
@@ -241,7 +241,7 @@ Value* Value_Match::GetValueOfGroupString(const Value& valueIndex) const
 		return new Value_String(GetMatch().GetGroupString(iGroup));
 	}
 	size_t iGroup = 0;
-	if (!Index::GetIndexNumber(valueIndex, GetMatch().CountGroups(), &iGroup)) return false;
+	if (!Index::GetIndexNumber(valueIndex, GetMatch().CountGroups(), &iGroup)) return nullptr;
 	return new Value_String(GetMatch().GetGroupString(iGroup));
 }
 

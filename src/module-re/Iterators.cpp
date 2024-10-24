@@ -147,7 +147,7 @@ Iterator_Group::Iterator_Group(Match* pMatch) : _pMatch(pMatch), _iGroup(1)
 
 Value* Iterator_Group::DoNextValue()
 {
-	if (_iGroup < _pMatch->CountGroups()) {
+	if (_iGroup < static_cast<size_t>(_pMatch->CountGroups())) {
 		RefPtr<Value> pValue(new Value_Group(_pMatch->CreateGroup(_iGroup)));
 		_iGroup++;
 		return pValue.release();

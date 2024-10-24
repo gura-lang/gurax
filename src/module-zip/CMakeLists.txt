@@ -12,10 +12,17 @@ add_library(zip.gurd SHARED)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
-if(EXISTS ${PROJECT_SOURCE_DIR}/../gurax/gurax.cpp)
-set(GURAX_BASEDIR ${PROJECT_SOURCE_DIR}/../..)
+if (PROJECT_IS_TOP_LEVEL)
+	execute_process(COMMAND gurax --naked -p "sys.dirModule.Chop()" OUTPUT_VARIABLE GURAX_MODULEDIR)
+	execute_process(COMMAND gurax --naked -p "sys.version" OUTPUT_VARIABLE GURAX_VERSION)
 else()
-execute_process(COMMAND gurax --naked -p "sys.dirBase.Chop()" OUTPUT_VARIABLE GURAX_BASEDIR)
+	set(GURAX_VERSION ${CMAKE_PROJECT_VERSION})
+endif()
+set(GURAX_BASEDIR ${PROJECT_SOURCE_DIR}/../..)
+if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
+	set(GURAX_MODULEDIR ${GURAX_BASEDIR}/module/site)
+elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+	set(GURAX_MODULEDIR ${CMAKE_INSTALL_PREFIX}/lib/gurax/${GURAX_VERSION}/module/site)
 endif()
 target_include_directories(zip.gurd PRIVATE
 	${GURAX_BASEDIR}/include
@@ -27,7 +34,6 @@ target_link_directories(zip.gurd PRIVATE
 	$<$<PLATFORM_ID:Windows>:
 		${GURAX_BASEDIR}/guest/zlib-1.2.11
 		${GURAX_BASEDIR}/guest/bzip2-1.0.8>)
-set(CMAKE_INSTALL_PREFIX ${GURAX_BASEDIR})
 #-------------------------------------------------------------------------------
 # Compile
 #-------------------------------------------------------------------------------
@@ -69,4 +75,4 @@ target_link_libraries(zip.gurd PRIVATE guraxcore
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------
-install(TARGETS zip.gurd RUNTIME DESTINATION module/site)
+install(TARGETS zip.gurd LIBRARY DESTINATION ${GURAX_MODULEDIR})
