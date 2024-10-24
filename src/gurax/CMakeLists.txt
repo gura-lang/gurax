@@ -27,7 +27,10 @@ target_sources(gurax PRIVATE gurax.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
-target_link_libraries(gurax PRIVATE guraxcore) # ${LIBREADLINE}
+target_link_libraries(gurax PRIVATE guraxcore
+	$<$<PLATFORM_ID:Windows>:>
+	$<$<PLATFORM_ID:Linux>:readline>
+	$<$<PLATFORM_ID:Darwin>:readline>)
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------

@@ -1,10 +1,9 @@
 ﻿//==============================================================================
 // gurax.cpp
-// Copyright (C) 2011-2020 ypsitau
+// Copyright (C) 2011-2024 ypsitau
 //==============================================================================
 #include "stdafx.h"
-//#if defined(GURAX_ON_MSWIN)
-#if 1
+#if defined(GURAX_ON_MSWIN)
 #else
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -166,8 +165,7 @@ void RunREPL()
 //------------------------------------------------------------------------------
 // ReadLine
 //------------------------------------------------------------------------------
-//#if defined(GURAX_ON_MSWIN)
-#if 1
+#if defined(GURAX_ON_MSWIN)
 bool ReadLine(const char* prompt, String& strLine)
 {
 	strLine.clear();
@@ -183,9 +181,9 @@ bool ReadLine(const char* prompt, String& strLine)
 #else
 bool ReadLine(const char* prompt, String& strLine)
 {
-	char* lineBuff = readline(prompt);
+	char* lineBuff = ::readline(prompt);
 	if (lineBuff == nullptr) return false;
-	if (lineBuff[0] != '\0') add_history(lineBuff);
+	if (lineBuff[0] != '\0') ::add_history(lineBuff);
 	strLine = lineBuff;
 	::free(lineBuff);
 	strLine += '\n';
