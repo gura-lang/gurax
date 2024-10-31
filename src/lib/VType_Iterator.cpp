@@ -1736,6 +1736,30 @@ Gurax_ImplementOpBinary(Concat, Iterator, Iterator)
 	return new Value_Iterator(new Iterator_Concat(iteratorL.Reference(), iteratorR.Reference()));
 }
 
+// Iterator |+| List
+Gurax_ImplementOpBinary(Concat, Iterator, List)
+{
+	Iterator& iteratorL = Value_Iterator::GetIterator(valueL);
+	RefPtr<Iterator> pIteratorR(Value_List::GetValueTypedOwner(valueR).GenerateIterator());
+	return new Value_Iterator(new Iterator_Concat(iteratorL.Reference(), pIteratorR.release()));
+}
+
+// Iterator |+| Any
+Gurax_ImplementOpBinary(Concat, Iterator, Any)
+{
+	Iterator& iteratorL = Value_Iterator::GetIterator(valueL);
+	RefPtr<Iterator> pIteratorR(new Iterator_ConstN(valueR.Reference(), 1));
+	return new Value_Iterator(new Iterator_Concat(iteratorL.Reference(), pIteratorR.release()));
+}
+
+// Any |+| Iterator
+Gurax_ImplementOpBinary(Concat, Any, Iterator)
+{
+	RefPtr<Iterator> pIteratorL(new Iterator_ConstN(valueL.Reference(), 1));
+	Iterator& iteratorR = Value_Iterator::GetIterator(valueR);
+	return new Value_Iterator(new Iterator_Concat(pIteratorL.release(), iteratorR.Reference()));
+}
+
 //------------------------------------------------------------------------------
 // VType_Iterator
 //------------------------------------------------------------------------------
@@ -1811,6 +1835,9 @@ void VType_Iterator::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Iterator, tuple));
 	// Assignment of operator
 	Gurax_AssignOpBinary(Concat, Iterator, Iterator);
+	Gurax_AssignOpBinary(Concat, Iterator, List);
+	Gurax_AssignOpBinary(Concat, Iterator, Any);
+	Gurax_AssignOpBinary(Concat, Any, Iterator);
 }
 
 Value* VType_Iterator::DoCastFrom(Processor& processor, const Value& value, DeclArg::Flags flags) const

@@ -24,6 +24,9 @@ TestCase('PUnit') {
 TestCase('Concatenation') {
 	Tester(`(Range(6) |+| Range(4)).Join(', '))
 	Tester(`(Range(6) |+| Range(4) |+| Range(7)).Join(', '))
+	Tester(`(Range(6) |+| [5, 4, 3, 2, 1]).Join(', '))
+	Tester(`(Range(6) |+| 999).Join(', '))
+	Tester(`(999 |+| Range(6)).Join(', '))
 	x = Range(6) |+| Range(4)
 	Tester(`x)
 	Tester(`x.IsFinite())
