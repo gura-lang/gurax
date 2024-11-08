@@ -108,14 +108,20 @@ public:
 	void SetRGB(UInt8 r, UInt8 g, UInt8 b) { _elem.r = r, _elem.g = g, _elem.b = b; }
 	void SetRGBA(UInt8 r, UInt8 g, UInt8 b, UInt8 a) { _elem.r = r, _elem.g = g, _elem.b = b, _elem.a = a; }
 	void SetRGB565(UInt16 rgb565) {
-		_elem.b = static_cast<UInt8>(rgb565 & 0x1f); rgb565 >>= 5;
-		_elem.g = static_cast<UInt8>(rgb565 & 0x3f); rgb565 >>= 6;
-		_elem.r = static_cast<UInt8>(rgb565);
+		_elem.b = static_cast<UInt8>(rgb565 & 0x1f) << 3; rgb565 >>= 5;
+		_elem.g = static_cast<UInt8>(rgb565 & 0x3f) << 2; rgb565 >>= 6;
+		_elem.r = static_cast<UInt8>(rgb565) << 3;
+		if (_elem.b) _elem.b |= 0x07;
+		if (_elem.g) _elem.g |= 0x03;
+		if (_elem.r) _elem.r |= 0x07;
 	}
 	void SetRGB555(UInt16 rgb555) {
-		_elem.b = static_cast<UInt8>(rgb555 & 0x1f); rgb555 >>= 5;
-		_elem.g = static_cast<UInt8>(rgb555 & 0x1f); rgb555 >>= 5;
-		_elem.r = static_cast<UInt8>(rgb555);
+		_elem.b = static_cast<UInt8>(rgb555 & 0x1f) << 3; rgb555 >>= 5;
+		_elem.g = static_cast<UInt8>(rgb555 & 0x1f) << 3; rgb555 >>= 5;
+		_elem.r = static_cast<UInt8>(rgb555) << 3;
+		if (_elem.b) _elem.b |= 0x07;
+		if (_elem.g) _elem.g |= 0x07;
+		if (_elem.r) _elem.r |= 0x07;
 	}
 	UInt16 GetRGB565() const { return
 		(static_cast<UInt16>(_elem.r & 0xf8) << (6 + 5 - 3)) |

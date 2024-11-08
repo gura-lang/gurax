@@ -276,6 +276,56 @@ Gurax_ImplementPropertySetter(Color, grayScale)
 	color.SetRGB(gray, gray, gray);
 }
 
+// Color#rgb555
+Gurax_DeclareProperty_RW(Color, rgb555)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
+}
+
+Gurax_ImplementPropertyGetter(Color, rgb555)
+{
+	// Target
+	auto& valueThis = GetValueThis(valueTarget);
+	// Function body
+	return new Value_Number(valueThis.GetColor().GetRGB555());
+}
+
+Gurax_ImplementPropertySetter(Color, rgb555)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	UInt16 rgb555 = Value_Number::GetNumberRanged<UInt16>(value, 0, 65535);
+	if (Error::IsIssued()) return;
+	Color& color = valueThis.GetColor();
+	color.SetRGB555(rgb555);
+}
+
+// Color#rgb565
+Gurax_DeclareProperty_RW(Color, rgb565)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+)""");
+}
+
+Gurax_ImplementPropertyGetter(Color, rgb565)
+{
+	// Target
+	auto& valueThis = GetValueThis(valueTarget);
+	// Function body
+	return new Value_Number(valueThis.GetColor().GetRGB565());
+}
+
+Gurax_ImplementPropertySetter(Color, rgb565)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	UInt16 rgb565 = Value_Number::GetNumberRanged<UInt16>(value, 0, 65535);
+	if (Error::IsIssued()) return;
+	Color& color = valueThis.GetColor();
+	color.SetRGB565(rgb565);
+}
+
 // Color#tupleRGB
 Gurax_DeclareProperty_R(Color, tupleRGB)
 {
@@ -352,6 +402,8 @@ void VType_Color::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Color, b));
 	Assign(Gurax_CreateProperty(Color, a));
 	Assign(Gurax_CreateProperty(Color, grayScale));
+	Assign(Gurax_CreateProperty(Color, rgb555));
+	Assign(Gurax_CreateProperty(Color, rgb565));
 	Assign(Gurax_CreateProperty(Color, tupleRGB));
 	Assign(Gurax_CreateProperty(Color, tupleRGBA));
 }

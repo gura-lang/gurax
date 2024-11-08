@@ -251,10 +251,50 @@ TestCase('Color#grayScale') {
 	Tester(`Color('red', 0).grayScale)
 	Tester(`Color('red', 128).grayScale)
 	Tester(`Color('red', 255).grayScale)
-	color = Color.black
+	color = Color.RGB(0, 0, 0)
 	Tester(`{color.grayScale = 0xff, color})
 	Tester(`{color.grayScale = 0x00, color})
 	Tester(`{color.grayScale = 0x80, color})
+}
+
+TestCase('Color#rgb565') {
+	Tester(`Format('%016b', Color.black.rgb565))
+	Tester(`Format('%016b', Color.blue.rgb565))
+	Tester(`Format('%016b', Color.lime.rgb565))
+	Tester(`Format('%016b', Color.aqua.rgb565))
+	Tester(`Format('%016b', Color.red.rgb565))
+	Tester(`Format('%016b', Color.fuchsia.rgb565))
+	Tester(`Format('%016b', Color.yellow.rgb565))
+	Tester(`Format('%016b', Color.white.rgb565))
+	color = Color.RGB(0, 0, 0)
+	Tester(`{color.rgb565 = 0b0000000000000000, color})
+	Tester(`{color.rgb565 = 0b0000000000011111, color})
+	Tester(`{color.rgb565 = 0b0000011111100000, color})
+	Tester(`{color.rgb565 = 0b0000011111111111, color})
+	Tester(`{color.rgb565 = 0b1111100000000000, color})
+	Tester(`{color.rgb565 = 0b1111100000011111, color})
+	Tester(`{color.rgb565 = 0b1111111111100000, color})
+	Tester(`{color.rgb565 = 0b1111111111111111, color})
+}
+
+TestCase('Color#rgb555') {
+	Tester(`Format('%016b', Color.black.rgb555))
+	Tester(`Format('%016b', Color.blue.rgb555))
+	Tester(`Format('%016b', Color.lime.rgb555))
+	Tester(`Format('%016b', Color.aqua.rgb555))
+	Tester(`Format('%016b', Color.red.rgb555))
+	Tester(`Format('%016b', Color.fuchsia.rgb555))
+	Tester(`Format('%016b', Color.yellow.rgb555))
+	Tester(`Format('%016b', Color.white.rgb555))
+	color = Color.RGB(0, 0, 0)
+	Tester(`{color.rgb555 = 0b0000000000000000, color})
+	Tester(`{color.rgb555 = 0b0000000000011111, color})
+	Tester(`{color.rgb555 = 0b0000001111100000, color})
+	Tester(`{color.rgb555 = 0b0000001111111111, color})
+	Tester(`{color.rgb555 = 0b0111110000000000, color})
+	Tester(`{color.rgb555 = 0b0111110000011111, color})
+	Tester(`{color.rgb555 = 0b0111111111100000, color})
+	Tester(`{color.rgb555 = 0b0111111111111111, color})
 }
 
 TestCase('Color#tupleRGB') {

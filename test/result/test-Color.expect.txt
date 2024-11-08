@@ -3,8 +3,10 @@ Color
   #a                Number       R/W
   #b                Number       R/W
   #g                Number       R/W
-  #grayScale        Number       R
+  #grayScale        Number       R/W
   #r                Number       R/W
+  #rgb555           Number       R/W
+  #rgb565           Number       R/W
   #tupleRGB         Tuple        R
   #tupleRGBA        Tuple        R
 ======== Constructor ========
@@ -240,6 +242,43 @@ Color('aqua').grayScale .. 178
 Color('red', 0).grayScale .. 76
 Color('red', 128).grayScale .. 76
 Color('red', 255).grayScale .. 76
+{color.grayScale = 0xff, color} .. <Color:#ffffff,ff>
+{color.grayScale = 0x00, color} .. <Color:#000000,ff>
+{color.grayScale = 0x80, color} .. <Color:#808080,ff>
+======== Color#rgb565 ========
+Format('%016b', Color.black.rgb565) .. 0000000000000000
+Format('%016b', Color.blue.rgb565) .. 0000000000011111
+Format('%016b', Color.lime.rgb565) .. 0000011111100000
+Format('%016b', Color.aqua.rgb565) .. 0000011111111111
+Format('%016b', Color.red.rgb565) .. 1111100000000000
+Format('%016b', Color.fuchsia.rgb565) .. 1111100000011111
+Format('%016b', Color.yellow.rgb565) .. 1111111111100000
+Format('%016b', Color.white.rgb565) .. 1111111111111111
+{color.rgb565 = 0b0000000000000000, color} .. <Color:#000000,ff>
+{color.rgb565 = 0b0000000000011111, color} .. <Color:#0000ff,ff>
+{color.rgb565 = 0b0000011111100000, color} .. <Color:#00ff00,ff>
+{color.rgb565 = 0b0000011111111111, color} .. <Color:#00ffff,ff>
+{color.rgb565 = 0b1111100000000000, color} .. <Color:#ff0000,ff>
+{color.rgb565 = 0b1111100000011111, color} .. <Color:#ff00ff,ff>
+{color.rgb565 = 0b1111111111100000, color} .. <Color:#ffff00,ff>
+{color.rgb565 = 0b1111111111111111, color} .. <Color:#ffffff,ff>
+======== Color#rgb555 ========
+Format('%016b', Color.black.rgb555) .. 0000000000000000
+Format('%016b', Color.blue.rgb555) .. 0000000000011111
+Format('%016b', Color.lime.rgb555) .. 0000001111100000
+Format('%016b', Color.aqua.rgb555) .. 0000001111111111
+Format('%016b', Color.red.rgb555) .. 0111110000000000
+Format('%016b', Color.fuchsia.rgb555) .. 0111110000011111
+Format('%016b', Color.yellow.rgb555) .. 0111111111100000
+Format('%016b', Color.white.rgb555) .. 0111111111111111
+{color.rgb555 = 0b0000000000000000, color} .. <Color:#000000,ff>
+{color.rgb555 = 0b0000000000011111, color} .. <Color:#0000ff,ff>
+{color.rgb555 = 0b0000001111100000, color} .. <Color:#00ff00,ff>
+{color.rgb555 = 0b0000001111111111, color} .. <Color:#00ffff,ff>
+{color.rgb555 = 0b0111110000000000, color} .. <Color:#ff0000,ff>
+{color.rgb555 = 0b0111110000011111, color} .. <Color:#ff00ff,ff>
+{color.rgb555 = 0b0111111111100000, color} .. <Color:#ffff00,ff>
+{color.rgb555 = 0b0111111111111111, color} .. <Color:#ffffff,ff>
 ======== Color#tupleRGB ========
 Color('black').tupleRGB .. (0, 0, 0)
 Color('silver').tupleRGB .. (192, 192, 192)
