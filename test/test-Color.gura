@@ -251,6 +251,10 @@ TestCase('Color#grayScale') {
 	Tester(`Color('red', 0).grayScale)
 	Tester(`Color('red', 128).grayScale)
 	Tester(`Color('red', 255).grayScale)
+	color = Color.black
+	Tester(`{color.grayScale = 0xff, color})
+	Tester(`{color.grayScale = 0x00, color})
+	Tester(`{color.grayScale = 0x80, color})
 }
 
 TestCase('Color#tupleRGB') {
