@@ -1,0 +1,10 @@
+#!/usr/bin/env gurax
+//==============================================================================
+// test-freetype.gura
+//==============================================================================
+import(util.tester) {*}
+import(freetype)
+
+TestCase('Basic test') {
+	Println(freetype.Test('hello', 4))
+}

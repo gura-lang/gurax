@@ -6,6 +6,9 @@ Iterator
 ======== Concatenation ========
 (Range(6) |+| Range(4)).Join(', ') .. 0, 1, 2, 3, 4, 5, 0, 1, 2, 3
 (Range(6) |+| Range(4) |+| Range(7)).Join(', ') .. 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 0, 1, 2, 3, 4, 5, 6
+(Range(6) |+| [5, 4, 3, 2, 1]).Join(', ') .. 0, 1, 2, 3, 4, 5, 5, 4, 3, 2, 1
+(Range(6) |+| 999).Join(', ') .. 0, 1, 2, 3, 4, 5, 999
+(999 |+| Range(6)).Join(', ') .. 999, 0, 1, 2, 3, 4, 5
 x .. <Iterator:Concat:(Range:begin=0:end=6:step=1) |+| (Range:begin=0:end=4:step=1)>
 x.IsFinite() .. true
 x.len .. 10

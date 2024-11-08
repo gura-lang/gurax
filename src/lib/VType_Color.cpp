@@ -251,7 +251,7 @@ Gurax_ImplementPropertySetter(Color, a)
 }
 
 // Color#grayScale
-Gurax_DeclareProperty_R(Color, grayScale)
+Gurax_DeclareProperty_RW(Color, grayScale)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"""(
@@ -265,6 +265,15 @@ Gurax_ImplementPropertyGetter(Color, grayScale)
 	auto& valueThis = GetValueThis(valueTarget);
 	// Function body
 	return new Value_Number(valueThis.GetColor().CalcGray());
+}
+
+Gurax_ImplementPropertySetter(Color, grayScale)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	UInt8 gray = Value_Number::GetNumberRanged<UInt8>(value, 0, 255);
+	if (Error::IsIssued()) return;
+	Color& color = valueThis.GetColor();
+	color.SetRGB(gray, gray, gray);
 }
 
 // Color#tupleRGB

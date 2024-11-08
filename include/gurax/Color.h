@@ -105,6 +105,28 @@ public:
 	void SetG(UInt8 g) { _elem.g = g; }
 	void SetB(UInt8 b) { _elem.b = b; }
 	void SetA(UInt8 a) { _elem.a = a; }
+	void SetRGB(UInt8 r, UInt8 g, UInt8 b) { _elem.r = r, _elem.g = g, _elem.b = b; }
+	void SetRGBA(UInt8 r, UInt8 g, UInt8 b, UInt8 a) { _elem.r = r, _elem.g = g, _elem.b = b, _elem.a = a; }
+	void SetRGB565(UInt16 rgb565) {
+		_elem.b = static_cast<UInt8>(rgb565 & 0x1f); rgb565 >>= 5;
+		_elem.g = static_cast<UInt8>(rgb565 & 0x3f); rgb565 >>= 6;
+		_elem.r = static_cast<UInt8>(rgb565);
+	}
+	void SetRGB555(UInt16 rgb555) {
+		_elem.b = static_cast<UInt8>(rgb555 & 0x1f); rgb555 >>= 5;
+		_elem.g = static_cast<UInt8>(rgb555 & 0x1f); rgb555 >>= 5;
+		_elem.r = static_cast<UInt8>(rgb555);
+	}
+	UInt16 GetRGB565() const { return
+		(static_cast<UInt16>(_elem.r & 0xf8) << (6 + 5 - 3)) |
+		(static_cast<UInt16>(_elem.g & 0xfc) << (5 - 2)) |
+		(static_cast<UInt16>(_elem.b) >> 3);
+	}
+	UInt16 GetRGB555() const { return
+		(static_cast<UInt16>(_elem.r & 0xf8) << (5 + 5 - 3)) |
+		(static_cast<UInt16>(_elem.g & 0xf8) << (5 - 3)) |
+		(static_cast<UInt16>(_elem.b) >> 3);
+	}
 	Color GrayScale() const { return GrayScale(*this); }
 	static Color GrayScale(const Color& color) {
 		return GrayScale(color.GetR(), color.GetG(), color.GetB(), color.GetA());
