@@ -39,20 +39,20 @@ UInt8 x##_uint64_b56, x##_uint64_b48, x##_uint64_b40, x##_uint64_b32, \
 )
 
 #define Gurax_PackUInt32(x, n) ( \
-	x##_uint32_b0 = static_cast<UInt8>((static_cast<UInt32>(n) >> 0) & 0xff), \
-	x##_uint32_b8 = static_cast<UInt8>((static_cast<UInt32>(n) >> 8) & 0xff), \
+	x##_uint32_b0 = static_cast<UInt8>((static_cast<UInt32>(n)  >>  0) & 0xff), \
+	x##_uint32_b8 = static_cast<UInt8>((static_cast<UInt32>(n)  >>  8) & 0xff), \
 	x##_uint32_b16 = static_cast<UInt8>((static_cast<UInt32>(n) >> 16) & 0xff), \
 	x##_uint32_b24 = static_cast<UInt8>((static_cast<UInt32>(n) >> 24) & 0xff) \
 )
 
 #define Gurax_PackUInt64(x, n) ( \
-	x##_uint64_b0 = static_cast<UInt8>((static_cast<UInt64>(n) >> 0) & 0xff), \
-	x##_uint64_b8 = static_cast<UInt8>((static_cast<UInt64>(n) >> 8) & 0xff), \
+	x##_uint64_b0 = static_cast<UInt8>((static_cast<UInt64>(n)  >>  0) & 0xff), \
+	x##_uint64_b8 = static_cast<UInt8>((static_cast<UInt64>(n)  >>  8) & 0xff), \
 	x##_uint64_b16 = static_cast<UInt8>((static_cast<UInt64>(n) >> 16) & 0xff), \
-	x##_uint64_b24 = static_cast<UInt8>((static_cast<UInt64>(n) >> 24) & 0xff) \
-	x##_uint64_b32 = static_cast<UInt8>((static_cast<UInt64>(n) >> 32) & 0xff) \
-	x##_uint64_b40 = static_cast<UInt8>((static_cast<UInt64>(n) >> 40) & 0xff) \
-	x##_uint64_b48 = static_cast<UInt8>((static_cast<UInt64>(n) >> 48) & 0xff) \
+	x##_uint64_b24 = static_cast<UInt8>((static_cast<UInt64>(n) >> 24) & 0xff), \
+	x##_uint64_b32 = static_cast<UInt8>((static_cast<UInt64>(n) >> 32) & 0xff), \
+	x##_uint64_b40 = static_cast<UInt8>((static_cast<UInt64>(n) >> 40) & 0xff), \
+	x##_uint64_b48 = static_cast<UInt8>((static_cast<UInt64>(n) >> 48) & 0xff), \
 	x##_uint64_b56 = static_cast<UInt8>((static_cast<UInt64>(n) >> 56) & 0xff) \
 )
 
@@ -62,20 +62,20 @@ UInt8 x##_uint64_b56, x##_uint64_b48, x##_uint64_b40, x##_uint64_b32, \
 )
 
 #define Gurax_UnpackUInt32(x) ( \
-	(static_cast<UInt32>(x##_uint32_b0) << 0) | \
-	(static_cast<UInt32>(x##_uint32_b8) << 8) | \
+	(static_cast<UInt32>(x##_uint32_b0)  <<  0) | \
+	(static_cast<UInt32>(x##_uint32_b8)  <<  8) | \
 	(static_cast<UInt32>(x##_uint32_b16) << 16) | \
 	(static_cast<UInt32>(x##_uint32_b24) << 24) \
 )
 
 #define Gurax_UnpackUInt64(x) ( \
-	(static_cast<UInt64>(x##_uint64_b0) << 0) | \
-	(static_cast<UInt64>(x##_uint64_b8) << 8) | \
+	(static_cast<UInt64>(x##_uint64_b0)  <<  0) | \
+	(static_cast<UInt64>(x##_uint64_b8)  <<  8) | \
 	(static_cast<UInt64>(x##_uint64_b16) << 16) | \
-	(static_cast<UInt64>(x##_uint64_b24) << 24) \
-	(static_cast<UInt64>(x##_uint64_b32) << 32) \
-	(static_cast<UInt64>(x##_uint64_b40) << 40) \
-	(static_cast<UInt64>(x##_uint64_b48) << 48) \
+	(static_cast<UInt64>(x##_uint64_b24) << 24) | \
+	(static_cast<UInt64>(x##_uint64_b32) << 32) | \
+	(static_cast<UInt64>(x##_uint64_b40) << 40) | \
+	(static_cast<UInt64>(x##_uint64_b48) << 48) | \
 	(static_cast<UInt64>(x##_uint64_b56) << 56) \
 )
 
