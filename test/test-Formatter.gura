@@ -33,6 +33,10 @@ TestCase('%d specifier for Bool') {
 	Tester(`Format('%d %d', true, false))
 }
 
+TestCase('%C specifier') {
+	Tester(`Format('%C%C%C%C%C', 0x3042, 0x3044, 0x3046, 0x3048, 0x304a))
+}
+
 TestCase('Complex') {
 	Tester(`Format('%e', 0+0j))
 	Tester(`Format('%e', 2+0j))
