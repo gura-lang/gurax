@@ -296,6 +296,7 @@ public:
 	virtual bool Format_g(Formatter& formatter, FormatterFlags& formatterFlags) const;
 	virtual bool Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const;
 	virtual bool Format_c(Formatter& formatter, FormatterFlags& formatterFlags) const;
+	virtual bool Format_C(Formatter& formatter, FormatterFlags& formatterFlags) const;
 };
 
 }

@@ -9,7 +9,7 @@ if (${CMAKE_SYSTEM_NAME} MATCHES Windows)
 #add_subdirectory(module-base64)				# built-in module
 #add_subdirectory(module-bmp)					# built-in module
 add_subdirectory(module-bzip2)
-add_subdirectory(module-cairo)
+####add_subdirectory(module-cairo)
 #add_subdirectory(module-codecs)				# built-in module
 #add_subdirectory(module-codecs_basic)			# built-in module
 #add_subdirectory(module-codecs_chinese)		# built-in module
@@ -23,7 +23,7 @@ add_subdirectory(module-diff)
 add_subdirectory(module-gif)
 add_subdirectory(module-glfw)
 add_subdirectory(module-glu)
-add_subdirectory(module-gmp)
+####add_subdirectory(module-gmp)
 add_subdirectory(module-gzip)
 add_subdirectory(module-hash)
 add_subdirectory(module-jpeg)
@@ -39,9 +39,9 @@ add_subdirectory(module-mtp)
 add_subdirectory(module-opengl)
 #add_subdirectory(module-os)					# built-in module
 #add_subdirectory(module-path)					# built-in module
-add_subdirectory(module-png)
+####add_subdirectory(module-png)
 add_subdirectory(module-re)
-add_subdirectory(module-sdl)
+####add_subdirectory(module-sdl)
 #add_subdirectory(module-sys)					# built-in module
 add_subdirectory(module-tar)
 #add_subdirectory(module-wx)

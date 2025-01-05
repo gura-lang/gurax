@@ -1081,6 +1081,30 @@ bool Value_Number::Format_c(Formatter& formatter, FormatterFlags& formatterFlags
 	return formatter.PutChar(GetNumber<Char>());
 }
 
+bool Value_Number::Format_C(Formatter& formatter, FormatterFlags& formatterFlags) const
+{
+	UInt32 code = GetNumber<UInt32>();
+	if (code < 0x00000080) {
+		if (!formatter.PutChar(static_cast<char>(code & 0b01111111))) return false;
+	} else if (code < 0x0000800) {
+		if (!formatter.PutChar(static_cast<char>(0b11000000 | ((code >> 6) & 0b00011111)))) return false;
+		if (!formatter.PutChar(static_cast<char>(0b10000000 | (code & 0b00111111)))) return false;
+	} else if (code < 0x00010000) {
+		if (!formatter.PutChar(static_cast<char>(0b11100000 | ((code >> 12) & 0b00001111)))) return false;
+		if (!formatter.PutChar(static_cast<char>(0b10000000 | ((code >> 6) & 0b00111111)))) return false;
+		if (!formatter.PutChar(static_cast<char>(0b10000000 | (code & 0b00111111)))) return false;
+	} else if (code < 0x00110000) {
+		if (!formatter.PutChar(static_cast<char>(0b11110000 | ((code >> 18) & 0b00000111)))) return false;
+		if (!formatter.PutChar(static_cast<char>(0b10000000 | ((code >> 12) & 0b00111111)))) return false;
+		if (!formatter.PutChar(static_cast<char>(0b10000000 | ((code >> 6) & 0b00111111)))) return false;
+		if (!formatter.PutChar(static_cast<char>(0b10000000 | (code & 0b00111111)))) return false;
+	} else {
+		Error::Issue(ErrorType::RangeError, "UTF32 code number is out of range");
+		return false;
+	}
+	return true;
+}
+
 bool Value_Number::DoSerialize(Stream& stream) const
 {
 	return stream.SerializeNumber<Double>(GetNumberRaw());

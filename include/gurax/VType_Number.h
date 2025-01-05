@@ -110,6 +110,7 @@ public:
 	virtual bool Format_f(Formatter& formatter, FormatterFlags& formatterFlags) const override;
 	virtual bool Format_g(Formatter& formatter, FormatterFlags& formatterFlags) const override;
 	virtual bool Format_c(Formatter& formatter, FormatterFlags& formatterFlags) const override;
+	virtual bool Format_C(Formatter& formatter, FormatterFlags& formatterFlags) const override;
 	virtual bool DoSerialize(Stream& stream) const override;
 };
 

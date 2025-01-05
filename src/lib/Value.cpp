@@ -408,6 +408,14 @@ bool Value::Format_c(Formatter& formatter, FormatterFlags& formatterFlags) const
 	return false;
 }
 
+bool Value::Format_C(Formatter& formatter, FormatterFlags& formatterFlags) const
+{
+	Error::Issue(ErrorType::ValueError,
+				"value type %s can not be formatted with %%C qualifier",
+				GetVTypeCustom().MakeFullName().c_str());
+	return false;
+}
+
 //------------------------------------------------------------------------------
 // Value::CustomCompare
 //------------------------------------------------------------------------------

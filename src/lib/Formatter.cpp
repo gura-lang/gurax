@@ -180,6 +180,11 @@ bool Formatter::Format(const char* format, Source&& source)
 				if (!pValue) return false;
 				if (!pValue->Format_c(*this, formatterFlags)) return false;
 				stat = Stat::Start;
+			} else if (ch == 'C') {
+				RefPtr<Value> pValue(source.FetchInt());
+				if (!pValue) return false;
+				if (!pValue->Format_C(*this, formatterFlags)) return false;
+				stat = Stat::Start;
 			} else {
 				IssueError_WrongFormat();
 				return false;
