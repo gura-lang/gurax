@@ -144,7 +144,13 @@ Context = class {
 				if (m = line.Match(r'^ENCODING\s+(.*)')) {
 					code = m[1].ToNumber()
 					charEntry.ENCODING = code
-					charEntry.codeUTF32 = cond(code < 0x100, code, codecs.japanese.ConvJISToUTF32(code))
+					if (!this.CHARSET_REGISTRY) {
+						charEntry.codeUTF32 = code
+					} elsif (this.CHARSET_REGISTRY.StartsWith('JISX'):icase) {
+						charEntry.codeUTF32 = cond(code < 0x100, code, codecs.japanese.ConvJISToUTF32(code))
+					} else {
+						charEntry.codeUTF32 = code
+					}
 				} elsif (m = line.Match(r'^SWIDTH\s+(.*)')) {
 					charEntry.SWIDTH = m[1].SplitReg(r'\s+'):*ToNumber().tuple
 				} elsif (m = line.Match(r'^DWIDTH\s+(.*)')) {
