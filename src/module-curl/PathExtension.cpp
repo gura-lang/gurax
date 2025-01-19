@@ -12,10 +12,10 @@ bool PathMgrEx::IsResponsible(Directory* pDirectoryParent, const char* pathName)
 {
 	return !pDirectoryParent &&
 		(String::StartsWith<CharCase>(pDirectoryParent->GetName(), "http:") ||
-		 String::StartsWith<CharCase>(pDirectoryParent->GetName(), "https:") ||
-		 String::StartsWith<CharCase>(pDirectoryParent->GetName(), "ftp:") ||
-		 String::StartsWith<CharCase>(pDirectoryParent->GetName(), "ftps:") ||
-		 String::StartsWith<CharCase>(pDirectoryParent->GetName(), "sftp:"));
+		String::StartsWith<CharCase>(pDirectoryParent->GetName(), "https:") ||
+		String::StartsWith<CharCase>(pDirectoryParent->GetName(), "ftp:") ||
+		String::StartsWith<CharCase>(pDirectoryParent->GetName(), "ftps:") ||
+		String::StartsWith<CharCase>(pDirectoryParent->GetName(), "sftp:"));
 }
 
 Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName, Directory::Type typeWouldBe)
@@ -30,23 +30,15 @@ Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** 
 
 PathMgr::Existence PathMgrEx::DoCheckExistence(Directory* pDirectoryParent, const char** pPathName)
 {
-#if 0
 	RefPtr<Directory> pDirectory(DoOpenDirectory(pDirectoryParent, pPathName, Directory::Type::None));
 	Error::Clear();
 	return pDirectory? Existence::Exist : Existence::None;
-#endif
-	return Existence::None;
 }
 
-#if 0
 //------------------------------------------------------------------------------
 // StatEx
 //------------------------------------------------------------------------------
-StatEx::StatEx(CentralFileHeader* pCentralFileHeader) :
-	Stat(pCentralFileHeader->MakeLastModDateTime(), pCentralFileHeader->GetFileName(),
-		 pCentralFileHeader->IsFolder()? Flag::Dir : Flag::Reg,
-		 0666, pCentralFileHeader->GetUncompressedSize(), 0, 0),
-	_pCentralFileHeader(pCentralFileHeader)
+StatEx::StatEx() : Stat(nullptr, "", Flag::Reg, 0666, -1, 0, 0)
 {
 }
 
@@ -54,12 +46,10 @@ String StatEx::ToString(const StringStyle& ss) const
 {
 	String str = Stat::ToString(ss);
 	str += ":curl";
-	str += ":";
-	const Symbol* pSymbol = CompressionMethodToSymbol(_pCentralFileHeader->GetCompressionMethod());
-	str += pSymbol->GetName();
 	return str;
 }
 
+#if 0
 //------------------------------------------------------------------------------
 // StatExList
 //------------------------------------------------------------------------------
@@ -140,32 +130,26 @@ void DirectoryEx::DoRewindChild()
 
 Directory* DirectoryEx::DoNextChild()
 {
-#if 0
-	CoreOwner& coreOwner = GetCoreEx().GetCoreOwner();
-	if (_idxChild >= coreOwner.size()) return nullptr;
-	RefPtr<Directory> pDirectory(new DirectoryEx(dynamic_cast<CoreEx*>(coreOwner[_idxChild++]->Reference())));
-	pDirectory->SetDirectoryParent(Reference());
-	return pDirectory.release();
-#endif
 	return nullptr;
 }
 
 Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
 {
-#if 0
-	if (openFlags & (Stream::OpenFlag::Write | Stream::OpenFlag::Append)) return nullptr;
-	StatEx* pStatEx = GetCoreEx().GetStatEx();
-	return pStatEx? Stream_Reader::Create(GetStreamSrc(), *pStatEx) : nullptr;
-#endif
+	CURL* curl = ::curl_easy_init();
+	::curl_easy_setopt(curl, CURLOPT_URL, GetName());
+	::curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1);
+	::curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0);
+	//::curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, CallbackXFERINFO);
+	//::curl_easy_setopt(curl, CURLOPT_XFERINFODATA, progressInfo);
+	CURLcode res = ::curl_easy_perform(curl);
+	::curl_easy_cleanup(curl);
 	return nullptr;
 }
 
 Value_Stat* DirectoryEx::DoCreateStatValue()
 {
-#if 0
-	StatEx* pStatEx = GetCoreEx().GetStatEx();
-	return pStatEx? new Value_StatEx(pStatEx->Reference()) : nullptr;
-#endif
+	//StatEx* pStatEx = GetCoreEx().GetStatEx();
+	//return pStatEx? new Value_StatEx(pStatEx->Reference()) : nullptr;
 	return nullptr;
 }
 

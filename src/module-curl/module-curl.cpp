@@ -5,21 +5,6 @@
 
 Gurax_BeginModule(curl)
 
-static long OnChunkBgn(curl_fileinfo* finfo, void* data, int remains)
-{
-	::printf("%-40s  %10zd %d\n", finfo->filename, finfo->size, finfo->filetype);
-	/*
-	CURLFILETYPE_DIRECTORY:
-	CURLFILETYPE_FILE:
-	*/
-	return CURL_CHUNK_BGN_FUNC_SKIP;
-}
-
-static long OnChunkEnd(void* data)
-{
-	return CURL_CHUNK_END_FUNC_OK;
-}
-
 //------------------------------------------------------------------------------
 // Entries
 //------------------------------------------------------------------------------
@@ -45,12 +30,32 @@ Gurax_ModulePrepare()
 	AssignConsts(GetFrame());
 	// Assignment of function
 	AssignFunctions(GetFrame());
-	curl_global_init(CURL_GLOBAL_ALL);
+	// Assignment of path manager
+	PathMgr::Assign(new PathMgrEx());
+	// Initialize Curl
+	::curl_global_init(CURL_GLOBAL_ALL);
 	return true;
 }
 
 Gurax_ModuleTerminate()
 {
 }
+
+#if 0
+static long OnChunkBgn(curl_fileinfo* finfo, void* data, int remains)
+{
+	::printf("%-40s  %10zd %d\n", finfo->filename, finfo->size, finfo->filetype);
+	/*
+	CURLFILETYPE_DIRECTORY:
+	CURLFILETYPE_FILE:
+	*/
+	return CURL_CHUNK_BGN_FUNC_SKIP;
+}
+
+static long OnChunkEnd(void* data)
+{
+	return CURL_CHUNK_END_FUNC_OK;
+}
+#endif
 
 Gurax_EndModule(curl)

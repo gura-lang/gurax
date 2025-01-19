@@ -19,7 +19,6 @@ protected:
 	virtual Existence DoCheckExistence(Directory* pDirectoryParent, const char** pPathName) override;
 };
 
-#if 0
 //------------------------------------------------------------------------------
 // StatEx
 //------------------------------------------------------------------------------
@@ -27,17 +26,13 @@ class GURAX_DLLDECLARE StatEx : public Stat {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(StatEx);
-private:
-	std::unique_ptr<CentralFileHeader> _pCentralFileHeader;
 public:
-	StatEx(CentralFileHeader* pCentralFileHeader);
-public:
-	CentralFileHeader& GetCentralFileHeader() { return *_pCentralFileHeader; }
-	const CentralFileHeader& GetCentralFileHeader() const { return *_pCentralFileHeader; }
+	StatEx();
 public:
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
+#if 0
 //-----------------------------------------------------------------------------
 // StatExList
 //-----------------------------------------------------------------------------
@@ -65,8 +60,7 @@ class DirectoryEx : public Directory {
 private:
 	size_t _idxChild;
 public:
-	DirectoryEx(Type type, String name) :
-		Directory(type, std::move(name), '/', true), _idxChild(0) {}
+	DirectoryEx(Type type, String name) : Directory(type, std::move(name), '/', true), _idxChild(0) {}
 protected:
 	virtual void DoRewindChild() override;
 	virtual Directory* DoNextChild() override;
