@@ -305,12 +305,14 @@ $packages += [Package_libjpeg]::new()
 #---------------------------------------------------------------------------------
 class Package_libpng {
 	[String] $name = "libpng"
-	[String] $ver = "1.6.37"
+	[String] $ver = "1.6.50"
 	[String] $baseName = "$($this.name)-$($this.ver)"
-	[String[]] $fileNames = @("$($this.baseName).tar.gz", "$($this.baseName)-gurapatch-vs2019.tar.gz")
+	[String[]] $fileNames = @("$($this.baseName).tar.gz")
 	[String] $dirName = $this.baseName
 	Build() {
-		msbuild projects\vstudio\vstudio.sln /clp:DisableConsoleColor /t:Build /p:Configuration="Release Library" /p:Platform=x64
+		cmake . -A x64 -DZLIB_INCLUDE_DIR="../zlib-1.2.11" -DZLIB_LIBRARY="../zlib-1.2.11/zlib.lib"
+		cmake --build . --config Release
+		Copy-Item Release/libpng16_static.lib libpng.lib
 	}
 }
 $packages += [Package_libpng]::new()
@@ -433,12 +435,14 @@ $packages += [Package_yaml]::new()
 #---------------------------------------------------------------------------------
 class Package_cairo {
 	[String] $name = "cairo"
-	[String] $ver = "1.16.0"
+	[String] $ver = "1.18.4"
 	[String] $baseName = "$($this.name)-$($this.ver)"
-	[String[]] $fileNames = @("$($this.baseName).tar.xz", "$($this.baseName)-gurapatch.tar.gz")
+	[String[]] $fileNames = @("$($this.baseName).tar.xz")
 	[String] $dirName = $this.baseName
 	Build() {
-		ExecCommand make '-f .\Makefile.win32 PIXMAN_PATH=../../pixman-0.40.0 ZLIB_PATH=../../zlib-1.2.11 LIBPNG_PATH=../../libpng-1.6.37 CFG=release CFLAGS=/wd4819'
+		meson setup build
+		ninja -C build
+		Copy-Item build/src/cairo-2.dll ../../bin
 	}
 }
 $packages += [Package_cairo]::new()

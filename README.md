@@ -21,3 +21,14 @@ Build for Windows
 		$ cmake --build build --config Release --target install
 
    When you use Visual Source Code to build it, make sure to do the command `CMake: Select Variant` and choose `Release`.
+
+Setup Build Environment on Windows
+---------------------------------
+To build Gurax on Windows, you need to set up the build environment as follows:
+
+1. Install meson, ninja, and setuptools using pip:
+
+        $ pip install meson ninja --target DIRECTORY
+        $ pip install setuptools
+
+   and add `DIRECTORY` to the PATH environment variable.
