@@ -15,13 +15,15 @@ execute_process(COMMAND gurax --naked -p "sys.dirBase.Chop()" OUTPUT_VARIABLE GU
 endif()
 target_include_directories(cairo.gurd PRIVATE
 	${GURAX_BASEDIR}/include
-	$<$<PLATFORM_ID:Windows>:${GURAX_BASEDIR}/guest/cairo-1.16.0/src>
+	$<$<PLATFORM_ID:Windows>:${GURAX_BASEDIR}/guest/cairo-1.18.4/src>
+	$<$<PLATFORM_ID:Windows>:${GURAX_BASEDIR}/guest/cairo-1.18.4/build/src>
 	$<$<PLATFORM_ID:Linux>:${GURAX_BASEDIR}/guest>
 	$<$<PLATFORM_ID:Darwin>:${GURAX_BASEDIR}/guest>)
 target_link_directories(cairo.gurd PRIVATE
 	${GURAX_BASEDIR}/lib
-	$<$<PLATFORM_ID:Windows>:${GURAX_BASEDIR}/guest/cairo-1.16.0/src/release>
-	$<$<PLATFORM_ID:Windows>:${GURAX_BASEDIR}/guest/libpng-1.6.37/projects/vstudio/x64/Release\ Library>
+	$<$<PLATFORM_ID:Windows>:${GURAX_BASEDIR}/guest/cairo-1.18.4/build/src>
+	$<$<PLATFORM_ID:Windows>:${GURAX_BASEDIR}/guest/libpng-1.6.50>
+	$<$<PLATFORM_ID:Windows>:${GURAX_BASEDIR}/guest/zlib-1.2.11>
 	$<$<PLATFORM_ID:Linux>:${GURAX_BASEDIR}/guest>
 	$<$<PLATFORM_ID:Darwin>:${GURAX_BASEDIR}/guest>)
 set(CMAKE_INSTALL_PREFIX ${GURAX_BASEDIR})
@@ -70,13 +72,13 @@ target_sources(cairo.gurd PRIVATE
 set(CMAKE_SHARED_MODULE_PREFIX)
 set(CMAKE_SHARED_MODULE_SUFFIX)
 target_link_options(cairo.gurd PRIVATE
-	$<$<PLATFORM_ID:Windows>:-NODEFAULTLIB:LIBCMT -LTCG -INCREMENTAL:NO>
+	$<$<PLATFORM_ID:Windows>:-NODEFAULTLIB:LIBCMT -INCREMENTAL:NO>
 	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:-NODEFAULTLIB:MSVCRT>
 	$<$<PLATFORM_ID:Linux>:>
 	$<$<PLATFORM_ID:Darwin>:>)
 target_link_libraries(cairo.gurd PRIVATE guraxcore
-	$<$<PLATFORM_ID:Windows>:cairo-static>
-	$<$<PLATFORM_ID:Windows>:libpng16>
+	$<$<PLATFORM_ID:Windows>:cairo>
+	$<$<PLATFORM_ID:Windows>:libpng>
 	$<$<PLATFORM_ID:Windows>:zlib>
 	$<$<PLATFORM_ID:Linux>:>
 	$<$<PLATFORM_ID:Darwin>:>)
