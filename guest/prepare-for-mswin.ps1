@@ -360,7 +360,7 @@ class Package_sdl {
 	[String] $dirName = $this.baseName
 	Build() {
 		msbuild VisualC\SDL.sln /clp:DisableConsoleColor /t:Build /p:Configuration="Release" /p:Platform=x64
-		copy VisualC\x64\Release\SDL2.dll ..\..\bin
+		copy VisualC\x64\Release\SDL3.dll ..\..\bin
 	}
 }
 $packages += [Package_sdl]::new()

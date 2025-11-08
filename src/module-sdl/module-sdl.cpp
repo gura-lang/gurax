@@ -3,6 +3,62 @@
 //==============================================================================
 #include "stdafx.h"
 
+static SDL_Window *window = NULL;
+static SDL_Renderer *renderer = NULL;
+
+/* This function runs once at startup. */
+SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
+{
+    SDL_SetAppMetadata("Example Renderer Clear", "1.0", "com.example.renderer-clear");
+
+    if (!SDL_Init(SDL_INIT_VIDEO)) {
+        SDL_Log("Couldn't initialize SDL: %s", SDL_GetError());
+        return SDL_APP_FAILURE;
+    }
+
+    if (!SDL_CreateWindowAndRenderer("examples/renderer/clear", 640, 480, SDL_WINDOW_RESIZABLE, &window, &renderer)) {
+        SDL_Log("Couldn't create window/renderer: %s", SDL_GetError());
+        return SDL_APP_FAILURE;
+    }
+    SDL_SetRenderLogicalPresentation(renderer, 640, 480, SDL_LOGICAL_PRESENTATION_LETTERBOX);
+
+    return SDL_APP_CONTINUE;  /* carry on with the program! */
+}
+
+/* This function runs when a new event (mouse input, keypresses, etc) occurs. */
+SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
+{
+    if (event->type == SDL_EVENT_QUIT) {
+        return SDL_APP_SUCCESS;  /* end the program, reporting success to the OS. */
+    }
+    return SDL_APP_CONTINUE;  /* carry on with the program! */
+}
+
+/* This function runs once per frame, and is the heart of the program. */
+SDL_AppResult SDL_AppIterate(void *appstate)
+{
+    const double now = ((double)SDL_GetTicks()) / 1000.0;  /* convert from milliseconds to seconds. */
+    /* choose the color for the frame we will draw. The sine wave trick makes it fade between colors smoothly. */
+    const float red = (float) (0.5 + 0.5 * SDL_sin(now));
+    const float green = (float) (0.5 + 0.5 * SDL_sin(now + SDL_PI_D * 2 / 3));
+    const float blue = (float) (0.5 + 0.5 * SDL_sin(now + SDL_PI_D * 4 / 3));
+    SDL_SetRenderDrawColorFloat(renderer, red, green, blue, SDL_ALPHA_OPAQUE_FLOAT);  /* new color, full alpha. */
+
+    /* clear the window to the draw color. */
+    SDL_RenderClear(renderer);
+
+    /* put the newly-cleared rendering on the screen. */
+    SDL_RenderPresent(renderer);
+
+    return SDL_APP_CONTINUE;  /* carry on with the program! */
+}
+
+/* This function runs once at shutdown. */
+void SDL_AppQuit(void *appstate, SDL_AppResult result)
+{
+    /* SDL will clean up the window/renderer for us. */
+}
+
 Gurax_BeginModule(sdl)
 
 //------------------------------------------------------------------------------
@@ -19,46 +75,16 @@ Adds up the given two numbers and returns the result.
 
 Gurax_ImplementFunction(Test)
 {
-	//The window we'll be rendering to
-	SDL_Window* window = NULL;
-	
-	//The surface contained by the window
-	SDL_Surface* screenSurface = NULL;
-
-	//Initialize SDL
-	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
-	{
-		printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
-	}
-	else
-	{
-		//Create window
-		//window = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_SHOWN );
-		if( window == NULL )
-		{
-			printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
-		}
-		else
-		{
-			//Get window surface
-			screenSurface = SDL_GetWindowSurface( window );
-
-			//Fill the surface white
-			//SDL_FillRect( screenSurface, NULL, SDL_MapRGB( screenSurface->format, 0xFF, 0xFF, 0xFF ) );
-			
-			//Update the surface
-			SDL_UpdateWindowSurface( window );
-
-			//Wait two seconds
-			SDL_Delay( 2000 );
+	SDL_AppInit(nullptr, 0, nullptr);
+	// Run the main loop
+	while (SDL_AppIterate(nullptr) == SDL_APP_CONTINUE) {
+		// Handle events
+		SDL_Event event;
+		while (SDL_PollEvent(&event)) {
+			SDL_AppEvent(nullptr, &event);
 		}
 	}
-	//Destroy window
-	SDL_DestroyWindow( window );
-
-	//Quit SDL subsystems
-	SDL_Quit();
-
+	SDL_AppQuit(nullptr, SDL_APP_SUCCESS);
 	return Value::nil();
 }
 
@@ -138,10 +164,10 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_TTF_Font);
 	// Assignment of function
 	AssignFunctions(GetFrame());
-	Assign(Gurax_CreateFunction(Test));
 	// Assignment of constant
 	AssignConsts(GetFrame());
 #endif
+	Assign(Gurax_CreateFunction(Test));
 	return true;
 }
 
