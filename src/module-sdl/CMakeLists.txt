@@ -43,32 +43,32 @@ target_sources(sdl.gurd PRIVATE
 	#Consts.cpp
 	#VType_SDL_AudioCVT.cpp
 	#VType_SDL_AudioSpec.cpp
-	#VType_SDL_AudioStream.cpp
-	#VType_SDL_Color.cpp
-	#VType_SDL_Cursor.cpp
-	#VType_SDL_DisplayMode.cpp
+	VType_SDL_AudioStream.cpp
+	VType_SDL_Color.cpp
+	VType_SDL_Cursor.cpp
+	VType_SDL_DisplayMode.cpp
 	#VType_SDL_Event.cpp
-	#VType_SDL_FPoint.cpp
-	#VType_SDL_FRect.cpp
+	VType_SDL_FPoint.cpp
+	VType_SDL_FRect.cpp
 	#VType_SDL_GameController.cpp
-	#VType_SDL_GLContext.cpp
-	#VType_SDL_Haptic.cpp
-	#VType_SDL_HapticDirection.cpp
-	#VType_SDL_HapticEffect.cpp
-	#VType_SDL_HapticConstant.cpp
-	#VTYPE_SDL_HapticPeriodic.cpp
-	#VTYPE_SDL_HapticCondition.cpp
-	#VTYPE_SDL_HapticRamp.cpp
-	#VTYPE_SDL_HapticLeftRight.cpp
-	#VTYPE_SDL_HapticCustom.cpp
-	#VType_SDL_Joystick.cpp
+	VType_SDL_GLContext.cpp
+	VType_SDL_Haptic.cpp
+	VType_SDL_HapticDirection.cpp
+	VType_SDL_HapticEffect.cpp
+	VType_SDL_HapticConstant.cpp
+	VTYPE_SDL_HapticPeriodic.cpp
+	VTYPE_SDL_HapticCondition.cpp
+	VTYPE_SDL_HapticRamp.cpp
+	VTYPE_SDL_HapticLeftRight.cpp
+	VTYPE_SDL_HapticCustom.cpp
+	VType_SDL_Joystick.cpp
 	#VType_SDL_JoystickGUID.cpp
 	#VType_SDL_Keysym.cpp
-	#VType_SDL_Palette.cpp
+	VType_SDL_Palette.cpp
 	#VType_SDL_PixelFormat.cpp
-	#VType_SDL_Point.cpp
-	#VType_SDL_Rect.cpp
-	#VType_SDL_Renderer.cpp
+	VType_SDL_Point.cpp
+	VType_SDL_Rect.cpp
+	VType_SDL_Renderer.cpp
 	#VType_SDL_RendererInfo.cpp
 	#VType_SDL_RWops.cpp
 	#VType_SDL_Sensor.cpp
