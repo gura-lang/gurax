@@ -4,11 +4,12 @@
 #ifndef GURAX_MODULE_SDL_H
 #define GURAX_MODULE_SDL_H
 #include <gurax.h>
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_mixer.h>
-#include <SDL_ttf.h>
-#include <SDL_syswm.h>
+#include <SDL3/SDL.h>
+#if 0
+//#include <SDL3/SDL_image.h>
+//#include <SDL3/SDL_mixer.h>
+//#include <SDL3/SDL_ttf.h>
+//#include <SDL3/SDL_syswm.h>
 #include "Util.h"
 #include "Functions.h"
 #include "Consts.h"
@@ -75,6 +76,7 @@
 #include "VType_Mix_Chunk.h"
 #include "VType_Mix_Music.h"
 #include "VType_TTF_Font.h"
+#endif
 
 Gurax_BeginModuleHeader(sdl)
 Gurax_EndModuleHeader(sdl)

@@ -354,9 +354,9 @@ $packages += [Package_onigmo]::new()
 #---------------------------------------------------------------------------------
 class Package_sdl {
 	[String] $name = "sdl"
-	[String] $ver = "2.0.12"
-	[String] $baseName = "SDL2-$($this.ver)"
-	[String[]] $fileNames = @("$($this.baseName).zip", "$($this.baseName)-gurapatch-vs2019.zip")
+	[String] $ver = "3.2.26"
+	[String] $baseName = "SDL3-$($this.ver)"
+	[String[]] $fileNames = @("$($this.baseName).zip")
 	[String] $dirName = $this.baseName
 	Build() {
 		msbuild VisualC\SDL.sln /clp:DisableConsoleColor /t:Build /p:Configuration="Release" /p:Platform=x64
