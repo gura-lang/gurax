@@ -8,17 +8,10 @@ add_library(markdown.gurd MODULE)
 #-------------------------------------------------------------------------------
 # Directory Information
 #-------------------------------------------------------------------------------
-if (PROJECT_IS_TOP_LEVEL)
-	execute_process(COMMAND gurax --naked -p "sys.dirModule.Chop()" OUTPUT_VARIABLE GURAX_MODULEDIR)
-	execute_process(COMMAND gurax --naked -p "sys.version" OUTPUT_VARIABLE GURAX_VERSION)
-else()
-	set(GURAX_VERSION ${CMAKE_PROJECT_VERSION})
-endif()
+if(EXISTS ${PROJECT_SOURCE_DIR}/../gurax/gurax.cpp)
 set(GURAX_BASEDIR ${PROJECT_SOURCE_DIR}/../..)
-if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
-	set(GURAX_MODULEDIR ${CMAKE_INSTALL_PREFIX}/module/site)
-elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
-	set(GURAX_MODULEDIR ${CMAKE_INSTALL_PREFIX}/lib/gurax/${GURAX_VERSION}/module/site)
+else()
+execute_process(COMMAND gurax --naked -p "sys.dirBase.Chop()" OUTPUT_VARIABLE GURAX_BASEDIR)
 endif()
 target_include_directories(markdown.gurd PRIVATE ${GURAX_BASEDIR}/include)
 target_link_directories(markdown.gurd PRIVATE ${GURAX_BASEDIR}/lib)
@@ -51,7 +44,7 @@ target_link_libraries(markdown.gurd PRIVATE guraxcore)
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------
-install(TARGETS markdown.gurd LIBRARY DESTINATION ${GURAX_MODULEDIR})
+install(TARGETS markdown.gurd LIBRARY DESTINATION module/site)
 install(FILES
 	script-module/markdown.composer.gura
 	script-module/markdown.console.gura
@@ -60,5 +53,4 @@ install(FILES
 	script-module/markdown.rtf.gura
 	script-module/markdown.tex.gura
 	script-module/markdown.toc.gura
-	DESTINATION ${GURAX_MODULEDIR}
-	PERMISSIONS OWNER_READ GROUP_READ WORLD_READ OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE)
+	DESTINATION module/site)
