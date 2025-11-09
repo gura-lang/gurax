@@ -97,4 +97,8 @@ add_subdirectory(module-re)
 add_subdirectory(module-zip)
 endif()
 
+# CPack configuration for Windows installer
+set(CPACK_PACKAGE_INSTALL_DIRECTORY "gurax/${GURAX_VERSION}")
+set(CPACK_NSIS_INSTALL_ROOT "$PROGRAMFILES64")
+
 include(CPack)

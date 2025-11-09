@@ -2,7 +2,7 @@
 # CMakeLists for gurax project
 #===============================================================================
 cmake_minimum_required(VERSION 3.16) # 3.16 or newer supports handling of precompiled header
-project(GURAX
+project(gurax
 	VERSION			0.0.1
 	DESCRIPTION 	"Gurax Programming Language"
 	HOMEPAGE_URL	http://www.gura-lang.org/
@@ -10,6 +10,9 @@ project(GURAX
 
 set(GURAX_COPYRIGHT "Copyright (C) 2011-2025 ypsitau")
 set(GURAX_VERSION ${CMAKE_PROJECT_VERSION})
+set(GURAX_VERSION_MAJOR ${CMAKE_PROJECT_VERSION_MAJOR})
+set(GURAX_VERSION_MINOR ${CMAKE_PROJECT_VERSION_MINOR})
+set(GURAX_VERSION_PATCH ${CMAKE_PROJECT_VERSION_PATCH})
 
 configure_file(
 	${PROJECT_SOURCE_DIR}/include/gurax/Version.h.in
