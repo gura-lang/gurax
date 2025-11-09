@@ -43,7 +43,7 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_OLE);
 	Assign(VTYPE_RegKey);
 	// Assignment of function
-	Assign(Gurax_CreateFunction(Test));
+	//Assign(Gurax_CreateFunction(Test));
 	// Assignment of value
 	Assign("HKEY_CLASSES_ROOT",			new Value_RegKey(new RegKey(HKEY_CLASSES_ROOT, "HKEY_CLASSES_ROOT", false)));
 	Assign("HKEY_CURRENT_CONFIG",		new Value_RegKey(new RegKey(HKEY_CURRENT_CONFIG, "HKEY_CURRENT_CONFIG", false)));

@@ -38,7 +38,7 @@ Gurax_ImplementFunction(Clock)
 	return new Value_Number(timeEnd - timeBegin);
 }
 
-// os.Exec(pathName:string, args*:String):map:[fork]
+// os.Exec(pathName as String, args* as String):map:[fork]
 Gurax_DeclareFunction(Exec)
 {
 	Declare(VTYPE_Number, Flag::Map);
@@ -67,7 +67,50 @@ Gurax_ImplementFunction(Exec)
 	return new Value_Number(rtn);
 }
 
-// os.Redirect(cin:Stream:nil:r, cout:Stream:nil:w, cerr?:Stream:w) {block}
+// os.GetEnv(name as String):map
+Gurax_DeclareFunction(GetEnv)
+{
+	Declare(VTYPE_String, Flag::Map);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Gets the value of the environment variable `name`.
+)""");
+}
+
+Gurax_ImplementFunction(GetEnv)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const char* name = args.PickString();
+	// Function body
+	bool foundFlag = false;
+	String value = OAL::GetEnv(name, &foundFlag);
+	return foundFlag? new Value_String(value) : Value::nil();
+}
+
+// os.PutEnv(name as String, value as String)
+Gurax_DeclareFunction(PutEnv)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("value", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(Gurax_Symbol(en), u8R"""(
+Sets the environment variable `name` to `value`.
+)""");
+}
+
+Gurax_ImplementFunction(PutEnv)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const char* name = args.PickString();
+	const char* value = args.PickString();
+	// Function body
+	OAL::PutEnv(name, value);
+	return Value::nil();
+}
+
+// os.Redirect(cin:nil:r as Stream, cout:nil:w as Stream, cerr?:w as Stream) {block}
 Gurax_DeclareFunction(Redirect)
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -100,7 +143,7 @@ Gurax_ImplementFunction(Redirect)
 	return pValueRtn.release();
 }
 
-// os.Sleep(secs:Number)
+// os.Sleep(secs as Number)
 Gurax_DeclareFunction(Sleep)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -195,6 +238,8 @@ Gurax_ModulePrepare()
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Clock));
 	Assign(Gurax_CreateFunction(Exec));
+	Assign(Gurax_CreateFunction(GetEnv));
+	Assign(Gurax_CreateFunction(PutEnv));
 	Assign(Gurax_CreateFunction(Redirect));
 	Assign(Gurax_CreateFunction(Sleep));
 	// Assignment of property

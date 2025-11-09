@@ -3,7 +3,7 @@
 #===============================================================================
 cmake_minimum_required(VERSION 3.16) # 3.16 or newer supports handling of precompiled header
 project(Gurax
-	VERSION			0.0.1
+	VERSION			0.1.0
 	DESCRIPTION 	"Gurax Programming Language"
 	HOMEPAGE_URL	http://www.gura-lang.org/
 	LANGUAGES		CXX)
@@ -50,6 +50,10 @@ if (${CMAKE_SYSTEM_NAME} MATCHES Windows)
 		DESTINATION module
 		FILES_MATCHING
 		PATTERN "*.gura")
+	install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/
+		DESTINATION include
+		FILES_MATCHING
+		PATTERN "*.h")
 endif()
 
 add_subdirectory(src)
