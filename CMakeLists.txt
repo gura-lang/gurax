@@ -2,7 +2,7 @@
 # CMakeLists for gurax project
 #===============================================================================
 cmake_minimum_required(VERSION 3.16) # 3.16 or newer supports handling of precompiled header
-project(gurax
+project(Gurax
 	VERSION			0.0.1
 	DESCRIPTION 	"Gurax Programming Language"
 	HOMEPAGE_URL	http://www.gura-lang.org/
@@ -38,5 +38,18 @@ elseif (${CMAKE_SYSTEM_NAME} STREQUAL Darwin)
 else ()
 	set(CMAKE_INSTALL_PREFIX /usr)
 endif ()
+
+if (${CMAKE_SYSTEM_NAME} MATCHES Windows)
+	install(DIRECTORY ${PROJECT_SOURCE_DIR}/bin/
+		DESTINATION bin
+		FILES_MATCHING
+		PATTERN "*.dll"
+		PATTERN "*.exe"
+		PATTERN ".gitkeep" EXCLUDE)
+	install(DIRECTORY ${PROJECT_SOURCE_DIR}/module/
+		DESTINATION module
+		FILES_MATCHING
+		PATTERN "*.gura")
+endif()
 
 add_subdirectory(src)

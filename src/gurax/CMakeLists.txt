@@ -34,4 +34,6 @@ target_link_libraries(gurax PRIVATE guraxcore
 #-------------------------------------------------------------------------------
 # Install
 #-------------------------------------------------------------------------------
-install(TARGETS gurax LIBRARY DESTINATION bin)
+install(TARGETS gurax
+	RUNTIME DESTINATION bin
+	LIBRARY DESTINATION bin)
