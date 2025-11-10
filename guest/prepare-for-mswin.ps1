@@ -440,9 +440,12 @@ class Package_cairo {
 	[String[]] $fileNames = @("$($this.baseName).tar.xz")
 	[String] $dirName = $this.baseName
 	Build() {
-		meson setup build
-		ninja -C build
-		Copy-Item build/src/cairo-2.dll ../../bin
+		meson setup build --default-library=static
+		meson compile -C build
+		Copy-Item build/src/libcairo.a build/cairo.lib
+		Copy-Item build/subprojects/pixman-0.43.4/pixman/libpixman-1.a build/pixman-1.lib
+		Copy-Item build/subprojects/zlib-1.3.1/libz.a build/z.lib
+		Copy-Item build/subprojects/libpng-1.6.43/libpng16.a build/png16.lib
 	}
 }
 $packages += [Package_cairo]::new()

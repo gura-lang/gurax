@@ -21,9 +21,7 @@ target_include_directories(cairo.gurd PRIVATE
 	$<$<PLATFORM_ID:Darwin>:${GURAX_BASEDIR}/guest>)
 target_link_directories(cairo.gurd PRIVATE
 	${GURAX_BASEDIR}/lib
-	$<$<PLATFORM_ID:Windows>:${GURAX_BASEDIR}/guest/cairo-1.18.4/build/src>
-	$<$<PLATFORM_ID:Windows>:${GURAX_BASEDIR}/guest/libpng-1.6.50>
-	$<$<PLATFORM_ID:Windows>:${GURAX_BASEDIR}/guest/zlib-1.2.11>
+	$<$<PLATFORM_ID:Windows>:${GURAX_BASEDIR}/guest/cairo-1.18.4/build>
 	$<$<PLATFORM_ID:Linux>:${GURAX_BASEDIR}/guest>
 	$<$<PLATFORM_ID:Darwin>:${GURAX_BASEDIR}/guest>)
 set(CMAKE_INSTALL_PREFIX ${GURAX_BASEDIR})
@@ -72,14 +70,16 @@ target_sources(cairo.gurd PRIVATE
 set(CMAKE_SHARED_MODULE_PREFIX)
 set(CMAKE_SHARED_MODULE_SUFFIX)
 target_link_options(cairo.gurd PRIVATE
-	$<$<PLATFORM_ID:Windows>:-NODEFAULTLIB:LIBCMT -INCREMENTAL:NO>
-	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:-NODEFAULTLIB:MSVCRT>
+	$<$<PLATFORM_ID:Windows>:-NODEFAULTLIB:LIBCMT -INCREMENTAL:NO -NODEFAULTLIB:MSVCRT>
+	#$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:-NODEFAULTLIB:MSVCRT>
 	$<$<PLATFORM_ID:Linux>:>
 	$<$<PLATFORM_ID:Darwin>:>)
 target_link_libraries(cairo.gurd PRIVATE guraxcore
 	$<$<PLATFORM_ID:Windows>:cairo>
-	$<$<PLATFORM_ID:Windows>:libpng>
-	$<$<PLATFORM_ID:Windows>:zlib>
+	$<$<PLATFORM_ID:Windows>:pixman-1>
+	$<$<PLATFORM_ID:Windows>:z>
+	$<$<PLATFORM_ID:Windows>:png16>
+	$<$<PLATFORM_ID:Windows>:msimg32>
 	$<$<PLATFORM_ID:Linux>:>
 	$<$<PLATFORM_ID:Darwin>:>)
 #-------------------------------------------------------------------------------

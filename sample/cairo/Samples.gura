@@ -598,7 +598,7 @@ main() = {
 	}
 	cr.destroy();
 	surface.write_to_png_stream("image.png");
-	//surface.ToImage().Write('a.jpg')
+	//surface.ToImage().Write('a.png')
 	surface.destroy();
 }
 
