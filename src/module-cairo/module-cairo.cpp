@@ -11,15 +11,21 @@ Gurax_BeginModule(cairo)
 // cairo.Test()
 Gurax_DeclareFunction(Test)
 {
-	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"""(
-
-)""");
+	Declare(VTYPE_Image, Flag::None);
+	//DeclareArg("image", VTYPE_Image, ArgOccur::Once, ArgFlag::None);
 }
 
 Gurax_ImplementFunction(Test)
 {
-	return Value::nil();
+	// Arguments
+	ArgPicker args(argument);
+	//Image& image = args.PickImage();
+	// Function body
+	RefPtr<Image> pImage(new Image(Image::Format::RGBA));
+	if (!pImage->Allocate(100, 100)) {
+		return Value::nil();
+	}
+	return new Value_Image(pImage.release());
 }
 
 //------------------------------------------------------------------------------
@@ -51,7 +57,7 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_cairo_text_cluster_t);
 	Assign(VTYPE_cairo_text_extents_t);
 	// Assignment of function
-	Assign(Gurax_CreateFunction(Test));
+	//Assign(Gurax_CreateFunction(Test));
 	AssignFunctions(GetFrame());
 	// Assignment of value
 	AssignConsts(GetFrame());
