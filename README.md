@@ -21,7 +21,8 @@ To get a quick start, download the following sample archive that contains Gurax 
 Following is an example to see a sample GUI application that demonstrates the use of the Cairo graphics library.
 
 ```bash
-$ gurax gurax-sample/sample/cairo/SampleGUI.gura
+$ cd gurax-sample/cairo
+$ gurax SampleGUI.gura
 ```
 
 ![SampleGUI](/image/SampleGUI.png)
