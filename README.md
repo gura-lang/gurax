@@ -14,7 +14,7 @@ For Windows, download the following installer to install Gurax.
 
 ▶️ [gurax-0.1.0-x64.exe](https://github.com/gura-lang/gurax/releases/download/0.1.0/gurax-0.1.0-x64.exe)
 
-To get a quick start, download the following sample archive that contains Gurax scripts and try them.
+To get a quick start, download the following sample archive that contains Gurax scripts.
 
 ▶️ [gurax-sample.zip](https://github.com/gura-lang/gurax/releases/download/0.1.0/gurax-sample.zip)
 
@@ -26,7 +26,7 @@ $ gurax gurax-sample/sample/cairo/SampleGUI.gura
 
 ![SampleGUI](/image/SampleGUI.png)
 
-`gurax-sample/test` directory contains regression tests for Gurax, which can also be a good reference to learn Gurax programming.
+`gurax-sample/test` directory contains regression tests for Gurax, which can also be a good reference to learn Gurax programming. For instance, `gurax-sample/test/test-Iterator.gura` demonstrates various ways to use iterators in Gurax.
 
 Build for Windows
 -----------------
